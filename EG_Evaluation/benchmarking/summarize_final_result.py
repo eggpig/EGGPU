@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate a final EGGPU result summary for paper-facing review.
+"""Generate a final EGGPU result summary for benchmark review.
 
 The report is intentionally conservative:
 
@@ -96,6 +96,11 @@ PARAM_RE = re.compile(r"\[params\].*easygraph_warmup=(?P<warmup>\d+)")
 ACCEPTED_SCALE_SKIP_NOTE = "exact all-source Closeness skipped by symmetric scale guard"
 SOTA_TIE_REL_TOL = 0.0005
 NEAR_MISS_REL_TOL = 0.02
+VALIDATED_SOTA_BASELINE_STATUSES = {"pass", "weak_pass", "reference"}
+EGGPU_TIMING_ALLOWED_STATUSES = VALIDATED_SOTA_BASELINE_STATUSES | {
+    "inconclusive_self_reference",
+    "sampled_pass",
+}
 
 
 def _safe_float(value) -> float | None:
@@ -178,13 +183,37 @@ def backend_log_summary(result_dir: Path) -> tuple[dict[str, Counter], list[tupl
     return counts, failures
 
 
+def _load_validation(result_dir: Path) -> pd.DataFrame | None:
+    path = result_dir / "correctness_validation.csv"
+    if not path.exists():
+        return None
+    validation = pd.read_csv(path)
+    required = {"dataset", "function", "baseline", "validation_status"}
+    if not required.issubset(validation.columns):
+        return None
+    return validation[["dataset", "function", "baseline", "validation_status"]].copy()
+
+
+def _apply_validation_filter(df: pd.DataFrame, validation: pd.DataFrame | None) -> pd.DataFrame:
+    if validation is None or df.empty:
+        return df
+    merged = df.merge(validation, on=["dataset", "function", "baseline"], how="left")
+    ok = merged["status"] == "ok"
+    eggpu = merged["baseline"] == "EGGPU"
+    validated_non_eggpu = merged["validation_status"].isin(VALIDATED_SOTA_BASELINE_STATUSES)
+    validated_eggpu = merged["validation_status"].isin(EGGPU_TIMING_ALLOWED_STATUSES)
+    keep = (~ok) | (eggpu & validated_eggpu) | ((~eggpu) & validated_non_eggpu)
+    return merged[keep].drop(columns=["validation_status"]).copy()
+
+
 def load_metric(result_dir: Path, metric: str) -> pd.DataFrame:
     path = result_dir / f"results_{metric}.csv"
     if not path.exists():
         raise SystemExit(f"missing {path}")
     df = pd.read_csv(path)
     df["seconds_num"] = pd.to_numeric(df["seconds"], errors="coerce")
-    return df[df["status"].isin(["ok", "timeout"])].copy()
+    df = df[df["status"].isin(["ok", "timeout"])].copy()
+    return _apply_validation_filter(df, _load_validation(result_dir))
 
 
 def _pair_allowed(predicate, dataset: str, function: str) -> bool:
@@ -436,6 +465,41 @@ def category_target_verdict(
     return pd.DataFrame(rows, columns=columns)
 
 
+def load_closeness_large_supplement(result_dir: Path) -> dict | None:
+    base = result_dir / "closeness_large_sampled"
+    sota_path = base / "closeness_large_sampled_sota.csv"
+    validation_path = base / "closeness_large_sampled_validation.csv"
+    long_path = base / "closeness_large_sampled_long.csv"
+    merged_path = base / "results_long_with_closeness_large_sampled.csv"
+    if not sota_path.exists():
+        return None
+
+    sota = pd.read_csv(sota_path)
+    validation = pd.read_csv(validation_path) if validation_path.exists() else pd.DataFrame()
+    rows = pd.read_csv(long_path) if long_path.exists() else pd.DataFrame()
+    timed_ok = 0
+    if not rows.empty and {"metric", "status"}.issubset(rows.columns):
+        timed_ok = int(
+            rows[
+                rows["metric"].isin(["e2e", "kernel"])
+                & (rows["status"] == "ok")
+            ].shape[0]
+        )
+    validation_pass = 0
+    validation_total = 0
+    if not validation.empty and "validation_status" in validation.columns:
+        validation_total = int(len(validation))
+        validation_pass = int((validation["validation_status"] == "pass").sum())
+    return {
+        "base": base,
+        "sota": sota,
+        "validation_pass": validation_pass,
+        "validation_total": validation_total,
+        "timed_ok": timed_ok,
+        "merged_path": merged_path,
+    }
+
+
 def goal_target_verdict(
     audit: dict,
     backend_failures: list[tuple[str, str]],
@@ -611,7 +675,32 @@ def write_markdown(
             f"| {summary['metric']} | {summary['filter']} | {summary['sota_pairs']} | "
             f"{summary['total_pairs']} | {summary['sota_pct']:.1f}% |"
         )
-    lines.append("")
+        lines.append("")
+
+    closeness_supplement = load_closeness_large_supplement(result_dir)
+    if closeness_supplement is not None:
+        lines.extend(
+            [
+                "## Large-Graph Closeness Supplement",
+                "",
+                "The exact all-node Closeness rows remain the main benchmark semantic.  Datasets skipped by the symmetric exact scale guard are filled by a separate `sampled_target_exact` supplement with deterministic target nodes; these rows are not counted as exact-all-node SOTA pairs.",
+                "",
+                f"- Supplement directory: `{closeness_supplement['base']}`",
+                f"- Merged matrix: `{closeness_supplement['merged_path']}`",
+                f"- Timed ok E2E/kernel rows: {closeness_supplement['timed_ok']}",
+                f"- Validation pass rows: {closeness_supplement['validation_pass']}/{closeness_supplement['validation_total']}",
+                "",
+                "| Dataset | Metric | EGGPU | Best Baseline | Best | Ratio | Pair SOTA | Semantic |",
+                "|---|---|---:|---|---:|---:|---|---|",
+            ]
+        )
+        for row in closeness_supplement["sota"].sort_values(["dataset", "metric"]).itertuples(index=False):
+            lines.append(
+                f"| {row.dataset} | {row.metric} | {float(row.eggpu_seconds):.6g} | "
+                f"{row.best_baseline} | {float(row.best_seconds):.6g} | "
+                f"{float(row.ratio_to_best):.3f}x | {row.is_pair_sota} | {row.semantic} |"
+            )
+        lines.append("")
 
     for summary in summaries:
         lines.extend(
@@ -660,7 +749,7 @@ def write_markdown(
         [
             "## Category Target Verdict",
             "",
-            "This is the direct target check for the category-average claim.  A category passes only if EGGPU has no timeout or missing pair in that view and its common-pair geomean is faster than every supported baseline.",
+            "This is the category-average claim check.  A category passes only if EGGPU has no timeout or missing pair in that view and its common-pair geomean is faster than every supported baseline.",
             "",
             "| Metric | Filter | Category | Timeout/Missing | Beats All Baselines | Min Speedup | Category-Average SOTA |",
             "|---|---|---|---:|---|---:|---|",

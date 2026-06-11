@@ -567,6 +567,13 @@ def pick_sources(n, k):
     return out
 
 
+def pick_optional_sources(n, k):
+    k = int(k or 0)
+    if k <= 0:
+        return None
+    return pick_sources(n, k)
+
+
 def call_with_supported_kwargs(func, kwargs):
     try:
         params = inspect.signature(func).parameters
@@ -851,6 +858,19 @@ def write_vector_detail(backend, function, values, n, dtype="float64", default=0
     return f", detail={path}, detail_kind=vector, detail_sha={_array_digest(arr)}"
 
 
+def write_source_vector_detail(backend, function, sources, values, n, dtype="float64"):
+    import numpy as np
+
+    path = _detail_path(backend, function)
+    if path is None:
+        return ""
+    src = np.asarray([int(s) for s in sources], dtype=np.int64)
+    vals = np.asarray([float(v) for v in values], dtype=dtype)
+    np.savez_compressed(path, kind="source_vector", sources=src, values=vals, graph_n=int(n))
+    digest_arr = np.column_stack((src, vals.astype(np.float64, copy=False))) if len(src) else vals
+    return f", detail={path}, detail_kind=source_vector, detail_sha={_array_digest(digest_arr)}"
+
+
 def write_cc_detail(backend, function, components, n):
     import numpy as np
 
@@ -1056,7 +1076,7 @@ def cugraph_bc_values(edges_df, directed, sources, normalized=False, endpoints=F
     return {int(v): float(c) for v, c in zip(pdf["vertex"], pdf[col])}
 
 
-def bench_igraph(views, graph_type, skip_cpu, functions, pr_alpha, cooldown, warmup, sssp_sources, bc_sources):
+def bench_igraph(views, graph_type, skip_cpu, functions, pr_alpha, cooldown, warmup, sssp_sources, bc_sources, closeness_sources):
     backend = "igraph"
     if skip_cpu:
         for func in functions:
@@ -1140,10 +1160,12 @@ def bench_igraph(views, graph_type, skip_cpu, functions, pr_alpha, cooldown, war
                 g = build_igraph(n, base_edges, graph_type == "directed")
                 t1 = time.perf_counter()
                 mode = "OUT" if graph_type == "directed" else "ALL"
+                source_nodes = pick_optional_sources(n, closeness_sources)
 
                 def run_closeness():
-                    vals = g.closeness(mode=mode, weights=None, normalized=True)
-                    reachable = g.neighborhood_size(order=max(0, n), mode=mode)
+                    vertices = None if source_nodes is None else source_nodes
+                    vals = g.closeness(vertices=vertices, mode=mode, weights=None, normalized=True)
+                    reachable = g.neighborhood_size(vertices=vertices, order=max(0, n), mode=mode)
                     out = []
                     denom = max(1, n - 1)
                     for idx, v in enumerate(vals):
@@ -1165,15 +1187,26 @@ def bench_igraph(views, graph_type, skip_cpu, functions, pr_alpha, cooldown, war
                 barrier(cooldown)
                 vals, algo_s, mem = timed_algorithm(run_closeness, sync_after=False)
                 count, total, mean = summarize_numeric_mapping(vals)
-                detail = write_vector_detail(backend, "Closeness", vals, n)
+                if source_nodes is None:
+                    detail = write_vector_detail(backend, "Closeness", vals, n)
+                    corr_prefix = f"nodes={count}"
+                    note_prefix = "outgoing distance for directed graphs"
+                else:
+                    detail = write_source_vector_detail(backend, "Closeness", source_nodes, vals, n)
+                    corr_prefix = f"sources={len(source_nodes)}, graph_nodes={n}"
+                    note_prefix = (
+                        "sampled-target exact closeness; deterministic evenly spaced sources; "
+                        f"sources={len(source_nodes)}; outgoing distance for directed graphs"
+                    )
                 emit_metrics(
                     backend,
                     "Closeness",
                     t1 - t0,
                     algo_s,
                     algo_s,
-                    correctness=f"nodes={count}, sum={total:.9g}, mean={mean:.9g}" + detail,
-                    notes="outgoing distance for directed graphs; igraph closeness mode="
+                    correctness=f"{corr_prefix}, sum={total:.9g}, mean={mean:.9g}" + detail,
+                    notes=note_prefix
+                    + "; igraph closeness mode="
                     + mode
                     + "; Wasserman-Faust disconnected correction applied; cpu backend kernel=algorithm",
                     memory=mem,
@@ -1334,7 +1367,7 @@ def bench_igraph(views, graph_type, skip_cpu, functions, pr_alpha, cooldown, war
             emit_exception(backend, func, e)
 
 
-def bench_networkx(views, graph_type, skip_cpu, functions, pr_alpha, pr_max_iter, pr_tol, cooldown, warmup, sssp_sources, bc_sources):
+def bench_networkx(views, graph_type, skip_cpu, functions, pr_alpha, pr_max_iter, pr_tol, cooldown, warmup, sssp_sources, bc_sources, closeness_sources):
     backend = "networkx"
     if skip_cpu:
         for func in functions:
@@ -1420,17 +1453,38 @@ def bench_networkx(views, graph_type, skip_cpu, functions, pr_alpha, pr_max_iter
                 g = build_networkx(n, base_edges, graph_type == "directed")
                 close_graph = g.reverse(copy=False) if graph_type == "directed" else g
                 t1 = time.perf_counter()
-                run_closeness = lambda: nx.closeness_centrality(
-                    close_graph,
-                    distance=None,
-                    wf_improved=True,
-                )
+                source_nodes = pick_optional_sources(n, closeness_sources)
+                if source_nodes is None:
+                    run_closeness = lambda: nx.closeness_centrality(
+                        close_graph,
+                        distance=None,
+                        wf_improved=True,
+                    )
+                else:
+                    run_closeness = lambda: [
+                        nx.closeness_centrality(
+                            close_graph,
+                            u=int(source),
+                            distance=None,
+                            wf_improved=True,
+                        )
+                        for source in source_nodes
+                    ]
                 warmup_call(run_closeness, warmup)
                 barrier(cooldown)
                 vals, algo_s, mem = timed_algorithm(run_closeness, sync_after=False)
                 count, total, mean = summarize_numeric_mapping(vals)
-                detail = write_vector_detail(backend, "Closeness", vals, n)
-                note = "outgoing distance for directed graphs"
+                if source_nodes is None:
+                    detail = write_vector_detail(backend, "Closeness", vals, n)
+                    corr_prefix = f"nodes={count}"
+                    note = "outgoing distance for directed graphs"
+                else:
+                    detail = write_source_vector_detail(backend, "Closeness", source_nodes, vals, n)
+                    corr_prefix = f"sources={len(source_nodes)}, graph_nodes={n}"
+                    note = (
+                        "sampled-target exact closeness; deterministic evenly spaced sources; "
+                        f"sources={len(source_nodes)}; outgoing distance for directed graphs"
+                    )
                 if graph_type == "directed":
                     note += "; networkx uses reverse graph view because its directed closeness is inward by default"
                 emit_metrics(
@@ -1439,7 +1493,7 @@ def bench_networkx(views, graph_type, skip_cpu, functions, pr_alpha, pr_max_iter
                     t1 - t0,
                     algo_s,
                     algo_s,
-                    correctness=f"nodes={count}, sum={total:.9g}, mean={mean:.9g}" + detail,
+                    correctness=f"{corr_prefix}, sum={total:.9g}, mean={mean:.9g}" + detail,
                     notes=note + "; cpu backend kernel=algorithm",
                     memory=mem,
                 )
@@ -1646,6 +1700,7 @@ def bench_easygraph_mode(
     easygraph_gpu_backend,
     sssp_sources,
     bc_sources,
+    closeness_sources,
     cooldown,
     mode,
 ):
@@ -1878,26 +1933,36 @@ def bench_easygraph_mode(
                 t0 = time.perf_counter()
                 g = to_mode_graph(n, base_edges, graph_type == "directed")
                 t1 = time.perf_counter()
+                source_nodes = pick_optional_sources(n, closeness_sources)
                 run_closeness = lambda: eg.closeness_centrality(
                     g,
                     weight=None,
-                    sources=None,
+                    sources=source_nodes,
                 )
                 easygraph_warmup(run_closeness)
                 barrier(cooldown)
                 vals, algo_s, mem = timed_algorithm(run_closeness, sync_after=sync_after_eg_call)
                 count, total, mean = summarize_numeric_mapping(vals)
-                note = "outgoing distance for directed graphs"
+                if source_nodes is None:
+                    detail = write_vector_detail(backend, "Closeness", vals, n)
+                    corr_prefix = f"nodes={count}"
+                    note = "outgoing distance for directed graphs"
+                else:
+                    detail = write_source_vector_detail(backend, "Closeness", source_nodes, vals, n)
+                    corr_prefix = f"sources={len(source_nodes)}, graph_nodes={n}"
+                    note = (
+                        "sampled-target exact closeness; deterministic evenly spaced sources; "
+                        f"sources={len(source_nodes)}; outgoing distance for directed graphs"
+                    )
                 if mode != "gpu":
                     note += "; cpu backend kernel=algorithm"
-                detail = write_vector_detail(backend, "Closeness", vals, n)
                 emit_metrics(
                     backend,
                     "Closeness",
                     t1 - t0,
                     algo_s,
                     kernel_or_algo("closeness", algo_s),
-                    correctness=f"nodes={count}, sum={total:.9g}, mean={mean:.9g}" + detail,
+                    correctness=f"{corr_prefix}, sum={total:.9g}, mean={mean:.9g}" + detail,
                     notes=note,
                     memory=mem,
                 )
@@ -2128,7 +2193,7 @@ def bench_easygraph_mode(
             emit_exception(backend, func, e)
 
 
-def bench_nx_cugraph(views, graph_type, functions, pr_alpha, pr_max_iter, pr_tol, cooldown, warmup, sssp_sources, bc_sources):
+def bench_nx_cugraph(views, graph_type, functions, pr_alpha, pr_max_iter, pr_tol, cooldown, warmup, sssp_sources, bc_sources, closeness_sources):
     backend = "nx-cugraph"
     os.environ["EGGPU_ALLOW_CUDA_SYNC"] = "TRUE"
     if all(func in STRUCTURAL_HOLE_FUNCTIONS for func in functions):
@@ -2480,6 +2545,15 @@ def main():
     ap.add_argument("--easygraph-warmup", type=int, default=1)
     ap.add_argument("--sssp-sources", type=int, default=8, help="Number of deterministic sources for SSSP.")
     ap.add_argument("--bc-sources", type=int, default=16, help="Number of deterministic sources for BC source-sampled mode.")
+    ap.add_argument(
+        "--closeness-sources",
+        type=int,
+        default=0,
+        help=(
+            "If >0, run Closeness in sampled-target exact mode on this many deterministic nodes. "
+            "Default 0 keeps exact all-node Closeness semantics."
+        ),
+    )
     ap.add_argument("--cooldown", type=float, default=0.2, help="Sleep seconds between build/algorithm phases for run isolation.")
     args = ap.parse_args()
 
@@ -2506,7 +2580,8 @@ def main():
         flush=True,
     )
     print(
-        f"[params] easygraph_series_warmup={args.warmup} easygraph_warmup={args.easygraph_warmup} sssp_sources={args.sssp_sources} bc_sources={args.bc_sources}",
+        f"[params] easygraph_series_warmup={args.warmup} easygraph_warmup={args.easygraph_warmup} "
+        f"sssp_sources={args.sssp_sources} bc_sources={args.bc_sources} closeness_sources={args.closeness_sources}",
         flush=True,
     )
     print(
@@ -2525,6 +2600,7 @@ def main():
             0,
             args.sssp_sources,
             args.bc_sources,
+            args.closeness_sources,
         )
     if args.backend in ("all", "networkx"):
         bench_networkx(
@@ -2539,6 +2615,7 @@ def main():
             0,
             args.sssp_sources,
             args.bc_sources,
+            args.closeness_sources,
         )
     if args.backend in ("all", "EGGPU"):
         bench_easygraph_mode(
@@ -2554,6 +2631,7 @@ def main():
             args.easygraph_gpu_backend,
             args.sssp_sources,
             args.bc_sources,
+            args.closeness_sources,
             args.cooldown,
             mode="gpu",
         )
@@ -2571,6 +2649,7 @@ def main():
             args.easygraph_gpu_backend,
             args.sssp_sources,
             args.bc_sources,
+            args.closeness_sources,
             args.cooldown,
             mode="cpu",
         )
@@ -2588,6 +2667,7 @@ def main():
             args.easygraph_gpu_backend,
             args.sssp_sources,
             args.bc_sources,
+            args.closeness_sources,
             args.cooldown,
             mode="cpp",
         )
@@ -2603,6 +2683,7 @@ def main():
             0,
             args.sssp_sources,
             args.bc_sources,
+            args.closeness_sources,
         )
 
 

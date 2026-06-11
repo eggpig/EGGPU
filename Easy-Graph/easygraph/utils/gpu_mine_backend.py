@@ -822,11 +822,12 @@ def _cpp_gpu_structural_dense(prepared, G, metric, nodes, weight):
         return None
     all_nodes = prepared.get("nodes", [])
     values = _normalize_dense_array(dense, len(all_nodes), dtype="float64", fill_value=0)
-    counts = np.asarray(_neighbor_count_values(G, all_nodes), dtype=np.int64)
-    if metric in {"effective_size", "constraint"}:
-        values[counts == 0] = np.nan
-    elif metric == "hierarchy":
-        values[counts == 0] = 0.0
+    if bool(prepared.get("directed", G.is_directed())):
+        counts = np.asarray(_neighbor_count_values(G, all_nodes), dtype=np.int64)
+        if metric in {"effective_size", "constraint"}:
+            values[counts == 0] = np.nan
+        elif metric == "hierarchy":
+            values[counts == 0] = 0.0
     result = _slice_dense_for_nodes(prepared, values, selected_nodes, selected_index)
     kernel_s = out.get("kernel_seconds")
     return result, (float(kernel_s) if kernel_s is not None else None)

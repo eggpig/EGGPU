@@ -11,8 +11,11 @@ ABLATION_TIMEOUT="${ABLATION_TIMEOUT:-300}"
 RUN_PARALLEL="${RUN_PARALLEL:-${EGGPU_RUN_PARALLEL:-0}}"
 RUN_ABLATION_ON_MAIN_FAILURE="${RUN_ABLATION_ON_MAIN_FAILURE:-TRUE}"
 RUN_PREFLIGHT="${RUN_PREFLIGHT:-TRUE}"
+RUN_CLOSENESS_LARGE_SUPPLEMENT="${RUN_CLOSENESS_LARGE_SUPPLEMENT:-TRUE}"
+CLOSENESS_LARGE_SOURCES="${CLOSENESS_LARGE_SOURCES:-16}"
+CLOSENESS_LARGE_TIMEOUT="${CLOSENESS_LARGE_TIMEOUT:-1800}"
 EGGPU_GPU_VISIBILITY_MARKER="${EGGPU_GPU_VISIBILITY_MARKER:-FALSE}"
-# Default paper-quality runs keep the marker off.  When explicitly enabled, the
+# Default comparable runs keep the marker off.  When explicitly enabled, the
 # long-lived runner reserves a small visible allocation and auto-measures the
 # whole-device memory increment so the busy-GPU guard and memory tables subtract
 # only that fixed marker footprint.
@@ -95,6 +98,15 @@ preflight_enabled() {
   return 0
 }
 
+closeness_large_supplement_enabled() {
+  case "${RUN_CLOSENESS_LARGE_SUPPLEMENT}" in
+    0|false|FALSE|no|NO|off|OFF)
+      return 1
+      ;;
+  esac
+  return 0
+}
+
 require_gpu_idle() {
   local gpu="$1"
   local phase="$2"
@@ -154,7 +166,7 @@ require_gpu_idle() {
     echo "${gpu_rows}"
     echo "Compute processes, if queryable:"
     nvidia-smi --query-compute-apps=gpu_uuid,pid,process_name,used_memory --format=csv,noheader,nounits 2>/dev/null || true
-    echo "Pick an idle GPU. Override with EGGPU_ALLOW_BUSY_GPU=1 only for deliberate non-paper/debug runs."
+    echo "Pick an idle GPU. Override with EGGPU_ALLOW_BUSY_GPU=1 only for deliberate non-comparable/debug runs."
     exit 2
   fi
 
@@ -195,6 +207,40 @@ run_preflight() {
       PYTHONPATH="${EG_REPO}:${PYTHONPATH:-}" \
       LD_LIBRARY_PATH="${LD_PATH}" \
       "${COMMON_PY}" benchmarking/preflight_full_eval_ready.py
+}
+
+run_closeness_large_supplement() {
+  set -euo pipefail
+  env -u CFLAGS -u CPPFLAGS -u CXXFLAGS \
+      -u C_INCLUDE_PATH -u CPLUS_INCLUDE_PATH -u CPATH -u LIBRARY_PATH \
+      CONDA_EXE="${CONDA_EXE_PATH}" \
+      EGGPU_CHILD_PYTHON="${COMMON_PY}" \
+      EGGPU_USE_CONDA_RUN=FALSE \
+      CUDA_VISIBLE_DEVICES="${MAIN_GPU}" \
+      EGGPU_MONITOR_GPU_INDEX="${MAIN_GPU}" \
+      EGGPU_CUDA_ROOT="${CUDA_ROOT}" \
+      CUDA_PATH="${CUDA_ROOT}" \
+      CONDA_PREFIX="${CUDA_ROOT}" \
+      EASYGRAPH_ENABLE_GPU=TRUE \
+      EASYGRAPH_GPU_BACKEND=mine \
+      EASYGRAPH_GPU_STRICT_ERRORS=TRUE \
+      EGGPU_GPU_VISIBILITY_MARKER="${EGGPU_GPU_VISIBILITY_MARKER}" \
+      EGGPU_GPU_VISIBILITY_MARKER_MB="${EGGPU_GPU_VISIBILITY_MARKER_MB}" \
+      EGGPU_GPU_VISIBILITY_MARKER_ADJUST_MB="${EGGPU_GPU_VISIBILITY_MARKER_ADJUST_MB}" \
+      EASYGRAPH_GPU_RESULT_CACHE=FALSE \
+      EASYGRAPH_GPU_RESULT_CACHE_RETURN_COPY=FALSE \
+      EASYGRAPH_GPU_SCC_HOST_ENABLE=FALSE \
+      EASYGRAPH_GPU_KCORE_HOST_ENABLE=FALSE \
+      EASYGRAPH_GPU_SSSP_HOST_ENABLE=FALSE \
+      PYTHONPATH="${EG_REPO}:${PYTHONPATH:-}" \
+      LD_LIBRARY_PATH="${LD_PATH}" \
+      "${COMMON_PY}" benchmarking/run_closeness_large_supplement.py \
+        "${MAIN_OUT}" \
+        --easygraph-repo "${EG_REPO}" \
+        --sources "${CLOSENESS_LARGE_SOURCES}" \
+        --gpu "${MAIN_GPU}" \
+        --timeout "${CLOSENESS_LARGE_TIMEOUT}" \
+        --python "${COMMON_PY}"
 }
 
 run_main_eval() {
@@ -457,6 +503,24 @@ run_main_audits() {
     echo "Pair-level SOTA summary written: OUT=${MAIN_OUT}/EGGPU_NON_SOTA_PAIRS.md"
   fi
 
+  if closeness_large_supplement_enabled; then
+    echo "Closeness large-graph supplement starting: OUT=${MAIN_OUT}/closeness_large_sampled, LOG=benchmarking/results/${MAIN_ID}.closeness_large.log"
+    run_closeness_large_supplement > >(tee "benchmarking/results/${MAIN_ID}.closeness_large.log") 2>&1
+    CLOSENESS_LARGE_RC=$?
+
+    if [[ "${CLOSENESS_LARGE_RC}" -ne 0 ]]; then
+      echo "Closeness large-graph supplement exit code: ${CLOSENESS_LARGE_RC}"
+      echo "Closeness large-graph supplement failed; see benchmarking/results/${MAIN_ID}.closeness_large.log"
+      echo "Main result: ${MAIN_OUT}"
+      GROUP_RC=1
+    else
+      echo "Closeness large-graph supplement written: OUT=${MAIN_OUT}/closeness_large_sampled"
+    fi
+  else
+    CLOSENESS_LARGE_RC=0
+    echo "Closeness large-graph supplement skipped because RUN_CLOSENESS_LARGE_SUPPLEMENT=${RUN_CLOSENESS_LARGE_SUPPLEMENT}"
+  fi
+
   echo "Final result summary starting: OUT=${MAIN_OUT}, LOG=benchmarking/results/${MAIN_ID}.final_summary.log"
   "${COMMON_PY}" benchmarking/summarize_final_result.py "${MAIN_OUT}" > "benchmarking/results/${MAIN_ID}.final_summary.log" 2>&1
   FINAL_SUMMARY_RC=$?
@@ -478,6 +542,7 @@ AUDIT_RC=0
 BACKEND_AUDIT_RC=0
 NON_SOTA_RC=0
 FINAL_SUMMARY_RC=0
+CLOSENESS_LARGE_RC=0
 ABL_RC=0
 AUDIT_GROUP_RC=0
 PREFLIGHT_RC=0
@@ -534,9 +599,11 @@ if parallel_enabled; then
   echo "Main audit exit code: ${AUDIT_RC}"
   echo "Backend separation audit exit code: ${BACKEND_AUDIT_RC}"
   echo "Pair-level SOTA summary exit code: ${NON_SOTA_RC}"
+  echo "Closeness large-graph supplement exit code: ${CLOSENESS_LARGE_RC}"
   echo "Final result summary exit code: ${FINAL_SUMMARY_RC}"
   echo "Ablation exit code: ${ABL_RC}"
   echo "Main result: ${MAIN_OUT}"
+  echo "Closeness supplement result: ${MAIN_OUT}/closeness_large_sampled"
   echo "Ablation result: ${ABL_OUT}"
 
   if [[ "${MAIN_RC}" -ne 0 || "${AUDIT_GROUP_RC}" -ne 0 || "${ABL_RC}" -ne 0 ]]; then
@@ -594,9 +661,11 @@ echo "Preflight exit code: ${PREFLIGHT_RC}"
 echo "Main audit exit code: ${AUDIT_RC}"
 echo "Backend separation audit exit code: ${BACKEND_AUDIT_RC}"
 echo "Pair-level SOTA summary exit code: ${NON_SOTA_RC}"
+echo "Closeness large-graph supplement exit code: ${CLOSENESS_LARGE_RC}"
 echo "Final result summary exit code: ${FINAL_SUMMARY_RC}"
 echo "Ablation exit code: ${ABL_RC}"
 echo "Main result: ${MAIN_OUT}"
+echo "Closeness supplement result: ${MAIN_OUT}/closeness_large_sampled"
 echo "Ablation result: ${ABL_OUT}"
 
 if [[ "${MAIN_RC}" -ne 0 || "${AUDIT_GROUP_RC}" -ne 0 || "${ABL_RC}" -ne 0 ]]; then

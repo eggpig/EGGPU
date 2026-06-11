@@ -4,6 +4,7 @@
 import argparse
 import csv
 import math
+import os
 import re
 from collections import defaultdict
 from pathlib import Path
@@ -18,6 +19,26 @@ REFERENCE_PRIORITY = (
     "EGGPU",
 )
 STRUCTURAL_HOLE_FUNCTIONS = {"EffectiveSize", "Efficiency", "Constraint", "Hierarchy"}
+ROOT = Path(__file__).resolve().parents[1]
+DATASET_PATHS = {
+    "ca-GrQc": "datasets/undirected/ca-GrQc.txt",
+    "ca-HepTh": "datasets/undirected/ca-HepTh.txt",
+    "LastFM": "datasets/undirected/LastFM.txt",
+    "pgp": "datasets/undirected/pgp.txt",
+    "ca-CondMat": "datasets/undirected/ca-CondMat.txt",
+    "ca-HepPh": "datasets/undirected/ca-HepPh.txt",
+    "email-Enron": "datasets/undirected/email-Enron.txt",
+    "com-youtube": "datasets/undirected/com-youtube.ungraph.txt",
+    "p2p-Gnutella04": "datasets/directed/p2p-Gnutella04.txt",
+    "p2p-Gnutella08": "datasets/directed/p2p-Gnutella08.txt",
+    "wiki-Vote": "datasets/directed/wiki-Vote.txt",
+    "soc-Epinions1": "datasets/directed/soc-Epinions1.txt",
+    "email-EuAll": "datasets/directed/email-EuAll.txt",
+    "soc-Slashdot0811": "datasets/directed/soc-Slashdot0811.txt",
+    "web-NotreDame": "datasets/directed/web-NotreDame.txt",
+    "ER-100k": "datasets/directed/ER-100k.txt",
+    "wiki-Talk": "datasets/directed/wiki-Talk.txt",
+}
 EASYGRAPH_STRUCTURAL_REFERENCE_PRIORITY = (
     "easygraph-cpu",
     "EGGPU",
@@ -39,6 +60,7 @@ FIELDS = (
     "correctness",
     "reference_correctness",
 )
+_STRUCTURAL_GRAPH_CACHE = {}
 
 
 def _parse_correctness(text):
@@ -79,6 +101,259 @@ def _load_detail(parsed):
         return {"kind": kind, "values": values, "sources": sources, "path": str(p)}, ""
     except Exception as e:
         return None, f"detail load failed: {e}"
+
+
+def _normalized_clean_edges(dataset):
+    cached = _STRUCTURAL_GRAPH_CACHE.get(dataset)
+    if cached is not None:
+        return cached
+    rel = DATASET_PATHS.get(dataset)
+    if rel is None:
+        raise KeyError(f"unknown dataset={dataset}")
+    path = ROOT / rel
+    raw_edges = []
+    nodes = set()
+    with path.open() as f:
+        for line in f:
+            s = line.strip()
+            if not s or s[0] in "#%/c":
+                continue
+            parts = s.split()
+            if len(parts) < 2:
+                continue
+            try:
+                u = int(parts[0])
+                v = int(parts[1])
+            except ValueError:
+                continue
+            if u == v:
+                continue
+            raw_edges.append((u, v))
+            nodes.add(u)
+            nodes.add(v)
+    ordered = sorted(nodes)
+    remap = {node: idx for idx, node in enumerate(ordered)}
+    directed = sorted({(remap[u], remap[v]) for u, v in raw_edges})
+    undirected = sorted({(min(remap[u], remap[v]), max(remap[u], remap[v])) for u, v in raw_edges})
+    out = {"n": len(ordered), "directed": directed, "undirected": undirected}
+    _STRUCTURAL_GRAPH_CACHE[dataset] = out
+    return out
+
+
+def _structural_graph(dataset, graph_type):
+    cache_key = (dataset, graph_type)
+    cached = _STRUCTURAL_GRAPH_CACHE.get(cache_key)
+    if cached is not None:
+        return cached
+    data = _normalized_clean_edges(dataset)
+    n = data["n"]
+    directed = graph_type == "directed"
+    if directed:
+        out_adj = [set() for _ in range(n)]
+        in_adj = [set() for _ in range(n)]
+        for u, v in data["directed"]:
+            out_adj[u].add(v)
+            in_adj[v].add(u)
+    else:
+        out_adj = [set() for _ in range(n)]
+        in_adj = out_adj
+        for u, v in data["undirected"]:
+            out_adj[u].add(v)
+            out_adj[v].add(u)
+    degrees = [
+        (len(out_adj[i]) + len(in_adj[i]) if directed else len(out_adj[i]))
+        for i in range(n)
+    ]
+    if directed:
+        sum_scale = degrees
+        max_scale = [
+            2 if any(v in out_adj[u] for u in out_adj[v]) else (1 if degrees[v] > 0 else 0)
+            for v in range(n)
+        ]
+    else:
+        sum_scale = degrees
+        max_scale = [1 if degree > 0 else 0 for degree in degrees]
+    top_degree_nodes = sorted(range(n), key=lambda idx: degrees[idx], reverse=True)[:32]
+    graph = {
+        "n": n,
+        "directed": directed,
+        "out": out_adj,
+        "in": in_adj,
+        "degrees": degrees,
+        "sum_scale": sum_scale,
+        "max_scale": max_scale,
+        "top_degree_nodes": top_degree_nodes,
+    }
+    _STRUCTURAL_GRAPH_CACHE[cache_key] = graph
+    return graph
+
+
+def _all_neighbors(graph, node):
+    if graph["directed"]:
+        return graph["out"][node] | graph["in"][node]
+    return graph["out"][node]
+
+
+def _successor_count(graph, node):
+    return len(graph["out"][node])
+
+
+def _mutual_count(graph, u, v):
+    if graph["directed"]:
+        return int(v in graph["out"][u]) + int(u in graph["out"][v])
+    return int(v in graph["out"][u])
+
+
+def _normalized_mutual_weight(graph, u, v, norm):
+    scale = graph["sum_scale"][u] if norm == "sum" else graph["max_scale"][u]
+    return 0.0 if scale == 0 else float(_mutual_count(graph, u, v)) / float(scale)
+
+
+def _structural_redundancy(graph, u, v):
+    total = 0.0
+    for w in _all_neighbors(graph, u):
+        total += _normalized_mutual_weight(graph, u, w, "sum") * _normalized_mutual_weight(graph, v, w, "max")
+    return 1.0 - total
+
+
+def _structural_local_constraint(graph, u, v, cache):
+    key = (u, v)
+    hit = cache.get(key)
+    if hit is not None:
+        return hit
+    direct = _normalized_mutual_weight(graph, u, v, "sum")
+    indirect = 0.0
+    for w in _all_neighbors(graph, u):
+        indirect += _normalized_mutual_weight(graph, u, w, "sum") * _normalized_mutual_weight(graph, w, v, "sum")
+    value = (direct + indirect) ** 2
+    cache[key] = value
+    return value
+
+
+def _sampled_structural_value(function, graph, node, local_cache):
+    neighbors = _all_neighbors(graph, node)
+    if function == "EffectiveSize" and not graph["directed"]:
+        if _successor_count(graph, node) == 0:
+            return float("nan")
+        degree = len(neighbors)
+        internal_edges = 0
+        ordered = list(neighbors)
+        for i, u in enumerate(ordered):
+            rest = ordered[i + 1 :]
+            if rest:
+                internal_edges += sum(1 for v in rest if v in graph["out"][u])
+        return float(degree) if internal_edges == 0 else float(degree) - (2.0 * float(internal_edges)) / float(degree)
+
+    if function == "EffectiveSize":
+        if _successor_count(graph, node) == 0:
+            return float("nan")
+        return sum(_structural_redundancy(graph, node, u) for u in neighbors)
+
+    if function == "Efficiency":
+        effective = _sampled_structural_value("EffectiveSize", graph, node, local_cache)
+        degree = graph["degrees"][node]
+        return float("nan") if degree == 0 else effective / float(degree)
+
+    if function == "Constraint":
+        if _successor_count(graph, node) == 0:
+            return float("nan")
+        return sum(_structural_local_constraint(graph, node, u, local_cache) for u in neighbors)
+
+    if function == "Hierarchy":
+        c = {}
+        total = 0.0
+        for u in neighbors:
+            value = _structural_local_constraint(graph, node, u, local_cache)
+            c[u] = value
+            total += value
+        n = len(neighbors)
+        if n <= 1 or total == 0.0:
+            return 0.0
+        denom = float(n) * math.log(float(n))
+        return sum((value / total) * float(n) * math.log((value / total) * float(n)) / denom for value in c.values())
+
+    raise ValueError(f"not a structural-hole function: {function}")
+
+
+def _ordered_sample(values, graph, limit=24):
+    import numpy as np
+
+    n = int(graph["n"])
+    max_degree = int(os.environ.get("EGGPU_STRUCTURAL_VALIDATION_MAX_SAMPLE_DEGREE", "2048"))
+    out = []
+
+    def add(node):
+        node = int(node)
+        if 0 <= node < n and node not in out and graph["degrees"][node] <= max_degree:
+            out.append(node)
+
+    for node in (0, n // 4, n // 2, (3 * n) // 4, n - 1):
+        add(node)
+    for node in graph["top_degree_nodes"]:
+        add(node)
+        if len(out) >= 8:
+            break
+    arr = np.asarray(values)
+    finite = np.flatnonzero(np.isfinite(arr))
+    if finite.size:
+        take = min(8, int(finite.size))
+        top_pos = finite[np.argpartition(np.abs(arr[finite]), -take)[-take:]]
+        for node in top_pos[np.argsort(np.abs(arr[top_pos]))[::-1]]:
+            add(node)
+    nan_nodes = np.flatnonzero(np.isnan(arr))
+    for node in nan_nodes[:3]:
+        add(node)
+    step = max(1, n // max(1, limit))
+    for node in range(0, n, step):
+        add(node)
+        if len(out) >= limit:
+            break
+    if not out:
+        out.append(min(range(n), key=lambda idx: graph["degrees"][idx]))
+    return out[:limit]
+
+
+def _sampled_structural_check(row, function, parsed):
+    detail, detail_err = _load_detail(parsed)
+    if detail is None:
+        return None, detail_err
+    if detail.get("kind") != "vector":
+        return None, f"sampled structural validation needs vector detail, got {detail.get('kind')}"
+    try:
+        import numpy as np
+
+        graph = _structural_graph(row.get("dataset", ""), row.get("graph_type", ""))
+        values = np.asarray(detail["values"], dtype=float)
+        if values.shape != (graph["n"],):
+            return False, f"sampled structural detail shape mismatch: {values.shape} vs {(graph['n'],)}"
+        sample = _ordered_sample(values, graph)
+        local_cache = {}
+        bad = []
+        max_diff = 0.0
+        for node in sample:
+            expected = _sampled_structural_value(function, graph, node, local_cache)
+            observed = float(values[node])
+            if math.isnan(expected) and math.isnan(observed):
+                continue
+            diff = abs(expected - observed)
+            max_diff = max(max_diff, diff)
+            if not math.isclose(expected, observed, rel_tol=1e-5, abs_tol=1e-7):
+                bad.append((node, observed, expected, diff))
+        if bad:
+            node, observed, expected, diff = bad[0]
+            return (
+                False,
+                f"sampled exact CPU structural-hole validation failed at node={node}: "
+                f"got {observed:.9g} vs expected {expected:.9g}, abs_diff={diff:.6g}, "
+                f"sampled_nodes={len(sample)}, max_abs_diff={max_diff:.6g}",
+            )
+        return (
+            True,
+            f"sampled exact CPU structural-hole validation matches {len(sample)} nodes, "
+            f"max_abs_diff={max_diff:.6g}",
+        )
+    except Exception as exc:
+        return None, f"sampled structural validation unavailable: {exc}"
 
 
 def _detail_tolerance(function):
@@ -229,6 +504,12 @@ def _validate_one(row, ref_row, ref_parsed):
         return "inconclusive", "no reference baseline with correctness fields"
     if baseline == ref_row.get("baseline"):
         if baseline == "EGGPU":
+            if function in STRUCTURAL_HOLE_FUNCTIONS:
+                sampled_ok, sampled_msg = _sampled_structural_check(row, function, parsed)
+                if sampled_ok is True:
+                    return "sampled_pass", sampled_msg
+                if sampled_ok is False:
+                    return "fail", sampled_msg
             return (
                 "inconclusive_self_reference",
                 "EGGPU is the only available reference; correctness is not externally established",
@@ -324,15 +605,16 @@ def write_validation_outputs(out_dir, rows):
     md = ["# Correctness Validation", ""]
     if counts:
         md.append("Status counts:")
-        for key in ("pass", "weak_pass", "reference", "semantic_mismatch", "fail", "inconclusive"):
+        for key in ("pass", "sampled_pass", "weak_pass", "reference", "semantic_mismatch", "fail", "inconclusive", "inconclusive_self_reference"):
             if counts.get(key):
                 md.append(f"- {key}: {counts[key]}")
         md.append("")
     md.append("Validation compares full detail dumps when present. If a baseline lacks a detail dump, it falls back to the legacy summary fields.")
     md.append("Reference priority: networkx, igraph, easygraph-cpu, easygraph-cpp, nx-cugraph, EGGPU.")
     md.append("Structural-hole metrics use EasyGraph-compatible semantics: easygraph-cpu, EGGPU, networkx, igraph, easygraph-cpp, nx-cugraph.")
+    md.append("Large structural-hole EGGPU rows without a full external reference use deterministic sampled exact CPU validation and are marked `sampled_pass`.")
     md.append("PageRank is only marked `weak_pass` when no full vector detail is available.")
-    md.append("EGGPU self-reference rows are marked `inconclusive_self_reference`; final audits require EGGPU rows to be externally validated as `pass`.")
+    md.append("EGGPU self-reference rows are marked `inconclusive_self_reference`; final audits require EGGPU rows to be externally validated as `pass` or `sampled_pass`.")
     if failures:
         md.extend(["", "Non-passing rows:"])
         for row in failures[:200]:

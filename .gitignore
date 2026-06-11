@@ -18,6 +18,15 @@ EG_Evaluation/benchmarking/results/
 # artifact documentation.
 EG_Evaluation/EGGPU_SESSION_PROGRESS_*.md
 
+# Internal paper/report notes stay in the private paper repository, not in the
+# public export repository.
+EG_Evaluation/EGGPU_*.md
+EG_Evaluation/BASELINE_SUPPORT_MATRIX_*.md
+EG_Evaluation/BASELINE_VERSIONS_*.md
+EG_Evaluation/REPRODUCE_ON_NEW_GPU_*.md
+EG_Evaluation/*RESULT*.md
+EG_Evaluation/*REPORT*.md
+
 # Python/editor caches
 __pycache__/
 **/__pycache__/

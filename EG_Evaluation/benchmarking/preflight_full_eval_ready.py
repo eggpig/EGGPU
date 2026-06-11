@@ -360,9 +360,11 @@ def check_closeness_cuda_launch_contract() -> bool:
     required = {
         "wrapper_output_matches_source_count": "CC = vector<double>(sources.size())" in centrality_text,
         "wrapper_passes_unweighted_flag": "unweighted, CC.data(), kernel_seconds" in centrality_text,
-        "cuda_uses_device_csr_cache": "acquire_device_csr(V, E, W, len_V, len_E, !unweighted" in text,
-        "cuda_has_unweighted_bfs_kernel": "d_bfs_cc" in text
-        and "if (unweighted)" in text,
+        "cuda_uses_device_csr_cache": "acquire_device_csr(V, E, W, len_V, len_E, needs_weights" in text,
+        "cuda_disables_experimental_bfs_path": "const bool use_bfs_kernel = false" in text
+        and "const bool needs_weights = !use_bfs_kernel" in text,
+        "cuda_keeps_bfs_path_guarded": "d_bfs_cc" in text
+        and "if (use_bfs_kernel)" in text,
         "dijkstra_grid_capped_by_sources": "dijkstra_grid_size > len_sources" in text
         and "dijkstra_grid_size = len_sources" in text,
         "bfs_grid_capped_by_sources": "bfs_grid_size > len_sources" in text
@@ -588,6 +590,32 @@ def check_backend_separation_static_contract() -> bool:
     missing = [name for name, ok in required.items() if not ok]
     emit(
         "backend_separation_static_contract",
+        "ok" if not missing else "fail",
+        missing=missing,
+    )
+    return not missing
+
+
+def check_sota_summary_validation_filter_contract() -> bool:
+    final_text = (ROOT / "benchmarking" / "summarize_final_result.py").read_text()
+    pair_text = (ROOT / "benchmarking" / "summarize_non_sota_pairs.py").read_text()
+    required = {
+        "final_reads_correctness_validation": "correctness_validation.csv" in final_text
+        and "validation_status" in final_text
+        and "VALIDATED_SOTA_BASELINE_STATUSES" in final_text,
+        "final_excludes_non_eggpu_validation_failures": "validated_non_eggpu" in final_text
+        and "inconclusive_self_reference" in final_text
+        and "sampled_pass" in final_text,
+        "pair_reads_correctness_validation": "correctness_validation.csv" in pair_text
+        and "validation_status" in pair_text
+        and "VALIDATED_SOTA_BASELINE_STATUSES" in pair_text,
+        "pair_excludes_non_eggpu_validation_failures": "validated_non_eggpu" in pair_text
+        and "inconclusive_self_reference" in pair_text
+        and "sampled_pass" in pair_text,
+    }
+    missing = [name for name, ok in required.items() if not ok]
+    emit(
+        "sota_summary_validation_filter_contract",
         "ok" if not missing else "fail",
         missing=missing,
     )
@@ -1068,6 +1096,7 @@ def main() -> int:
         check_public_gpu_dispatch_strict_errors(),
         check_closeness_baseline_semantics_contract(),
         check_backend_separation_static_contract(),
+        check_sota_summary_validation_filter_contract(),
         check_audit_metadata_gate(),
         check_audit_validation_gate(),
         check_audit_validation_error_gate(),

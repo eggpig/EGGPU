@@ -46,10 +46,10 @@ static inline bool should_use_kcore_single_block(
     int len_E
 ) {
     if (!env_flag_enabled("EASYGRAPH_GPU_KCORE_SINGLE_BLOCK", true)) return false;
-    if (len_V > env_int_value("EASYGRAPH_GPU_KCORE_SINGLE_BLOCK_MAX_NODES", 50000)) return false;
-    if (len_E > env_int_value("EASYGRAPH_GPU_KCORE_SINGLE_BLOCK_MAX_EDGE_SLOTS", 700000)) return false;
+    if (len_V > env_int_value("EASYGRAPH_GPU_KCORE_SINGLE_BLOCK_MAX_NODES", 100000)) return false;
+    if (len_E > env_int_value("EASYGRAPH_GPU_KCORE_SINGLE_BLOCK_MAX_EDGE_SLOTS", 1200000)) return false;
 
-    const int easy_node_cut = env_int_value("EASYGRAPH_GPU_KCORE_SINGLE_BLOCK_EASY_MAX_NODES", 20000);
+    const int easy_node_cut = env_int_value("EASYGRAPH_GPU_KCORE_SINGLE_BLOCK_EASY_MAX_NODES", 100000);
     if (len_V <= easy_node_cut) return true;
     if (!stats.ready) return false;
 

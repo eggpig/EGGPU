@@ -329,6 +329,9 @@ static py::object invoke_gpu_closeness_centrality(py::object G, py::object weigh
     std::vector<int>& V = csr_graph->V;
     std::vector<double> *W_p = weight.is_none() ? &(csr_graph->unweighted_W)
                                 : csr_graph->W_map.find(weight_to_string(weight))->second.get();
+    if (weight.is_none() && W_p->size() != E.size()) {
+        W_p->assign(E.size(), 1.0);
+    }
     auto sources = G_.gen_CSR_sources(py_sources);
     std::vector<double> CC;
     double kernel_seconds = 0.0;

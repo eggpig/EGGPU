@@ -9,6 +9,13 @@ from pathlib import Path
 import pandas as pd
 
 
+VALIDATED_SOTA_BASELINE_STATUSES = {"pass", "weak_pass", "reference"}
+EGGPU_TIMING_ALLOWED_STATUSES = VALIDATED_SOTA_BASELINE_STATUSES | {
+    "inconclusive_self_reference",
+    "sampled_pass",
+}
+
+
 def load_rows(input_path: Path) -> pd.DataFrame:
     if input_path.is_dir():
         candidate = input_path / "category_estimate_details.csv"
@@ -24,6 +31,31 @@ def load_rows(input_path: Path) -> pd.DataFrame:
                 raise SystemExit(f"no result CSV found under {input_path}")
             return pd.concat(frames, ignore_index=True)
     return pd.read_csv(input_path)
+
+
+def load_validation(input_path: Path) -> pd.DataFrame | None:
+    if not input_path.is_dir():
+        return None
+    validation_path = input_path / "correctness_validation.csv"
+    if not validation_path.exists():
+        return None
+    validation = pd.read_csv(validation_path)
+    required = {"dataset", "function", "baseline", "validation_status"}
+    if not required.issubset(validation.columns):
+        return None
+    return validation[["dataset", "function", "baseline", "validation_status"]].copy()
+
+
+def apply_validation_filter(df: pd.DataFrame, validation: pd.DataFrame | None) -> pd.DataFrame:
+    if validation is None or df.empty:
+        return df
+    merged = df.merge(validation, on=["dataset", "function", "baseline"], how="left")
+    ok = merged["status"] == "ok"
+    eggpu = merged["baseline"] == "EGGPU"
+    validated_non_eggpu = merged["validation_status"].isin(VALIDATED_SOTA_BASELINE_STATUSES)
+    validated_eggpu = merged["validation_status"].isin(EGGPU_TIMING_ALLOWED_STATUSES)
+    keep = (~ok) | (eggpu & validated_eggpu) | ((~eggpu) & validated_non_eggpu)
+    return merged[keep].drop(columns=["validation_status"]).copy()
 
 
 def summarize(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -171,7 +203,7 @@ def main() -> int:
     out_dir = args.out_dir or (input_path if input_path.is_dir() else input_path.parent)
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    df = load_rows(input_path)
+    df = apply_validation_filter(load_rows(input_path), load_validation(input_path))
     details, summary = summarize(df)
     details.to_csv(out_dir / "eggpu_pair_sota_details.csv", index=False)
     summary.to_csv(out_dir / "eggpu_pair_sota_summary.csv", index=False)

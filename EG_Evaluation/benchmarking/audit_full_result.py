@@ -51,7 +51,7 @@ EXPECTED_BASELINES = [
 ]
 
 PASSLIKE = {"pass", "weak_pass", "reference"}
-EGGPU_PASSLIKE = {"pass"}
+EGGPU_PASSLIKE = {"pass", "sampled_pass"}
 HARD_RUNTIME_BAD = {"failed", "timeout"}
 
 
@@ -118,7 +118,7 @@ def audit_memory_rows(long_rows):
     """Flag memory rows whose whole-device value is likely externally polluted.
 
     `memory_peak_gpu_mb` is intentionally a whole-device NVML reading, so it can
-    include unrelated processes.  The paper-facing comparable metric is
+    include unrelated processes.  The comparable benchmark metric is
     `memory_peak_gpu_proc_mb` when NVML can attribute memory to the benchmark
     process tree.  These rows are warnings, not gate blockers.
     """

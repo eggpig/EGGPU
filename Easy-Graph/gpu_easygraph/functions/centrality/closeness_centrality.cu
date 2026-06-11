@@ -305,6 +305,10 @@ int cuda_closeness_centrality (
     int rc = EG_GPU_SUCC;
     int* d_sources = nullptr;
     double* d_CC = nullptr;
+    // The dedicated unweighted BFS closeness kernel is kept experimental: the
+    // stable production path uses the weighted Dijkstra kernel with unit weights.
+    const bool use_bfs_kernel = false;
+    const bool needs_weights = !use_bfs_kernel;
 
     cudaOccupancyMaxPotentialBlockSize(&min_edge_grid_size, &min_edge_block_size, d_calc_min_edge, 0, 0); 
     cudaOccupancyMaxPotentialBlockSize(&dijkstra_grid_size, &dijkstra_block_size, d_dijkstra_cc, 0, 0); 
@@ -320,7 +324,7 @@ int cuda_closeness_centrality (
         bfs_grid_size = len_sources;
     }
 
-    rc = acquire_device_csr(V, E, W, len_V, len_E, !unweighted, &graph_view);
+    rc = acquire_device_csr(V, E, W, len_V, len_E, needs_weights, &graph_view);
     if (rc != EG_GPU_SUCC) {
         EG_ret = rc;
         goto exit;
@@ -340,7 +344,7 @@ int cuda_closeness_centrality (
     d_CC = g_closeness_ws.d_CC.as<double>();
     EXIT_IF_CUDA_FAILED(cudaMemcpy(d_sources, sources, sizeof(int) * len_sources, cudaMemcpyHostToDevice));
 
-    if (unweighted) {
+    if (use_bfs_kernel) {
         rc = g_closeness_ws.d_bfs_dist_2D.ensure_bytes(sizeof(int) * bfs_grid_size * len_V);
         if (rc != EG_GPU_SUCC) {
             EG_ret = rc;
@@ -385,7 +389,7 @@ int cuda_closeness_centrality (
         EXIT_IF_CUDA_FAILED(cudaEventRecord(runtime.start_event));
     }
 
-    if (unweighted) {
+    if (use_bfs_kernel) {
         d_bfs_cc<<<bfs_grid_size, bfs_block_size>>>(
             graph_view.d_V, graph_view.d_E, d_sources,
             g_closeness_ws.d_bfs_dist_2D.as<int>(),
