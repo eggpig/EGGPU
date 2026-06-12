@@ -24,6 +24,25 @@ def run(cmd):
     return proc.returncode, output
 
 
+def detect_cuda_architectures():
+    rc, output = run(
+        [
+            "nvidia-smi",
+            "--query-gpu=compute_cap",
+            "--format=csv,noheader,nounits",
+        ]
+    )
+    if rc is None or rc != 0:
+        return None
+    archs = []
+    for raw in output.splitlines():
+        cap = raw.strip().replace(" ", "")
+        digits = cap.replace(".", "")
+        if digits.isdigit() and digits not in archs:
+            archs.append(digits)
+    return ";".join(archs) if archs else None
+
+
 def env_cuda_root():
     for name in ("EGGPU_CUDA_ROOT", "CUDA_PATH", "CUDA_HOME", "CUDAToolkit_ROOT", "CONDA_PREFIX"):
         value = os.environ.get(name)
@@ -98,6 +117,19 @@ def main():
         print(output)
     else:
         print(output)
+    detected_archs = detect_cuda_architectures()
+    configured_archs = os.environ.get("EGGPU_CUDA_ARCHITECTURES") or os.environ.get(
+        "CMAKE_CUDA_ARCHITECTURES"
+    )
+    print_kv("auto CUDA architectures", detected_archs or "unavailable")
+    print_kv("configured CUDA architectures", configured_archs or "AUTO")
+    if configured_archs and configured_archs.strip().upper() != "AUTO" and detected_archs:
+        configured_set = {item.strip() for item in configured_archs.split(";") if item.strip()}
+        detected_set = {item.strip() for item in detected_archs.split(";") if item.strip()}
+        if detected_set and configured_set and not (detected_set & configured_set):
+            warnings.append(
+                "Configured EGGPU_CUDA_ARCHITECTURES does not include the detected GPU architecture."
+            )
 
     print("\n== EasyGraph/EGGPU ==")
     for module in ("easygraph", "cpp_easygraph"):

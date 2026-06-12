@@ -55,6 +55,33 @@ def _find_libgomp(cuda_root):
     return None
 
 
+def _detect_cuda_architectures():
+    try:
+        proc = subprocess.run(
+            [
+                "nvidia-smi",
+                "--query-gpu=compute_cap",
+                "--format=csv,noheader,nounits",
+            ],
+            check=False,
+            text=True,
+            capture_output=True,
+        )
+    except FileNotFoundError:
+        return None
+    if proc.returncode != 0:
+        return None
+    archs = []
+    for raw in proc.stdout.splitlines():
+        cap = raw.strip().replace(" ", "")
+        if not cap:
+            continue
+        digits = cap.replace(".", "")
+        if digits.isdigit() and digits not in archs:
+            archs.append(digits)
+    return ";".join(archs) if archs else None
+
+
 def _gpu_cmake_args():
     cuda_root = _first_env_path(
         ("EGGPU_CUDA_ROOT", "CUDA_PATH", "CUDA_HOME", "CUDAToolkit_ROOT", "CONDA_PREFIX")
@@ -68,6 +95,8 @@ def _gpu_cmake_args():
     arch = os.environ.get("EGGPU_CUDA_ARCHITECTURES") or os.environ.get(
         "CMAKE_CUDA_ARCHITECTURES"
     )
+    if not arch or arch.strip().upper() == "AUTO":
+        arch = _detect_cuda_architectures()
     if arch:
         args.append(f"-DCMAKE_CUDA_ARCHITECTURES={arch}")
     libgomp = _find_libgomp(cuda_root)

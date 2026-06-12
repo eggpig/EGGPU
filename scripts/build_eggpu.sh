@@ -127,15 +127,57 @@ elif [[ -d "${BUILD_ROOT}" ]]; then
   done < <(find "${BUILD_ROOT}" -name CMakeCache.txt -print)
 fi
 
+detect_cuda_architectures() {
+  local requested="${EGGPU_CUDA_ARCHITECTURES:-${CMAKE_CUDA_ARCHITECTURES:-AUTO}}"
+  if [[ -n "${requested}" && ! "${requested}" =~ ^([Aa][Uu][Tt][Oo])$ ]]; then
+    printf '%s' "${requested}"
+    return 0
+  fi
+
+  local detected=""
+  if command -v nvidia-smi >/dev/null 2>&1; then
+    detected="$(
+      nvidia-smi --query-gpu=compute_cap --format=csv,noheader,nounits 2>/dev/null \
+        | "${PYTHON_BIN}" -c '
+import sys
+
+seen = []
+for raw in sys.stdin:
+    cap = raw.strip().replace(" ", "")
+    if not cap:
+        continue
+    digits = cap.replace(".", "")
+    if digits.isdigit() and digits not in seen:
+        seen.append(digits)
+print(";".join(seen))
+'
+    )"
+  fi
+
+  if [[ -z "${detected}" ]]; then
+    echo "Could not auto-detect CUDA architecture with nvidia-smi; defaulting to sm_80. Set EGGPU_CUDA_ARCHITECTURES explicitly for other GPUs." >&2
+    detected="80"
+  fi
+  printf '%s' "${detected}"
+}
+
+CUDA_ARCHITECTURES="$(detect_cuda_architectures)"
+echo "Using CMAKE_CUDA_ARCHITECTURES=${CUDA_ARCHITECTURES}"
+
 CMAKE_ARG_LIST=(
   "-DCUDAToolkit_ROOT=${CUDA_ROOT}"
   "-DCMAKE_CUDA_COMPILER=${CUDA_ROOT}/bin/nvcc"
-  "-DCMAKE_CUDA_ARCHITECTURES=${EGGPU_CUDA_ARCHITECTURES:-80}"
+  "-DCMAKE_CUDA_ARCHITECTURES=${CUDA_ARCHITECTURES}"
 )
 if [[ -n "${OPENMP_GOMP_LIBRARY}" ]]; then
   CMAKE_ARG_LIST+=("-DOpenMP_gomp_LIBRARY=${OPENMP_GOMP_LIBRARY}")
 fi
 CMAKE_ARGS_JOINED="${CMAKE_ARG_LIST[*]}"
+
+if [[ "${EGGPU_BUILD_DRY_RUN:-0}" =~ ^(1|true|TRUE|yes|YES|on|ON)$ ]]; then
+  printf 'CMAKE_ARGS=%s\n' "${CMAKE_ARGS_JOINED}"
+  exit 0
+fi
 
 cd "${ROOT}/Easy-Graph"
 env -u CFLAGS -u CPPFLAGS -u CXXFLAGS \

@@ -49,11 +49,23 @@ export CUDAToolkit_ROOT="$EGGPU_CUDA_ROOT"
 Build in place:
 
 ```bash
-EGGPU_CUDA_ARCHITECTURES=80 bash scripts/build_eggpu.sh
+bash scripts/build_eggpu.sh
 ```
 
-Use the matching compute capability for other GPUs, for example
-`EGGPU_CUDA_ARCHITECTURES=89` for RTX 4090.
+The build wrapper auto-detects the visible GPU compute capability with
+`nvidia-smi` and passes it to CMake.  For example, it selects `80` on A100,
+`86` on RTX 3080 Ti, and `89` on RTX 4090.  To force a specific target, set
+`EGGPU_CUDA_ARCHITECTURES` explicitly:
+
+```bash
+EGGPU_CUDA_ARCHITECTURES=86 bash scripts/build_eggpu.sh
+```
+
+For a quick check without compiling:
+
+```bash
+EGGPU_BUILD_DRY_RUN=1 bash scripts/build_eggpu.sh
+```
 
 The package name remains `Python-EasyGraph`.  A direct source install also
 works:
@@ -61,7 +73,6 @@ works:
 ```bash
 EASYGRAPH_ENABLE_GPU=TRUE \
 EGGPU_CUDA_ROOT="$CONDA_PREFIX" \
-EGGPU_CUDA_ARCHITECTURES=80 \
 pip install -v ./Easy-Graph
 ```
 

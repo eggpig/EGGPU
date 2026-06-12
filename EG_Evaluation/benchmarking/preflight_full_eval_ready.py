@@ -351,6 +351,8 @@ def check_build_script() -> bool:
         "safe_build_root": "Refusing to clean unexpected build path",
         "openmp_gomp_pin": "OpenMP_gomp_LIBRARY",
         "cuda_architecture_pin": "CMAKE_CUDA_ARCHITECTURES",
+        "cuda_architecture_auto_detect": "detect_cuda_architectures",
+        "cuda_architecture_dry_run": "EGGPU_BUILD_DRY_RUN",
         "sanitize_compile_env": "-u CFLAGS -u CPPFLAGS -u CXXFLAGS",
     }
     missing = [name for name, needle in required.items() if needle not in text]
