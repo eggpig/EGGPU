@@ -1,67 +1,73 @@
 # EG_Evaluation
 
-This directory contains public evaluation helpers for EGGPU: benchmark runners,
-correctness checks, ablation scripts, environment files, and dataset manifests.
+This directory contains the reproducible benchmark, audit, ablation, dataset,
+and reporting workflow for EGGPU.
 
-The current benchmark runner covers:
+Current benchmark scope:
 
 ```text
 PageRank, MST, LCC, WCC, SCC, BFS, Dijkstra, BellmanFord, SSSP,
 KCore, BC, Closeness, EffectiveSize, Efficiency, Constraint, Hierarchy
 ```
 
-## Entry Point
-
-From the repository root:
+Primary entry point:
 
 ```bash
-cd EG_Evaluation
-MAIN_GPU=0 ABL_GPU=0 RUN_PARALLEL=0 bash run_main_and_ablation.sh
+bash run_main_and_ablation.sh
 ```
 
-The workflow runs preflight checks, the main benchmark, correctness/backend
-audits, summary generation, optional large-graph Closeness supplement, and
-ablation scripts.  Use an idle GPU for comparable timing.
+The official workflow runs preflight first, then the full baseline benchmark,
+full-result audit, backend-separation audit, pair-level SOTA summaries, the
+large-graph Closeness supplement, final summary generation, and ablations.  Use
+an idle GPU and keep
+`EGGPU_ALLOW_BUSY_GPU`, `RUN_PREFLIGHT=FALSE`, and `EGGPU_USE_CONDA_RUN=TRUE`
+for debug-only runs.
 
-Useful environment variables:
+Current official defaults include EGGPU warmup of two calls, baseline warmup of
+zero, `EGGPU_GPU_VISIBILITY_MARKER=FALSE`,
+`EGGPU_GPU_VISIBILITY_MARKER_MB=0`,
+`EGGPU_CLOSENESS_EXACT_MAX_NODES=1000000`,
+`EGGPU_CLOSENESS_EXACT_MAX_WORK=50000000000`,
+`RUN_CLOSENESS_LARGE_SUPPLEMENT=TRUE`,
+`CLOSENESS_LARGE_SOURCES=16`,
+`CLOSENESS_LARGE_TIMEOUT=1800`,
+`EASYGRAPH_GPU_KCORE_SINGLE_BLOCK_THREADS=1024`,
+`EASYGRAPH_GPU_KCORE_SINGLE_BLOCK_MIN_MAX_DEGREE=AUTO`, and
+`EASYGRAPH_GPU_BC_WARP_SIZE=AUTO`.  Unweighted `BC` and unweighted
+`Closeness` use BFS-based CUDA paths by default; set
+`EASYGRAPH_GPU_BC_UNWEIGHTED_BFS=FALSE` or
+`EASYGRAPH_GPU_CLOSENESS_UNWEIGHTED_BFS=FALSE` only for regression A/B runs.
+KCore's default single-block gate is
+graph-aware and does not select the single-block path from high maximum degree
+alone.  Exact all-node Closeness remains the main 270-pair semantic; datasets
+skipped by the symmetric exact node/work scale guard are filled by an
+automatically generated `sampled_target_exact` supplement and merged matrix
+with explicit `semantic`, `skip_reason`, `source_policy`, and
+`source_nodes_sha` columns.  Supplement rows are exact only for the
+deterministic sampled target vertices and must not be counted as all-node exact
+Closeness.  The final summary reports `full`, `nodes>=10000`,
+`gpu-friendly`, and reproducible filtered SOTA views, with a documented
+`0.05%` timing-tie tolerance and near-miss diagnostics for targeted reruns.
 
-- `MAIN_GPU`: GPU index for the main benchmark.
-- `ABL_GPU`: GPU index for ablations.
-- `RUN_PARALLEL`: set to `1` only when `MAIN_GPU` and `ABL_GPU` are different
-  idle GPUs.
-- `RUN_PREFLIGHT`: set to `FALSE` only for local debugging.
-- `LIBRARY_TIMEOUT`: per baseline/function timeout for the main benchmark.
-- `ABLATION_TIMEOUT`: per run timeout for ablations.
-- `EGGPU_GPU_VISIBILITY_MARKER`: optional fixed allocation marker for shared
-  servers; default is `FALSE`.
+For shared-server reservation visibility, you may set
+`EGGPU_GPU_VISIBILITY_MARKER=TRUE` and
+`EGGPU_GPU_VISIBILITY_MARKER_MB=<N>` to make the long-lived runner visible in
+`nvidia-smi`/`nvtop` with a fixed allocation.  If enabled and no marker size is
+provided, the runner uses `256` MiB.  The default
+`EGGPU_GPU_VISIBILITY_MARKER_ADJUST_MB=AUTO` measures the whole-device increment
+created by the marker process, including CUDA context overhead, records it in
+`run_metadata.json`, and subtracts it only from whole-device absolute memory
+metrics; process-tree and delta memory metrics remain unadjusted.
 
-The runner writes logs and generated outputs under `benchmarking/results/`.
-These outputs are intentionally ignored by Git.
+Public reference files:
 
-## Environment
+- `datasets/DATASETS.md` and `datasets/MANIFEST_20260609.tsv`: processed
+  dataset policy, sizes, checksums, and source hints.
+- `environment_eggpu_cuda128.yml`: conda environment specification.
+- `benchmarking/*.py`: benchmark runners, correctness validation, audit, and
+  summary generation scripts.
 
-Use the provided conda environment file:
-
-```bash
-conda env create -f environment_eggpu_cuda128.yml
-conda activate EGGPU
-```
-
-Before a full run on a new machine, check the environment:
-
-```bash
-python ../scripts/check_eggpu_compat.py --strict --expect-rapids
-```
-
-## Datasets
-
-Processed dataset paths, sizes, checksums, and source hints are recorded in
-`datasets/MANIFEST_20260609.tsv`.  See `datasets/DATASETS.md` for the dataset
-policy.
-
-## Timing Definitions
-
-- `build`: graph object construction, excluding raw file parse/import.
-- `e2e`: user function wall time, including per-call conversion, transfer,
-  synchronization, and result wrapping.
-- `kernel`: CUDA event time for EGGPU; algorithm wall time for CPU baselines.
+Generated result directories under `benchmarking/results/` are intentionally
+not versioned.  A paper-quality result must include `run_metadata.json`,
+correctness validation, backend-separation evidence, and final summaries from a
+clean idle-GPU run.

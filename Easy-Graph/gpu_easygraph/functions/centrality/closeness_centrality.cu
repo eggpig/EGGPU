@@ -1,6 +1,7 @@
 #include <cuda.h>
 #include <cuda_runtime.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "buffer_cache.h"
 #include "common.h"
@@ -30,6 +31,32 @@ struct ClosenessWorkspace {
 };
 
 static thread_local ClosenessWorkspace g_closeness_ws;
+
+static bool env_truthy(const char* value)
+{
+    if (value == nullptr) return false;
+    return strcmp(value, "1") == 0 ||
+           strcmp(value, "TRUE") == 0 ||
+           strcmp(value, "true") == 0 ||
+           strcmp(value, "ON") == 0 ||
+           strcmp(value, "on") == 0 ||
+           strcmp(value, "YES") == 0 ||
+           strcmp(value, "yes") == 0 ||
+           strcmp(value, "AUTO") == 0 ||
+           strcmp(value, "auto") == 0;
+}
+
+static bool env_falsey(const char* value)
+{
+    if (value == nullptr) return false;
+    return strcmp(value, "0") == 0 ||
+           strcmp(value, "FALSE") == 0 ||
+           strcmp(value, "false") == 0 ||
+           strcmp(value, "OFF") == 0 ||
+           strcmp(value, "off") == 0 ||
+           strcmp(value, "NO") == 0 ||
+           strcmp(value, "no") == 0;
+}
 
 static __device__ double atomicAddDouble (
     _OUT_ double* address, 
@@ -305,9 +332,9 @@ int cuda_closeness_centrality (
     int rc = EG_GPU_SUCC;
     int* d_sources = nullptr;
     double* d_CC = nullptr;
-    // The dedicated unweighted BFS closeness kernel is kept experimental: the
-    // stable production path uses the weighted Dijkstra kernel with unit weights.
-    const bool use_bfs_kernel = false;
+    const char* bfs_env = getenv("EASYGRAPH_GPU_CLOSENESS_UNWEIGHTED_BFS");
+    const bool use_bfs_kernel =
+        unweighted && (bfs_env == nullptr || env_truthy(bfs_env)) && !env_falsey(bfs_env);
     const bool needs_weights = !use_bfs_kernel;
 
     cudaOccupancyMaxPotentialBlockSize(&min_edge_grid_size, &min_edge_block_size, d_calc_min_edge, 0, 0); 

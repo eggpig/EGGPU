@@ -29,15 +29,19 @@ BACKEND_SEPARATION_AUDIT = ROOT / "benchmarking" / "audit_backend_separation.py"
 STRUCTURAL_PREFLIGHT = ROOT / "benchmarking" / "preflight_structural_scanv.py"
 CLOSENESS_PREFLIGHT = ROOT / "benchmarking" / "preflight_closeness_semantics.py"
 CLOSENESS_CUDA = EASYGRAPH_REPO / "gpu_easygraph" / "functions" / "centrality" / "closeness_centrality.cu"
+BC_CUDA = EASYGRAPH_REPO / "gpu_easygraph" / "functions" / "centrality" / "betweenness_centrality.cu"
 
 COMPILED_SOURCE_FILES = (
     EASYGRAPH_REPO / "cpp_easygraph" / "cpp_easygraph.cpp",
     EASYGRAPH_REPO / "cpp_easygraph" / "functions" / "centrality" / "closeness.cpp",
+    EASYGRAPH_REPO / "cpp_easygraph" / "functions" / "centrality" / "betweenness.cpp",
     EASYGRAPH_REPO / "cpp_easygraph" / "functions" / "centrality" / "centrality.h",
     EASYGRAPH_REPO / "gpu_easygraph" / "gpu_easygraph.h",
     EASYGRAPH_REPO / "gpu_easygraph" / "functions" / "centrality" / "centrality.cpp",
     EASYGRAPH_REPO / "gpu_easygraph" / "functions" / "centrality" / "closeness_centrality.cu",
     EASYGRAPH_REPO / "gpu_easygraph" / "functions" / "centrality" / "closeness_centrality.cuh",
+    EASYGRAPH_REPO / "gpu_easygraph" / "functions" / "centrality" / "betweenness_centrality.cu",
+    EASYGRAPH_REPO / "gpu_easygraph" / "functions" / "centrality" / "betweenness_centrality.cuh",
 )
 
 EXPECTED_FUNCTIONS = (
@@ -361,9 +365,11 @@ def check_closeness_cuda_launch_contract() -> bool:
         "wrapper_output_matches_source_count": "CC = vector<double>(sources.size())" in centrality_text,
         "wrapper_passes_unweighted_flag": "unweighted, CC.data(), kernel_seconds" in centrality_text,
         "cuda_uses_device_csr_cache": "acquire_device_csr(V, E, W, len_V, len_E, needs_weights" in text,
-        "cuda_disables_experimental_bfs_path": "const bool use_bfs_kernel = false" in text
+        "cuda_unweighted_bfs_default_with_regression_switch": "EASYGRAPH_GPU_CLOSENESS_UNWEIGHTED_BFS" in text
+        and "bfs_env == nullptr || env_truthy(bfs_env)" in text
+        and "!env_falsey(bfs_env)" in text
         and "const bool needs_weights = !use_bfs_kernel" in text,
-        "cuda_keeps_bfs_path_guarded": "d_bfs_cc" in text
+        "cuda_keeps_bfs_path_explicit": "d_bfs_cc" in text
         and "if (use_bfs_kernel)" in text,
         "dijkstra_grid_capped_by_sources": "dijkstra_grid_size > len_sources" in text
         and "dijkstra_grid_size = len_sources" in text,
@@ -503,6 +509,31 @@ def check_closeness_baseline_semantics_contract() -> bool:
     missing = [name for name, ok in required.items() if not ok]
     emit(
         "closeness_baseline_semantics_contract",
+        "ok" if not missing else "fail",
+        missing=missing,
+    )
+    return not missing
+
+
+def check_unweighted_centrality_bfs_contract() -> bool:
+    bc_text = BC_CUDA.read_text()
+    centrality_text = (EASYGRAPH_REPO / "gpu_easygraph" / "functions" / "centrality" / "centrality.cpp").read_text()
+    pybind_text = (EASYGRAPH_REPO / "cpp_easygraph" / "functions" / "centrality" / "betweenness.cpp").read_text()
+    lib_text = (ROOT / "benchmarking" / "library_baselines.py").read_text()
+    required = {
+        "bc_has_bfs_brandes_kernel": "d_bfs_bc" in bc_text
+        and "EASYGRAPH_GPU_BC_UNWEIGHTED_BFS" in bc_text,
+        "bc_default_bfs_has_regression_switch": "bfs_env == nullptr || env_truthy(bfs_env)" in bc_text
+        and "!env_falsey(bfs_env)" in bc_text,
+        "bc_wrapper_passes_unweighted_flag": "bool unweighted" in centrality_text
+        and "endpoints, unweighted" in centrality_text,
+        "bc_pybind_uses_weight_none": "weight.is_none(), BC, &kernel_seconds" in pybind_text,
+        "runner_notes_unweighted_bfs": "unweighted GPU path uses BFS-Brandes kernel" in lib_text
+        and "unweighted GPU path uses BFS kernel" in lib_text,
+    }
+    missing = [name for name, ok in required.items() if not ok]
+    emit(
+        "unweighted_centrality_bfs_contract",
         "ok" if not missing else "fail",
         missing=missing,
     )
@@ -1093,6 +1124,7 @@ def main() -> int:
         check_gpu_routing_contract(),
         check_build_script(),
         check_closeness_cuda_launch_contract(),
+        check_unweighted_centrality_bfs_contract(),
         check_public_gpu_dispatch_strict_errors(),
         check_closeness_baseline_semantics_contract(),
         check_backend_separation_static_contract(),

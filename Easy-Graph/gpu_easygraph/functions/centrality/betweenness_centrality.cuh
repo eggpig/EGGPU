@@ -58,6 +58,7 @@ int cuda_betweenness_centrality (
     _IN_ int is_directed,
     _IN_ int normalized,
     _IN_ int endpoints,
+    _IN_ bool unweighted,
     _OUT_ double* BC,
     _OUT_ double* kernel_seconds = nullptr
 );

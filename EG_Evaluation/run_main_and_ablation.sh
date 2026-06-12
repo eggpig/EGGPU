@@ -14,6 +14,7 @@ RUN_PREFLIGHT="${RUN_PREFLIGHT:-TRUE}"
 RUN_CLOSENESS_LARGE_SUPPLEMENT="${RUN_CLOSENESS_LARGE_SUPPLEMENT:-TRUE}"
 CLOSENESS_LARGE_SOURCES="${CLOSENESS_LARGE_SOURCES:-16}"
 CLOSENESS_LARGE_TIMEOUT="${CLOSENESS_LARGE_TIMEOUT:-1800}"
+EGGPU_CLOSENESS_EXACT_MAX_WORK="${EGGPU_CLOSENESS_EXACT_MAX_WORK:-50000000000}"
 EGGPU_GPU_VISIBILITY_MARKER="${EGGPU_GPU_VISIBILITY_MARKER:-FALSE}"
 # Default comparable runs keep the marker off.  When explicitly enabled, the
 # long-lived runner reserves a small visible allocation and auto-measures the
@@ -204,6 +205,7 @@ run_preflight() {
       EASYGRAPH_GPU_BC_WARP_SIZE="${EASYGRAPH_GPU_BC_WARP_SIZE:-AUTO}" \
       EASYGRAPH_GPU_CONSTRAINT_SMALLER_INTERSECTION=AUTO \
       EGGPU_CLOSENESS_EXACT_MAX_NODES="${EGGPU_CLOSENESS_EXACT_MAX_NODES:-1000000}" \
+      EGGPU_CLOSENESS_EXACT_MAX_WORK="${EGGPU_CLOSENESS_EXACT_MAX_WORK}" \
       PYTHONPATH="${EG_REPO}:${PYTHONPATH:-}" \
       LD_LIBRARY_PATH="${LD_PATH}" \
       "${COMMON_PY}" benchmarking/preflight_full_eval_ready.py
@@ -275,6 +277,7 @@ run_main_eval() {
       EASYGRAPH_GPU_BC_WARP_SIZE="${EASYGRAPH_GPU_BC_WARP_SIZE:-AUTO}" \
       EASYGRAPH_GPU_CONSTRAINT_SMALLER_INTERSECTION=AUTO \
       EGGPU_CLOSENESS_EXACT_MAX_NODES="${EGGPU_CLOSENESS_EXACT_MAX_NODES:-1000000}" \
+      EGGPU_CLOSENESS_EXACT_MAX_WORK="${EGGPU_CLOSENESS_EXACT_MAX_WORK}" \
       PYTHONPATH="${EG_REPO}:${PYTHONPATH:-}" \
       LD_LIBRARY_PATH="${LD_PATH}" \
       "${COMMON_PY}" benchmarking/run_full_baselines.py \
@@ -336,6 +339,7 @@ run_ablation_one() {
       EASYGRAPH_GPU_BC_WARP_SIZE="${EASYGRAPH_GPU_BC_WARP_SIZE:-AUTO}" \
       EASYGRAPH_GPU_CONSTRAINT_SMALLER_INTERSECTION=AUTO \
       EGGPU_CLOSENESS_EXACT_MAX_NODES="${EGGPU_CLOSENESS_EXACT_MAX_NODES:-1000000}" \
+      EGGPU_CLOSENESS_EXACT_MAX_WORK="${EGGPU_CLOSENESS_EXACT_MAX_WORK}" \
       PYTHONPATH="${EG_REPO}:${PYTHONPATH:-}" \
       LD_LIBRARY_PATH="${LD_PATH}" \
       "${COMMON_PY}" benchmarking/run_eggpu_ablations.py \
@@ -538,11 +542,11 @@ run_main_audits() {
 }
 
 MAIN_RC=0
-AUDIT_RC=0
-BACKEND_AUDIT_RC=0
-NON_SOTA_RC=0
-FINAL_SUMMARY_RC=0
-CLOSENESS_LARGE_RC=0
+AUDIT_RC=NOT_RUN
+BACKEND_AUDIT_RC=NOT_RUN
+NON_SOTA_RC=NOT_RUN
+FINAL_SUMMARY_RC=NOT_RUN
+CLOSENESS_LARGE_RC=NOT_RUN
 ABL_RC=0
 AUDIT_GROUP_RC=0
 PREFLIGHT_RC=0
@@ -603,7 +607,11 @@ if parallel_enabled; then
   echo "Final result summary exit code: ${FINAL_SUMMARY_RC}"
   echo "Ablation exit code: ${ABL_RC}"
   echo "Main result: ${MAIN_OUT}"
-  echo "Closeness supplement result: ${MAIN_OUT}/closeness_large_sampled"
+  if [[ "${CLOSENESS_LARGE_RC}" == "NOT_RUN" ]]; then
+    echo "Closeness supplement result: NOT_RUN"
+  else
+    echo "Closeness supplement result: ${MAIN_OUT}/closeness_large_sampled"
+  fi
   echo "Ablation result: ${ABL_OUT}"
 
   if [[ "${MAIN_RC}" -ne 0 || "${AUDIT_GROUP_RC}" -ne 0 || "${ABL_RC}" -ne 0 ]]; then
@@ -665,7 +673,11 @@ echo "Closeness large-graph supplement exit code: ${CLOSENESS_LARGE_RC}"
 echo "Final result summary exit code: ${FINAL_SUMMARY_RC}"
 echo "Ablation exit code: ${ABL_RC}"
 echo "Main result: ${MAIN_OUT}"
-echo "Closeness supplement result: ${MAIN_OUT}/closeness_large_sampled"
+if [[ "${CLOSENESS_LARGE_RC}" == "NOT_RUN" ]]; then
+  echo "Closeness supplement result: NOT_RUN"
+else
+  echo "Closeness supplement result: ${MAIN_OUT}/closeness_large_sampled"
+fi
 echo "Ablation result: ${ABL_OUT}"
 
 if [[ "${MAIN_RC}" -ne 0 || "${AUDIT_GROUP_RC}" -ne 0 || "${ABL_RC}" -ne 0 ]]; then

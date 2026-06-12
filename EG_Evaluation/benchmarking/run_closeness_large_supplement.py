@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import os
 import re
@@ -23,7 +24,9 @@ BASELINES = ["igraph", "networkx", "EGGPU", "easygraph-cpu", "easygraph-cpp", "n
 RUN_BASELINES = {"igraph", "networkx", "EGGPU", "easygraph-cpu", "easygraph-cpp"}
 METRICS = ("build", "e2e", "kernel")
 SEMANTIC = "sampled_target_exact"
+ESTIMATOR_KIND = "exact_selected_vertices"
 SOURCE_POLICY = "deterministic_evenly_spaced"
+SOURCE_SEED = "none"
 SOTA_TIE_TOL = 0.0005
 
 
@@ -46,21 +49,59 @@ def dataset_stats(main_result: Path) -> dict[str, dict[str, object]]:
     return {str(row["name"]): row for row in stats}
 
 
-def skipped_closeness_datasets(main_result: Path) -> list[str]:
-    out = []
+def pick_sources(n: int, k: int) -> list[int]:
+    if n <= 0:
+        return []
+    k = max(1, int(k))
+    if k >= n:
+        return list(range(n))
+    step = max(1, n // k)
+    out = list(range(0, n, step))[:k]
+    if len(out) < k:
+        tail = n - 1
+        while len(out) < k and tail >= 0:
+            if tail not in out:
+                out.append(tail)
+            tail -= 1
+    return out
+
+
+def source_nodes_sha(sources: list[int]) -> str:
+    payload = ",".join(str(int(x)) for x in sources).encode("ascii")
+    return hashlib.sha256(payload).hexdigest()[:16]
+
+
+def closeness_supplement_datasets(main_result: Path) -> list[dict[str, str]]:
+    by_dataset: dict[str, set[str]] = {}
     for row in read_csv(main_result / "results_long.csv"):
-        if (
-            row.get("function") == "Closeness"
-            and row.get("baseline") == "EGGPU"
-            and row.get("metric") == "e2e"
-            and row.get("status") == "skipped"
-            and "exact all-source Closeness skipped" in row.get("notes", "")
+        if row.get("function") != "Closeness" or row.get("baseline") != "EGGPU" or row.get("metric") != "e2e":
+            continue
+        status = row.get("status", "")
+        notes = row.get("notes", "")
+        skip_reason = row.get("skip_reason", "")
+        dataset = row.get("dataset", "")
+        if not dataset:
+            continue
+        if status == "skipped" and (
+            skip_reason == "exact_scale_guard" or "exact all-source Closeness skipped" in notes
         ):
-            out.append(row["dataset"])
-    return sorted(set(out))
+            by_dataset.setdefault(dataset, set()).add("exact_scale_guard")
+        elif status in {"timeout", "failed"}:
+            by_dataset.setdefault(dataset, set()).add(f"exact_{status}")
+    return [
+        {"dataset": dataset, "supplement_reason": "+".join(sorted(reasons))}
+        for dataset, reasons in sorted(by_dataset.items())
+    ]
 
 
-def add_unavailable(rows: list[dict[str, object]], stat: dict[str, object], baseline: str, log_path: Path) -> None:
+def add_unavailable(
+    rows: list[dict[str, object]],
+    stat: dict[str, object],
+    baseline: str,
+    log_path: Path,
+    sources: int,
+    supplement_reason: str,
+) -> None:
     note = "no aligned sampled-target exact Closeness backend in this benchmark"
     if baseline == "Gunrock":
         note = "no matching Gunrock executable for Closeness"
@@ -68,6 +109,8 @@ def add_unavailable(rows: list[dict[str, object]], stat: dict[str, object], base
         note = "nx-cugraph supported-algorithm list does not include closeness_centrality"
     log_path.parent.mkdir(parents=True, exist_ok=True)
     log_path.write_text(note + "\n")
+    source_list = pick_sources(int(stat.get("nodes_raw", 0) or 0), sources)
+    source_sha = source_nodes_sha(source_list)
     for metric in METRICS:
         rows.append(
             {
@@ -84,8 +127,15 @@ def add_unavailable(rows: list[dict[str, object]], stat: dict[str, object], base
                 "notes": note,
                 "is_timeout": "False",
                 "semantic": SEMANTIC,
-                "sample_sources": "",
+                "skip_reason": "",
+                "estimator_kind": ESTIMATOR_KIND,
+                "sample_sources": sources,
                 "source_policy": SOURCE_POLICY,
+                "source_seed": SOURCE_SEED,
+                "source_nodes_sha": source_sha,
+                "exact_matrix_inclusion": "False",
+                "is_supplement": "True",
+                "supplement_reason": supplement_reason,
             }
         )
 
@@ -113,6 +163,7 @@ def run_one(
     timeout: float,
     out_dir: Path,
     python: str,
+    supplement_reason: str,
 ) -> list[dict[str, object]]:
     ds_dir = out_dir / "logs" / str(stat["name"])
     details = ds_dir / "details"
@@ -121,7 +172,7 @@ def run_one(
 
     if baseline not in RUN_BASELINES:
         rows: list[dict[str, object]] = []
-        add_unavailable(rows, stat, baseline, log_path)
+        add_unavailable(rows, stat, baseline, log_path, sources, supplement_reason)
         return rows
 
     env = os.environ.copy()
@@ -185,10 +236,18 @@ def run_one(
         output = exc.stdout or ""
         rc = 124
     elapsed = time.time() - t0
+    source_list = pick_sources(int(stat.get("nodes_raw", 0) or 0), sources)
+    source_sha = source_nodes_sha(source_list)
     log_path.write_text(
         "COMMAND: " + " ".join(cmd) + "\n"
         f"RETURN_CODE: {rc}\n"
         f"ELAPSED_SECONDS: {elapsed:.6f}\n"
+        f"SEMANTIC: {SEMANTIC}\n"
+        f"ESTIMATOR_KIND: {ESTIMATOR_KIND}\n"
+        f"SOURCE_POLICY: {SOURCE_POLICY}\n"
+        f"SOURCE_SEED: {SOURCE_SEED}\n"
+        f"SOURCE_NODES_SHA: {source_sha}\n"
+        f"SUPPLEMENT_REASON: {supplement_reason}\n"
         + output
     )
 
@@ -213,8 +272,15 @@ def run_one(
                     "notes": note,
                     "is_timeout": str(timed_out),
                     "semantic": SEMANTIC,
+                    "skip_reason": "",
+                    "estimator_kind": ESTIMATOR_KIND,
                     "sample_sources": sources,
                     "source_policy": SOURCE_POLICY,
+                    "source_seed": SOURCE_SEED,
+                    "source_nodes_sha": source_sha,
+                    "exact_matrix_inclusion": "False",
+                    "is_supplement": "True",
+                    "supplement_reason": supplement_reason,
                 }
             )
         return rows
@@ -236,8 +302,15 @@ def run_one(
                 "notes": str(item.get("notes", "")),
                 "is_timeout": str(timed_out),
                 "semantic": SEMANTIC,
+                "skip_reason": "",
+                "estimator_kind": ESTIMATOR_KIND,
                 "sample_sources": sources if metric in METRICS else "",
                 "source_policy": SOURCE_POLICY,
+                "source_seed": SOURCE_SEED,
+                "source_nodes_sha": source_sha,
+                "exact_matrix_inclusion": "False",
+                "is_supplement": "True",
+                "supplement_reason": supplement_reason,
             }
         )
     return rows
@@ -302,6 +375,11 @@ def validate(rows: list[dict[str, object]]) -> list[dict[str, object]]:
                     "max_abs": max_abs,
                     "max_rel": max_rel,
                     "semantic": SEMANTIC,
+                    "estimator_kind": str(row.get("estimator_kind", ESTIMATOR_KIND)),
+                    "sample_sources": str(row.get("sample_sources", "")),
+                    "source_policy": str(row.get("source_policy", SOURCE_POLICY)),
+                    "source_seed": str(row.get("source_seed", SOURCE_SEED)),
+                    "source_nodes_sha": str(row.get("source_nodes_sha", "")),
                 }
             )
     return out
@@ -350,8 +428,10 @@ def write_markdown(out_dir: Path, rows: list[dict[str, object]], validation: lis
         "# Large-Graph Closeness Supplement",
         "",
         f"- Semantic: `{SEMANTIC}`.",
-        f"- Source policy: `{SOURCE_POLICY}`, `sources={sources}`.",
-        "- This supplement does not replace exact all-node Closeness rows; it fills the large skipped datasets with an explicitly labeled sampled-target exact task.",
+        f"- Estimator kind: `{ESTIMATOR_KIND}`.",
+        f"- Source policy: `{SOURCE_POLICY}`, `sources={sources}`, `source_seed={SOURCE_SEED}`.",
+        "- This supplement does not replace exact all-node Closeness rows; it fills scale-guarded or exact-timeout datasets with an explicitly labeled sampled-target exact task.",
+        "- The sampled task computes exact Closeness only for the deterministic target/source vertices. It must not be described as all-node exact Closeness or as an ADS/HIP/HyperBall approximation.",
         f"- Timed ok rows: {len(ok_rows)}.",
         f"- Validation pass rows: {len(pass_rows)}/{len(validation)}.",
         "",
@@ -387,8 +467,15 @@ def merged_view(main_result: Path, supplement_rows: list[dict[str, object]]) -> 
     for row in main_rows:
         row = dict(row)
         row.setdefault("semantic", "exact_all_node")
+        row.setdefault("skip_reason", "")
         row.setdefault("sample_sources", "")
         row.setdefault("source_policy", "")
+        row.setdefault("source_seed", "")
+        row.setdefault("source_nodes_sha", "")
+        row.setdefault("estimator_kind", "")
+        row.setdefault("exact_matrix_inclusion", "True")
+        row.setdefault("is_supplement", "False")
+        row.setdefault("supplement_reason", "")
         out.append(row)
     out.extend(supplement_rows)
     return out
@@ -421,18 +508,27 @@ def main() -> int:
     out_dir.mkdir(parents=True, exist_ok=True)
 
     stats_by_name = dataset_stats(main_result)
-    datasets = args.datasets if args.datasets is not None else skipped_closeness_datasets(main_result)
+    if args.datasets is not None:
+        datasets = [{"dataset": name, "supplement_reason": "manual"} for name in args.datasets]
+    else:
+        datasets = closeness_supplement_datasets(main_result)
     if not datasets:
-        print("No skipped large Closeness datasets found.", flush=True)
+        print("No scale-guarded or exact-timeout Closeness datasets found.", flush=True)
         return 0
 
     all_rows: list[dict[str, object]] = []
-    for dataset in datasets:
+    for item in datasets:
+        dataset = item["dataset"]
+        supplement_reason = item["supplement_reason"]
         if dataset not in stats_by_name:
             raise SystemExit(f"Unknown dataset in dataset_stats.json: {dataset}")
         stat = stats_by_name[dataset]
         for baseline in BASELINES:
-            print(f"[closeness-large] dataset={dataset} baseline={baseline} sources={args.sources}", flush=True)
+            print(
+                f"[closeness-large] dataset={dataset} baseline={baseline} "
+                f"sources={args.sources} reason={supplement_reason}",
+                flush=True,
+            )
             rows = run_one(
                 repo=repo,
                 eval_dir=eval_dir,
@@ -443,6 +539,7 @@ def main() -> int:
                 timeout=float(args.timeout),
                 out_dir=out_dir,
                 python=args.python,
+                supplement_reason=supplement_reason,
             )
             all_rows.extend(rows)
 
@@ -460,8 +557,15 @@ def main() -> int:
         "notes",
         "is_timeout",
         "semantic",
+        "skip_reason",
+        "estimator_kind",
         "sample_sources",
         "source_policy",
+        "source_seed",
+        "source_nodes_sha",
+        "exact_matrix_inclusion",
+        "is_supplement",
+        "supplement_reason",
     ]
     write_csv(out_dir / "closeness_large_sampled_long.csv", all_rows, fields)
     write_csv(out_dir / "closeness_large_sampled_e2e.csv", [r for r in all_rows if r["metric"] == "e2e"], fields)
@@ -472,7 +576,21 @@ def main() -> int:
     write_csv(
         out_dir / "closeness_large_sampled_validation.csv",
         validation,
-        ["dataset", "function", "baseline", "reference", "validation_status", "max_abs", "max_rel", "semantic"],
+        [
+            "dataset",
+            "function",
+            "baseline",
+            "reference",
+            "validation_status",
+            "max_abs",
+            "max_rel",
+            "semantic",
+            "estimator_kind",
+            "sample_sources",
+            "source_policy",
+            "source_seed",
+            "source_nodes_sha",
+        ],
     )
     sota = summarize_sota(all_rows)
     write_csv(

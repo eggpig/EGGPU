@@ -1,6 +1,7 @@
 #include <cuda.h>
 #include <cuda_runtime.h>
 #include <stdlib.h>
+#include <string.h>
 #include <algorithm>
 
 #include "buffer_cache.h"
@@ -8,6 +9,32 @@
 #include "device_graph_cache.h"
 
 namespace gpu_easygraph {
+
+static bool env_truthy(const char* value)
+{
+    if (value == nullptr) return false;
+    return strcmp(value, "1") == 0 ||
+           strcmp(value, "TRUE") == 0 ||
+           strcmp(value, "true") == 0 ||
+           strcmp(value, "ON") == 0 ||
+           strcmp(value, "on") == 0 ||
+           strcmp(value, "YES") == 0 ||
+           strcmp(value, "yes") == 0 ||
+           strcmp(value, "AUTO") == 0 ||
+           strcmp(value, "auto") == 0;
+}
+
+static bool env_falsey(const char* value)
+{
+    if (value == nullptr) return false;
+    return strcmp(value, "0") == 0 ||
+           strcmp(value, "FALSE") == 0 ||
+           strcmp(value, "false") == 0 ||
+           strcmp(value, "OFF") == 0 ||
+           strcmp(value, "off") == 0 ||
+           strcmp(value, "NO") == 0 ||
+           strcmp(value, "no") == 0;
+}
 
 static inline int ensure_device_buffer(PersistentDeviceBuffer& buf, std::size_t bytes, int* eg_ret) {
     int rc = buf.ensure_bytes(bytes);
@@ -297,6 +324,169 @@ static __global__ void d_dijkstra_bc (
     }
 }
 
+static __global__ void d_bfs_bc (
+    _IN_ int* d_curr_node,
+    _IN_ int* d_V,
+    _IN_ int* d_E,
+    _IN_ int* d_sources,
+    _BUFFER_ double* d_sigma_2D,
+    _BUFFER_ double* d_delta_2D,
+    _BUFFER_ int* d_dist_2D,
+    _BUFFER_ int* d_st_2D,
+    _BUFFER_ int* d_st_idx_2D,
+    _IN_ int len_V,
+    _IN_ int len_sources,
+    _IN_ int warp_size,
+    _IN_ int endpoints,
+    _OUT_ double* d_BC
+)
+{
+    while (1) {
+        __shared__ int curr_node;
+        if (threadIdx.x == 0) {
+            curr_node = atomicAdd(d_curr_node, 1);
+        }
+        __syncthreads();
+
+        if (curr_node >= len_sources) {
+            break;
+        }
+
+        int s = d_sources[curr_node];
+
+        double* d_sigma = d_sigma_2D + blockIdx.x * len_V;
+        double* d_delta = d_delta_2D + blockIdx.x * len_V;
+        int* d_dist = d_dist_2D + blockIdx.x * len_V;
+        int* d_st = d_st_2D + blockIdx.x * len_V;
+        int* d_st_idx = d_st_idx_2D + blockIdx.x * (len_V + 2);
+
+        __shared__ int depth;
+        __shared__ int len_st_idx;
+        __shared__ int st_start;
+        __shared__ int st_end;
+        __shared__ int next_start;
+        __shared__ int next_size;
+        __shared__ int stop_bfs;
+
+        for (int i = threadIdx.x; i < len_V; i += blockDim.x) {
+            d_dist[i] = -1;
+            d_sigma[i] = 0.0;
+            d_delta[i] = 0.0;
+        }
+        __syncthreads();
+
+        if (threadIdx.x == 0) {
+            d_dist[s] = 0;
+            d_sigma[s] = 1.0;
+            d_st[0] = s;
+            d_st_idx[0] = 0;
+            d_st_idx[1] = 1;
+            len_st_idx = 2;
+            depth = 0;
+        }
+        __syncthreads();
+
+        while (true) {
+            if (threadIdx.x == 0) {
+                st_start = d_st_idx[depth];
+                st_end = d_st_idx[depth + 1];
+                next_start = st_end;
+                next_size = 0;
+                stop_bfs = 0;
+            }
+            __syncthreads();
+
+            int next_depth = depth + 1;
+            for (int j = threadIdx.x; j < (st_end - st_start) * warp_size; j += blockDim.x) {
+                int u = d_st[st_start + j / warp_size];
+                double sigma_u = d_sigma[u];
+                int edge_start = d_V[u];
+                int edge_end = d_V[u + 1];
+                for (int e = j % warp_size; e < edge_end - edge_start; e += warp_size) {
+                    int v = d_E[e + edge_start];
+                    int old_dist = atomicCAS(d_dist + v, -1, next_depth);
+                    if (old_dist == -1) {
+                        int out_idx = atomicAdd(&next_size, 1);
+                        d_st[next_start + out_idx] = v;
+                    }
+                    if (old_dist == -1 || old_dist == next_depth) {
+                        atomicAddDouble(d_sigma + v, sigma_u);
+                    }
+                }
+                __threadfence_block();
+            }
+            __syncthreads();
+
+            if (threadIdx.x == 0) {
+                if (next_size == 0) {
+                    stop_bfs = 1;
+                } else {
+                    d_st_idx[len_st_idx] = next_start + next_size;
+                    ++len_st_idx;
+                    ++depth;
+                }
+            }
+            __syncthreads();
+
+            if (stop_bfs) {
+                break;
+            }
+        }
+
+        if (threadIdx.x == 0 && endpoints) {
+            atomicAddDouble(d_BC + s, d_st_idx[len_st_idx - 1] - 1);
+        }
+        __syncthreads();
+
+        if (threadIdx.x == 0) {
+            depth = len_st_idx - 1;
+        }
+        __syncthreads();
+
+        while (depth > 0) {
+            if (threadIdx.x == 0) {
+                st_start = d_st_idx[depth - 1];
+                st_end = d_st_idx[depth];
+            }
+            __syncthreads();
+
+            for (int j = threadIdx.x; j < (st_end - st_start) * warp_size; j += blockDim.x) {
+                int pred = d_st[st_start + j / warp_size];
+                int pred_dist = d_dist[pred];
+                double pred_sigma = d_sigma[pred];
+                int edge_start = d_V[pred];
+                int edge_end = d_V[pred + 1];
+
+                for (int e = j % warp_size; e < edge_end - edge_start; e += warp_size) {
+                    int succ = d_E[e + edge_start];
+                    if (d_dist[succ] == pred_dist + 1) {
+                        double succ_sigma = d_sigma[succ];
+                        if (succ_sigma != 0.0) {
+                            atomicAddDouble(d_delta + pred,
+                                            pred_sigma / succ_sigma * (1.0 + d_delta[succ]));
+                        }
+                    }
+                }
+                __threadfence_block();
+            }
+            __syncthreads();
+
+            for (int i = threadIdx.x; i < st_end - st_start; i += blockDim.x) {
+                int pred = d_st[st_start + i];
+                if (s != pred) {
+                    atomicAddDouble(d_BC + pred, d_delta[pred] + endpoints);
+                }
+            }
+            __syncthreads();
+
+            if (threadIdx.x == 0) {
+                --depth;
+            }
+            __syncthreads();
+        }
+    }
+}
+
 static __global__ void d_rescale(
     _IN_ int len_V,
     _IN_ double scale,
@@ -389,6 +579,7 @@ int cuda_betweenness_centrality (
     _IN_ int is_directed,
     _IN_ int normalized,
     _IN_ int endpoints,
+    _IN_ bool unweighted,
     _OUT_ double* BC,
     _OUT_ double* kernel_seconds
 )
@@ -416,6 +607,9 @@ int cuda_betweenness_centrality (
     }
     
     double scale = calc_scale(len_V, is_directed, normalized, endpoints);
+    const char* bfs_env = getenv("EASYGRAPH_GPU_BC_UNWEIGHTED_BFS");
+    const bool use_bfs_kernel =
+        unweighted && (bfs_env == nullptr || env_truthy(bfs_env)) && !env_falsey(bfs_env);
 
     thread_local PersistentDeviceBuffer b_curr_node;
     thread_local PersistentDeviceBuffer b_sources;
@@ -445,11 +639,11 @@ int cuda_betweenness_centrality (
     if (EG_ret != EG_GPU_SUCC) goto exit;
     if (ensure_device_buffer(b_sources, sizeof(int) * len_sources, &EG_ret) != EG_GPU_SUCC) goto exit;
     if (ensure_device_buffer(b_U_2D, sizeof(int) * dijkstra_grid_size * len_V, &EG_ret) != EG_GPU_SUCC) goto exit;
-    if (ensure_device_buffer(b_F_2D, sizeof(int) * dijkstra_grid_size * len_V, &EG_ret) != EG_GPU_SUCC) goto exit;
+    if (!use_bfs_kernel && ensure_device_buffer(b_F_2D, sizeof(int) * dijkstra_grid_size * len_V, &EG_ret) != EG_GPU_SUCC) goto exit;
     if (ensure_device_buffer(b_st_2D, sizeof(int) * dijkstra_grid_size * len_V, &EG_ret) != EG_GPU_SUCC) goto exit;
     if (ensure_device_buffer(b_st_idx_2D, sizeof(int) * dijkstra_grid_size * (len_V + 2), &EG_ret) != EG_GPU_SUCC) goto exit;
-    if (ensure_device_buffer(b_min_edge, sizeof(double) * len_V, &EG_ret) != EG_GPU_SUCC) goto exit;
-    if (ensure_device_buffer(b_dist_2D, sizeof(double) * dijkstra_grid_size * len_V, &EG_ret) != EG_GPU_SUCC) goto exit;
+    if (!use_bfs_kernel && ensure_device_buffer(b_min_edge, sizeof(double) * len_V, &EG_ret) != EG_GPU_SUCC) goto exit;
+    if (!use_bfs_kernel && ensure_device_buffer(b_dist_2D, sizeof(double) * dijkstra_grid_size * len_V, &EG_ret) != EG_GPU_SUCC) goto exit;
     if (ensure_device_buffer(b_sigma_2D, sizeof(double) * dijkstra_grid_size * len_V, &EG_ret) != EG_GPU_SUCC) goto exit;
     if (ensure_device_buffer(b_delta_2D, sizeof(double) * dijkstra_grid_size * len_V, &EG_ret) != EG_GPU_SUCC) goto exit;
     if (ensure_device_buffer(b_BC, sizeof(double) * len_V, &EG_ret) != EG_GPU_SUCC) goto exit;
@@ -459,12 +653,12 @@ int cuda_betweenness_centrality (
     d_E = graph_view.d_E;
     d_sources = b_sources.as<int>();
     d_U_2D = b_U_2D.as<int>();
-    d_F_2D = b_F_2D.as<int>();
+    d_F_2D = use_bfs_kernel ? NULL : b_F_2D.as<int>();
     d_st_2D = b_st_2D.as<int>();
     d_st_idx_2D = b_st_idx_2D.as<int>();
     d_W = graph_view.d_W;
-    d_min_edge = b_min_edge.as<double>();
-    d_dist_2D = b_dist_2D.as<double>();
+    d_min_edge = use_bfs_kernel ? NULL : b_min_edge.as<double>();
+    d_dist_2D = use_bfs_kernel ? NULL : b_dist_2D.as<double>();
     d_sigma_2D = b_sigma_2D.as<double>();
     d_delta_2D = b_delta_2D.as<double>();
     d_BC = b_BC.as<double>();
@@ -481,14 +675,22 @@ int cuda_betweenness_centrality (
     }
     EXIT_IF_CUDA_FAILED(cudaEventRecord(runtime.start_event));
 
-    d_calc_min_edge<<<min_edge_grid_size, min_edge_block_size>>>(d_V, d_E, d_W, len_V, len_E, d_min_edge);
-    EXIT_IF_CUDA_FAILED(cudaGetLastError());
+    if (use_bfs_kernel) {
+        d_bfs_bc<<<dijkstra_grid_size, dijkstra_block_size>>>(
+            d_curr_node, d_V, d_E, d_sources, d_sigma_2D, d_delta_2D,
+            d_U_2D, d_st_2D, d_st_idx_2D, len_V, len_sources,
+            warp_size, endpoints, d_BC);
+        EXIT_IF_CUDA_FAILED(cudaGetLastError());
+    } else {
+        d_calc_min_edge<<<min_edge_grid_size, min_edge_block_size>>>(d_V, d_E, d_W, len_V, len_E, d_min_edge);
+        EXIT_IF_CUDA_FAILED(cudaGetLastError());
 
-    d_dijkstra_bc<<<dijkstra_grid_size, dijkstra_block_size>>>(d_curr_node, d_V, d_E, d_W, d_min_edge,
-                                            d_sources, d_dist_2D, d_sigma_2D, d_delta_2D, d_U_2D,
-                                            d_F_2D, d_st_2D, d_st_idx_2D, len_V, len_E, len_sources,
-                                            warp_size, endpoints, d_BC);
-    EXIT_IF_CUDA_FAILED(cudaGetLastError());
+        d_dijkstra_bc<<<dijkstra_grid_size, dijkstra_block_size>>>(d_curr_node, d_V, d_E, d_W, d_min_edge,
+                                                d_sources, d_dist_2D, d_sigma_2D, d_delta_2D, d_U_2D,
+                                                d_F_2D, d_st_2D, d_st_idx_2D, len_V, len_E, len_sources,
+                                                warp_size, endpoints, d_BC);
+        EXIT_IF_CUDA_FAILED(cudaGetLastError());
+    }
 
     if (scale != 1.0) {
         d_rescale<<<rescale_grid_size, rescale_block_size>>>(len_V, scale, d_BC);

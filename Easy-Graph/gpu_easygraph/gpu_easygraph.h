@@ -24,6 +24,7 @@ int betweenness_centrality(
     bool is_directed,
     bool normalized,
     bool endpoints,
+    bool unweighted,
     std::vector<double>& BC,
     double* kernel_seconds = nullptr
 );

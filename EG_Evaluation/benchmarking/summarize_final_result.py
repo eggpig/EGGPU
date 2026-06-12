@@ -683,7 +683,7 @@ def write_markdown(
             [
                 "## Large-Graph Closeness Supplement",
                 "",
-                "The exact all-node Closeness rows remain the main benchmark semantic.  Datasets skipped by the symmetric exact scale guard are filled by a separate `sampled_target_exact` supplement with deterministic target nodes; these rows are not counted as exact-all-node SOTA pairs.",
+                "The exact all-node Closeness rows remain the main benchmark semantic.  Scale-guarded datasets, and older exact-timeout datasets when present, are filled by a separate `sampled_target_exact` supplement with deterministic target nodes; these rows are not counted as exact-all-node SOTA pairs.",
                 "",
                 f"- Supplement directory: `{closeness_supplement['base']}`",
                 f"- Merged matrix: `{closeness_supplement['merged_path']}`",

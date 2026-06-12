@@ -382,7 +382,7 @@ py::object py_sources, py::object normalized, py::object endpoints) {
     double kernel_seconds = 0.0;
     int gpu_r = gpu_easygraph::betweenness_centrality(V, E, *W_p, *sources,
         is_directed, normalized.cast<py::bool_>(),
-        endpoints.cast<py::bool_>(), BC, &kernel_seconds);
+        endpoints.cast<py::bool_>(), weight.is_none(), BC, &kernel_seconds);
     if (gpu_r != gpu_easygraph::EG_GPU_SUCC) {
         // the code below will throw an exception
         py::pybind11_fail(gpu_easygraph::err_code_detail(gpu_r));

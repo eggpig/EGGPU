@@ -102,6 +102,7 @@ int betweenness_centrality(
     _IN_ bool is_directed,
     _IN_ bool normalized,
     _IN_ bool endpoints,
+    _IN_ bool unweighted,
     _OUT_ std::vector<double>& BC,
     _IN_ double* kernel_seconds
 ) {
@@ -123,7 +124,7 @@ int betweenness_centrality(
             double chunk_kernel_seconds = 0.0;
             int r = cuda_betweenness_centrality(V.data(), E.data(), W.data(),
                     chunk_sources.data(), len_V, len_E, chunk_sources.size(),
-                    warp_size, is_directed, normalized, endpoints, part.data(),
+                    warp_size, is_directed, normalized, endpoints, unweighted, part.data(),
                     &chunk_kernel_seconds);
             if (r != EG_GPU_SUCC) return r;
             for (int i = 0; i < len_V; ++i) {
@@ -139,7 +140,7 @@ int betweenness_centrality(
 
     int r = cuda_betweenness_centrality(V.data(), E.data(), W.data(),
             sources.data(), len_V, len_E, sources.size(),
-            warp_size, is_directed, normalized, endpoints, BC.data(),
+            warp_size, is_directed, normalized, endpoints, unweighted, BC.data(),
             kernel_seconds);
 
     return r;

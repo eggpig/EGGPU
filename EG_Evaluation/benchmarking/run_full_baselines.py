@@ -215,35 +215,58 @@ def check_eggpu_child_gpu_idle(env):
         return True, "busy-GPU guard explicitly disabled; debug-only"
     if not _ensure_nvml():
         return False, "gpu_busy_before_eggpu_child: NVML unavailable; refusing to launch EGGPU timing row"
-    try:
-        gpu_index = _resolve_monitor_gpu_index(env)
-        handle = pynvml.nvmlDeviceGetHandleByIndex(gpu_index)
-        info = pynvml.nvmlDeviceGetMemoryInfo(handle)
-        raw_used_mb = int(info.used) / (1024.0 * 1024.0)
-        marker_adjust_mb = visibility_marker_adjust_mb(env)
-        used_mb = max(0.0, raw_used_mb - marker_adjust_mb)
-        util = pynvml.nvmlDeviceGetUtilizationRates(handle)
-        gpu_util = int(getattr(util, "gpu", 0))
-        procs = []
-        own_pid = os.getpid()
-        for proc_info in _nvml_compute_processes(handle):
-            try:
-                pid = int(getattr(proc_info, "pid", -1))
-            except Exception:
-                pid = -1
-            if pid > 0 and pid != own_pid:
-                pname = ""
+    max_mem_mb = float(env.get("EGGPU_IDLE_MAX_MEMORY_MB", "1024"))
+    max_util = float(env.get("EGGPU_IDLE_MAX_UTILIZATION", "5"))
+    retry_attempts = max(1, int(env.get("EGGPU_IDLE_RETRY_ATTEMPTS", "6")))
+    retry_sleep_s = max(0.0, float(env.get("EGGPU_IDLE_RETRY_SLEEP_S", "0.5")))
+    last_sample = None
+    for attempt in range(1, retry_attempts + 1):
+        try:
+            gpu_index = _resolve_monitor_gpu_index(env)
+            handle = pynvml.nvmlDeviceGetHandleByIndex(gpu_index)
+            info = pynvml.nvmlDeviceGetMemoryInfo(handle)
+            raw_used_mb = int(info.used) / (1024.0 * 1024.0)
+            marker_adjust_mb = visibility_marker_adjust_mb(env)
+            used_mb = max(0.0, raw_used_mb - marker_adjust_mb)
+            util = pynvml.nvmlDeviceGetUtilizationRates(handle)
+            gpu_util = int(getattr(util, "gpu", 0))
+            procs = []
+            own_pid = os.getpid()
+            for proc_info in _nvml_compute_processes(handle):
                 try:
-                    pname = psutil.Process(pid).name() if psutil is not None else ""
+                    pid = int(getattr(proc_info, "pid", -1))
                 except Exception:
+                    pid = -1
+                if pid > 0 and pid != own_pid:
                     pname = ""
-                mem_mb = _safe_used_gpu_memory_bytes(proc_info) / (1024.0 * 1024.0)
-                procs.append(f"pid={pid},name={pname},mem_mb={mem_mb:.1f}")
-        max_mem_mb = float(env.get("EGGPU_IDLE_MAX_MEMORY_MB", "1024"))
-        max_util = float(env.get("EGGPU_IDLE_MAX_UTILIZATION", "5"))
-    except Exception as exc:
-        return False, f"gpu_busy_before_eggpu_child: unable to query GPU idleness: {exc}"
+                    try:
+                        pname = psutil.Process(pid).name() if psutil is not None else ""
+                    except Exception:
+                        pname = ""
+                    mem_mb = _safe_used_gpu_memory_bytes(proc_info) / (1024.0 * 1024.0)
+                    procs.append(f"pid={pid},name={pname},mem_mb={mem_mb:.1f}")
+        except Exception as exc:
+            return False, f"gpu_busy_before_eggpu_child: unable to query GPU idleness: {exc}"
 
+        last_sample = (gpu_index, used_mb, raw_used_mb, marker_adjust_mb, gpu_util, procs, attempt)
+        if not procs and used_mb <= max_mem_mb and gpu_util <= max_util:
+            retry_note = "" if attempt == 1 else f", idle_retry_attempt={attempt}"
+            return (
+                True,
+                "gpu_idle_before_eggpu_child: "
+                f"gpu={gpu_index}, memory_mb={used_mb:.1f}, raw_memory_mb={raw_used_mb:.1f}, "
+                f"visibility_marker_adjust_mb={marker_adjust_mb:.1f}, utilization={gpu_util}%"
+                f"{retry_note}",
+            )
+        # NVML utilization can briefly lag after the previous child process exits.
+        # Only retry this benign residual-utilization case; real processes or
+        # high memory remain hard blockers for comparable timing rows.
+        if procs or used_mb > max_mem_mb or attempt >= retry_attempts:
+            break
+        if retry_sleep_s:
+            time.sleep(retry_sleep_s)
+
+    gpu_index, used_mb, raw_used_mb, marker_adjust_mb, gpu_util, procs, attempt = last_sample
     if procs or used_mb > max_mem_mb or gpu_util > max_util:
         proc_note = "; ".join(procs) if procs else "none"
         return (
@@ -252,14 +275,8 @@ def check_eggpu_child_gpu_idle(env):
             f"gpu={gpu_index}, memory_mb={used_mb:.1f}, raw_memory_mb={raw_used_mb:.1f}, "
             f"visibility_marker_adjust_mb={marker_adjust_mb:.1f}, utilization={gpu_util}%, "
             f"threshold_memory_mb={max_mem_mb:.1f}, threshold_utilization={max_util:.1f}%, "
-            f"compute_processes=[{proc_note}]",
+            f"compute_processes=[{proc_note}], idle_retry_attempts={attempt}",
         )
-    return (
-        True,
-        "gpu_idle_before_eggpu_child: "
-        f"gpu={gpu_index}, memory_mb={used_mb:.1f}, raw_memory_mb={raw_used_mb:.1f}, "
-        f"visibility_marker_adjust_mb={marker_adjust_mb:.1f}, utilization={gpu_util}%",
-    )
 
 
 def run_cmd(cmd, out_path, env, timeout=None, cooldown=0.0):
@@ -539,8 +556,11 @@ def collect_run_metadata(args, out_dir, datasets, selected_functions, env):
         "EASYGRAPH_GPU_KCORE_SINGLE_BLOCK_MIN_MAX_DEGREE",
         "EASYGRAPH_GPU_KCORE_SINGLE_BLOCK_THREADS",
         "EASYGRAPH_GPU_BC_WARP_SIZE",
+        "EASYGRAPH_GPU_BC_UNWEIGHTED_BFS",
+        "EASYGRAPH_GPU_CLOSENESS_UNWEIGHTED_BFS",
         "EASYGRAPH_GPU_CONSTRAINT_SMALLER_INTERSECTION",
         "EGGPU_CLOSENESS_EXACT_MAX_NODES",
+        "EGGPU_CLOSENESS_EXACT_MAX_WORK",
         "EGGPU_USE_CONDA_RUN",
         "EGGPU_CHILD_PYTHON",
         "COMMON_PY",
@@ -738,6 +758,16 @@ def add_row(rows, dataset_size, graph_type, dataset_name, function, baseline, me
         status = "timeout"
         if seconds is None and metric in ("e2e", "kernel"):
             seconds = timeout_seconds_from_notes(notes)
+    structured = {
+        "semantic": "exact_all_node" if function == "Closeness" else "",
+        "skip_reason": "",
+        "estimator_kind": "",
+        "sample_sources": "",
+        "source_policy": "",
+        "source_seed": "",
+        "source_nodes_sha": "",
+    }
+    structured.update(extra or {})
     rows.append({
         "dataset_size": dataset_size,
         "graph_type": graph_type,
@@ -750,7 +780,7 @@ def add_row(rows, dataset_size, graph_type, dataset_name, function, baseline, me
         "correctness": correctness,
         "log": str(log),
         "notes": notes,
-        **(extra or {}),
+        **structured,
     })
 
 
@@ -1998,33 +2028,73 @@ def add_unavailable_gunrock(rows, size, graph_type, name, function, ds_dir):
                 notes=note)
 
 
-def exact_closeness_too_large(dataset_stat):
-    if os.environ.get("EGGPU_CLOSENESS_EXACT_MAX_NODES", "").strip().upper() in {"", "AUTO"}:
+def _closeness_exact_limits():
+    raw_nodes = os.environ.get("EGGPU_CLOSENESS_EXACT_MAX_NODES", "").strip().upper()
+    raw_work = os.environ.get("EGGPU_CLOSENESS_EXACT_MAX_WORK", "").strip().upper()
+    if raw_nodes in {"", "AUTO"}:
         max_nodes = 1000000
     else:
         try:
-            max_nodes = int(os.environ.get("EGGPU_CLOSENESS_EXACT_MAX_NODES", "1000000"))
+            max_nodes = int(raw_nodes)
         except Exception:
             max_nodes = 1000000
+    if raw_work in {"", "AUTO"}:
+        max_work = 50_000_000_000
+    else:
+        try:
+            max_work = int(raw_work)
+        except Exception:
+            max_work = 50_000_000_000
+    return max_nodes, max_work
+
+
+def exact_closeness_too_large(dataset_stat):
+    max_nodes, max_work = _closeness_exact_limits()
     try:
         nodes = int(dataset_stat.get("nodes_raw", 0))
     except Exception:
         nodes = 0
-    return max_nodes > 0 and nodes > max_nodes
+    try:
+        edges = int(dataset_stat.get("edge_rows_no_selfloops", 0))
+    except Exception:
+        edges = 0
+    work = nodes * edges
+    return (max_nodes > 0 and nodes > max_nodes) or (max_work > 0 and work > max_work)
 
 
 def add_exact_closeness_scale_skip(rows, size, graph_type, name, baseline, ds_dir, dataset_stat):
     log = ds_dir / f"library_{baseline}_closeness.log"
     nodes = int(dataset_stat.get("nodes_raw", 0) or 0)
+    edges = int(dataset_stat.get("edge_rows_no_selfloops", 0) or 0)
+    work = nodes * edges
+    max_nodes, max_work = _closeness_exact_limits()
     note = (
         "exact all-source Closeness skipped by symmetric scale guard: "
-        f"nodes={nodes:,} exceeds EGGPU_CLOSENESS_EXACT_MAX_NODES="
-        f"{os.environ.get('EGGPU_CLOSENESS_EXACT_MAX_NODES', '1000000')}; "
-        "all exact CPU/GPU backends use the same skip rule to avoid recording timeout as timing"
+        f"nodes={nodes:,}, edge_rows_no_selfloops={edges:,}, work_estimate=nodes*edges={work:,}; "
+        f"limits: EGGPU_CLOSENESS_EXACT_MAX_NODES={max_nodes}, "
+        f"EGGPU_CLOSENESS_EXACT_MAX_WORK={max_work}; "
+        "all exact CPU/GPU backends use the same predeclared skip rule; "
+        "large-graph Closeness is reported in the separate sampled-target supplement"
     )
     log.write_text(note + "\n")
     for metric in ("build", "e2e", "kernel"):
-        add_row(rows, size, graph_type, name, "Closeness", baseline, metric, None, "skipped", log, notes=note)
+        add_row(
+            rows,
+            size,
+            graph_type,
+            name,
+            "Closeness",
+            baseline,
+            metric,
+            None,
+            "skipped",
+            log,
+            notes=note,
+            extra={
+                "semantic": "exact_all_node",
+                "skip_reason": "exact_scale_guard",
+            },
+        )
 
 
 def collect_gunrock_lib_dirs(exe_path):
@@ -2526,6 +2596,10 @@ def main():
         f"- Per-function timeout is {PER_FUNCTION_TIMEOUT_SECONDS}s for all baselines; timed-out runs are marked with `TIMEOUT_TOO_LONG` in logs/notes.",
         "- Directed PageRank preserves edge direction. WCC ignores edge direction, SCC preserves directed reachability; on undirected graphs SCC=WCC. MST and LCC use an undirected projection on directed datasets.",
         "- Raw self-loop rows are preserved in source files for provenance but removed during benchmark graph construction and Gunrock MatrixMarket conversion for all libraries/functions.",
+        "- Exact all-source Closeness uses a symmetric predeclared scale guard: "
+        f"EGGPU_CLOSENESS_EXACT_MAX_NODES={env.get('EGGPU_CLOSENESS_EXACT_MAX_NODES', os.environ.get('EGGPU_CLOSENESS_EXACT_MAX_NODES', '1000000'))}, "
+        f"EGGPU_CLOSENESS_EXACT_MAX_WORK={env.get('EGGPU_CLOSENESS_EXACT_MAX_WORK', os.environ.get('EGGPU_CLOSENESS_EXACT_MAX_WORK', '50000000000'))}. "
+        "Guarded rows remain `semantic=exact_all_node` with `skip_reason=exact_scale_guard`; large-graph evidence is reported separately as `sampled_target_exact`.",
         "- Native cuGraph timings are not emitted as standalone baseline rows; nx-cugraph may fallback to native cuGraph for unsupported functions and logs that fallback.",
         "- Gunrock baselines are discovered per executable (`pr`, `mst`, `lcc`, `cc`, `sssp`, `kcore`, `bc`) across configured build directories; each algorithm may come from a different build tree. Closeness has no aligned Gunrock executable in this benchmark and is marked unavailable.",
         "- Gunrock MST retries on the largest connected component when full-graph input triggers connected-graph/super-vertex constraints; such rows are explicitly annotated as component-level timings.",

@@ -1956,6 +1956,8 @@ def bench_easygraph_mode(
                     )
                 if mode != "gpu":
                     note += "; cpu backend kernel=algorithm"
+                else:
+                    note += "; unweighted GPU path uses BFS kernel"
                 emit_metrics(
                     backend,
                     "Closeness",
@@ -2178,6 +2180,8 @@ def bench_easygraph_mode(
                 note = f"source-sampled; sources={len(source_nodes)}; normalized=False"
                 if mode != "gpu":
                     note += "; cpu backend kernel=algorithm"
+                else:
+                    note += "; unweighted GPU path uses BFS-Brandes kernel"
                 detail = write_vector_detail(backend, "BC", vals, n)
                 emit_metrics(
                     backend,

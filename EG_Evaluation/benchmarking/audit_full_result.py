@@ -60,7 +60,10 @@ def is_accepted_eggpu_skip(row):
         row.get("baseline") == "EGGPU"
         and row.get("function") == "Closeness"
         and row.get("status") == "skipped"
-        and "exact all-source Closeness skipped by symmetric scale guard" in row.get("notes", "")
+        and (
+            row.get("skip_reason") == "exact_scale_guard"
+            or "exact all-source Closeness skipped by symmetric scale guard" in row.get("notes", "")
+        )
     )
 
 

@@ -215,13 +215,14 @@ def audit_result_rows(result_dir: Path) -> list[dict]:
             if baseline == "EGGPU" and metric in {"e2e", "kernel"}:
                 ok_count = int(counts.get("ok", 0))
                 accepted_skip_count = 0
-                if "notes" in bdf.columns:
-                    accepted_skip_count = int(
-                        (
-                            bdf["status"].fillna("").eq("skipped")
-                            & bdf["notes"].fillna("").str.contains(ACCEPTED_SCALE_SKIP_NOTE, regex=False)
-                        ).sum()
-                    )
+                accepted_skip = bdf["status"].fillna("").eq("skipped")
+                if "skip_reason" in bdf.columns:
+                    accepted_skip = accepted_skip & bdf["skip_reason"].fillna("").eq("exact_scale_guard")
+                elif "notes" in bdf.columns:
+                    accepted_skip = accepted_skip & bdf["notes"].fillna("").str.contains(ACCEPTED_SCALE_SKIP_NOTE, regex=False)
+                else:
+                    accepted_skip = accepted_skip & False
+                accepted_skip_count = int(accepted_skip.sum())
                 expected = expected_eggpu_rows if expected_eggpu_rows is not None else ok_count
                 if ok_count + accepted_skip_count != expected:
                     status = "fail"
