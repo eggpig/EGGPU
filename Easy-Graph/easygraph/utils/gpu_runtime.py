@@ -3,11 +3,18 @@ import os
 _MINE_BACKENDS = {"mine", "mine-bin", "eggpu", "native-mine", "auto", "default"}
 _RAPIDS_BACKENDS = {"auto", "rapids"}
 _SUPPORTED_BACKENDS = _MINE_BACKENDS | _RAPIDS_BACKENDS
+_TRUE_VALUES = {"1", "TRUE", "ON", "YES"}
+
+
+def _env_true(name):
+    return os.environ.get(name, "").strip().upper() in _TRUE_VALUES
 
 
 def gpu_runtime_enabled():
-    value = os.environ.get("EASYGRAPH_ENABLE_GPU", "")
-    return value.strip().upper() in {"1", "TRUE", "ON", "YES"}
+    canonical = os.environ.get("EASYGRAPH_ENABLE_GPU")
+    if canonical is not None:
+        return canonical.strip().upper() in _TRUE_VALUES
+    return any(_env_true(name) for name in ("EGGPU", "EGGPU_ENABLE", "EGGPU_ENABLED"))
 
 
 def gpu_backend_name():

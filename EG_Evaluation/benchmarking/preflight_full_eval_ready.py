@@ -314,6 +314,24 @@ def check_child_python_wrapper() -> bool:
     return not missing
 
 
+def check_gpu_runtime_enable_alias_contract() -> bool:
+    runtime_text = (EASYGRAPH_REPO / "easygraph" / "utils" / "gpu_runtime.py").read_text()
+    required = {
+        "canonical_enable_variable": "EASYGRAPH_ENABLE_GPU" in runtime_text,
+        "user_friendly_eggpu_alias": '"EGGPU"' in runtime_text,
+        "eggpu_enable_alias": '"EGGPU_ENABLE"' in runtime_text,
+        "canonical_variable_takes_precedence": "if canonical is not None:" in runtime_text,
+        "true_values_shared": "_TRUE_VALUES" in runtime_text,
+    }
+    missing = [name for name, ok in required.items() if not ok]
+    emit(
+        "gpu_runtime_enable_alias_contract",
+        "ok" if not missing else "fail",
+        missing=missing,
+    )
+    return not missing
+
+
 def check_gpu_routing_contract() -> bool:
     """Verify physical GPU monitoring and logical CUDA device usage stay split.
 
@@ -1180,6 +1198,7 @@ def main() -> int:
         check_run_script(),
         check_function_registry_consistency(),
         check_child_python_wrapper(),
+        check_gpu_runtime_enable_alias_contract(),
         check_gpu_routing_contract(),
         check_build_script(),
         check_closeness_cuda_launch_contract(),
