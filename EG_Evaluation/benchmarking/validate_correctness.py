@@ -18,6 +18,13 @@ REFERENCE_PRIORITY = (
     "nx-cugraph",
     "EGGPU",
 )
+UNSAFE_REFERENCE_BY_FUNCTION = {
+    # nx-cugraph BC can use a different normalization/semantic path than
+    # NetworkX/igraph/EasyGraph on large graphs.  It remains a measured
+    # baseline, but it must not become the oracle when exact CPU references
+    # time out on a slower reproduction machine.
+    "BC": {"nx-cugraph"},
+}
 STRUCTURAL_HOLE_FUNCTIONS = {"EffectiveSize", "Efficiency", "Constraint", "Hierarchy"}
 ROOT = Path(__file__).resolve().parents[1]
 DATASET_PATHS = {
@@ -484,7 +491,10 @@ def _reference_priority(function):
 
 def _pick_reference(rows, function):
     by_backend = {r.get("baseline"): r for r in rows}
+    unsafe = UNSAFE_REFERENCE_BY_FUNCTION.get(function, set())
     for backend in _reference_priority(function):
+        if backend in unsafe:
+            continue
         hit = by_backend.get(backend)
         if hit is not None:
             parsed = _parse_correctness(hit.get("correctness", ""))
@@ -611,6 +621,7 @@ def write_validation_outputs(out_dir, rows):
         md.append("")
     md.append("Validation compares full detail dumps when present. If a baseline lacks a detail dump, it falls back to the legacy summary fields.")
     md.append("Reference priority: networkx, igraph, easygraph-cpu, easygraph-cpp, nx-cugraph, EGGPU.")
+    md.append("Function-specific unsafe references are skipped when selecting an oracle; currently BC does not use nx-cugraph as an oracle because its large-graph values differ from NetworkX/igraph/EasyGraph semantics in existing validation rows.")
     md.append("Structural-hole metrics use EasyGraph-compatible semantics: easygraph-cpu, EGGPU, networkx, igraph, easygraph-cpp, nx-cugraph.")
     md.append("Large structural-hole EGGPU rows without a full external reference use deterministic sampled exact CPU validation and are marked `sampled_pass`.")
     md.append("PageRank is only marked `weak_pass` when no full vector detail is available.")

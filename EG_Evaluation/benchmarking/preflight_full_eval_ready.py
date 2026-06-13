@@ -144,7 +144,16 @@ def check_compiled_extension_freshness() -> bool:
         emit("compiled_extension_freshness", "fail", error=repr(exc))
         return False
 
-    so_path = Path(cpp_easygraph.__file__).resolve()
+    cpp_file = getattr(cpp_easygraph, "__file__", None)
+    if not cpp_file:
+        emit(
+            "compiled_extension_freshness",
+            "fail",
+            note="cpp_easygraph has no compiled extension file; rebuild EGGPU in this checkout",
+        )
+        return False
+
+    so_path = Path(cpp_file).resolve()
     missing = [str(path) for path in COMPILED_SOURCE_FILES if not path.exists()]
     if missing:
         emit("compiled_extension_freshness", "fail", missing=missing)
@@ -655,6 +664,25 @@ def check_sota_summary_validation_filter_contract() -> bool:
     return not missing
 
 
+def check_validation_reference_oracle_contract() -> bool:
+    validation_text = (ROOT / "benchmarking" / "validate_correctness.py").read_text()
+    required = {
+        "has_unsafe_reference_map": "UNSAFE_REFERENCE_BY_FUNCTION" in validation_text,
+        "bc_excludes_nx_cugraph_oracle": '"BC": {"nx-cugraph"}' in validation_text
+        or "'BC': {'nx-cugraph'}" in validation_text,
+        "pick_reference_skips_unsafe": "if backend in unsafe:" in validation_text
+        and "continue" in validation_text,
+        "validation_doc_mentions_unsafe_reference": "Function-specific unsafe references are skipped" in validation_text,
+    }
+    missing = [name for name, ok in required.items() if not ok]
+    emit(
+        "validation_reference_oracle_contract",
+        "ok" if not missing else "fail",
+        missing=missing,
+    )
+    return not missing
+
+
 def check_audit_metadata_gate() -> bool:
     with tempfile.TemporaryDirectory(prefix="eggpu_preflight_audit_") as tmp:
         tmp_path = Path(tmp)
@@ -1131,6 +1159,7 @@ def main() -> int:
         check_closeness_baseline_semantics_contract(),
         check_backend_separation_static_contract(),
         check_sota_summary_validation_filter_contract(),
+        check_validation_reference_oracle_contract(),
         check_audit_metadata_gate(),
         check_audit_validation_gate(),
         check_audit_validation_error_gate(),
