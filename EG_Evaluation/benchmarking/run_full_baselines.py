@@ -28,6 +28,7 @@ except Exception:
     pynvml = None
 
 from gpu_visibility_marker import GpuVisibilityMarker
+from gpu_device_profile import collect_gpu_device_profile
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -595,6 +596,7 @@ def collect_run_metadata(args, out_dir, datasets, selected_functions, env):
             "local_cuda_root": str(cuda_root) if cuda_root is not None else "",
             "nvcc": str(cuda_root / "bin" / "nvcc") if cuda_root is not None else "",
         },
+        "gpu_device_profile": collect_gpu_device_profile(args.gpu, env),
         "build_artifacts": {
             "cpp_easygraph": cpp_easygraph_artifacts(),
         },

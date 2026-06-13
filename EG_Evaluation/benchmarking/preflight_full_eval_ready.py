@@ -24,6 +24,8 @@ EASYGRAPH_REPO = WORKSPACE / "Easy-Graph"
 RUN_SCRIPT = ROOT / "run_main_and_ablation.sh"
 BUILD_SCRIPT = WORKSPACE / "scripts" / "build_eggpu.sh"
 FULL_BASELINE_RUNNER = ROOT / "benchmarking" / "run_full_baselines.py"
+ABLATION_RUNNER = ROOT / "benchmarking" / "run_eggpu_ablations.py"
+GPU_DEVICE_PROFILE = ROOT / "benchmarking" / "gpu_device_profile.py"
 FULL_AUDIT = ROOT / "benchmarking" / "audit_full_result.py"
 BACKEND_SEPARATION_AUDIT = ROOT / "benchmarking" / "audit_backend_separation.py"
 STRUCTURAL_PREFLIGHT = ROOT / "benchmarking" / "preflight_structural_scanv.py"
@@ -683,6 +685,33 @@ def check_validation_reference_oracle_contract() -> bool:
     return not missing
 
 
+def check_gpu_device_profile_metadata_contract() -> bool:
+    profile_text = GPU_DEVICE_PROFILE.read_text()
+    full_text = FULL_BASELINE_RUNNER.read_text()
+    ablation_text = ABLATION_RUNNER.read_text()
+    required = {
+        "profile_module_collects_selected_device": "def collect_gpu_device_profile" in profile_text
+        and "selected_device" in profile_text
+        and "resolved_monitor_gpu_index" in profile_text,
+        "profile_records_compute_capability": "compute_capability" in profile_text
+        and "cuda_architecture" in profile_text,
+        "profile_records_memory": "memory_total_mb" in profile_text,
+        "profile_falls_back_to_nvidia_smi": "def _collect_with_nvidia_smi" in profile_text,
+        "full_metadata_records_gpu_profile": "collect_gpu_device_profile(args.gpu, env)" in full_text
+        and '"gpu_device_profile"' in full_text,
+        "ablation_metadata_records_gpu_profile": "collect_gpu_device_profile(args.gpu, os.environ)" in ablation_text
+        and '"gpu_device_profile"' in ablation_text
+        and "metadata.json" in ablation_text,
+    }
+    missing = [name for name, ok in required.items() if not ok]
+    emit(
+        "gpu_device_profile_metadata_contract",
+        "ok" if not missing else "fail",
+        missing=missing,
+    )
+    return not missing
+
+
 def check_audit_metadata_gate() -> bool:
     with tempfile.TemporaryDirectory(prefix="eggpu_preflight_audit_") as tmp:
         tmp_path = Path(tmp)
@@ -1160,6 +1189,7 @@ def main() -> int:
         check_backend_separation_static_contract(),
         check_sota_summary_validation_filter_contract(),
         check_validation_reference_oracle_contract(),
+        check_gpu_device_profile_metadata_contract(),
         check_audit_metadata_gate(),
         check_audit_validation_gate(),
         check_audit_validation_error_gate(),

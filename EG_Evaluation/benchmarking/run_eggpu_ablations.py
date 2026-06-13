@@ -15,7 +15,10 @@ import csv
 import json
 import math
 import os
+import platform
+import sys
 import time
+from datetime import datetime
 from pathlib import Path
 
 import numpy as np
@@ -27,6 +30,7 @@ from library_baselines import load_graph
 from library_baselines import pick_sources
 from library_baselines import sync_gpu
 from gpu_visibility_marker import GpuVisibilityMarker
+from gpu_device_profile import collect_gpu_device_profile
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -631,6 +635,58 @@ def write_rows(rows, out_path):
     print(f"Wrote {path}", flush=True)
 
 
+def write_metadata(args, out_path):
+    if not out_path:
+        return
+    path = Path(out_path).with_suffix(".metadata.json")
+    env_keys = [
+        "CUDA_VISIBLE_DEVICES",
+        "EGGPU_MONITOR_GPU_INDEX",
+        "EGGPU_CUDA_ROOT",
+        "CUDA_PATH",
+        "CONDA_PREFIX",
+        "EASYGRAPH_ENABLE_GPU",
+        "EASYGRAPH_GPU_BACKEND",
+        "EASYGRAPH_GPU_STRICT_ERRORS",
+        "EASYGRAPH_GPU_ADAPTIVE_POLICY",
+        "EASYGRAPH_GPU_COMPONENT_DENSE_RETURN",
+        "EASYGRAPH_GPU_SCC_ACTIVE_TRIM_MAX_ITERS",
+        "EASYGRAPH_GPU_SCC_HOST_ENABLE",
+        "EASYGRAPH_GPU_KCORE_HOST_ENABLE",
+        "EASYGRAPH_GPU_SSSP_HOST_ENABLE",
+        "EASYGRAPH_GPU_BC_WARP_SIZE",
+        "EASYGRAPH_GPU_CONSTRAINT_SMALLER_INTERSECTION",
+    ]
+    metadata = {
+        "schema_version": 1,
+        "created_at": datetime.now().isoformat(timespec="seconds"),
+        "argv": list(sys.argv),
+        "python": {
+            "executable": sys.executable,
+            "version": sys.version.replace("\n", " "),
+            "platform": platform.platform(),
+        },
+        "benchmark_args": {
+            "experiment": args.experiment,
+            "variant": args.variant,
+            "edge_path": args.edge_path,
+            "dataset_name": args.dataset_name,
+            "graph_type": args.graph_type,
+            "functions": args.functions,
+            "repeat": args.repeat,
+            "warmup": args.warmup,
+            "gpu": args.gpu,
+            "sssp_sources": args.sssp_sources,
+            "bc_sources": args.bc_sources,
+            "layout_pr_iters": args.layout_pr_iters,
+        },
+        "environment": {key: os.environ.get(key, "") for key in env_keys},
+        "gpu_device_profile": collect_gpu_device_profile(args.gpu, os.environ),
+    }
+    path.write_text(json.dumps(metadata, indent=2, sort_keys=True) + "\n")
+    print(f"Wrote {path}", flush=True)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--experiment", choices=["workflow", "return", "layout"], required=True)
@@ -662,6 +718,7 @@ def main():
     else:
         raise ValueError(args.experiment)
     write_rows(rows, args.out)
+    write_metadata(args, args.out)
 
 
 if __name__ == "__main__":
