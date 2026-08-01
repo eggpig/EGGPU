@@ -3,6 +3,8 @@ import os
 from .directed_graph import DiGraph
 from .directed_graph import DiGraphC
 from .directed_multigraph import MultiDiGraph
+from .eggpu_bulk_graph import EGGPUBulkGraph
+from .eggpu_bulk_graph import read_eggpu_csr
 from .graph import Graph
 from .graph import GraphC
 from .graphviews import *

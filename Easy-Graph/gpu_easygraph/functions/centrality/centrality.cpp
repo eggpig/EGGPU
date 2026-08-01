@@ -167,7 +167,7 @@ int pagerank(
     return cuda_pagerank(
         V.data(),
         E.data(),
-        W.data(),
+        W.empty() ? nullptr : W.data(),
         len_V,
         len_E,
         alpha,

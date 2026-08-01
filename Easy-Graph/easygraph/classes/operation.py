@@ -123,6 +123,12 @@ def set_edge_attributes(G, values, name=None):
                     G[u][v].update(d)
                 except KeyError:
                     pass
+    # Edge attributes participate in weighted degree, native CSR, and EGGPU
+    # graph-state caches.  Keep this explicit for custom graph classes whose
+    # attribute mappings are not mutation-aware.
+    clear_cache = getattr(G, "_clear_cache", None)
+    if callable(clear_cache):
+        clear_cache()
 
 
 def add_path(G_to_add_to, nodes_for_path, **attr):

@@ -23,7 +23,10 @@
 namespace py = pybind11;
 
 typedef int node_t;
-typedef float weight_t;
+// Python numeric edge attributes and all GPU weighted kernels use double.
+// Keeping the intermediate C++ graph at float silently changed both MST edge
+// ordering and returned weights before data ever reached CUDA.
+typedef double weight_t;
 typedef std::map<std::string, weight_t> node_attr_dict_factory; //(weight_key, value)
 typedef std::map<std::string, weight_t> edge_attr_dict_factory; //(weight_key, value)
 typedef std::unordered_map<node_t, node_attr_dict_factory> node_dict_factory; //(node, node_attr)
@@ -34,4 +37,3 @@ struct graph_edge {
 	edge_attr_dict_factory attr;
 	graph_edge(node_t, node_t, edge_attr_dict_factory);
 };
-

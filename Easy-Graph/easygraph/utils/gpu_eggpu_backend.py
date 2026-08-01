@@ -1,3 +1,4 @@
+import copy
 import os
 import re
 import shutil
@@ -10,12 +11,11 @@ from collections.abc import Mapping
 from pathlib import Path
 
 from easygraph.utils import gpu_adaptive_policy as adaptive_policy
-from easygraph.utils.gpu_runtime import gpu_backend_name
 from easygraph.utils.gpu_runtime import gpu_runtime_enabled
 
 
 _LAST_KERNEL_SECONDS = {}
-_PREPARED_CACHE_KEY = "__gpu_mine_prepared_graph__"
+_PREPARED_CACHE_KEY = "__eggpu_prepared_graph__"
 _CACHE_ROOT = Path(
     os.environ.get(
         "EASYGRAPH_GPU_CACHE_DIR",
@@ -24,14 +24,14 @@ _CACHE_ROOT = Path(
 ).expanduser()
 _MAX_CACHE_DIRS = int(os.environ.get("EASYGRAPH_GPU_MAX_CACHE_DIRS", "32"))
 _HASH_MASK = (1 << 64) - 1
-_RESULT_CACHE_ENABLED = os.environ.get("EASYGRAPH_GPU_RESULT_CACHE", "TRUE").strip().upper() in {
+_RESULT_CACHE_ENABLED = os.environ.get("EASYGRAPH_GPU_RESULT_CACHE", "FALSE").strip().upper() in {
     "1",
     "TRUE",
     "ON",
     "YES",
 }
 _RESULT_CACHE_RETURN_COPY = os.environ.get(
-    "EASYGRAPH_GPU_RESULT_CACHE_RETURN_COPY", "FALSE"
+    "EASYGRAPH_GPU_RESULT_CACHE_RETURN_COPY", "TRUE"
 ).strip().upper() in {
     "1",
     "TRUE",
@@ -41,8 +41,8 @@ _RESULT_CACHE_RETURN_COPY = os.environ.get(
 _RESULT_CACHE_MAX_ITEMS = max(1, int(os.environ.get("EASYGRAPH_GPU_RESULT_CACHE_MAX_ITEMS", "8")))
 _RESULT_CACHE_MAX_NODES = max(0, int(os.environ.get("EASYGRAPH_GPU_RESULT_CACHE_MAX_NODES", "2000000")))
 _FALLBACK_GRAPH_CACHE = weakref.WeakKeyDictionary()
-_CPP_GRAPH_CACHE_KEY = "__gpu_mine_cpp_graph__"
-_CPP_GRAPH_CACHE_CTX_KEY = "__gpu_mine_cpp_graph_ctx__"
+_CPP_GRAPH_CACHE_KEY = "__eggpu_cpp_graph__"
+_CPP_GRAPH_CACHE_CTX_KEY = "__eggpu_cpp_graph_ctx__"
 _CPP_DIRECT_DISABLED = os.environ.get("EASYGRAPH_GPU_DISABLE_CPP_DIRECT", "").strip().upper() in {
     "1",
     "TRUE",
@@ -94,17 +94,8 @@ _CPP_CC_PREFER_DICT = _env_bool(
 )
 
 
-def mine_backend_enabled():
-    if not gpu_runtime_enabled():
-        return False
-    return gpu_backend_name() in {
-        "mine",
-        "mine-bin",
-        "eggpu",
-        "native-mine",
-        "auto",
-        "default",
-    }
+def eggpu_backend_enabled():
+    return gpu_runtime_enabled()
 
 
 def set_last_kernel_time(key, seconds):
@@ -134,32 +125,180 @@ def _edge_slots(prepared):
     return adaptive_policy.edge_slots(prepared)
 
 
-class _DenseValueDict(dict):
-    """Dict-compatible view over a dense result vector.
+def _is_bulk_graph(G):
+    return bool(getattr(G, "_eggpu_bulk_csr", False))
 
-    The EasyGraph public API historically returns dict-like objects for
-    PageRank/LCC.  Materializing millions of Python key/value pairs dominates
-    EGGPU e2e time, so this view keeps dense storage and only creates Python
-    pairs when a caller explicitly iterates over items.
+
+def _bulk_weight_available(G, weight):
+    return (
+        _is_bulk_graph(G)
+        and weight is not None
+        and getattr(G, "weights_path", None) is not None
+        and getattr(G, "weight_key", None) == str(weight)
+    )
+
+
+def _compact_node_sequence(nodes):
+    return nodes if isinstance(nodes, range) else list(nodes)
+
+
+class _ContiguousNodeDict(dict):
+    """Sparse-attribute node mapping for implicit labels ``0..N-1``.
+
+    Bulk CSR inputs deliberately avoid millions of Python node objects.  MST
+    results nevertheless need to preserve the EasyGraph Graph contract, so
+    this mapping exposes every integer node while allocating an attribute
+    dictionary only when a caller actually accesses or modifies that node.
+    """
+
+    def __init__(self, size):
+        self._size = int(size)
+        self._attrs = {}
+
+    def _valid(self, key):
+        return isinstance(key, int) and 0 <= key < self._size
+
+    def __len__(self):
+        return self._size
+
+    def __iter__(self):
+        return iter(range(self._size))
+
+    def __contains__(self, key):
+        return self._valid(key)
+
+    def __getitem__(self, key):
+        if not self._valid(key):
+            raise KeyError(key)
+        return self._attrs.setdefault(key, {})
+
+    def __setitem__(self, key, value):
+        if not self._valid(key):
+            raise KeyError(key)
+        self._attrs[key] = value
+
+    def get(self, key, default=None):
+        if not self._valid(key):
+            return default
+        return self._attrs.get(key, {})
+
+    def keys(self):
+        return range(self._size)
+
+    def values(self):
+        for node in range(self._size):
+            yield self._attrs.get(node, {})
+
+    def items(self):
+        for node in range(self._size):
+            yield node, self._attrs.get(node, {})
+
+    def copy(self):
+        return {node: dict(attrs) for node, attrs in self.items()}
+
+
+class _IdentityIndexDict(dict):
+    """Dict-compatible identity mapping without materializing N entries."""
+
+    def __init__(self, size):
+        self._size = int(size)
+
+    def _valid(self, key):
+        return isinstance(key, int) and 0 <= key < self._size
+
+    def __len__(self):
+        return self._size
+
+    def __iter__(self):
+        return iter(range(self._size))
+
+    def __contains__(self, key):
+        return self._valid(key)
+
+    def __getitem__(self, key):
+        if not self._valid(key):
+            raise KeyError(key)
+        return key
+
+    def get(self, key, default=None):
+        return key if self._valid(key) else default
+
+    def keys(self):
+        return range(self._size)
+
+    def values(self):
+        return range(self._size)
+
+    def items(self):
+        return ((node, node) for node in range(self._size))
+
+
+def _restore_bulk_mst_tree_contract(tree, prepared):
+    """Attach the implicit bulk-CSR node domain to a native MST result."""
+
+    if tree is None or not prepared.get("bulk_csr"):
+        return tree
+    nodes = prepared.get("nodes", ())
+    node_count = len(nodes)
+    if len(tree) == node_count:
+        return tree
+
+    node_map = _ContiguousNodeDict(node_count)
+    identity = _IdentityIndexDict(node_count)
+    tree._node = node_map
+    tree._node_index = identity
+    tree._id = node_count
+    cache = tree.cache if isinstance(getattr(tree, "cache", None), dict) else {}
+    cache["index2node"] = identity
+    cache["node_index"] = identity
+    cache["_compact_zero_based_node_count"] = node_count
+    lazy_arrays = cache.get("_lazy_edge_arrays")
+    if lazy_arrays is not None and len(lazy_arrays) >= 1:
+        cache["_lazy_edge_count"] = len(lazy_arrays[0])
+    tree.cache = cache
+    return tree
+
+
+class _DenseResultShapeError(ValueError):
+    """Raised when a native dense result violates its documented ABI shape."""
+
+
+class _DenseValueDict(Mapping):
+    """Read-only mapping over a dense result vector.
+
+    EGGPU's bulk-result contract is a node-to-value ``Mapping``.  Keeping this
+    object out of the ``dict`` inheritance hierarchy is deliberate: an empty
+    base ``dict`` with overridden accessors is not a conforming dictionary
+    (for example, equality and the C JSON encoder inspect its empty storage).
+    This mapping keeps dense storage, supports normal mapping equality and
+    ``dict(result)``, and rejects mutation explicitly.
     """
 
     def __init__(self, nodes, values, node_to_idx=None, dtype=float):
-        import numpy as np
-
-        self._nodes = list(nodes)
-        self._values = np.asarray(values, dtype=dtype).reshape(-1)
-        if len(self._values) < len(self._nodes):
-            padded = np.zeros(len(self._nodes), dtype=self._values.dtype)
-            padded[: len(self._values)] = self._values
-            self._values = padded
-        elif len(self._values) > len(self._nodes):
-            self._values = self._values[: len(self._nodes)]
+        self._nodes = _compact_node_sequence(nodes)
+        self._values = _normalize_dense_array(
+            values,
+            len(self._nodes),
+            dtype=dtype,
+            result_name="dense node-value mapping",
+        )
+        self._values.setflags(write=False)
         self._node_to_idx = node_to_idx if isinstance(node_to_idx, dict) else None
+        self._contiguous_zero_based = (
+            isinstance(self._nodes, range)
+            and self._nodes.start == 0
+            and self._nodes.step == 1
+        )
+        self._value_cast = int if self._values.dtype.kind in {"i", "u"} else float
         self._index = None
 
     def _idx(self, key):
         if self._node_to_idx is not None:
             return self._node_to_idx.get(key)
+        if self._contiguous_zero_based:
+            if isinstance(key, int) and 0 <= key < len(self._nodes):
+                return key
+            return None
         if self._index is None:
             self._index = {node: i for i, node in enumerate(self._nodes)}
         return self._index.get(key)
@@ -177,23 +316,23 @@ class _DenseValueDict(dict):
         idx = self._idx(key)
         if idx is None:
             raise KeyError(key)
-        return float(self._values[int(idx)])
+        return self._value_cast(self._values[int(idx)])
 
     def get(self, key, default=None):
         idx = self._idx(key)
         if idx is None:
             return default
-        return float(self._values[int(idx)])
+        return self._value_cast(self._values[int(idx)])
 
     def keys(self):
-        return list(self._nodes)
+        return self._nodes if self._contiguous_zero_based else list(self._nodes)
 
     def values(self):
         return self._values
 
     def items(self):
         for i, node in enumerate(self._nodes):
-            yield node, float(self._values[i])
+            yield node, self._value_cast(self._values[i])
 
     def copy(self):
         return dict(self.items())
@@ -213,22 +352,30 @@ class _DenseValueDict(dict):
         return np.asarray(self._values, dtype=dtype)
 
     def __repr__(self):
+        if len(self._nodes) > 1000:
+            return (
+                f"{self.__class__.__name__}(nodes={len(self._nodes)}, "
+                f"dtype={self._values.dtype}, materialized=False)"
+            )
         return repr(self.to_dict())
 
 
-class _DenseDistanceDict(dict):
+class _DenseDistanceDict(Mapping):
     def __init__(self, nodes, values, node_to_idx=None):
-        import numpy as np
-
-        self._nodes = list(nodes)
-        self._values = np.asarray(values, dtype=np.float64).reshape(-1)
-        if len(self._values) < len(self._nodes):
-            padded = np.full(len(self._nodes), math.inf, dtype=np.float64)
-            padded[: len(self._values)] = self._values
-            self._values = padded
-        elif len(self._values) > len(self._nodes):
-            self._values = self._values[: len(self._nodes)]
+        self._nodes = _compact_node_sequence(nodes)
+        self._values = _normalize_dense_array(
+            values,
+            len(self._nodes),
+            dtype="float64",
+            result_name="dense distance mapping",
+        )
+        self._values.setflags(write=False)
         self._node_to_idx = node_to_idx if isinstance(node_to_idx, dict) else None
+        self._contiguous_zero_based = (
+            isinstance(self._nodes, range)
+            and self._nodes.start == 0
+            and self._nodes.step == 1
+        )
         self._index = None
         self._finite_mask = None
         self._finite_idxs = None
@@ -236,6 +383,10 @@ class _DenseDistanceDict(dict):
     def _idx(self, key):
         if self._node_to_idx is not None:
             return self._node_to_idx.get(key)
+        if self._contiguous_zero_based:
+            if isinstance(key, int) and 0 <= key < len(self._nodes):
+                return key
+            return None
         if self._index is None:
             self._index = {node: i for i, node in enumerate(self._nodes)}
         return self._index.get(key)
@@ -296,32 +447,38 @@ class _DenseDistanceDict(dict):
         return self._values.copy() if copy else self._values
 
     def __repr__(self):
+        if len(self._nodes) > 1000:
+            return (
+                f"{self.__class__.__name__}(nodes={len(self._nodes)}, "
+                f"reachable={len(self)}, materialized=False)"
+            )
         return repr(self.copy())
 
 
-class _DenseMultiSourceSSSPDict(dict):
-    def __init__(self, sources, nodes, values, node_to_idx=None):
-        import numpy as np
-
+class _DenseMultiSourceSSSPDict(Mapping):
+    def __init__(
+        self,
+        sources,
+        nodes,
+        values,
+        node_to_idx=None,
+        *,
+        allow_leading_sentinel=False,
+        result_name="multi-source SSSP values_dense",
+    ):
         self._sources = list(sources)
-        self._nodes = list(nodes)
-        arr = np.asarray(values, dtype=np.float64)
-        if arr.ndim == 1:
-            arr = arr.reshape(1, -1)
-        if arr.shape[0] < len(self._sources):
-            padded = np.full((len(self._sources), arr.shape[1]), math.inf, dtype=np.float64)
-            padded[: arr.shape[0], : arr.shape[1]] = arr
-            arr = padded
-        if arr.shape[1] == len(self._nodes) + 1:
-            arr = arr[:, 1:]
-        if arr.shape[1] < len(self._nodes):
-            padded = np.full((arr.shape[0], len(self._nodes)), math.inf, dtype=np.float64)
-            padded[:, : arr.shape[1]] = arr
-            arr = padded
-        elif arr.shape[1] > len(self._nodes):
-            arr = arr[:, : len(self._nodes)]
-        self._values = arr[: len(self._sources)]
+        self._nodes = _compact_node_sequence(nodes)
+        self._values = _normalize_dense_matrix(
+            values,
+            len(self._sources),
+            len(self._nodes),
+            dtype="float64",
+            allow_leading_sentinel=allow_leading_sentinel,
+            result_name=result_name,
+        )
+        self._values.setflags(write=False)
         self._node_to_idx = node_to_idx if isinstance(node_to_idx, dict) else None
+        self._source_to_row = {source: row for row, source in enumerate(self._sources)}
         self._rows = {}
 
     def __len__(self):
@@ -334,9 +491,8 @@ class _DenseMultiSourceSSSPDict(dict):
         return key in self._sources
 
     def __getitem__(self, key):
-        try:
-            row = self._sources.index(key)
-        except ValueError:
+        row = self._source_to_row.get(key)
+        if row is None:
             raise KeyError(key) from None
         cached = self._rows.get(row)
         if cached is None:
@@ -371,7 +527,51 @@ class _DenseMultiSourceSSSPDict(dict):
         return self._values.copy() if copy else self._values
 
     def __repr__(self):
+        if len(self._nodes) > 1000:
+            return (
+                f"{self.__class__.__name__}(sources={len(self._sources)}, "
+                f"nodes={len(self._nodes)}, materialized=False)"
+            )
         return repr(self.copy())
+
+
+class _DenseComponentCollection:
+    """Deferred EasyGraph component-set view over compact integer labels."""
+
+    def __init__(self, nodes, labels):
+        import numpy as np
+
+        self._nodes = _compact_node_sequence(nodes)
+        self._labels = np.asarray(labels, dtype=np.int32).reshape(-1)
+        if len(self._labels) != len(self._nodes):
+            raise ValueError("component label count does not match node count")
+
+    def labels_numpy(self, copy=False):
+        return self._labels.copy() if copy else self._labels
+
+    def __iter__(self):
+        import numpy as np
+
+        if not len(self._labels):
+            return
+        order = np.argsort(self._labels, kind="stable")
+        ordered_labels = self._labels[order]
+        boundaries = np.flatnonzero(ordered_labels[1:] != ordered_labels[:-1]) + 1
+        start = 0
+        contiguous = isinstance(self._nodes, range)
+        for end in np.append(boundaries, len(order)):
+            idxs = order[start:int(end)]
+            if contiguous:
+                yield {int(idx) for idx in idxs}
+            else:
+                yield {self._nodes[int(idx)] for idx in idxs}
+            start = int(end)
+
+    def __repr__(self):
+        return (
+            f"{self.__class__.__name__}(nodes={len(self._nodes)}, "
+            "component_sets_materialized=False)"
+        )
 
 
 def _candidate_bin_dirs():
@@ -464,6 +664,8 @@ def _cpp_graph_cache_keys(directed_mode, host_mode=False):
 
 
 def _build_cpp_graph(G, directed_mode):
+    if _is_bulk_graph(G):
+        return G.cpp()
     cpp_graph = None
     try:
         import cpp_easygraph
@@ -549,13 +751,13 @@ def _cpp_gpu_pagerank(prepared, G, alpha, max_iter, eps, weight):
             dense = out.get("values_dense")
             if dense is not None:
                 kernel_s = out.get("kernel_seconds")
-                try:
-                    raw_len = len(dense)
-                except Exception:
-                    raw_len = None
-                if target_len > 0 and raw_len == 0 and (kernel_s is None or float(kernel_s) == 0.0):
-                    return None
-                vals = _normalize_dense_array(dense, target_len, dtype="float64")
+                vals = _normalize_dense_array(
+                    dense,
+                    target_len,
+                    dtype="float64",
+                    allow_leading_sentinel=True,
+                    result_name="PageRank values_dense",
+                )
                 values = _DenseValueDict(
                     nodes,
                     vals,
@@ -643,7 +845,7 @@ def _cpp_gpu_mst_tree(prepared, G, weight):
     out = cpp_easygraph.cpp_gpu_mst_tree(cpp_graph, weight=weight)
     if not isinstance(out, dict):
         return None
-    tree = out.get("tree")
+    tree = _restore_bulk_mst_tree_contract(out.get("tree"), prepared)
     kernel_s = out.get("kernel_seconds")
     if edge_slots and tree is None and (kernel_s is None or float(kernel_s) == 0.0):
         return None
@@ -676,13 +878,13 @@ def _cpp_gpu_clustering(prepared, G):
             dense = out.get("values_dense")
             if dense is not None:
                 kernel_s = out.get("kernel_seconds")
-                try:
-                    raw_len = len(dense)
-                except Exception:
-                    raw_len = None
-                if target_len > 0 and raw_len == 0 and (kernel_s is None or float(kernel_s) == 0.0):
-                    return None
-                vals = _normalize_dense_array(dense, target_len, dtype="float64")
+                vals = _normalize_dense_array(
+                    dense,
+                    target_len,
+                    dtype="float64",
+                    allow_leading_sentinel=True,
+                    result_name="LCC values_dense",
+                )
                 values = _DenseValueDict(
                     nodes,
                     vals,
@@ -708,6 +910,16 @@ def _structural_nodes(prepared, nodes):
     if nodes is None:
         return None, all_nodes, prepared.get("node_to_idx")
     node_to_idx = prepared.get("node_to_idx", {})
+    if node_to_idx is None and prepared.get("bulk_csr"):
+        try:
+            selected = [int(nodes)] if isinstance(nodes, int) else [int(node) for node in nodes]
+        except (TypeError, ValueError):
+            raise KeyError("bulk CSR node labels must be integers") from None
+        node_count = int(prepared.get("node_count", 0))
+        missing = [node for node in selected if node < 0 or node >= node_count]
+        if missing:
+            raise KeyError(f"nodes are not in graph: {missing[:5]}")
+        return selected, selected, {node: i for i, node in enumerate(selected)}
     try:
         if nodes in node_to_idx:
             selected = [nodes]
@@ -733,6 +945,11 @@ def _edge_attr_weight(data, weight):
 
 
 def _weighted_degree_values(G, target_nodes, weight):
+    if _is_bulk_graph(G):
+        dense = G.degree_values(weight=weight)
+        if isinstance(target_nodes, range) and target_nodes == G.nodes:
+            return dense
+        return [float(dense[int(node)]) for node in target_nodes]
     adj = _adj_dict(G)
     directed = bool(G.is_directed())
     pred = getattr(G, "_pred", None)
@@ -755,6 +972,14 @@ def _weighted_degree_values(G, target_nodes, weight):
 
 
 def _neighbor_count_values(G, target_nodes):
+    if _is_bulk_graph(G):
+        # Only the zero/nonzero distinction is consumed by structural-hole
+        # postprocessing. Total degree is sufficient even when reciprocal
+        # directed edges would otherwise be deduplicated as neighbors.
+        dense = G.nonisolated_mask()
+        if isinstance(target_nodes, range) and target_nodes == G.nodes:
+            return dense
+        return [float(dense[int(node)]) for node in target_nodes]
     adj = _adj_dict(G)
     directed = bool(G.is_directed())
     pred = getattr(G, "_pred", None)
@@ -796,8 +1021,12 @@ def _slice_dense_for_nodes(prepared, dense, selected_nodes, selected_index):
         )
     node_to_idx = prepared.get("node_to_idx", {})
     values = np.empty(len(selected_nodes), dtype=np.float64)
-    for i, node in enumerate(selected_nodes):
-        values[i] = full[int(node_to_idx[node])]
+    if node_to_idx is None and prepared.get("bulk_csr"):
+        for i, node in enumerate(selected_nodes):
+            values[i] = full[int(node)]
+    else:
+        for i, node in enumerate(selected_nodes):
+            values[i] = full[int(node_to_idx[node])]
     return _DenseValueDict(selected_nodes, values, node_to_idx=selected_index, dtype=float)
 
 
@@ -821,7 +1050,13 @@ def _cpp_gpu_structural_dense(prepared, G, metric, nodes, weight):
     if dense is None:
         return None
     all_nodes = prepared.get("nodes", [])
-    values = _normalize_dense_array(dense, len(all_nodes), dtype="float64", fill_value=0)
+    values = _normalize_dense_array(
+        dense,
+        len(all_nodes),
+        dtype="float64",
+        allow_leading_sentinel=True,
+        result_name=f"{metric} values_dense",
+    )
     if bool(prepared.get("directed", G.is_directed())):
         counts = np.asarray(_neighbor_count_values(G, all_nodes), dtype=np.int64)
         if metric in {"effective_size", "constraint"}:
@@ -861,14 +1096,26 @@ def _cpp_gpu_connected_component_labels(prepared, G, directed):
             dense = out.get("labels_dense")
             if dense is not None:
                 kernel_s = out.get("kernel_seconds")
-                try:
-                    raw_len = len(dense)
-                except Exception:
-                    raw_len = None
-                if target_len > 0 and raw_len == 0 and (kernel_s is None or float(kernel_s) == 0.0):
-                    return None
-                raw = _normalize_dense_vector(dense, target_len)
-                labels = dict(zip(nodes, (int(v) for v in raw)))
+                if prepared.get("bulk_csr"):
+                    raw = _normalize_dense_labels(
+                        dense,
+                        target_len,
+                        allow_leading_sentinel=True,
+                    )
+                    labels = _DenseValueDict(
+                        nodes,
+                        raw,
+                        node_to_idx=None,
+                        dtype="int32",
+                    )
+                else:
+                    raw = _normalize_dense_vector(
+                        dense,
+                        target_len,
+                        allow_leading_sentinel=True,
+                        result_name="connected-component labels_dense",
+                    )
+                    labels = dict(zip(nodes, (int(v) for v in raw)))
                 return labels, (float(kernel_s) if kernel_s is not None else None)
 
     if dict_attempted or not hasattr(cpp_easygraph, "cpp_gpu_connected_component_labels"):
@@ -897,62 +1144,135 @@ def _index_to_node_list(prepared, G):
     return nodes
 
 
-def _normalize_dense_vector(raw_values, target_len):
-    try:
-        n = len(raw_values)
-    except Exception:
-        n = None
-
-    start = 0
-    if n is not None and n == target_len + 1:
-        # Some cpp paths use 1-based IDs and return a sentinel at 0.
-        start = 1
-        n -= 1
-
-    if n is not None and n >= target_len:
-        return [raw_values[start + i] for i in range(target_len)]
-
-    values = list(raw_values[start:]) if start else list(raw_values)
-    if len(values) < target_len:
-        values.extend([0.0] * (target_len - len(values)))
-    elif len(values) > target_len:
-        values = values[:target_len]
-    return values
+def _dense_shape_message(result_name, expected_shapes, actual_shape):
+    expected = " or ".join(str(tuple(shape)) for shape in expected_shapes)
+    return (
+        f"EGGPU {result_name} returned invalid dense shape {tuple(actual_shape)}; "
+        f"expected {expected}"
+    )
 
 
-def _normalize_dense_array(raw_values, target_len, dtype="float64", fill_value=0):
+def _normalize_dense_vector(
+    raw_values,
+    target_len,
+    *,
+    allow_leading_sentinel=False,
+    result_name="dense vector",
+):
+    values = _normalize_dense_array(
+        raw_values,
+        target_len,
+        dtype=None,
+        allow_leading_sentinel=allow_leading_sentinel,
+        result_name=result_name,
+    )
+    return values.tolist()
+
+
+def _normalize_dense_array(
+    raw_values,
+    target_len,
+    dtype="float64",
+    *,
+    allow_leading_sentinel=False,
+    result_name="dense vector",
+):
     import numpy as np
 
-    arr = np.asarray(raw_values, dtype=dtype).reshape(-1)
-    if len(arr) == target_len + 1:
-        arr = arr[1:]
-    if len(arr) < target_len:
-        padded = np.full(target_len, fill_value, dtype=arr.dtype)
-        padded[: len(arr)] = arr
-        arr = padded
-    elif len(arr) > target_len:
-        arr = arr[:target_len]
-    return arr
+    try:
+        arr = np.asarray(raw_values, dtype=dtype)
+    except Exception as exc:
+        raise _DenseResultShapeError(
+            f"EGGPU {result_name} could not be converted to a one-dimensional "
+            f"dense result: {exc}"
+        ) from exc
+
+    exact_shape = (int(target_len),)
+    sentinel_shape = (int(target_len) + 1,)
+    if arr.ndim == 1 and arr.shape == exact_shape:
+        return arr
+    if (
+        allow_leading_sentinel
+        and arr.ndim == 1
+        and arr.shape == sentinel_shape
+    ):
+        return arr[1:]
+
+    expected_shapes = [exact_shape]
+    if allow_leading_sentinel:
+        expected_shapes.append(sentinel_shape)
+    raise _DenseResultShapeError(
+        _dense_shape_message(result_name, expected_shapes, arr.shape)
+    )
 
 
-def _normalize_dense_labels(raw_values, target_len):
-    values = _normalize_dense_array(raw_values, target_len, dtype="int64", fill_value=-1)
-    return values
+def _normalize_dense_matrix(
+    raw_values,
+    source_count,
+    target_len,
+    dtype="float64",
+    *,
+    allow_leading_sentinel=False,
+    result_name="multi-source dense result",
+):
+    import numpy as np
+
+    try:
+        arr = np.asarray(raw_values, dtype=dtype)
+    except Exception as exc:
+        raise _DenseResultShapeError(
+            f"EGGPU {result_name} could not be converted to a two-dimensional "
+            f"dense result: {exc}"
+        ) from exc
+
+    exact_shape = (int(source_count), int(target_len))
+    sentinel_shape = (int(source_count), int(target_len) + 1)
+    if arr.ndim == 2 and arr.shape == exact_shape:
+        return arr
+    if (
+        allow_leading_sentinel
+        and arr.ndim == 2
+        and arr.shape == sentinel_shape
+    ):
+        return arr[:, 1:]
+
+    expected_shapes = [exact_shape]
+    if allow_leading_sentinel:
+        expected_shapes.append(sentinel_shape)
+    raise _DenseResultShapeError(
+        _dense_shape_message(result_name, expected_shapes, arr.shape)
+    )
+
+
+def _normalize_dense_labels(
+    raw_values,
+    target_len,
+    *,
+    allow_leading_sentinel=False,
+    result_name="connected-component labels_dense",
+):
+    return _normalize_dense_array(
+        raw_values,
+        target_len,
+        dtype="int32",
+        allow_leading_sentinel=allow_leading_sentinel,
+        result_name=result_name,
+    )
 
 
 def _components_from_dense_labels(prepared, dense_labels):
     import numpy as np
 
     nodes = prepared.get("nodes", [])
-    labels = np.asarray(dense_labels, dtype=np.int64).reshape(-1)
-    if len(labels) == len(nodes) + 1:
-        labels = labels[1:]
-    if len(labels) < len(nodes):
-        padded = np.full(len(nodes), -1, dtype=np.int64)
-        padded[: len(labels)] = labels
-        labels = padded
-    elif len(labels) > len(nodes):
-        labels = labels[: len(nodes)]
+    labels = _normalize_dense_labels(
+        dense_labels,
+        len(nodes),
+        allow_leading_sentinel=True,
+        result_name="connected-component labels_dense",
+    )
+
+    if prepared.get("bulk_csr"):
+        return _DenseComponentCollection(nodes, labels)
 
     valid = labels >= 0
     if not bool(valid.any()):
@@ -1003,13 +1323,11 @@ def _cpp_gpu_connected_component_labels_dense(prepared, G, directed):
         return None
     nodes = prepared.get("nodes", [])
     kernel_s = out.get("kernel_seconds")
-    try:
-        raw_len = len(dense)
-    except Exception:
-        raw_len = None
-    if len(nodes) > 0 and raw_len == 0 and (kernel_s is None or float(kernel_s) == 0.0):
-        return None
-    labels = _normalize_dense_labels(dense, len(nodes))
+    labels = _normalize_dense_labels(
+        dense,
+        len(nodes),
+        allow_leading_sentinel=True,
+    )
     return labels, (float(kernel_s) if kernel_s is not None else None)
 
 
@@ -1085,6 +1403,8 @@ def _cpp_gpu_multi_source_dijkstra(prepared, G, sources, weight, target):
                     nodes,
                     dense,
                     node_to_idx=prepared.get("node_to_idx"),
+                    allow_leading_sentinel=True,
+                    result_name="Dijkstra multi-source values_dense",
                 )
                 return result, (float(kernel_s) if kernel_s is not None else None)
 
@@ -1108,44 +1428,15 @@ def _cpp_gpu_multi_source_dijkstra(prepared, G, sources, weight, target):
         kernel_s = float(kernel_s)
     if isinstance(out, dict):
         return out, kernel_s
-    try:
-        import numpy as np
-
-        arr = np.asarray(out, dtype=np.float64)
-        if arr.ndim == 1:
-            arr = arr.reshape(1, -1)
-        if arr.shape[0] != len(source_list):
-            return None
-        if arr.shape[1] == len(nodes) + 1:
-            arr = arr[:, 1:]
-        result = _DenseMultiSourceSSSPDict(
-            source_list,
-            nodes,
-            arr,
-            node_to_idx=prepared.get("node_to_idx"),
-        )
-        return result, kernel_s
-    except Exception:
-        rows = out.tolist() if hasattr(out, "tolist") else list(out)
-        if len(rows) != len(source_list):
-            return None
-        result = {}
-        for source, row in zip(source_list, rows):
-            dist = {}
-            values = row.tolist() if hasattr(row, "tolist") else list(row)
-            if len(values) == len(nodes) + 1:
-                values = values[1:]
-            if len(values) < len(nodes):
-                values = values + [math.inf] * (len(nodes) - len(values))
-            for idx, v in enumerate(values[: len(nodes)]):
-                try:
-                    dv = float(v)
-                except Exception:
-                    continue
-                if math.isfinite(dv) and abs(dv) < 1.0e30:
-                    dist[nodes[idx]] = dv
-            result[source] = dist
-        return result, kernel_s
+    result = _DenseMultiSourceSSSPDict(
+        source_list,
+        nodes,
+        out,
+        node_to_idx=prepared.get("node_to_idx"),
+        allow_leading_sentinel=True,
+        result_name="Dijkstra multi-source values",
+    )
+    return result, kernel_s
 
 
 def _cpp_gpu_multi_source_bellman_ford(prepared, G, sources, weight, target):
@@ -1176,6 +1467,8 @@ def _cpp_gpu_multi_source_bellman_ford(prepared, G, sources, weight, target):
         nodes,
         dense,
         node_to_idx=prepared.get("node_to_idx"),
+        allow_leading_sentinel=True,
+        result_name="Bellman-Ford multi-source values_dense",
     )
     return result, (float(kernel_s) if kernel_s is not None else None)
 
@@ -1211,44 +1504,15 @@ def _cpp_host_multi_source_dijkstra(prepared, G, sources, weight, target):
     if isinstance(out, dict):
         return out, kernel_s
 
-    try:
-        import numpy as np
-
-        arr = np.asarray(out, dtype=np.float64)
-        if arr.ndim == 1:
-            arr = arr.reshape(1, -1)
-        if arr.shape[0] != len(source_list):
-            return None
-        if arr.shape[1] == len(nodes) + 1:
-            arr = arr[:, 1:]
-        result = _DenseMultiSourceSSSPDict(
-            source_list,
-            nodes,
-            arr,
-            node_to_idx=prepared.get("node_to_idx"),
-        )
-        return result, kernel_s
-    except Exception:
-        rows = out.tolist() if hasattr(out, "tolist") else list(out)
-        if len(rows) != len(source_list):
-            return None
-        result = {}
-        for source, row in zip(source_list, rows):
-            dist = {}
-            values = row.tolist() if hasattr(row, "tolist") else list(row)
-            if len(values) == len(nodes) + 1:
-                values = values[1:]
-            if len(values) < len(nodes):
-                values = values + [math.inf] * (len(nodes) - len(values))
-            for idx, v in enumerate(values[: len(nodes)]):
-                try:
-                    dv = float(v)
-                except Exception:
-                    continue
-                if math.isfinite(dv) and abs(dv) < 1.0e30:
-                    dist[nodes[idx]] = dv
-            result[source] = dist
-        return result, kernel_s
+    result = _DenseMultiSourceSSSPDict(
+        source_list,
+        nodes,
+        out,
+        node_to_idx=prepared.get("node_to_idx"),
+        allow_leading_sentinel=True,
+        result_name="host Dijkstra multi-source values",
+    )
+    return result, kernel_s
 
 
 def _cpp_gpu_k_core(prepared, G):
@@ -1263,14 +1527,12 @@ def _cpp_gpu_k_core(prepared, G):
             dense = out.get("values_dense")
             if dense is not None:
                 nodes = prepared.get("nodes", [])
-                try:
-                    raw_len = len(dense)
-                except Exception:
-                    raw_len = None
-                arr = (
-                    dense
-                    if raw_len == len(nodes)
-                    else _normalize_dense_array(dense, len(nodes), dtype="int32", fill_value=0)
+                arr = _normalize_dense_array(
+                    dense,
+                    len(nodes),
+                    dtype="int32",
+                    allow_leading_sentinel=True,
+                    result_name="k-core values_dense",
                 )
                 kernel_s = out.get("kernel_seconds")
                 return arr, (float(kernel_s) if kernel_s is not None else None)
@@ -1283,7 +1545,12 @@ def _cpp_gpu_k_core(prepared, G):
     if out is None:
         return None
     nodes = prepared.get("nodes", [])
-    values = _normalize_dense_vector(out, len(nodes))
+    values = _normalize_dense_vector(
+        out,
+        len(nodes),
+        allow_leading_sentinel=True,
+        result_name="k-core values",
+    )
     normalized = [int(v) for v in values]
     return normalized, kernel_s
 
@@ -1308,7 +1575,13 @@ def _cpp_host_k_core(prepared, G):
     if out is None:
         return None
     nodes = prepared.get("nodes", [])
-    values = _normalize_dense_array(out, len(nodes), dtype="int64", fill_value=0)
+    values = _normalize_dense_array(
+        out,
+        len(nodes),
+        dtype="int64",
+        allow_leading_sentinel=True,
+        result_name="host k-core values",
+    )
     return values, elapsed
 
 
@@ -1338,7 +1611,13 @@ def _cpp_gpu_betweenness(prepared, G, weight, sources, normalized, endpoints):
         if out is None:
             return None
     nodes = prepared.get("nodes", [])
-    values = _normalize_dense_array(out, len(nodes), dtype="float64", fill_value=0.0)
+    values = _normalize_dense_array(
+        out,
+        len(nodes),
+        dtype="float64",
+        allow_leading_sentinel=True,
+        result_name="betweenness values_dense",
+    )
     return values, kernel_s
 
 
@@ -1372,7 +1651,13 @@ def _cpp_gpu_closeness(prepared, G, weight, sources):
             target_len = len(sources)
         except TypeError:
             target_len = len(tuple(sources))
-    values = _normalize_dense_array(out, target_len, dtype="float64", fill_value=0.0)
+    values = _normalize_dense_array(
+        out,
+        target_len,
+        dtype="float64",
+        allow_leading_sentinel=True,
+        result_name="closeness values_dense",
+    )
     return values, kernel_s
 
 
@@ -1449,6 +1734,16 @@ def _prepared_graph_usable(G, prepared):
         return False
     if bool(G.is_directed()) != bool(prepared.get("directed")):
         return False
+    if _is_bulk_graph(G):
+        return prepared.get("bulk_signature") == getattr(
+            G, "_eggpu_bulk_signature", None
+        )
+    mutation_generation = getattr(G, "_mutation_generation", None)
+    if (
+        mutation_generation is not None
+        and prepared.get("mutation_generation") != mutation_generation
+    ):
+        return False
     adj = _adj_dict(G)
     if len(adj) != int(prepared.get("node_count", -1)):
         return False
@@ -1465,6 +1760,53 @@ def _prepare_graph_cache(G):
     cache = None if _GRAPH_CONTEXT_CACHE_DISABLED else _graph_cache_dict(G)
     prepared = cache.get(_PREPARED_CACHE_KEY) if cache is not None else None
     if prepared is not None and _prepared_graph_usable(G, prepared):
+        return prepared
+
+    if _is_bulk_graph(G):
+        directed = bool(G.is_directed())
+        node_count = int(len(G))
+        edge_slots = int(getattr(G, "num_entries", 0))
+        signature = getattr(G, "_eggpu_bulk_signature", None)
+        stamp = (
+            directed,
+            node_count,
+            edge_slots,
+            hash(signature) & _HASH_MASK,
+        )
+        metadata = getattr(G, "metadata", {})
+        graph_stats = adaptive_policy.GraphStats(
+            directed=directed,
+            node_count=node_count,
+            edge_slots=edge_slots,
+            max_degree=int(metadata.get("max_degree", 0)),
+            nonzero_degree_nodes=int(metadata.get("nonzero_degree_nodes", 0)),
+            avg_degree=(float(edge_slots) / float(node_count) if node_count else 0.0),
+        )
+        prepared = {
+            "ctx_id": time.time_ns(),
+            "stamp": stamp,
+            "bulk_csr": True,
+            "bulk_signature": signature,
+            "node_count": node_count,
+            "graph_stats": graph_stats,
+            "graph_dir": None,
+            "directed": directed,
+            "nodes": G.nodes,
+            "node_to_idx": None,
+            "directed_path": None,
+            "undirected_path": None,
+            "directed_ready": False,
+            "undirected_ready": False,
+            "weighted_paths": {},
+            "result_cache": {},
+            "result_cache_order": [],
+            "sentinel_directed": [],
+            "sentinel_undirected": [],
+            "reuse_hits": 0,
+            "mutation_generation": None,
+        }
+        if cache is not None:
+            cache[_PREPARED_CACHE_KEY] = prepared
         return prepared
 
     stamp = _graph_stamp(G)
@@ -1503,6 +1845,7 @@ def _prepare_graph_cache(G):
         "sentinel_directed": [],
         "sentinel_undirected": [],
         "reuse_hits": 0,
+        "mutation_generation": getattr(G, "_mutation_generation", None),
     }
     if not directed:
         # Undirected graph can reuse a single unique-edge file for both modes.
@@ -1719,11 +2062,7 @@ def _allow_result_cache(prepared):
 def _copy_for_return(obj):
     if not _RESULT_CACHE_RETURN_COPY:
         return obj
-    if isinstance(obj, dict):
-        return dict(obj)
-    if isinstance(obj, list):
-        return list(obj)
-    return obj
+    return copy.deepcopy(obj)
 
 
 def _result_cache_get(prepared, key):
@@ -1747,7 +2086,9 @@ def _result_cache_put(prepared, key, result, kernel):
     if not isinstance(order, list):
         order = []
         prepared["result_cache_order"] = order
-    cache[key] = {"result": result, "kernel": kernel}
+    # The cache owns a private snapshot.  Returning the same mutable object to
+    # the caller would let ordinary result mutation corrupt a later call.
+    cache[key] = {"result": _copy_for_return(result), "kernel": kernel}
     if key in order:
         order.remove(key)
     order.append(key)
@@ -1758,6 +2099,11 @@ def _result_cache_put(prepared, key, result, kernel):
 
 def pagerank(G, alpha=0.85, max_iter=200, eps=1e-6, weight=None):
     prepared = _graph_context(G)
+    if prepared.get("bulk_csr") and weight is not None and not _bulk_weight_available(G, weight):
+        raise NotImplementedError(
+            f"weighted PageRank requires an EGGPU CSR artifact containing "
+            f"the {weight!r} edge attribute"
+        )
     cache_key = _cache_key(
         "pagerank",
         bool(prepared["directed"]),
@@ -1784,8 +2130,11 @@ def pagerank(G, alpha=0.85, max_iter=200, eps=1e-6, weight=None):
             set_last_kernel_time("pagerank", kernel_s)
             _result_cache_put(prepared, cache_key, result, kernel_s)
             return result
+    except _DenseResultShapeError:
+        raise
     except Exception:
-        pass
+        if prepared.get("bulk_csr"):
+            raise
 
     if weight is not None:
         raise RuntimeError("weighted PageRank fallback binary unavailable; cpp gpu path failed")
@@ -1970,7 +2319,7 @@ def clustering(G):
         return values
 
     nodes = prepared["nodes"]
-    values = {node: 0.0 for node in nodes}
+    values = {} if prepared.get("bulk_csr") else {node: 0.0 for node in nodes}
     if not nodes:
         set_last_kernel_time("lcc", 0.0)
         return values
@@ -1982,6 +2331,8 @@ def clustering(G):
             set_last_kernel_time("lcc", kernel_s)
             _result_cache_put(prepared, cache_key, values, kernel_s)
             return values
+    except _DenseResultShapeError:
+        raise
     except Exception:
         pass
 
@@ -2030,10 +2381,10 @@ def connected_component_labels(G, directed):
         return labels
 
     nodes = prepared["nodes"]
-    labels = {node: -1 for node in nodes}
+    labels = None if prepared.get("bulk_csr") else {node: -1 for node in nodes}
     if not nodes:
         set_last_kernel_time("scc" if directed else "cc", 0.0)
-        return labels
+        return {} if labels is None else labels
 
     try:
         cpp_hit = _cpp_gpu_connected_component_labels(prepared, G, directed=bool(directed))
@@ -2042,8 +2393,11 @@ def connected_component_labels(G, directed):
             set_last_kernel_time("scc" if directed else "cc", kernel_s)
             _result_cache_put(prepared, cache_key, labels, kernel_s)
             return labels
+    except _DenseResultShapeError:
+        raise
     except Exception:
-        pass
+        if prepared.get("bulk_csr"):
+            raise
 
     exe = _resolve_bin("EASYGRAPH_GPU_CC_BIN", ["gpu_graph_scc_v2_local", "gpu_graph_scc_v2"])
     if exe is None:
@@ -2135,14 +2489,20 @@ def connected_components(G, directed=False):
             return out
 
     dense_kernel_s = None
-    if adaptive_policy.prefer_dense_component_return(prepared, directed):
+    if prepared.get("bulk_csr") or adaptive_policy.prefer_dense_component_return(
+        prepared, directed
+    ):
         try:
             dense_hit = _cpp_gpu_connected_component_labels_dense(
                 prepared,
                 G,
                 directed=bool(directed),
             )
+        except _DenseResultShapeError:
+            raise
         except Exception:
+            if prepared.get("bulk_csr"):
+                raise
             dense_hit = None
         if dense_hit is not None:
             dense_labels, dense_kernel_s = dense_hit
@@ -2171,6 +2531,8 @@ def connected_components(G, directed=False):
             G,
             directed=bool(directed),
         )
+    except _DenseResultShapeError:
+        raise
     except Exception:
         dense_hit = None
     if dense_hit is not None:
@@ -2192,6 +2554,11 @@ def connected_components(G, directed=False):
 
 def multi_source_dijkstra(G, sources, weight="weight", target=None):
     prepared = _graph_context(G)
+    if prepared.get("bulk_csr") and weight is not None and not _bulk_weight_available(G, weight):
+        raise NotImplementedError(
+            f"weighted Dijkstra requires an EGGPU CSR artifact containing "
+            f"the {weight!r} edge attribute"
+        )
     source_list = list(sources)
     cache_key = _cache_key(
         "sssp",
@@ -2212,6 +2579,30 @@ def multi_source_dijkstra(G, sources, weight="weight", target=None):
         set_last_kernel_time("bfs" if weight is None else "dijkstra", 0.0)
         return {}
 
+    # CUDA CSR allocation paths need at least one edge.  For an edgeless
+    # graph the shortest-path contract is already known: every valid source
+    # reaches only itself, including when an unreachable target is supplied.
+    # Resolve this exact boundary before entering either weighted GPU backend.
+    if _edge_slots(prepared) == 0:
+        nodes = prepared.get("nodes", ())
+        node_to_idx = prepared.get("node_to_idx")
+        for source in source_list:
+            present = (
+                source in node_to_idx
+                if isinstance(node_to_idx, dict)
+                else source in nodes
+            )
+            if not present:
+                raise KeyError(source)
+        result = {
+            source: {source: 0.0}
+            for source in source_list
+        }
+        set_last_kernel_time("sssp", 0.0)
+        set_last_kernel_time("bfs" if weight is None else "dijkstra", 0.0)
+        _result_cache_put(prepared, cache_key, result, 0.0)
+        return result
+
     # The host Dijkstra fallback is only a weighted shortest-path fast path.
     # Reusing it for BFS (weight=None) is unsafe in long-lived workflow runs
     # after GPU component kernels have initialized cached graph contexts.
@@ -2224,6 +2615,8 @@ def multi_source_dijkstra(G, sources, weight="weight", target=None):
                 weight=weight,
                 target=target,
             )
+        except _DenseResultShapeError:
+            raise
         except Exception:
             host_hit = None
         if host_hit is not None:
@@ -2315,6 +2708,16 @@ def single_source_bellman_ford(G, source, weight="weight", target=None):
 
 def k_core(G):
     prepared = _graph_context(G)
+    if (
+        prepared.get("bulk_csr")
+        and bool(prepared["directed"])
+        and getattr(G, "undirected_projection", None) is None
+    ):
+        raise NotImplementedError(
+            "k-core on a directed EGGPU bulk CSR requires an explicit "
+            "undirected-projection artifact; using the outgoing CSR directly "
+            "would not preserve k-core semantics"
+        )
     cache_key = _cache_key("kcore", bool(prepared["directed"]))
     cached = _result_cache_get(prepared, cache_key)
     if cached is not None:
@@ -2327,6 +2730,8 @@ def k_core(G):
     ):
         try:
             host_hit = _cpp_host_k_core(prepared, G)
+        except _DenseResultShapeError:
+            raise
         except Exception:
             host_hit = None
         if host_hit is not None:

@@ -17,6 +17,11 @@ bool adaptive_policy_enabled();
 
 HostCsrStats summarize_host_csr(const int* V, int len_V, int len_E);
 
-bool should_use_weighted_frontier_sssp(const HostCsrStats& stats, int len_V, int len_E);
+bool should_use_weighted_frontier_sssp(
+    const HostCsrStats& stats,
+    int len_V,
+    int len_E,
+    int len_sources
+);
 
 } // namespace gpu_easygraph

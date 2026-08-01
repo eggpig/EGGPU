@@ -87,6 +87,7 @@ py::object _invoke_gpu_dijkstra_multisource(py::object G,py::object py_sources, 
         G_.gen_CSR(weight_to_string(weight));
     }
     auto csr_graph = G_.csr_graph;
+    gpu_easygraph::DeviceCsrCacheScope device_cache_scope(csr_graph->cache_id);
     std::vector<int>& E = csr_graph->E;
     std::vector<int>& V = csr_graph->V;
     std::vector<double> *W_p = weight.is_none() ? &(csr_graph->unweighted_W)
@@ -150,6 +151,7 @@ py::object _invoke_gpu_dijkstra_multisource_dense(py::object G, py::object py_so
         G_.gen_CSR(weight_to_string(weight));
     }
     auto csr_graph = G_.csr_graph;
+    gpu_easygraph::DeviceCsrCacheScope device_cache_scope(csr_graph->cache_id);
     std::vector<int>& E = csr_graph->E;
     std::vector<int>& V = csr_graph->V;
     std::vector<double>* W_p = weight.is_none() ? &(csr_graph->unweighted_W)
@@ -226,6 +228,7 @@ py::object _bellman_ford_multisource_gpu_dense(py::object G, py::object py_sourc
         G_.gen_CSR(weight_to_string(weight));
     }
     auto csr_graph = G_.csr_graph;
+    gpu_easygraph::DeviceCsrCacheScope device_cache_scope(csr_graph->cache_id);
     std::vector<int>& E = csr_graph->E;
     std::vector<int>& V = csr_graph->V;
     std::vector<double>* W_p = weight.is_none() ? &(csr_graph->unweighted_W)

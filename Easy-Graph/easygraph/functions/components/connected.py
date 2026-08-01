@@ -76,9 +76,12 @@ def connected_components(G):
     """
     gpu_components = _connected_components_gpu_runtime_dispatch(G)
     if gpu_components is not None:
-        for comp in gpu_components:
-            yield comp
-        return
+        return gpu_components
+    return _connected_components_python(G)
+
+
+def _connected_components_python(G):
+    """Generate component sets for the CPU path after backend dispatch."""
 
     seen = set()
     for v in G:
@@ -172,44 +175,11 @@ def _connected_components_gpu_runtime_dispatch(G):
         return None
 
     try:
-        from easygraph.utils import gpu_mine_backend as mine_backend
+        from easygraph.utils import gpu_eggpu_backend as eggpu_backend
 
-        if mine_backend.mine_backend_enabled():
-            return mine_backend.connected_components(G, directed=False)
+        if eggpu_backend.eggpu_backend_enabled():
+            return eggpu_backend.connected_components(G, directed=False)
     except Exception:
-        if gpu_strict_errors():
+        if gpu_strict_errors() or getattr(G, "_eggpu_bulk_csr", False):
             raise
-
-    if not rapids_backend_enabled():
-        return None
-    if G.is_directed():
-        return None
-
-    try:
-        nodes, node_to_idx = build_node_index(G)
-        if not nodes:
-            return []
-        rows = indexed_edges(
-            G,
-            node_to_idx,
-            undirected_projection=True,
-            weight_key=None,
-        )
-        if not rows:
-            return [{node} for node in nodes]
-
-        cudf, cugraph = import_rapids()
-        edge_df = to_cudf_edgelist(cudf, rows, weighted=False)
-        cg = make_cugraph_graph(cugraph, directed=False)
-        load_cugraph_edgelist(
-            cg,
-            cudf,
-            edge_df,
-            weighted=False,
-            num_nodes=len(nodes),
-            renumber=False,
-        )
-        out = cugraph.connected_components(cg)
-        return component_sets_from_labels(out, nodes)
-    except Exception:
-        return None
+    return None

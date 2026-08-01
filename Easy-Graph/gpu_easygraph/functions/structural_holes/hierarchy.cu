@@ -1,13 +1,16 @@
 #include <cuda.h>
 #include <cuda_runtime.h>
 #include <stdlib.h>
+#include <vector>
 
 #include "common.h"
+#include "device_graph_cache.h"
 #define NODES_PER_BLOCK 1
 
 namespace gpu_easygraph {
 
 enum norm_t { SUM = 0, MAX = 1 };
+static constexpr int DIRECTED_BLOCK_DEGREE_THRESHOLD = 128;
 
 static __device__ bool has_out_edge(
     const int* V,
@@ -400,6 +403,81 @@ static __device__ double directed_local_constraint(
     return local_constraint_of_uv;
 }
 
+__global__ void directed_unweighted_calculate_hierarchy_thread(
+    const int* __restrict__ V,
+    const int* __restrict__ E,
+    const int* __restrict__ in_V,
+    const int* __restrict__ in_E,
+    int num_nodes,
+    const int* __restrict__ node_mask,
+    double* __restrict__ hierarchy_results,
+    const int* __restrict__ directed_sum_scale,
+    int block_degree_threshold
+) {
+    int v = blockIdx.x * blockDim.x + threadIdx.x;
+    if (v >= num_nodes || !node_mask[v]) return;
+
+    int combined_degree =
+        (V[v + 1] - V[v]) + (in_V[v + 1] - in_V[v]);
+    if (combined_degree >= block_degree_threshold) return;
+
+    int neighbor_count = V[v + 1] - V[v];
+    for (int i = in_V[v]; i < in_V[v + 1]; ++i) {
+        int w = in_E[i];
+        if (!has_out_edge(V, E, v, w)) ++neighbor_count;
+    }
+    if (neighbor_count <= 1) {
+        hierarchy_results[v] = 0.0;
+        return;
+    }
+
+    double C = 0.0;
+    for (int i = V[v]; i < V[v + 1]; ++i) {
+        int w = E[i];
+        C += directed_local_constraint(
+            V, E, in_V, in_E, nullptr, nullptr, nullptr, 0, v, w, true,
+            directed_sum_scale);
+    }
+    for (int i = in_V[v]; i < in_V[v + 1]; ++i) {
+        int w = in_E[i];
+        if (!has_out_edge(V, E, v, w)) {
+            C += directed_local_constraint(
+                V, E, in_V, in_E, nullptr, nullptr, nullptr, 0, v, w, true,
+                directed_sum_scale);
+        }
+    }
+    if (C <= 0.0) {
+        hierarchy_results[v] = 0.0;
+        return;
+    }
+
+    double H = 0.0;
+    double log_n = log((double)neighbor_count);
+    for (int i = V[v]; i < V[v + 1]; ++i) {
+        int w = E[i];
+        double c = directed_local_constraint(
+            V, E, in_V, in_E, nullptr, nullptr, nullptr, 0, v, w, true,
+            directed_sum_scale);
+        if (c > 0.0) {
+            double p = c / C;
+            H += p * log(p * (double)neighbor_count) / log_n;
+        }
+    }
+    for (int i = in_V[v]; i < in_V[v + 1]; ++i) {
+        int w = in_E[i];
+        if (!has_out_edge(V, E, v, w)) {
+            double c = directed_local_constraint(
+                V, E, in_V, in_E, nullptr, nullptr, nullptr, 0, v, w, true,
+                directed_sum_scale);
+            if (c > 0.0) {
+                double p = c / C;
+                H += p * log(p * (double)neighbor_count) / log_n;
+            }
+        }
+    }
+    hierarchy_results[v] = H;
+}
+
 __global__ void directed_calculate_hierarchy(
     const int* V,
     const int* E,
@@ -413,9 +491,13 @@ __global__ void directed_calculate_hierarchy(
     const int* node_mask,
     double* hierarchy_results,
     bool is_unweighted,
-    const int* directed_sum_scale
+    const int* directed_sum_scale,
+    const int* block_nodes,
+    int block_node_count
 ) {
-    int v = blockIdx.x;
+    int work_index = blockIdx.x;
+    if (block_nodes != nullptr && work_index >= block_node_count) return;
+    int v = block_nodes == nullptr ? work_index : block_nodes[work_index];
     if (v >= num_nodes || !node_mask[v]) return;
 
     extern __shared__ double shared[];
@@ -493,6 +575,25 @@ __global__ void directed_calculate_hierarchy(
     if (threadIdx.x == 0) hierarchy_results[v] = shared[0];
 }
 
+static std::vector<int> directed_unweighted_block_nodes(
+    const int* V,
+    const int* in_V,
+    const int* node_mask,
+    int num_nodes,
+    int degree_threshold
+) {
+    std::vector<int> nodes;
+    nodes.reserve((size_t)num_nodes / 64 + 1);
+    for (int v = 0; v < num_nodes; ++v) {
+        if (!node_mask[v]) continue;
+        long long combined_degree =
+            (long long)(V[v + 1] - V[v]) +
+            (long long)(in_V[v + 1] - in_V[v]);
+        if (combined_degree >= degree_threshold) nodes.push_back(v);
+    }
+    return nodes;
+}
+
 int cuda_hierarchy(
     _IN_ const int* V,
     _IN_ const int* E,
@@ -518,41 +619,78 @@ int cuda_hierarchy(
     cudaOccupancyMaxPotentialBlockSize(&min_grid_size, &block_size, calculate_hierarchy, 0, 0);
     int grid_size = (num_nodes + block_size - 1) / block_size;
     
-    int* d_V;
-    int* d_E;
-    int* d_in_V;
-    int* d_in_E;
-    int* d_row;
-    int* d_col;
-    double* d_W;
-    int* d_node_mask;
+    int* d_V = nullptr;
+    int* d_E = nullptr;
+    int* d_in_V = nullptr;
+    int* d_in_E = nullptr;
+    int* d_row = nullptr;
+    int* d_col = nullptr;
+    double* d_W = nullptr;
+    int* d_node_mask = nullptr;
     int* d_directed_sum_scale = nullptr;
-    double* d_hierarchy_results;
+    int* d_block_nodes = nullptr;
+    double* d_hierarchy_results = nullptr;
     cudaEvent_t kernel_start = nullptr;
     cudaEvent_t kernel_stop = nullptr;
+    DeviceCsrView out_view;
+    DeviceCsrView in_view;
+    const bool use_cached_csr = is_unweighted;
+    std::vector<int> block_nodes;
+    if (is_directed && is_unweighted) {
+        block_nodes = directed_unweighted_block_nodes(
+            V, in_V, node_mask, num_nodes, DIRECTED_BLOCK_DEGREE_THRESHOLD);
+    }
 
-    EXIT_IF_CUDA_FAILED(cudaMalloc((void**)&d_V, (num_nodes+1) * sizeof(int)));
-    EXIT_IF_CUDA_FAILED(cudaMalloc((void**)&d_E, num_edges * sizeof(int)));
-    EXIT_IF_CUDA_FAILED(cudaMalloc((void**)&d_in_V, (num_nodes+1) * sizeof(int)));
-    EXIT_IF_CUDA_FAILED(cudaMalloc((void**)&d_in_E, num_edges * sizeof(int)));
-    EXIT_IF_CUDA_FAILED(cudaMalloc((void**)&d_row, num_edges * sizeof(int)));
-    EXIT_IF_CUDA_FAILED(cudaMalloc((void**)&d_col, num_edges * sizeof(int)));
-    EXIT_IF_CUDA_FAILED(cudaMalloc((void**)&d_W, num_edges * sizeof(double)));
+    if (use_cached_csr) {
+        EG_ret = acquire_device_csr(
+            V, E, nullptr, num_nodes, num_edges, false, &out_view);
+        if (EG_ret != EG_GPU_SUCC) goto exit;
+        d_V = out_view.d_V;
+        d_E = out_view.d_E;
+        if (is_directed) {
+            EG_ret = acquire_device_csr(
+                in_V, in_E, nullptr, num_nodes, num_edges, false, &in_view);
+            if (EG_ret != EG_GPU_SUCC) goto exit;
+            d_in_V = in_view.d_V;
+            d_in_E = in_view.d_E;
+        }
+    } else {
+        EXIT_IF_CUDA_FAILED(cudaMalloc((void**)&d_V, (num_nodes+1) * sizeof(int)));
+        EXIT_IF_CUDA_FAILED(cudaMalloc((void**)&d_E, num_edges * sizeof(int)));
+        EXIT_IF_CUDA_FAILED(cudaMalloc((void**)&d_in_V, (num_nodes+1) * sizeof(int)));
+        EXIT_IF_CUDA_FAILED(cudaMalloc((void**)&d_in_E, num_edges * sizeof(int)));
+        EXIT_IF_CUDA_FAILED(cudaMalloc((void**)&d_row, num_edges * sizeof(int)));
+        EXIT_IF_CUDA_FAILED(cudaMalloc((void**)&d_col, num_edges * sizeof(int)));
+        EXIT_IF_CUDA_FAILED(cudaMalloc((void**)&d_W, num_edges * sizeof(double)));
+    }
     EXIT_IF_CUDA_FAILED(cudaMalloc((void**)&d_node_mask, num_nodes * sizeof(int)));
     if (is_directed && is_unweighted) {
         EXIT_IF_CUDA_FAILED(cudaMalloc((void**)&d_directed_sum_scale, num_nodes * sizeof(int)));
+        if (!block_nodes.empty()) {
+            EXIT_IF_CUDA_FAILED(cudaMalloc(
+                (void**)&d_block_nodes, block_nodes.size() * sizeof(int)));
+        }
     }
     EXIT_IF_CUDA_FAILED(cudaMalloc((void**)&d_hierarchy_results, num_nodes * sizeof(double)));
     EXIT_IF_CUDA_FAILED(cudaMemset(d_hierarchy_results, 0, num_nodes * sizeof(double)));
 
-    EXIT_IF_CUDA_FAILED(cudaMemcpy(d_V, V, (num_nodes+1) * sizeof(int), cudaMemcpyHostToDevice));
-    EXIT_IF_CUDA_FAILED(cudaMemcpy(d_E, E, num_edges * sizeof(int), cudaMemcpyHostToDevice));
-    EXIT_IF_CUDA_FAILED(cudaMemcpy(d_in_V, in_V, (num_nodes+1) * sizeof(int), cudaMemcpyHostToDevice));
-    EXIT_IF_CUDA_FAILED(cudaMemcpy(d_in_E, in_E, num_edges * sizeof(int), cudaMemcpyHostToDevice));
-    EXIT_IF_CUDA_FAILED(cudaMemcpy(d_row, row, num_edges * sizeof(int), cudaMemcpyHostToDevice));
-    EXIT_IF_CUDA_FAILED(cudaMemcpy(d_col, col, num_edges * sizeof(int), cudaMemcpyHostToDevice));
+    if (!use_cached_csr) {
+        EXIT_IF_CUDA_FAILED(cudaMemcpy(d_V, V, (num_nodes+1) * sizeof(int), cudaMemcpyHostToDevice));
+        EXIT_IF_CUDA_FAILED(cudaMemcpy(d_E, E, num_edges * sizeof(int), cudaMemcpyHostToDevice));
+        EXIT_IF_CUDA_FAILED(cudaMemcpy(d_in_V, in_V, (num_nodes+1) * sizeof(int), cudaMemcpyHostToDevice));
+        EXIT_IF_CUDA_FAILED(cudaMemcpy(d_in_E, in_E, num_edges * sizeof(int), cudaMemcpyHostToDevice));
+        EXIT_IF_CUDA_FAILED(cudaMemcpy(d_row, row, num_edges * sizeof(int), cudaMemcpyHostToDevice));
+        EXIT_IF_CUDA_FAILED(cudaMemcpy(d_col, col, num_edges * sizeof(int), cudaMemcpyHostToDevice));
+    }
     EXIT_IF_CUDA_FAILED(cudaMemcpy(d_node_mask, node_mask, num_nodes * sizeof(int), cudaMemcpyHostToDevice));
-    EXIT_IF_CUDA_FAILED(cudaMemcpy(d_W, W, num_edges * sizeof(double), cudaMemcpyHostToDevice));
+    if (!block_nodes.empty()) {
+        EXIT_IF_CUDA_FAILED(cudaMemcpy(
+            d_block_nodes, block_nodes.data(), block_nodes.size() * sizeof(int),
+            cudaMemcpyHostToDevice));
+    }
+    if (!is_unweighted) {
+        EXIT_IF_CUDA_FAILED(cudaMemcpy(d_W, W, num_edges * sizeof(double), cudaMemcpyHostToDevice));
+    }
 
     EXIT_IF_CUDA_FAILED(cudaEventCreate(&kernel_start));
     EXIT_IF_CUDA_FAILED(cudaEventCreate(&kernel_stop));
@@ -560,15 +698,33 @@ int cuda_hierarchy(
 
     if(is_directed){
         int block_size = 128;
-        int grid_size = num_nodes;
         int shared_memory_size = sizeof(double) * block_size; 
         if (is_unweighted) {
             int scale_grid = (num_nodes + block_size - 1) / block_size;
             hierarchy_directed_unweighted_sum_scale_precompute<<<scale_grid, block_size>>>(
                 d_V, d_in_V, num_nodes, d_directed_sum_scale);
             EXIT_IF_CUDA_FAILED(cudaGetLastError());
+            directed_unweighted_calculate_hierarchy_thread<<<
+                scale_grid, block_size>>>(
+                d_V, d_E, d_in_V, d_in_E, num_nodes, d_node_mask,
+                d_hierarchy_results, d_directed_sum_scale,
+                DIRECTED_BLOCK_DEGREE_THRESHOLD);
+            EXIT_IF_CUDA_FAILED(cudaGetLastError());
+            if (!block_nodes.empty()) {
+                directed_calculate_hierarchy<<<
+                    (int)block_nodes.size(), block_size, shared_memory_size>>>(
+                    d_V, d_E, d_in_V, d_in_E, d_row, d_col, d_W, num_nodes,
+                    num_edges, d_node_mask, d_hierarchy_results, true,
+                    d_directed_sum_scale, d_block_nodes,
+                    (int)block_nodes.size());
+            }
+        } else {
+            directed_calculate_hierarchy<<<
+                num_nodes, block_size, shared_memory_size>>>(
+                d_V, d_E, d_in_V, d_in_E, d_row, d_col, d_W, num_nodes,
+                num_edges, d_node_mask, d_hierarchy_results, false,
+                d_directed_sum_scale, nullptr, num_nodes);
         }
-        directed_calculate_hierarchy<<<grid_size, block_size, shared_memory_size>>>(d_V, d_E, d_in_V, d_in_E, d_row, d_col, d_W, num_nodes, num_edges, d_node_mask, d_hierarchy_results, is_unweighted, d_directed_sum_scale);
     }else{
         int block_size = 128;
         int grid_size = num_nodes; 
@@ -586,16 +742,18 @@ int cuda_hierarchy(
 
     EXIT_IF_CUDA_FAILED(cudaMemcpy(hierarchy_results, d_hierarchy_results, num_nodes * sizeof(double), cudaMemcpyDeviceToHost));
 exit:
-
-    cudaFree(d_V);
-    cudaFree(d_E);
-    cudaFree(d_in_V);
-    cudaFree(d_in_E);
+    if (!use_cached_csr) {
+        cudaFree(d_V);
+        cudaFree(d_E);
+        cudaFree(d_in_V);
+        cudaFree(d_in_E);
+    }
     cudaFree(d_row);
     cudaFree(d_col);
     cudaFree(d_W);
     cudaFree(d_node_mask);
     cudaFree(d_directed_sum_scale);
+    cudaFree(d_block_nodes);
     if (kernel_start != nullptr) cudaEventDestroy(kernel_start);
     if (kernel_stop != nullptr) cudaEventDestroy(kernel_stop);
     cudaFree(d_hierarchy_results);

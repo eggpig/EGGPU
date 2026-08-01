@@ -171,6 +171,53 @@ py::object prim_mst_edges(py::object G, py::object minimum, py::object weight, p
     return res;
 }
 
+#ifdef EASYGRAPH_ENABLE_GPU
+static int run_native_gpu_mst(
+    const std::shared_ptr<CSRGraph>& csr_graph,
+    const py::object& weight,
+    const std::string& weight_key,
+    std::vector<int>& mst_src,
+    std::vector<int>& mst_dst,
+    std::vector<double>& mst_weight,
+    double* kernel_seconds
+) {
+    const auto& projection = csr_graph->undirected_projection;
+    if (projection) {
+        static const std::vector<double> unit_weights;
+        const std::vector<double>* weights = &unit_weights;
+        if (!weight.is_none()) {
+            if (projection->lower_W.size() != projection->lower_E.size() ||
+                projection->weight_key != weight_key) {
+                return gpu_easygraph::EG_UNSUPPORTED_GRAPH;
+            }
+            weights = &projection->lower_W;
+        }
+        return gpu_easygraph::mst_single_incidence(
+            projection->lower_V,
+            projection->lower_E,
+            *weights,
+            mst_src,
+            mst_dst,
+            mst_weight,
+            kernel_seconds
+        );
+    }
+
+    std::vector<double>* weights = weight.is_none()
+        ? &(csr_graph->unweighted_W)
+        : csr_graph->W_map.find(weight_key)->second.get();
+    return gpu_easygraph::mst(
+        csr_graph->V,
+        csr_graph->E,
+        *weights,
+        mst_src,
+        mst_dst,
+        mst_weight,
+        kernel_seconds
+    );
+}
+#endif
+
 py::object _mst_gpu_native(py::object G, py::object weight) {
 #ifdef EASYGRAPH_ENABLE_GPU
     Graph& G_ = G.cast<Graph&>();
@@ -181,20 +228,15 @@ py::object _mst_gpu_native(py::object G, py::object weight) {
         G_.gen_CSR(weight_key);
     }
     auto csr_graph = G_.csr_graph;
-    std::vector<int>& V = csr_graph->V;
-    std::vector<int>& E = csr_graph->E;
-    std::vector<double>* W_p = weight.is_none()
-        ? &(csr_graph->unweighted_W)
-        : csr_graph->W_map.find(weight_key)->second.get();
-
+    gpu_easygraph::DeviceCsrCacheScope device_cache_scope(csr_graph->cache_id);
     std::vector<int> mst_src;
     std::vector<int> mst_dst;
     std::vector<double> mst_weight;
     double kernel_seconds = 0.0;
-    int gpu_r = gpu_easygraph::mst(
-        V,
-        E,
-        *W_p,
+    int gpu_r = run_native_gpu_mst(
+        csr_graph,
+        weight,
+        weight_key,
         mst_src,
         mst_dst,
         mst_weight,
@@ -241,20 +283,15 @@ py::object _mst_gpu_native_index_edges(py::object G, py::object weight) {
         G_.gen_CSR(weight_key);
     }
     auto csr_graph = G_.csr_graph;
-    std::vector<int>& V = csr_graph->V;
-    std::vector<int>& E = csr_graph->E;
-    std::vector<double>* W_p = weight.is_none()
-        ? &(csr_graph->unweighted_W)
-        : csr_graph->W_map.find(weight_key)->second.get();
-
+    gpu_easygraph::DeviceCsrCacheScope device_cache_scope(csr_graph->cache_id);
     std::vector<int> mst_src;
     std::vector<int> mst_dst;
     std::vector<double> mst_weight;
     double kernel_seconds = 0.0;
-    int gpu_r = gpu_easygraph::mst(
-        V,
-        E,
-        *W_p,
+    int gpu_r = run_native_gpu_mst(
+        csr_graph,
+        weight,
+        weight_key,
         mst_src,
         mst_dst,
         mst_weight,
@@ -295,20 +332,15 @@ py::object _mst_gpu_native_tree(py::object G, py::object weight) {
         G_.gen_CSR(weight_key);
     }
     auto csr_graph = G_.csr_graph;
-    std::vector<int>& V = csr_graph->V;
-    std::vector<int>& E = csr_graph->E;
-    std::vector<double>* W_p = weight.is_none()
-        ? &(csr_graph->unweighted_W)
-        : csr_graph->W_map.find(weight_key)->second.get();
-
+    gpu_easygraph::DeviceCsrCacheScope device_cache_scope(csr_graph->cache_id);
     std::vector<int> mst_src;
     std::vector<int> mst_dst;
     std::vector<double> mst_weight;
     double kernel_seconds = 0.0;
-    int gpu_r = gpu_easygraph::mst(
-        V,
-        E,
-        *W_p,
+    int gpu_r = run_native_gpu_mst(
+        csr_graph,
+        weight,
+        weight_key,
         mst_src,
         mst_dst,
         mst_weight,
@@ -321,13 +353,17 @@ py::object _mst_gpu_native_tree(py::object G, py::object weight) {
     py::object tree = py::module_::import("easygraph").attr("Graph")();
     py::dict node_dict;
     py::dict node_index;
-    const std::vector<node_t>& nodes = csr_graph->nodes;
-    const int n = (int)nodes.size();
-    for (int i = 0; i < n; ++i) {
-        node_t internal_id = nodes[i];
-        py::object node = G_.id_to_node[py::cast(internal_id)];
-        node_dict[node] = py::dict();
-        node_index[node] = py::int_(i);
+    const int n = csr_graph->contiguous_zero_based
+        ? static_cast<int>(csr_graph->node_count)
+        : static_cast<int>(csr_graph->nodes.size());
+    if (!csr_graph->contiguous_zero_based) {
+        const std::vector<node_t>& nodes = csr_graph->nodes;
+        for (int i = 0; i < n; ++i) {
+            node_t internal_id = nodes[i];
+            py::object node = G_.id_to_node[py::cast(internal_id)];
+            node_dict[node] = py::dict();
+            node_index[node] = py::int_(i);
+        }
     }
 
     const int limit = std::min({(int)mst_src.size(), (int)mst_dst.size(), (int)mst_weight.size()});

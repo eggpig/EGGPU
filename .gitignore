@@ -1,31 +1,8 @@
-# Build products
+# Native and Python build products
 Easy-Graph/build/
 Easy-Graph/.eggs/
 Easy-Graph/*.egg-info/
-Easy-Graph/*.so
-EG_Evaluation/build*/
 *.so
-
-# Runtime outputs
-EG_Evaluation/benchmarking/results/
-*.run.log
-*.audit.log
-*.console.log
-*.backend_separation.log
-*.non_sota.log
-
-# Conversation/session progress notes are local coordination records, not
-# artifact documentation.
-EG_Evaluation/EGGPU_SESSION_PROGRESS_*.md
-
-# Internal paper/report notes stay in the private paper repository, not in the
-# public export repository.
-EG_Evaluation/EGGPU_*.md
-EG_Evaluation/BASELINE_SUPPORT_MATRIX_*.md
-EG_Evaluation/BASELINE_VERSIONS_*.md
-EG_Evaluation/REPRODUCE_ON_NEW_GPU_*.md
-EG_Evaluation/*RESULT*.md
-EG_Evaluation/*REPORT*.md
 
 # Python/editor caches
 __pycache__/
@@ -37,22 +14,8 @@ __pycache__/
 .idea/
 .DS_Store
 
-# Optional third-party baseline checkouts/builds
-EG_Evaluation/gunrock_latest/
-EG_Evaluation/gunrock_legacy_master/
-EG_Evaluation/gunrock_legacy_v12_clean/
-EG_Evaluation/benchmarking/HyTGraph/
-EG_Evaluation/basic_functions/
-EG_Evaluation/cuda_overlays/
-
-# Raw downloads and large generated conversion outputs
-EG_Evaluation/datasets/raw_downloads/
-EG_Evaluation/datasets_mtx/
-EG_Evaluation/paper_sync/
-
-# Keep the public artifact lightweight by default. Full datasets are reproduced
-# from EG_Evaluation/datasets/MANIFEST_*.tsv or deliberately force-added.
-EG_Evaluation/datasets/**/*.txt
-!EG_Evaluation/datasets/DATASETS.md
-!EG_Evaluation/datasets/MANIFEST_*.tsv
-!EG_Evaluation/datasets/undirected/LastFM.txt
+# Local outputs and downloaded data
+*.log
+artifact/datasets/files/
+dist/
+build/

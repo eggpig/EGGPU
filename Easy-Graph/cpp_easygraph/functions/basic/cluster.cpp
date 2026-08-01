@@ -307,15 +307,28 @@ py::object _clustering_gpu_native(py::object G) {
     const bool directed = G.attr("is_directed")().cast<bool>();
     G_.gen_CSR();
     auto csr_graph = G_.csr_graph;
+    gpu_easygraph::DeviceCsrCacheScope device_cache_scope(csr_graph->cache_id);
     std::vector<double> cc_values;
     double kernel_seconds = 0.0;
-    int gpu_r = gpu_easygraph::clustering(
-        csr_graph->V,
-        csr_graph->E,
-        directed,
-        cc_values,
-        &kernel_seconds
-    );
+    int gpu_r = gpu_easygraph::EG_GPU_SUCC;
+    if (directed && csr_graph->undirected_projection != nullptr) {
+        const auto& projection = *csr_graph->undirected_projection;
+        gpu_r = gpu_easygraph::clustering_forward(
+            projection.forward_V,
+            projection.forward_E,
+            projection.degree,
+            cc_values,
+            &kernel_seconds
+        );
+    } else {
+        gpu_r = gpu_easygraph::clustering(
+            csr_graph->V,
+            csr_graph->E,
+            directed,
+            cc_values,
+            &kernel_seconds
+        );
+    }
     if (gpu_r != gpu_easygraph::EG_GPU_SUCC) {
         py::pybind11_fail(gpu_easygraph::err_code_detail(gpu_r));
     }
@@ -345,15 +358,28 @@ py::object _clustering_gpu_native_dense(py::object G) {
     const bool directed = G.attr("is_directed")().cast<bool>();
     G_.gen_CSR();
     auto csr_graph = G_.csr_graph;
+    gpu_easygraph::DeviceCsrCacheScope device_cache_scope(csr_graph->cache_id);
     std::vector<double> cc_values;
     double kernel_seconds = 0.0;
-    int gpu_r = gpu_easygraph::clustering(
-        csr_graph->V,
-        csr_graph->E,
-        directed,
-        cc_values,
-        &kernel_seconds
-    );
+    int gpu_r = gpu_easygraph::EG_GPU_SUCC;
+    if (directed && csr_graph->undirected_projection != nullptr) {
+        const auto& projection = *csr_graph->undirected_projection;
+        gpu_r = gpu_easygraph::clustering_forward(
+            projection.forward_V,
+            projection.forward_E,
+            projection.degree,
+            cc_values,
+            &kernel_seconds
+        );
+    } else {
+        gpu_r = gpu_easygraph::clustering(
+            csr_graph->V,
+            csr_graph->E,
+            directed,
+            cc_values,
+            &kernel_seconds
+        );
+    }
     if (gpu_r != gpu_easygraph::EG_GPU_SUCC) {
         py::pybind11_fail(gpu_easygraph::err_code_detail(gpu_r));
     }

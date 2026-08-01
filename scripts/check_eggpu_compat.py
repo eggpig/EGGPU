@@ -77,6 +77,11 @@ def main():
         description="Check whether the local machine can build and run the EGGPU artifact."
     )
     parser.add_argument("--strict", action="store_true", help="exit nonzero on missing core requirements")
+    parser.add_argument(
+        "--require-extension",
+        action="store_true",
+        help="treat a missing compiled cpp_easygraph extension as an error",
+    )
     parser.add_argument("--expect-rapids", action="store_true", help="treat RAPIDS baseline packages as required")
     args = parser.parse_args()
 
@@ -138,23 +143,27 @@ def main():
         if not ok and module == "easygraph":
             errors.append(f"Cannot import {module}: {detail}")
         elif not ok and module == "cpp_easygraph":
-            warnings.append(f"Cannot import cpp_easygraph yet: {detail}")
+            message = f"Cannot import cpp_easygraph yet: {detail}"
+            if args.require_extension:
+                errors.append(message)
+            else:
+                warnings.append(message)
 
     try:
         from easygraph.utils import gpu_runtime
 
         old_env = {
             key: os.environ.get(key)
-            for key in ("EASYGRAPH_ENABLE_GPU", "EASYGRAPH_GPU_BACKEND", "EASYGRAPH_GPU_STRICT_ERRORS")
+            for key in ("EASYGRAPH_ENABLE_GPU", "EASYGRAPH_GPU_STRICT_ERRORS")
         }
         os.environ["EASYGRAPH_ENABLE_GPU"] = "TRUE"
-        os.environ["EASYGRAPH_GPU_BACKEND"] = "typo"
         os.environ["EASYGRAPH_GPU_STRICT_ERRORS"] = "TRUE"
         try:
-            gpu_runtime.gpu_backend_name()
-            errors.append("Strict GPU backend validation did not reject an unknown backend.")
-        except RuntimeError as exc:
-            print_kv("strict backend validation", str(exc))
+            if not gpu_runtime.gpu_runtime_enabled():
+                errors.append("EASYGRAPH_ENABLE_GPU=TRUE did not enable EGGPU dispatch.")
+            if not gpu_runtime.gpu_strict_errors():
+                errors.append("EASYGRAPH_GPU_STRICT_ERRORS=TRUE did not enable strict errors.")
+            print_kv("EGGPU runtime contract", "enabled with strict errors")
         finally:
             for key, value in old_env.items():
                 if value is None:
@@ -164,14 +173,15 @@ def main():
     except Exception as exc:
         warnings.append(f"Could not run EGGPU runtime contract check: {type(exc).__name__}: {exc}")
 
-    print("\n== Baseline Packages ==")
-    required = ("numpy", "pandas", "scipy", "networkx", "igraph", "psutil", "matplotlib", "pynvml")
+    print("\n== Python Packages ==")
+    required = ("numpy", "pandas", "scipy", "networkx", "psutil", "matplotlib")
+    optional = ("igraph", "pynvml")
     rapids = ("cupy", "cudf", "cugraph", "nx_cugraph")
-    for name in required + rapids:
+    for name in required + optional + rapids:
         ok, detail = import_status(name)
         print_kv(name, detail)
         if not ok and name in required:
-            errors.append(f"Missing baseline package {name}: {detail}")
+            errors.append(f"Missing required package {name}: {detail}")
         if not ok and name in rapids and args.expect_rapids:
             errors.append(f"Missing RAPIDS baseline package {name}: {detail}")
 

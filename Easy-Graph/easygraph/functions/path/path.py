@@ -216,6 +216,11 @@ def Kruskal(G, weight="weight"):
 
 @not_implemented_for("multigraph")
 def single_source_bfs(G, source, target=None):
+    """Return a source-to-node hop-distance mapping.
+
+    GPU execution may return an immutable dense-backed mapping. Use
+    ``dict(result)`` when an independently mutable dictionary is required.
+    """
     gpu_result = _path_gpu_runtime_dispatch(
         "single_source_bfs",
         G,
@@ -249,6 +254,10 @@ def _single_source_bfs(adj, firstlevel, target=None):
 
 @not_implemented_for("multigraph")
 def multi_source_bfs(G, sources, target=None):
+    """Return a source-to-distance-mapping result.
+
+    GPU execution may return immutable dense-backed mappings.
+    """
     gpu_result = _path_gpu_runtime_dispatch(
         "multi_source_bfs",
         G,
@@ -262,6 +271,11 @@ def multi_source_bfs(G, sources, target=None):
 
 @not_implemented_for("multigraph")
 def single_source_dijkstra(G, source, weight="weight", target=None):
+    """Return weighted distances from ``source`` as a node-value mapping.
+
+    GPU execution may return an immutable dense-backed mapping. Use
+    ``dict(result)`` when an independently mutable dictionary is required.
+    """
     gpu_result = _path_gpu_runtime_dispatch(
         "single_source_dijkstra",
         G,
@@ -309,6 +323,10 @@ def single_source_dijkstra(G, source, weight="weight", target=None):
 @not_implemented_for("multigraph")
 @hybrid("cpp_dijkstra_multisource")
 def multi_source_dijkstra(G, sources, weight="weight", target=None):
+    """Return a source-to-distance-mapping result.
+
+    GPU execution may return immutable dense-backed mappings.
+    """
     gpu_result = _multi_source_dijkstra_gpu_runtime_dispatch(
         G,
         sources=sources,
@@ -324,6 +342,10 @@ def multi_source_dijkstra(G, sources, weight="weight", target=None):
 
 @not_implemented_for("multigraph")
 def single_source_bellman_ford(G, source, weight="weight", target=None):
+    """Return Bellman--Ford distances as a node-value mapping.
+
+    GPU execution may return an immutable dense-backed mapping.
+    """
     gpu_result = _path_gpu_runtime_dispatch(
         "single_source_bellman_ford",
         G,
@@ -338,6 +360,10 @@ def single_source_bellman_ford(G, source, weight="weight", target=None):
 
 @not_implemented_for("multigraph")
 def multi_source_bellman_ford(G, sources, weight="weight", target=None):
+    """Return a source-to-Bellman--Ford-distance-mapping result.
+
+    GPU execution may return immutable dense-backed mappings.
+    """
     gpu_result = _path_gpu_runtime_dispatch(
         "multi_source_bellman_ford",
         G,
@@ -403,12 +429,12 @@ def _path_gpu_runtime_dispatch(name, G, **kwargs):
     if not gpu_runtime_enabled():
         return None
     try:
-        from easygraph.utils import gpu_mine_backend as mine_backend
+        from easygraph.utils import gpu_eggpu_backend as eggpu_backend
 
-        if not mine_backend.mine_backend_enabled():
+        if not eggpu_backend.eggpu_backend_enabled():
             return None
-        return getattr(mine_backend, name)(G, **kwargs)
+        return getattr(eggpu_backend, name)(G, **kwargs)
     except Exception:
-        if gpu_strict_errors():
+        if gpu_strict_errors() or getattr(G, "_eggpu_bulk_csr", False):
             raise
         return None

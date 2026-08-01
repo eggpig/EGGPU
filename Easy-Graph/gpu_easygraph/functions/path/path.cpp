@@ -154,4 +154,38 @@ int mst(
     );
 }
 
+int mst_single_incidence(
+    _IN_ const vector<int>& V,
+    _IN_ const vector<int>& E,
+    _IN_ const vector<double>& W,
+    _OUT_ vector<int>& mst_src,
+    _OUT_ vector<int>& mst_dst,
+    _OUT_ vector<double>& mst_weight,
+    _IN_ double* kernel_seconds
+) {
+    const int len_V = static_cast<int>(V.size()) - 1;
+    const int len_E = static_cast<int>(E.size());
+    if (len_V <= 0 || len_E <= 0) {
+        mst_src.clear();
+        mst_dst.clear();
+        mst_weight.clear();
+        if (kernel_seconds != nullptr) *kernel_seconds = 0.0;
+        return EG_GPU_SUCC;
+    }
+    if (!W.empty() && W.size() != E.size()) {
+        return EG_GPU_UNKNOW_ERROR;
+    }
+    return cuda_mst_single_incidence(
+        V.data(),
+        E.data(),
+        W.empty() ? nullptr : W.data(),
+        len_V,
+        len_E,
+        mst_src,
+        mst_dst,
+        mst_weight,
+        kernel_seconds
+    );
+}
+
 } // namespace gpu_easygraph

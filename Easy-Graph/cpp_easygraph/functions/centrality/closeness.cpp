@@ -325,6 +325,7 @@ static py::object invoke_gpu_closeness_centrality(py::object G, py::object weigh
         G_.gen_CSR(weight_to_string(weight));
     }
     auto csr_graph = G_.csr_graph;
+    gpu_easygraph::DeviceCsrCacheScope device_cache_scope(csr_graph->cache_id);
     std::vector<int>& E = csr_graph->E;
     std::vector<int>& V = csr_graph->V;
     std::vector<double> *W_p = weight.is_none() ? &(csr_graph->unweighted_W)

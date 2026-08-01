@@ -12,11 +12,11 @@ def _structural_holes_gpu_runtime_dispatch(metric, G, nodes=None, weight=None):
     if not gpu_runtime_enabled():
         return None
     try:
-        from easygraph.utils import gpu_mine_backend as mine_backend
+        from easygraph.utils import gpu_eggpu_backend as eggpu_backend
 
-        if not mine_backend.mine_backend_enabled():
+        if not eggpu_backend.eggpu_backend_enabled():
             return None
-        return getattr(mine_backend, metric)(G, nodes=nodes, weight=weight)
+        return getattr(eggpu_backend, metric)(G, nodes=nodes, weight=weight)
     except Exception:
         if gpu_strict_errors():
             raise
@@ -113,8 +113,10 @@ def effective_size(G, nodes=None, weight=None, n_workers=None):
         The key for edge weight. If *None*, `G` will be regarded as unweighted graph.
     Returns
     -------
-    effective_size : dict
-        The Effective Size of node in `nodes`.
+    effective_size : collections.abc.Mapping
+        The Effective Size of each node in `nodes`. GPU execution may return
+        an immutable dense-backed mapping; ``dict(effective_size)`` creates an
+        independently mutable dictionary.
     Examples
     --------
     >>> effective_size(G,
@@ -213,8 +215,9 @@ def efficiency(G, nodes=None, weight=None, n_workers=None):
         The key for edge weight. If *None*, `G` will be regarded as unweighted graph.
     Returns
     -------
-    efficiency : dict
-        The Efficiency of node in `nodes`.
+    efficiency : collections.abc.Mapping
+        The Efficiency of each node in `nodes`. GPU execution may return an
+        immutable dense-backed mapping.
     Examples
     --------
     >>> efficiency(G,
@@ -270,8 +273,9 @@ def constraint(G, nodes=None, weight=None, n_workers=None):
         None if not using only one worker.
     Returns
     -------
-    constraint : dict
-        The Constraint of node in `nodes`.
+    constraint : collections.abc.Mapping
+        The Constraint of each node in `nodes`. GPU execution may return an
+        immutable dense-backed mapping.
     Examples
     --------
     >>> constraint(G,
@@ -388,8 +392,9 @@ def hierarchy(G, nodes=None, weight=None, n_workers=None):
     weight : dict, optional (default: None)
     Returns
     -------
-    hierarchy : dict
-        the hierarchy of nodes in the graph
+    hierarchy : collections.abc.Mapping
+        The hierarchy of nodes in the graph. GPU execution may return an
+        immutable dense-backed mapping.
     Examples
     --------
     Returns the hierarchy of nodes in the graph G

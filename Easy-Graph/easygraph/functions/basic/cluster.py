@@ -499,8 +499,10 @@ def clustering(G, nodes=None, weight=None, n_workers=None):
 
     Returns
     -------
-    out : float, or dictionary
-       Clustering coefficient at specified nodes
+    out : float, or collections.abc.Mapping
+       Clustering coefficient at specified nodes. The GPU bulk-result path may
+       return an immutable dense-backed mapping; ``dict(out)`` materializes an
+       independently mutable dictionary.
 
     Examples
     --------
@@ -568,76 +570,33 @@ def clustering(G, nodes=None, weight=None, n_workers=None):
 
 def _clustering_gpu_runtime_dispatch(G, nodes=None, weight=None):
     # The current GPU path uses triangle count on an undirected projection.
-    # Keep directed and weighted cases on the existing CPU implementation.
-    if not gpu_runtime_enabled():
+    # Ordinary directed and weighted calls retain their established CPU
+    # semantics.  A directed immutable bulk graph is the exception when it
+    # carries an explicit logical-undirected projection: the native LCC path
+    # consumes that validated projection without materializing Python
+    # adjacency dictionaries.
+    bulk_projection = (
+        getattr(G, "_eggpu_bulk_csr", False)
+        and getattr(G, "undirected_projection", None) is not None
+    )
+    if (
+        not gpu_runtime_enabled()
+        or weight is not None
+        or (G.is_directed() and not bulk_projection)
+    ):
         return None
 
     try:
-        from easygraph.utils import gpu_mine_backend as mine_backend
+        from easygraph.utils import gpu_eggpu_backend as eggpu_backend
 
-        if mine_backend.mine_backend_enabled():
-            values = mine_backend.clustering(G)
+        if eggpu_backend.eggpu_backend_enabled():
+            values = eggpu_backend.clustering(G)
             if nodes is None:
                 return values
             if nodes in G:
                 return {nodes: values.get(nodes, 0.0)}
             return {node: values.get(node, 0.0) for node in nodes}
     except Exception:
-        if gpu_strict_errors():
+        if gpu_strict_errors() or getattr(G, "_eggpu_bulk_csr", False):
             raise
-
-    if not rapids_backend_enabled():
-        return None
-    if G.is_directed() or weight is not None:
-        return None
-
-    try:
-        all_nodes, node_to_idx = build_node_index(G)
-        rows = indexed_edges(
-            G,
-            node_to_idx,
-            undirected_projection=True,
-            weight_key=None,
-        )
-        values = {node: 0.0 for node in all_nodes}
-        if rows:
-            cudf, cugraph = import_rapids()
-            edge_df = to_cudf_edgelist(cudf, rows, weighted=False)
-            cg = make_cugraph_graph(cugraph, directed=False)
-            load_cugraph_edgelist(
-                cg,
-                cudf,
-                edge_df,
-                weighted=False,
-                num_nodes=len(all_nodes),
-                renumber=False,
-            )
-            tri = cugraph.triangle_count(cg)
-            tri_pdf = tri.to_pandas()
-            tri_col = (
-                "counts"
-                if "counts" in tri_pdf.columns
-                else ("count" if "count" in tri_pdf.columns else tri_pdf.columns[-1])
-            )
-            tri_map = {
-                int(vertex): float(count)
-                for vertex, count in zip(tri_pdf["vertex"], tri_pdf[tri_col])
-            }
-            deg = [0] * len(all_nodes)
-            for src, dst in rows:
-                deg[src] += 1
-                deg[dst] += 1
-            for idx, degree in enumerate(deg):
-                if degree < 2:
-                    values[all_nodes[idx]] = 0.0
-                    continue
-                comb2 = degree * (degree - 1) / 2.0
-                values[all_nodes[idx]] = float(tri_map.get(idx, 0.0) / comb2)
-
-        if nodes is None:
-            return values
-        if nodes in G:
-            return {nodes: values.get(nodes, 0.0)}
-        return {node: values.get(node, 0.0) for node in nodes}
-    except Exception:
-        return None
+    return None

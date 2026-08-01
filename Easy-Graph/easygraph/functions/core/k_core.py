@@ -85,11 +85,11 @@ def _k_core_gpu_runtime_dispatch(G):
     if not gpu_runtime_enabled():
         return None
     try:
-        from easygraph.utils import gpu_mine_backend as mine_backend
+        from easygraph.utils import gpu_eggpu_backend as eggpu_backend
 
-        if mine_backend.mine_backend_enabled():
-            return mine_backend.k_core(G)
+        if eggpu_backend.eggpu_backend_enabled():
+            return eggpu_backend.k_core(G)
     except Exception:
-        if gpu_strict_errors():
+        if gpu_strict_errors() or getattr(G, "_eggpu_bulk_csr", False):
             raise
     return None

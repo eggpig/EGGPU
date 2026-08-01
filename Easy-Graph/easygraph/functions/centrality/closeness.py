@@ -53,8 +53,9 @@ def closeness_centrality(G, weight=None, sources=None, n_workers=None):
 
     Returns
     -------
-    nodes : dictionary
-      Dictionary of nodes with closeness centrality as the value.
+    scores : list of float
+      Closeness scores ordered by ``sources`` when it is provided, otherwise
+      by the graph's internal node order (``G.index2node``).
     """
     gpu_result = _closeness_centrality_gpu_runtime_dispatch(
         G,
@@ -120,14 +121,24 @@ def _closeness_centrality_gpu_runtime_dispatch(G, weight=None, sources=None, n_w
             raise RuntimeError("EGGPU closeness does not support n_workers")
         return None
     try:
-        from easygraph.utils import gpu_mine_backend as mine_backend
+        from easygraph.utils import gpu_eggpu_backend as eggpu_backend
 
-        if mine_backend.mine_backend_enabled():
-            return mine_backend.closeness_centrality(
+        if eggpu_backend.eggpu_backend_enabled():
+            values = eggpu_backend.closeness_centrality(
                 G,
                 weight=weight,
                 sources=sources,
             )
+            if hasattr(values, "tolist"):
+                values = values.tolist()
+            if isinstance(values, dict):
+                output_nodes = (
+                    list(sources)
+                    if sources is not None
+                    else [G.index2node[i] for i in range(len(G))]
+                )
+                return [float(values[node]) for node in output_nodes]
+            return [float(value) for value in values]
     except Exception:
         if gpu_strict_errors():
             raise

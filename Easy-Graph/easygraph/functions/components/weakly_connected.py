@@ -60,9 +60,12 @@ def weakly_connected_components(G):
     """
     gpu_components = _weakly_connected_components_gpu_runtime_dispatch(G)
     if gpu_components is not None:
-        for comp in gpu_components:
-            yield comp
-        return
+        return gpu_components
+    return _weakly_connected_components_python(G)
+
+
+def _weakly_connected_components_python(G):
+    """Generate WCC sets for the CPU path after backend dispatch."""
 
     seen = set()
     for v in G:
@@ -201,12 +204,12 @@ def _weakly_connected_components_gpu_runtime_dispatch(G):
         strict_errors = gpu_strict_errors()
         if not gpu_runtime_enabled():
             return None
-        from easygraph.utils import gpu_mine_backend as mine_backend
+        from easygraph.utils import gpu_eggpu_backend as eggpu_backend
 
-        if mine_backend.mine_backend_enabled():
-            return mine_backend.connected_components(G, directed=False)
+        if eggpu_backend.eggpu_backend_enabled():
+            return eggpu_backend.connected_components(G, directed=False)
     except Exception:
-        if strict_errors:
+        if strict_errors or getattr(G, "_eggpu_bulk_csr", False):
             raise
         return None
     return None

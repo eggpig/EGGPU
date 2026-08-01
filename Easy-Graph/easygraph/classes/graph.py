@@ -1,5 +1,6 @@
 import copy
 import warnings
+import weakref
 
 from copy import deepcopy
 from typing import Dict
@@ -11,6 +12,70 @@ import easygraph.convert as convert
 
 from easygraph.utils.exception import EasyGraphError
 from easygraph.utils.sparse import sparse_dropout
+
+
+class _CacheAwareEdgeAttrDict(dict):
+    """Edge attributes that invalidate graph-derived state on mutation.
+
+    EasyGraph exposes edge attribute dictionaries through ``G[u][v]``.  A
+    plain dict lets callers change a weight without going through a graph
+    mutation method, so cached degree/CSR/GPU state can otherwise outlive the
+    value from which it was built.
+    """
+
+    def __init__(self, owner, *args, **kwargs):
+        self._owner_ref = weakref.ref(owner)
+        dict.__init__(self, *args, **kwargs)
+
+    def _invalidate(self):
+        owner = self._owner_ref()
+        if owner is not None:
+            owner._clear_cache()
+
+    def __setitem__(self, key, value):
+        dict.__setitem__(self, key, value)
+        self._invalidate()
+
+    def __delitem__(self, key):
+        dict.__delitem__(self, key)
+        self._invalidate()
+
+    def clear(self):
+        if self:
+            dict.clear(self)
+            self._invalidate()
+
+    def pop(self, key, *args):
+        existed = key in self
+        value = dict.pop(self, key, *args)
+        if existed:
+            self._invalidate()
+        return value
+
+    def popitem(self):
+        value = dict.popitem(self)
+        self._invalidate()
+        return value
+
+    def setdefault(self, key, default=None):
+        if key in self:
+            return dict.__getitem__(self, key)
+        value = dict.setdefault(self, key, default)
+        self._invalidate()
+        return value
+
+    def update(self, *args, **kwargs):
+        if args or kwargs:
+            dict.update(self, *args, **kwargs)
+            self._invalidate()
+
+    def __ior__(self, other):
+        dict.__ior__(self, other)
+        self._invalidate()
+        return self
+
+    def __deepcopy__(self, memo):
+        return copy.deepcopy(dict(self), memo)
 
 
 class Graph:
@@ -77,6 +142,10 @@ class Graph:
         self.extra_selfloop = extra_selfloop
         self._ndata = self.gnn_data_dict_factory()
         self.cache = {}
+        # Monotonic correctness token for graph-derived host/device state.
+        # All supported public topology and edge-attribute mutations reach
+        # _clear_cache(), including mutations through G[u][v].
+        self._mutation_generation = 0
         self._node_index = self.node_index_dict()
         self.cflag = 0
         self._id = 0
@@ -102,6 +171,17 @@ class Graph:
         self._materialize_lazy_edges()
         return self._adj[node]
 
+    def _new_edge_attr_dict(self, data=None):
+        """Create an owner-bound edge attribute mapping."""
+        if isinstance(data, _CacheAwareEdgeAttrDict):
+            owner = data._owner_ref()
+            if owner is self:
+                return data
+            data = dict(data)
+        if data is None:
+            data = {}
+        return _CacheAwareEdgeAttrDict(self, data)
+
     def _materialize_lazy_edges(self):
         if self.cache.get("_lazy_edges") is None:
             self._materialize_lazy_edge_arrays()
@@ -125,7 +205,7 @@ class Graph:
                 self._id += 1
                 self._node[v] = self.node_attr_dict_factory()
                 adj[v] = self.adjlist_inner_dict_factory()
-            datadict = data if isinstance(data, dict) else self.edge_attr_dict_factory(data)
+            datadict = self._new_edge_attr_dict(data)
             adj[u][v] = datadict
             adj[v][u] = datadict
         self._adj = adj
@@ -530,6 +610,9 @@ class Graph:
         >>> G.size(weight='weight')
 
         """
+        lazy_edge_count = self.cache.get("_lazy_edge_count")
+        if lazy_edge_count is not None and weight is None:
+            return int(lazy_edge_count)
         if self.cache.get("size") != None:
             return self.cache["size"]
         s = sum(d for v, d in self.degree(weight=weight).items())
@@ -616,8 +699,11 @@ class Graph:
         1
 
         """
+        if u is None and self.cache.get("_lazy_edge_count") is not None:
+            return int(self.cache["_lazy_edge_count"])
         if u is None:
             return int(self.size())
+        self._materialize_lazy_edges()
         if v in self._adj[u]:
             return 1
         return 0
@@ -1062,7 +1148,7 @@ class Graph:
                     raise ValueError("None cannot be a node")
                 self._adj[v] = self.adjlist_inner_dict_factory()
                 self._node[v] = self.node_attr_dict_factory()
-            datadict = self._adj[u].get(v, self.edge_attr_dict_factory())
+            datadict = self._adj[u].get(v, self._new_edge_attr_dict())
             datadict.update(attr)
             datadict.update(dd)
             self._adj[u][v] = datadict
@@ -1224,6 +1310,7 @@ class Graph:
                 del adj[n]
             except KeyError:
                 pass
+        self._clear_cache()
 
     def _add_one_edge(self, u_of_edge, v_of_edge, edge_attr: dict = {}):
         u, v = u_of_edge, v_of_edge
@@ -1233,7 +1320,7 @@ class Graph:
         if v not in self._node:
             self._add_one_node(v)
         # add the edge
-        datadict = self._adj[u].get(v, self.edge_attr_dict_factory())
+        datadict = self._adj[u].get(v, self._new_edge_attr_dict())
         datadict.update(edge_attr)
         self._adj[u][v] = datadict
         self._adj[v][u] = datadict
@@ -1389,6 +1476,7 @@ class Graph:
 
         """
         assert u != None and v != None, "Nodes can not be None."
+        self._materialize_lazy_edges()
         try:
             return v in self._adj[u]
         except KeyError:
@@ -1552,6 +1640,7 @@ class Graph:
 
     def _clear_cache(self):
         r"""Clear the cache."""
+        self._mutation_generation = getattr(self, "_mutation_generation", 0) + 1
         self.cache = {}
 
     def to_directed_class(self):

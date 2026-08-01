@@ -131,6 +131,7 @@ py::object _pagerank_gpu_native(py::object G, double alpha, int max_iterator, do
         G_.gen_CSR(weight_key);
     }
     auto csr_graph = G_.csr_graph;
+    gpu_easygraph::DeviceCsrCacheScope device_cache_scope(csr_graph->cache_id);
     std::vector<int>& V = csr_graph->V;
     std::vector<int>& E = csr_graph->E;
     std::vector<double>* W_p = weight.is_none()
@@ -182,6 +183,7 @@ py::object _pagerank_gpu_native_dense(py::object G, double alpha, int max_iterat
         G_.gen_CSR(weight_key);
     }
     auto csr_graph = G_.csr_graph;
+    gpu_easygraph::DeviceCsrCacheScope device_cache_scope(csr_graph->cache_id);
     std::vector<int>& V = csr_graph->V;
     std::vector<int>& E = csr_graph->E;
     std::vector<double>* W_p = weight.is_none()

@@ -37,4 +37,17 @@ int cuda_k_core (
     _OUT_ double* kernel_seconds = nullptr
 );
 
+int cuda_k_core_split(
+    _IN_ const int* lower_V,
+    _IN_ const int* lower_E,
+    _IN_ int lower_len_E,
+    _IN_ const int* upper_V,
+    _IN_ const int* upper_E,
+    _IN_ int upper_len_E,
+    _IN_ const int* degree,
+    _IN_ int len_V,
+    _OUT_ int* k_core_res,
+    _OUT_ double* kernel_seconds = nullptr
+);
+
 } // namespace gpu_easygraph

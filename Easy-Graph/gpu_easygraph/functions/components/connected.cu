@@ -2,6 +2,8 @@
 
 #include <algorithm>
 #include <cctype>
+#include <chrono>
+#include <cstdio>
 #include <cstdlib>
 #include <string>
 #include <unordered_map>
@@ -65,7 +67,8 @@ static thread_local ConnectedWorkspace g_conn_ws;
 
 __global__ void k_init_parents(int* parent, int n) {
     int u = blockIdx.x * blockDim.x + threadIdx.x;
-    if (u < n) parent[u] = u;
+    int stride = blockDim.x * gridDim.x;
+    for (; u < n; u += stride) parent[u] = u;
 }
 
 template <int SampleCount>
@@ -77,26 +80,28 @@ __global__ void k_sample_hook(
     int* __restrict__ changed
 ) {
     int u = blockIdx.x * blockDim.x + threadIdx.x;
-    if (u >= n) return;
-    int begin = __ldg(&row_ptr[u]);
-    int end = __ldg(&row_ptr[u + 1]);
-    #pragma unroll
-    for (int t = 0; t < SampleCount; ++t) {
-        int p = begin + t;
-        if (p >= end) break;
-        int v = __ldg(&col_idx[p]);
-        int pu = parent[u];
-        int pv = parent[v];
-        while (pu != pv) {
-            int hi = pu > pv ? pu : pv;
-            int lo = pu ^ pv ^ hi;
-            int old = atomicMin(&parent[hi], lo);
-            if (old == hi) {
-                atomicExch(changed, 1);
-                break;
+    int stride = blockDim.x * gridDim.x;
+    for (; u < n; u += stride) {
+        int begin = __ldg(&row_ptr[u]);
+        int end = __ldg(&row_ptr[u + 1]);
+        #pragma unroll
+        for (int t = 0; t < SampleCount; ++t) {
+            int p = begin + t;
+            if (p >= end) break;
+            int v = __ldg(&col_idx[p]);
+            int pu = parent[u];
+            int pv = parent[v];
+            while (pu != pv) {
+                int hi = pu > pv ? pu : pv;
+                int lo = pu ^ pv ^ hi;
+                int old = atomicMin(&parent[hi], lo);
+                if (old == hi) {
+                    atomicExch(changed, 1);
+                    break;
+                }
+                pu = parent[pu];
+                pv = parent[pv];
             }
-            pu = parent[pu];
-            pv = parent[pv];
         }
     }
 }
@@ -140,30 +145,45 @@ __global__ void k_hook_csr_edges(
 
 __global__ void k_compress(int* parent, int n) {
     int u = blockIdx.x * blockDim.x + threadIdx.x;
-    if (u >= n) return;
-    int p = parent[u];
-    int gp = parent[p];
-    if (p != gp) parent[u] = gp;
+    int stride = blockDim.x * gridDim.x;
+    for (; u < n; u += stride) {
+        int p = parent[u];
+        int gp = parent[p];
+        if (p != gp) parent[u] = gp;
+    }
 }
 
 __global__ void k_assign_roots(const int* parent, int* labels, int n) {
     int u = blockIdx.x * blockDim.x + threadIdx.x;
-    if (u < n) labels[u] = parent[u];
+    int stride = blockDim.x * gridDim.x;
+    for (; u < n; u += stride) {
+        int root = parent[u];
+        // Hooking always links a larger label to a smaller label, so the
+        // parent chain is acyclic. Resolve the complete chain here instead of
+        // assuming a fixed number of path-halving passes reached every root.
+        while (root != parent[root]) root = parent[root];
+        labels[u] = root;
+    }
 }
 
 __global__ void k_init_array_int(int* a, int value, int n) {
     int u = blockIdx.x * blockDim.x + threadIdx.x;
-    if (u < n) a[u] = value;
+    int stride = blockDim.x * gridDim.x;
+    for (; u < n; u += stride) a[u] = value;
 }
 
 __global__ void k_mark_valid_nodes(int* valid, int value, int n) {
     int u = blockIdx.x * blockDim.x + threadIdx.x;
-    if (u < n) valid[u] = value;
+    int stride = blockDim.x * gridDim.x;
+    for (; u < n; u += stride) valid[u] = value;
 }
 
 __global__ void k_find_pivot_min(const int* __restrict__ valid, int n, int* pivot) {
     int u = blockIdx.x * blockDim.x + threadIdx.x;
-    if (u < n && valid[u] == 1) atomicMin(pivot, u);
+    int stride = blockDim.x * gridDim.x;
+    for (; u < n; u += stride) {
+        if (valid[u] == 1) atomicMin(pivot, u);
+    }
 }
 
 __global__ void k_find_pivot_max_degree(
@@ -174,16 +194,19 @@ __global__ void k_find_pivot_max_degree(
     unsigned long long* best
 ) {
     int u = blockIdx.x * blockDim.x + threadIdx.x;
-    if (u >= n || valid[u] != 1) return;
-    int raw_in = indeg[u];
-    int raw_out = outdeg[u];
-    unsigned int din = (unsigned int)(raw_in > 0 ? raw_in : 0);
-    unsigned int dout = (unsigned int)(raw_out > 0 ? raw_out : 0);
-    unsigned int score = din + dout;
-    if (score < din) score = 0xffffffffu;
-    unsigned int tie = 0xffffffffu - (unsigned int)u;
-    unsigned long long key = ((unsigned long long)score << 32) | (unsigned long long)tie;
-    atomicMax(best, key);
+    int stride = blockDim.x * gridDim.x;
+    for (; u < n; u += stride) {
+        if (valid[u] != 1) continue;
+        int raw_in = indeg[u];
+        int raw_out = outdeg[u];
+        unsigned int din = (unsigned int)(raw_in > 0 ? raw_in : 0);
+        unsigned int dout = (unsigned int)(raw_out > 0 ? raw_out : 0);
+        unsigned int score = din + dout;
+        if (score < din) score = 0xffffffffu;
+        unsigned int tie = 0xffffffffu - (unsigned int)u;
+        unsigned long long key = ((unsigned long long)score << 32) | (unsigned long long)tie;
+        atomicMax(best, key);
+    }
 }
 
 __device__ __forceinline__ int warp_agg_push_int(int success, int* __restrict__ counter) {
@@ -243,15 +266,19 @@ __global__ void k_scc_intersect_assign(
     int visit_mark
 ) {
     int u = blockIdx.x * blockDim.x + threadIdx.x;
-    if (u < n && valid[u] == 1 && forward[u] == visit_mark && backward[u] == visit_mark) {
-        comp[u] = cid;
-        valid[u] = 0;
+    int stride = blockDim.x * gridDim.x;
+    for (; u < n; u += stride) {
+        if (valid[u] == 1 && forward[u] == visit_mark && backward[u] == visit_mark) {
+            comp[u] = cid;
+            valid[u] = 0;
+        }
     }
 }
 
 __global__ void k_outdeg(const int* row_ptr, int* outdeg, int n) {
     int u = blockIdx.x * blockDim.x + threadIdx.x;
-    if (u < n) outdeg[u] = row_ptr[u + 1] - row_ptr[u];
+    int stride = blockDim.x * gridDim.x;
+    for (; u < n; u += stride) outdeg[u] = row_ptr[u + 1] - row_ptr[u];
 }
 
 __global__ void k_trim_singletons_assign(
@@ -264,11 +291,14 @@ __global__ void k_trim_singletons_assign(
     int* __restrict__ trimmed
 ) {
     int u = blockIdx.x * blockDim.x + threadIdx.x;
-    if (u < n && valid[u] == 1 && (indeg[u] == 0 || outdeg[u] == 0)) {
-        int cid = atomicAdd(next_cid, 1);
-        comp[u] = cid;
-        valid[u] = 0;
-        if (trimmed != nullptr) atomicAdd(trimmed, 1);
+    int stride = blockDim.x * gridDim.x;
+    for (; u < n; u += stride) {
+        if (valid[u] == 1 && (indeg[u] == 0 || outdeg[u] == 0)) {
+            int cid = atomicAdd(next_cid, 1);
+            comp[u] = cid;
+            valid[u] = 0;
+            if (trimmed != nullptr) atomicAdd(trimmed, 1);
+        }
     }
 }
 
@@ -392,8 +422,9 @@ static void build_reverse_csr_cached(
 
 static inline int grid_for(int n, int block_size, int max_blocks = 65535) {
     if (n <= 0) return 1;
-    int g = (n + block_size - 1) / block_size;
-    return std::max(1, std::min(g, max_blocks));
+    const long long g =
+        ((long long)n + (long long)block_size - 1LL) / (long long)block_size;
+    return (int)std::max(1LL, std::min(g, (long long)max_blocks));
 }
 
 static int run_scc_bfs(
@@ -505,7 +536,14 @@ int cuda_connected_components(
     DeviceCsrView graph_view;
 
     auto fail = [&](cudaError_t err, int code) {
-        if (err != cudaSuccess) status = code;
+        if (err != cudaSuccess) {
+            std::fprintf(
+                stderr,
+                "EasyGraph GPU connected-components CUDA failure: %s (%d)\n",
+                cudaGetErrorString(err),
+                (int)err);
+            status = code;
+        }
     };
     auto fail_if_status = [&](int rc) {
         if (rc != EG_GPU_SUCC) status = rc;
@@ -611,6 +649,12 @@ int cuda_strongly_connected_components(
     std::vector<int>& labels,
     double* kernel_seconds
 ) {
+    using HostClock = std::chrono::steady_clock;
+    const auto host_begin = HostClock::now();
+    auto host_seconds_since = [](const HostClock::time_point& begin) {
+        return std::chrono::duration<double>(HostClock::now() - begin).count();
+    };
+
     labels.clear();
     if (kernel_seconds != nullptr) *kernel_seconds = 0.0;
     if (len_V <= 0) return EG_GPU_SUCC;
@@ -656,6 +700,20 @@ int cuda_strongly_connected_components(
     bool reg_rev_V = false;
     bool reg_rev_E = false;
     bool rev_changed = !reverse_signature_matches(g_conn_ws, V, E, n, m);
+    const bool profile = env_flag_enabled("EASYGRAPH_GPU_SCC_PROFILE", false);
+    double reverse_build_seconds = 0.0;
+    double prepare_seconds = 0.0;
+    double reverse_copy_seconds = 0.0;
+    double kernel_wall_seconds = 0.0;
+    double output_copy_seconds = 0.0;
+    double initial_trim_seconds = 0.0;
+    double active_trim_seconds = 0.0;
+    double pivot_search_seconds = 0.0;
+    int initial_trimmed = 0;
+    int pivot_count = 0;
+    HostClock::time_point reverse_copy_begin;
+    HostClock::time_point kernel_wall_begin;
+    HostClock::time_point phase_begin;
 
     auto fail = [&](cudaError_t err, int code) {
         if (err != cudaSuccess) status = code;
@@ -664,7 +722,12 @@ int cuda_strongly_connected_components(
         if (rc != EG_GPU_SUCC) status = rc;
     };
 
-    build_reverse_csr_cached(g_conn_ws, V, E, n, m);
+    {
+        const auto phase_begin = HostClock::now();
+        build_reverse_csr_cached(g_conn_ws, V, E, n, m);
+        reverse_build_seconds = host_seconds_since(phase_begin);
+    }
+    const auto prepare_begin = HostClock::now();
     fail_if_status(acquire_device_csr(V, E, nullptr, n, m, false, &graph_view));
     if (status != EG_GPU_SUCC) goto cleanup;
 
@@ -716,7 +779,9 @@ int cuda_strongly_connected_components(
     d_next_cid = g_conn_ws.d_next_cid.as<int>();
     d_pivot = g_conn_ws.d_pivot.as<int>();
     d_pivot_score = g_conn_ws.d_pivot_score.as<unsigned long long>();
+    prepare_seconds = host_seconds_since(prepare_begin);
 
+    reverse_copy_begin = HostClock::now();
     if (rev_changed) {
         h_rev_V = prepare_h2d_source(g_conn_ws.cached_rev_V.data(), (size_t)(n + 1), g_conn_ws.h_rev_V_stage, &reg_rev_V);
         if (h_rev_V == nullptr) h_rev_V = g_conn_ws.cached_rev_V.data();
@@ -729,6 +794,7 @@ int cuda_strongly_connected_components(
             if (status != EG_GPU_SUCC) goto cleanup;
         }
     }
+    reverse_copy_seconds = host_seconds_since(reverse_copy_begin);
 
     if (!g_conn_ws.runtime_ready) {
         fail(cudaEventCreate(&g_conn_ws.ev_begin), EG_GPU_DEVICE_ERR);
@@ -738,9 +804,11 @@ int cuda_strongly_connected_components(
         g_conn_ws.runtime_ready = true;
     }
 
+    kernel_wall_begin = HostClock::now();
     fail(cudaEventRecord(g_conn_ws.ev_begin), EG_GPU_DEVICE_ERR);
     if (status != EG_GPU_SUCC) goto cleanup;
 
+    phase_begin = HostClock::now();
     k_init_array_int<<<gv, bs>>>(d_comp, -1, n);
     k_mark_valid_nodes<<<gv, bs>>>(d_valid, 1, n);
     k_init_array_int<<<gv, bs>>>(d_forward, 0, n);
@@ -760,19 +828,30 @@ int cuda_strongly_connected_components(
     k_trim_singletons_assign<<<gv, bs>>>(d_indeg, d_outdeg, d_valid, d_comp, n, d_next_cid, d_trim_count);
     fail(cudaGetLastError(), EG_GPU_DEVICE_ERR);
     if (status != EG_GPU_SUCC) goto cleanup;
-    if (env_flag_enabled("EASYGRAPH_GPU_SCC_ACTIVE_TRIM", true)) {
-        int trimmed = 0;
-        fail(cudaMemcpy(&trimmed, d_trim_count, sizeof(int), cudaMemcpyDeviceToHost), EG_GPU_DEVICE_ERR);
+    {
+        const bool active_trim =
+            env_flag_enabled("EASYGRAPH_GPU_SCC_ACTIVE_TRIM", true);
+        if (active_trim || profile) {
+            fail(cudaMemcpy(
+                &initial_trimmed,
+                d_trim_count,
+                sizeof(int),
+                cudaMemcpyDeviceToHost), EG_GPU_DEVICE_ERR);
+        }
         if (status != EG_GPU_SUCC) goto cleanup;
-        if (trimmed > 0) {
+        initial_trim_seconds = host_seconds_since(phase_begin);
+        if (active_trim && initial_trimmed > 0) {
             int max_trim_iters = env_int_value("EASYGRAPH_GPU_SCC_ACTIVE_TRIM_MAX_ITERS", 16);
+            phase_begin = HostClock::now();
             fail_if_status(run_active_singleton_trim(
                 d_V, d_E, n, d_valid, d_comp, d_indeg, d_outdeg,
                 d_next_cid, d_trim_count, gv, bs, max_trim_iters));
+            active_trim_seconds = host_seconds_since(phase_begin);
             if (status != EG_GPU_SUCC) goto cleanup;
         }
     }
 
+    phase_begin = HostClock::now();
     {
         int comp_id = 0;
         fail(cudaMemcpy(&comp_id, d_next_cid, sizeof(int), cudaMemcpyDeviceToHost), EG_GPU_DEVICE_ERR);
@@ -803,6 +882,7 @@ int cuda_strongly_connected_components(
                 if (status != EG_GPU_SUCC) goto cleanup;
             }
             if (pivot == n) break;
+            ++pivot_count;
 
             int visit_mark = comp_id + 1;
             fail_if_status(run_scc_bfs(
@@ -826,6 +906,7 @@ int cuda_strongly_connected_components(
             }
         }
     }
+    pivot_search_seconds = host_seconds_since(phase_begin);
 
     fail(cudaEventRecord(g_conn_ws.ev_end), EG_GPU_DEVICE_ERR);
     if (status != EG_GPU_SUCC) goto cleanup;
@@ -837,11 +918,39 @@ int cuda_strongly_connected_components(
         if (status != EG_GPU_SUCC) goto cleanup;
         *kernel_seconds = (double)ms / 1000.0;
     }
+    kernel_wall_seconds = host_seconds_since(kernel_wall_begin);
 
-    fail(cudaMemcpy(labels.data(), d_comp, (size_t)n * sizeof(int), cudaMemcpyDeviceToHost), EG_GPU_DEVICE_ERR);
+    {
+        const auto output_copy_begin = HostClock::now();
+        fail(cudaMemcpy(labels.data(), d_comp, (size_t)n * sizeof(int), cudaMemcpyDeviceToHost), EG_GPU_DEVICE_ERR);
+        output_copy_seconds = host_seconds_since(output_copy_begin);
+    }
     if (status != EG_GPU_SUCC) goto cleanup;
 
 cleanup:
+    if (profile) {
+        std::fprintf(
+            stderr,
+            "EGGPU_SCC_PROFILE status=%d reverse_changed=%d reverse_build_s=%.6f "
+            "prepare_s=%.6f reverse_copy_s=%.6f kernel_wall_s=%.6f "
+            "kernel_event_s=%.6f initial_trim_s=%.6f initial_trimmed=%d "
+            "active_trim_s=%.6f pivot_search_s=%.6f pivots=%d "
+            "output_copy_s=%.6f total_native_s=%.6f\n",
+            status,
+            rev_changed ? 1 : 0,
+            reverse_build_seconds,
+            prepare_seconds,
+            reverse_copy_seconds,
+            kernel_wall_seconds,
+            kernel_seconds != nullptr ? *kernel_seconds : 0.0,
+            initial_trim_seconds,
+            initial_trimmed,
+            active_trim_seconds,
+            pivot_search_seconds,
+            pivot_count,
+            output_copy_seconds,
+            host_seconds_since(host_begin));
+    }
     release_h2d_source(h_rev_V, reg_rev_V);
     release_h2d_source(h_rev_E, reg_rev_E);
     if (status != EG_GPU_SUCC) {

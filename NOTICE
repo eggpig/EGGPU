@@ -1,0 +1,11 @@
+EGGPU includes and extends EasyGraph source code. EasyGraph is distributed
+under the BSD 3-Clause License; its original notice is retained in
+Easy-Graph/LICENSE.
+
+The vendored pybind11 source under Easy-Graph/cpp_easygraph/pybind11 is also
+distributed under the BSD 3-Clause License. Its copyright and license notice
+are retained in Easy-Graph/cpp_easygraph/pybind11/LICENSE.
+
+NVIDIA CUDA libraries are build/runtime dependencies and are not redistributed
+by this repository. Dataset files are not included; their upstream licenses and
+terms must be reviewed before redistribution.

@@ -1,0 +1,59 @@
+{
+  "status": "DRAFT_REQUIRES_RIGHTS_REVIEW",
+  "metadata": {
+    "title": "EGGPU Dataset Provenance Manifest",
+    "upload_type": "dataset",
+    "description": "Source records, exact checksums, graph semantics, and redistribution boundaries for the 13 graph inputs used in the EGGPU paper. This draft describes a provenance-manifest deposit; it does not authorize redistribution of third-party graph files.",
+    "creators": [
+      {"name": "Du, Haoran", "affiliation": "Fudan University"},
+      {"name": "Wen, Wen", "affiliation": "Fudan University"},
+      {"name": "Wang, Xinming", "affiliation": "Institute of Automation, Chinese Academy of Sciences"},
+      {"name": "Zhang, Su-Su", "affiliation": "Fudan University"},
+      {"name": "Gong, Qingyuan", "affiliation": "Fudan University"},
+      {"name": "Li, Yupeng", "affiliation": "Hong Kong Baptist University"},
+      {"name": "Wang, Xin", "affiliation": "Fudan University"},
+      {"name": "Chen, Yang", "affiliation": "Fudan University"}
+    ],
+    "keywords": [
+      "EGGPU",
+      "graph analytics",
+      "GPU",
+      "dataset provenance",
+      "reproducibility"
+    ],
+    "related_identifiers": [
+      {
+        "identifier": "https://github.com/eggpig/EGGPU",
+        "relation": "isSupplementTo",
+        "scheme": "url"
+      }
+    ]
+  },
+  "planned_files": [
+    "README.md",
+    "manifest.tsv"
+  ],
+  "excluded_until_rights_review": [
+    "all SNAP-origin graph files and derived copies",
+    "ER-100k.txt until the authors assign a dataset license"
+  ],
+  "conditionally_redistributable": [
+    {
+      "dataset": "GAP-twitter",
+      "license": "CC-BY-4.0",
+      "conditions": [
+        "credit the SuiteSparse Matrix Collection and original graph authors",
+        "preserve the source metadata and dataset-specific citations",
+        "identify every transformed artifact with a new name",
+        "document row retention, index conversion, weight semantics, and CSR conversion"
+      ]
+    }
+  ],
+  "required_before_deposition": [
+    "confirm the final creator order and affiliations",
+    "resolve every UNKNOWN redistribution field for any graph bytes to be uploaded",
+    "choose and record a license for the manifest itself",
+    "add the final paper DOI or bibliographic identifier",
+    "recompute checksums for the exact files selected for upload"
+  ]
+}

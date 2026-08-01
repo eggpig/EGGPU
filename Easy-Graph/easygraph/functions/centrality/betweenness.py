@@ -68,8 +68,9 @@ def betweenness_centrality(
     Returns
     -------
 
-    nodes : dictionary
-       Dictionary of nodes with betweenness centrality as the value.
+    scores : list of float
+       Betweenness score for every node, ordered by the graph's internal node
+       order (``G.index2node``).
 
     >>> betweenness_centrality(G,weight="weight")
     """
@@ -156,16 +157,21 @@ def _betweenness_centrality_gpu_runtime_dispatch(
     if not gpu_runtime_enabled():
         return None
     try:
-        from easygraph.utils import gpu_mine_backend as mine_backend
+        from easygraph.utils import gpu_eggpu_backend as eggpu_backend
 
-        if mine_backend.mine_backend_enabled():
-            return mine_backend.betweenness_centrality(
+        if eggpu_backend.eggpu_backend_enabled():
+            values = eggpu_backend.betweenness_centrality(
                 G,
                 weight=weight,
                 sources=sources,
                 normalized=normalized,
                 endpoints=endpoints,
             )
+            if hasattr(values, "tolist"):
+                values = values.tolist()
+            if isinstance(values, dict):
+                return [float(values[G.index2node[i]]) for i in range(len(G))]
+            return [float(value) for value in values]
     except Exception:
         if gpu_strict_errors():
             raise

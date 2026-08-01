@@ -76,19 +76,33 @@ py::object invoke_cpp_core_decomposition(py::object G) {
 py::object invoke_gpu_core_decomposition(py::object G) {
     Graph& G_ = G.cast<Graph&>();
     auto csr_graph = G_.gen_CSR();
+    gpu_easygraph::DeviceCsrCacheScope device_cache_scope(csr_graph->cache_id);
     std::vector<int>& E = csr_graph->E;
     std::vector<int>& V = csr_graph->V;
-    std::vector<int> KC;
     double kernel_seconds = 0.0;
-    int gpu_r = gpu_easygraph::k_core(V, E, KC, &kernel_seconds);
+    const py::ssize_t result_size = static_cast<py::ssize_t>(V.size()) - 1;
+    py::array_t<int> ret(result_size);
+    if (result_size == 0) return ret;
+    int gpu_r = gpu_easygraph::EG_GPU_SUCC;
+    if (csr_graph->undirected_projection != nullptr) {
+        const auto& projection = *csr_graph->undirected_projection;
+        gpu_r = gpu_easygraph::k_core_split_into(
+            projection.lower_V,
+            projection.lower_E,
+            projection.upper_V,
+            projection.upper_E,
+            projection.degree,
+            ret.mutable_data(),
+            &kernel_seconds);
+    } else {
+        gpu_r = gpu_easygraph::k_core_into(
+            V, E, ret.mutable_data(), &kernel_seconds);
+    }
 
     if (gpu_r != gpu_easygraph::EG_GPU_SUCC) {
         // the code below will throw an exception
         py::pybind11_fail(gpu_easygraph::err_code_detail(gpu_r));
     }
-
-    py::array::ShapeContainer ret_shape{(int)KC.size()};
-    py::array_t<int> ret(ret_shape, KC.data());
 
     return ret;
 }
@@ -96,18 +110,34 @@ py::object invoke_gpu_core_decomposition(py::object G) {
 py::object gpu_core_decomposition(py::object G) {
     Graph& G_ = G.cast<Graph&>();
     auto csr_graph = G_.gen_CSR();
+    gpu_easygraph::DeviceCsrCacheScope device_cache_scope(csr_graph->cache_id);
     std::vector<int>& E = csr_graph->E;
     std::vector<int>& V = csr_graph->V;
-    std::vector<int> KC;
     double kernel_seconds = 0.0;
-    int gpu_r = gpu_easygraph::k_core(V, E, KC, &kernel_seconds);
+    const py::ssize_t result_size = static_cast<py::ssize_t>(V.size()) - 1;
+    py::array_t<int> ret(result_size);
+    int gpu_r = gpu_easygraph::EG_GPU_SUCC;
+    if (result_size > 0) {
+        if (csr_graph->undirected_projection != nullptr) {
+            const auto& projection = *csr_graph->undirected_projection;
+            gpu_r = gpu_easygraph::k_core_split_into(
+                projection.lower_V,
+                projection.lower_E,
+                projection.upper_V,
+                projection.upper_E,
+                projection.degree,
+                ret.mutable_data(),
+                &kernel_seconds);
+        } else {
+            gpu_r = gpu_easygraph::k_core_into(
+                V, E, ret.mutable_data(), &kernel_seconds);
+        }
+    }
 
     if (gpu_r != gpu_easygraph::EG_GPU_SUCC) {
         py::pybind11_fail(gpu_easygraph::err_code_detail(gpu_r));
     }
 
-    py::array::ShapeContainer ret_shape{(int)KC.size()};
-    py::array_t<int> ret(ret_shape, KC.data());
     py::dict out;
     out["values_dense"] = ret;
     out["kernel_seconds"] = py::float_(kernel_seconds);

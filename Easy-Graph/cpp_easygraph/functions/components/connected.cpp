@@ -211,6 +211,7 @@ py::object _connected_components_gpu_native(py::object G, py::object directed) {
     bool directed_mode = directed.cast<bool>();
     G_.gen_CSR();
     auto csr_graph = G_.csr_graph;
+    gpu_easygraph::DeviceCsrCacheScope device_cache_scope(csr_graph->cache_id);
 
     std::vector<int> labels;
     double kernel_seconds = 0.0;
@@ -250,6 +251,7 @@ py::object _connected_components_gpu_native_dense(py::object G, py::object direc
     bool directed_mode = directed.cast<bool>();
     G_.gen_CSR();
     auto csr_graph = G_.csr_graph;
+    gpu_easygraph::DeviceCsrCacheScope device_cache_scope(csr_graph->cache_id);
 
     std::vector<int> labels;
     double kernel_seconds = 0.0;
@@ -286,6 +288,7 @@ py::object _connected_components_gpu_native_sets(py::object G, py::object direct
     bool directed_mode = directed.cast<bool>();
     G_.gen_CSR();
     auto csr_graph = G_.csr_graph;
+    gpu_easygraph::DeviceCsrCacheScope device_cache_scope(csr_graph->cache_id);
 
     std::vector<int> labels;
     double kernel_seconds = 0.0;

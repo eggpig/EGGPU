@@ -104,6 +104,31 @@ static __global__ void d_k_core_scan_enqueue(
     }
 }
 
+static __device__ __forceinline__ void d_k_core_decrement_neighbor(
+    int nbr,
+    int* d_deg,
+    int* d_core,
+    int* d_processed,
+    int level,
+    int* d_queue,
+    int* d_queue_len,
+    int* d_processed_count,
+    int len_V
+) {
+    if (d_processed[nbr] != 0) return;
+    int old = atomicSub(d_deg + nbr, 1);
+    if (old == level + 1) {
+        if (atomicCAS(d_processed + nbr, 0, 1) == 0) {
+            d_core[nbr] = level;
+            int pos = atomicAdd(d_queue_len, 1);
+            if (pos < len_V) d_queue[pos] = nbr;
+            atomicAdd(d_processed_count, 1);
+        }
+    } else if (old <= level) {
+        atomicAdd(d_deg + nbr, 1);
+    }
+}
+
 static __global__ void d_k_core_process_queue(
     _IN_ int* d_V,
     _IN_ int* d_E,
@@ -132,18 +157,52 @@ static __global__ void d_k_core_process_queue(
         int edge_end = d_V[v + 1];
         for (int e = edge_start + lane; e < edge_end; e += warp_size) {
             int nbr = d_E[e];
-            if (d_processed[nbr] != 0) continue;
-            int old = atomicSub(d_deg + nbr, 1);
-            if (old == level + 1) {
-                if (atomicCAS(d_processed + nbr, 0, 1) == 0) {
-                    d_core[nbr] = level;
-                    int pos = atomicAdd(d_queue_len, 1);
-                    if (pos < len_V) d_queue[pos] = nbr;
-                    atomicAdd(d_processed_count, 1);
-                }
-            } else if (old <= level) {
-                atomicAdd(d_deg + nbr, 1);
-            }
+            d_k_core_decrement_neighbor(
+                nbr, d_deg, d_core, d_processed, level, d_queue,
+                d_queue_len, d_processed_count, len_V);
+        }
+    }
+}
+
+static __global__ void d_k_core_process_queue_split(
+    _IN_ int* d_lower_V,
+    _IN_ int* d_lower_E,
+    _IN_ int* d_upper_V,
+    _IN_ int* d_upper_E,
+    _OUT_ int* d_deg,
+    _OUT_ int* d_core,
+    _OUT_ int* d_processed,
+    _IN_ int len_V,
+    _IN_ int level,
+    _OUT_ int* d_queue,
+    _IN_ int start,
+    _IN_ int end,
+    _OUT_ int* d_queue_len,
+    _OUT_ int* d_processed_count
+) {
+    const int warp_size = 32;
+    const long long tid =
+        (long long)blockIdx.x * blockDim.x + threadIdx.x;
+    const long long tnum = (long long)blockDim.x * gridDim.x;
+    const long long work = (long long)(end - start) * warp_size;
+
+    for (long long j = tid; j < work; j += tnum) {
+        const int q_idx = start + (int)(j / warp_size);
+        const int lane = (int)(j % warp_size);
+        const int v = d_queue[q_idx];
+        for (int e = d_lower_V[v] + lane;
+             e < d_lower_V[v + 1];
+             e += warp_size) {
+            d_k_core_decrement_neighbor(
+                d_lower_E[e], d_deg, d_core, d_processed, level, d_queue,
+                d_queue_len, d_processed_count, len_V);
+        }
+        for (int e = d_upper_V[v] + lane;
+             e < d_upper_V[v + 1];
+             e += warp_size) {
+            d_k_core_decrement_neighbor(
+                d_upper_E[e], d_deg, d_core, d_processed, level, d_queue,
+                d_queue_len, d_processed_count, len_V);
         }
     }
 }
@@ -453,6 +512,194 @@ exit:
         }
     }
 
+    return EG_ret;
+}
+
+int cuda_k_core_split(
+    _IN_ const int* lower_V,
+    _IN_ const int* lower_E,
+    _IN_ int lower_len_E,
+    _IN_ const int* upper_V,
+    _IN_ const int* upper_E,
+    _IN_ int upper_len_E,
+    _IN_ const int* degree,
+    _IN_ int len_V,
+    _OUT_ int* k_core_res,
+    _OUT_ double* kernel_seconds
+) {
+    if (kernel_seconds != nullptr) *kernel_seconds = 0.0;
+    if (len_V < 0 || lower_V == nullptr || upper_V == nullptr ||
+        degree == nullptr || (len_V > 0 && k_core_res == nullptr) ||
+        (lower_len_E > 0 && lower_E == nullptr) ||
+        (upper_len_E > 0 && upper_E == nullptr)) {
+        return EG_GPU_DEVICE_ERR;
+    }
+    if (len_V == 0) return EG_GPU_SUCC;
+
+    int cuda_ret = cudaSuccess;
+    int EG_ret = EG_GPU_SUCC;
+    const int block_size = 256;
+    const int grid_size = std::min(
+        65535, std::max(1, (len_V + block_size - 1) / block_size));
+    int processed_count = 0;
+    int level = 0;
+
+    thread_local PersistentDeviceBuffer b_deg;
+    thread_local PersistentDeviceBuffer b_core;
+    thread_local PersistentDeviceBuffer b_processed;
+    thread_local PersistentDeviceBuffer b_queue;
+    thread_local PersistentDeviceBuffer b_queue_len;
+    thread_local PersistentDeviceBuffer b_processed_count;
+    thread_local PersistentDeviceBuffer b_min_level;
+    thread_local KCoreRuntime runtime;
+
+    DeviceCsrView lower_view;
+    DeviceCsrView upper_view;
+    int* d_deg = nullptr;
+    int* d_core = nullptr;
+    int* d_processed = nullptr;
+    int* d_queue = nullptr;
+    int* d_queue_len = nullptr;
+    int* d_processed_count = nullptr;
+    int* d_min_level = nullptr;
+
+    EG_ret = acquire_device_csr(
+        lower_V, lower_E, nullptr, len_V, lower_len_E, false, &lower_view);
+    if (EG_ret != EG_GPU_SUCC) goto exit;
+    EG_ret = acquire_device_csr(
+        upper_V, upper_E, nullptr, len_V, upper_len_E, false, &upper_view);
+    if (EG_ret != EG_GPU_SUCC) goto exit;
+    if (ensure_device_buffer(
+            b_deg, sizeof(int) * len_V, &EG_ret) != EG_GPU_SUCC) goto exit;
+    if (ensure_device_buffer(
+            b_core, sizeof(int) * len_V, &EG_ret) != EG_GPU_SUCC) goto exit;
+    if (ensure_device_buffer(
+            b_processed, sizeof(int) * len_V, &EG_ret) != EG_GPU_SUCC) goto exit;
+    if (ensure_device_buffer(
+            b_queue, sizeof(int) * len_V, &EG_ret) != EG_GPU_SUCC) goto exit;
+    if (ensure_device_buffer(
+            b_queue_len, sizeof(int), &EG_ret) != EG_GPU_SUCC) goto exit;
+    if (ensure_device_buffer(
+            b_processed_count, sizeof(int), &EG_ret) != EG_GPU_SUCC) goto exit;
+    if (ensure_device_buffer(
+            b_min_level, sizeof(int), &EG_ret) != EG_GPU_SUCC) goto exit;
+
+    d_deg = b_deg.as<int>();
+    d_core = b_core.as<int>();
+    d_processed = b_processed.as<int>();
+    d_queue = b_queue.as<int>();
+    d_queue_len = b_queue_len.as<int>();
+    d_processed_count = b_processed_count.as<int>();
+    d_min_level = b_min_level.as<int>();
+
+    if (!runtime.ready) {
+        EXIT_IF_CUDA_FAILED(cudaEventCreate(&runtime.start_event));
+        EXIT_IF_CUDA_FAILED(cudaEventCreate(&runtime.stop_event));
+        runtime.ready = true;
+    }
+    EXIT_IF_CUDA_FAILED(cudaEventRecord(runtime.start_event));
+    EXIT_IF_CUDA_FAILED(cudaMemcpy(
+        d_deg, degree, sizeof(int) * len_V, cudaMemcpyHostToDevice));
+    EXIT_IF_CUDA_FAILED(cudaMemset(d_core, 0, sizeof(int) * len_V));
+    EXIT_IF_CUDA_FAILED(cudaMemset(d_processed, 0, sizeof(int) * len_V));
+    EXIT_IF_CUDA_FAILED(cudaMemset(d_processed_count, 0, sizeof(int)));
+
+    while (processed_count < len_V) {
+        int queue_len = 0;
+        int offset = 0;
+        EXIT_IF_CUDA_FAILED(cudaMemset(d_queue_len, 0, sizeof(int)));
+        d_k_core_scan_enqueue<<<grid_size, block_size>>>(
+            d_deg, d_core, d_processed, len_V, level, d_queue,
+            d_queue_len, d_processed_count);
+        EXIT_IF_CUDA_FAILED(cudaGetLastError());
+        EXIT_IF_CUDA_FAILED(cudaMemcpy(
+            &queue_len, d_queue_len, sizeof(int), cudaMemcpyDeviceToHost));
+
+        while (offset < queue_len) {
+            const int segment = queue_len - offset;
+            const int process_grid = std::min(
+                65535,
+                std::max(
+                    1,
+                    (int)(((long long)segment * 32LL + block_size - 1) /
+                          block_size)));
+            d_k_core_process_queue_split<<<process_grid, block_size>>>(
+                lower_view.d_V,
+                lower_view.d_E,
+                upper_view.d_V,
+                upper_view.d_E,
+                d_deg,
+                d_core,
+                d_processed,
+                len_V,
+                level,
+                d_queue,
+                offset,
+                queue_len,
+                d_queue_len,
+                d_processed_count);
+            EXIT_IF_CUDA_FAILED(cudaGetLastError());
+            offset = queue_len;
+            EXIT_IF_CUDA_FAILED(cudaMemcpy(
+                &queue_len, d_queue_len, sizeof(int), cudaMemcpyDeviceToHost));
+            if (queue_len > len_V) {
+                EG_ret = EG_GPU_DEVICE_ERR;
+                goto exit;
+            }
+        }
+
+        EXIT_IF_CUDA_FAILED(cudaMemcpy(
+            &processed_count,
+            d_processed_count,
+            sizeof(int),
+            cudaMemcpyDeviceToHost));
+        if (processed_count < len_V) {
+            int h_min_level = 0x7fffffff;
+            EXIT_IF_CUDA_FAILED(cudaMemcpy(
+                d_min_level,
+                &h_min_level,
+                sizeof(int),
+                cudaMemcpyHostToDevice));
+            d_k_core_find_min_unprocessed<<<grid_size, block_size>>>(
+                d_deg, d_processed, len_V, d_min_level);
+            EXIT_IF_CUDA_FAILED(cudaGetLastError());
+            EXIT_IF_CUDA_FAILED(cudaMemcpy(
+                &h_min_level,
+                d_min_level,
+                sizeof(int),
+                cudaMemcpyDeviceToHost));
+            if (h_min_level != 0x7fffffff && h_min_level > level + 1) {
+                level = h_min_level;
+            } else {
+                ++level;
+            }
+        }
+        if (level > len_V) {
+            EG_ret = EG_GPU_DEVICE_ERR;
+            goto exit;
+        }
+    }
+
+    EXIT_IF_CUDA_FAILED(cudaEventRecord(runtime.stop_event));
+    EXIT_IF_CUDA_FAILED(cudaEventSynchronize(runtime.stop_event));
+    if (kernel_seconds != nullptr) {
+        float elapsed_ms = 0.0f;
+        EXIT_IF_CUDA_FAILED(cudaEventElapsedTime(
+            &elapsed_ms, runtime.start_event, runtime.stop_event));
+        *kernel_seconds = (double)elapsed_ms * 1e-3;
+    }
+    EXIT_IF_CUDA_FAILED(cudaMemcpy(
+        k_core_res,
+        d_core,
+        sizeof(int) * len_V,
+        cudaMemcpyDeviceToHost));
+
+exit:
+    if (cuda_ret != cudaSuccess) {
+        EG_ret = cuda_ret == cudaErrorMemoryAllocation
+            ? EG_GPU_FAILED_TO_ALLOCATE_DEVICE_MEM
+            : EG_GPU_DEVICE_ERR;
+    }
     return EG_ret;
 }
 

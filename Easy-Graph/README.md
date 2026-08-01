@@ -109,7 +109,7 @@ If prebuilt EasyGraph wheels are not supported for your platform (OS / CPU arch,
 - CMake >= 3.23
 - A compiler that fully supports C++11
 - CUDA Toolkit 11.8 or later for experimental EGGPU source builds; CUDA 12.x or
-  newer is recommended when running RAPIDS/cuGraph baselines.
+  newer is recommended for the full RAPIDS/cuGraph paper baseline environment.
 
 ### Installation
 #### On Linux
@@ -131,16 +131,15 @@ GitHub subdirectory:
     pip install -v "git+https://github.com/eggpig/EGGPU.git#subdirectory=Easy-Graph"
 ```
 
-At runtime, enable strict GPU mode explicitly:
+At runtime, enable paper/debug mode explicitly:
 
 ```
     export EASYGRAPH_ENABLE_GPU="TRUE"
-    export EASYGRAPH_GPU_BACKEND="mine"
     export EASYGRAPH_GPU_STRICT_ERRORS="TRUE"
 ```
 
-Strict mode makes GPU dispatch failures and unsupported backend names raise
-errors instead of silently returning CPU fallback timings.
+Strict mode makes GPU dispatch failures raise errors instead of silently
+returning CPU fallback timings.
 
 #### On Windows
 ```

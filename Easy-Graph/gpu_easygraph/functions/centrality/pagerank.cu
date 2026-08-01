@@ -11,6 +11,7 @@
 
 #include "centrality/pagerank.cuh"
 #include "buffer_cache.h"
+#include "device_graph_cache.h"
 #include "err.h"
 
 namespace gpu_easygraph {
@@ -78,6 +79,9 @@ struct PagerankWorkspace {
     int sig_em = 0;
     std::uint64_t sig_w0 = 0;
     std::uint64_t sig_wm = 0;
+    std::uint64_t sig_alpha = 0;
+    std::uint64_t sig_graph_id = 0;
+    int owner_device_id = -1;
     bool graph_cached = false;
 
     // Reusable CUDA runtime objects.
@@ -139,11 +143,16 @@ static bool graph_signature_matches(
     const int* E,
     const double* W,
     int n,
-    int m
+    int m,
+    double alpha,
+    std::uint64_t graph_id,
+    int device_id
 ) {
     if (!ws.graph_cached) return false;
+    if (ws.sig_graph_id != graph_id || ws.owner_device_id != device_id) return false;
     if (ws.sig_V != V || ws.sig_E != E || ws.sig_W != W) return false;
     if (ws.sig_n != n || ws.sig_m != m) return false;
+    if (ws.sig_alpha != bitcast_u64(alpha)) return false;
     if (n <= 0) return true;
     if (ws.sig_v0 != V[0] || ws.sig_vn != V[n]) return false;
     if (m > 0) {
@@ -163,7 +172,10 @@ static void update_graph_signature(
     const int* E,
     const double* W,
     int n,
-    int m
+    int m,
+    double alpha,
+    std::uint64_t graph_id,
+    int device_id
 ) {
     ws.sig_V = V;
     ws.sig_E = E;
@@ -176,6 +188,9 @@ static void update_graph_signature(
     ws.sig_em = (m > 0) ? E[m - 1] : 0;
     ws.sig_w0 = (W != nullptr && m > 0) ? bitcast_u64(W[0]) : 0;
     ws.sig_wm = (W != nullptr && m > 0) ? bitcast_u64(W[m - 1]) : 0;
+    ws.sig_alpha = bitcast_u64(alpha);
+    ws.sig_graph_id = graph_id;
+    ws.owner_device_id = device_id;
     ws.graph_cached = true;
 }
 
@@ -351,7 +366,19 @@ int cuda_pagerank(
     if (kernel_seconds != nullptr) *kernel_seconds = 0.0;
     PR.clear();
     if (n <= 0) return EG_GPU_SUCC;
-    const bool graph_changed = !graph_signature_matches(g_pr_ws, V, E, W, n, m);
+    int device_id = -1;
+    if (cudaGetDevice(&device_id) != cudaSuccess || device_id < 0) {
+        return EG_GPU_DEVICE_ERR;
+    }
+    if (g_pr_ws.owner_device_id >= 0 && g_pr_ws.owner_device_id != device_id) {
+        // Persistent buffers, streams, handles, and events are device-owned.
+        // EGGPU binds one worker thread to one CUDA device while they live.
+        return EG_GPU_DEVICE_ERR;
+    }
+    g_pr_ws.owner_device_id = device_id;
+    const std::uint64_t graph_id = active_device_graph_id();
+    const bool graph_changed = !graph_signature_matches(
+        g_pr_ws, V, E, W, n, m, alpha, graph_id, device_id);
 
     int* d_in_row = nullptr;
     int* d_in_col = nullptr;
@@ -492,7 +519,8 @@ int cuda_pagerank(
         fail_if_cuda(cudaGetLastError(), EG_GPU_DEVICE_ERR);
         if (status != EG_GPU_SUCC) goto cleanup;
 
-        update_graph_signature(g_pr_ws, V, E, W, n, m);
+        update_graph_signature(
+            g_pr_ws, V, E, W, n, m, alpha, graph_id, device_id);
     } else {
         d_in_row = g_pr_ws.d_in_row.as<int>();
         d_in_col = g_pr_ws.d_in_col.as<int>();

@@ -580,8 +580,14 @@ static inline bool use_parallel_delta_sssp(int len_V, int len_E) {
     return len_E >= min_edges || len_V >= min_vertices;
 }
 
-static inline bool use_frontier_weighted_sssp(const HostCsrStats& stats, int len_V, int len_E) {
-    return should_use_weighted_frontier_sssp(stats, len_V, len_E);
+static inline bool use_frontier_weighted_sssp(
+    const HostCsrStats& stats,
+    int len_V,
+    int len_E,
+    int len_sources
+) {
+    return should_use_weighted_frontier_sssp(
+        stats, len_V, len_E, len_sources);
 }
 
 static inline bool use_small_scan_bfs(int len_V, int len_E, int len_sources) {
@@ -659,7 +665,8 @@ int cuda_sssp_dijkstra(
     if (ensure_device_buffer(b_curr_node, sizeof(int), &EG_ret) != EG_GPU_SUCC) goto exit;
     EG_ret = acquire_device_csr(V, E, W, len_V, len_E, true, &graph_view);
     if (EG_ret != EG_GPU_SUCC) goto exit;
-    frontier_sssp = use_frontier_weighted_sssp(graph_view.stats, len_V, len_E);
+    frontier_sssp = use_frontier_weighted_sssp(
+        graph_view.stats, len_V, len_E, len_sources);
     parallel_delta = !frontier_sssp && use_parallel_delta_sssp(len_V, len_E);
     if (ensure_device_buffer(b_sources, sizeof(int) * len_sources, &EG_ret) != EG_GPU_SUCC) goto exit;
     if (ensure_device_buffer(

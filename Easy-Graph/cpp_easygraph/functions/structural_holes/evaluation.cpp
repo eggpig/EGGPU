@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <string>
 #include <chrono>
+#include <stdexcept>
 
 #ifdef _OPENMP
 #include <omp.h>
@@ -18,6 +19,10 @@
 #include "../../classes/graph.h"
 #include "../../classes/directed_graph.h"
 #include "../../common/utils.h"
+
+#ifdef EASYGRAPH_ENABLE_GPU
+static void ensure_reverse_csr(const std::shared_ptr<CSRGraph>& csr_graph);
+#endif
 
 struct pair_hash {
     template <class T1, class T2>
@@ -246,6 +251,7 @@ static py::object invoke_gpu_constraint(py::object G, py::object nodes, py::obje
         G_.gen_CSR(weight_to_string(weight));
     }
     auto csr_graph = G_.csr_graph;
+    gpu_easygraph::DeviceCsrCacheScope device_cache_scope(csr_graph->cache_id);
     auto coo_graph = G_.transfer_csr_to_coo(csr_graph);
     std::vector<int>& V = csr_graph->V;
     std::vector<int>& E = csr_graph->E;
@@ -271,7 +277,12 @@ static py::object invoke_gpu_constraint(py::object G, py::object nodes, py::obje
         std::fill(node_mask.begin(), node_mask.end(), 1);
     }
 
-    int gpu_r = gpu_easygraph::constraint(V, E, row, col, num_nodes, *W_p, is_directed, node_mask, constraint_results);
+    if (is_directed) ensure_reverse_csr(csr_graph);
+    const std::vector<int>& in_V = is_directed ? csr_graph->reverse_V : V;
+    const std::vector<int>& in_E = is_directed ? csr_graph->reverse_E : E;
+    int gpu_r = gpu_easygraph::constraint(
+        V, E, in_V, in_E, row, col, num_nodes, *W_p, is_directed,
+        node_mask, constraint_results);
     if (gpu_r != gpu_easygraph::EG_GPU_SUCC) {
         py::pybind11_fail(gpu_easygraph::err_code_detail(gpu_r));
     }
@@ -556,6 +567,7 @@ static py::object invoke_gpu_effective_size(py::object G, py::object nodes, py::
         G_.gen_CSR(weight_to_string(weight));
     }
     auto csr_graph = G_.csr_graph;
+    gpu_easygraph::DeviceCsrCacheScope device_cache_scope(csr_graph->cache_id);
     auto coo_graph = G_.transfer_csr_to_coo(csr_graph);
 
     std::vector<int>& V = csr_graph->V;
@@ -584,7 +596,12 @@ static py::object invoke_gpu_effective_size(py::object G, py::object nodes, py::
         std::fill(node_mask.begin(), node_mask.end(), 1);
     }
 
-    int gpu_r = gpu_easygraph::effective_size(V, E, row, col, num_nodes, *W_p, is_directed, node_mask, effective_size_results);
+    if (is_directed) ensure_reverse_csr(csr_graph);
+    const std::vector<int>& in_V = is_directed ? csr_graph->reverse_V : V;
+    const std::vector<int>& in_E = is_directed ? csr_graph->reverse_E : E;
+    int gpu_r = gpu_easygraph::effective_size(
+        V, E, in_V, in_E, row, col, num_nodes, *W_p, is_directed,
+        node_mask, effective_size_results);
 
     if (gpu_r != gpu_easygraph::EG_GPU_SUCC) {
         py::pybind11_fail(gpu_easygraph::err_code_detail(gpu_r));
@@ -615,6 +632,7 @@ static py::object invoke_gpu_efficiency(py::object G, py::object nodes, py::obje
         G_.gen_CSR(weight_to_string(weight));
     }
     auto csr_graph = G_.csr_graph;
+    gpu_easygraph::DeviceCsrCacheScope device_cache_scope(csr_graph->cache_id);
     auto coo_graph = G_.transfer_csr_to_coo(csr_graph);
 
     std::vector<int>& V = csr_graph->V;
@@ -643,7 +661,12 @@ static py::object invoke_gpu_efficiency(py::object G, py::object nodes, py::obje
         std::fill(node_mask.begin(), node_mask.end(), 1);
     }
 
-    int gpu_r = gpu_easygraph::effective_size(V, E, row, col, num_nodes, *W_p, is_directed, node_mask, effective_size_results);
+    if (is_directed) ensure_reverse_csr(csr_graph);
+    const std::vector<int>& in_V = is_directed ? csr_graph->reverse_V : V;
+    const std::vector<int>& in_E = is_directed ? csr_graph->reverse_E : E;
+    int gpu_r = gpu_easygraph::effective_size(
+        V, E, in_V, in_E, row, col, num_nodes, *W_p, is_directed,
+        node_mask, effective_size_results);
 
     if (gpu_r != gpu_easygraph::EG_GPU_SUCC) {
         py::pybind11_fail(gpu_easygraph::err_code_detail(gpu_r));
@@ -943,6 +966,7 @@ static py::object invoke_gpu_hierarchy(py::object G, py::object nodes, py::objec
         G_.gen_CSR(weight_to_string(weight));
     }
     auto csr_graph = G_.csr_graph;
+    gpu_easygraph::DeviceCsrCacheScope device_cache_scope(csr_graph->cache_id);
     auto coo_graph = G_.transfer_csr_to_coo(csr_graph);
     std::vector<int>& V = csr_graph->V;
     std::vector<int>& E = csr_graph->E;
@@ -967,7 +991,12 @@ static py::object invoke_gpu_hierarchy(py::object G, py::object nodes, py::objec
         std::fill(node_mask.begin(), node_mask.end(), 1);
     }
 
-    int gpu_r = gpu_easygraph::hierarchy(V, E, row, col, num_nodes, *W_p, is_directed, node_mask, hierarchy_results);
+    if (is_directed) ensure_reverse_csr(csr_graph);
+    const std::vector<int>& in_V = is_directed ? csr_graph->reverse_V : V;
+    const std::vector<int>& in_E = is_directed ? csr_graph->reverse_E : E;
+    int gpu_r = gpu_easygraph::hierarchy(
+        V, E, in_V, in_E, row, col, num_nodes, *W_p, is_directed,
+        node_mask, hierarchy_results);
     if (gpu_r != gpu_easygraph::EG_GPU_SUCC) {
         py::pybind11_fail(gpu_easygraph::err_code_detail(gpu_r));
     }
@@ -987,6 +1016,8 @@ using gpu_structural_fn = int (*)(
     const std::vector<int>&,
     const std::vector<int>&,
     const std::vector<int>&,
+    const std::vector<int>&,
+    const std::vector<int>&,
     int,
     const std::vector<double>&,
     bool,
@@ -994,6 +1025,40 @@ using gpu_structural_fn = int (*)(
     std::vector<double>&,
     double*
 );
+
+static void ensure_reverse_csr(const std::shared_ptr<CSRGraph>& csr_graph) {
+    std::lock_guard<std::mutex> guard(csr_graph->reverse_mutex);
+    if (csr_graph->reverse_ready) return;
+
+    const int num_nodes = csr_graph->contiguous_zero_based
+        ? static_cast<int>(csr_graph->node_count)
+        : static_cast<int>(csr_graph->node2idx.size());
+    const std::vector<int>& V = csr_graph->V;
+    const std::vector<int>& E = csr_graph->E;
+    std::vector<int>& reverse_V = csr_graph->reverse_V;
+    std::vector<int>& reverse_E = csr_graph->reverse_E;
+    reverse_V.assign(static_cast<std::size_t>(num_nodes) + 1, 0);
+    reverse_E.assign(E.size(), 0);
+
+    for (int target : E) {
+        if (target < 0 || target >= num_nodes) {
+            throw std::runtime_error("CSR target is outside the node-id domain");
+        }
+        ++reverse_V[static_cast<std::size_t>(target) + 1];
+    }
+    for (int node = 0; node < num_nodes; ++node) {
+        reverse_V[static_cast<std::size_t>(node) + 1] +=
+            reverse_V[static_cast<std::size_t>(node)];
+    }
+    std::vector<int> cursor = reverse_V;
+    for (int source = 0; source < num_nodes; ++source) {
+        for (int edge = V[source]; edge < V[source + 1]; ++edge) {
+            const int target = E[edge];
+            reverse_E[cursor[target]++] = source;
+        }
+    }
+    csr_graph->reverse_ready = true;
+}
 
 static py::dict invoke_gpu_structural_dense(
     py::object G,
@@ -1009,28 +1074,57 @@ static py::dict invoke_gpu_structural_dense(
     }
 
     auto csr_graph = G_.csr_graph;
-    auto coo_graph = G_.transfer_csr_to_coo(csr_graph);
+    gpu_easygraph::DeviceCsrCacheScope device_cache_scope(csr_graph->cache_id);
     std::vector<int>& V = csr_graph->V;
     std::vector<int>& E = csr_graph->E;
-    std::vector<int>& row = coo_graph->row;
-    std::vector<int>& col = coo_graph->col;
-    std::vector<double>* W_p = weight.is_none()
-        ? &(coo_graph->unweighted_W)
-        : coo_graph->W_map.find(weight_to_string(weight))->second.get();
-    std::unordered_map<node_t, int>& node2idx = coo_graph->node2idx;
-    int num_nodes = coo_graph->node2idx.size();
+    std::vector<int> empty_int;
+    std::vector<double> empty_weight;
+    const std::vector<int>* row = &empty_int;
+    const std::vector<int>* col = &empty_int;
+    const std::vector<double>* W_p = &empty_weight;
+    if (!weight.is_none()) {
+        auto coo_graph = (
+            csr_graph->contiguous_zero_based &&
+            G_.coo_graph != nullptr &&
+            G_.coo_graph->row.size() == csr_graph->E.size()
+        ) ? G_.coo_graph : G_.transfer_csr_to_coo(csr_graph);
+        if (csr_graph->contiguous_zero_based) {
+            G_.coo_graph = coo_graph;
+        }
+        row = &coo_graph->row;
+        col = &coo_graph->col;
+        auto weight_it = coo_graph->W_map.find(weight_to_string(weight));
+        if (weight_it == coo_graph->W_map.end()) {
+            throw py::key_error("weight key is not present in the graph CSR");
+        }
+        W_p = weight_it->second.get();
+    }
+    std::unordered_map<node_t, int>& node2idx = csr_graph->node2idx;
+    const bool contiguous_zero_based = csr_graph->contiguous_zero_based;
+    int num_nodes = contiguous_zero_based
+        ? static_cast<int>(csr_graph->node_count)
+        : static_cast<int>(node2idx.size());
     bool is_directed = G.attr("is_directed")().cast<bool>();
 
     std::vector<int> node_mask(num_nodes, 0);
     if (!nodes.is_none()) {
         py::list nodes_list = py::list(nodes);
         for (auto node : nodes_list) {
-            node_t node_id = G_.node_to_id[node].cast<node_t>();
-            auto it = node2idx.find(node_id);
-            if (it == node2idx.end()) {
+            int index = -1;
+            if (contiguous_zero_based) {
+                std::int64_t value = py::cast<std::int64_t>(node);
+                if (value >= 0 && value < num_nodes) {
+                    index = static_cast<int>(value);
+                }
+            } else {
+                node_t node_id = G_.node_to_id[node].cast<node_t>();
+                auto it = node2idx.find(node_id);
+                if (it != node2idx.end()) index = it->second;
+            }
+            if (index < 0) {
                 throw py::key_error("node is not present in the graph CSR index");
             }
-            node_mask[it->second] = 1;
+            node_mask[index] = 1;
         }
     } else {
         std::fill(node_mask.begin(), node_mask.end(), 1);
@@ -1038,7 +1132,72 @@ static py::dict invoke_gpu_structural_dense(
 
     std::vector<double> results(num_nodes, 0.0);
     double kernel_seconds = 0.0;
-    int gpu_r = fn(V, E, row, col, num_nodes, *W_p, is_directed, node_mask, results, &kernel_seconds);
+    int gpu_r = gpu_easygraph::EG_GPU_DEVICE_ERR;
+    const auto& projection = csr_graph->undirected_projection;
+    const bool use_ego_edge_statistics =
+        is_directed &&
+        contiguous_zero_based &&
+        csr_graph->simple_sorted_topology &&
+        weight.is_none() &&
+        nodes.is_none() &&
+        projection != nullptr &&
+        projection->forward_V.size() == V.size() &&
+        projection->degree.size() == static_cast<std::size_t>(num_nodes);
+    if (use_ego_edge_statistics) {
+        if (fn == gpu_easygraph::effective_size) {
+            gpu_r = gpu_easygraph::effective_size_ego_edge_statistics(
+                V,
+                E,
+                projection->forward_V,
+                projection->forward_E,
+                projection->degree,
+                csr_graph->cache_id,
+                results,
+                &kernel_seconds);
+        } else if (fn == gpu_easygraph::constraint) {
+            gpu_r = gpu_easygraph::constraint_ego_edge_statistics(
+                V,
+                E,
+                projection->forward_V,
+                projection->forward_E,
+                projection->degree,
+                csr_graph->cache_id,
+                results,
+                &kernel_seconds);
+        } else if (fn == gpu_easygraph::hierarchy) {
+            gpu_r = gpu_easygraph::hierarchy_ego_edge_statistics(
+                V,
+                E,
+                projection->forward_V,
+                projection->forward_E,
+                projection->degree,
+                csr_graph->cache_id,
+                results,
+                &kernel_seconds);
+        }
+    } else {
+        if (is_directed) {
+            ensure_reverse_csr(csr_graph);
+        }
+        const std::vector<int>& in_V =
+            is_directed ? csr_graph->reverse_V : V;
+        const std::vector<int>& in_E =
+            is_directed ? csr_graph->reverse_E : E;
+        gpu_r = fn(
+            V,
+            E,
+            in_V,
+            in_E,
+            *row,
+            *col,
+            num_nodes,
+            *W_p,
+            is_directed,
+            node_mask,
+            results,
+            &kernel_seconds
+        );
+    }
     if (gpu_r != gpu_easygraph::EG_GPU_SUCC) {
         py::pybind11_fail(gpu_easygraph::err_code_detail(gpu_r));
     }

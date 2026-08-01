@@ -1,146 +1,103 @@
 # EGGPU
 
-EGGPU is an EasyGraph-based GPU graph analytics project.  It keeps the
-EasyGraph Python call style and adds optional native CUDA dispatch, C++/pybind
-bindings, reusable graph context paths, correctness checks, and benchmark
-helpers.
+EGGPU is an end-to-end GPU backend for EasyGraph network analysis. Existing
+EasyGraph calls enter native C++/CUDA implementations while reusable host and
+device graph state avoids rebuilding the same representations across compatible
+calls. The current implementation exposes 16 analysis functions in four
+families and preserves their documented EasyGraph return forms.
 
-Implemented GPU-facing functions include:
+This repository is the **framework and correctness artifact**. It contains the
+implementation, build helpers, code-to-design map, dataset provenance, and a
+small GPU correctness smoke test. It deliberately contains no paper source,
+benchmark results, raw datasets, or performance harness. Dataset files will be
+published separately; [`artifact/datasets/`](artifact/datasets/) records their
+provenance and planned archive metadata.
 
-```text
-PageRank, MST, LCC, WCC, SCC, BFS, Dijkstra, BellmanFord, SSSP,
-KCore, BC, Closeness, EffectiveSize, Efficiency, Constraint, Hierarchy
-```
+## Repository layout
 
-## Repository Layout
+- [`Easy-Graph/`](Easy-Graph/) — EasyGraph, EGGPU dispatch, native bindings,
+  reusable graph state, and CUDA operators.
+- [`artifact/`](artifact/) — architecture, function coverage, correctness
+  protocol, paper-to-code map, and dataset metadata.
+- [`scripts/`](scripts/) — environment check, native build, correctness smoke,
+  and release-content verifier.
 
-- `Easy-Graph/`: EasyGraph source, EGGPU Python dispatch, C++ bindings, and
-  CUDA kernels.
-- `EG_Evaluation/`: public benchmark, smoke-test, dataset manifest, and
-  environment files.
-- `scripts/`: build, smoke, and compatibility helpers.
+## Requirements
 
-## Install
+The reference environment is Linux x86-64, Python 3.10, CUDA Toolkit 12.8, and
+an NVIDIA GPU. The build has been exercised on compute capabilities 8.0 and
+8.6. A compatible NVIDIA driver, `nvidia-smi`, CMake 3.23 or newer, and a C++
+compiler are required.
 
-Clone the repository:
-
-```bash
-git clone https://github.com/eggpig/EGGPU.git
-cd EGGPU
-```
-
-Create the conda environment:
-
-```bash
-conda env create -f EG_Evaluation/environment_eggpu_cuda128.yml
-conda activate EGGPU
-```
-
-Select a user-space CUDA toolkit.  The build should not depend on system-wide
-CUDA or GCC paths.
+Create the supplied environment:
 
 ```bash
+conda env create -f environment.yml
+conda activate eggpu-artifact
 export EGGPU_CUDA_ROOT="$CONDA_PREFIX"
-export CUDA_PATH="$EGGPU_CUDA_ROOT"
-export CUDA_HOME="$EGGPU_CUDA_ROOT"
-export CUDAToolkit_ROOT="$EGGPU_CUDA_ROOT"
+python scripts/check_eggpu_compat.py --strict
 ```
 
-Build in place:
+If CUDA is installed outside Conda, set `EGGPU_CUDA_ROOT` to the toolkit root
+containing `bin/nvcc`.
+
+## Build and verify
 
 ```bash
 bash scripts/build_eggpu.sh
+python scripts/check_eggpu_compat.py --strict --require-extension
+GPU=0 bash scripts/run_smoke.sh
+python scripts/verify_release.py
 ```
 
-The build wrapper auto-detects the visible GPU compute capability with
-`nvidia-smi` and passes it to CMake.  For example, it selects `80` on A100,
-`86` on RTX 3080 Ti, and `89` on RTX 4090.  To force a specific target, set
-`EGGPU_CUDA_ARCHITECTURES` explicitly:
+The build helper detects the visible GPU architecture. Override it when
+cross-compiling, for example:
 
 ```bash
 EGGPU_CUDA_ARCHITECTURES=86 bash scripts/build_eggpu.sh
 ```
 
-For a quick check without compiling:
+The smoke test performs no benchmarking. It compares the public GPU calls with
+the corresponding EasyGraph CPU results on small deterministic graphs and
+fails if strict GPU dispatch or a result contract is violated.
+
+## Use EGGPU
+
+One environment setting enables EGGPU for supported calls:
 
 ```bash
-EGGPU_BUILD_DRY_RUN=1 bash scripts/build_eggpu.sh
+export EASYGRAPH_ENABLE_GPU=TRUE
 ```
 
-The package name remains `Python-EasyGraph`.  A direct source install also
-works:
-
-```bash
-EASYGRAPH_ENABLE_GPU=TRUE \
-EGGPU_CUDA_ROOT="$CONDA_PREFIX" \
-pip install -v ./Easy-Graph
-```
-
-## Runtime
-
-Normal EasyGraph calls stay unchanged:
+Then use the normal EasyGraph API:
 
 ```python
 import easygraph as eg
 
-G = eg.DiGraph()
-G.add_edges_from([(0, 1), (1, 2), (2, 0)])
-print(eg.pagerank(G))
+graph = eg.DiGraph()
+graph.add_edges_from([(0, 1), (1, 2), (2, 0), (2, 3)])
+rank = eg.pagerank(graph)
+components = list(eg.strongly_connected_components(graph))
 ```
 
-Enable EGGPU explicitly:
+For validation and deployment, strict mode prevents an unsupported or failed
+GPU path from silently continuing on the CPU:
 
 ```bash
-export EASYGRAPH_ENABLE_GPU=TRUE
-export EASYGRAPH_GPU_BACKEND=mine
 export EASYGRAPH_GPU_STRICT_ERRORS=TRUE
 ```
 
-Strict mode raises an error when GPU dispatch fails instead of silently timing a
-CPU fallback.  Disable GPU or leave strict mode off only for exploratory local
-debugging.
+See [`artifact/FUNCTION_SUPPORT.md`](artifact/FUNCTION_SUPPORT.md) for the 16
+public calls and their input boundaries.
 
-## Checks And Benchmarks
+## Artifact boundary
 
-Run a compatibility check:
+This code release supports implementation inspection and functional
+verification. It is not, by itself, the complete performance-reproduction
+package for the paper. The latter also requires the archived datasets,
+experiment protocol, baseline environments, and result provenance.
 
-```bash
-python scripts/check_eggpu_compat.py --strict --expect-rapids
-```
+## License and citation
 
-Run a small smoke test on one GPU:
-
-```bash
-GPU=0 bash scripts/run_smoke.sh
-```
-
-Run the public benchmark workflow on one idle GPU:
-
-```bash
-cd EG_Evaluation
-MAIN_GPU=0 ABL_GPU=0 RUN_PARALLEL=0 bash run_main_and_ablation.sh
-```
-
-Generated outputs are written under `EG_Evaluation/benchmarking/results/` and
-are intentionally ignored by Git.
-
-## Datasets
-
-Dataset checksums and source hints are recorded in
-`EG_Evaluation/datasets/MANIFEST_20260609.tsv`.  For a lightweight clone, keep
-the manifest in Git and stage larger public datasets before running the full
-benchmark.  See `EG_Evaluation/datasets/DATASETS.md`.
-
-## Timing Definitions
-
-- `build`: graph object construction, excluding raw file parse/import.
-- `e2e`: user function wall time, including per-call conversion, transfer,
-  synchronization, and result wrapping.
-- `kernel`: CUDA event time for EGGPU; algorithm wall time for CPU baselines.
-
-## Ignored Files
-
-The repository does not track build outputs, compiled shared libraries,
-benchmark results, local logs, raw downloads, or third-party baseline source
-trees.  Keep project-internal notes and unpublished analysis outside this public
-export repository.
+EGGPU is distributed under the BSD 3-Clause License. See [`LICENSE`](LICENSE),
+[`NOTICE`](NOTICE), and [`CITATION.cff`](CITATION.cff).

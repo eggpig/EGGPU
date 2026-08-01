@@ -732,13 +732,13 @@ def _minimum_spanning_tree_gpu_runtime_dispatch(G, weight="weight"):
         return None
 
     try:
-        from easygraph.utils import gpu_mine_backend as mine_backend
+        from easygraph.utils import gpu_eggpu_backend as eggpu_backend
 
-        if mine_backend.mine_backend_enabled():
-            tree = mine_backend.minimum_spanning_tree(G, weight=weight)
+        if eggpu_backend.eggpu_backend_enabled():
+            tree = eggpu_backend.minimum_spanning_tree(G, weight=weight)
             if tree is not None:
                 return tree
-            edges = mine_backend.minimum_spanning_tree_edges(G, weight=weight)
+            edges = eggpu_backend.minimum_spanning_tree_edges(G, weight=weight)
             T = G.__class__()
             if not _populate_mst_tree_fast(T, G, edges, weight=weight):
                 if edges:
@@ -752,54 +752,4 @@ def _minimum_spanning_tree_gpu_runtime_dispatch(G, weight="weight"):
     except Exception:
         if gpu_strict_errors():
             raise
-
-    if not rapids_backend_enabled():
-        return None
-    if G.is_directed():
-        return None
-
-    try:
-        nodes, node_to_idx = build_node_index(G)
-        T = G.__class__()
-        for node in nodes:
-            T.add_node(node)
-
-        rows = indexed_edges(
-            G,
-            node_to_idx,
-            undirected_projection=True,
-            weight_key=weight,
-        )
-        if not rows:
-            return T
-
-        cudf, cugraph = import_rapids()
-        edge_df = to_cudf_edgelist(cudf, rows, weighted=True)
-        cg = make_cugraph_graph(cugraph, directed=False)
-        load_cugraph_edgelist(
-            cg,
-            cudf,
-            edge_df,
-            weighted=True,
-            num_nodes=len(nodes),
-            renumber=False,
-        )
-
-        tree = cugraph.minimum_spanning_tree(cg, weight="weight")
-        tree_df = (
-            tree.view_edge_list().to_pandas()
-            if hasattr(tree, "view_edge_list")
-            else tree.to_pandas()
-        )
-        weight_col = (
-            "weight"
-            if "weight" in tree_df.columns
-            else ("weights" if "weights" in tree_df.columns else "w")
-        )
-        for src, dst, w in zip(tree_df["src"], tree_df["dst"], tree_df[weight_col]):
-            u = nodes[int(src)]
-            v = nodes[int(dst)]
-            T.add_edge(u, v, **{weight: float(w)})
-        return T
-    except Exception:
-        return None
+    return None

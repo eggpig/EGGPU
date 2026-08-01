@@ -1,5 +1,8 @@
 #include "classes/__init__.h"
 #include "functions/__init__.h"
+#ifdef EASYGRAPH_ENABLE_GPU
+#include <gpu_easygraph.h>
+#endif
 PYBIND11_MODULE(cpp_easygraph, m) {
 
     py::class_<Graph>(m, "Graph")
@@ -91,6 +94,23 @@ PYBIND11_MODULE(cpp_easygraph, m) {
     m.def("cpp_efficiency", &efficiency, py::arg("G"), py::arg("nodes") = py::none(), py::arg("weight") = py::none(), py::arg("n_workers") = py::none());
     m.def("cpp_hierarchy", &hierarchy, py::arg("G"), py::arg("nodes") = py::none(), py::arg("weight") = py::none(), py::arg("n_workers") = py::none());
 #ifdef EASYGRAPH_ENABLE_GPU
+    m.def("cpp_gpu_reset_device_csr_cache", []() {
+        gpu_easygraph::reset_device_csr_cache();
+    });
+    m.def("cpp_gpu_device_csr_cache_stats", []() {
+        const auto stats = gpu_easygraph::get_device_csr_cache_stats();
+        py::dict out;
+        out["structure_hits"] = py::int_(stats.structure_hits);
+        out["structure_misses"] = py::int_(stats.structure_misses);
+        out["weight_hits"] = py::int_(stats.weight_hits);
+        out["weight_misses"] = py::int_(stats.weight_misses);
+        out["evictions"] = py::int_(stats.evictions);
+        out["structure_bytes_copied"] = py::int_(stats.structure_bytes_copied);
+        out["weight_bytes_copied"] = py::int_(stats.weight_bytes_copied);
+        out["active_entries"] = py::int_(stats.active_entries);
+        out["device_bytes"] = py::int_(stats.device_bytes);
+        return out;
+    });
     m.def("cpp_gpu_constraint_dense", &gpu_constraint_dense, py::arg("G"), py::arg("nodes") = py::none(), py::arg("weight") = py::none());
     m.def("cpp_gpu_effective_size_dense", &gpu_effective_size_dense, py::arg("G"), py::arg("nodes") = py::none(), py::arg("weight") = py::none());
     m.def("cpp_gpu_hierarchy_dense", &gpu_hierarchy_dense, py::arg("G"), py::arg("nodes") = py::none(), py::arg("weight") = py::none());
@@ -122,4 +142,20 @@ PYBIND11_MODULE(cpp_easygraph, m) {
     m.def("cpp_gpu_connected_component_labels_dense", &_connected_components_gpu_native_dense, py::arg("G"), py::arg("directed") = false);
     m.def("cpp_gpu_connected_components_sets", &_connected_components_gpu_native_sets, py::arg("G"), py::arg("directed") = false);
     m.def("cpp_graph_from_easygraph", &cpp_graph_from_easygraph, py::arg("G"), py::arg("directed") = false);
+    m.def(
+        "cpp_graph_from_csr_files",
+        &cpp_graph_from_csr_files,
+        py::arg("offsets_path"),
+        py::arg("indices_path"),
+        py::arg("num_nodes"),
+        py::arg("num_entries"),
+        py::arg("directed") = false,
+        py::arg("validate") = true,
+        py::arg("weights_path") = "",
+        py::arg("weight_key") = "weight",
+        py::arg("undirected_projection") = py::none());
+    m.def(
+        "cpp_graph_undirected_projection_info",
+        &cpp_graph_undirected_projection_info,
+        py::arg("G"));
 }

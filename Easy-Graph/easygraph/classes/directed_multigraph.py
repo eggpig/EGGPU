@@ -170,12 +170,12 @@ class MultiDiGraph(MultiGraph, DiGraph):
             key = self.new_edge_key(u, v)
         if v in self._adj[u]:
             keydict = self._adj[u][v]
-            datadict = keydict.get(key, self.edge_key_dict_factory())
+            datadict = keydict.get(key, self._new_edge_attr_dict())
             datadict.update(attr)
             keydict[key] = datadict
         else:
             # selfloops work this way without special treatment
-            datadict = self.edge_attr_dict_factory()
+            datadict = self._new_edge_attr_dict()
             datadict.update(attr)
             keydict = self.edge_key_dict_factory()
             keydict[key] = datadict

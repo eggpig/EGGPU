@@ -2,6 +2,7 @@
 #include "linkgraph.h"
 #include "../common/utils.h"
 
+#include <limits>
 
 Graph::Graph() {
     this->id = 0;
@@ -717,6 +718,12 @@ void Graph::drop_cache() {
 
 std::shared_ptr<CSRGraph> Graph::gen_CSR(const std::string& weight) {
     if (csr_graph != nullptr) {
+        if (csr_graph->implicit_unit_weights) {
+            throw std::runtime_error(
+                "weighted operations require a bulk CSR artifact with explicit "
+                "edge weights; this topology-only artifact stores implicit unit weights"
+            );
+        }
         if (csr_graph->W_map.find(weight) == csr_graph->W_map.end()) {
             auto W = std::make_shared<std::vector<double>>();
             W->reserve(csr_graph->E.size());
@@ -757,6 +764,10 @@ std::shared_ptr<CSRGraph> Graph::gen_CSR(const std::string& weight) {
         }
 
         std::sort(nodes.begin(), nodes.end());
+        if (nodes.size() >= static_cast<std::size_t>(std::numeric_limits<int>::max())) {
+            throw py::value_error(
+                "node count exceeds the signed 32-bit EGGPU CSR limit");
+        }
 
         std::unordered_map<node_t, int>& node2idx = csr_graph->node2idx;
 
@@ -769,7 +780,7 @@ std::shared_ptr<CSRGraph> Graph::gen_CSR(const std::string& weight) {
         auto W = std::make_shared<std::vector<double>>();
 
         for (int idx = 0; idx < nodes.size(); ++idx) {
-            V.push_back(E.size());
+            V.push_back(static_cast<int>(E.size()));
 
             node_t n = nodes[idx];
 
@@ -789,15 +800,22 @@ std::shared_ptr<CSRGraph> Graph::gen_CSR(const std::string& weight) {
                       [](const std::pair<int, weight_t>& a, const std::pair<int, weight_t>& b) {
                           return a.first < b.first;
                       });
+            if (row_entries.size() >=
+                static_cast<std::size_t>(std::numeric_limits<int>::max()) -
+                    E.size()) {
+                throw py::value_error(
+                    "adjacency entry count exceeds the signed 32-bit EGGPU CSR limit");
+            }
             for (const auto& entry : row_entries) {
                 E.push_back(entry.first);
                 W->push_back(entry.second);
             }
         }
 
-        V.push_back(E.size());
+        V.push_back(static_cast<int>(E.size()));
 
         csr_graph->W_map[weight] = W;
+        csr_graph->node_count = static_cast<std::int64_t>(nodes.size());
     }
 
     return csr_graph;
@@ -805,7 +823,8 @@ std::shared_ptr<CSRGraph> Graph::gen_CSR(const std::string& weight) {
 
 std::shared_ptr<CSRGraph> Graph::gen_CSR() {
     if (csr_graph != nullptr) {
-        if (csr_graph->unweighted_W.size() != csr_graph->E.size()) {
+        if (!csr_graph->implicit_unit_weights &&
+            csr_graph->unweighted_W.size() != csr_graph->E.size()) {
             csr_graph->unweighted_W = std::vector<double>(csr_graph->E.size(), 1.0);
         }
     } else {
@@ -819,6 +838,10 @@ std::shared_ptr<CSRGraph> Graph::gen_CSR() {
         }
 
         std::sort(nodes.begin(), nodes.end());
+        if (nodes.size() >= static_cast<std::size_t>(std::numeric_limits<int>::max())) {
+            throw py::value_error(
+                "node count exceeds the signed 32-bit EGGPU CSR limit");
+        }
 
         std::unordered_map<node_t, int>& node2idx = csr_graph->node2idx;
 
@@ -830,7 +853,7 @@ std::shared_ptr<CSRGraph> Graph::gen_CSR() {
         std::vector<int>& E = csr_graph->E;
 
         for (int idx = 0; idx < nodes.size(); ++idx) {
-            V.push_back(E.size());
+            V.push_back(static_cast<int>(E.size()));
 
             node_t n = nodes[idx];
 
@@ -843,13 +866,20 @@ std::shared_ptr<CSRGraph> Graph::gen_CSR() {
                 row_entries.push_back(node2idx[adj_it->first]);
             }
             std::sort(row_entries.begin(), row_entries.end());
+            if (row_entries.size() >=
+                static_cast<std::size_t>(std::numeric_limits<int>::max()) -
+                    E.size()) {
+                throw py::value_error(
+                    "adjacency entry count exceeds the signed 32-bit EGGPU CSR limit");
+            }
             for (int dst_idx : row_entries) {
                 E.push_back(dst_idx);
             }
         }
 
-        V.push_back(E.size());
+        V.push_back(static_cast<int>(E.size()));
         csr_graph->unweighted_W = std::vector<double>(E.size(), 1.0);
+        csr_graph->node_count = static_cast<std::int64_t>(nodes.size());
     }
 
     return csr_graph;
@@ -861,6 +891,15 @@ std::shared_ptr<std::vector<int>> Graph::gen_CSR_sources(const py::object& py_so
     if (py_sources.is_none()) {
         for (int i = 0; i < csr_graph->V.size() - 1; ++i) {
             sources->push_back(i);
+        }
+    } else if (csr_graph->contiguous_zero_based) {
+        const std::int64_t n = static_cast<std::int64_t>(csr_graph->V.size()) - 1;
+        for (auto it = py_sources.begin(); it != py_sources.end(); ++it) {
+            std::int64_t source = py::cast<std::int64_t>(*it);
+            if (source < 0 || source >= n) {
+                throw py::value_error("source node should exist in the graph");
+            }
+            sources->push_back(static_cast<int>(source));
         }
     } else {
         for (auto it = py_sources.begin(); it != py_sources.end(); ++it) {

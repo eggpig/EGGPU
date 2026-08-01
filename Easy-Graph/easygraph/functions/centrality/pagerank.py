@@ -34,6 +34,13 @@ def pagerank(G, alpha=0.85, weight=None, max_iter=None, tol=None):
     tol : float, optional
         Convergence tolerance for L1 residual.
         If None, read from environment variable EASYGRAPH_CPU_PR_TOL (default 1e-6).
+
+    Returns
+    -------
+    scores : collections.abc.Mapping
+        A node-to-score mapping. CPU execution returns a ``dict``; the GPU
+        bulk-result path may return an immutable dense-backed mapping. Use
+        ``dict(scores)`` when an independently mutable dictionary is required.
     """
     if max_iter is None:
         max_iter_eff = max(1, int(os.environ.get("EASYGRAPH_CPU_PR_MAX_ITER", "200")))
@@ -156,10 +163,10 @@ def _pagerank_gpu_runtime_dispatch(G, alpha, weight, max_iter, tol):
         return None
 
     try:
-        from easygraph.utils import gpu_mine_backend as mine_backend
+        from easygraph.utils import gpu_eggpu_backend as eggpu_backend
 
-        if mine_backend.mine_backend_enabled():
-            return mine_backend.pagerank(
+        if eggpu_backend.eggpu_backend_enabled():
+            return eggpu_backend.pagerank(
                 G,
                 alpha=alpha,
                 max_iter=int(max_iter),
@@ -167,79 +174,6 @@ def _pagerank_gpu_runtime_dispatch(G, alpha, weight, max_iter, tol):
                 weight=weight,
             )
     except Exception:
-        if gpu_strict_errors():
+        if gpu_strict_errors() or getattr(G, "_eggpu_bulk_csr", False):
             raise
-
-    if not rapids_backend_enabled():
-        return None
-
-    # First try nx-cugraph (simpler semantics for isolated vertices).
-    try:
-        import networkx as nx
-        import nx_cugraph  # noqa: F401
-
-        g_nx = nx.DiGraph() if G.is_directed() else nx.Graph()
-        g_nx.add_nodes_from(graph_nodes_list(G))
-        if weight is None:
-            g_nx.add_edges_from((u, v) for u, v, _ in G.edges)
-            return nx.pagerank(g_nx, alpha=alpha, max_iter=int(max_iter), tol=float(tol), backend="cugraph")
-        g_nx.add_edges_from((u, v, {weight: data.get(weight, 1)}) for u, v, data in G.edges)
-        return nx.pagerank(
-            g_nx,
-            alpha=alpha,
-            weight=weight,
-            max_iter=int(max_iter),
-            tol=float(tol),
-            backend="cugraph",
-        )
-    except Exception:
-        pass
-
-    # Fallback to native cuGraph if nx-cugraph path is unavailable.
-    try:
-        nodes, node_to_idx = build_node_index(G)
-        if not nodes:
-            return {}
-        rows = indexed_edges(
-            G,
-            node_to_idx,
-            undirected_projection=not G.is_directed(),
-            weight_key=weight,
-        )
-        if not rows:
-            uniform = 1.0 / len(nodes)
-            return {node: uniform for node in nodes}
-
-        cudf, cugraph = import_rapids()
-        edge_df = to_cudf_edgelist(cudf, rows, weighted=(weight is not None))
-        cg = make_cugraph_graph(cugraph, directed=G.is_directed())
-        load_cugraph_edgelist(
-            cg,
-            cudf,
-            edge_df,
-            weighted=(weight is not None),
-            num_nodes=len(nodes),
-            renumber=False,
-        )
-        try:
-            pr = cugraph.pagerank(cg, alpha=alpha, max_iter=int(max_iter), tol=float(tol))
-        except TypeError:
-            pr = cugraph.pagerank(cg, alpha=alpha)
-        pr_pdf = pr.to_pandas()
-        score_col = "pagerank" if "pagerank" in pr_pdf.columns else pr_pdf.columns[-1]
-        result = {node: 0.0 for node in nodes}
-        for vertex, value in zip(pr_pdf["vertex"], pr_pdf[score_col]):
-            idx = int(vertex)
-            if 0 <= idx < len(nodes):
-                result[nodes[idx]] = float(value)
-        total = sum(result.values())
-        if total > 0:
-            inv_total = 1.0 / total
-            for node in result:
-                result[node] *= inv_total
-        else:
-            uniform = 1.0 / len(nodes)
-            result = {node: uniform for node in nodes}
-        return result
-    except Exception:
-        return None
+    return None

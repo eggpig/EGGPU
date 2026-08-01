@@ -82,10 +82,21 @@ HostCsrStats summarize_host_csr(const int* V, int len_V, int len_E) {
     return stats;
 }
 
-bool should_use_weighted_frontier_sssp(const HostCsrStats& stats, int len_V, int len_E) {
+bool should_use_weighted_frontier_sssp(
+    const HostCsrStats& stats,
+    int len_V,
+    int len_E,
+    int len_sources
+) {
     if (env_present("EASYGRAPH_GPU_SSSP_FRONTIER")) {
         return env_bool("EASYGRAPH_GPU_SSSP_FRONTIER", true);
     }
+    // A single-source request gives the source-parallel CTA path only one
+    // block of work. Use the frontier backend so parallelism comes from the
+    // active vertices instead. Multi-source calls retain the established
+    // size and topology policy below.
+    if (len_sources == 1) return true;
+
     const int min_edges = env_int("EASYGRAPH_GPU_SSSP_FRONTIER_MIN_EDGES", 300000);
     const int min_vertices = env_int("EASYGRAPH_GPU_SSSP_FRONTIER_MIN_VERTICES", 50000);
     bool large_enough = len_E >= min_edges || len_V >= min_vertices;

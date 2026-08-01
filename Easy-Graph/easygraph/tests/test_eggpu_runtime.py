@@ -37,37 +37,23 @@ class EnvGuard:
 class TestEGGPURuntime(unittest.TestCase):
     ENV_KEYS = (
         "EASYGRAPH_ENABLE_GPU",
-        "EASYGRAPH_GPU_BACKEND",
         "EASYGRAPH_GPU_STRICT_ERRORS",
     )
 
     def test_gpu_runtime_disabled_by_default(self):
         with EnvGuard(*self.ENV_KEYS):
             self.assertFalse(gpu_runtime.gpu_runtime_enabled())
-            self.assertEqual(gpu_runtime.gpu_backend_name(), "mine")
 
-    def test_strict_unknown_backend_fails_fast(self):
+    def test_canonical_switch_enables_eggpu_without_backend_selection(self):
         with EnvGuard(*self.ENV_KEYS):
             os.environ["EASYGRAPH_ENABLE_GPU"] = "TRUE"
-            os.environ["EASYGRAPH_GPU_BACKEND"] = "typo"
-            os.environ["EASYGRAPH_GPU_STRICT_ERRORS"] = "TRUE"
-            with self.assertRaisesRegex(RuntimeError, "Unsupported EASYGRAPH_GPU_BACKEND"):
-                gpu_runtime.gpu_backend_name()
+            self.assertTrue(gpu_runtime.gpu_runtime_enabled())
+            self.assertFalse(hasattr(gpu_runtime, "gpu_backend_name"))
 
-    def test_non_strict_unknown_backend_remains_cpu_compatible(self):
+    def test_strict_error_switch_is_independent(self):
         with EnvGuard(*self.ENV_KEYS):
-            os.environ["EASYGRAPH_ENABLE_GPU"] = "TRUE"
-            os.environ["EASYGRAPH_GPU_BACKEND"] = "typo"
-            os.environ["EASYGRAPH_GPU_STRICT_ERRORS"] = "FALSE"
-            self.assertEqual(gpu_runtime.gpu_backend_name(), "typo")
-
-    def test_gpu_disabled_ignores_backend_typo(self):
-        with EnvGuard(*self.ENV_KEYS):
-            os.environ["EASYGRAPH_ENABLE_GPU"] = "FALSE"
-            os.environ["EASYGRAPH_GPU_BACKEND"] = "typo"
             os.environ["EASYGRAPH_GPU_STRICT_ERRORS"] = "TRUE"
-            self.assertFalse(gpu_runtime.gpu_runtime_enabled())
-            self.assertEqual(gpu_runtime.gpu_backend_name(), "typo")
+            self.assertTrue(gpu_runtime.gpu_strict_errors())
 
 
 if __name__ == "__main__":

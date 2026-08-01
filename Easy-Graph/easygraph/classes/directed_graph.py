@@ -73,6 +73,7 @@ class DiGraph(Graph):
         self._id = 0
         self.cflag = 0
         self.cache = {}
+        self._mutation_generation = 0
         self._node_index = self.node_index_dict()
         if incoming_graph_data is not None:
             convert.to_easygraph_graph(incoming_graph_data, create_using=self)
@@ -876,7 +877,7 @@ class DiGraph(Graph):
                 self._adj[v] = self.adjlist_inner_dict_factory()
                 self._pred[v] = self.adjlist_inner_dict_factory()
                 self._node[v] = self.node_attr_dict_factory()
-            datadict = self._adj[u].get(v, self.edge_attr_dict_factory())
+            datadict = self._adj[u].get(v, self._new_edge_attr_dict())
             datadict.update(attr)
             datadict.update(dd)
             self._adj[u][v] = datadict
@@ -947,7 +948,7 @@ class DiGraph(Graph):
         if v not in self._node:
             self._add_one_node(v)
         # add the edge
-        datadict = self._adj[u].get(v, self.edge_attr_dict_factory())
+        datadict = self._adj[u].get(v, self._new_edge_attr_dict())
         datadict.update(edge_attr)
         self._adj[u][v] = datadict
         self._pred[v][u] = datadict

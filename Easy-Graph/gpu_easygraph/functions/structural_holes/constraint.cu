@@ -2,13 +2,16 @@
 #include <cuda_runtime.h>
 #include <cstring>
 #include <stdlib.h>
+#include <vector>
 
 #include "common.h"
+#include "device_graph_cache.h"
 #define NODES_PER_BLOCK 1
 
 namespace gpu_easygraph {
 
 enum norm_t { SUM = 0, MAX = 1 };
+static constexpr int DIRECTED_BLOCK_DEGREE_THRESHOLD = 128;
 
 static inline bool env_flag_enabled(const char* name, bool default_value) {
     const char* raw = std::getenv(name);
@@ -410,6 +413,48 @@ static __device__ double directed_local_constraint(
     return local_constraint_of_uv;
 }
 
+__global__ void directed_unweighted_calculate_constraints_thread(
+    const int* __restrict__ V,
+    const int* __restrict__ E,
+    const int* __restrict__ in_V,
+    const int* __restrict__ in_E,
+    int num_nodes,
+    const int* __restrict__ node_mask,
+    double* __restrict__ constraint_results,
+    const int* __restrict__ directed_sum_scale,
+    int block_degree_threshold
+) {
+    int v = blockIdx.x * blockDim.x + threadIdx.x;
+    if (v >= num_nodes || !node_mask[v]) return;
+
+    int out_degree = V[v + 1] - V[v];
+    if (out_degree == 0) {
+        constraint_results[v] = NAN;
+        return;
+    }
+    int combined_degree = out_degree + (in_V[v + 1] - in_V[v]);
+    if (combined_degree >= block_degree_threshold) return;
+
+    double local_sum = 0.0;
+    bool saw_neighbor = false;
+    for (int i = V[v]; i < V[v + 1]; ++i) {
+        int neighbor = E[i];
+        saw_neighbor = true;
+        local_sum += directed_local_constraint(
+            V, E, in_V, in_E, nullptr, nullptr, nullptr, 0, v, neighbor,
+            true, directed_sum_scale);
+    }
+    for (int i = in_V[v]; i < in_V[v + 1]; ++i) {
+        int neighbor = in_E[i];
+        if (has_out_edge(V, E, v, neighbor)) continue;
+        saw_neighbor = true;
+        local_sum += directed_local_constraint(
+            V, E, in_V, in_E, nullptr, nullptr, nullptr, 0, v, neighbor,
+            true, directed_sum_scale);
+    }
+    constraint_results[v] = saw_neighbor ? local_sum : NAN;
+}
+
 __global__ void directed_calculate_constraints(
     const int* V,
     const int* E,
@@ -423,54 +468,77 @@ __global__ void directed_calculate_constraints(
     int* node_mask,
     double* constraint_results,
     bool is_unweighted,
-    const int* directed_sum_scale
+    const int* directed_sum_scale,
+    const int* block_nodes,
+    int block_node_count
 ) {
-    int start_node = blockIdx.x * NODES_PER_BLOCK;
-    int end_node = min(start_node + NODES_PER_BLOCK, num_nodes);
+    int work_index = blockIdx.x;
+    if (block_nodes != nullptr && work_index >= block_node_count) return;
+    int v = block_nodes == nullptr ? work_index : block_nodes[work_index];
+    if (v >= num_nodes || !node_mask[v]) return;
 
-    for (int v = start_node; v < end_node; ++v) {
-        if (!node_mask[v]) continue;
-
-        // For directed graphs EasyGraph checks the outgoing adjacency G[v],
-        // not the union of predecessors and successors.
-        if (V[v + 1] == V[v]) {
-            if (threadIdx.x == 0) constraint_results[v] = NAN;
-            continue;
-        }
-
-        double constraint_of_v = 0.0;
-        bool is_nan = true;
-
-        __shared__ double shared_constraint[256];
-        double local_sum = 0.0;
-
-        for (int i = V[v] + threadIdx.x; i < V[v + 1]; i += blockDim.x) {
-            is_nan = false;
-            int neighbor = E[i];
-            local_sum += directed_local_constraint(V, E, in_V, in_E, row, col, W, num_edges, v, neighbor, is_unweighted, directed_sum_scale);
-        }
-
-        for (int i = in_V[v] + threadIdx.x; i < in_V[v + 1]; i += blockDim.x) {
-            int neighbor = in_E[i];
-            if (has_out_edge(V, E, v, neighbor)) continue;
-            is_nan = false;
-            local_sum += directed_local_constraint(V, E, in_V, in_E, row, col, W, num_edges, v, neighbor, is_unweighted, directed_sum_scale);
-        }
-
-        shared_constraint[threadIdx.x] = local_sum;
-        __syncthreads();
-
-        for (int offset = blockDim.x / 2; offset > 0; offset /= 2) {
-            if (threadIdx.x < offset) {
-                shared_constraint[threadIdx.x] += shared_constraint[threadIdx.x + offset];
-            }
-            __syncthreads();
-        }
-
-        if (threadIdx.x == 0) {
-            constraint_results[v] = (is_nan) ? NAN : shared_constraint[0];
-        }
+    // For directed graphs EasyGraph checks the outgoing adjacency G[v],
+    // not the union of predecessors and successors.
+    if (V[v + 1] == V[v]) {
+        if (threadIdx.x == 0) constraint_results[v] = NAN;
+        return;
     }
+
+    bool saw_neighbor = false;
+    __shared__ double shared_constraint[256];
+    double local_sum = 0.0;
+
+    for (int i = V[v] + threadIdx.x; i < V[v + 1]; i += blockDim.x) {
+        saw_neighbor = true;
+        int neighbor = E[i];
+        local_sum += directed_local_constraint(
+            V, E, in_V, in_E, row, col, W, num_edges, v, neighbor,
+            is_unweighted, directed_sum_scale);
+    }
+
+    for (int i = in_V[v] + threadIdx.x; i < in_V[v + 1]; i += blockDim.x) {
+        int neighbor = in_E[i];
+        if (has_out_edge(V, E, v, neighbor)) continue;
+        saw_neighbor = true;
+        local_sum += directed_local_constraint(
+            V, E, in_V, in_E, row, col, W, num_edges, v, neighbor,
+            is_unweighted, directed_sum_scale);
+    }
+
+    int any_neighbor = __syncthreads_or(saw_neighbor ? 1 : 0);
+    shared_constraint[threadIdx.x] = local_sum;
+    __syncthreads();
+
+    for (int offset = blockDim.x / 2; offset > 0; offset /= 2) {
+        if (threadIdx.x < offset) {
+            shared_constraint[threadIdx.x] += shared_constraint[threadIdx.x + offset];
+        }
+        __syncthreads();
+    }
+
+    if (threadIdx.x == 0) {
+        constraint_results[v] = any_neighbor ? shared_constraint[0] : NAN;
+    }
+}
+
+static std::vector<int> directed_unweighted_block_nodes(
+    const int* V,
+    const int* in_V,
+    const int* node_mask,
+    int num_nodes,
+    int degree_threshold
+) {
+    std::vector<int> nodes;
+    nodes.reserve((size_t)num_nodes / 64 + 1);
+    for (int v = 0; v < num_nodes; ++v) {
+        if (!node_mask[v]) continue;
+        int out_degree = V[v + 1] - V[v];
+        if (out_degree == 0) continue;
+        long long combined_degree =
+            (long long)out_degree + (long long)(in_V[v + 1] - in_V[v]);
+        if (combined_degree >= degree_threshold) nodes.push_back(v);
+    }
+    return nodes;
 }
 
 
@@ -494,44 +562,81 @@ int cuda_constraint(
     int EG_ret = EG_GPU_SUCC;
     if (kernel_seconds != nullptr) *kernel_seconds = 0.0;
     
-    int* d_V;
-    int* d_E;
-    int* d_in_V;
-    int* d_in_E;
-    int* d_row;
-    int* d_col;
-    double* d_W;
-    int* d_node_mask;
+    int* d_V = nullptr;
+    int* d_E = nullptr;
+    int* d_in_V = nullptr;
+    int* d_in_E = nullptr;
+    int* d_row = nullptr;
+    int* d_col = nullptr;
+    double* d_W = nullptr;
+    int* d_node_mask = nullptr;
     int* d_directed_sum_scale = nullptr;
-    double* d_constraint_results;
+    int* d_block_nodes = nullptr;
+    double* d_constraint_results = nullptr;
     cudaEvent_t kernel_start = nullptr;
     cudaEvent_t kernel_stop = nullptr;
+    DeviceCsrView out_view;
+    DeviceCsrView in_view;
+    const bool use_cached_csr = is_unweighted;
     int block_size = 128;
     int grid_size = (num_nodes + NODES_PER_BLOCK - 1) / NODES_PER_BLOCK;
     bool use_smaller_intersection = constraint_use_smaller_intersection(
         num_nodes, num_edges, is_directed);
+    std::vector<int> block_nodes;
+    if (is_directed && is_unweighted) {
+        block_nodes = directed_unweighted_block_nodes(
+            V, in_V, node_mask, num_nodes, DIRECTED_BLOCK_DEGREE_THRESHOLD);
+    }
 
-    EXIT_IF_CUDA_FAILED(cudaMalloc((void**)&d_V, (num_nodes+1) * sizeof(int)));
-    EXIT_IF_CUDA_FAILED(cudaMalloc((void**)&d_E, num_edges * sizeof(int)));
-    EXIT_IF_CUDA_FAILED(cudaMalloc((void**)&d_in_V, (num_nodes+1) * sizeof(int)));
-    EXIT_IF_CUDA_FAILED(cudaMalloc((void**)&d_in_E, num_edges * sizeof(int)));
-    EXIT_IF_CUDA_FAILED(cudaMalloc((void**)&d_row, num_edges * sizeof(int)));
-    EXIT_IF_CUDA_FAILED(cudaMalloc((void**)&d_col, num_edges * sizeof(int)));
-    EXIT_IF_CUDA_FAILED(cudaMalloc((void**)&d_W, num_edges * sizeof(double)));
+    if (use_cached_csr) {
+        EG_ret = acquire_device_csr(
+            V, E, nullptr, num_nodes, num_edges, false, &out_view);
+        if (EG_ret != EG_GPU_SUCC) goto exit;
+        d_V = out_view.d_V;
+        d_E = out_view.d_E;
+        if (is_directed) {
+            EG_ret = acquire_device_csr(
+                in_V, in_E, nullptr, num_nodes, num_edges, false, &in_view);
+            if (EG_ret != EG_GPU_SUCC) goto exit;
+            d_in_V = in_view.d_V;
+            d_in_E = in_view.d_E;
+        }
+    } else {
+        EXIT_IF_CUDA_FAILED(cudaMalloc((void**)&d_V, (num_nodes+1) * sizeof(int)));
+        EXIT_IF_CUDA_FAILED(cudaMalloc((void**)&d_E, num_edges * sizeof(int)));
+        EXIT_IF_CUDA_FAILED(cudaMalloc((void**)&d_in_V, (num_nodes+1) * sizeof(int)));
+        EXIT_IF_CUDA_FAILED(cudaMalloc((void**)&d_in_E, num_edges * sizeof(int)));
+        EXIT_IF_CUDA_FAILED(cudaMalloc((void**)&d_row, num_edges * sizeof(int)));
+        EXIT_IF_CUDA_FAILED(cudaMalloc((void**)&d_col, num_edges * sizeof(int)));
+        EXIT_IF_CUDA_FAILED(cudaMalloc((void**)&d_W, num_edges * sizeof(double)));
+    }
     EXIT_IF_CUDA_FAILED(cudaMalloc((void**)&d_node_mask, num_nodes * sizeof(int)));
     if (is_directed && is_unweighted) {
         EXIT_IF_CUDA_FAILED(cudaMalloc((void**)&d_directed_sum_scale, num_nodes * sizeof(int)));
+        if (!block_nodes.empty()) {
+            EXIT_IF_CUDA_FAILED(cudaMalloc(
+                (void**)&d_block_nodes, block_nodes.size() * sizeof(int)));
+        }
     }
     EXIT_IF_CUDA_FAILED(cudaMalloc((void**)&d_constraint_results, num_nodes * sizeof(double)));
 
-    EXIT_IF_CUDA_FAILED(cudaMemcpy(d_V, V, (num_nodes+1) * sizeof(int), cudaMemcpyHostToDevice));
-    EXIT_IF_CUDA_FAILED(cudaMemcpy(d_E, E, num_edges * sizeof(int), cudaMemcpyHostToDevice));
-    EXIT_IF_CUDA_FAILED(cudaMemcpy(d_in_V, in_V, (num_nodes+1) * sizeof(int), cudaMemcpyHostToDevice));
-    EXIT_IF_CUDA_FAILED(cudaMemcpy(d_in_E, in_E, num_edges * sizeof(int), cudaMemcpyHostToDevice));
-    EXIT_IF_CUDA_FAILED(cudaMemcpy(d_row, row, num_edges * sizeof(int), cudaMemcpyHostToDevice));
-    EXIT_IF_CUDA_FAILED(cudaMemcpy(d_col, col, num_edges * sizeof(int), cudaMemcpyHostToDevice));
+    if (!use_cached_csr) {
+        EXIT_IF_CUDA_FAILED(cudaMemcpy(d_V, V, (num_nodes+1) * sizeof(int), cudaMemcpyHostToDevice));
+        EXIT_IF_CUDA_FAILED(cudaMemcpy(d_E, E, num_edges * sizeof(int), cudaMemcpyHostToDevice));
+        EXIT_IF_CUDA_FAILED(cudaMemcpy(d_in_V, in_V, (num_nodes+1) * sizeof(int), cudaMemcpyHostToDevice));
+        EXIT_IF_CUDA_FAILED(cudaMemcpy(d_in_E, in_E, num_edges * sizeof(int), cudaMemcpyHostToDevice));
+        EXIT_IF_CUDA_FAILED(cudaMemcpy(d_row, row, num_edges * sizeof(int), cudaMemcpyHostToDevice));
+        EXIT_IF_CUDA_FAILED(cudaMemcpy(d_col, col, num_edges * sizeof(int), cudaMemcpyHostToDevice));
+    }
     EXIT_IF_CUDA_FAILED(cudaMemcpy(d_node_mask, node_mask, num_nodes * sizeof(int), cudaMemcpyHostToDevice));
-    EXIT_IF_CUDA_FAILED(cudaMemcpy(d_W, W, num_edges * sizeof(double), cudaMemcpyHostToDevice));
+    if (!block_nodes.empty()) {
+        EXIT_IF_CUDA_FAILED(cudaMemcpy(
+            d_block_nodes, block_nodes.data(), block_nodes.size() * sizeof(int),
+            cudaMemcpyHostToDevice));
+    }
+    if (!is_unweighted) {
+        EXIT_IF_CUDA_FAILED(cudaMemcpy(d_W, W, num_edges * sizeof(double), cudaMemcpyHostToDevice));
+    }
 
     EXIT_IF_CUDA_FAILED(cudaEventCreate(&kernel_start));
     EXIT_IF_CUDA_FAILED(cudaEventCreate(&kernel_stop));
@@ -543,8 +648,26 @@ int cuda_constraint(
             constraint_directed_unweighted_sum_scale_precompute<<<scale_grid, block_size>>>(
                 d_V, d_in_V, num_nodes, d_directed_sum_scale);
             EXIT_IF_CUDA_FAILED(cudaGetLastError());
+            directed_unweighted_calculate_constraints_thread<<<
+                scale_grid, block_size>>>(
+                d_V, d_E, d_in_V, d_in_E, num_nodes, d_node_mask,
+                d_constraint_results, d_directed_sum_scale,
+                DIRECTED_BLOCK_DEGREE_THRESHOLD);
+            EXIT_IF_CUDA_FAILED(cudaGetLastError());
+            if (!block_nodes.empty()) {
+                directed_calculate_constraints<<<
+                    (int)block_nodes.size(), block_size>>>(
+                    d_V, d_E, d_in_V, d_in_E, d_row, d_col, d_W, num_nodes,
+                    num_edges, d_node_mask, d_constraint_results, true,
+                    d_directed_sum_scale, d_block_nodes,
+                    (int)block_nodes.size());
+            }
+        } else {
+            directed_calculate_constraints<<<grid_size, block_size>>>(
+                d_V, d_E, d_in_V, d_in_E, d_row, d_col, d_W, num_nodes,
+                num_edges, d_node_mask, d_constraint_results, false,
+                d_directed_sum_scale, nullptr, num_nodes);
         }
-        directed_calculate_constraints<<<grid_size, block_size>>>(d_V, d_E, d_in_V, d_in_E, d_row, d_col, d_W, num_nodes, num_edges, d_node_mask, d_constraint_results, is_unweighted, d_directed_sum_scale);
     }else{
         calculate_constraints<<<grid_size, block_size>>>(d_V, d_E, d_W, num_nodes, d_node_mask, d_constraint_results, is_unweighted, use_smaller_intersection);
     }
@@ -559,16 +682,18 @@ int cuda_constraint(
 
     EXIT_IF_CUDA_FAILED(cudaMemcpy(constraint_results, d_constraint_results, num_nodes * sizeof(double), cudaMemcpyDeviceToHost));
 exit:
-
-    cudaFree(d_V);
-    cudaFree(d_E);
-    cudaFree(d_in_V);
-    cudaFree(d_in_E);
+    if (!use_cached_csr) {
+        cudaFree(d_V);
+        cudaFree(d_E);
+        cudaFree(d_in_V);
+        cudaFree(d_in_E);
+    }
     cudaFree(d_row);
     cudaFree(d_col);
     cudaFree(d_W);
     cudaFree(d_node_mask);
     cudaFree(d_directed_sum_scale);
+    cudaFree(d_block_nodes);
     if (kernel_start != nullptr) cudaEventDestroy(kernel_start);
     if (kernel_stop != nullptr) cudaEventDestroy(kernel_stop);
     cudaFree(d_constraint_results);

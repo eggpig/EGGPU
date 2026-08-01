@@ -127,9 +127,17 @@ class CMakeBuild(build_ext):
         # Set Python_EXECUTABLE instead if you use PYBIND11_FINDPYTHON
         # EXAMPLE_VERSION_INFO shows you how to pass a value into the C++ code
         # from Python.
+        python_prefix = Path(sys.executable).resolve().parent.parent
         cmake_args = [
             f"-DCMAKE_LIBRARY_OUTPUT_DIRECTORY={extdir}{os.sep}",
+            # pybind11 3 uses CMake's modern FindPython path.  Keep the legacy
+            # variable too, but pin every supported spelling so an unrelated
+            # /opt/conda interpreter cannot change the extension ABI tag.
             f"-DPYTHON_EXECUTABLE={sys.executable}",
+            f"-DPython_EXECUTABLE={sys.executable}",
+            f"-DPython3_EXECUTABLE={sys.executable}",
+            f"-DPython_ROOT_DIR={python_prefix}",
+            "-DPYBIND11_FINDPYTHON=ON",
             f"-DCMAKE_BUILD_TYPE={cfg}",  # not used on MSVC, but no harm
             f"-DEASYGRAPH_ENABLE_GPU={'ON' if enable_gpu else 'OFF'}",
         ]
@@ -191,7 +199,6 @@ class CMakeBuild(build_ext):
 with open("README.md", encoding="utf-8") as fh:
     long_description = fh.read()
 
-CYTHON_STR = "Cython"
 setuptools.setup(
     name="Python-EasyGraph",
     version="1.6",
@@ -243,7 +250,6 @@ setuptools.setup(
             "torch_geometric>=2.3",
         ],
     },
-    setup_requires=[CYTHON_STR],
     cmdclass={
         "build_ext": CMakeBuild,
     },

@@ -533,7 +533,12 @@ static double calc_scale(
     return scale;
 }
 
-static int memory_aware_source_blocks(int requested, int len_V)
+static int memory_aware_source_blocks(
+    int requested,
+    int len_V,
+    bool use_unweighted_bfs,
+    std::size_t reusable_source_workspace_bytes
+)
 {
     const char* explicit_cap = getenv("EASYGRAPH_GPU_BC_MAX_CONCURRENT_SOURCES");
     if (explicit_cap != nullptr) {
@@ -541,26 +546,39 @@ static int memory_aware_source_blocks(int requested, int len_V)
         if (parsed > 0) return std::max(1, std::min(requested, parsed));
     }
 
-    // Brandes keeps several per-source dense arrays.  On smaller GPUs this can
-    // turn sampled BC into a memory benchmark, so cap concurrency only when the
-    // workspace would exceed a conservative budget.  Users can override with
-    // EASYGRAPH_GPU_BC_MAX_CONCURRENT_SOURCES.
+    // A fully sized persistent workspace proves that this invocation will not
+    // allocate any per-source storage.  Re-querying global free memory cannot
+    // make the existing allocation safer, but cudaMemGetInfo may synchronize
+    // with driver activity and inject large host-side latency tails.
+    if (reusable_source_workspace_bytes > 0) return requested;
+
+    // Brandes keeps several dense arrays per concurrent source.  Account for
+    // the actual unweighted BFS and weighted workspaces separately; using the
+    // weighted footprint for both paths unnecessarily serialized BC on large
+    // memory GPUs.
+    const std::size_t per_vertex_bytes = use_unweighted_bfs
+        ? (2 * sizeof(double) + 3 * sizeof(int))
+        : (3 * sizeof(double) + 4 * sizeof(int));
     std::size_t per_source_bytes =
-        (std::size_t)len_V * (3 * sizeof(double) + 4 * sizeof(int)) +
-        (std::size_t)(len_V + 2) * sizeof(int);
+        (std::size_t)len_V * per_vertex_bytes;
     std::size_t free_b = 0, total_b = 0;
     cudaError_t mem_ret = cudaMemGetInfo(&free_b, &total_b);
     if (mem_ret != cudaSuccess || per_source_bytes == 0) {
         (void)cudaGetLastError();
         return requested;
     }
-    double frac = 0.20;
+    double frac = 0.45;
     const char* frac_env = getenv("EASYGRAPH_GPU_BC_WORKSPACE_FRACTION");
     if (frac_env != nullptr) {
         double parsed = atof(frac_env);
         if (parsed > 0.0 && parsed < 0.95) frac = parsed;
     }
-    std::size_t budget = (std::size_t)((double)free_b * frac);
+    // First-use and growing-graph decisions remain conservative.  The
+    // reusable-workspace fast path above handles warmed calls before this
+    // query, so the add-back is normally zero and remains as a defensive guard.
+    const std::size_t effective_free_b =
+        std::min(total_b, free_b + reusable_source_workspace_bytes);
+    std::size_t budget = (std::size_t)((double)effective_free_b * frac);
     int by_mem = (int)std::max<std::size_t>(1, budget / per_source_bytes);
     return std::max(1, std::min(requested, by_mem));
 }
@@ -601,16 +619,6 @@ int cuda_betweenness_centrality (
     if (len_sources > 0 && dijkstra_grid_size > len_sources) {
         dijkstra_grid_size = len_sources;
     }
-    dijkstra_grid_size = memory_aware_source_blocks(dijkstra_grid_size, len_V);
-    if (dijkstra_grid_size < 1) {
-        dijkstra_grid_size = 1;
-    }
-    
-    double scale = calc_scale(len_V, is_directed, normalized, endpoints);
-    const char* bfs_env = getenv("EASYGRAPH_GPU_BC_UNWEIGHTED_BFS");
-    const bool use_bfs_kernel =
-        unweighted && (bfs_env == nullptr || env_truthy(bfs_env)) && !env_falsey(bfs_env);
-
     thread_local PersistentDeviceBuffer b_curr_node;
     thread_local PersistentDeviceBuffer b_sources;
     thread_local PersistentDeviceBuffer b_U_2D;
@@ -625,6 +633,46 @@ int cuda_betweenness_centrality (
     thread_local PersistentPinnedBuffer h_sources_stage;
     thread_local BcRuntime runtime;
 
+    const char* bfs_env = getenv("EASYGRAPH_GPU_BC_UNWEIGHTED_BFS");
+    const bool use_bfs_kernel =
+        unweighted && (bfs_env == nullptr || env_truthy(bfs_env)) && !env_falsey(bfs_env);
+    const int requested_source_blocks = std::max(1, dijkstra_grid_size);
+    const std::size_t vertex_count = (std::size_t)len_V;
+    const std::size_t requested_u_bytes =
+        sizeof(int) * (std::size_t)requested_source_blocks * vertex_count;
+    const std::size_t requested_st_bytes = requested_u_bytes;
+    const std::size_t requested_st_idx_bytes =
+        sizeof(int) * (std::size_t)requested_source_blocks * (vertex_count + 2);
+    const std::size_t requested_sigma_bytes =
+        sizeof(double) * (std::size_t)requested_source_blocks * vertex_count;
+    const std::size_t requested_delta_bytes = requested_sigma_bytes;
+    const std::size_t requested_f_bytes = use_bfs_kernel ? 0 : requested_u_bytes;
+    const std::size_t requested_dist_bytes =
+        use_bfs_kernel ? 0 : requested_sigma_bytes;
+    const bool source_workspace_fully_reusable =
+        b_U_2D.capacity_bytes() >= requested_u_bytes &&
+        b_st_2D.capacity_bytes() >= requested_st_bytes &&
+        b_st_idx_2D.capacity_bytes() >= requested_st_idx_bytes &&
+        b_sigma_2D.capacity_bytes() >= requested_sigma_bytes &&
+        b_delta_2D.capacity_bytes() >= requested_delta_bytes &&
+        (use_bfs_kernel || (
+            b_F_2D.capacity_bytes() >= requested_f_bytes &&
+            b_dist_2D.capacity_bytes() >= requested_dist_bytes));
+    const std::size_t reusable_source_workspace_bytes =
+        source_workspace_fully_reusable
+            ? requested_u_bytes + requested_st_bytes + requested_st_idx_bytes +
+                  requested_sigma_bytes + requested_delta_bytes +
+                  requested_f_bytes + requested_dist_bytes
+            : 0;
+    dijkstra_grid_size = memory_aware_source_blocks(
+        requested_source_blocks, len_V, use_bfs_kernel,
+        reusable_source_workspace_bytes);
+    if (dijkstra_grid_size < 1) {
+        dijkstra_grid_size = 1;
+    }
+
+    double scale = calc_scale(len_V, is_directed, normalized, endpoints);
+
     int *d_curr_node = NULL;
     int *d_V = NULL, *d_E = NULL, *d_sources= NULL;
     int *d_U_2D = NULL, *d_F_2D = NULL, *d_st_2D = NULL, *d_st_idx_2D = NULL;
@@ -635,7 +683,11 @@ int cuda_betweenness_centrality (
     DeviceCsrView graph_view;
 
     if (ensure_device_buffer(b_curr_node, sizeof(int), &EG_ret) != EG_GPU_SUCC) goto exit;
-    EG_ret = acquire_device_csr(V, E, W, len_V, len_E, true, &graph_view);
+    // The unweighted Brandes path uses only topology.  Bulk CSR artifacts
+    // deliberately omit an O(E) array of unit weights, so requesting a
+    // weighted device view here would copy an empty host buffer and fail.
+    // Weighted BC still requests and validates the explicit weight array.
+    EG_ret = acquire_device_csr(V, E, W, len_V, len_E, !unweighted, &graph_view);
     if (EG_ret != EG_GPU_SUCC) goto exit;
     if (ensure_device_buffer(b_sources, sizeof(int) * len_sources, &EG_ret) != EG_GPU_SUCC) goto exit;
     if (ensure_device_buffer(b_U_2D, sizeof(int) * dijkstra_grid_size * len_V, &EG_ret) != EG_GPU_SUCC) goto exit;
