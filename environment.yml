@@ -1,0 +1,36 @@
+name: eggpu-artifact
+channels:
+  - nvidia
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - setuptools>=66
+  - wheel
+  - cython
+  - cmake>=3.23
+  - ninja
+  - pybind11
+  - gcc_linux-64=12
+  - gxx_linux-64=12
+  - libgomp
+  - cuda-toolkit=12.8
+  - numpy=2.2
+  - scipy=1.15
+  - pandas=2.3
+  - networkx=3.4
+  - scikit-learn
+  - matplotlib
+  - tqdm
+  - joblib
+  - six
+  - requests
+  - statsmodels
+  - gensim
+  - optuna
+  - fastjsonschema
+  - pytest
+  - pip:
+      - progressbar33>=2.4
+      - progressbar>=2.5
+      - nose>=1.3.7

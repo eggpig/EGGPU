@@ -1,0 +1,21 @@
+# Native and Python build products
+Easy-Graph/build/
+Easy-Graph/.eggs/
+Easy-Graph/*.egg-info/
+*.so
+
+# Python/editor caches
+__pycache__/
+**/__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.vscode/
+.idea/
+.DS_Store
+
+# Local outputs and downloaded data
+*.log
+artifact/datasets/files/
+dist/
+build/

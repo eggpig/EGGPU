@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use EGGPU, please cite this software and the accompanying paper."
+title: "EGGPU: An End-to-End GPU Acceleration System for Efficient Large-Scale Network Analysis"
+type: software
+authors:
+  - family-names: Du
+    given-names: Haoran
+  - family-names: Wen
+    given-names: Wen
+  - family-names: Wang
+    given-names: Xinming
+  - family-names: Zhang
+    given-names: Su-Su
+  - family-names: Gong
+    given-names: Qingyuan
+  - family-names: Li
+    given-names: Yupeng
+  - family-names: Wang
+    given-names: Xin
+  - family-names: Chen
+    given-names: Yang
+repository-code: "https://github.com/eggpig/EGGPU"
+license: BSD-3-Clause
+keywords:
+  - GPU graph analytics
+  - network analysis
+  - EasyGraph
+  - CUDA
