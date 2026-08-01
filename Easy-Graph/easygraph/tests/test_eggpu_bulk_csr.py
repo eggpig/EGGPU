@@ -448,7 +448,7 @@ def test_bulk_graph_never_falls_into_python_adjacency_path(tmp_path, monkeypatch
     try:
         eg.pagerank(bulk, weight="weight")
     except NotImplementedError as exc:
-        assert "weighted EGGPU CSR artifact" in str(exc)
+        assert "weighted PageRank requires an EGGPU CSR artifact" in str(exc)
     else:
         raise AssertionError("topology-only bulk graph accepted weighted PageRank")
 
