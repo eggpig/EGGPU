@@ -25,6 +25,7 @@ dependencies:
   - joblib
   - six
   - requests
+  - psutil
   - statsmodels
   - gensim
   - optuna
