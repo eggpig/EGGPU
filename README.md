@@ -60,5 +60,11 @@ Supported functions and inputs are listed in
 This repository contains source code and correctness checks. Paper source,
 performance results, evaluation scripts, and raw datasets are not included.
 
+## Datasets
+
+The 13 benchmark graph datasets used to reproduce EGGPU results are available
+on Zenodo:
+[10.5281/zenodo.21746036](https://doi.org/10.5281/zenodo.21746036).
+
 See [`LICENSE`](LICENSE), [`NOTICE`](NOTICE), and
 [`CITATION.cff`](CITATION.cff).
