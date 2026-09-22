@@ -19,3 +19,23 @@ __pycache__/
 artifact/datasets/files/
 dist/
 build/
+
+# Local research evidence and archived checkout history
+.maintenance/
+.codex-tmp/
+writing/
+baselines/
+EG_Evaluation/benchmarking/results/
+EG_Evaluation/benchmarking/build/
+EG_Evaluation/benchmarking/diagnostics/
+EG_Evaluation/build_artifacts/
+EG_Evaluation/third_party/
+EG_Evaluation/torchinductor_batchcom/
+EG_Evaluation/dataset_package/
+EG_Evaluation/datasets/*
+!EG_Evaluation/datasets/DATASETS.md
+!EG_Evaluation/datasets/MANIFEST_*.tsv
+!EG_Evaluation/datasets/DATASET_PROVENANCE_*.csv
+EG_Evaluation/benchmarking/tools/csr_to_matrix_market
+EG_Evaluation/benchmarking/tools/generate_rmat_csr
+EG_Evaluation/benchmarking/tools/prepare_graphscope_dataset

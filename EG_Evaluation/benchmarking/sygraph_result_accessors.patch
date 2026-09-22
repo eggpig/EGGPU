@@ -1,0 +1,141 @@
+diff --git a/include/sygraph/algorithms/sssp.hpp b/include/sygraph/algorithms/sssp.hpp
+--- a/include/sygraph/algorithms/sssp.hpp
++++ b/include/sygraph/algorithms/sssp.hpp
+@@ -9,4 +9,5 @@
+ #include <memory>
++#include <limits>
+ #include <vector>
+ #include <sygraph/frontier/frontier.hpp>
+ #include <sygraph/graph/graph.hpp>
+@@ -40,7 +41,7 @@ struct SSSPInstance {
+     size_t size = G.getVertexCount();
+ 
+     distances = memory::detail::memoryAlloc<weight_t, memory::space::device>(size, queue);
+-    queue.fill(distances, static_cast<weight_t>(size + 1), size).wait();
++    queue.fill(distances, std::numeric_limits<weight_t>::max(), size).wait();
+     queue.fill(&distances[source], static_cast<weight_t>(0), 1).wait();
+ 
+     parents = memory::detail::memoryAlloc<vertex_t, memory::space::device>(size, queue);
+@@ -53,12 +54,12 @@ struct SSSPInstance {
+   size_t getVisitedVertices() const {
+     size_t vertex_count = G.getVertexCount();
+     size_t visited_nodes = 0;
+     auto& queue = G.getQueue();
+-    std::vector<edge_t> dists (vertex_count);
++    std::vector<weight_t> dists (vertex_count);
+     queue.copy(distances, dists.data(), vertex_count).wait();
+ 
+     for (size_t i = 0; i < G.getVertexCount(); i++) {
+-      if (dists[i] != static_cast<edge_t>(vertex_count + 1)) { visited_nodes++; }
++      if (dists[i] != std::numeric_limits<weight_t>::max()) { visited_nodes++; }
+     }
+     return visited_nodes;
+   }
+@@ -66,12 +67,12 @@ struct SSSPInstance {
+   size_t getVisitedEdges() const {
+     size_t vertex_count = G.getVertexCount();
+     size_t visited_edges = 0;
+     auto& queue = G.getQueue();
+-    std::vector<edge_t> dists (vertex_count);
++    std::vector<weight_t> dists (vertex_count);
+     queue.copy(distances, dists.data(), vertex_count).wait();
+ 
+     for (size_t i = 0; i < G.getVertexCount(); i++) {
+-      if (dists[i] != static_cast<edge_t>(vertex_count + 1)) { visited_edges += G.getDegree(i); }
++      if (dists[i] != std::numeric_limits<weight_t>::max()) { visited_edges += G.getDegree(i); }
+     }
+     return visited_edges;
+   }
+@@ -210,8 +211,16 @@ public:
+   }
+ 
+   weight_t getDistance(size_t vertex) const { return _instance->distances[vertex]; }
+ 
++  std::vector<weight_t> getDistances() const {
++    if (!_instance) { throw std::runtime_error("SSSP instance not initialized"); }
++    const size_t size = _g.getVertexCount();
++    std::vector<weight_t> distances(size);
++    _g.getQueue().copy(_instance->distances, distances.data(), size).wait();
++    return distances;
++  }
++
+   vertex_t getParents(size_t vertex) const {
+     throw std::runtime_error("Not implemented");
+     return _instance->parents[vertex];
+   }
+diff --git a/include/sygraph/algorithms/bc.hpp b/include/sygraph/algorithms/bc.hpp
+--- a/include/sygraph/algorithms/bc.hpp
++++ b/include/sygraph/algorithms/bc.hpp
+@@ -18,1 +18,2 @@
+ #include <memory>
++#include <vector>
+@@ -202,1 +203,9 @@ public:
++  std::vector<weight_t> getValues() const {
++    if (!_instance) { throw std::runtime_error("BC instance not initialized"); }
++    const size_t size = _g.getVertexCount();
++    std::vector<weight_t> values(size);
++    _g.getQueue().copy(_instance->bc_values, values.data(), size).wait();
++    return values;
++  }
++
+ protected:
+diff --git a/include/sygraph/utils/device.hpp b/include/sygraph/utils/device.hpp
+--- a/include/sygraph/utils/device.hpp
++++ b/include/sygraph/utils/device.hpp
+@@ -30,7 +30,7 @@ uint32_t getWorkgroupSize(sycl::queue& queue) {
+ 
+ uint32_t getNumComputeUnits(sycl::queue& queue) {
+   auto device = queue.get_device();
+-  return device.get_info<sycl::ext::oneapi::info::device::num_compute_units>();
++  return device.get_info<sycl::info::device::max_compute_units>();
+ }
+ 
+ } // namespace device
+diff --git a/include/sygraph/algorithms/bfs.hpp b/include/sygraph/algorithms/bfs.hpp
+--- a/include/sygraph/algorithms/bfs.hpp
++++ b/include/sygraph/algorithms/bfs.hpp
+@@ -307,7 +307,7 @@ private:
+     size_t nodes = G.getVertexCount();
+ 
+     auto e = queue.submit([&](sycl::handler& cgh) {
+-      auto sum_reduction = sycl::reduction<uint32_t>(degree_buf, cgh, sycl::plus<uint32_t>());
++      auto sum_reduction = sycl::reduction(degree_buf, cgh, uint32_t{0}, sycl::plus<uint32_t>());
+ 
+       cgh.parallel_for<class compute_unexplored_degree_kernel>(sycl::range<1>(nodes), sum_reduction, [=](sycl::id<1> idx, auto& sum) {
+         size_t vertex = idx[0];
+diff --git a/include/sygraph/operators/for/impl_for.hpp b/include/sygraph/operators/for/impl_for.hpp
+--- a/include/sygraph/operators/for/impl_for.hpp
++++ b/include/sygraph/operators/for/impl_for.hpp
+@@ -96,7 +96,7 @@ sygraph::Event launchBitmapReduce(GraphT& graph,
+   accumulator_buf.set_write_back(true);
+ 
+   return q.submit([&](sycl::handler& cgh) {
+-    auto sum_reduction = sycl::reduction<R>(accumulator_buf, cgh, sycl::plus<R>());
++    auto sum_reduction = sycl::reduction(accumulator_buf, cgh, R{}, sycl::plus<R>());
+     cgh.parallel_for(sycl::nd_range<1>{config.global, config.local}, sum_reduction, [=](sycl::nd_item<1> item, auto& acc) {
+       auto lid = item.get_local_id();
+       auto group_id = item.get_group_linear_id();
+diff --git a/include/sygraph/frontier/impls/mlb_frontier.hpp b/include/sygraph/frontier/impls/mlb_frontier.hpp
+--- a/include/sygraph/frontier/impls/mlb_frontier.hpp
++++ b/include/sygraph/frontier/impls/mlb_frontier.hpp
+@@ -371,6 +371,10 @@ public:
+     size_t global_size = sygraph::detail::device::getNumComputeUnits(_queue) * local_range[0];
+     sycl::range<1> global_range{global_size};
+ 
++    // Reset before launching the multi-work-group compaction kernel. Resetting
++    // from one work-item inside that kernel races with other groups' atomics.
++    _queue.fill(bitmap.getOffsetsSize(), static_cast<uint32_t>(0), 1).wait();
++
+     auto e = this->_queue.submit([&](sycl::handler& cgh) {
+       sycl::local_accessor<int, 1> local_offsets(local_range[0] * range, cgh);
+       sycl::local_accessor<uint32_t, 1> local_size(1, cgh);
+@@ -379,9 +383,8 @@ public:
+           sycl::nd_range<1>{global_range, local_range},
+           [=, offsets_size = bitmap.getOffsetsSize(), offsets = bitmap.getOffsets()](sycl::nd_item<1> item) {
+             // if (offsets_size[0] > 0) { return; } // TODO optimize for multiple calls on the same frontier
+             int gid = item.get_global_linear_id();
+             auto group = item.get_group();
+-            if (item.get_global_linear_id() == 0) { offsets_size[0] = 0; }
+             sycl::atomic_ref<uint32_t, sycl::memory_order::relaxed, sycl::memory_scope::work_group> local_size_ref(local_size[0]);
+             sycl::atomic_ref<uint32_t, sycl::memory_order::relaxed, sycl::memory_scope::device> offsets_size_ref{offsets_size[0]};
+ 

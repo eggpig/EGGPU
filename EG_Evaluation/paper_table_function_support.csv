@@ -1,0 +1,10 @@
+Baseline,PR,MST,LCC,WCC,SCC,BFS,Dijkstra,BF,SSSP,KCore,BC,Closeness,EffectiveSize,Efficiency,Constraint,Hierarchy
+EasyGraph CPU,T,T,T,T,T,T,T,T,T,T,T,T,T,T,T,T
+EasyGraph C++,T,T,T,T,T,T,T,F,T,T,T,T,P,P,P,T
+NetworkX,T,T,T,T,T,T,T,T,T,T,T,T,T,F,T,F
+igraph,T,T,T,T,T,T,T,T,T,T,T,P,F,F,P,F
+nx-cugraph,T,F,T,T,F,T,T,P,T,T,P,F,F,F,F,F
+Gunrock adapted exec.,T,P,P,F,F,T,T,P,T,T,P,F,F,F,F,F
+GraphScope,P,F,T,T,T,T,P,F,T,P,P,P,F,F,F,F
+EGGPU-2024,F,F,F,F,F,F,F,F,T,T,P,F,F,F,F,F
+EGGPU,T,T,T,T,T,T,T,T,T,T,T,T,T,T,T,T

@@ -1,0 +1,75 @@
+{
+  "policy_id": "eggpu-vldb-final-evidence-v1",
+  "effective_date": "2026-07-26",
+  "raw_artifact_policy": "immutable",
+  "replacement_unit": [
+    "dataset",
+    "function",
+    "baseline"
+  ],
+  "replacement_rules": {
+    "EGGPU": {
+      "implementation": "eggpu_candidate_20260726_v5",
+      "binary_sha256": "796160b7f873ac8d121153bc34f8b2059d55f6a247616325285a8b1a2f6437f6",
+      "timing_samples_required": 5,
+      "memory_samples_required": 3,
+      "timing_estimator": "minimum_of_five_with_sample_standard_deviation_reported",
+      "memory_estimator": "arithmetic_mean_of_three_with_sample_standard_deviation",
+      "replace_historical_current_system_rows": true,
+      "allow_cross_run_sample_mixing": false,
+      "failed_latest_attempt_policy": "report_current_failure_do_not_restore_historical_numeric_value"
+    },
+    "other_baselines": {
+      "timing_samples_required": 5,
+      "memory_samples_required": 3,
+      "timing_estimator": "arithmetic_mean_of_five_with_sample_standard_deviation",
+      "memory_estimator": "arithmetic_mean_of_three_with_sample_standard_deviation",
+      "replace_only_declared_cells": true,
+      "retain_unrelated_historical_cells": true,
+      "allow_cross_run_sample_mixing": false
+    }
+  },
+  "eligibility": {
+    "timing_numeric_value": [
+      "aligned_callable_semantics",
+      "no_forbidden_fallback",
+      "correctness_pass_or_independent_external_reference_pass",
+      "complete_required_timing_sample_set"
+    ],
+    "memory_numeric_value": [
+      "same_implementation_and_semantics_as_timing_cell",
+      "isolated_process_lifetime_measurement",
+      "complete_required_memory_sample_set"
+    ]
+  },
+  "metric_windows": {
+    "build": "graph construction or preparation reported separately from the public function call",
+    "e2e": "prepared public graph plus function invocation through complete public result",
+    "gpu_kernel": "device algorithm execution measured by the implementation",
+    "cpu_processing": "algorithm-call wall time; not described as a CUDA kernel",
+    "gpu_memory": "memory_peak_gpu_proc_mb",
+    "host_memory": "memory_peak_rss_mb"
+  },
+  "large_graph_semantics": {
+    "main_timeout_seconds": 100,
+    "extended_timeout_result": "supplementary_completion_evidence_only",
+    "selected_source_or_target_result": "must_be_labeled_and_must_not_replace_all_node_semantics",
+    "representation_limit": "retain_as_explicit_RL_outcome",
+    "timeout": "retain_as_explicit_TO_outcome"
+  },
+  "support_classification": {
+    "T": "complete aligned callable semantics for the applicable graph contract",
+    "P": "a real callable implementation with a documented graph, parameter, numerical, or result restriction",
+    "F": "no aligned complete implementation, forbidden fallback, or incorrect result requiring an algorithm rewrite",
+    "timeout_is_not_support": true,
+    "output_equivalent_alias_can_be_T": true
+  },
+  "provenance_required": [
+    "source_result_directory",
+    "results_samples_sha256",
+    "run_metadata_sha256",
+    "implementation_or_executable_version",
+    "replacement_decision",
+    "validation_status"
+  ]
+}

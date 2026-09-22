@@ -1,0 +1,121 @@
+{
+  "protocol_id": "eggpu_second_supplement_20260715",
+  "balanced_10": [
+    {"name": "ca-HepTh", "size": "small", "graph_type": "undirected", "path": "datasets/undirected/ca-HepTh.txt"},
+    {"name": "LastFM", "size": "small", "graph_type": "undirected", "path": "datasets/undirected/LastFM.txt"},
+    {"name": "p2p-Gnutella04", "size": "small", "graph_type": "directed", "path": "datasets/directed/p2p-Gnutella04.txt"},
+    {"name": "ca-HepPh", "size": "medium", "graph_type": "undirected", "path": "datasets/undirected/ca-HepPh.txt"},
+    {"name": "email-Enron", "size": "medium", "graph_type": "undirected", "path": "datasets/undirected/email-Enron.txt"},
+    {"name": "ca-CondMat", "size": "medium", "graph_type": "undirected", "path": "datasets/undirected/ca-CondMat.txt"},
+    {"name": "soc-Epinions1", "size": "medium", "graph_type": "directed", "path": "datasets/directed/soc-Epinions1.txt"},
+    {"name": "com-youtube", "size": "large", "graph_type": "undirected", "path": "datasets/undirected/com-youtube.ungraph.txt"},
+    {"name": "ER-100k", "size": "large", "graph_type": "directed", "path": "datasets/directed/ER-100k.txt"},
+    {"name": "soc-Slashdot0811", "size": "large", "graph_type": "directed", "path": "datasets/directed/soc-Slashdot0811.txt"}
+  ],
+  "real_scale_anchors": [
+    {
+      "name": "com-Orkut",
+      "graph_type": "undirected",
+      "source_url": "https://snap.stanford.edu/data/com-Orkut.html",
+      "expected_nodes": 3072441,
+      "expected_raw_unique_edges": 117185083,
+      "expected_csr_entries_approx": 234370166,
+      "role": "hundred_million_edge_real_graph"
+    },
+    {
+      "name": "GAP-twitter",
+      "graph_type": "directed",
+      "source_url": "https://sparse.tamu.edu/GAP/GAP-twitter",
+      "expected_nodes": 61578415,
+      "expected_matrix_entries_approx": 1468000000,
+      "role": "billion_edge_real_graph"
+    }
+  ],
+  "main_12": {
+    "cross_library_graphs": 10,
+    "real_scale_anchors": 2,
+    "scope": "The ten representative graphs support aligned cross-library comparisons. com-Orkut and GAP-twitter extend the EGGPU real-graph scale envelope; unsupported baseline/function combinations are not imputed."
+  },
+  "controlled_rmat": {
+    "status": "enabled_scaling_only",
+    "scales": [20, 22, 24, 26],
+    "edge_factor": 16,
+    "raw_directed_edge_records": [16777216, 67108864, 268435456, 1073741824],
+    "initiator": {"a": 0.57, "b": 0.19, "c": 0.19, "d": 0.05},
+    "seed": 20260716,
+    "graph_semantics": "directed simple graph after removing self-loops and duplicate ordered pairs",
+    "generator_qualification": "Graph500-parameter compatible distribution with deterministic counter-based random numbers and bijective label scrambling; not bit-identical to the Graph500 reference generator",
+    "functions": ["PageRank", "WCC", "BFS"],
+    "reference_gate": "S10 results are compared with NetworkX for PageRank, WCC, and four-source BFS",
+    "reporting": "separate controlled-scaling figure; never merged into the 12-real-graph main table"
+  },
+  "native_csr_acceptance": {
+    "dataset": "com-youtube",
+    "functions": [
+      "PageRank",
+      "WCC",
+      "BFS",
+      "KCore"
+    ],
+    "correctness": "exact partition or aligned numeric result versus the regular EasyGraph-object EGGPU path",
+    "ordering": "AB/BA hot-cache blocks",
+    "repeat_per_order": 5,
+    "minimum_median_geomean_e2e_speedup": 1.02,
+    "maximum_allowed_per_function_median_regression_fraction": 0.05,
+    "kernel_regression_checked": true
+  },
+  "cold_start": {
+    "baselines": ["EGGPU", "igraph", "nx-cugraph"],
+    "common_functions": ["PageRank", "LCC", "WCC", "BFS", "SSSP", "KCore"],
+    "workflow_scope": "single-function first-use comparison; workflow reuse is covered by the prior matched supplement",
+    "timing_repeat": 5,
+    "timing_repeat_unit": "independent_fresh_process",
+    "timing_source": "reuse the audited EGGPU first-use run and the zero-warmup igraph/nx-cugraph samples from the audited main run",
+    "memory_repeat": 0,
+    "memory_scope": "cold-start is a latency experiment; steady-state and large-scale memory come from isolated main/scaling memory passes",
+    "warmup": 0,
+    "api_cold_excludes_import_and_raw_file_parse": true,
+    "report_graph_build_separately": true,
+    "report_user_cold_total": true,
+    "path_source_count": 8,
+    "forbid_nx_cugraph_fallback": true
+  },
+  "scaling": {
+    "native_csr_bridge": "com-youtube",
+    "functions": ["PageRank", "WCC", "BFS", "KCore"],
+    "function_applicability": {
+      "PageRank": "directed_or_undirected",
+      "WCC": "directed_or_undirected_edge_union_with_deferred_component_set_materialization",
+      "BFS": "directed_or_undirected",
+      "KCore": "undirected_projection_only"
+    },
+    "timing_repeat": 5,
+    "timing_repeat_unit": "independent_fresh_process",
+    "per_process_sequence": ["native_load", "first_use", "warmup_1", "warmup_2", "steady_state"],
+    "memory_repeat": 3,
+    "steady_state_warmup": 2,
+    "timeout_seconds": 1800,
+    "path_source_count": 4,
+    "path_source_seed": 20260715,
+    "pagerank": {"alpha": 0.75, "eps": 1e-6, "max_iter": 200},
+    "max_signed_32bit_csr_entries_exclusive": 2147483648
+  },
+  "statistics": {
+    "primary_estimator": {
+      "EGGPU": "best_observed_of_five_repeats",
+      "other_baselines": "arithmetic_mean_of_five_repeats"
+    },
+    "error_bar": "sample_standard_deviation",
+    "also_record": ["best_observed", "coefficient_of_variation", "ci95_half_width"],
+    "raw_samples_required": true,
+    "scaling_fit": "no fit for heterogeneous real graphs; descriptive log-log slopes are reported only for controlled R-MAT and are not claimed as algorithmic complexity"
+  },
+  "required_edge_count_fields": [
+    "raw_edge_records",
+    "simple_directed_edges",
+    "unique_undirected_edges",
+    "csr_entries",
+    "self_loops_removed",
+    "duplicates_removed"
+  ]
+}

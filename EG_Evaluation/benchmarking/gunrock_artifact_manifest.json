@@ -1,0 +1,204 @@
+{
+  "schema_version": 1,
+  "description": "Pinned Gunrock source provenance bound to the exact executable SHA-256 values used by the EGGPU paper benchmark.",
+  "sources": {
+    "maintained-v2": {
+      "source_directory_name": "gunrock_latest",
+      "source_remote": "https://github.com/gunrock/gunrock.git",
+      "source_commit": "748f79e66cc26762cd3f99422b028e742a737bde",
+      "source_version": "v2.2.0-13-g748f79e66-dirty",
+      "source_tracked_dirty": true,
+      "source_diff_sha256": "d0050f966d8e5186765333197db313f9ff74c80d4a2a0c6afd55d024ee10f037",
+      "source_modified_files": [
+        "examples/algorithms/aligned_e2e.hxx",
+        "examples/algorithms/bc/bc.cu",
+        "examples/algorithms/bfs/bfs.cu",
+        "examples/algorithms/kcore/kcore.cu",
+        "examples/algorithms/mst/mst.cu",
+        "examples/algorithms/pr/pr.cu",
+        "examples/algorithms/sssp/sssp.cu",
+        "include/gunrock/algorithms/bc.hxx",
+        "include/gunrock/framework/operators/advance/helpers.hxx",
+        "include/gunrock/framework/operators/advance/merge_path_v2.hxx",
+        "include/gunrock/framework/operators/configs.hxx",
+        "include/gunrock/graph/csr.hxx",
+        "include/gunrock/io/parameters.hxx"
+      ],
+      "source_modified_files_latest_mtime_epoch": 1785370990.5977252
+    },
+    "legacy-v1": {
+      "source_directory_name": "gunrock_legacy_master",
+      "source_remote": "https://github.com/gunrock/gunrock.git",
+      "source_commit": "386d04450b9ae11097e9789a648042d4d310f199",
+      "source_version": "release-79-g386d04450-dirty",
+      "source_tracked_dirty": true,
+      "source_diff_sha256": "ab31470d30a967290801a206b8357092e3d56e5543c6a4c66fbcdcd833a95848",
+      "source_modified_files": [
+        "CMakeLists.txt",
+        "cmake/CPM.cmake",
+        "examples/lcc/test_lcc.cu",
+        "gunrock/app/lcc/lcc_app.cu",
+        "gunrock/app/lcc/lcc_enactor.cuh",
+        "gunrock/util/memset_kernel.cuh"
+      ],
+      "source_modified_files_latest_mtime_epoch": 1785371022.735967
+    }
+  },
+  "executables": {
+    "pr": {
+      "source": "maintained-v2",
+      "sha256": "649bd9298dedb507c9d40271da33f171dcdcb87eec66978763b86c1ad45e3eb1",
+      "source_relevant_modified_files": [
+        "examples/algorithms/pr/pr.cu",
+        "examples/algorithms/aligned_e2e.hxx",
+        "include/gunrock/io/parameters.hxx",
+        "include/gunrock/framework/operators/advance/helpers.hxx",
+        "include/gunrock/framework/operators/advance/merge_path_v2.hxx",
+        "include/gunrock/framework/operators/configs.hxx",
+        "include/gunrock/graph/csr.hxx"
+      ],
+      "source_relevant_file_sha256": {
+        "examples/algorithms/pr/pr.cu": "eeb14fda15a9e1e6f1ecd8728dd29a79c7fe9635eda3e4e5bf09f4b62cc20bff",
+        "examples/algorithms/aligned_e2e.hxx": "23bbf44a84e82467e3bc18342f72c178abc21acb278c0fc53df7099a4a753f43",
+        "include/gunrock/io/parameters.hxx": "15f69930b6702b0e383a538c47fa61147107e360f33eb24be9e997eb2b61d0e6",
+        "include/gunrock/framework/operators/advance/helpers.hxx": "9cc28fe326ccc5279ad5a6220c2dbe8e8749d3863b2ef8a11f810dba6a4802d6",
+        "include/gunrock/framework/operators/advance/merge_path_v2.hxx": "b16317efd2374443ee1f97608f33aabf682bb26849906461824ba8e4da0eaaa3",
+        "include/gunrock/framework/operators/configs.hxx": "dae11f546cfa3a7faec69ee80234225cef0b72e841a48fed8dd10d01042d16db",
+        "include/gunrock/graph/csr.hxx": "507e489665597fa5e404be045e09a89ef498dfdda4198e2a1ecaa879c7190546"
+      },
+      "source_relevant_files_latest_mtime_epoch": 1785370990.5977252
+    },
+    "mst": {
+      "source": "maintained-v2",
+      "sha256": "1abb7f5f191164e0475dae67558d562043d9951eb0c0ae12e4d15e4d0cc0aa7a",
+      "source_relevant_modified_files": [
+        "examples/algorithms/mst/mst.cu",
+        "examples/algorithms/aligned_e2e.hxx",
+        "include/gunrock/framework/operators/advance/helpers.hxx",
+        "include/gunrock/framework/operators/advance/merge_path_v2.hxx",
+        "include/gunrock/framework/operators/configs.hxx",
+        "include/gunrock/graph/csr.hxx"
+      ],
+      "source_relevant_file_sha256": {
+        "examples/algorithms/mst/mst.cu": "c567042cadc22435c3bd9d43ba36281069cab542bfea18b914f30004841cd049",
+        "examples/algorithms/aligned_e2e.hxx": "23bbf44a84e82467e3bc18342f72c178abc21acb278c0fc53df7099a4a753f43",
+        "include/gunrock/framework/operators/advance/helpers.hxx": "9cc28fe326ccc5279ad5a6220c2dbe8e8749d3863b2ef8a11f810dba6a4802d6",
+        "include/gunrock/framework/operators/advance/merge_path_v2.hxx": "b16317efd2374443ee1f97608f33aabf682bb26849906461824ba8e4da0eaaa3",
+        "include/gunrock/framework/operators/configs.hxx": "dae11f546cfa3a7faec69ee80234225cef0b72e841a48fed8dd10d01042d16db",
+        "include/gunrock/graph/csr.hxx": "507e489665597fa5e404be045e09a89ef498dfdda4198e2a1ecaa879c7190546"
+      },
+      "source_relevant_files_latest_mtime_epoch": 1785370990.5977252
+    },
+    "bfs": {
+      "source": "maintained-v2",
+      "sha256": "55a35ecd178d162f78f740cd925b5e1112d36207b5ee03bd7e5e16a6e236c3f4",
+      "source_relevant_modified_files": [
+        "examples/algorithms/bfs/bfs.cu",
+        "examples/algorithms/aligned_e2e.hxx",
+        "include/gunrock/io/parameters.hxx",
+        "include/gunrock/framework/operators/advance/helpers.hxx",
+        "include/gunrock/framework/operators/advance/merge_path_v2.hxx",
+        "include/gunrock/framework/operators/configs.hxx",
+        "include/gunrock/graph/csr.hxx"
+      ],
+      "source_relevant_file_sha256": {
+        "examples/algorithms/bfs/bfs.cu": "54ed1935ac8f4b65eae075289b075a932293f0566fd0c47c7d49785308f0c102",
+        "examples/algorithms/aligned_e2e.hxx": "23bbf44a84e82467e3bc18342f72c178abc21acb278c0fc53df7099a4a753f43",
+        "include/gunrock/io/parameters.hxx": "15f69930b6702b0e383a538c47fa61147107e360f33eb24be9e997eb2b61d0e6",
+        "include/gunrock/framework/operators/advance/helpers.hxx": "9cc28fe326ccc5279ad5a6220c2dbe8e8749d3863b2ef8a11f810dba6a4802d6",
+        "include/gunrock/framework/operators/advance/merge_path_v2.hxx": "b16317efd2374443ee1f97608f33aabf682bb26849906461824ba8e4da0eaaa3",
+        "include/gunrock/framework/operators/configs.hxx": "dae11f546cfa3a7faec69ee80234225cef0b72e841a48fed8dd10d01042d16db",
+        "include/gunrock/graph/csr.hxx": "507e489665597fa5e404be045e09a89ef498dfdda4198e2a1ecaa879c7190546"
+      },
+      "source_relevant_files_latest_mtime_epoch": 1785370990.5977252
+    },
+    "sssp": {
+      "source": "maintained-v2",
+      "sha256": "01f7754bea27ead5a3f73a2056b24b1b4745adec6403f97ae7ae2198c8d7a1f4",
+      "source_relevant_modified_files": [
+        "examples/algorithms/sssp/sssp.cu",
+        "examples/algorithms/aligned_e2e.hxx",
+        "include/gunrock/io/parameters.hxx",
+        "include/gunrock/framework/operators/advance/helpers.hxx",
+        "include/gunrock/framework/operators/advance/merge_path_v2.hxx",
+        "include/gunrock/framework/operators/configs.hxx",
+        "include/gunrock/graph/csr.hxx"
+      ],
+      "source_relevant_file_sha256": {
+        "examples/algorithms/sssp/sssp.cu": "175aec5b11df61c718763e23b84ad68369e9317d03a6bc2c98c53e2b4ff51396",
+        "examples/algorithms/aligned_e2e.hxx": "23bbf44a84e82467e3bc18342f72c178abc21acb278c0fc53df7099a4a753f43",
+        "include/gunrock/io/parameters.hxx": "15f69930b6702b0e383a538c47fa61147107e360f33eb24be9e997eb2b61d0e6",
+        "include/gunrock/framework/operators/advance/helpers.hxx": "9cc28fe326ccc5279ad5a6220c2dbe8e8749d3863b2ef8a11f810dba6a4802d6",
+        "include/gunrock/framework/operators/advance/merge_path_v2.hxx": "b16317efd2374443ee1f97608f33aabf682bb26849906461824ba8e4da0eaaa3",
+        "include/gunrock/framework/operators/configs.hxx": "dae11f546cfa3a7faec69ee80234225cef0b72e841a48fed8dd10d01042d16db",
+        "include/gunrock/graph/csr.hxx": "507e489665597fa5e404be045e09a89ef498dfdda4198e2a1ecaa879c7190546"
+      },
+      "source_relevant_files_latest_mtime_epoch": 1785370990.5977252
+    },
+    "kcore": {
+      "source": "maintained-v2",
+      "sha256": "b60241e38c09d78836e39e566bc2d54a7bf91e40a7627bac3dbdfc037a34488c",
+      "source_relevant_modified_files": [
+        "examples/algorithms/kcore/kcore.cu",
+        "examples/algorithms/aligned_e2e.hxx",
+        "include/gunrock/framework/operators/advance/helpers.hxx",
+        "include/gunrock/framework/operators/advance/merge_path_v2.hxx",
+        "include/gunrock/framework/operators/configs.hxx",
+        "include/gunrock/graph/csr.hxx"
+      ],
+      "source_relevant_file_sha256": {
+        "examples/algorithms/kcore/kcore.cu": "8414cbe04dc1ce55707df58f93b71e02e2bd18e17e869ac1b3253180886f4bde",
+        "examples/algorithms/aligned_e2e.hxx": "23bbf44a84e82467e3bc18342f72c178abc21acb278c0fc53df7099a4a753f43",
+        "include/gunrock/framework/operators/advance/helpers.hxx": "9cc28fe326ccc5279ad5a6220c2dbe8e8749d3863b2ef8a11f810dba6a4802d6",
+        "include/gunrock/framework/operators/advance/merge_path_v2.hxx": "b16317efd2374443ee1f97608f33aabf682bb26849906461824ba8e4da0eaaa3",
+        "include/gunrock/framework/operators/configs.hxx": "dae11f546cfa3a7faec69ee80234225cef0b72e841a48fed8dd10d01042d16db",
+        "include/gunrock/graph/csr.hxx": "507e489665597fa5e404be045e09a89ef498dfdda4198e2a1ecaa879c7190546"
+      },
+      "source_relevant_files_latest_mtime_epoch": 1785370990.5977252
+    },
+    "bc": {
+      "source": "maintained-v2",
+      "sha256": "f3b0a4b4c7b34e4067a6282cde4d252e9849dc6b42722607da5cd5a77af8d833",
+      "source_relevant_modified_files": [
+        "examples/algorithms/bc/bc.cu",
+        "examples/algorithms/aligned_e2e.hxx",
+        "include/gunrock/algorithms/bc.hxx",
+        "include/gunrock/io/parameters.hxx",
+        "include/gunrock/framework/operators/advance/helpers.hxx",
+        "include/gunrock/framework/operators/advance/merge_path_v2.hxx",
+        "include/gunrock/framework/operators/configs.hxx",
+        "include/gunrock/graph/csr.hxx"
+      ],
+      "source_relevant_file_sha256": {
+        "examples/algorithms/bc/bc.cu": "b93d4a9424cd02c477e9ac7be77296daabbf46265d0ac750fa9a8cd7a52b85c8",
+        "examples/algorithms/aligned_e2e.hxx": "23bbf44a84e82467e3bc18342f72c178abc21acb278c0fc53df7099a4a753f43",
+        "include/gunrock/algorithms/bc.hxx": "05421f5e63b8fb70bbd02b61a22e5d343237fa647e2fd4c9c5eb61d4022fd743",
+        "include/gunrock/io/parameters.hxx": "15f69930b6702b0e383a538c47fa61147107e360f33eb24be9e997eb2b61d0e6",
+        "include/gunrock/framework/operators/advance/helpers.hxx": "9cc28fe326ccc5279ad5a6220c2dbe8e8749d3863b2ef8a11f810dba6a4802d6",
+        "include/gunrock/framework/operators/advance/merge_path_v2.hxx": "b16317efd2374443ee1f97608f33aabf682bb26849906461824ba8e4da0eaaa3",
+        "include/gunrock/framework/operators/configs.hxx": "dae11f546cfa3a7faec69ee80234225cef0b72e841a48fed8dd10d01042d16db",
+        "include/gunrock/graph/csr.hxx": "507e489665597fa5e404be045e09a89ef498dfdda4198e2a1ecaa879c7190546"
+      },
+      "source_relevant_files_latest_mtime_epoch": 1785370990.5977252
+    },
+    "lcc": {
+      "source": "legacy-v1",
+      "sha256": "edefacbd68db9fc3754f9a12f8065eb85a1535491186ff93a38ada61bac0cf1c",
+      "source_relevant_modified_files": [
+        "CMakeLists.txt",
+        "cmake/CPM.cmake",
+        "examples/lcc/test_lcc.cu",
+        "gunrock/app/lcc/lcc_app.cu",
+        "gunrock/app/lcc/lcc_enactor.cuh"
+      ],
+      "source_relevant_file_sha256": {
+        "CMakeLists.txt": "8855ed7fdf174088cb08f9e0ed7131470835e48e3d69cb3cb7c6b5fe9b083fef",
+        "cmake/CPM.cmake": "2279378cb0acfd0756f4a1caebd366d50b62674bf3029a0cffd1f3aeea71f9dc",
+        "examples/lcc/test_lcc.cu": "381a3ff53743f6a62557bfe995b40aa60b869ec6f773b300178e7b172995c7a5",
+        "gunrock/app/lcc/lcc_app.cu": "a7c080977a7981ad934f2323b30c82f2b5286d3b6d23a3e44f5a8532cae92422",
+        "gunrock/app/lcc/lcc_enactor.cuh": "c23437cd1937c843bb02654797170260f920721417a84a75dfc1c50ab8eadb3f"
+      },
+      "source_relevant_files_latest_mtime_epoch": 1785371022.735967
+    }
+  }
+}

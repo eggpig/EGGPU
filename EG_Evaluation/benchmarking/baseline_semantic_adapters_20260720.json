@@ -1,0 +1,246 @@
+{
+  "schema_version": 3,
+  "updated_at": "2026-07-21",
+  "policy": {
+    "allowed": [
+      "documented implementation alias with aligned benchmark semantics",
+      "benchmark-parameter forwarding",
+      "result export in a separate unmeasured validation invocation",
+      "CPU-reference validation outside the timing window",
+      "reporting of the sum of already measured native kernel invocations",
+      "build-only compatibility changes that do not alter algorithm logic",
+      "small numerical correctness fixes when the patched baseline is explicitly labeled"
+    ],
+    "forbidden": [
+      "new baseline algorithm implementation",
+      "baseline CUDA kernel performance optimization",
+      "CPU or native-cuGraph fallback under the nx-cugraph name",
+      "replacement of timeout, OOM, unsupported, or failed validation by an inferred value",
+      "publication of a failed semantic qualification as a valid timing"
+    ]
+  },
+  "adapters": [
+    {
+      "baseline": "Gunrock",
+      "function": "PageRank",
+      "upstream_generation": "maintained v2.2.0 lineage",
+      "source_commit": "748f79e66cc26762cd3f99422b028e742a737bde",
+      "files": [
+        "gunrock_latest/examples/algorithms/pr/pr.cu",
+        "gunrock_latest/include/gunrock/io/parameters.hxx",
+        "EG_Evaluation/benchmarking/run_full_baselines.py",
+        "EG_Evaluation/benchmarking/run_gunrock_large_matrix.py",
+        "EG_Evaluation/benchmarking/pagerank_residual_validation.py",
+        "EG_Evaluation/benchmarking/revalidate_gunrock_large_pagerank.py"
+      ],
+      "change": "forward alpha and tolerance from the CLI, export the full score vector only in a separate unmeasured validation invocation, and validate iterative solutions by the PageRank fixed-point equation instead of cross-solver pointwise identity",
+      "change_class": "parameter, result-interface, and correctness-protocol adapter",
+      "cuda_kernel_changed": false,
+      "timed_algorithm_changed": false,
+      "timing_or_memory_values_changed_by_validation_update": false,
+      "validation": "independent PageRank fixed-point residual on directed and undirected qualification graphs; com-Orkut mean residual 1.3490753685e-08 versus threshold 1e-06, score sum 0.999999991244124",
+      "validation_evidence": "EG_Evaluation/benchmarking/results/gpu_baseline_gap_recovery_gpu7_20260721_152655/large_revalidated_fixedpoint_20260721/PAGERANK_REVALIDATION.json",
+      "publication_status": "eligible as locally adapted Gunrock after residual validation"
+    },
+    {
+      "baseline": "Gunrock",
+      "function": "LCC",
+      "upstream_generation": "legacy 1.x release-79-g386d04450",
+      "source_commit": "386d04450b9ae11097e9789a648042d4d310f199",
+      "files": [
+        "gunrock_legacy_master/CMakeLists.txt",
+        "gunrock_legacy_master/cmake/CPM.cmake",
+        "gunrock_legacy_master/gunrock/app/lcc/lcc_app.cu",
+        "gunrock_legacy_master/gunrock/app/lcc/lcc_enactor.cuh",
+        "EG_Evaluation/benchmarking/run_full_baselines.py"
+      ],
+      "change": "make the legacy checkout build locally, export the full coefficient vector outside timing, replace integer division in coefficient normalization with floating-point division, and expose an aligned host timer from invocation on the prepared Gunrock graph through complete device-to-host result extraction",
+      "change_class": "build adapter, result-interface adapter, disclosed numerical correctness fix, and measurement-boundary instrumentation",
+      "cuda_kernel_changed": true,
+      "timed_algorithm_changed": true,
+      "validation": "pointwise comparison against the aligned LCC reference; maximum absolute errors 2.90e-08 on ca-HepTh and 1.99e-08 on p2p-Gnutella04",
+      "publication_status": "eligible only as Gunrock legacy (correctness patched), never as an unmodified upstream result"
+    },
+    {
+      "baseline": "Gunrock",
+      "function": "BFS",
+      "upstream_generation": "maintained v2.2.0 lineage",
+      "source_commit": "748f79e66cc26762cd3f99422b028e742a737bde",
+      "files": [
+        "gunrock_latest/examples/algorithms/bfs/bfs.cu",
+        "gunrock_latest/include/gunrock/io/parameters.hxx",
+        "EG_Evaluation/benchmarking/run_full_baselines.py",
+        "EG_Evaluation/benchmarking/run_gunrock_large_matrix.py"
+      ],
+      "change": "pass all benchmark sources through Gunrock's documented comma-separated source option, report the sum of the native per-source kernel timers, export full distances separately, and move CPU validation outside the timed process",
+      "change_class": "multi-source invocation, timing-report, result-interface, and validation-isolation adapter",
+      "cuda_kernel_changed": false,
+      "timed_algorithm_changed": false,
+      "validation": "all source-by-vertex distances and reachability masks compared with saved EGGPU reference results",
+      "publication_status": "eligible after external full-result validation"
+    },
+    {
+      "baseline": "Gunrock",
+      "function": "SSSP",
+      "upstream_generation": "maintained v2.2.0 lineage",
+      "source_commit": "748f79e66cc26762cd3f99422b028e742a737bde",
+      "files": [
+        "gunrock_latest/examples/algorithms/sssp/sssp.cu",
+        "gunrock_latest/include/gunrock/io/parameters.hxx",
+        "EG_Evaluation/benchmarking/run_full_baselines.py",
+        "EG_Evaluation/benchmarking/run_gunrock_large_matrix.py"
+      ],
+      "change": "pass all benchmark sources in one documented source-list invocation, report summed native kernel time, export full distances separately, and move CPU validation outside timing",
+      "change_class": "multi-source invocation, timing-report, result-interface, and validation-isolation adapter",
+      "cuda_kernel_changed": false,
+      "timed_algorithm_changed": false,
+      "validation": "all source-by-vertex weighted distances and reachability masks compared with saved EGGPU reference results",
+      "publication_status": "eligible after external full-result validation"
+    },
+    {
+      "baseline": "Gunrock",
+      "function": "Dijkstra",
+      "upstream_generation": "maintained v2.2.0 lineage",
+      "source_commit": "748f79e66cc26762cd3f99422b028e742a737bde",
+      "files": [
+        "gunrock_latest/examples/algorithms/sssp/sssp.cu",
+        "gunrock_latest/include/gunrock/io/parameters.hxx",
+        "EG_Evaluation/benchmarking/run_full_baselines.py",
+        "EG_Evaluation/benchmarking/run_gunrock_large_matrix.py"
+      ],
+      "change": "invoke the maintained weighted SSSP executable with one source on deterministic nonnegative weights and validate the complete distance vector",
+      "change_class": "documented implementation alias plus result-interface and validation-isolation adapter",
+      "cuda_kernel_changed": false,
+      "timed_algorithm_changed": false,
+      "validation": "exact reachability and distance equality on the qualification graph",
+      "publication_status": "conditional support; disclose that the SSSP executable supplies Dijkstra-compatible benchmark semantics"
+    },
+    {
+      "baseline": "Gunrock",
+      "function": "KCore",
+      "upstream_generation": "maintained v2.2.0 lineage",
+      "source_commit": "748f79e66cc26762cd3f99422b028e742a737bde",
+      "files": [
+        "gunrock_latest/examples/algorithms/kcore/kcore.cu",
+        "EG_Evaluation/benchmarking/run_full_baselines.py",
+        "EG_Evaluation/benchmarking/run_gunrock_large_matrix.py"
+      ],
+      "change": "add an option that suppresses the bundled CPU reference during timed runs and add a separate full-vector result export for unmeasured validation",
+      "change_class": "validation-isolation and result-interface adapter",
+      "cuda_kernel_changed": false,
+      "timed_algorithm_changed": false,
+      "validation": "exact pointwise core-number comparison with the saved reference result",
+      "publication_status": "eligible after external full-result validation"
+    },
+    {
+      "baseline": "Gunrock",
+      "function": "BC-16",
+      "upstream_generation": "maintained v2.2.0 lineage",
+      "source_commit": "748f79e66cc26762cd3f99422b028e742a737bde",
+      "files": [
+        "gunrock_latest/examples/algorithms/bc/bc.cu",
+        "gunrock_latest/include/gunrock/io/parameters.hxx",
+        "EG_Evaluation/benchmarking/run_full_baselines.py",
+        "EG_Evaluation/benchmarking/run_gunrock_large_matrix.py"
+      ],
+      "change": "initialize the output, use the documented source list, sum native kernel timers, and export the full accumulated vector outside timing",
+      "change_class": "initialization, multi-source invocation, timing-report, and result-interface adapter",
+      "cuda_kernel_changed": false,
+      "timed_algorithm_changed": false,
+      "validation": "failed pointwise subset-BC qualification; maximum absolute errors 4203.54 on ca-HepTh and 9744.67 on p2p-Gnutella04",
+      "publication_status": "excluded from aligned BC-16 timing; keep the failed attempt in the failure ledger"
+    },
+    {
+      "baseline": "Gunrock",
+      "function": "BellmanFord",
+      "upstream_generation": "maintained v2.2.0 lineage",
+      "source_commit": "748f79e66cc26762cd3f99422b028e742a737bde",
+      "files": [
+        "EG_Evaluation/benchmarking/run_full_baselines.py"
+      ],
+      "change": "the maintained SSSP executable was tested only as a diagnostic on nonnegative weights",
+      "change_class": "unsupported semantic proxy",
+      "cuda_kernel_changed": false,
+      "timed_algorithm_changed": false,
+      "validation": "not sufficient to establish Bellman-Ford support",
+      "publication_status": "excluded; no aligned Bellman-Ford implementation"
+    },
+    {
+      "baseline": "Gunrock",
+      "function": "common maintained framework",
+      "upstream_generation": "maintained v2.2.0 lineage",
+      "source_commit": "748f79e66cc26762cd3f99422b028e742a737bde",
+      "files": [
+        "gunrock_latest/include/gunrock/framework/operators/advance/helpers.hxx",
+        "gunrock_latest/include/gunrock/framework/operators/advance/merge_path_v2.hxx",
+        "gunrock_latest/include/gunrock/framework/operators/configs.hxx",
+        "gunrock_latest/include/gunrock/graph/csr.hxx"
+      ],
+      "change": "add explicit Thrust distance headers for toolchain compatibility and suppress full frontier dumps while retaining the original sort operations",
+      "change_class": "build compatibility and diagnostic-output suppression",
+      "cuda_kernel_changed": false,
+      "timed_algorithm_changed": false,
+      "validation": "algorithms are independently result-validated; no frontier or operator logic was changed",
+      "publication_status": "disclose local compatibility and logging patch; not an algorithm optimization"
+    },
+    {
+      "baseline": "Gunrock",
+      "function": "Dijkstra/BellmanFord/SSSP measurement metadata",
+      "upstream_generation": "benchmark runner",
+      "source_commit": "local PaperRepo source state",
+      "files": [
+        "EG_Evaluation/benchmarking/run_full_baselines.py"
+      ],
+      "change": "attribute process memory rows and setup failures to the requested shortest-path function instead of the previously hard-coded BFS label",
+      "change_class": "measurement-label correctness fix",
+      "cuda_kernel_changed": false,
+      "timed_algorithm_changed": false,
+      "validation": "Python compilation plus focused row-label regression test",
+      "publication_status": "required for all refreshed memory tables; older mislabeled shortest-path memory rows are excluded"
+    },
+    {
+      "baseline": "EGGPU-2024",
+      "function": "BC",
+      "upstream_generation": "EasyGraph commit 558f311db655256f9ddd7d5e182c2089d56da29d",
+      "source_commit": "558f311db655256f9ddd7d5e182c2089d56da29d",
+      "files": [
+        "Easy-Graph-20240712-558f311/gpu_easygraph/functions/centrality/betweenness_centrality.cu"
+      ],
+      "change": "correct buffer initialization sizes, initialize the BC accumulator, and synchronize the dependency level before writing accumulated values",
+      "change_class": "disclosed historical correctness patch",
+      "cuda_kernel_changed": true,
+      "timed_algorithm_changed": true,
+      "validation": "all 11 datasets externally validated under the current BC semantics",
+      "publication_status": "label every result EGGPU-2024 (correctness patched)"
+    },
+    {
+      "baseline": "EGGPU-2024",
+      "function": "build",
+      "upstream_generation": "EasyGraph commit 558f311db655256f9ddd7d5e182c2089d56da29d",
+      "source_commit": "558f311db655256f9ddd7d5e182c2089d56da29d",
+      "files": [
+        "Easy-Graph-20240712-558f311/cpp_easygraph/CMakeLists.txt",
+        "Easy-Graph-20240712-558f311/setup.py"
+      ],
+      "change": "select the evaluation GPU architecture explicitly and provide the extension module name required by the current setuptools toolchain",
+      "change_class": "build-only compatibility adapter",
+      "cuda_kernel_changed": false,
+      "timed_algorithm_changed": false,
+      "validation": "BC, SSSP, and KCore completed and validated on all 11 datasets",
+      "publication_status": "disclose current-toolchain compatibility patch"
+    },
+    {
+      "baseline": "nx-cugraph",
+      "function": "all",
+      "upstream_generation": "26.2.0",
+      "source_commit": "package release",
+      "files": [],
+      "change": "strict NetworkX backend dispatch with no package patch, CPU fallback, or native-cuGraph fallback",
+      "change_class": "runner policy only",
+      "cuda_kernel_changed": false,
+      "timed_algorithm_changed": false,
+      "validation": "function-specific result checks in the benchmark runner",
+      "publication_status": "only officially registered backend algorithms with aligned semantics are eligible"
+    }
+  ]
+}

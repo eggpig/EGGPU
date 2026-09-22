@@ -1,0 +1,213 @@
+{
+  "schema_version": 1,
+  "decision_id": "eggpu-vldb-function-support-20260727-graphscope",
+  "decision_date": "2026-07-27",
+  "state": "frozen",
+  "reopen_rule": "Reopen only when the evaluated package or executable version, the aligned benchmark semantics, or correctness evidence changes.",
+  "classification": {
+    "T": "Complete aligned callable implementation for the applicable graph contract.",
+    "P": "Callable implementation with a documented graph, parameter, numerical, or result restriction.",
+    "F": "No complete aligned implementation, forbidden fallback, or an incorrect implementation requiring an algorithm rewrite.",
+    "timeout": "A performance outcome that does not change T/P/F support."
+  },
+  "functions": [
+    "PageRank", "MST", "LCC", "WCC", "SCC", "BFS", "Dijkstra",
+    "BellmanFord", "SSSP", "KCore", "BC", "Closeness", "EffectiveSize",
+    "Efficiency", "Constraint", "Hierarchy"
+  ],
+  "baselines": {
+    "networkx": {
+      "display_name": "NetworkX",
+      "version": "3.4.2",
+      "evidence": [
+        "https://networkx.org/documentation/stable/reference/algorithms/",
+        "https://networkx.org/documentation/stable/reference/algorithms/structuralholes.html",
+        "benchmarking/results/final13_authoritative_main_20260717"
+      ],
+      "statuses": {
+        "PageRank": "T", "MST": "T", "LCC": "T", "WCC": "T", "SCC": "T",
+        "BFS": "T", "Dijkstra": "T", "BellmanFord": "T", "SSSP": "T",
+        "KCore": "T", "BC": "T", "Closeness": "T", "EffectiveSize": "T",
+        "Efficiency": "F", "Constraint": "T", "Hierarchy": "F"
+      },
+      "restrictions": {
+        "Efficiency": "NetworkX efficiency is shortest-path efficiency, not Burt structural-hole efficiency.",
+        "Hierarchy": "NetworkX flow_hierarchy is not Burt structural-hole hierarchy."
+      }
+    },
+    "easygraph-cpu": {
+      "display_name": "EasyGraph CPU",
+      "version": "1.6 workspace source",
+      "evidence": [
+        "https://easy-graph.github.io/docs/",
+        "benchmarking/results/final13_authoritative_main_20260717"
+      ],
+      "statuses": {
+        "PageRank": "T", "MST": "T", "LCC": "T", "WCC": "T", "SCC": "T",
+        "BFS": "T", "Dijkstra": "T", "BellmanFord": "T", "SSSP": "T",
+        "KCore": "T", "BC": "T", "Closeness": "T", "EffectiveSize": "T",
+        "Efficiency": "T", "Constraint": "T", "Hierarchy": "T"
+      },
+      "restrictions": {}
+    },
+    "easygraph-cpp": {
+      "display_name": "EasyGraph C++",
+      "version": "1.6 workspace CPU-only extension",
+      "evidence": [
+        "benchmarking/results/easygraph_cpp_structural_qualification_20260726",
+        "benchmarking/results/final13_authoritative_main_20260717"
+      ],
+      "statuses": {
+        "PageRank": "T", "MST": "T", "LCC": "T", "WCC": "T", "SCC": "T",
+        "BFS": "T", "Dijkstra": "T", "BellmanFord": "F", "SSSP": "T",
+        "KCore": "T", "BC": "T", "Closeness": "T", "EffectiveSize": "P",
+        "Efficiency": "P", "Constraint": "P", "Hierarchy": "T"
+      },
+      "restrictions": {
+        "BellmanFord": "The native CPU extension exposes no Bellman-Ford binding.",
+        "EffectiveSize": "Directed zero-outdegree vertices use a finite-versus-NaN convention different from the aligned reference.",
+        "Efficiency": "Directed undefined vertices use a finite-versus-NaN convention different from the aligned reference.",
+        "Constraint": "Directed zero-outdegree vertices use a finite-versus-NaN convention different from the aligned reference."
+      }
+    },
+    "igraph": {
+      "display_name": "igraph",
+      "version": "1.0.0",
+      "evidence": [
+        "https://python.igraph.org/en/develop/api/igraph.Graph.html",
+        "https://igraph.org/c/doc/igraph-Structural.html",
+        "benchmarking/results/final13_authoritative_main_20260717"
+      ],
+      "statuses": {
+        "PageRank": "T", "MST": "T", "LCC": "T", "WCC": "T", "SCC": "T",
+        "BFS": "T", "Dijkstra": "T", "BellmanFord": "T", "SSSP": "T",
+        "KCore": "T", "BC": "T", "Closeness": "P", "EffectiveSize": "F",
+        "Efficiency": "F", "Constraint": "P", "Hierarchy": "F"
+      },
+      "restrictions": {
+        "Closeness": "Requires explicit OUT direction and reachable-fraction correction on disconnected directed graphs.",
+        "EffectiveSize": "No Burt effective-size API.",
+        "Efficiency": "No Burt structural-hole efficiency API.",
+        "Constraint": "Directed zero-outdegree output convention differs from the aligned reference.",
+        "Hierarchy": "No Burt structural-hole hierarchy API."
+      }
+    },
+    "nx-cugraph": {
+      "display_name": "nx-cugraph",
+      "version": "26.2.0",
+      "evidence": [
+        "https://docs.rapids.ai/api/cugraph/stable/nx_cugraph/supported-algorithms/",
+        "benchmarking/results/nxcugraph_v4_recovery_split_assembled_20260726"
+      ],
+      "statuses": {
+        "PageRank": "T", "MST": "F", "LCC": "T", "WCC": "T", "SCC": "F",
+        "BFS": "T", "Dijkstra": "T", "BellmanFord": "P", "SSSP": "T",
+        "KCore": "T", "BC": "P", "Closeness": "F", "EffectiveSize": "F",
+        "Efficiency": "F", "Constraint": "F", "Hierarchy": "F"
+      },
+      "restrictions": {
+        "MST": "No strict NetworkX backend implementation; direct cuGraph substitution is forbidden.",
+        "SCC": "No aligned strict backend implementation for directed SCC.",
+        "BellmanFord": "Version 26.2 forwards to Dijkstra and rejects negative weights.",
+        "BC": "Ordinary all-source BC is implemented, but betweenness_centrality_subset for BC-16 is not.",
+        "Closeness": "Not implemented by the strict backend.",
+        "EffectiveSize": "Not implemented by the strict backend.",
+        "Efficiency": "Not implemented by the strict backend.",
+        "Constraint": "Not implemented by the strict backend.",
+        "Hierarchy": "Not implemented by the strict backend."
+      }
+    },
+    "Gunrock": {
+      "display_name": "Gunrock",
+      "version": "maintained 748f79e66; legacy LCC 386d04450",
+      "evidence": [
+        "https://gunrock.github.io/gunrock/gunrock.wiki/Graph-Algorithms.html",
+        "benchmarking/gunrock_artifact_manifest.json",
+        "benchmarking/results/gpu_baseline_gap_recovery_gpu6_20260726_v5_clean"
+      ],
+      "statuses": {
+        "PageRank": "T", "MST": "P", "LCC": "P", "WCC": "F", "SCC": "F",
+        "BFS": "T", "Dijkstra": "T", "BellmanFord": "P", "SSSP": "T",
+        "KCore": "T", "BC": "P", "Closeness": "F", "EffectiveSize": "F",
+        "Efficiency": "F", "Constraint": "F", "Hierarchy": "F"
+      },
+      "restrictions": {
+        "MST": "Connected-input and input-type restrictions do not provide the common minimum spanning forest contract.",
+        "LCC": "Only the legacy executable is usable and it requires a disclosed normalization correctness repair.",
+        "WCC": "The maintained release has no aligned executable; the obsolete CC port is not substituted.",
+        "SCC": "No aligned executable.",
+        "BellmanFord": "The weighted SSSP alias covers only nonnegative weights.",
+        "BC": "Upstream BC exists, but the evaluated CLI/result scaling does not reproduce the aligned directed BC-16 vector.",
+        "Closeness": "No aligned executable.",
+        "EffectiveSize": "No aligned executable.",
+        "Efficiency": "No aligned executable.",
+        "Constraint": "No aligned executable.",
+        "Hierarchy": "No aligned executable."
+      }
+    },
+    "GraphScope": {
+      "display_name": "GraphScope",
+      "version": "0.29.0",
+      "source_crosscheck_commit": "d8581c18ac92f7cf1f0ffdd2f4a739958cbdcd1c",
+      "evidence": [
+        "https://graphscope.io/docs/analytical_engine/builtin_algorithms",
+        "https://graphscope.io/docs/analytical_engine/flash",
+        "benchmarking/results/graphscope_qualification_20260727"
+      ],
+      "statuses": {
+        "PageRank": "P", "MST": "F", "LCC": "T", "WCC": "T", "SCC": "T",
+        "BFS": "T", "Dijkstra": "P", "BellmanFord": "F", "SSSP": "T",
+        "KCore": "P", "BC": "P", "Closeness": "P", "EffectiveSize": "F",
+        "Efficiency": "F", "Constraint": "F", "Hierarchy": "F"
+      },
+      "restrictions": {
+        "PageRank": "The native GAE app requires a directed graph; undirected inputs use an equivalent bidirected projection.",
+        "MST": "FLASH minimum_spanning_forest returns only the optimum scalar weight, not the selected forest edge set required by the aligned public result.",
+        "Dijkstra": "No separately named Dijkstra app is exposed; native nonnegative-weight SSSP is output-equivalent for the evaluated contract.",
+        "BellmanFord": "Bellman-Ford occurs only in a separate Ligra benchmark harness, not in the callable GAE/FLASH API.",
+        "KCore": "FLASH k-core decomposition requires a single-orientation representation so each logical undirected edge contributes one neighbor.",
+        "BC": "FLASH exposes source-specific BC; BC-16 repeats the native app over the fixed 16-source set and reconstructs the aligned vector.",
+        "Closeness": "Directed outgoing-distance semantics require a reversed graph view; the native app computes all-node exact closeness before selected-vertex reconstruction on large datasets.",
+        "EffectiveSize": "No aligned callable native implementation.",
+        "Efficiency": "No aligned callable native implementation.",
+        "Constraint": "No aligned callable native implementation.",
+        "Hierarchy": "No aligned callable native implementation."
+      }
+    },
+    "EGGPU-2024": {
+      "display_name": "EGGPU-2024*",
+      "version": "evaluation 249582219; EasyGraph 558f311db",
+      "evidence": [
+        "writing/EGGPU_BASELINE_ADAPTATION_AND_DISCLOSURE_LEDGER_20260721.md",
+        "benchmarking/baseline_semantic_adapters_20260720.json"
+      ],
+      "statuses": {
+        "PageRank": "F", "MST": "F", "LCC": "F", "WCC": "F", "SCC": "F",
+        "BFS": "F", "Dijkstra": "F", "BellmanFord": "F", "SSSP": "T",
+        "KCore": "T", "BC": "P", "Closeness": "F", "EffectiveSize": "F",
+        "Efficiency": "F", "Constraint": "F", "Hierarchy": "F"
+      },
+      "restrictions": {
+        "BC": "The archived kernel requires a disclosed correctness-only initialization and dependency-level synchronization repair.",
+        "default": "The archived evaluation artifact implements only BC, SSSP, and KCore."
+      }
+    },
+    "EGGPU": {
+      "display_name": "EGGPU",
+      "version": "eggpu_candidate_20260726_v5",
+      "binary_sha256": "796160b7f873ac8d121153bc34f8b2059d55f6a247616325285a8b1a2f6437f6",
+      "evidence": [
+        "benchmarking/results/latest_source_v5_correctness_gpu2_20260726",
+        "benchmarking/results/latest_v5_main11_gpu0_20260726_repeat5_memory3",
+        "benchmarking/results/latest_v5_com_orkut_gpu2_20260726_repeat5_memory3"
+      ],
+      "statuses": {
+        "PageRank": "T", "MST": "T", "LCC": "T", "WCC": "T", "SCC": "T",
+        "BFS": "T", "Dijkstra": "T", "BellmanFord": "T", "SSSP": "T",
+        "KCore": "T", "BC": "T", "Closeness": "T", "EffectiveSize": "T",
+        "Efficiency": "T", "Constraint": "T", "Hierarchy": "T"
+      },
+      "restrictions": {}
+    }
+  }
+}

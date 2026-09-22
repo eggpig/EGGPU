@@ -1,0 +1,169 @@
+{
+  "schema_version": "gunrock_strict_formal_v1",
+  "created_at": "2026-07-30T08:38:29+08:00",
+  "timing_protocol": {
+    "construction": "matrix_market_load_to_device_graph_v1",
+    "processing": "processing_native_device_interval_v1",
+    "end_to_end": "matrix_market_load_to_complete_host_result_v1",
+    "external_process_wall_allowed": false,
+    "required_repeats_per_success_cell": 5,
+    "catastrophic_outlier_guard": {
+      "max_min_ratio": 20.0,
+      "minimum_absolute_span_seconds": 0.1,
+      "rule": "fail only when both thresholds are exceeded"
+    },
+    "required_positive_metrics": [
+      "construction",
+      "processing",
+      "end_to_end"
+    ]
+  },
+  "main_correctness_reference": {
+    "results_long": "benchmarking/results/latest_baselines_main11_with_gunrock_bf_20260726/results_long.csv",
+    "results_long_sha256": "2b654def65bf179072f6c4b1f828c21986da2103ad9c38861a263c62e75dc5ad",
+    "validation_csv": "benchmarking/results/latest_baselines_main11_with_gunrock_bf_20260726/correctness_validation.csv",
+    "validation_csv_sha256": "bcdeaf8c447173779abd6d04a50c294dcf933121837dd1e90c4e568c2bc3d74b",
+    "policy": "Require prior cross-baseline validation_status=pass and exact full-result detail_sha continuity for deterministic vector/path outputs; PageRank instead requires a fresh full-vector fixed-point residual pass because independently converged floating-point vectors need not be byte-identical; every fresh MST weight and the pinned Gunrock weight must match the independent NetworkX reference within rel_tol=1e-4 and abs_tol=1.0.",
+    "mst_weight_reference": "networkx",
+    "mst_weight_relative_tolerance": 0.0001,
+    "mst_weight_absolute_tolerance": 1.0
+  },
+  "expected_success_matrix": {
+    "core_functions_on_all_12_datasets": [
+      "PageRank",
+      "LCC",
+      "BFS",
+      "Dijkstra",
+      "BellmanFord",
+      "SSSP",
+      "KCore"
+    ],
+    "main_datasets": [
+      "ca-HepTh",
+      "LastFM",
+      "p2p-Gnutella04",
+      "ca-HepPh",
+      "email-Enron",
+      "ca-CondMat",
+      "soc-Epinions1",
+      "soc-Slashdot0811",
+      "ER-100k",
+      "web-NotreDame",
+      "com-youtube"
+    ],
+    "large_dataset": "com-Orkut",
+    "mst_success_datasets": [
+      "LastFM",
+      "p2p-Gnutella04",
+      "soc-Slashdot0811",
+      "ER-100k",
+      "web-NotreDame",
+      "com-youtube"
+    ],
+    "total_success_cells": 90
+  },
+  "included_batches": [
+    {
+      "path": "benchmarking/results/gunrock_strict_main83_gpu3_20260730",
+      "physical_gpu": 3,
+      "gpu_uuid": "GPU-ffb081fa-782f-208e-4bdf-460381bfeb96",
+      "status": "complete",
+      "launched_at": "2026-07-30T08:33:06+08:00",
+      "completed_at": "2026-07-30T09:25:03+08:00",
+      "expected_success_cells": 83,
+      "argv": [
+        "benchmarking/run_full_baselines.py",
+        "--gpu",
+        "3",
+        "--out-dir",
+        "benchmarking/results/gunrock_strict_main83_gpu3_20260730",
+        "--repeat",
+        "5",
+        "--datasets",
+        "ca-HepTh,LastFM,p2p-Gnutella04,ca-HepPh,email-Enron,ca-CondMat,soc-Epinions1,soc-Slashdot0811,ER-100k,web-NotreDame,com-youtube",
+        "--functions",
+        "PageRank,MST,LCC,BFS,Dijkstra,BellmanFord,SSSP,KCore",
+        "--baselines",
+        "Gunrock",
+        "--measurement-mode",
+        "timing",
+        "--library-timeout",
+        "2400",
+        "--inter-run-cooldown",
+        "0.2"
+      ]
+    },
+    {
+      "path": "benchmarking/results/gunrock_strict_orkut7_gpu7_20260730",
+      "physical_gpu": 7,
+      "gpu_uuid": "GPU-5435533c-15d4-baf7-7637-5eb2e5bdb2a5",
+      "status": "complete",
+      "launched_at": "2026-07-30T08:39:03+08:00",
+      "completed_at": "2026-07-30T09:23:21+08:00",
+      "expected_success_cells": 7,
+      "argv": [
+        "benchmarking/run_gunrock_large_matrix.py",
+        "--manifests",
+        "datasets/scaling/csr/com-Orkut/com-Orkut.weighted.json",
+        "--functions",
+        "PageRank",
+        "LCC",
+        "BFS",
+        "Dijkstra",
+        "BellmanFord",
+        "SSSP",
+        "KCore",
+        "--input-dir",
+        "benchmarking/results/final13_missing_gpu7_20260716_212844/gunrock_inputs",
+        "--eggpu-result-dir",
+        "benchmarking/results/final13_missing_gpu7_20260716_212844/eggpu_large_matrix",
+        "--out-dir",
+        "benchmarking/results/gunrock_strict_orkut7_gpu7_20260730",
+        "--gpu",
+        "7",
+        "--repeat",
+        "5",
+        "--memory-repeat",
+        "0",
+        "--source-count",
+        "8",
+        "--pagerank-alpha",
+        "0.75",
+        "--pagerank-tolerance",
+        "0.000001",
+        "--timeout",
+        "2400",
+        "--no-resume"
+      ],
+      "exclusive_prelaunch_nvidia_smi": {
+        "captured_at": "2026-07-30T08:38:29+08:00",
+        "memory_used_mib": 130,
+        "utilization_gpu_percent": 0,
+        "compute_processes": []
+      },
+      "exclusive_postrun_nvidia_smi": {
+        "captured_at": "2026-07-30T09:23:21+08:00",
+        "memory_used_mib": 130,
+        "utilization_gpu_percent": 0,
+        "compute_processes": []
+      }
+    }
+  ],
+  "excluded_batches": [
+    {
+      "path": "benchmarking/results/gunrock_strict_orkut7_gpu4_20260730",
+      "status": "excluded_entire_batch",
+      "must_not_merge": true,
+      "reason": "GPU4 lost exclusivity after an nx-cugraph shard started; the Gunrock run was terminated and every partial sample is contaminated by policy.",
+      "exclusion_evidence": {
+        "verified_at": "2026-07-30T09:10:39+08:00",
+        "surviving_matching_processes": [],
+        "completed_cell_json": [],
+        "residual_partial_files": [
+          "logs/com-Orkut/PageRank_timing_1.log"
+        ],
+        "policy": "The residual log is retained only as contamination evidence and is rejected by the formal gate and overlay script."
+      }
+    }
+  ]
+}
