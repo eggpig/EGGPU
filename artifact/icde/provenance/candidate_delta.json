@@ -1,0 +1,70 @@
+{
+  "base_source_sha256": "aeeade2ea64edf46fc226c0e33f2ccf8e596f77b5ff1e8cc47489db3ff30ef80",
+  "cuda_cpp_changed": false,
+  "current_source_sha256": "832781697b0ceb785b15740aa3dd0231c67787467924dc5ed9d0b29ee868d5f9",
+  "date": "2026-11-04",
+  "files": [
+    {
+      "base_sha256": null,
+      "change": "added",
+      "current_sha256": "4eadad69f40f73c68f02f853ee24e6d34930fbde8464396ff0256d9730495c4b",
+      "path": "easygraph/gpu/_dispatch.py"
+    },
+    {
+      "base_sha256": "19a6c04e9be1fd05cd78ca568129320e659fc99f66357b4ef94d106fe354e01b",
+      "change": "modified",
+      "current_sha256": "64a441a3162df1dd250770a6a7ef9367d13788c818c2dfc6e1ba6fbed25d31ec",
+      "path": "easygraph/gpu/__init__.py"
+    },
+    {
+      "base_sha256": "4e441517622f125d7f9ba33cd81bfea2fad2e0ecfdc2302539b4ee756bfdf3e6",
+      "change": "modified",
+      "current_sha256": "3014634d051d556fe534d6e1c79bb17bfbf61a9b15bd493de37d4bf0550c9c62",
+      "path": "easygraph/gpu/session.py"
+    },
+    {
+      "base_sha256": "bfb1d17c98aaad1e00d9492e532d57da3c3eb96a175f7bb038f5722eb4652eb3",
+      "change": "modified",
+      "current_sha256": "da48b1ef165810a0a70faddd9cc38ddd8f8f96c1f126c6ffab92217fa46c735a",
+      "path": "easygraph/gpu/_bridge.py"
+    },
+    {
+      "base_sha256": "df7b4a257812d1e45e70a85e1fdc5943153bff63a6ef72c720b52177c14ca9ef",
+      "change": "modified",
+      "current_sha256": "6b2bc3ecba2050dafefce332d0020e9e88dd910be3c84d49eb6b67c34595a5b8",
+      "path": "easygraph/gpu/_core.py"
+    },
+    {
+      "base_sha256": "47b839fc84c0c3c422c6d23f2834981744e8b1d5447f1c178b80a97dbc2f4427",
+      "change": "modified",
+      "current_sha256": "4bab35920788e5c97585db9ff6a965184f96c17427ceb4e9c54888efcbc7128d",
+      "path": "easygraph/gpu/_arena/trace_backends.py"
+    },
+    {
+      "base_sha256": null,
+      "change": "added",
+      "current_sha256": "4b46a7e0fee04d00a506fa1fab788ec772d371264437a9bede3db8a409c362b1",
+      "path": "tests/gpu/test_capability_dispatch.py"
+    },
+    {
+      "base_sha256": "b28809f719ff05f6464a0b7e6050755f5c182dc02bd61ce6d86a6f326a133b9a",
+      "change": "modified",
+      "current_sha256": "7cbaf80b739628e172a05ee651406b53814f5abe5d59a0a96bd765db603dce7a",
+      "path": "tests/gpu/test_arena_numerical_contract.py"
+    },
+    {
+      "base_sha256": null,
+      "change": "added",
+      "current_sha256": "b9049bb0de083060b2318df244d321fa179ca1f2a505271e5ed235208d08501f",
+      "path": "tests/gpu/qualify_capability_route.py"
+    },
+    {
+      "base_sha256": "d8f1f1920937d7791d2c7553b6720d9bdd946dfcbdc91a090f873f1c686cd782",
+      "change": "modified",
+      "current_sha256": "7da317b45fc2fea858f50eae1cc1afa38bbe7c2e1c56105601304f2927870fd4",
+      "path": "easygraph/gpu/_controller.py"
+    }
+  ],
+  "schema": "eggpu.source_delta/v1",
+  "source_scope": "Python capability dispatch, public result semantics, closure-LRU control, and associated tests; all other published source bytes equal the source3 base."
+}

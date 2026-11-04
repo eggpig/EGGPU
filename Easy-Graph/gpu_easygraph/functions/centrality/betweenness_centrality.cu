@@ -574,7 +574,7 @@ static int memory_aware_source_blocks(
         if (parsed > 0.0 && parsed < 0.95) frac = parsed;
     }
     // First-use and growing-graph decisions remain conservative.  The
-    // reusable-workspace fast path above handles repeated calls before this
+    // reusable-workspace fast path above handles warmed calls before this
     // query, so the add-back is normally zero and remains as a defensive guard.
     const std::size_t effective_free_b =
         std::min(total_b, free_b + reusable_source_workspace_bytes);

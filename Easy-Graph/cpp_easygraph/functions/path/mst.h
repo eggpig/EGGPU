@@ -19,3 +19,4 @@ py::object prim_mst_edges(py::object G, py::object minimum, py::object weight, p
 py::object _mst_gpu_native(py::object G, py::object weight);
 py::object _mst_gpu_native_index_edges(py::object G, py::object weight);
 py::object _mst_gpu_native_tree(py::object G, py::object weight);
+py::object boruvka_mst_edges(py::object G, py::object minimum, py::object weight, py::object data, py::object ignore_nan);

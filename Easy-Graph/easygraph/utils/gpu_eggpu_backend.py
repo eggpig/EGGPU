@@ -766,6 +766,10 @@ def _cpp_gpu_mst_tree(prepared, G, weight):
     if not isinstance(out, dict):
         return None
     tree = _restore_bulk_mst_tree_contract(out.get("tree"), prepared)
+    if tree is not None and hasattr(G, "edge_attr_dict_factory"):
+        # Native results are ordinary Graph objects with a lazy edge payload.
+        # Bind the input's factory before that payload exposes attributes.
+        tree.edge_attr_dict_factory = G.edge_attr_dict_factory
     kernel_s = out.get("kernel_seconds")
     if edge_slots and tree is None and (kernel_s is None or float(kernel_s) == 0.0):
         return None
@@ -1870,6 +1874,8 @@ def minimum_spanning_tree(G, weight="weight"):
         import easygraph as eg
 
         T = eg.Graph()
+        if hasattr(G, "edge_attr_dict_factory"):
+            T.edge_attr_dict_factory = G.edge_attr_dict_factory
         nodes = prepared.get("nodes", [])
         T._adj = {n: {} for n in nodes}
         T._node = {n: {} for n in nodes}
@@ -1877,12 +1883,14 @@ def minimum_spanning_tree(G, weight="weight"):
         T._id = len(nodes)
         adj = T._adj
         for u, v, w in edges:
-            attr = {weight: w}
+            attr = T._new_edge_attr_dict({weight: w})
             adj[u][v] = attr
             adj[v][u] = attr
         T.cache = {}
     except Exception:
         T = G.__class__()
+        if hasattr(G, "_copy_edge_attr_factory_to"):
+            G._copy_edge_attr_factory_to(T)
         if edges:
             T.add_weighted_edges_from(edges, weight=weight)
         if len(T) < len(G):

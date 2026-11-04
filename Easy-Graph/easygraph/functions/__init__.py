@@ -1,5 +1,5 @@
-import os
-
+from easygraph._optional import HAS_TORCH as _HAS_TORCH
+from easygraph._optional import optional_torch_modules as _torch_imports
 from easygraph.functions.basic import *
 from easygraph.functions.centrality import *
 from easygraph.functions.community import *
@@ -13,12 +13,6 @@ from easygraph.functions.path import *
 from easygraph.functions.structural_holes import *
 
 
-try:
-    from easygraph.functions.hypergraph import *
-except:
-    if os.environ.get("EASYGRAPH_SHOW_OPTIONAL_IMPORT_WARNINGS", "").strip().upper() in {"1", "TRUE", "ON", "YES"}:
-        print(
-            "Warning raise in module:model.Please install "
-            "Pytorch before you use functions"
-            " related to Hypergraph"
-        )
+if _HAS_TORCH:
+    with _torch_imports():
+        from easygraph.functions.hypergraph import *

@@ -1,0 +1,33 @@
+{
+  "current_source_sha256": "832781697b0ceb785b15740aa3dd0231c67787467924dc5ed9d0b29ee868d5f9",
+  "gpu_executed": false,
+  "qualification_scope": "Each suite's stated scope is retained; CPU evidence does not qualify CUDA or a DSO.",
+  "schema": "eggpu.source_cpu_validation/v2",
+  "status": "PASS_RECORDED_CPU_SUITES",
+  "suites": [
+    {
+      "gpu_executed": false,
+      "note": "Actual GPU Python modules; namespace shell avoids unrelated root-package imports; no CUDA or DSO loaded.",
+      "status": "PASS_CPU",
+      "tests": 46
+    },
+    {
+      "gpu_executed": false,
+      "note": "Actual public closure-LRU and C-Retain controller with independent CPU refcount receipts; no GPU, native DSO or formal performance qualification.",
+      "status": "PASS_CPU_ONLY",
+      "tests": 10
+    }
+  ],
+  "tested_patch_files": {
+    "easygraph/gpu/__init__.py": "64a441a3162df1dd250770a6a7ef9367d13788c818c2dfc6e1ba6fbed25d31ec",
+    "easygraph/gpu/_arena/trace_backends.py": "4bab35920788e5c97585db9ff6a965184f96c17427ceb4e9c54888efcbc7128d",
+    "easygraph/gpu/_bridge.py": "da48b1ef165810a0a70faddd9cc38ddd8f8f96c1f126c6ffab92217fa46c735a",
+    "easygraph/gpu/_controller.py": "7da317b45fc2fea858f50eae1cc1afa38bbe7c2e1c56105601304f2927870fd4",
+    "easygraph/gpu/_core.py": "6b2bc3ecba2050dafefce332d0020e9e88dd910be3c84d49eb6b67c34595a5b8",
+    "easygraph/gpu/_dispatch.py": "4eadad69f40f73c68f02f853ee24e6d34930fbde8464396ff0256d9730495c4b",
+    "easygraph/gpu/session.py": "3014634d051d556fe534d6e1c79bb17bfbf61a9b15bd493de37d4bf0550c9c62",
+    "tests/gpu/qualify_capability_route.py": "b9049bb0de083060b2318df244d321fa179ca1f2a505271e5ed235208d08501f",
+    "tests/gpu/test_arena_numerical_contract.py": "7cbaf80b739628e172a05ee651406b53814f5abe5d59a0a96bd765db603dce7a",
+    "tests/gpu/test_capability_dispatch.py": "4b46a7e0fee04d00a506fa1fab788ec772d371264437a9bede3db8a409c362b1"
+  }
+}

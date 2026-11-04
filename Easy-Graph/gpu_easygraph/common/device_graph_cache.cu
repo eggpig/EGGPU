@@ -357,7 +357,7 @@ int acquire_device_csr(
     bool require_weights,
     DeviceCsrView* out
 ) {
-    if (out == nullptr || V == nullptr || E == nullptr || len_V < 0 || len_E < 0) {
+    if (out == nullptr || V == nullptr || (E == nullptr && len_E > 0) || len_V < 0 || len_E < 0) {
         return EG_GPU_DEVICE_ERR;
     }
 
@@ -450,7 +450,7 @@ int acquire_device_csr(
             return (ret == cudaErrorMemoryAllocation)
                 ? EG_GPU_FAILED_TO_ALLOCATE_DEVICE_MEM : EG_GPU_DEVICE_ERR;
         }
-        ret = cudaMemcpy(d_E, h_E, e_bytes, cudaMemcpyHostToDevice);
+        ret = e_bytes ? cudaMemcpy(d_E, h_E, e_bytes, cudaMemcpyHostToDevice) : cudaSuccess;
         release_h2d_source(h_E, reg_E);
         if (ret != cudaSuccess) {
             return (ret == cudaErrorMemoryAllocation)
@@ -474,7 +474,7 @@ int acquire_device_csr(
             W, static_cast<std::size_t>(len_E), g_csr_registry.h_W_stage, &reg_W
         );
         if (h_W == nullptr) h_W = W;
-        const cudaError_t ret = cudaMemcpy(d_W, h_W, w_bytes, cudaMemcpyHostToDevice);
+        const cudaError_t ret = w_bytes ? cudaMemcpy(d_W, h_W, w_bytes, cudaMemcpyHostToDevice) : cudaSuccess;
         release_h2d_source(h_W, reg_W);
         if (ret != cudaSuccess) {
             return (ret == cudaErrorMemoryAllocation)

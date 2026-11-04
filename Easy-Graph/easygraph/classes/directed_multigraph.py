@@ -170,7 +170,7 @@ class MultiDiGraph(MultiGraph, DiGraph):
             key = self.new_edge_key(u, v)
         if v in self._adj[u]:
             keydict = self._adj[u][v]
-            datadict = keydict.get(key, self._new_edge_attr_dict())
+            datadict = keydict.get(key, self.edge_key_dict_factory())
             datadict.update(attr)
             keydict[key] = datadict
         else:

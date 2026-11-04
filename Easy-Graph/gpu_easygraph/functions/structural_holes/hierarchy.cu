@@ -75,7 +75,7 @@ static __device__ double mutual_weight(
 static __device__ double normalized_mutual_weight(
     const int* V,
     const int* E,
-    const double* W, 
+    const double* W,
     int u,
     int v,
     norm_t norm
@@ -127,9 +127,9 @@ static __device__ double directed_normalized_mutual_weight(
     const int* E,
     const int* in_V,
     const int* in_E,
-    const int* row, 
-    const int* col, 
-    const double* W, 
+    const int* row,
+    const int* col,
+    const double* W,
     int num_edges,
     int u,
     int v,
@@ -247,7 +247,7 @@ __global__ void hierarchy_directed_unweighted_sum_scale_precompute(
 }
 
 static __device__ double atomicAdd (
-    _OUT_ double* address, 
+    _OUT_ double* address,
     _IN_ double val
 )
 {
@@ -283,8 +283,8 @@ static __device__ double local_constraint(
 }
 
 __global__ void calculate_hierarchy(
-    const int* V, 
-    const int* E, 
+    const int* V,
+    const int* E,
     const double* W,
     int num_nodes,
     const int* node_mask,
@@ -296,7 +296,7 @@ __global__ void calculate_hierarchy(
 
     extern __shared__ double shared[];
 
-    int n = V[v + 1] - V[v]; 
+    int n = V[v + 1] - V[v];
     if (n <= 1) {
         if (threadIdx.x == 0) hierarchy_results[v] = 0.0;
         return;
@@ -347,7 +347,7 @@ __global__ void calculate_hierarchy(
         __syncthreads();
     }
 
-    if (threadIdx.x == 0) hierarchy_results[v] = shared[0]; 
+    if (threadIdx.x == 0) hierarchy_results[v] = shared[0];
 }
 
 static __device__ double directed_local_constraint(
@@ -355,8 +355,8 @@ static __device__ double directed_local_constraint(
     const int* E,
     const int* in_V,
     const int* in_E,
-    const int* row, 
-    const int* col, 
+    const int* row,
+    const int* col,
     const double* W,
     int num_edges,
     int u,
@@ -485,7 +485,7 @@ __global__ void directed_calculate_hierarchy(
     const int* in_E,
     const int* row,
     const int* col,
-    const double* W, 
+    const double* W,
     const int num_nodes,
     const int num_edges,
     const int* node_mask,
@@ -502,7 +502,7 @@ __global__ void directed_calculate_hierarchy(
 
     extern __shared__ double shared[];
 
-    int neighbor_count = V[v + 1] - V[v];  
+    int neighbor_count = V[v + 1] - V[v];
     for (int i = in_V[v]; i < in_V[v + 1]; i++) {
         int w = in_E[i];
         if (!has_out_edge(V, E, v, w)) neighbor_count++;
@@ -615,10 +615,10 @@ int cuda_hierarchy(
     if (kernel_seconds != nullptr) *kernel_seconds = 0.0;
     int min_grid_size = 0;
     int block_size = 0;
-    
+
     cudaOccupancyMaxPotentialBlockSize(&min_grid_size, &block_size, calculate_hierarchy, 0, 0);
     int grid_size = (num_nodes + block_size - 1) / block_size;
-    
+
     int* d_V = nullptr;
     int* d_E = nullptr;
     int* d_in_V = nullptr;
@@ -698,7 +698,7 @@ int cuda_hierarchy(
 
     if(is_directed){
         int block_size = 128;
-        int shared_memory_size = sizeof(double) * block_size; 
+        int shared_memory_size = sizeof(double) * block_size;
         if (is_unweighted) {
             int scale_grid = (num_nodes + block_size - 1) / block_size;
             hierarchy_directed_unweighted_sum_scale_precompute<<<scale_grid, block_size>>>(
@@ -727,8 +727,8 @@ int cuda_hierarchy(
         }
     }else{
         int block_size = 128;
-        int grid_size = num_nodes; 
-        int shared_memory_size = sizeof(double) * block_size; 
+        int grid_size = num_nodes;
+        int shared_memory_size = sizeof(double) * block_size;
         calculate_hierarchy<<<grid_size, block_size, shared_memory_size>>>(d_V, d_E, d_W, num_nodes, d_node_mask, d_hierarchy_results, is_unweighted);
     }
     EXIT_IF_CUDA_FAILED(cudaGetLastError());
@@ -768,6 +768,6 @@ exit:
         }
     }
 
-    return EG_ret; 
+    return EG_ret;
 }
 }

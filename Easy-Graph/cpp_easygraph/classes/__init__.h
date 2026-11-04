@@ -5,6 +5,7 @@
 #include "operation.h"
 
 py::object cpp_graph_from_easygraph(py::object G, bool directed);
+py::object cpp_egmgpu_freeze_graph_snapshot(py::object G);
 py::object cpp_graph_from_csr_files(
     const std::string& offsets_path,
     const std::string& indices_path,

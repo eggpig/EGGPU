@@ -1,85 +1,29 @@
 # EGGPU
 
-EGGPU adds native CUDA graph analytics to EasyGraph while retaining its Python
-API and reusing prepared graph data across compatible function calls.
+EGGPU integrates single-GPU and multi-GPU graph analysis with reusable execution state, version-aware maintenance, and memory-budget-aware retention. The maintained implementation is [`Easy-Graph/`](Easy-Graph/).
 
-This repository contains the implementation and correctness checks for
-*EGGPU: An End-to-End GPU Acceleration System for Efficient Large-Scale Network
-Analysis*, currently under review at VLDB.
+The current candidate adds a fixed capability policy to the source3 implementation. `Session.create` selects the single-GPU arena for static or journal workloads and native partition execution for immutable snapshots or multiple GPUs. Selection uses requested devices and state semantics; it does not use graph names, measured timings, or a fallback after failure. Use `Session.native` at every GPU count for fixed-backend scaling.
 
-## Requirements
+## Status and reproduction
 
-- Linux x86-64 and Python 3.10
-- CUDA Toolkit 12.8 and a compatible NVIDIA driver
-- An NVIDIA GPU; compute capabilities 8.0 and 8.6 have been tested
-
-## Build and check
-
-```bash
-conda env create -f environment.yml
-conda activate eggpu-artifact
-export EGGPU_CUDA_ROOT="$CONDA_PREFIX"
-bash scripts/build_eggpu.sh
-GPU=0 bash scripts/run_smoke.sh
+```sh
+python -B artifact/icde/tools/reproduce.py status
+python -B artifact/icde/tools/reproduce.py verify
+python -B artifact/icde/tools/reproduce.py build --build-dir /outside/new-build --cuda-root /your/cuda --architecture 89 --jobs 2
 ```
 
-The smoke test compares the 16 supported GPU functions with their EasyGraph
-CPU implementations on small deterministic graphs. It does not run performance
-experiments.
+The build command prints a plan. Add `--execute` to compile, with the target-machine NCCL include/library paths as required. Rebuilt binaries need their own correctness and numerical qualification. The capability-dispatch patch has passed 46 CPU checks, and the closure-LRU control passed a separate 10-test CPU suite; GPU qualification and the new seven-dataset performance campaign are recorded separately and are not inferred from the older source3 results.
 
-## Use
+The [artifact guide](artifact/icde/README.md) covers input preparation, supported execution modes, qualification, and available commands. E1–E6 are designed and registered; complete portable campaign runners and the new measurements remain pending. This checkpoint does not claim a completed paper reproducer or a measured 90% leading rate.
 
-Enable EGGPU once:
+## Paper and experiment organization
 
-```bash
-export EASYGRAPH_ENABLE_GPU=TRUE
-```
+- [Related Work narrative](artifact/icde/paper/RELATED_WORK_NARRATIVE_20261104_CN.md): assumptions and the two-part argument, ready for author editing.
+- [Experiment and presentation design](artifact/icde/paper/PAPER_EXPERIMENT_DESIGN_20261104_CN.md): E1–E6, matched baselines, visual roles, captions and setup.
+- [Baseline capability matrix](artifact/icde/baselines/README_CN.md): author implementations, applicable functions/resources, and qualification gaps.
+- [Seven frozen datasets](artifact/icde/datasets.json): US, EP, LJ, OR, IN, UK, TW, with source variants and deterministic normalization/weight/source rules.
+- [Figure slots](artifact/icde/paper/figures/README.md): reserved mechanism and framework artwork; final drawings will be supplied separately.
 
-Existing EasyGraph calls then use EGGPU when the function and its parameters
-are supported:
+Only current and previous successful presentation generations should be exposed as results. Formal repetitions remain individually traceable; identical immutable output arrays may share storage without deleting measurements. Historical VLDB evaluation source and notes retained elsewhere in this repository describe their original releases.
 
-```python
-import easygraph as eg
-
-graph = eg.DiGraph()
-graph.add_edges_from([(0, 1), (1, 2), (2, 0)])
-rank = eg.pagerank(graph)
-```
-
-Supported functions and inputs are listed in
-[`artifact/FUNCTION_SUPPORT.md`](artifact/FUNCTION_SUPPORT.md).
-
-## Repository contents
-
-- [`Easy-Graph/`](Easy-Graph/): Python API, C++ bindings, reusable graph data,
-  and CUDA implementations.
-- [`artifact/`](artifact/): architecture, supported functions, code map,
-  correctness checks, and dataset provenance.
-- [`scripts/`](scripts/): build and verification commands.
-- [`EG_Evaluation/`](EG_Evaluation/): retained evaluation, preprocessing, and
-  evidence assembly source from the paper workspace.
-
-Raw datasets, measurements, manuscript files, archived baseline checkouts,
-and machine-specific build products remain local and are excluded from Git.
-
-## Development status
-
-Use this repository's `main` branch as the single development entry point.
-The September 2026 consolidation retains the implementation published at
-`79d74a5`; it adds the evaluation source without changing algorithm behavior.
-The separate EGMGPU project is maintained independently.
-
-A clean A100 CUDA build passed all 39 EGGPU contract tests and all 16 small-graph
-CPU/GPU comparisons on September 22, 2026. General EasyGraph compatibility
-tests exposed failures that must be fixed before an upstream merge; see
-[`artifact/STATUS.md`](artifact/STATUS.md). These checks do not establish full
-EasyGraph test-suite compatibility or reproduce the large performance matrix.
-
-## Datasets
-
-The 13 benchmark graph datasets used to reproduce EGGPU results are available
-on Zenodo:
-[10.5281/zenodo.21746036](https://doi.org/10.5281/zenodo.21746036).
-
-See [`LICENSE`](LICENSE), [`NOTICE`](NOTICE), and
-[`CITATION.cff`](CITATION.cff).
+See [`LICENSE`](LICENSE), [`NOTICE`](NOTICE), and [`CITATION.cff`](CITATION.cff). The source publication includes no credentials, private host configuration, compiled libraries, or graph payloads.

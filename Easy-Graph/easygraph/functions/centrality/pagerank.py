@@ -10,7 +10,6 @@ __all__ = ["pagerank"]
 
 
 @not_implemented_for("multigraph")
-@hybrid("cpp_pagerank")
 def pagerank(G, alpha=0.85, weight=None, max_iter=None, tol=None):
     """
     Returns the PageRank value of each node in G.
@@ -42,6 +41,23 @@ def pagerank(G, alpha=0.85, weight=None, max_iter=None, tol=None):
         bulk-result path may return an immutable dense-backed mapping. Use
         ``dict(scores)`` when an independently mutable dictionary is required.
     """
+    if getattr(G, "cflag", False):
+        import cpp_easygraph
+        return cpp_easygraph.cpp_pagerank(
+            G, alpha=alpha, weight=weight,
+            max_iterator=500 if max_iter is None else int(max_iter),
+            threshold=1e-6 if tol is None else float(tol))
+
+    if not gpu_runtime_enabled() and max_iter is None and tol is None:
+        import numpy as np
+        if len(G) == 0:
+            return {}
+        M = google_matrix(G, alpha=alpha, weight=weight)
+        eigenvalues, eigenvectors = np.linalg.eig(M.T)
+        ind = np.argmax(eigenvalues)
+        largest = np.array(eigenvectors[:, ind]).flatten().real
+        return dict(zip(G, map(float, largest / float(largest.sum()))))
+
     if max_iter is None:
         max_iter_eff = max(1, int(os.environ.get("EASYGRAPH_CPU_PR_MAX_ITER", "200")))
     else:
@@ -86,9 +102,9 @@ def _pagerank_power_iteration(G, alpha=0.85, weight=None, max_iter=200, tol=1.0e
     )
     if not G.is_directed():
         if weight is None:
-            rows = [(u, v) for (u, v) in rows if u != v] + [(v, u) for (u, v) in rows if u != v]
+            rows = list(rows) + [(v, u) for (u, v) in rows if u != v]
         else:
-            rows = [(u, v, w) for (u, v, w) in rows if u != v] + [(v, u, w) for (u, v, w) in rows if u != v]
+            rows = list(rows) + [(v, u, w) for (u, v, w) in rows if u != v]
 
     if not rows:
         uniform = 1.0 / n

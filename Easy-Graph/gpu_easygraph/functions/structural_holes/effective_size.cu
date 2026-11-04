@@ -52,7 +52,7 @@ static __device__ double mutual_weight(
 static __device__ double normalized_mutual_weight(
     const int* V,
     const int* E,
-    const double* W, 
+    const double* W,
     int u,
     int v,
     norm_t norm
@@ -104,9 +104,9 @@ static __device__ double directed_normalized_mutual_weight(
     const int* E,
     const int* in_V,
     const int* in_E,
-    const int* row, 
-    const int* col, 
-    const double* W, 
+    const int* row,
+    const int* col,
+    const double* W,
     int num_edges,
     int u,
     int v,
@@ -374,7 +374,7 @@ __global__ void calculate_effective_size(
             double r = 0.0;
             for (int j = V[v]; j < V[v + 1]; j++) {
                 int w = E[j];
-                r += normalized_mutual_weight(V, E, W, u, w, SUM) * 
+                r += normalized_mutual_weight(V, E, W, u, w, SUM) *
                      normalized_mutual_weight(V, E, W, v, w, MAX);
             }
             redundancy_sum += 1 - r;
@@ -444,7 +444,7 @@ __global__ void directed_calculate_effective_size(
     const int* in_E,
     const int* row,
     const int* col,
-    const double* W, 
+    const double* W,
     const int num_nodes,
     const int num_edges,
     const int* node_mask,
@@ -731,10 +731,10 @@ int cuda_effective_size(
                 d_directed_sum_scale, d_directed_max_scale);
         }
     }else{
-        int block_size = 128; 
+        int block_size = 128;
         int grid_size = (num_nodes + NODES_PER_BLOCK - 1) / NODES_PER_BLOCK;
         calculate_effective_size<<<grid_size, block_size>>>(d_V, d_E, d_W, num_nodes, d_node_mask, d_effective_size_results, is_unweighted);
-        
+
     }
     EXIT_IF_CUDA_FAILED(cudaGetLastError());
     EXIT_IF_CUDA_FAILED(cudaEventRecord(kernel_stop, 0));

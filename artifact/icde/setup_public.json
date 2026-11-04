@@ -1,0 +1,21 @@
+{
+  "schema": "eggpu.public_setup/v1",
+  "observed_utc": "2026-11-04T12:49:49.958543+00:00",
+  "scope": "Selected public hardware/software fields from the read-only setup probe; not a per-run resource reservation.",
+  "gpu_count": 8,
+  "gpu_model": "NVIDIA GeForce RTX 4090 D",
+  "gpu_memory_mib": 24564.0,
+  "driver": "580.105.08",
+  "cpu_model": "Intel(R) Xeon(R) Platinum 8474C",
+  "cpu_sockets": 2,
+  "cores_per_socket": 48,
+  "threads_per_core": 2,
+  "logical_cpus": 192,
+  "physical_memory_kib": 1056479508,
+  "container_memory_limit_bytes": 687194767360,
+  "container_cpu_quota_equivalent": 128.0,
+  "os": "Ubuntu 22.04.5 LTS",
+  "nvcc": "13.0.88",
+  "topology_summary": "PCIe NODE/PHB and cross-NUMA SYS links; NVLink not shown in captured topology; route/P2P must be qualified per run.",
+  "baseline_runtime_versions": "Each compiled baseline must bind its own exact compiler, package and loaded runtime identities."
+}

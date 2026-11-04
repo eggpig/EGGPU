@@ -1,18 +1,15 @@
-import os
+from easygraph._optional import HAS_TORCH as _HAS_TORCH
+from easygraph._optional import optional_torch_modules as _torch_imports
 
-try:
-    from .common import compose_pipes
-    from .common import to_bool_tensor
-    from .common import to_long_tensor
-    from .common import to_tensor
-    from .normalize import min_max_scaler
-    from .normalize import norm_ft
-except:
-    if os.environ.get("EASYGRAPH_SHOW_OPTIONAL_IMPORT_WARNINGS", "").strip().upper() in {"1", "TRUE", "ON", "YES"}:
-        print(
-            "Warning raise in module:datapipe. Please install Pytorch before you use"
-            " functions related to nueral network"
-        )
+
+if _HAS_TORCH:
+    with _torch_imports():
+        from .common import compose_pipes
+        from .common import to_bool_tensor
+        from .common import to_long_tensor
+        from .common import to_tensor
+        from .normalize import min_max_scaler
+        from .normalize import norm_ft
 
 from .loader import load_from_json
 from .loader import load_from_pickle

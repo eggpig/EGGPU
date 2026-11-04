@@ -1,0 +1,26 @@
+{
+  "EG_framework.png": {
+    "reason": "Nontext upstream illustration, PDF, or sample data; outside source-only publication.",
+    "sha256": "10028c46015c3e67ecb703a2783719e58bd18e85682dc2fbec1d98929a0e3f80"
+  },
+  "cpp_easygraph/pybind11/docs/pybind11-logo.png": {
+    "reason": "Nontext upstream illustration, PDF, or sample data; outside source-only publication.",
+    "sha256": "3e62c3690f6ffdd7889d2859787435e337889f6a907dd10aef9a59aa658a9e4d"
+  },
+  "cpp_easygraph/pybind11/docs/pybind11_vs_boost_python1.png": {
+    "reason": "Nontext upstream illustration, PDF, or sample data; outside source-only publication.",
+    "sha256": "2845c0aa832cbb21ce38397fb850730610b786c988ea2ee8cb5db7130795f91a"
+  },
+  "cpp_easygraph/pybind11/docs/pybind11_vs_boost_python2.png": {
+    "reason": "Nontext upstream illustration, PDF, or sample data; outside source-only publication.",
+    "sha256": "724a5b94fe8b104996de044c7ea72a4c781e244a45976fc508162bf2e2b7b3f2"
+  },
+  "easygraph/datasets/samples/blogcatalog.mat": {
+    "reason": "Nontext upstream illustration, PDF, or sample data; outside source-only publication.",
+    "sha256": "d4f4fb89ce1ccd4b7e2a183386c000773cc9362cc61f1be5b246a6d9c259da8f"
+  },
+  "easygraph/functions/graph_embedding/n2v_citesee.pdf": {
+    "reason": "Nontext upstream illustration, PDF, or sample data; outside source-only publication.",
+    "sha256": "98fda1a29f410da1807580ab19e7fed836e9c188e573d1bd811b137697226020"
+  }
+}

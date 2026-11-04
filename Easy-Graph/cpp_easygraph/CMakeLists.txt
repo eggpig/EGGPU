@@ -6,6 +6,7 @@ file(GLOB SOURCES
     classes/*.cpp
     common/*.cpp
     functions/*/*.cpp
+    runtime/*.cpp
     cpp_easygraph.cpp
 )
 
@@ -16,6 +17,7 @@ option(EASYGRAPH_ENABLE_GPU "EASYGRAPH_ENABLE_GPU" OFF)
 
 if (EASYGRAPH_ENABLE_GPU)
     find_package(CUDAToolkit REQUIRED)
+    find_package(Threads REQUIRED)
 
     pybind11_add_module(cpp_easygraph
         ${SOURCES}
@@ -31,8 +33,12 @@ if (EASYGRAPH_ENABLE_GPU)
     )
 
     target_link_libraries(cpp_easygraph
-        PRIVATE CUDA::cudart_static CUDA::cublas CUDA::cusparse
+        PRIVATE CUDA::cudart_static CUDA::cublas CUDA::cusparse Threads::Threads
     )
+
+    if (EGMGPU_ENABLE_NCCL)
+        target_link_libraries(cpp_easygraph PRIVATE EGMGPU::NCCL)
+    endif()
 
 else()
     pybind11_add_module(cpp_easygraph

@@ -29,6 +29,11 @@ struct EgoEdgeWorkspace {
     PersistentDeviceBuffer d_indirect;
     PersistentDeviceBuffer d_aux;
     PersistentDeviceBuffer d_result;
+    PersistentDeviceBuffer d_lower_edge_index;
+    PersistentDeviceBuffer d_upper_edge_index;
+    PersistentDeviceBuffer d_selected_nodes;
+    PersistentDeviceBuffer d_compact_result;
+    PersistentDeviceBuffer d_mapping_error;
     PersistentPinnedBuffer h_result;
 
     std::uint64_t graph_id = 0;
@@ -36,11 +41,16 @@ struct EgoEdgeWorkspace {
     const int* host_E = nullptr;
     const int* host_forward_V = nullptr;
     const int* host_forward_E = nullptr;
+    const int* host_lower_V = nullptr;
+    const int* host_lower_E = nullptr;
+    const int* host_upper_V = nullptr;
+    const int* host_upper_E = nullptr;
     int num_nodes = -1;
     int num_entries = -1;
     int num_undirected_edges = -1;
     int device_id = -1;
     bool statistics_ready = false;
+    bool incidence_index_ready = false;
 
     void reset() {
         d_degree.reset();
@@ -51,16 +61,26 @@ struct EgoEdgeWorkspace {
         d_indirect.reset();
         d_aux.reset();
         d_result.reset();
+        d_lower_edge_index.reset();
+        d_upper_edge_index.reset();
+        d_selected_nodes.reset();
+        d_compact_result.reset();
+        d_mapping_error.reset();
         h_result.reset();
         graph_id = 0;
         host_V = nullptr;
         host_E = nullptr;
         host_forward_V = nullptr;
         host_forward_E = nullptr;
+        host_lower_V = nullptr;
+        host_lower_E = nullptr;
+        host_upper_V = nullptr;
+        host_upper_E = nullptr;
         num_nodes = -1;
         num_entries = -1;
         num_undirected_edges = -1;
         statistics_ready = false;
+        incidence_index_ready = false;
     }
 
     bool matches(
@@ -84,6 +104,19 @@ struct EgoEdgeWorkspace {
             num_entries == candidate_num_entries &&
             num_undirected_edges == candidate_num_undirected_edges &&
             device_id == candidate_device;
+    }
+
+    bool incidence_matches(
+        const int* candidate_lower_V,
+        const int* candidate_lower_E,
+        const int* candidate_upper_V,
+        const int* candidate_upper_E
+    ) const {
+        return incidence_index_ready &&
+            host_lower_V == candidate_lower_V &&
+            host_lower_E == candidate_lower_E &&
+            host_upper_V == candidate_upper_V &&
+            host_upper_E == candidate_upper_E;
     }
 };
 
@@ -230,6 +263,261 @@ __device__ __forceinline__ double warp_sum(double value) {
         value += __shfl_down_sync(0xffffffff, value, offset);
     }
     return value;
+}
+
+__device__ __forceinline__ bool projection_rank_less(
+    int source,
+    int target,
+    const int* __restrict__ degree
+) {
+    return degree[source] < degree[target] ||
+        (degree[source] == degree[target] && source < target);
+}
+
+__device__ __forceinline__ int find_forward_edge(
+    const int* __restrict__ offsets,
+    const int* __restrict__ indices,
+    const int* __restrict__ degree,
+    int first,
+    int second
+) {
+    const bool first_is_source = projection_rank_less(first, second, degree);
+    const int source = first_is_source ? first : second;
+    const int target = first_is_source ? second : first;
+    int lo = offsets[source];
+    int hi = offsets[source + 1] - 1;
+    while (lo <= hi) {
+        const int mid = lo + ((hi - lo) >> 1);
+        const int value = indices[mid];
+        if (value == target) return mid;
+        if (value < target) {
+            lo = mid + 1;
+        } else {
+            hi = mid - 1;
+        }
+    }
+    return -1;
+}
+
+__global__ void index_projection_incidence(
+    const int* __restrict__ incidence_offsets,
+    const int* __restrict__ incidence_indices,
+    const int* __restrict__ forward_offsets,
+    const int* __restrict__ forward_indices,
+    const int* __restrict__ degree,
+    int* __restrict__ forward_edge_index,
+    int* __restrict__ mapping_error,
+    int num_nodes
+) {
+    const int tid = blockIdx.x * blockDim.x + threadIdx.x;
+    const int stride = blockDim.x * gridDim.x;
+    for (int u = tid; u < num_nodes; u += stride) {
+        for (int edge = incidence_offsets[u];
+             edge < incidence_offsets[u + 1];
+             ++edge) {
+            const int mapped = find_forward_edge(
+                forward_offsets,
+                forward_indices,
+                degree,
+                u,
+                incidence_indices[edge]);
+            forward_edge_index[edge] = mapped;
+            if (mapped < 0) atomicExch(mapping_error, 1);
+        }
+    }
+}
+
+__device__ __forceinline__ double effective_size_edge_value(
+    int u,
+    int v,
+    int forward_edge,
+    const int* __restrict__ sum_scale,
+    const int* __restrict__ max_scale,
+    const unsigned long long* __restrict__ common_product
+) {
+    return 1.0 -
+        static_cast<double>(common_product[forward_edge]) /
+        static_cast<double>(sum_scale[u] * max_scale[v]);
+}
+
+__device__ __forceinline__ double constraint_edge_value(
+    int u,
+    int forward_edge,
+    const std::uint8_t* __restrict__ mutual,
+    const int* __restrict__ sum_scale,
+    const double* __restrict__ indirect
+) {
+    const double total =
+        static_cast<double>(mutual[forward_edge]) + indirect[forward_edge];
+    const double normalized = total / static_cast<double>(sum_scale[u]);
+    return normalized * normalized;
+}
+
+__global__ void reduce_selected_effective_size(
+    const int* __restrict__ lower_offsets,
+    const int* __restrict__ lower_indices,
+    const int* __restrict__ lower_edge_index,
+    const int* __restrict__ upper_offsets,
+    const int* __restrict__ upper_indices,
+    const int* __restrict__ upper_edge_index,
+    const int* __restrict__ selected_nodes,
+    const int* __restrict__ degree,
+    const int* __restrict__ sum_scale,
+    const int* __restrict__ max_scale,
+    const unsigned long long* __restrict__ common_product,
+    double* __restrict__ result,
+    int selected_count
+) {
+    const int global_thread = blockIdx.x * blockDim.x + threadIdx.x;
+    const int lane = threadIdx.x & 31;
+    const int warp_id = global_thread >> 5;
+    const int warp_count = (blockDim.x * gridDim.x) >> 5;
+    if (warp_count <= 0) return;
+
+    for (int selected = warp_id;
+         selected < selected_count;
+         selected += warp_count) {
+        const int u = selected_nodes[selected];
+        double local = 0.0;
+        for (int edge = lower_offsets[u] + lane;
+             edge < lower_offsets[u + 1];
+             edge += 32) {
+            local += effective_size_edge_value(
+                u,
+                lower_indices[edge],
+                lower_edge_index[edge],
+                sum_scale,
+                max_scale,
+                common_product);
+        }
+        for (int edge = upper_offsets[u] + lane;
+             edge < upper_offsets[u + 1];
+             edge += 32) {
+            local += effective_size_edge_value(
+                u,
+                upper_indices[edge],
+                upper_edge_index[edge],
+                sum_scale,
+                max_scale,
+                common_product);
+        }
+        local = warp_sum(local);
+        if (lane == 0) {
+            result[selected] = degree[u] == 0 ? nan("") : local;
+        }
+    }
+}
+
+__global__ void reduce_selected_constraint(
+    const int* __restrict__ lower_offsets,
+    const int* __restrict__ lower_edge_index,
+    const int* __restrict__ upper_offsets,
+    const int* __restrict__ upper_edge_index,
+    const int* __restrict__ selected_nodes,
+    const int* __restrict__ degree,
+    const std::uint8_t* __restrict__ mutual,
+    const int* __restrict__ sum_scale,
+    const double* __restrict__ indirect,
+    double* __restrict__ result,
+    int selected_count
+) {
+    const int global_thread = blockIdx.x * blockDim.x + threadIdx.x;
+    const int lane = threadIdx.x & 31;
+    const int warp_id = global_thread >> 5;
+    const int warp_count = (blockDim.x * gridDim.x) >> 5;
+    if (warp_count <= 0) return;
+
+    for (int selected = warp_id;
+         selected < selected_count;
+         selected += warp_count) {
+        const int u = selected_nodes[selected];
+        double local = 0.0;
+        for (int edge = lower_offsets[u] + lane;
+             edge < lower_offsets[u + 1];
+             edge += 32) {
+            local += constraint_edge_value(
+                u,
+                lower_edge_index[edge],
+                mutual,
+                sum_scale,
+                indirect);
+        }
+        for (int edge = upper_offsets[u] + lane;
+             edge < upper_offsets[u + 1];
+             edge += 32) {
+            local += constraint_edge_value(
+                u,
+                upper_edge_index[edge],
+                mutual,
+                sum_scale,
+                indirect);
+        }
+        local = warp_sum(local);
+        if (lane == 0) {
+            result[selected] = degree[u] == 0 ? nan("") : local;
+        }
+    }
+}
+
+__global__ void reduce_selected_hierarchy(
+    const int* __restrict__ lower_offsets,
+    const int* __restrict__ lower_edge_index,
+    const int* __restrict__ upper_offsets,
+    const int* __restrict__ upper_edge_index,
+    const int* __restrict__ selected_nodes,
+    const int* __restrict__ degree,
+    const std::uint8_t* __restrict__ mutual,
+    const int* __restrict__ sum_scale,
+    const double* __restrict__ indirect,
+    const double* __restrict__ total_constraint,
+    double* __restrict__ result,
+    int selected_count
+) {
+    const int global_thread = blockIdx.x * blockDim.x + threadIdx.x;
+    const int lane = threadIdx.x & 31;
+    const int warp_id = global_thread >> 5;
+    const int warp_count = (blockDim.x * gridDim.x) >> 5;
+    if (warp_count <= 0) return;
+
+    for (int selected = warp_id;
+         selected < selected_count;
+         selected += warp_count) {
+        const int u = selected_nodes[selected];
+        const double total = total_constraint[selected];
+        if (degree[u] <= 1 || total <= 0.0) {
+            if (lane == 0) result[selected] = 0.0;
+            continue;
+        }
+        double local = 0.0;
+        for (int edge = lower_offsets[u] + lane;
+             edge < lower_offsets[u + 1];
+             edge += 32) {
+            const double c = constraint_edge_value(
+                u,
+                lower_edge_index[edge],
+                mutual,
+                sum_scale,
+                indirect);
+            const double p = c / total;
+            local += p * log(p * static_cast<double>(degree[u])) /
+                log(static_cast<double>(degree[u]));
+        }
+        for (int edge = upper_offsets[u] + lane;
+             edge < upper_offsets[u + 1];
+             edge += 32) {
+            const double c = constraint_edge_value(
+                u,
+                upper_edge_index[edge],
+                mutual,
+                sum_scale,
+                indirect);
+            const double p = c / total;
+            local += p * log(p * static_cast<double>(degree[u])) /
+                log(static_cast<double>(degree[u]));
+        }
+        local = warp_sum(local);
+        if (lane == 0) result[selected] = local;
+    }
 }
 
 __global__ void reduce_effective_size(
@@ -397,7 +685,12 @@ static int run_ego_metric(
     std::uint64_t graph_id,
     EgoMetric metric,
     std::vector<double>& result,
-    double* kernel_seconds
+    double* kernel_seconds,
+    const std::vector<int>* lower_V,
+    const std::vector<int>* lower_E,
+    const std::vector<int>* upper_V,
+    const std::vector<int>* upper_E,
+    const std::vector<int>* selected_nodes
 ) {
     if (kernel_seconds != nullptr) *kernel_seconds = 0.0;
     if (V.empty() || forward_V.empty()) return EG_GPU_DEVICE_ERR;
@@ -417,6 +710,43 @@ static int run_ego_metric(
     const int num_nodes = static_cast<int>(n_size);
     const int num_entries = static_cast<int>(E.size());
     const int num_undirected_edges = static_cast<int>(forward_E.size());
+    const bool selected_mode = selected_nodes != nullptr;
+    if (selected_mode) {
+        if (lower_V == nullptr || lower_E == nullptr ||
+            upper_V == nullptr || upper_E == nullptr ||
+            lower_V->size() != V.size() || upper_V->size() != V.size() ||
+            lower_E->size() != forward_E.size() ||
+            upper_E->size() != forward_E.size() ||
+            lower_V->empty() || upper_V->empty() ||
+            lower_V->front() != 0 || upper_V->front() != 0 ||
+            lower_V->back() != num_undirected_edges ||
+            upper_V->back() != num_undirected_edges ||
+            selected_nodes->size() >
+                static_cast<std::size_t>(std::numeric_limits<int>::max())) {
+            return EG_GPU_DEVICE_ERR;
+        }
+        for (std::size_t i = 0; i < selected_nodes->size(); ++i) {
+            if ((*selected_nodes)[i] < 0 ||
+                (*selected_nodes)[i] >= num_nodes) {
+                return EG_GPU_DEVICE_ERR;
+            }
+        }
+        if (selected_nodes->empty()) {
+            result.clear();
+            return EG_GPU_SUCC;
+        }
+    }
+    if (num_undirected_edges == 0) {
+        const std::size_t output_size = selected_mode
+            ? selected_nodes->size()
+            : static_cast<std::size_t>(num_nodes);
+        result.assign(
+            output_size,
+            metric == EgoMetric::Hierarchy
+                ? 0.0
+                : std::numeric_limits<double>::quiet_NaN());
+        return EG_GPU_SUCC;
+    }
     int device_id = -1;
     int rc = status_from_cuda(cudaGetDevice(&device_id));
     if (rc != EG_GPU_SUCC) return rc;
@@ -447,6 +777,8 @@ static int run_ego_metric(
 
     DeviceCsrView directed_view;
     DeviceCsrView forward_view;
+    DeviceCsrView lower_view;
+    DeviceCsrView upper_view;
     rc = acquire_device_csr(
         V.data(), E.data(), nullptr, num_nodes, num_entries, false,
         &directed_view);
@@ -455,6 +787,16 @@ static int run_ego_metric(
         forward_V.data(), forward_E.data(), nullptr, num_nodes,
         num_undirected_edges, false, &forward_view);
     if (rc != EG_GPU_SUCC) return rc;
+    if (selected_mode) {
+        rc = acquire_device_csr(
+            lower_V->data(), lower_E->data(), nullptr, num_nodes,
+            num_undirected_edges, false, &lower_view);
+        if (rc != EG_GPU_SUCC) return rc;
+        rc = acquire_device_csr(
+            upper_V->data(), upper_E->data(), nullptr, num_nodes,
+            num_undirected_edges, false, &upper_view);
+        if (rc != EG_GPU_SUCC) return rc;
+    }
 
     const std::size_t node_int_bytes =
         static_cast<std::size_t>(num_nodes) * sizeof(int);
@@ -479,6 +821,36 @@ static int run_ego_metric(
              ensure_buffer(ws.d_aux, node_double_bytes),
              ensure_buffer(ws.d_result, node_double_bytes)}) {
         if (status != EG_GPU_SUCC) return status;
+    }
+
+    const int selected_count = selected_mode
+        ? static_cast<int>(selected_nodes->size())
+        : num_nodes;
+    const std::size_t selected_int_bytes =
+        static_cast<std::size_t>(selected_count) * sizeof(int);
+    const std::size_t selected_double_bytes =
+        static_cast<std::size_t>(selected_count) * sizeof(double);
+    if (selected_mode) {
+        for (const int status : {
+                 ensure_buffer(
+                     ws.d_lower_edge_index,
+                     static_cast<std::size_t>(num_undirected_edges) *
+                         sizeof(int)),
+                 ensure_buffer(
+                     ws.d_upper_edge_index,
+                     static_cast<std::size_t>(num_undirected_edges) *
+                         sizeof(int)),
+                 ensure_buffer(ws.d_selected_nodes, selected_int_bytes),
+                 ensure_buffer(ws.d_compact_result, selected_double_bytes),
+                 ensure_buffer(ws.d_mapping_error, sizeof(int))}) {
+            if (status != EG_GPU_SUCC) return status;
+        }
+        rc = status_from_cuda(cudaMemcpy(
+            ws.d_selected_nodes.data(),
+            selected_nodes->data(),
+            selected_int_bytes,
+            cudaMemcpyHostToDevice));
+        if (rc != EG_GPU_SUCC) return rc;
     }
 
     if (!cache_hit) {
@@ -554,61 +926,167 @@ static int run_ego_metric(
         if (status != cudaSuccess) return fail(status);
     }
 
-    status = cudaMemset(ws.d_result.data(), 0, node_double_bytes);
-    if (status != cudaSuccess) return fail(status);
-
-    if (metric == EgoMetric::EffectiveSize) {
-        reduce_effective_size<<<warp_grid, block>>>(
+    const bool incidence_cache_hit = selected_mode && ws.incidence_matches(
+        lower_V->data(),
+        lower_E->data(),
+        upper_V->data(),
+        upper_E->data());
+    if (selected_mode && !incidence_cache_hit) {
+        status = cudaMemset(ws.d_mapping_error.data(), 0, sizeof(int));
+        if (status != cudaSuccess) return fail(status);
+        index_projection_incidence<<<node_grid, block>>>(
+            lower_view.d_V,
+            lower_view.d_E,
             forward_view.d_V,
             forward_view.d_E,
-            ws.d_sum_scale.as<int>(),
-            ws.d_max_scale.as<int>(),
-            ws.d_common_product.as<unsigned long long>(),
-            ws.d_result.as<double>(),
-            num_nodes);
-    } else {
-        double* constraint_target = ws.d_result.as<double>();
-        if (metric == EgoMetric::Hierarchy) {
-            status = cudaMemset(ws.d_aux.data(), 0, node_double_bytes);
-            if (status != cudaSuccess) return fail(status);
-            constraint_target = ws.d_aux.as<double>();
-        }
-        reduce_constraint<<<warp_grid, block>>>(
-            forward_view.d_V,
-            forward_view.d_E,
-            ws.d_mutual.as<std::uint8_t>(),
-            ws.d_sum_scale.as<int>(),
-            ws.d_indirect.as<double>(),
-            constraint_target,
+            ws.d_degree.as<int>(),
+            ws.d_lower_edge_index.as<int>(),
+            ws.d_mapping_error.as<int>(),
             num_nodes);
         status = cudaGetLastError();
         if (status != cudaSuccess) return fail(status);
+        index_projection_incidence<<<node_grid, block>>>(
+            upper_view.d_V,
+            upper_view.d_E,
+            forward_view.d_V,
+            forward_view.d_E,
+            ws.d_degree.as<int>(),
+            ws.d_upper_edge_index.as<int>(),
+            ws.d_mapping_error.as<int>(),
+            num_nodes);
+        status = cudaGetLastError();
+        if (status != cudaSuccess) return fail(status);
+        int mapping_error = 0;
+        status = cudaMemcpy(
+            &mapping_error,
+            ws.d_mapping_error.data(),
+            sizeof(int),
+            cudaMemcpyDeviceToHost);
+        if (status != cudaSuccess) return fail(status);
+        if (mapping_error != 0) {
+            cudaEventDestroy(start);
+            cudaEventDestroy(stop);
+            return EG_GPU_DEVICE_ERR;
+        }
+    }
 
-        if (metric == EgoMetric::Hierarchy) {
-            reduce_hierarchy<<<warp_grid, block>>>(
-                forward_view.d_V,
-                forward_view.d_E,
+    if (selected_mode) {
+        const long long requested_selected_warp_grid =
+            (static_cast<long long>(selected_count) * 32LL + block - 1) /
+            block;
+        const int selected_warp_grid = static_cast<int>(
+            std::max(
+                1LL,
+                std::min(65535LL, requested_selected_warp_grid)));
+        if (metric == EgoMetric::EffectiveSize) {
+            reduce_selected_effective_size<<<selected_warp_grid, block>>>(
+                lower_view.d_V,
+                lower_view.d_E,
+                ws.d_lower_edge_index.as<int>(),
+                upper_view.d_V,
+                upper_view.d_E,
+                ws.d_upper_edge_index.as<int>(),
+                ws.d_selected_nodes.as<int>(),
+                ws.d_degree.as<int>(),
+                ws.d_sum_scale.as<int>(),
+                ws.d_max_scale.as<int>(),
+                ws.d_common_product.as<unsigned long long>(),
+                ws.d_compact_result.as<double>(),
+                selected_count);
+        } else {
+            double* constraint_target = ws.d_compact_result.as<double>();
+            if (metric == EgoMetric::Hierarchy) {
+                constraint_target = ws.d_aux.as<double>();
+            }
+            reduce_selected_constraint<<<selected_warp_grid, block>>>(
+                lower_view.d_V,
+                ws.d_lower_edge_index.as<int>(),
+                upper_view.d_V,
+                ws.d_upper_edge_index.as<int>(),
+                ws.d_selected_nodes.as<int>(),
                 ws.d_degree.as<int>(),
                 ws.d_mutual.as<std::uint8_t>(),
                 ws.d_sum_scale.as<int>(),
                 ws.d_indirect.as<double>(),
-                ws.d_aux.as<double>(),
+                constraint_target,
+                selected_count);
+            status = cudaGetLastError();
+            if (status != cudaSuccess) return fail(status);
+            if (metric == EgoMetric::Hierarchy) {
+                reduce_selected_hierarchy<<<selected_warp_grid, block>>>(
+                    lower_view.d_V,
+                    ws.d_lower_edge_index.as<int>(),
+                    upper_view.d_V,
+                    ws.d_upper_edge_index.as<int>(),
+                    ws.d_selected_nodes.as<int>(),
+                    ws.d_degree.as<int>(),
+                    ws.d_mutual.as<std::uint8_t>(),
+                    ws.d_sum_scale.as<int>(),
+                    ws.d_indirect.as<double>(),
+                    ws.d_aux.as<double>(),
+                    ws.d_compact_result.as<double>(),
+                    selected_count);
+            }
+        }
+        status = cudaGetLastError();
+        if (status != cudaSuccess) return fail(status);
+    } else {
+        status = cudaMemset(ws.d_result.data(), 0, node_double_bytes);
+        if (status != cudaSuccess) return fail(status);
+
+        if (metric == EgoMetric::EffectiveSize) {
+            reduce_effective_size<<<warp_grid, block>>>(
+                forward_view.d_V,
+                forward_view.d_E,
+                ws.d_sum_scale.as<int>(),
+                ws.d_max_scale.as<int>(),
+                ws.d_common_product.as<unsigned long long>(),
                 ws.d_result.as<double>(),
                 num_nodes);
-        }
-    }
-    status = cudaGetLastError();
-    if (status != cudaSuccess) return fail(status);
+        } else {
+            double* constraint_target = ws.d_result.as<double>();
+            if (metric == EgoMetric::Hierarchy) {
+                status = cudaMemset(ws.d_aux.data(), 0, node_double_bytes);
+                if (status != cudaSuccess) return fail(status);
+                constraint_target = ws.d_aux.as<double>();
+            }
+            reduce_constraint<<<warp_grid, block>>>(
+                forward_view.d_V,
+                forward_view.d_E,
+                ws.d_mutual.as<std::uint8_t>(),
+                ws.d_sum_scale.as<int>(),
+                ws.d_indirect.as<double>(),
+                constraint_target,
+                num_nodes);
+            status = cudaGetLastError();
+            if (status != cudaSuccess) return fail(status);
 
-    finalize_result<<<node_grid, block>>>(
-        directed_view.d_V,
-        ws.d_degree.as<int>(),
-        metric == EgoMetric::Hierarchy ? ws.d_aux.as<double>() : nullptr,
-        ws.d_result.as<double>(),
-        num_nodes,
-        static_cast<int>(metric));
-    status = cudaGetLastError();
-    if (status != cudaSuccess) return fail(status);
+            if (metric == EgoMetric::Hierarchy) {
+                reduce_hierarchy<<<warp_grid, block>>>(
+                    forward_view.d_V,
+                    forward_view.d_E,
+                    ws.d_degree.as<int>(),
+                    ws.d_mutual.as<std::uint8_t>(),
+                    ws.d_sum_scale.as<int>(),
+                    ws.d_indirect.as<double>(),
+                    ws.d_aux.as<double>(),
+                    ws.d_result.as<double>(),
+                    num_nodes);
+            }
+        }
+        status = cudaGetLastError();
+        if (status != cudaSuccess) return fail(status);
+
+        finalize_result<<<node_grid, block>>>(
+            directed_view.d_V,
+            ws.d_degree.as<int>(),
+            metric == EgoMetric::Hierarchy ? ws.d_aux.as<double>() : nullptr,
+            ws.d_result.as<double>(),
+            num_nodes,
+            static_cast<int>(metric));
+        status = cudaGetLastError();
+        if (status != cudaSuccess) return fail(status);
+    }
 
     status = cudaEventRecord(stop, 0);
     if (status != cudaSuccess) return fail(status);
@@ -622,28 +1100,42 @@ static int run_ego_metric(
         *kernel_seconds = static_cast<double>(elapsed_ms) * 1e-3;
     }
     if (!cache_hit) ws.statistics_ready = true;
+    if (selected_mode && !incidence_cache_hit) {
+        ws.host_lower_V = lower_V->data();
+        ws.host_lower_E = lower_E->data();
+        ws.host_upper_V = upper_V->data();
+        ws.host_upper_E = upper_E->data();
+        ws.incidence_index_ready = true;
+    }
 
     cudaEventDestroy(start);
     cudaEventDestroy(stop);
 
-    result.resize(static_cast<std::size_t>(num_nodes));
-    const int pinned_rc = ws.h_result.ensure_bytes(node_double_bytes);
+    const std::size_t output_size = selected_mode
+        ? static_cast<std::size_t>(selected_count)
+        : static_cast<std::size_t>(num_nodes);
+    const std::size_t output_bytes = output_size * sizeof(double);
+    const void* device_result = selected_mode
+        ? ws.d_compact_result.data()
+        : ws.d_result.data();
+    result.resize(output_size);
+    const int pinned_rc = ws.h_result.ensure_bytes(output_bytes);
     if (pinned_rc == EG_GPU_SUCC) {
         status = cudaMemcpy(
             ws.h_result.data(),
-            ws.d_result.data(),
-            node_double_bytes,
+            device_result,
+            output_bytes,
             cudaMemcpyDeviceToHost);
         if (status != cudaSuccess) return status_from_cuda(status);
         std::copy(
             ws.h_result.as<double>(),
-            ws.h_result.as<double>() + num_nodes,
+            ws.h_result.as<double>() + output_size,
             result.begin());
     } else {
         status = cudaMemcpy(
             result.data(),
-            ws.d_result.data(),
-            node_double_bytes,
+            device_result,
+            output_bytes,
             cudaMemcpyDeviceToHost);
         if (status != cudaSuccess) return status_from_cuda(status);
     }
@@ -664,7 +1156,8 @@ int effective_size_ego_edge_statistics(
 ) {
     return run_ego_metric(
         V, E, forward_V, forward_E, degree, graph_id,
-        EgoMetric::EffectiveSize, result, kernel_seconds);
+        EgoMetric::EffectiveSize, result, kernel_seconds,
+        nullptr, nullptr, nullptr, nullptr, nullptr);
 }
 
 int constraint_ego_edge_statistics(
@@ -679,7 +1172,8 @@ int constraint_ego_edge_statistics(
 ) {
     return run_ego_metric(
         V, E, forward_V, forward_E, degree, graph_id,
-        EgoMetric::Constraint, result, kernel_seconds);
+        EgoMetric::Constraint, result, kernel_seconds,
+        nullptr, nullptr, nullptr, nullptr, nullptr);
 }
 
 int hierarchy_ego_edge_statistics(
@@ -694,7 +1188,71 @@ int hierarchy_ego_edge_statistics(
 ) {
     return run_ego_metric(
         V, E, forward_V, forward_E, degree, graph_id,
-        EgoMetric::Hierarchy, result, kernel_seconds);
+        EgoMetric::Hierarchy, result, kernel_seconds,
+        nullptr, nullptr, nullptr, nullptr, nullptr);
+}
+
+int effective_size_ego_edge_statistics_subset(
+    const std::vector<int>& V,
+    const std::vector<int>& E,
+    const std::vector<int>& lower_V,
+    const std::vector<int>& lower_E,
+    const std::vector<int>& upper_V,
+    const std::vector<int>& upper_E,
+    const std::vector<int>& forward_V,
+    const std::vector<int>& forward_E,
+    const std::vector<int>& degree,
+    std::uint64_t graph_id,
+    const std::vector<int>& selected_nodes,
+    std::vector<double>& result,
+    double* kernel_seconds
+) {
+    return run_ego_metric(
+        V, E, forward_V, forward_E, degree, graph_id,
+        EgoMetric::EffectiveSize, result, kernel_seconds,
+        &lower_V, &lower_E, &upper_V, &upper_E, &selected_nodes);
+}
+
+int constraint_ego_edge_statistics_subset(
+    const std::vector<int>& V,
+    const std::vector<int>& E,
+    const std::vector<int>& lower_V,
+    const std::vector<int>& lower_E,
+    const std::vector<int>& upper_V,
+    const std::vector<int>& upper_E,
+    const std::vector<int>& forward_V,
+    const std::vector<int>& forward_E,
+    const std::vector<int>& degree,
+    std::uint64_t graph_id,
+    const std::vector<int>& selected_nodes,
+    std::vector<double>& result,
+    double* kernel_seconds
+) {
+    return run_ego_metric(
+        V, E, forward_V, forward_E, degree, graph_id,
+        EgoMetric::Constraint, result, kernel_seconds,
+        &lower_V, &lower_E, &upper_V, &upper_E, &selected_nodes);
+}
+
+int hierarchy_ego_edge_statistics_subset(
+    const std::vector<int>& V,
+    const std::vector<int>& E,
+    const std::vector<int>& lower_V,
+    const std::vector<int>& lower_E,
+    const std::vector<int>& upper_V,
+    const std::vector<int>& upper_E,
+    const std::vector<int>& forward_V,
+    const std::vector<int>& forward_E,
+    const std::vector<int>& degree,
+    std::uint64_t graph_id,
+    const std::vector<int>& selected_nodes,
+    std::vector<double>& result,
+    double* kernel_seconds
+) {
+    return run_ego_metric(
+        V, E, forward_V, forward_E, degree, graph_id,
+        EgoMetric::Hierarchy, result, kernel_seconds,
+        &lower_V, &lower_E, &upper_V, &upper_E, &selected_nodes);
 }
 
 } // namespace gpu_easygraph

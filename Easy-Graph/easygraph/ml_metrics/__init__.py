@@ -1,22 +1,19 @@
-import os
+from typing import Dict
+from typing import List
+from typing import Union
 
-try:
-    from typing import Dict
-    from typing import List
-    from typing import Union
+from easygraph._global import AUTHOR_EMAIL
+from easygraph._optional import HAS_TORCH as _HAS_TORCH
+from easygraph._optional import optional_torch_modules as _torch_imports
+from easygraph._optional import require_torch as _require_torch
 
-    from easygraph._global import AUTHOR_EMAIL
 
-    from .base import BaseEvaluator
-    from .classification import VertexClassificationEvaluator
-    from .classification import available_classification_metrics
-    from .hypergraphs import HypergraphVertexClassificationEvaluator
-except:
-    if os.environ.get("EASYGRAPH_SHOW_OPTIONAL_IMPORT_WARNINGS", "").strip().upper() in {"1", "TRUE", "ON", "YES"}:
-        print(
-            "Warning raise in module:ml_metrics. Please install Pytorch before you use"
-            " functions related to nueral network"
-        )
+if _HAS_TORCH:
+    with _torch_imports():
+        from .base import BaseEvaluator
+        from .classification import VertexClassificationEvaluator
+        from .classification import available_classification_metrics
+        from .hypergraphs import HypergraphVertexClassificationEvaluator
 
 
 def build_evaluator(
@@ -31,6 +28,7 @@ def build_evaluator(
         ``metric_configs`` (``List[Union[str, Dict[str, dict]]]``): The list of metric names.
         ``validate_index`` (``int``): The specified metric index used for validation. Defaults to ``0``.
     """
+    _require_torch("Machine-learning evaluators")
     if task == "hypergraph_vertex_classification":
         return HypergraphVertexClassificationEvaluator(metric_configs, validate_index)
     else:

@@ -16,6 +16,7 @@ __all__ = [
 ]
 
 
+@hybrid("cpp_boruvka_mst_edges")
 def boruvka_mst_edges(G, minimum=True, weight="weight", data=True, ignore_nan=False):
     """Iterate over edges of a Borůvka's algorithm min/max spanning tree.
 
@@ -440,6 +441,8 @@ def minimum_spanning_tree(G, weight="weight", algorithm="kruskal", ignore_nan=Fa
         minimum_spanning_edges(G, algorithm, weight, data=True, ignore_nan=ignore_nan)
     )
     T = G.__class__()  # Same graph class as G
+    if hasattr(G, "_copy_edge_attr_factory_to"):
+        G._copy_edge_attr_factory_to(T)
     for i in G.nodes:
         T.add_node(i)
     for i in edges:
@@ -503,6 +506,8 @@ def maximum_spanning_tree(G, weight="weight", algorithm="kruskal", ignore_nan=Fa
         maximum_spanning_edges(G, algorithm, weight, data=True, ignore_nan=ignore_nan)
     )
     T = G.__class__()  # Same graph class as G
+    if hasattr(G, "_copy_edge_attr_factory_to"):
+        G._copy_edge_attr_factory_to(T)
     for i in G.nodes:
         T.add_node(i)
     for i in edges:
@@ -693,10 +698,14 @@ class UnionFind:
 def _populate_mst_tree_fast(T, G, edges, weight="weight"):
     """Populate an EasyGraph MST result without per-edge public API overhead."""
     try:
+        # The undirected bulk layout does not maintain DiGraph._pred. Its
+        # existing public-add fallback maintains both directed indices.
+        if T.is_directed():
+            return False
         node_index = getattr(T, "_node_index", None)
         inner_factory = T.adjlist_inner_dict_factory
         node_factory = T.node_attr_dict_factory
-        edge_factory = T.edge_attr_dict_factory
+        new_edge_attrs = T._new_edge_attr_dict
         clear_cache = T._clear_cache
     except Exception:
         return False
@@ -715,9 +724,7 @@ def _populate_mst_tree_fast(T, G, edges, weight="weight"):
         adj = T._adj
 
         for u, v, w in edges:
-            datadict = {weight: w} if edge_factory is dict else edge_factory()
-            if datadict.get(weight) != w:
-                datadict[weight] = w
+            datadict = new_edge_attrs({weight: w})
             adj[u][v] = datadict
             adj[v][u] = datadict
 
@@ -740,6 +747,8 @@ def _minimum_spanning_tree_gpu_runtime_dispatch(G, weight="weight"):
                 return tree
             edges = eggpu_backend.minimum_spanning_tree_edges(G, weight=weight)
             T = G.__class__()
+            if hasattr(G, "_copy_edge_attr_factory_to"):
+                G._copy_edge_attr_factory_to(T)
             if not _populate_mst_tree_fast(T, G, edges, weight=weight):
                 if edges:
                     T.add_weighted_edges_from(edges, weight=weight)

@@ -69,7 +69,7 @@ weight_t directed_mutual_weight(DiGraph& G, node_t u, node_t v, std::string weig
 weight_t normalized_mutual_weight(Graph& G, node_t u, node_t v, std::string weight, norm_t norm, rec_type& nmw_rec) {
     std::pair<node_t, node_t> edge = std::make_pair(u, v);
     if (nmw_rec.count(edge)) return nmw_rec[edge];
-    
+
     weight_t scale = 0;
     for (auto& w : G.adj[u]) {
         weight_t temp_weight = mutual_weight(G, u, w.first, weight);
@@ -123,7 +123,7 @@ weight_t directed_local_constraint(DiGraph& G, node_t u, node_t v, std::string w
     std::unordered_set<node_t> neighbors;
     for (const auto& n : G.adj[v]) neighbors.insert(n.first);
     for (const auto& n : G.pred[v]) neighbors.insert(n.first);
-    
+
     for (const auto& n : neighbors) {
         if (n == v) continue;
         indirect += directed_normalized_mutual_weight(G, u, n, weight, sum, sum_nmw_rec) *
@@ -135,7 +135,7 @@ weight_t directed_local_constraint(DiGraph& G, node_t u, node_t v, std::string w
 }
 
 void preprocess_graph_for_constraint(
-    Graph& G, 
+    Graph& G,
     std::string weight_key,
     std::unordered_map<node_t, std::unordered_map<node_t, double>>& weighted_adj,
     std::unordered_map<node_t, double>& strength
@@ -164,7 +164,7 @@ py::object invoke_cpp_constraint(py::object G, py::object nodes, py::object weig
     }
     py::list nodes_list = py::list(nodes);
     int nodes_list_len = py::len(nodes_list);
-    
+
     Graph& G_ref = G.cast<Graph&>();
     std::vector<node_t> node_ids(nodes_list_len);
     for (int i = 0; i < nodes_list_len; i++) {
@@ -182,7 +182,7 @@ py::object invoke_cpp_constraint(py::object G, py::object nodes, py::object weig
         #pragma omp parallel for schedule(dynamic)
         for (int i = 0; i < nodes_list_len; i++) {
             node_t u = node_ids[i];
-            
+
             auto str_it = strength.find(u);
             if (str_it == strength.end() || str_it->second == 0.0) {
                 constraint_results[i] = Py_NAN;
@@ -202,7 +202,7 @@ py::object invoke_cpp_constraint(py::object G, py::object nodes, py::object weig
                 node_t j = neighbor.first;
                 double w_uj = neighbor.second;
                 double p_uj = w_uj / u_strength;
-                
+
                 contrib[j] += p_uj;
             }
 
@@ -340,7 +340,7 @@ inline weight_t compute_directed_mutual_weight(const DiGraph& G, node_t u, node_
 }
 
 std::vector<double> compute_redundancy_core(py::object G_obj, const std::vector<node_t>& target_nodes, const std::string& weight_key, bool is_directed) {
-    
+
     // Cast to C++ objects once to avoid Python API overhead
     const Graph* G_ptr = nullptr;
     const DiGraph* DiG_ptr = nullptr;
@@ -369,7 +369,7 @@ std::vector<double> compute_redundancy_core(py::object G_obj, const std::vector<
     // Deduplicate nodes
     std::sort(all_nodes_vec.begin(), all_nodes_vec.end());
     all_nodes_vec.erase(std::unique(all_nodes_vec.begin(), all_nodes_vec.end()), all_nodes_vec.end());
-    
+
     // Ensure vector size covers target nodes
     if (!target_nodes.empty()) {
         node_t max_target = *std::max_element(target_nodes.begin(), target_nodes.end());
@@ -421,7 +421,7 @@ std::vector<double> compute_redundancy_core(py::object G_obj, const std::vector<
         #pragma omp parallel for schedule(dynamic)
         for (int i = 0; i < (int)target_nodes.size(); i++) {
             node_t v_id = target_nodes[i];
-            
+
             if (G_ptr->adj.find(v_id) == G_ptr->adj.end() || G_ptr->adj.at(v_id).empty()) {
                 results[i] = NAN;
                 continue;
@@ -461,9 +461,9 @@ std::vector<double> compute_redundancy_core(py::object G_obj, const std::vector<
         for (int i = 0; i < target_nodes.size(); i++) {
             node_t v_id = target_nodes[i];
 
-            bool has_neighbors = (DiG_ptr->adj.count(v_id) && !DiG_ptr->adj.at(v_id).empty()) || 
+            bool has_neighbors = (DiG_ptr->adj.count(v_id) && !DiG_ptr->adj.at(v_id).empty()) ||
                                  (DiG_ptr->pred.count(v_id) && !DiG_ptr->pred.at(v_id).empty());
-            
+
             if (!has_neighbors) {
                 results[i] = NAN;
                 continue;
@@ -493,7 +493,7 @@ std::vector<double> compute_redundancy_core(py::object G_obj, const std::vector<
                     for (const auto& w_id : common_candidates) {
                         if (u_id == w_id) continue;
                         weight_t mw_uw = compute_directed_mutual_weight(*DiG_ptr, u_id, w_id, weight_key);
-                        if (mw_uw == 0) continue; 
+                        if (mw_uw == 0) continue;
                         weight_t mw_vw = compute_directed_mutual_weight(*DiG_ptr, v_id, w_id, weight_key);
 
                         double p_iq = (scale_v_sum > 0) ? (mw_vw / scale_v_sum) : 0;
@@ -514,7 +514,7 @@ std::vector<double> compute_redundancy_core(py::object G_obj, const std::vector<
                     for (const auto& w_id : common_candidates) {
                         if (u_id == w_id) continue;
                         weight_t mw_uw = compute_directed_mutual_weight(*DiG_ptr, u_id, w_id, weight_key);
-                        if (mw_uw == 0) continue; 
+                        if (mw_uw == 0) continue;
                         weight_t mw_vw = compute_directed_mutual_weight(*DiG_ptr, v_id, w_id, weight_key);
 
                         double p_iq = (scale_v_sum > 0) ? (mw_vw / scale_v_sum) : 0;
@@ -534,14 +534,14 @@ std::vector<double> compute_redundancy_core(py::object G_obj, const std::vector<
 py::object invoke_cpp_effective_size(py::object G, py::object nodes, py::object weight) {
     std::string weight_key = weight.is_none() ? "" : weight.cast<std::string>();
     bool is_directed = G.attr("is_directed")().cast<bool>();
-    
+
     if (nodes.is_none()) nodes = G.attr("nodes");
     py::list nodes_list = py::list(nodes);
     int len = py::len(nodes_list);
     std::vector<node_t> target_ids(len);
 
     if (py::hasattr(G, "node_to_id")) {
-        py::object node_to_id = G.attr("node_to_id"); 
+        py::object node_to_id = G.attr("node_to_id");
         for (int i = 0; i < len; i++) {
             target_ids[i] = node_to_id[nodes_list[i]].cast<node_t>();
         }
@@ -552,7 +552,7 @@ py::object invoke_cpp_effective_size(py::object G, py::object nodes, py::object 
     }
 
     std::vector<double> results = compute_redundancy_core(G, target_ids, weight_key, is_directed);
-    
+
     py::array::ShapeContainer ret_shape{ (long)results.size() };
     return py::array_t<double>(ret_shape, results.data());
 }
@@ -713,7 +713,7 @@ static py::object invoke_gpu_efficiency(py::object G, py::object nodes, py::obje
 py::object invoke_cpp_efficiency(py::object G, py::object nodes, py::object weight, py::object n_workers) {
     std::string weight_key = weight.is_none() ? "" : weight.cast<std::string>();
     bool is_directed = G.attr("is_directed")().cast<bool>();
-    
+
     // Parsing Nodes
     if (nodes.is_none()) nodes = G.attr("nodes");
     py::list nodes_list = py::list(nodes);
@@ -721,7 +721,7 @@ py::object invoke_cpp_efficiency(py::object G, py::object nodes, py::object weig
     std::vector<node_t> target_ids(len);
 
     if (py::hasattr(G, "node_to_id")) {
-        py::object node_to_id = G.attr("node_to_id"); 
+        py::object node_to_id = G.attr("node_to_id");
         for (int i = 0; i < len; i++) {
             target_ids[i] = node_to_id[nodes_list[i]].cast<node_t>();
         }
@@ -745,7 +745,7 @@ py::object invoke_cpp_efficiency(py::object G, py::object nodes, py::object weig
     #pragma omp parallel for schedule(static)
     for (int i = 0; i < len; ++i) {
         double es = eff_sizes[i];
-        
+
         // Propagate NAN from core
         if (std::isnan(es)) {
             efficiency_results[i] = NAN;
@@ -765,7 +765,7 @@ py::object invoke_cpp_efficiency(py::object G, py::object nodes, py::object weig
         if (degree > 0) {
             efficiency_results[i] = es / degree;
         } else {
-            efficiency_results[i] = NAN; 
+            efficiency_results[i] = NAN;
         }
     }
 

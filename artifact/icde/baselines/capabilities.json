@@ -1,0 +1,362 @@
+{
+  "schema": "eggpu.public_baseline_capabilities/v1",
+  "date": "2026-11-04",
+  "datasets": [
+    "US",
+    "EP",
+    "LJ",
+    "OR",
+    "IN",
+    "UK",
+    "TW"
+  ],
+  "capability_corrections": [
+    "CGgraph legacy author WCC and PR already implemented; V1.5 two-function limitation is not a system-wide absence",
+    "Grapin static BFS, SSSP, CC and FP32 PR all have historical complete cells",
+    "C2graph public tree also contains PPR and Adsorption, distinct from current SSSP common contract",
+    "SYgraph fixed source has BFS,SSSP,CC,BC,TC but no ready PageRank implementation",
+    "cuGraph SG global TC now has historical complete cells; older coverage generator warning that it is unmeasured is outdated",
+    "Gunrock and igraph strict-PR timing exists but common-table posterior numerical evidence remains incomplete",
+    "GUM official non-stealing HostFragment SSSP is a measured fallback distinct from work-stealing route",
+    "KGraph and GRACE source code is public; do not mark no-code based on undeployed status"
+  ],
+  "prohibited_inferences": [
+    "Historical COMPLETE is not new seven-graph qualification",
+    "No callable adapter is not lack of author implementation",
+    "GPU-count capability is not observed scalability",
+    "Different PR/PPR semantics or source scopes cannot share a speedup denominator"
+  ],
+  "baseline_change_policy": {
+    "allowed": [
+      "input/output adapters",
+      "current compiler compatibility",
+      "minimum correctness repairs",
+      "same numerical contract calibration",
+      "official documented parameters and native persistent state"
+    ],
+    "disallowed": [
+      "new optimized baseline kernels",
+      "disabling author memoization/cache/stealing without an explicit applicability reason",
+      "per-dataset fastest historical version selection",
+      "mistaking timeout/OOM/quality missing for unsupported API"
+    ]
+  },
+  "new_campaign_status": "CURRENT_RELEASE_QUALIFICATION_AND_TIMINGS_PENDING",
+  "packaged_baseline_runners": false,
+  "systems": [
+    {
+      "id": "cugraph26.02",
+      "upstream": "https://github.com/rapidsai/cugraph",
+      "version": "26.2.0; exact deployed package/DSO identities require the current-run receipt",
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "functions_in_portable_runner": [
+        "bfs",
+        "sssp",
+        "wcc",
+        "pr"
+      ],
+      "current_adapters": [
+        "bfs",
+        "sssp",
+        "wcc",
+        "pr",
+        "weighted_pr",
+        "lcc via per-vertex triangle_count",
+        "kcore",
+        "fixed32 BC",
+        "all-source BC",
+        "MST",
+        "SCC"
+      ],
+      "scope_status": "EXISTING_ADAPTER_REQUIRES_FROZEN_7_GRAPH_REQUALIFICATION"
+    },
+    {
+      "id": "gunrock_essentials2.1",
+      "upstream": "https://github.com/gunrock/gunrock",
+      "commit": "748f79e66cc26762cd3f99422b028e742a737bde",
+      "gpu_counts": [
+        1
+      ],
+      "functions_in_portable_runner": [
+        "bfs",
+        "sssp",
+        "pr"
+      ],
+      "current_adapters": [
+        "bfs",
+        "sssp",
+        "pr",
+        "fixed32 BC",
+        "all-source BC",
+        "kcore",
+        "per-vertex TC-derived LCC",
+        "global TC",
+        "complete MST forest"
+      ],
+      "scope_status": "EXISTING_ADAPTER_REQUIRES_FROZEN_7_GRAPH_REQUALIFICATION"
+    },
+    {
+      "id": "gunrock_legacy0.5.1_CC",
+      "upstream": "https://github.com/gunrock/gunrock",
+      "commit": "0c9a96dd64ddeecae9208644631983fc889b32b4",
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "functions_in_portable_runner": [
+        "wcc"
+      ],
+      "scope_status": "EXISTING_ADAPTER_REQUIRES_FROZEN_7_GRAPH_REQUALIFICATION"
+    },
+    {
+      "id": "igraph1.0",
+      "upstream": "https://igraph.org/python/",
+      "version": "1.0.0",
+      "gpu_counts": [
+        0
+      ],
+      "functions_in_portable_runner": [
+        "bfs",
+        "sssp",
+        "wcc",
+        "pr"
+      ],
+      "current_adapters": [
+        "bfs",
+        "sssp",
+        "wcc",
+        "pr",
+        "weighted_pr",
+        "lcc",
+        "kcore",
+        "fixed32 BC",
+        "all-source BC",
+        "all-source WF closeness",
+        "constraint",
+        "SCC",
+        "MST"
+      ],
+      "scope_status": "EXISTING_ADAPTER_REQUIRES_FROZEN_7_GRAPH_REQUALIFICATION"
+    },
+    {
+      "id": "CGgraph_V1.5",
+      "upstream": "https://github.com/PengBo410/CGgraph-V1.5",
+      "commit": "5945816f4ccf63fce8d13eac84c09bbbb4c7e58a",
+      "gpu_counts": [
+        1
+      ],
+      "functions_in_portable_runner": [
+        "bfs",
+        "sssp"
+      ],
+      "current_adapters": [
+        "modern V1.5 BFS/SSSP",
+        "legacy author WCC",
+        "legacy author PR with explicit FP64 contract adaptation"
+      ],
+      "cpu_threads": 16,
+      "scope_status": "EXISTING_ADAPTER_REQUIRES_FROZEN_7_GRAPH_REQUALIFICATION",
+      "legacy_author_source": {
+        "commit": "3b23a7d7384fab283952c84ae60e491d58e50ccd",
+        "used_for": [
+          "WCC",
+          "PR"
+        ],
+        "disclosure": "Older complete author CPU/GPU hybrid source, separate from the newer trimmed V1.5 BFS/SSSP source. PR is a documented FP64/dangling/convergence contract adaptation."
+      }
+    },
+    {
+      "id": "Grapin",
+      "upstream": "https://github.com/Yongze-zzz/C-GpuStreamGraph",
+      "commit": "7ffcb2949837ad9f05d5d77afe54c698e2887479",
+      "gpu_counts": [
+        1
+      ],
+      "functions_in_portable_runner": [
+        "dynamic_sssp"
+      ],
+      "cpu_threads": 4,
+      "scope_status": "EXISTING_ADAPTER_REQUIRES_FROZEN_7_GRAPH_REQUALIFICATION"
+    },
+    {
+      "id": "GUM",
+      "upstream": "https://github.com/alibaba/libgrape-lite/tree/gum",
+      "commit": "267ffdd345cc65e7b5541fabd9e94c70e2fd8141",
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "functions_in_portable_runner": [
+        "bfs",
+        "sssp",
+        "wcc",
+        "pr"
+      ],
+      "current_adapters": [
+        "BFS",
+        "PR",
+        "WCC",
+        "SSSP"
+      ],
+      "cpu_threads": 16,
+      "scope_status": "EXISTING_ADAPTER_REQUIRES_FROZEN_7_GRAPH_REQUALIFICATION"
+    },
+    {
+      "id": "SYgraph",
+      "upstream": "https://github.com/unisa-hpc/SYgraph",
+      "commit": "71dcb56aed0cd43fefa5752a552e0a10cb69a758",
+      "gpu_counts": [
+        1
+      ],
+      "functions_in_portable_runner": [
+        "bfs",
+        "sssp"
+      ],
+      "current_adapters": [
+        "BFS",
+        "SSSP",
+        "CC",
+        "fixed32 BC",
+        "global TC"
+      ],
+      "scope_status": "EXISTING_ADAPTER_REQUIRES_FROZEN_7_GRAPH_REQUALIFICATION"
+    },
+    {
+      "id": "C2graph_P_corrected",
+      "upstream": "https://github.com/lihuaibei7951/C-2graph",
+      "commit": "97af1ebd935a03f5adc180935644e786a624bdbe",
+      "gpu_counts": [
+        1
+      ],
+      "functions_in_portable_runner": [
+        "sssp"
+      ],
+      "current_adapters": [
+        "P standalone SSSP",
+        "PM two-buffer CPU/GPU distinct-source pipeline",
+        "same-source PM execution control (separate panel)"
+      ],
+      "scope_status": "EXISTING_ADAPTER_REQUIRES_FROZEN_7_GRAPH_REQUALIFICATION"
+    },
+    {
+      "id": "HyTGraph",
+      "upstream": "https://github.com/iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "gpu_counts": [
+        1
+      ],
+      "native_functions": [
+        "bfs",
+        "sssp",
+        "cc",
+        "pr"
+      ],
+      "additional_source_only": [
+        "bc"
+      ],
+      "scope_status": "FOUR_CORE_BUILD_PASS_GPU_QUALIFICATION_PENDING",
+      "author_entrypoints": [
+        "hybrid_bfs",
+        "hybrid_sssp",
+        "hybrid_cc",
+        "hybrid_pr"
+      ],
+      "blockers": [
+        "Tiny GPU complete-output qualification pending primary agent device authorization",
+        "Formal canonical seven-graph conversion/resource and numerical qualification pending"
+      ],
+      "current_adapters": [
+        "experiments/campaign_20261104/baselines/hytgraph_adapter.py"
+      ]
+    },
+    {
+      "id": "KGraph",
+      "upstream": "https://github.com/Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "gpu_counts": [
+        0
+      ],
+      "native_functions": [
+        "sssp",
+        "sswp",
+        "ssr",
+        "ppr",
+        "deepwalk"
+      ],
+      "scope_status": "SSSP_SPARSE_DENSE_BUILD_AND_TINY_CPU_PASS_FORMAL_PENDING",
+      "author_entrypoints": [
+        "kgraph-sssp-sparse",
+        "kgraph-sssp-dense",
+        "kgraph-sswp-sparse",
+        "kgraph-sswp-dense",
+        "kgraph-ssr-sparse",
+        "kgraph-ssr-dense",
+        "kgraph-ppr",
+        "kgraph-deepwalk"
+      ],
+      "blockers": [
+        "Formal graph partitions and partition construction charge must be frozen",
+        "All-source complete outputs need resource preflight at batch size 128",
+        "Cross-batch persistent memoization is not implemented by current adapter"
+      ],
+      "experimental_role": "Separate same-graph distinct-source SSSP memoization panel; not GPU closure-budget ablation or global PR",
+      "current_adapters": [
+        "experiments/campaign_20261104/baselines/kgraph_adapter.py"
+      ]
+    },
+    {
+      "id": "GRACE",
+      "upstream": "https://github.com/DataSysResearch/GRACE",
+      "old_upstream": "https://github.com/intellistream/GRACE",
+      "commit": "9f81318ecb12cbb5531034a574f6136f65d6b8e2",
+      "gpu_counts": [
+        0
+      ],
+      "author_integrations": [
+        "PPCSR-GRACE",
+        "Terrace-GRACE",
+        "VCSR-GRACE"
+      ],
+      "paper_functions": [
+        "bfs",
+        "sssp",
+        "pr",
+        "tc"
+      ],
+      "scope_status": "AUTHOR_SOURCE_AVAILABLE_DIFFERENT_UPDATE_SEMANTICS",
+      "experimental_role": "Topology insert/delete and PMA reconstruction reference; currently no direct identical fixed-topology GPU attribute-patch comparison",
+      "blockers": [
+        "Not deployed in current runners",
+        "Attribute replacement contract would need source-audited mapping; does not supply native GPU layout patch or GPU retention policy"
+      ]
+    },
+    {
+      "id": "GraphBLAST",
+      "upstream": "https://github.com/gunrock/graphblast",
+      "commit": "f56f9677276c574c6fe4f1cc104d51f13717e165",
+      "gpu_counts": [
+        1
+      ],
+      "native_functions": [
+        "bfs",
+        "sssp",
+        "pr"
+      ],
+      "scope_status": "OLDER_MACHINE_ADAPTER_REQUIRES_TARGET_REBUILD_AND_QUALIFICATION",
+      "blockers": [
+        "FP32 conservative exact-distance condition n*max_weight<=2^24 excludes some frozen large graphs; not silently waive",
+        "PR source supports PageRank but its output and dangling quality contract not qualified"
+      ],
+      "experimental_role": "Applicable single-GPU execution reference; outside multi-GPU resource panel"
+    }
+  ]
+}

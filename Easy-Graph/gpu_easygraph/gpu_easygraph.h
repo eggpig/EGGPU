@@ -232,4 +232,56 @@ int hierarchy_ego_edge_statistics(
     double* kernel_seconds = nullptr
 );
 
+// Compact-output variants for replicated VertexShard execution.  Each call
+// evaluates only selected_nodes and returns values in exactly that order.
+// lower/upper incidence views provide both endpoints of the once-oriented
+// forward edge set without scanning the complete graph on every device.
+int effective_size_ego_edge_statistics_subset(
+    const std::vector<int>& V,
+    const std::vector<int>& E,
+    const std::vector<int>& lower_V,
+    const std::vector<int>& lower_E,
+    const std::vector<int>& upper_V,
+    const std::vector<int>& upper_E,
+    const std::vector<int>& forward_V,
+    const std::vector<int>& forward_E,
+    const std::vector<int>& degree,
+    std::uint64_t graph_id,
+    const std::vector<int>& selected_nodes,
+    std::vector<double>& result,
+    double* kernel_seconds = nullptr
+);
+
+int constraint_ego_edge_statistics_subset(
+    const std::vector<int>& V,
+    const std::vector<int>& E,
+    const std::vector<int>& lower_V,
+    const std::vector<int>& lower_E,
+    const std::vector<int>& upper_V,
+    const std::vector<int>& upper_E,
+    const std::vector<int>& forward_V,
+    const std::vector<int>& forward_E,
+    const std::vector<int>& degree,
+    std::uint64_t graph_id,
+    const std::vector<int>& selected_nodes,
+    std::vector<double>& result,
+    double* kernel_seconds = nullptr
+);
+
+int hierarchy_ego_edge_statistics_subset(
+    const std::vector<int>& V,
+    const std::vector<int>& E,
+    const std::vector<int>& lower_V,
+    const std::vector<int>& lower_E,
+    const std::vector<int>& upper_V,
+    const std::vector<int>& upper_E,
+    const std::vector<int>& forward_V,
+    const std::vector<int>& forward_E,
+    const std::vector<int>& degree,
+    std::uint64_t graph_id,
+    const std::vector<int>& selected_nodes,
+    std::vector<double>& result,
+    double* kernel_seconds = nullptr
+);
+
 } // namespace gpu_easygraph

@@ -1,0 +1,23 @@
+{
+  "schema": "eggpu.combined_cpu_validation/v1",
+  "date": "2026-11-04",
+  "status": "PASS_CPU_COMBINED_SOURCE",
+  "current_source_sha256": "832781697b0ceb785b15740aa3dd0231c67787467924dc5ed9d0b29ee868d5f9",
+  "python": "3.14.8",
+  "suites": [
+    {
+      "command": "python -B artifact/icde/tools/reproduce.py test-cpu --work OUT",
+      "passed": 46,
+      "failed": 0,
+      "scope": "Actual Python capability/numerical modules under package namespace; no CUDA/DSO"
+    },
+    {
+      "command": "python -B artifact/icde/tools/reproduce.py test-state-controls --output OUT/receipt.json",
+      "passed": 10,
+      "failed": 0,
+      "scope": "Actual closure-LRU/C-Retain controller with independent CPU reference-count receipts"
+    }
+  ],
+  "gpu_executed": false,
+  "performance_eligible": false
+}

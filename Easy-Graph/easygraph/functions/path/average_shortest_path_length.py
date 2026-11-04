@@ -2,9 +2,10 @@ import warnings
 
 import easygraph as eg
 
+from easygraph.utils.decorators import *
 from easygraph.functions.path.path import *
 
-
+@hybrid("cpp_average_shortest_path_length")
 def average_shortest_path_length(G, weight=None, method=None):
     r"""Returns the average shortest path length.
 
@@ -72,7 +73,7 @@ def average_shortest_path_length(G, weight=None, method=None):
     1.0
 
     """
-    single_source_methods = ["single_source_bfs", "dijkstra", "bellman_ford", "bellman-ford"]
+    single_source_methods = ["single_source_bfs", "dijkstra"]
     all_pairs_methods = ["Floyed"]
     supported_methods = single_source_methods + all_pairs_methods
 
@@ -105,8 +106,6 @@ def average_shortest_path_length(G, weight=None, method=None):
             return eg.single_source_bfs(G, v)
         elif method == "dijkstra":
             return eg.Dijkstra(G, v, weight=weight)
-        elif method in {"bellman_ford", "bellman-ford"}:
-            return eg.BellmanFord(G, v, weight=weight)
 
     if method in single_source_methods:
         # Sum the distances for each (ordered) pair of source and target node.

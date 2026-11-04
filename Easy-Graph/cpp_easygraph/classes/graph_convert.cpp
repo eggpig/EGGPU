@@ -7,6 +7,7 @@
 #include <cmath>
 #include <fstream>
 #include <limits>
+#include <set>
 #include <sstream>
 #include <unordered_set>
 
@@ -14,14 +15,21 @@ namespace {
 
 edge_attr_dict_factory attrs_from_python(py::handle obj) {
     edge_attr_dict_factory attrs;
-    if (!py::isinstance<py::dict>(obj)) {
-        return attrs;
-    }
-    py::dict dict = py::reinterpret_borrow<py::dict>(obj);
-    for (auto item : dict) {
+    // Edge/node attribute factories may return any Python mutable mapping.
+    // Consume its public items protocol rather than assuming CPython dict
+    // storage, which silently discarded weights from UserDict and its peers.
+    py::object items = obj.attr("items")();
+    for (py::handle item : items) {
+        py::tuple pair = py::tuple(py::reinterpret_borrow<py::object>(item));
+        if (py::len(pair) != 2) {
+            throw py::value_error("attribute mapping items must contain key/value pairs");
+        }
         try {
-            py::object key = py::reinterpret_borrow<py::object>(item.first);
-            attrs[weight_to_string(key)] = item.second.cast<weight_t>();
+            // Convert before map insertion: under C++11 operand evaluation
+            // order, operator[] could otherwise insert zero before cast throws.
+            const weight_t value = pair[1].cast<weight_t>();
+            py::object key = py::reinterpret_borrow<py::object>(pair[0]);
+            attrs[weight_to_string(key)] = value;
         } catch (const std::exception&) {
             // EasyGraph permits arbitrary metadata. GPU kernels only consume
             // numeric edge/node attributes, so nonnumeric metadata is ignored.
@@ -536,6 +544,100 @@ GraphType graph_with_bulk_csr(const std::shared_ptr<CSRGraph>& csr) {
     return out;
 }
 
+void append_csr_row(
+    const std::vector<std::vector<int> >& rows,
+    std::vector<int>* offsets,
+    std::vector<int>* indices) {
+    if (offsets == nullptr || indices == nullptr) {
+        throw std::invalid_argument("projection CSR output is null");
+    }
+    offsets->clear();
+    indices->clear();
+    offsets->reserve(rows.size() + 1U);
+    offsets->push_back(0);
+    for (const std::vector<int>& row : rows) {
+        indices->insert(indices->end(), row.begin(), row.end());
+        if (indices->size() >=
+            static_cast<std::size_t>(std::numeric_limits<int>::max())) {
+            throw py::value_error(
+                "logical-undirected projection exceeds the signed 32-bit CSR limit");
+        }
+        offsets->push_back(static_cast<int>(indices->size()));
+    }
+}
+
+bool is_simple_sorted_csr(const CSRGraph& csr) {
+    const std::size_t vertex_count = static_cast<std::size_t>(csr.node_count);
+    if (csr.V.size() != vertex_count + 1U) return false;
+    for (std::size_t source = 0; source < vertex_count; ++source) {
+        int previous = -1;
+        for (int edge = csr.V[source]; edge < csr.V[source + 1U]; ++edge) {
+            const int target = csr.E[static_cast<std::size_t>(edge)];
+            if (target < 0 || static_cast<std::size_t>(target) >= vertex_count ||
+                target == static_cast<int>(source) || target <= previous) {
+                return false;
+            }
+            previous = target;
+        }
+    }
+    return true;
+}
+
+std::shared_ptr<UndirectedProjection> build_logical_undirected_projection(
+    const CSRGraph& csr) {
+    const std::size_t vertex_count = static_cast<std::size_t>(csr.node_count);
+    std::set<std::pair<int, int> > edges;
+    for (std::size_t source = 0; source < vertex_count; ++source) {
+        for (int edge = csr.V[source]; edge < csr.V[source + 1U]; ++edge) {
+            const int target = csr.E[static_cast<std::size_t>(edge)];
+            if (target < 0 || static_cast<std::size_t>(target) >= vertex_count) {
+                throw py::value_error("CSR endpoint is outside the vertex domain");
+            }
+            if (target == static_cast<int>(source)) continue;
+            edges.insert(std::minmax(static_cast<int>(source), target));
+        }
+    }
+    if (edges.size() >=
+        static_cast<std::size_t>(std::numeric_limits<int>::max())) {
+        throw py::value_error(
+            "logical-undirected projection exceeds the signed 32-bit edge limit");
+    }
+
+    std::vector<std::vector<int> > lower_rows(vertex_count);
+    std::vector<std::vector<int> > upper_rows(vertex_count);
+    std::vector<std::vector<int> > forward_rows(vertex_count);
+    std::vector<int> degree(vertex_count, 0);
+    for (const std::pair<int, int>& edge : edges) {
+        lower_rows[static_cast<std::size_t>(edge.first)].push_back(edge.second);
+        upper_rows[static_cast<std::size_t>(edge.second)].push_back(edge.first);
+        ++degree[static_cast<std::size_t>(edge.first)];
+        ++degree[static_cast<std::size_t>(edge.second)];
+    }
+    for (const std::pair<int, int>& edge : edges) {
+        const std::pair<int, int> left(
+            degree[static_cast<std::size_t>(edge.first)], edge.first);
+        const std::pair<int, int> right(
+            degree[static_cast<std::size_t>(edge.second)], edge.second);
+        if (left < right) {
+            forward_rows[static_cast<std::size_t>(edge.first)].push_back(edge.second);
+        } else {
+            forward_rows[static_cast<std::size_t>(edge.second)].push_back(edge.first);
+        }
+    }
+    for (std::vector<int>& row : forward_rows) {
+        std::sort(row.begin(), row.end());
+    }
+
+    const std::shared_ptr<UndirectedProjection> projection(
+        new UndirectedProjection());
+    append_csr_row(lower_rows, &projection->lower_V, &projection->lower_E);
+    append_csr_row(upper_rows, &projection->upper_V, &projection->upper_E);
+    append_csr_row(forward_rows, &projection->forward_V, &projection->forward_E);
+    projection->degree.swap(degree);
+    projection->unique_edge_count = static_cast<std::int64_t>(edges.size());
+    return projection;
+}
+
 }  // namespace
 
 py::object cpp_graph_from_easygraph(py::object G, bool directed) {
@@ -543,6 +645,21 @@ py::object cpp_graph_from_easygraph(py::object G, bool directed) {
         return py::cast(build_digraph(G));
     }
     return py::cast(build_graph(G));
+}
+
+py::object cpp_egmgpu_freeze_graph_snapshot(py::object G) {
+    // This entry point is invoked during request submission while the GIL is
+    // held.  It copies the mutable Python graph, then completes every topology
+    // view needed by single/request workers before the object is published.
+    const bool directed = G.attr("is_directed")().cast<bool>();
+    py::object native = cpp_graph_from_easygraph(G, directed);
+    Graph& graph = native.cast<Graph&>();
+    const std::shared_ptr<CSRGraph> csr = graph.gen_CSR();
+    csr->simple_sorted_topology = is_simple_sorted_csr(*csr);
+    if (directed && csr->simple_sorted_topology) {
+        csr->undirected_projection = build_logical_undirected_projection(*csr);
+    }
+    return native;
 }
 
 py::object cpp_graph_from_csr_files(

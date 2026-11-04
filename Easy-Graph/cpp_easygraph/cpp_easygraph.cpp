@@ -1,9 +1,32 @@
 #include "classes/__init__.h"
 #include "functions/__init__.h"
+#include "runtime/egmgpu_runtime_bindings.h"
+#include "runtime/egmgpu_replicated_centrality.h"
+#include "runtime/egmgpu_partition_loader_bindings.h"
+#include "runtime/egmgpu_replicated_structural_holes.h"
+#include "runtime/egmgpu_partitioned_pagerank.h"
+#include "runtime/egmgpu_partitioned_wcc.h"
+#include "runtime/egmgpu_partitioned_bfs.h"
+#include "runtime/egmgpu_single_dispatch.h"
+#include "runtime/egmgpu_partitioned_sssp.h"
+#include "runtime/egmgpu_partitioned_structural_holes.h"
+#include "runtime/egmgpu_triangle_count.h"
 #ifdef EASYGRAPH_ENABLE_GPU
 #include <gpu_easygraph.h>
 #endif
 PYBIND11_MODULE(cpp_easygraph, m) {
+
+    bind_egmgpu_runtime(m);
+    bind_egmgpu_replicated_centrality(m);
+    bind_egmgpu_partition_loader(m);
+    bind_egmgpu_replicated_structural_holes(m);
+    bind_egmgpu_partitioned_pagerank(m);
+    bind_egmgpu_partitioned_wcc(m);
+    bind_egmgpu_partitioned_bfs(m);
+    bind_egmgpu_single_dispatch(m);
+    bind_egmgpu_partitioned_sssp(m);
+    bind_egmgpu_partitioned_structural_holes(m);
+    bind_egmgpu_triangle_count(m);
 
     py::class_<Graph>(m, "Graph")
         .def(py::init<>())
@@ -143,6 +166,10 @@ PYBIND11_MODULE(cpp_easygraph, m) {
     m.def("cpp_gpu_connected_components_sets", &_connected_components_gpu_native_sets, py::arg("G"), py::arg("directed") = false);
     m.def("cpp_graph_from_easygraph", &cpp_graph_from_easygraph, py::arg("G"), py::arg("directed") = false);
     m.def(
+        "cpp_egmgpu_freeze_graph_snapshot",
+        &cpp_egmgpu_freeze_graph_snapshot,
+        py::arg("G"));
+    m.def(
         "cpp_graph_from_csr_files",
         &cpp_graph_from_csr_files,
         py::arg("offsets_path"),
@@ -158,4 +185,19 @@ PYBIND11_MODULE(cpp_easygraph, m) {
         "cpp_graph_undirected_projection_info",
         &cpp_graph_undirected_projection_info,
         py::arg("G"));
+
+    // Current upstream CPU and community entry points.
+    m.def("cpp_boruvka_mst_edges", &boruvka_mst_edges, py::arg("G"), py::arg("minimum") = true, py::arg("weight") = "weight", py::arg("data") = true, py::arg("ignore_nan") = false);
+    m.def("cpp_average_shortest_path_length", &average_shortest_path_length, py::arg("G"), py::arg("weight") = py::none(), py::arg("method") = py::none());
+    m.def("cpp_eccentricity", &eccentricity, py::arg("G"), py::arg("v") = py::none(), py::arg("sp") = py::none());
+    m.def("cpp_modularity", &cpp_modularity, py::arg("G"), py::arg("communities"), py::arg("weight") = py::str("weight"));
+    m.def("cpp_greedy_modularity_communities", &cpp_greedy_modularity_communities, py::arg("G"), py::arg("weight") = py::str("weight"));
+    m.def("cpp_enumerate_subgraph", &cpp_enumerate_subgraph, py::arg("G"), py::arg("k"));
+    m.def("cpp_random_enumerate_subgraph", &cpp_random_enumerate_subgraph, py::arg("G"), py::arg("k"), py::arg("cut_prob"));
+    m.def("cpp_louvain_communities", &cpp_louvain_communities, py::arg("G"), py::arg("weight") = py::str("weight"), py::arg("threshold") = py::float_(0.00002), py::arg("resolution") = py::float_(1.0));
+    m.def("cpp_louvain_communities_serial", &cpp_louvain_communities_serial, py::arg("G"), py::arg("weight") = py::str("weight"), py::arg("threshold") = py::float_(0.00002), py::arg("resolution") = py::float_(1.0));
+    m.def("cpp_LPA", &cpp_LPA, py::arg("G"));
+    m.def("cpp_ego_graph", &cpp_ego_graph, py::arg("G"), py::arg("n"), py::arg("radius") = py::int_(1), py::arg("center") = py::bool_(true), py::arg("undirected") = py::bool_(false), py::arg("distance") = py::none());
+    m.def("cpp_ego_graph_csr", &cpp_ego_graph_csr, py::arg("G"), py::arg("n"), py::arg("radius") = py::int_(1), py::arg("center") = py::bool_(true), py::arg("undirected") = py::bool_(false), py::arg("distance") = py::none());
+    m.def("cpp_localsearch", &cpp_localsearch, py::arg("G"), py::arg("center_num") = py::none(), py::arg("auto_choose_centers") = py::bool_(false), py::arg("maximum_tree") = py::bool_(true), py::arg("seed") = py::none(), py::arg("self_loop") = py::bool_(false));
 }

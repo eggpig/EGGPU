@@ -717,6 +717,10 @@ void Graph::drop_cache() {
 }
 
 std::shared_ptr<CSRGraph> Graph::gen_CSR(const std::string& weight) {
+    std::unique_lock<std::mutex> weight_guard;
+    if (csr_graph != nullptr) {
+        weight_guard = std::unique_lock<std::mutex>(csr_graph->weights_mutex);
+    }
     if (csr_graph != nullptr) {
         if (csr_graph->implicit_unit_weights) {
             throw std::runtime_error(

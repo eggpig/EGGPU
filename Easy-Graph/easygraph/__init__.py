@@ -11,6 +11,9 @@ import easygraph.nn
 import easygraph.readwrite
 import easygraph.utils
 
+from easygraph._optional import HAS_TORCH as _HAS_TORCH
+from easygraph._optional import require_torch as _require_torch
+from easygraph._optional import warn_missing_torch as _warn_missing_torch
 from easygraph.classes import *
 from easygraph.convert import *
 from easygraph.datapipe import *
@@ -24,6 +27,17 @@ from easygraph.nn import *
 from easygraph.readwrite import *
 from easygraph.utils import *
 
+import easygraph.egmgpu as egmgpu
+from easygraph.egmgpu.direct_dispatch import install_direct_public_api as _install_egmgpu_direct_api
+
+_install_egmgpu_direct_api(globals())
+del _install_egmgpu_direct_api
+
+
+_warn_missing_torch()
+
 
 def __getattr__(name):
-    print(f"attr {name} doesn't exist!")
+    if not _HAS_TORCH and name in {"Hypergraph", "BaseHypergraph", "load_structure"}:
+        _require_torch(name)
+    raise AttributeError("module 'easygraph' has no attribute {!r}".format(name))

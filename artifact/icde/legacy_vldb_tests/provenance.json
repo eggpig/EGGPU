@@ -1,0 +1,44 @@
+[
+  {
+    "original_path": "Easy-Graph/easygraph/tests/run_eggpu_gpu_contract_regression.py",
+    "archival_path": "artifact/icde/legacy_vldb_tests/run_eggpu_gpu_contract_regression.py",
+    "git_blob_sha1": "e36df5f20ccd045a25c3cd8c4357978cd80ec4b9",
+    "sha256": "127e0f08c590e5ce1e7be8b83ff6245063186baf77f9563c6f3310359b781e04",
+    "original_commit": "fa60da9e6d6cda8d7ffcd9d6098eb7193633e38b"
+  },
+  {
+    "original_path": "Easy-Graph/easygraph/tests/test_eggpu_bulk_csr.py",
+    "archival_path": "artifact/icde/legacy_vldb_tests/test_eggpu_bulk_csr.py",
+    "git_blob_sha1": "3ddb83a418e6f3f866348bbf1b4e1bea512bd8b6",
+    "sha256": "8baf1cc5436f0a3878b303fb56772cd0cfc9a64468868de51f7056f36062d7e1",
+    "original_commit": "fa60da9e6d6cda8d7ffcd9d6098eb7193633e38b"
+  },
+  {
+    "original_path": "Easy-Graph/easygraph/tests/test_eggpu_cache_contracts.py",
+    "archival_path": "artifact/icde/legacy_vldb_tests/test_eggpu_cache_contracts.py",
+    "git_blob_sha1": "70de17b25cf10e4f1d31fd2f34b6f8dc30aa2f85",
+    "sha256": "fe6404cab8c3b7c2585bb82b3fc75abb2b42553986bece4f92e2d7cb0b1a099f",
+    "original_commit": "fa60da9e6d6cda8d7ffcd9d6098eb7193633e38b"
+  },
+  {
+    "original_path": "Easy-Graph/easygraph/tests/test_eggpu_centrality_contracts.py",
+    "archival_path": "artifact/icde/legacy_vldb_tests/test_eggpu_centrality_contracts.py",
+    "git_blob_sha1": "c3035c129aa2d4df64be1313b2e6958a4b1e5a56",
+    "sha256": "7fd5e556a333c6ff8e74f0bb99cd7033f43fba85f12500afee1f8808fe48dbaf",
+    "original_commit": "fa60da9e6d6cda8d7ffcd9d6098eb7193633e38b"
+  },
+  {
+    "original_path": "Easy-Graph/easygraph/tests/test_eggpu_mst_fractional_weights.py",
+    "archival_path": "artifact/icde/legacy_vldb_tests/test_eggpu_mst_fractional_weights.py",
+    "git_blob_sha1": "af80db038e26ec6717d30b7dc0fa080539c6e61e",
+    "sha256": "f2743a9feedac0c512b329850a00144d54dc46a48b7d80ed590633b7c308bd3d",
+    "original_commit": "fa60da9e6d6cda8d7ffcd9d6098eb7193633e38b"
+  },
+  {
+    "original_path": "Easy-Graph/easygraph/tests/test_eggpu_runtime.py",
+    "archival_path": "artifact/icde/legacy_vldb_tests/test_eggpu_runtime.py",
+    "git_blob_sha1": "773a020c3fed2f9a185b6b90c80f9f561de2b58e",
+    "sha256": "2720a97874a1d760927fe9fb4dad34d15f76c102a64c30877e819cd4c2950421",
+    "original_commit": "fa60da9e6d6cda8d7ffcd9d6098eb7193633e38b"
+  }
+]

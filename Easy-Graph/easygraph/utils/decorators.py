@@ -137,23 +137,19 @@ def not_implemented_for(*graph_types):
 
 
 import functools
+
+import cpp_easygraph
+
+
 def hybrid(cpp_method_name):
     def _hybrid(py_method):
         @functools.wraps(py_method)
         def method(*args, **kwargs):
-            G = args[0] if args else kwargs.get("G")
-            if G is not None and G.cflag and cpp_method_name is not None:
+            G = args[0]
+            if G.cflag and cpp_method_name is not None:
                 try:
-                    import cpp_easygraph
-
                     cpp_method = getattr(cpp_easygraph, cpp_method_name)
-                    cpp_kwargs = dict(kwargs)
-                    if cpp_method_name == "cpp_pagerank":
-                        if "max_iter" in cpp_kwargs and "max_iterator" not in cpp_kwargs:
-                            cpp_kwargs["max_iterator"] = cpp_kwargs.pop("max_iter")
-                        if "tol" in cpp_kwargs and "threshold" not in cpp_kwargs:
-                            cpp_kwargs["threshold"] = cpp_kwargs.pop("tol")
-                    return cpp_method(*args, **cpp_kwargs)
+                    return cpp_method(*args, **kwargs)
                 except AttributeError as e:
                     print(f"Warning: {e}. Use python method instead.")
             return py_method(*args, **kwargs)

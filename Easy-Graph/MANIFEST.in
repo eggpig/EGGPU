@@ -1,3 +1,15 @@
 include README.md
 include CMakeLists.txt
+include scripts/wheel_smoke.py
+include scripts/check_pytorch_support.py
+include scripts/PYTHON_RELEASE.md
+recursive-include scripts/tests *.py
+include easygraph/_torch_compatibility.json
 recursive-include cpp_easygraph *
+
+recursive-include gpu_easygraph *.h *.cuh *.cu *.cpp *.inc CMakeLists.txt
+recursive-include docs/gpu *.md *.json
+recursive-include scripts/gpu *.py
+
+recursive-include easygraph/gpu/_arena/native *.cu *.h *.cuh
+recursive-include tests/gpu *.py

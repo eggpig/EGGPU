@@ -38,7 +38,7 @@ def erdos_renyi_M(n, edge, directed=False, FilePath=None):
     --------
     Returns an Erdős-Rényi random graph G.
 
-    >>> erdos_renyi_M(100, 180, directed=False, FilePath="RandomNetwork.txt")
+    >>> erdos_renyi_M(100,180,directed=False,FilePath="/users/fudanmsn/downloads/RandomNetwork.txt")
 
     References
     ----------
@@ -141,7 +141,7 @@ def erdos_renyi_P(n, p, directed=False, FilePath=None):
     --------
     Returns an Erdős-Rényi random graph G
 
-    >>> erdos_renyi_P(100, 0.5, directed=False, FilePath="RandomNetwork.txt")
+    >>> erdos_renyi_P(100,0.5,directed=False,FilePath="/users/fudanmsn/downloads/RandomNetwork.txt")
 
     References
     ----------
@@ -209,7 +209,7 @@ def fast_erdos_renyi_P(n, p, directed=False, FilePath=None):
     --------
     Returns an Erdős-Rényi random graph G
 
-    >>> erdos_renyi_P(100, 0.5, directed=False, FilePath="RandomNetwork.txt")
+    >>> erdos_renyi_P(100,0.5,directed=False,FilePath="/users/fudanmsn/downloads/RandomNetwork.txt")
 
     References
     ----------
@@ -292,7 +292,7 @@ def WS_Random(n, k, p, FilePath=None):
     --------
     Returns a small-world graph G
 
-    >>> WS_Random(100, 10, 0.3, "RandomNetwork.txt")
+    >>> WS_Random(100,10,0.3,"/users/fudanmsn/downloads/RandomNetwork.txt")
 
     """
     if k >= n:

@@ -877,7 +877,9 @@ class DiGraph(Graph):
                 self._adj[v] = self.adjlist_inner_dict_factory()
                 self._pred[v] = self.adjlist_inner_dict_factory()
                 self._node[v] = self.node_attr_dict_factory()
-            datadict = self._adj[u].get(v, self._new_edge_attr_dict())
+            datadict = self._adj[u].get(v)
+            if datadict is None:
+                datadict = self._new_edge_attr_dict()
             datadict.update(attr)
             datadict.update(dd)
             self._adj[u][v] = datadict
@@ -948,7 +950,9 @@ class DiGraph(Graph):
         if v not in self._node:
             self._add_one_node(v)
         # add the edge
-        datadict = self._adj[u].get(v, self._new_edge_attr_dict())
+        datadict = self._adj[u].get(v)
+        if datadict is None:
+            datadict = self._new_edge_attr_dict()
         datadict.update(edge_attr)
         self._adj[u][v] = datadict
         self._pred[v][u] = datadict
@@ -1175,6 +1179,7 @@ class DiGraph(Graph):
 
         """
         G = self.__class__()
+        self._copy_edge_attr_factory_to(G)
         G.graph.update(self.graph)
         for node, node_attr in self._node.items():
             G.add_node(node, **node_attr)
@@ -1312,6 +1317,8 @@ class DiGraph(Graph):
 
 try:
     import cpp_easygraph
+    if not hasattr(cpp_easygraph, "DiGraph"):
+        raise ImportError("cpp_easygraph extension is not built")
 
     class DiGraphC(cpp_easygraph.DiGraph):
         cflag = 1

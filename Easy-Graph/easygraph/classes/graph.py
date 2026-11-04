@@ -1,6 +1,11 @@
 import copy
 import warnings
 import weakref
+from easygraph.classes._state_tracking import notify as _notify_state_mutation
+from easygraph.classes._edge_attr_factory import (
+    _FactoryTrackedMixin,
+    bind_factory_mapping,
+)
 
 from copy import deepcopy
 from typing import Dict
@@ -10,6 +15,7 @@ from typing import Tuple
 import easygraph as eg
 import easygraph.convert as convert
 
+from easygraph._optional import require_torch
 from easygraph.utils.exception import EasyGraphError
 from easygraph.utils.sparse import sparse_dropout
 
@@ -24,58 +30,69 @@ class _CacheAwareEdgeAttrDict(dict):
     """
 
     def __init__(self, owner, *args, **kwargs):
-        self._owner_ref = weakref.ref(owner)
+        self._owner_ref = weakref.ref(owner) if owner is not None else None
         dict.__init__(self, *args, **kwargs)
 
-    def _invalidate(self):
-        owner = self._owner_ref()
+    def _invalidate(self, keys=None):
+        owner = self._owner_ref() if self._owner_ref is not None else None
         if owner is not None:
             owner._clear_cache()
+            _notify_state_mutation(owner, self, keys)
 
     def __setitem__(self, key, value):
         dict.__setitem__(self, key, value)
-        self._invalidate()
+        self._invalidate((key,))
 
     def __delitem__(self, key):
         dict.__delitem__(self, key)
-        self._invalidate()
+        self._invalidate((key,))
 
     def clear(self):
         if self:
+            keys=tuple(self)
             dict.clear(self)
-            self._invalidate()
+            self._invalidate(keys)
 
     def pop(self, key, *args):
         existed = key in self
         value = dict.pop(self, key, *args)
         if existed:
-            self._invalidate()
+            self._invalidate((key,))
         return value
 
     def popitem(self):
         value = dict.popitem(self)
-        self._invalidate()
+        self._invalidate((value[0],))
         return value
 
     def setdefault(self, key, default=None):
         if key in self:
             return dict.__getitem__(self, key)
         value = dict.setdefault(self, key, default)
-        self._invalidate()
+        self._invalidate((key,))
         return value
 
     def update(self, *args, **kwargs):
         if args or kwargs:
-            dict.update(self, *args, **kwargs)
-            self._invalidate()
+            changes=dict(*args, **kwargs)
+            dict.update(self, changes)
+            self._invalidate(changes)
 
     def __ior__(self, other):
-        dict.__ior__(self, other)
-        self._invalidate()
+        self.update(other)
         return self
 
     def __deepcopy__(self, memo):
-        return copy.deepcopy(dict(self), memo)
+        result = type(self)(None)
+        memo[id(self)] = result
+        for key, value in self.items():
+            dict.__setitem__(result, copy.deepcopy(key, memo), copy.deepcopy(value, memo))
+        return result
+
+    def __reduce_ex__(self, protocol):
+        # Restore contents before Graph.__setstate__ binds the new owner.
+        # The weak owner is process-local and is never serialized.
+        return (type(self), (None,), None, None, iter(self.items()))
 
 
 class Graph:
@@ -171,16 +188,73 @@ class Graph:
         self._materialize_lazy_edges()
         return self._adj[node]
 
+    def __getstate__(self):
+        state = self.__dict__.copy()
+        # Lazy edge arrays are authoritative graph data; preserve them while
+        # dropping process-local EGGPU handles and prepared representations.
+        state["cache"] = {
+            key: value for key, value in self.cache.items()
+            if not (isinstance(key, str) and key.startswith("__eggpu"))
+        }
+        return state
+
+    def __copy__(self):
+        # Sharing owner-bound edge dictionaries would direct invalidation to
+        # the original graph. Use the public structural-copy contract.
+        self._materialize_lazy_edges()
+        return self.copy()
+
+    def __setstate__(self, state):
+        self.__dict__.update(state)
+        rebound = {}
+        owner = weakref.ref(self)
+        multigraph = self.is_multigraph()
+        for adjacency in (self._adj, getattr(self, "_pred", {})):
+            for neighbours in adjacency.values():
+                for endpoint, data in list(neighbours.items()):
+                    entries = data if multigraph else {endpoint: data}
+                    for key, attrs in list(entries.items()):
+                        identity = id(attrs)
+                        if identity not in rebound:
+                            if isinstance(attrs, _CacheAwareEdgeAttrDict):
+                                attrs._owner_ref = owner
+                                rebound[identity] = attrs
+                            elif isinstance(attrs, _FactoryTrackedMixin):
+                                attrs._bind_owner(self)
+                                rebound[identity] = attrs
+                            else:
+                                rebound[identity] = self._new_edge_attr_dict(attrs)
+                        if multigraph:
+                            data[key] = rebound[identity]
+                        else:
+                            neighbours[endpoint] = rebound[identity]
+
     def _new_edge_attr_dict(self, data=None):
         """Create an owner-bound edge attribute mapping."""
+        if isinstance(data, _FactoryTrackedMixin) and data._has_owner(self):
+            return data
         if isinstance(data, _CacheAwareEdgeAttrDict):
-            owner = data._owner_ref()
+            owner = data._owner_ref() if data._owner_ref is not None else None
             if owner is self:
                 return data
             data = dict(data)
         if data is None:
             data = {}
-        return _CacheAwareEdgeAttrDict(self, data)
+        factory = self.edge_attr_dict_factory
+        if factory is dict:
+            return _CacheAwareEdgeAttrDict(self, data)
+        attrs = bind_factory_mapping(factory(), self)
+        if data:
+            attrs.update(data)
+        return attrs
+
+    def _copy_edge_attr_factory_to(self, graph):
+        """Preserve an explicitly configured instance factory on copies."""
+        if 'edge_attr_dict_factory' in self.__dict__:
+            factory = self.__dict__['edge_attr_dict_factory']
+            if getattr(factory, '__self__', None) is self:
+                factory = factory.__func__.__get__(graph, type(graph))
+            graph.edge_attr_dict_factory = factory
 
     def _materialize_lazy_edges(self):
         if self.cache.get("_lazy_edges") is None:
@@ -229,10 +303,15 @@ class Graph:
                 )
         except Exception:
             edge_list = []
-        self.cache["edges"] = edge_list
-        self.cache["edge"] = edge_list
         self.cache["_lazy_edges"] = edge_list
         self.cache.pop("_lazy_edge_arrays", None)
+        # Public edge attributes are mutable. Publish their authoritative
+        # adjacency before exposing them: cache invalidation must not discard
+        # the only copy of a lazy tree's topology or weights.
+        self._materialize_lazy_edges()
+        edge_list = [(u, v, self._adj[u][v]) for u, v, _ in edge_list]
+        self.cache["edges"] = edge_list
+        self.cache["edge"] = edge_list
         return edge_list
 
     @property
@@ -263,12 +342,15 @@ class Graph:
         """
         Return an edge list
         """
-        if self.cache.get("edges") != None:
-            return self.cache["edges"]
         if self.cache.get("_lazy_edges") != None:
-            return self.cache["_lazy_edges"]
+            edges = self.cache["_lazy_edges"]
+            self._materialize_lazy_edges()
+            self.cache["edges"] = [(u, v, self._adj[u][v]) for u, v, _ in edges]
+            return self.cache["edges"]
         if self.cache.get("_lazy_edge_arrays") != None:
             return self._materialize_lazy_edge_arrays()
+        if self.cache.get("edges") != None:
+            return self.cache["edges"]
         edge_lst = list()
         seen = set()
         for u in self._adj:
@@ -320,7 +402,7 @@ class Graph:
     def A(self):
         r"""Return the adjacency matrix :math:`\mathbf{A}` of the sample graph with ``torch.sparse_coo_tensor`` format. Size :math:`(|\mathcal{V}|, |\mathcal{V}|)`.
         """
-        import torch
+        torch = require_torch("Graph tensor operations")
 
         if self.cache.get("A", None) is None:
             if len(self.edges) == 0:
@@ -349,7 +431,7 @@ class Graph:
     ):
         r"""Return the normalized diagonal matrix of vertex degree :math:`\mathbf{D}_v^{-\frac{1}{2}}` with ``torch.sparse_coo_tensor`` format. Size :math:`(|\mathcal{V}|, |\mathcal{V}|)`.
         """
-        import torch
+        torch = require_torch("Graph tensor operations")
 
         if self.cache.get("D_v_neg_1_2") is None:
             if self.cache.get("D_v_value") is None:
@@ -436,7 +518,7 @@ class Graph:
     def D_v(self):
         r"""Return the diagonal matrix of vertex degree :math:`\mathbf{D}_v` with ``torch.sparse_coo_tensor`` format. Size :math:`(|\mathcal{V}|, |\mathcal{V}|)`.
         """
-        import torch
+        torch = require_torch("Graph tensor operations")
 
         if self.cache.get("D_v") is None:
             # print("self.A:",self.A)
@@ -484,7 +566,7 @@ class Graph:
         return self.N_v(v_idx).cpu().numpy().tolist()
 
     def N_v(self, v_idx: int) -> Tuple[List[int], List[float]]:
-        import torch
+        torch = require_torch("Graph tensor operations")
 
         r"""Return the neighbors of the vertex ``v_idx`` with ``torch.Tensor`` format.
 
@@ -628,7 +710,7 @@ class Graph:
             \mathcal{L}_{GCN} = \mathbf{\hat{D}}_v^{-\frac{1}{2}} \mathbf{\hat{A}} \mathbf{\hat{D}}_v^{-\frac{1}{2}}
 
         """
-        import torch
+        torch = require_torch("Graph tensor operations")
 
         if self.cache.get("L_GCN") is None:
             # self.add_extra_selfloop()
@@ -644,7 +726,7 @@ class Graph:
             ``X`` (``torch.Tensor``): Vertex feature matrix. Size :math:`(|\mathcal{V}|, C)`.
             ``drop_rate`` (``float``): Dropout rate. Randomly dropout the connections in adjacency matrix with probability ``drop_rate``. Default: ``0.0``.
         """
-        import torch
+        torch = require_torch("Graph tensor operations")
 
         if drop_rate > 0.0:
             L_GCN = sparse_dropout(self.L_GCN, drop_rate)
@@ -1148,7 +1230,9 @@ class Graph:
                     raise ValueError("None cannot be a node")
                 self._adj[v] = self.adjlist_inner_dict_factory()
                 self._node[v] = self.node_attr_dict_factory()
-            datadict = self._adj[u].get(v, self._new_edge_attr_dict())
+            datadict = self._adj[u].get(v)
+            if datadict is None:
+                datadict = self._new_edge_attr_dict()
             datadict.update(attr)
             datadict.update(dd)
             self._adj[u][v] = datadict
@@ -1320,7 +1404,9 @@ class Graph:
         if v not in self._node:
             self._add_one_node(v)
         # add the edge
-        datadict = self._adj[u].get(v, self._new_edge_attr_dict())
+        datadict = self._adj[u].get(v)
+        if datadict is None:
+            datadict = self._new_edge_attr_dict()
         datadict.update(edge_attr)
         self._adj[u][v] = datadict
         self._adj[v][u] = datadict
@@ -1516,6 +1602,7 @@ class Graph:
 
         """
         G = self.__class__()
+        self._copy_edge_attr_factory_to(G)
         G.graph.update(self.graph)
         for node, node_attr in self._node.items():
             G.add_node(node, **node_attr)
@@ -1642,6 +1729,7 @@ class Graph:
         r"""Clear the cache."""
         self._mutation_generation = getattr(self, "_mutation_generation", 0) + 1
         self.cache = {}
+        _notify_state_mutation(self)
 
     def to_directed_class(self):
         """Returns the class to use for empty directed copies.
@@ -1720,6 +1808,8 @@ class Graph:
 
 try:
     import cpp_easygraph
+    if not hasattr(cpp_easygraph, "Graph"):
+        raise ImportError("cpp_easygraph extension is not built")
 
     class GraphC(cpp_easygraph.Graph):
         cflag = 1

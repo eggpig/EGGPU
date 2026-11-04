@@ -1,32 +1,40 @@
 EasyGraph
-==================
+=========
 
-Copyright (C) <2020-2026> by [DataNET Group, Fudan University](https://fudan-datanet.mysxl.cn/)
+**A high-performance Python library for graph and hypergraph analysis.**
 
-___________________________________________________________________________
-
+[![GitHub Stars][stars-image]][stars-url]
 [![PyPI Version][pypi-image]][pypi-url]
 [![Python][python-image]][python-url]
 [![License][license-image]][license-url]
 [![Downloads][downloads-image]][downloads-url]
 
-[pypi-image]: https://img.shields.io/pypi/v/Python-EasyGraph.svg?label=PyPI
-[pypi-url]: https://pypi.org/project/Python-EasyGraph/
-[python-image]: https://img.shields.io/pypi/pyversions/Python-EasyGraph.svg?label=Python
-[python-url]: https://pypi.org/project/Python-EasyGraph/
-[license-image]: https://img.shields.io/pypi/l/Python-EasyGraph?label=License
-[license-url]: https://github.com/easy-graph/Easy-Graph/blob/master/LICENSE
-[downloads-image]: https://static.pepy.tech/personalized-badge/python-easygraph?period=total&units=international_system&left_color=brightgreen&right_color=yellowgreen&left_text=Downloads
-[downloads-url]: https://pypi.org/project/Python-EasyGraph/
+⭐ **If you find EasyGraph useful, please consider giving us a star!**
+
+Copyright © 2020–2026 by [DataNET Group, Fudan University](https://fudan-datanet.mysxl.cn/)
+
+---
 
 - **Documentation:** https://easy-graph.github.io/
 - **Source Code:** https://github.com/easy-graph/Easy-Graph
 - **Issue Tracker:** https://github.com/easy-graph/Easy-Graph/issues
 - **PyPI Homepage:** https://pypi.org/project/Python-EasyGraph/
-- **Youtube channel:** https://www.youtube.com/@python-easygraph
+- **YouTube Channel:** https://www.youtube.com/@python-easygraph
+
+[stars-image]: https://img.shields.io/github/stars/easy-graph/Easy-Graph?style=flat-square&logo=github&label=Stars&color=f5c518
+[stars-url]: https://github.com/easy-graph/Easy-Graph/stargazers
+[pypi-image]: https://img.shields.io/pypi/v/Python-EasyGraph?style=flat-square&label=PyPI
+[pypi-url]: https://pypi.org/project/Python-EasyGraph/
+[python-image]: https://img.shields.io/pypi/pyversions/Python-EasyGraph?style=flat-square&label=Python
+[python-url]: https://pypi.org/project/Python-EasyGraph/
+[license-image]: https://img.shields.io/pypi/l/Python-EasyGraph?style=flat-square&label=License
+[license-url]: https://github.com/easy-graph/Easy-Graph/blob/pybind11/LICENSE
+[downloads-image]: https://img.shields.io/pepy/dt/python-easygraph?style=flat-square&label=Downloads&color=yellowgreen
+[downloads-url]: https://pepy.tech/project/python-easygraph
 
 # Introduction
-The framework of EasyGraph is composed of four components: **EasyGraph (Core)**, **EasyHypergraph**, **EGGPU**, and **EasyGNN**.
+The framework of EasyGraph is composed of four components: **EasyGraph (Core)**, **EasyHypergraph**, **EGGPU**, and **EasyGNN**. 
+![Framework of EasyGraph.](EG_framework.png)
 
 **EasyGraph** is an open-source network analysis library primarily written in Python. It supports both undirected and directed networks and accommodates various network data formats. EasyGraph includes a comprehensive suite of network analysis algorithms such as community detection, structural hole spanner detection, network embedding, and motif detection. Additionally, it optimizes performance by implementing key components in C++ and utilizing multiprocessing.
 
@@ -58,10 +66,12 @@ It bridges the gap between EasyGraph and higher-order relationships. EasyHypergr
 - [01-07-2025] [计算机科学技术学院教授陈阳入选“2024中国开源先锋33人” (in Chinese)](https://news.fudan.edu.cn/2025/0107/c2463a143932/page.htm)
 - [12-04-2024] [国际开源基准委员会的"顶级开源证书" (in Chinese)](https://chenyang03.wordpress.com/wp-content/uploads/2025/07/image.png?w=1024)
 - [10-16-2024] [2023年度上海开源创新卓越成果奖 (in Chinese)](https://mp.weixin.qq.com/s/kO6Dpyolf74dlDvKuoLlJA)
-- [11-06-2023] [复旦大学陈阳Patterns：EasyGraph——面向多学科的高性能网络结构分析工具箱｜Cell Press论文速递 (in Chinese)](https://mp.weixin.qq.com/s/f2LCyQv1dYuquM_EfGX6Ow)
+- [11-06-2023] [复旦大学陈阳Patterns：EasyGraph——面向多学科的高性能网络结构分析工具箱｜Cell Press论文速递 (in Chinese)](https://mp.weixin.qq.com/s/f2LCyQv1dYuquM_EfGX6Ow?poc_token=HBV092ijI2L534IrD0Jl_fnf3VjhX8UudcPFLH6b)
 - [11-04-2023] [EasyGraph：多功能、跨平台、高效率的跨学科网络分析库 (in Chinese)](https://swarma.org/?p=46252)
 
 ## 🚀 Releases & Milestones
+- [06-07-2026] EasyGraph **v1.6.2** released (Community functions upgraded)
+- [05-07-2026] EasyGraph **v1.6.1** released (Add OpenMP-powered path-based functions)
 - [02-01-2026] EasyGraph **v1.6** released (OpenMP-powered functions for large network analysis)
 - **[01-16-2026] 🎉 1M Downloads! Thanks to our amazing community!**
 - [01-01-2026] EasyGraph **v1.5.3** released ([The Hypergraph Interchange Format (HIF) standard](https://github.com/HIF-org/HIF-standard))
@@ -92,7 +102,7 @@ It bridges the gap between EasyGraph and higher-order relationships. EasyHypergr
 
 ## Supported Versions
 
-``3.8 <= Python <= 3.14`` is required.
+``3.8 <= Python < 3.16`` is required.
 
 ## Installation With pip
 ```
@@ -108,37 +118,15 @@ If prebuilt EasyGraph wheels are not supported for your platform (OS / CPU arch,
 ### Prerequisites
 - CMake >= 3.23
 - A compiler that fully supports C++11
-- CUDA Toolkit 12.8 and a compatible NVIDIA driver for EGGPU source builds.
+- CUDA Toolkit 11.8 or later would be preferred (If need GPUs enabled)
 
 ### Installation
 #### On Linux
 ```
     git clone --recursive https://github.com/easy-graph/Easy-Graph
     export EASYGRAPH_ENABLE_GPU="TRUE"  # for users who want to enable GPUs
-    export EGGPU_CUDA_ROOT="${CONDA_PREFIX:-/path/to/cuda}"
-    export EGGPU_CUDA_ARCHITECTURES="80"  # A100; use 89 for RTX 4090
     pip install ./Easy-Graph
 ```
-
-For the EGGPU artifact repository, the same package can be installed from the
-GitHub subdirectory:
-
-```
-    export EASYGRAPH_ENABLE_GPU="TRUE"
-    export EGGPU_CUDA_ROOT="${CONDA_PREFIX:-/path/to/cuda}"
-    export EGGPU_CUDA_ARCHITECTURES="80"
-    pip install -v "git+https://github.com/eggpig/EGGPU.git#subdirectory=Easy-Graph"
-```
-
-Enable GPU dispatch and surface backend errors explicitly:
-
-```
-    export EASYGRAPH_ENABLE_GPU="TRUE"
-    export EASYGRAPH_GPU_STRICT_ERRORS="TRUE"
-```
-
-Strict error mode raises GPU dispatch failures instead of silently falling
-back to a CPU implementation.
 
 #### On Windows
 ```
@@ -158,9 +146,15 @@ back to a CPU implementation.
 
 ## Hint
 
-EasyGraph uses  1.12.1 <= [PyTorch](https://pytorch.org/get-started/locally/) < 2.0 for machine learning functions.
-Note that this does not prevent your from running non-machine learning functions normally, if there is no PyTorch in your environment.
-But you will receive some warnings which remind you some unavailable modules when they depend on it.
+EasyGraph automatically installs a compatible PyTorch version when a compatible
+stable wheel is listed in its release policy for your Python version, OS and CPU
+on PyPI. Otherwise, core graph algorithms and the C++ backend remain available,
+and importing EasyGraph shows one message linking to the [official PyTorch
+installer](https://pytorch.org/get-started/locally/). Install PyTorch from there
+and restart Python to enable its features. Additional graph-learning packages
+may require `pip install 'Python-EasyGraph[torch]'` or their own installation
+instructions. Maintainers can refresh the policy for a new Python release using
+[the release checklist](scripts/PYTHON_RELEASE.md).
 
 # Simple Example
 
@@ -204,3 +198,7 @@ If you use EasyGraph in a scientific publication, we kindly request that you cit
   }
 ```
 📢 If you notice anything unexpected, please open an issue and let us know. If you have any questions or require a specific feature, feel free to discuss them with us. We are motivated to constantly make EasyGraph even better and let more developers benefit!
+
+## Optional GPU integration
+
+See [GPU build, session contracts and qualification](docs/gpu/README_CN.md) and [upstream delta](docs/gpu/UPSTREAM_DELTA_CN.md). GPU execution is opt-in; ordinary CPU imports do not start CUDA.

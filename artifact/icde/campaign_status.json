@@ -1,0 +1,68 @@
+{
+  "schema": "eggpu.public_campaign_status/v1",
+  "date": "2026-11-04",
+  "source_status": "Capability patch passed 46 CPU checks and closure-LRU passed 10 CPU checks; current source GPU qualification awaiting bound readback",
+  "datasets": [
+    "US",
+    "EP",
+    "LJ",
+    "UK",
+    "IN",
+    "TW",
+    "OR"
+  ],
+  "formal_repetitions": 10,
+  "formal_results_in_this_publication": false,
+  "single_gpu_leading_target": 0.9,
+  "target_status": "OPTIMIZATION_TARGET_NOT_MEASURED",
+  "experiments": {
+    "E1": {
+      "design": "FROZEN",
+      "portable_formal_runner": "PENDING",
+      "current_source_formal_results": "PENDING"
+    },
+    "E2": {
+      "design": "FROZEN",
+      "portable_formal_runner": "PENDING",
+      "current_source_formal_results": "PENDING"
+    },
+    "E3": {
+      "design": "FROZEN",
+      "portable_formal_runner": "PENDING",
+      "current_source_formal_results": "PENDING"
+    },
+    "E4": {
+      "design": "FROZEN",
+      "portable_formal_runner": "PENDING",
+      "current_source_formal_results": "PENDING"
+    },
+    "E5": {
+      "design": "FROZEN",
+      "portable_formal_runner": "PENDING",
+      "current_source_formal_results": "PENDING"
+    },
+    "E6": {
+      "design": "FROZEN",
+      "portable_formal_runner": "PENDING",
+      "current_source_formal_results": "PENDING"
+    }
+  },
+  "provided": [
+    "source and fixed capability policy",
+    "CPU and explicit tiny GPU qualification source",
+    "input fetch/conversion/weight tools with documented inherited prerequisites",
+    "public baseline capabilities and author revisions",
+    "paper narrative and experiment design"
+  ],
+  "not_provided": [
+    "complete baseline build/run bundle",
+    "all seven fresh-machine graph converters",
+    "E1-E6 portable formal orchestrators",
+    "current-source formal measurement matrix",
+    "raw-to-paper figure/table regeneration for the new campaign"
+  ],
+  "figure_slots": {
+    "mechanism": "RESERVED_FOR_COLLABORATOR",
+    "framework": "RESERVED_FOR_COLLABORATOR"
+  }
+}

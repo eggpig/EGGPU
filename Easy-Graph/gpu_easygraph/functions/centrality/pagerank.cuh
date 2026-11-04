@@ -18,4 +18,3 @@ int cuda_pagerank(
 );
 
 } // namespace gpu_easygraph
-

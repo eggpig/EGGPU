@@ -1,3 +1,4 @@
+import json
 import os
 import platform
 import re
@@ -9,6 +10,7 @@ from pathlib import Path
 
 import setuptools
 
+from packaging.version import Version
 from setuptools.command.build_ext import build_ext
 
 
@@ -22,89 +24,6 @@ PLAT_TO_CMAKE = {
     "win-arm64": "ARM64",
 }
 
-
-def _truthy_env(name: str) -> bool:
-    return os.environ.get(name, "").strip().upper() in {"1", "TRUE", "ON", "YES"}
-
-
-def _first_env_path(names):
-    for name in names:
-        value = os.environ.get(name)
-        if value:
-            path = Path(value).expanduser()
-            if path.exists():
-                return path.resolve()
-    return None
-
-
-def _find_libgomp(cuda_root):
-    candidates = []
-    if cuda_root is not None:
-        candidates.extend(
-            [
-                cuda_root / "lib" / "libgomp.so",
-                cuda_root / "targets" / "x86_64-linux" / "lib" / "libgomp.so",
-            ]
-        )
-    conda_prefix = os.environ.get("CONDA_PREFIX")
-    if conda_prefix:
-        candidates.append(Path(conda_prefix).expanduser() / "lib" / "libgomp.so")
-    for candidate in candidates:
-        if candidate.exists():
-            return candidate.resolve()
-    return None
-
-
-def _detect_cuda_architectures():
-    try:
-        proc = subprocess.run(
-            [
-                "nvidia-smi",
-                "--query-gpu=compute_cap",
-                "--format=csv,noheader,nounits",
-            ],
-            check=False,
-            text=True,
-            capture_output=True,
-        )
-    except FileNotFoundError:
-        return None
-    if proc.returncode != 0:
-        return None
-    archs = []
-    for raw in proc.stdout.splitlines():
-        cap = raw.strip().replace(" ", "")
-        if not cap:
-            continue
-        digits = cap.replace(".", "")
-        if digits.isdigit() and digits not in archs:
-            archs.append(digits)
-    return ";".join(archs) if archs else None
-
-
-def _gpu_cmake_args():
-    cuda_root = _first_env_path(
-        ("EGGPU_CUDA_ROOT", "CUDA_PATH", "CUDA_HOME", "CUDAToolkit_ROOT", "CONDA_PREFIX")
-    )
-    args = []
-    if cuda_root is not None:
-        args.append(f"-DCUDAToolkit_ROOT={cuda_root}")
-        nvcc = cuda_root / "bin" / "nvcc"
-        if nvcc.exists():
-            args.append(f"-DCMAKE_CUDA_COMPILER={nvcc}")
-    arch = os.environ.get("EGGPU_CUDA_ARCHITECTURES") or os.environ.get(
-        "CMAKE_CUDA_ARCHITECTURES"
-    )
-    if not arch or arch.strip().upper() == "AUTO":
-        arch = _detect_cuda_architectures()
-    if arch:
-        args.append(f"-DCMAKE_CUDA_ARCHITECTURES={arch}")
-    libgomp = _find_libgomp(cuda_root)
-    if libgomp is not None:
-        args.append(f"-DOpenMP_gomp_LIBRARY={libgomp}")
-    return args
-
-
 class CMakeExtension(setuptools.Extension):
     def __init__(self, name: str, sourcedir: str = "") -> None:
         super().__init__(name, sources=[])
@@ -112,7 +31,7 @@ class CMakeExtension(setuptools.Extension):
 
 class CMakeBuild(build_ext):
     def build_extension(self, ext: CMakeExtension) -> None:
-        enable_gpu = _truthy_env("EASYGRAPH_ENABLE_GPU")
+        enable_gpu = "EASYGRAPH_ENABLE_GPU" in os.environ and "TRUE" in os.environ.get("EASYGRAPH_ENABLE_GPU").upper()
 
         # Must be in this form due to bug in .resolve() only fixed in Python 3.10+
         ext_fullpath = Path.cwd() / self.get_ext_fullpath(ext.name)
@@ -127,22 +46,15 @@ class CMakeBuild(build_ext):
         # Set Python_EXECUTABLE instead if you use PYBIND11_FINDPYTHON
         # EXAMPLE_VERSION_INFO shows you how to pass a value into the C++ code
         # from Python.
-        python_prefix = Path(sys.executable).resolve().parent.parent
         cmake_args = [
             f"-DCMAKE_LIBRARY_OUTPUT_DIRECTORY={extdir}{os.sep}",
-            # pybind11 3 uses CMake's modern FindPython path.  Keep the legacy
-            # variable too, but pin every supported spelling so an unrelated
-            # /opt/conda interpreter cannot change the extension ABI tag.
             f"-DPYTHON_EXECUTABLE={sys.executable}",
             f"-DPython_EXECUTABLE={sys.executable}",
             f"-DPython3_EXECUTABLE={sys.executable}",
-            f"-DPython_ROOT_DIR={python_prefix}",
             "-DPYBIND11_FINDPYTHON=ON",
             f"-DCMAKE_BUILD_TYPE={cfg}",  # not used on MSVC, but no harm
             f"-DEASYGRAPH_ENABLE_GPU={'ON' if enable_gpu else 'OFF'}",
         ]
-        if enable_gpu:
-            cmake_args += _gpu_cmake_args()
         build_args = []
         # Adding CMake arguments set as environment variable
         # (needed e.g. to build for ARM OSx on conda-forge)
@@ -199,9 +111,53 @@ class CMakeBuild(build_ext):
 with open("README.md", encoding="utf-8") as fh:
     long_description = fh.read()
 
+CYTHON_STR = "Cython"
+
+
+def default_torch_requirements():
+    # Refresh explicitly with scripts/check_pytorch_support.py before releases.
+    # Never query the network while building package metadata.
+    policy_path = Path(__file__).parent / "easygraph" / "_torch_compatibility.json"
+    with policy_path.open(encoding="utf-8") as stream:
+        policy = json.load(stream)
+    if policy["schema_version"] != 1:
+        raise ValueError("Unsupported PyTorch compatibility policy schema")
+    targets = {target["id"]: target for target in policy["targets"]}
+    requirements = []
+    for row in policy["support"]:
+        if row["torch_version"] is None:
+            continue
+        target = targets[row["target_id"]]
+        # PyPI's Linux torch wheels target glibc, not musl/Alpine.
+        if (target["sys_platform"] == "linux" and sys.platform == "linux"
+                and platform.libc_ver()[0] != "glibc"):
+            continue
+        machines = " or ".join(
+            "platform_machine == '{}'".format(machine)
+            for machine in target["platform_machines"]
+        )
+        marker = (
+            "python_version == '{}' and sys_platform == '{}' and "
+            "platform_system == '{}' and platform_python_implementation == 'CPython' "
+            "and ({})"
+        ).format(row["python_version"], target["sys_platform"],
+                 target["platform_system"], machines)
+        # Pip selects compatible OS versions from wheel platform tags. Do not
+        # compare platform_release: older marker parsers evaluate every branch
+        # and reject Linux kernel strings such as "6.8.0-1064-azure" as versions.
+        minimum = row["minimum_torch_version"]
+        requirements.append("torch>={},<={}; {}".format(
+            minimum, row["torch_version"], marker
+        ))
+        # Older macOS torch binaries use NumPy 1's C ABI.
+        if Version(minimum) < Version("2.3"):
+            requirements.append("numpy<2; {}".format(marker))
+    return requirements
+
+
 setuptools.setup(
     name="Python-EasyGraph",
-    version="1.6",
+    version="1.6.3",
     author="Fudan DataNET Group",
     author_email="mgao21@m.fudan.edu.cn",
     description="Easy Graph",
@@ -209,6 +165,8 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/easy-graph/Easy-Graph",
     packages=setuptools.find_packages(),
+    package_data={"easygraph": ["_torch_compatibility.json"],
+                  "easygraph.gpu._arena": ["native/*.cu", "native/*.h", "native/common/*.h"]},
     classifiers=[
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
@@ -217,10 +175,11 @@ setuptools.setup(
         "Programming Language :: Python :: 3.12",
         "Programming Language :: Python :: 3.13",
         "Programming Language :: Python :: 3.14",
+        "Programming Language :: Python :: 3.15",
         "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
     ],
-    python_requires=">=3.8, <3.15",
+    python_requires=">=3.8, <3.16",
     install_requires=[
         "numpy>=1.23; python_version < '3.14'",
         "numpy>=2.0; python_version >= '3.14'",
@@ -233,6 +192,7 @@ setuptools.setup(
         "scikit-learn>=0.24.0; python_version>='3.8' and python_version<'3.14'",
         "scipy>=1.5.0, <=1.7.3; python_version=='3.7'",
         "scipy>=1.8.0; python_version>='3.8' and python_version<'3.14'",
+        "scipy>=1.18.1; python_version>='3.14'",
         "statsmodels>=0.12.0; python_version>='3.7' and python_version<'3.14'",
         "progressbar>=2.5",
         "nose>=0.10.1",
@@ -242,7 +202,7 @@ setuptools.setup(
         "requests",
         "optuna",
         "fastjsonschema",
-    ],
+    ] + default_torch_requirements(),
     extras_require={
         "torch": [
             "torch>=2.0",
@@ -250,6 +210,7 @@ setuptools.setup(
             "torch_geometric>=2.3",
         ],
     },
+    setup_requires=[CYTHON_STR],
     cmdclass={
         "build_ext": CMakeBuild,
     },

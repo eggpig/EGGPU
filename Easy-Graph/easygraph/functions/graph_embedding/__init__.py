@@ -1,16 +1,12 @@
-import os
+from easygraph._optional import HAS_TORCH as _HAS_TORCH
+from easygraph._optional import optional_torch_modules as _torch_imports
 
 from .deepwalk import *
 from .NOBE import *
 from .node2vec import *
 
 
-try:
-    from .line import *
-    from .sdne import *
-except:
-    if os.environ.get("EASYGRAPH_SHOW_OPTIONAL_IMPORT_WARNINGS", "").strip().upper() in {"1", "TRUE", "ON", "YES"}:
-        print(
-            "Warning raise in module:graph_embedding. Please install packages Pytorch"
-            " before you use functions related to graph_embedding"
-        )
+if _HAS_TORCH:
+    with _torch_imports():
+        from .line import *
+        from .sdne import *
