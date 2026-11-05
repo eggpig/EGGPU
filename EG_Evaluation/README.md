@@ -1,25 +1,7 @@
-# Evaluation source
+# Historical evaluation
 
-This directory retains the EGGPU paper workspace's benchmark, correctness,
-preprocessing and evidence-assembly source. `../Easy-Graph` is the only EGGPU
-implementation used for ongoing development.
+The pre-ICDE A100 orchestration and 13-graph experiment files have been retired from the current branch. They use historical dataset versions and timing protocols.
 
-- `benchmarking/run_full_baselines.py`: function and baseline measurements.
-- `benchmarking/run_eggpu_correctness_gate.py`: evaluation correctness gates.
-- `benchmarking/prepare_*`: graph conversion and CSR preparation.
-- `benchmarking/run_v15_*` and associated audit/assembly tools: the last A100
-  campaign and its protocol corrections.
-- `environment_eggpu_cuda128.yml`: historical evaluation dependencies.
+Use [the current ICDE artifact](../artifact/icde/README.md) and its fixed seven-graph manifest. The implementation remains in `Easy-Graph/`.
 
-For a current installation check, run `../scripts/run_smoke.sh` from the
-repository root. Performance runners also require their declared baseline
-libraries and data. Historical orchestration scripts record machine-specific
-paths, GPU assignments and frozen build locations; review these before rerunning
-on a different machine. A fresh clone alone is not a complete performance setup.
-
-Raw `datasets/`, `benchmarking/results/`, `build_artifacts/` and third-party
-runtime environments remain local and are ignored by Git. Dataset provenance
-and the published download are described in `../artifact/datasets/`.
-The local `../.maintenance/consolidation_20260922/` manifest records the five
-retained evidence packages, their raw dependencies and cleanup operations.
-See `../artifact/STATUS.md` for measured coverage and known compatibility issues.
+The exact historical source remains available at [commit deea4de](https://github.com/eggpig/EGGPU/tree/deea4de6638ef94d5f574c346c13589c637103bf/EG_Evaluation). [The restoration manifest](../artifact/icde/legacy_retirement_manifest.json) records every retired path and Git blob. No raw experiment data was deleted by this change.

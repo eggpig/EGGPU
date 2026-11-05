@@ -1,0 +1,1944 @@
+{
+  "schema": "eggpu.public.legacy.retirement.v1",
+  "archived_commit": "deea4de6638ef94d5f574c346c13589c637103bf",
+  "archived_tree": "fefaaf5996a81901f15005782f9c0f527ebbf07d",
+  "reason": "Retire unreferenced pre-ICDE A100 orchestration, old 13-graph dataset lists, legacy build/smoke entrypoints and design maps from the current branch.",
+  "restoration": "Read any listed path at archived_commit; Git blob SHA and mode below identify its exact original bytes.",
+  "current_entry": "artifact/icde/README.md",
+  "current_files_preserved": 1793,
+  "raw_measurements_deleted": false,
+  "entries": [
+    {
+      "path": "EG_Evaluation/.gitignore",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cff2f10c810e4979732fc3df50aa8ee8fcb1b137",
+      "size": 1113
+    },
+    {
+      "path": "EG_Evaluation/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c41f5d2c05d50f121cf3bb2a428aac411b5e5a47",
+      "size": 1476
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/analyze_device_graph_view_registry.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c11fc6fe41743f0de84cfa1fe360fd56024d134c",
+      "size": 5783
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/apply_nxcugraph_strict_main99_overlay.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "87173b92c90a58f0de683f599ed085e764b090da",
+      "size": 19767
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/assemble_independent_measurement_passes.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bfbfccddcf5e121bcd9168a399dc5d5e9460e828",
+      "size": 9765
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/assemble_latest_v5_large_core.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b05b47cacaabc2b4888b1cf30624c5515d9eca37",
+      "size": 15323
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/assemble_reused_cold_start.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6b4d6cc7a860b17f3d3a483897f2a0c7f80ff732",
+      "size": 9752
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/assemble_v15_pagerank_protocol_correction_20260730.py",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "14671f13935e4b0bb2a34217b78a42fe4cefbfdf",
+      "size": 66793
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/audit_backend_separation.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "122f2045a4ad5c02402202ab1ab97d7a4a5de4b6",
+      "size": 13775
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/audit_complete_timing_triplets.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "05fcde28658f451729da6648d0f39482bd10c46f",
+      "size": 8344
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/audit_dataset_provenance.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "409fc40f97faedb3683ced225a43b78edc5a0d0f",
+      "size": 7984
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/audit_eggpu_timing_stability.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e4e5b6235238ea6cd98a2951ba1f318ee395cd75",
+      "size": 29904
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/audit_final_13_paper_assets.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0c277139ad0e1f79f54f8d4837fec61291320ccf",
+      "size": 17521
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/audit_full_result.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "58455d7d703c95ccaf48221f99c9ab3c83eeb605",
+      "size": 42636
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/audit_gpu_baseline_gap_recovery.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "652548452cbe227cf9c4ec74b26ae705e139a9fb",
+      "size": 14704
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/audit_gunrock_strict_formal.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "50a80c025897e1413e66b32b943249f6c71ea22b",
+      "size": 55953
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/audit_igraph_intro_raw_batch.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "31d70b61f19f3f497c75aba7280274eb21ac4c52",
+      "size": 9909
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/audit_nxcugraph_strict_main99.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "72caed93698da86bc1fce87b58a2e3f6e600b726",
+      "size": 43137
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/audit_paper_speedup_claims.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4d2cf56783737b8706cd34fb142450c013a2d122",
+      "size": 13299
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/audit_paper_supplements.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b4bd62aa8a04cb046db3e4902e2d6312d2d56f37",
+      "size": 16129
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/audit_second_supplement.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b38b912c1a41cdf1df55ba0ae36d2e479de30bb7",
+      "size": 17636
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/audit_v10_paper_claim_consistency.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d8c31730d29f353afa1c128dbc0b07778e4a7dce",
+      "size": 82934
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/audit_v12_pre_nx_lineage.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f65633dfbec4ecef7081b3a15899ee25bb51d7e8",
+      "size": 24642
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/audit_v15_stage4_outputs_20260730.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b02762f13987ce5a0768d1f4d0d1f5b8c12d468a",
+      "size": 29615
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/baseline_semantic_adapters_20260720.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5ed2e00534e37e329a91d3f9cbaa2ae425de3d01",
+      "size": 13781
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/baseline_versions.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "96b348c61ec94cddc8e4ce61c25fc6095a8bad20",
+      "size": 4542
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/benchmark_device_graph_view_registry.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a7911ab0a442a215aaf43a19c3164396c1ccc685",
+      "size": 8932
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/benchmark_stats.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d794679736eb530f8b64833a20de9a6f658ea50b",
+      "size": 7500
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/build_sygraph_local.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8f10361185c4473ccfe4e5a3a72f724ebc61c64c",
+      "size": 4554
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/check_internal_sota_stats.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "da4b28e263cce124a16a280c5d919deeda76640c",
+      "size": 4956
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/child_process_memory_monitor.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f1d7454891b86f24facf4ae648c2e06da8da5a8e",
+      "size": 9332
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/cluster/bench_lcc_fair.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3819f9dc5f0a9340cb76d3cae546715a5512b33a",
+      "size": 9015
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/consolidate_final_13_cpu_results.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "edc0455d5ee1c08445748a7f914441f039d9e005",
+      "size": 6689
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/debug_eggpu_host_stall_probe.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9a80fe68fb7c34505f355af8d805052d1dd98e82",
+      "size": 5446
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/derive_complete_evidence_reference.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d66e60b4be7533273eb92f53582974a7f356a8d6",
+      "size": 27073
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/derive_performance_efficiency_metrics.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "761b8a8c5a89f32ca25d9b83d809b56bed89a0d9",
+      "size": 7131
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/derive_v15_paper_sync_facts_20260730.py",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "673fb56804327cf94eafd0b20468a1ebfd85880e",
+      "size": 110551
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/easygraph_runtime_provenance.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "42db343ac3ece717adebe4309acec921c8c9ba07",
+      "size": 5354
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/eggpu_reuse_ablation.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0e80fa1a0625ccd7d09e37412344a7d412b47234",
+      "size": 4928
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/final_evidence_selection_policy_20260726.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5dfbd0ce3c46ff6a89c529f40c9f71e58cec13b6",
+      "size": 3128
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/final_function_support_decisions_20260726.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ca0dfb2bcf1dc9ff07c950f3e5040e58edf27d7d",
+      "size": 10226
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/final_function_support_decisions_20260727_graphscope.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "844ed9b6213e125dacfa126ccb60a90797cb87b8",
+      "size": 11170
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/finalize_rmat_manifest.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9ad803f4433da80e61b0ebc20e0c8af04b50b0af",
+      "size": 2622
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/finalize_scaling_manifest.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cd14cfbb48d06c0d878de5e6015b0e44de7dde81",
+      "size": 4493
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/finalize_v10_overlay_stage.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bd6d89e74591ab7c7673fa1ea606c8a3eeaf6e75",
+      "size": 6901
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/finalize_v10_uniform_assets_stage.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c3e1158370c4995011d8c5c61e2d36a6306e23a9",
+      "size": 13897
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/generate_ablation_story_visuals.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "622ae98eaaec979daede96301edf0a8ac71f1f24",
+      "size": 20868
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/generate_all_experiment_outcome_report.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "afdc037458db3432fac5c3e5842784a613a1ad9f",
+      "size": 11423
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/generate_best_observed_sensitivity.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b244bc9ffbef472a7065009a9b90bdbf6c96108a",
+      "size": 5763
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/generate_chapter4_evaluation_assets.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "86dee9abda171fe87b4ead25e5dfc248063cb858",
+      "size": 56568
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/generate_chapter4_evaluation_assets_graphscope.py",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "b49e2baa3ce9f5fcc3275f9d3c80631c219f5286",
+      "size": 67141
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/generate_converged_workflow_figure_20260729.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c17d2eccf3b339d379e198067386dd07d41ad9ef",
+      "size": 5329
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/generate_estimator_sensitivity_20260730.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2ee68987da72776e550e8ff5d5c4d894857f6003",
+      "size": 5762
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/generate_final_13_authoritative_guide.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1d014acd08a13c9ecac01efaf4f0afda00a466be",
+      "size": 31541
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/generate_final_13_complete_assets.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d0cc6962b201f552328867b88d8ed262105d5fa8",
+      "size": 30110
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/generate_final_13_complete_assets_graphscope.py",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "bb1b4d435da4b50341b4d9961e1360ad5adb3394",
+      "size": 49808
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/generate_final_13_dataset_story.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0cbce063121351fa5c6dd5ab0e507119df5df50a",
+      "size": 58495
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/generate_final_13_failure_ledger.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "121b83d96907f8e6a54f5debd028c10d27e7a640",
+      "size": 43342
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/generate_final_13_table_review.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3cc49561bea70a47b6915b7e8fd6015a5d416ca7",
+      "size": 2574
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/generate_final_baseline_versions.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "70ed66b73254648153a23bbecb5de346f505b04d",
+      "size": 6094
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/generate_final_experiment_visuals_v2.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9fd530032173151fe3f5934e02fcee5e40d88d72",
+      "size": 50299
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/generate_final_paper_bundle.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "599699deb89d77f7ccf305da3cfab48dfb8f2091",
+      "size": 86750
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/generate_first_use_workflow_artifacts.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d3b4d58790cd1d57d171762f5e0ec078b165d70a",
+      "size": 13139
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/generate_headline_results_20260730.py",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "4cc8326119f85a94f6cb44dba333ff2af62ca528",
+      "size": 43148
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/generate_intro_rmat_scaling_20260729.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c817ccf49839889c964a56c0fb13ca2cac6ca105",
+      "size": 55730
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/generate_paper_artifacts.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c418ae77ae9abe786b4d40c29a21f9f2c96c56a2",
+      "size": 25620
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/generate_result_showcase_visuals.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "78ce0f66985fa40889d65e85fee0f26d9f49d5fc",
+      "size": 18941
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/generate_second_supplement_artifacts.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cbd043267fc78579e2d635434016f87c286b6055",
+      "size": 47359
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/generate_sygraph_bfs_references.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4279107e9651e2c4741faef5906aa4e3fa89c5ed",
+      "size": 4144
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/generate_v15_secondary_mixed_stats_20260730.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "40ae97ab58a7b454bf777233b272a3b5dd745ef8",
+      "size": 26842
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/generate_v7_closure_assets.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6cb10c529040b3fbc7d56becd91cca390ad7f958",
+      "size": 11811
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/generate_v9_v10_metric_diff.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a22c335d4a5e6a45a10047923f2c8baba9128b94",
+      "size": 19884
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/generate_workflow_minimum_artifacts_20260730.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "29e2b05910db5d8d0fc8a1a05c742ca5423d6078",
+      "size": 11876
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/generate_workflow_minimum_figure_20260730.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "69ea8b421e9714fa6bd3f9950a1252f27ea8d8d0",
+      "size": 19409
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/generate_workflow_reuse_visuals.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d7824190cfefdc9bdec6043ca82f731695512214",
+      "size": 16892
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/gpu_device_profile.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d520ab3fb1584b55de9e925ae2265dcde7f8088d",
+      "size": 9861
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/gpu_visibility_marker.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a659d6c6f5f0f954e21ffac5df6e5c71591ad1dd",
+      "size": 7207
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/graphscope_baseline_worker.py",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "2279f7751bdf1787ab37d77cb30e34f8adc1b1a8",
+      "size": 19459
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/gunrock_artifact_manifest.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "982e58007c063a64218794f911fe610f99b89fc0",
+      "size": 12048
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/gunrock_strict_formal_manifest_20260730.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a4532c7b84e0fd48a648af1f1d76e4352b425851",
+      "size": 5822
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/gunrock_timing_protocol.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "58282a0372eac009ebbd9a88ca1938f77162a6d5",
+      "size": 5125
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/library_baselines.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2a6bb9167d27d69266233fa16ef526f1acda50b4",
+      "size": 118244
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/measurement_schema.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1e084860d2d145a7e0f9d3b8710588cdf3f66d4d",
+      "size": 11821
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/merge_gpu_baseline_recovery_into_final_13.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e1704199c9fac13bf4009f5f4008aa83271d0bf0",
+      "size": 12071
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/merge_graphscope_into_final_13.py",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "d61847332286a7a559575715e2eaff74874d6f5d",
+      "size": 12329
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/merge_latest_baseline_evidence.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fc8d542e2494604c6c6e02009ac1d2eca4d167d9",
+      "size": 6517
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/merge_latest_eggpu_main_evidence.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a2099deb11d559d7498d7f9937aadd652496e33e",
+      "size": 10401
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/mst/compare_mst.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8ea4303bc6389217b94107af73f63347d4a08300",
+      "size": 14035
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/nxcugraph_device_timer.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "79437c91a819ab8acf73e7dff0d6c12dcf2a8371",
+      "size": 8295
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/overlay_gunrock_strict_results.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6ff81ddebf6156d9023180be786a90e52d9b40f3",
+      "size": 25178
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/pagerank_residual_validation.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "805dec3f6048aa116613fb6d6ece9c65176dff09",
+      "size": 8864
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/pr/compare_pagerank_vs_cugraph.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8d2d7a7490a940c1221cee6a98ca0af43f614099",
+      "size": 12233
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/preflight_closeness_semantics.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fd2054c9130894802a66f3a38c717a3c56517d0b",
+      "size": 5804
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/preflight_full_eval_ready.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9310722fdcfcce63bbd522468f373774464f9366",
+      "size": 61319
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/preflight_structural_scanv.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ce10350f35597c864fc5f2a53d6bc918e2773206",
+      "size": 3542
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/prepare_bulk_csr_weights.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "83daf268632e0e93af74e29503631cb685c78f69",
+      "size": 4640
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/prepare_final_13_authoritative_inputs.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3acc22721abf0d3457f0cc35809c4483a0dac3a7",
+      "size": 18066
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/prepare_graphscope_13.py",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "2ecc508f8ce862476e124b8d12d4e561ddf827f7",
+      "size": 7274
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/prepare_gunrock_bulk_mtx.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "897d70ea73832815bc43e712b0d73c06fe00a448",
+      "size": 3719
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/prepare_logical_undirected_projection.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e87e5166cf4e080adc318cbd1385d089de0ddae4",
+      "size": 41115
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/prepare_logical_undirected_projection.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5a31357fa2f9df6870db9e07795e6992285b99d7",
+      "size": 12943
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/prepare_projection_weights.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "769662b225914d681529276c554ce85021383852",
+      "size": 6802
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/prepare_projection_weights.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3e62269a4ed8bd93a8c9c80dd20f672dca60a59c",
+      "size": 6284
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/prepare_sygraph_main_csr.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "146d6249b75817e90f2da04dace614623a1b7927",
+      "size": 3993
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/prepare_uniform_minimum_ledger_20260730.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "75a4ae21f62d9be424870ad24bbc101571828e87",
+      "size": 22228
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/prepare_v10_workflow_assets.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c810e3f41254822293459f15d53dc36b9f5bf050",
+      "size": 14783
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/prepare_vldb_uniform_assets.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d2dce7c88afc179f744c7ee0f79505641f70d99a",
+      "size": 93537
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/qualify_easygraph_cpp_structural.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "27719603d4d7c6c5ab73684b4375cb1c45d7906b",
+      "size": 8778
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/reconcile_authoritative_v7_evidence.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8205904bc1ace46e727c9308a0e731ebb5a82b29",
+      "size": 9137
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/reconcile_graphscope_repair.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3a398cf4037505572082701190ee78d367f4cdc3",
+      "size": 7211
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/refresh_gunrock_artifact_manifest.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3248f7d14cda571d18311b988251bf79ae6de2b3",
+      "size": 6105
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/repair_eggpu_first_use.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0d6c98bf75db48965905fb349fbb9a9c0dadd78b",
+      "size": 16725
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/revalidate_gunrock_large_pagerank.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1f3ac0e4f0cfffbf0b342b1ac5f36f1e93e97ba9",
+      "size": 5798
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_build_time_benchmark.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "453527718f07abbfa7804973097d9bf3a65d2947",
+      "size": 17175
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_bulk_csr_performance_gate.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "71f61ef848443a61b7eaa0202c6bbb7806225413",
+      "size": 11773
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_closeness_large_supplement.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b00d2278df64bb0eda3c7af3fed860ceba8ee47e",
+      "size": 31412
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_cpu_large_matrix.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "30f95d0dcdd4719aaf31e674022de1173eb68d55",
+      "size": 40229
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_cumulative_workflow_comparison.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "851232a693d7b078f3a74545a72a4a1a4829fb2e",
+      "size": 36518
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_eggpu_ablations.py",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "713f77c879e350a72f4752bb7882d9afb16a6358",
+      "size": 72520
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_eggpu_correctness_gate.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0ba7ec33cfe8da5c2221c416fe8fc00353a53200",
+      "size": 15001
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_eggpu_first_use.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d2c9a847c660be9df5f44d82255efb17847556e2",
+      "size": 26817
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_eggpu_natural_workflow.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c0d56618542197d87b825248765b829fe01f4a24",
+      "size": 42369
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_eggpu_scaling.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "07c6f985bf61fb6205b58b6c13cd9bbf4ea11892",
+      "size": 97499
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_eggpu_workflow_reuse.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5059754fc6d7257be302b9963b470247fa5f11e8",
+      "size": 13991
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_full_baselines.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "56f1e2283c612e7c2782c570404f103fc0803fa6",
+      "size": 191298
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_full_eval_gpu7.sh",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "5c4dc6b0f63b82a16149633c976dd74acc5eb2ab",
+      "size": 561
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_graphscope_baseline.py",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "150e2ea1d01588bd8a33ae54d73c769706da5122",
+      "size": 35791
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_gunrock_large_matrix.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f7fb2360b5fb48738a64d019f8494940cd544492",
+      "size": 35875
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_igraph_intro_scaling_fifo.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b2e52d9b6669643346179841979228d041b4be68",
+      "size": 30211
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_nxcugraph_large_matrix.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a8b8ae1594ea7dac87961ec53c980ab5d59ba154",
+      "size": 49634
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_nxcugraph_scale_qualification.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1da1fc15b44bfb31925478e56acf7b52adb7fe35",
+      "size": 15297
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_nxcugraph_snapshot_v2_override_20260730.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5addc89340ec1ccba5b05844bf3fbe5883531c48",
+      "size": 1037
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_nxcugraph_snapshot_v2_shard_20260730.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "dd24a221e77bf0e21e2f9fe24666f761b5cdf276",
+      "size": 1053
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_nxcugraph_strict_large11_20260730.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "37f7eb51ed18f92e11621f16b592f93d734d6c6c",
+      "size": 1981
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_nxcugraph_strict_main99_20260730.sh",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "8c8dfe82c5972997998f20de9d4f8bfbef164a2d",
+      "size": 1711
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_result_cardinality_sensitivity.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9ed52108f91dbce75b4809c0b22dca7e981027a6",
+      "size": 15727
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_split_full_baselines.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "342dc709c9502442b0fd4459513e96762da43bc8",
+      "size": 16201
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_sygraph_bfs_baseline.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "012e40eb1751582e294707fce9fc4f665332b494",
+      "size": 11437
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_v10_final_timing_stability_audit_20260729.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0e261ffbf0f3e1aebf0869a23353207e2f048ed0",
+      "size": 2584
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_v10_final_uniform_assets_20260729.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5b105805ac4182f2f061eec3f44d6bfae693d8cc",
+      "size": 5043
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_v10_final_uniform_overlay_20260729.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b782a4f38a707e11f58c553dc768e54d37fc3614",
+      "size": 6088
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_v15_current_runtime_merge_audit_assets_20260730.sh",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "5e06a33236b89f3c259a3f8d5f7b1d33be1725ef",
+      "size": 45697
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_v15_current_runtime_stage1_20260730.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f9e7bc91bf9dad2e3fd9eb29c2c8739b29471955",
+      "size": 2326
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_v15_current_runtime_stage1b_gpu0_recovery_20260730.sh",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "edaf32f7169d686e7aed8ed19c831226365f37d5",
+      "size": 1746
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_v15_current_runtime_stage1c_post_lcc_fix_20260730.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "66bf415732649ff9a5612554f0ccc8a45231ceed",
+      "size": 2550
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_v15_current_runtime_stage1d_recover_interrupted_20260730.sh",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "3ca001cf2a4abbab029db61a7fe12e5b4f43bdf3",
+      "size": 3375
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_v15_current_runtime_stage2_large_and_closeness_20260730.sh",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "ca50906a31fe7fc8a28c1033a0af712e100c554f",
+      "size": 6699
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_v15_current_runtime_stage3_memory_20260730.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b66e122715782f7317a553252c21f78a1e5ee89a",
+      "size": 4786
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_v15_current_runtime_stage4_workflow_intro_20260730.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "52e001fd049df8821a316519c563b6eaca7c0f40",
+      "size": 3619
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_v15_pagerank_protocol_assembly_20260730.sh",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "a29e9f56ab8ab22a77df3fd17c132f95fa1402c8",
+      "size": 3881
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_v15_pagerank_protocol_correction_20260730.sh",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "b4d6bf0319bcbadfbb646cbc47692f37ef1c51df",
+      "size": 8876
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/run_with_stable_affinity.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4e779fb3eaeee9685769114d6e19da53cf0abb4e",
+      "size": 2817
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/scc/compare_vs_cugraph.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "525a5e56d8c686334382401d77fec9c7a98194d1",
+      "size": 7405
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/second_supplement_protocol_20260715.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "902654835161e5ef797276a751df3911a15a9eeb",
+      "size": 5892
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/stable_timing_protocol.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "219cce83697cc3cfdadf642c1f5a2e12f1b372c8",
+      "size": 30114
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/stage_cpu_closeness_build_overlay.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "33ca86821bda0a69d0e179222ba2b4aef91d1ac8",
+      "size": 23543
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/summarize_ablation_system.py",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "e4d2f5a97e63d7349efb6dae54135e872437f3d7",
+      "size": 23259
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/summarize_category_estimate.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e843c20c9aeb42cdb17f52e197fe3f823c4b23aa",
+      "size": 10351
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/summarize_final_result.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e9fc0443debcddd810ef1e562900da1da0bd21ea",
+      "size": 39006
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/summarize_non_sota_pairs.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a8065c08afa895162dd53b518601270fad92894c",
+      "size": 8268
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/summarize_non_success_ledger.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "eaa9ff6272ee8d8dcf621071a288af2390fb2f46",
+      "size": 5210
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/sygraph_bfs_runner.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5670075efea6668c2a37a6cf7be954d3639b69bc",
+      "size": 9709
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/sygraph_multi_runner.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e87e26d1a8988c3478933edf5d2bf0102593680a",
+      "size": 12161
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/sygraph_result_accessors.patch",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "58885797f6e19b34f2ef6fecabf1bcaadef89804",
+      "size": 6706
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/test_gunrock_timing_protocol.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7b3a0280daf123c5b060ad4b0ee7f35595022fc7",
+      "size": 3222
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/test_overlay_gunrock_strict_results.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7b772f3ede711ea0594988403fa050b9d1919554",
+      "size": 12588
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/data/tiny_bulk.edgelist",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ca8b86e3035fdb3ac96798f2b1cbdc5362a10a19",
+      "size": 61
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/data/tiny_bulk_matrix.mtx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ae61c3d5e54c0c259d6093465b351bc126b35f52",
+      "size": 145
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_ablation_runtime_provenance.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ec0ee5ad58175f39adf08c3db3df26a21748e7c7",
+      "size": 10278
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_audit_sample_contract.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "229b88f8d08d9b41cdd3e11647517221133aa788",
+      "size": 4330
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_audit_v10_paper_claim_consistency.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "238a6778d78b608d170c789e52707a96b0fc1873",
+      "size": 23526
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_audit_v15_stage4_outputs_20260730.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c293e1fed4448e9da08ac5404f7cd98b3af23d12",
+      "size": 10985
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_authoritative_input_replacement_policy.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "29b7eb137aed1fccdf307b817753be6b7e763a5b",
+      "size": 4890
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_baseline_version_provenance.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "582f6d4fbbd890a8f769e83b53ced0148077c06f",
+      "size": 1401
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_benchmark_stats.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c5a5b37d4286c1ac61f8711a4f209ebab8bd79f2",
+      "size": 6738
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_best_observed_sensitivity.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "73dd23e541cc03860eb2af0392e6bf99858f685b",
+      "size": 1760
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_build_python_abi_contract.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4588e056200635ebbddbd7993d21de20f4cf4b55",
+      "size": 629
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_child_process_memory_monitor.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "48a82064bb041d8ddda33d78acc34c29fac385c4",
+      "size": 2070
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_complete_timing_triplets.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "89f26fed214ee14028b1a50ad0a4c18aff99532a",
+      "size": 2574
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_cumulative_workflow_protocol.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5fcc781574377c8a675b4b876d86d6896b0f501c",
+      "size": 8727
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_dataset_semantics.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0a704a2d33edc158763d7e878336e99c22655440",
+      "size": 1131
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_device_comparability_policy.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "325cc31bc11acb562f517a97f45e2180b0b9fd9c",
+      "size": 1504
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_device_graph_view_registry_protocol.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a973f5be7d84aa469ac336a9358d7760c1d65d1d",
+      "size": 1447
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_eggpu_timing_stability_audit.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "202f35d6e11e8afe68caa469fb60163dbc293308",
+      "size": 8802
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_execution_protocols.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cb1796114664357c95f0028bb45b6df46f6520f2",
+      "size": 31500
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_final_13_failure_ledger_contract.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "789ab19d361827fd63e83d03fa45e0c52fc567b2",
+      "size": 10280
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_final_gate_semantics.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5dc71c78c6b1d9561f4e4a3ce3ed95febd2b74fe",
+      "size": 17460
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_final_paper_bundle_policy.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "15d737e4fe2dea2827813e715eeb5352f729ac75",
+      "size": 4001
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_final_result_sota_semantics.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d02bb05df1ebd07ccff2d5a90019cf70f56eb23c",
+      "size": 2557
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_finalize_v10_overlay_stage.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "dbf2d23d7ee1b1c178245df63107aa304683a449",
+      "size": 4711
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_graphscope_baseline_contracts.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9a3244d3934f8e9216b1e9e66727aff4c6d864b3",
+      "size": 10608
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_gunrock_discovery.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8e80c8fd4aaead23536e755e5ce5542c21263417",
+      "size": 7638
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_gunrock_large_semantics.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1c52a16589fb78c54567f3efd6c508003941e9fe",
+      "size": 6277
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_gunrock_semantic_adapters.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "88100c06822f2b71caaeabbc3fb8b72eb5a32658",
+      "size": 11713
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_latest_eggpu_merge_contract.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "55b261eead3996c43f18d68d24aacc84d226685d",
+      "size": 3272
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_measurement_and_ablation_contracts.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c2b592c5d54d10cf329158469e1ab9e2607a6adb",
+      "size": 9594
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_nx_cugraph_isolation.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f71001250f082a146418f76d641f409ff0db3d71",
+      "size": 1400
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_nxcugraph_device_timing_contract.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1dd5832f7e3db7c77bfac216a689ba9856878683",
+      "size": 10081
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_nxcugraph_strict_overlay.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ecaa4a61d583ae07413ec9a0fbbb3bb3c72daf56",
+      "size": 5793
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_pagerank_cache_contract.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "feeeca2ce04ab59b864a34f37d1bd47de63a42aa",
+      "size": 465
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_path_benchmark_semantics.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d19adca0dad45f4c566272d610e05aea5e737488",
+      "size": 1352
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_plot_skip_contract.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a6ab560268ef038a4e4d2b93b92e78f95a17c8b0",
+      "size": 783
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_preflight_contracts.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2ff9da3801e755ae651404e8f6a3d10b426b569a",
+      "size": 2151
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_prepare_vldb_uniform_assets.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "037b4862e0b552cef0b398ac1266f58d58c7d112",
+      "size": 26489
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_runtime_backend_contract.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d0a067a34f84a8295fff9052a603d375f1436f68",
+      "size": 1855
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_scaling_resume_protocol.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ae07e7aa4108151bd7715783a5a7c2d577094f60",
+      "size": 16553
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_second_supplement_protocol.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "56f5176d865ef8d01a856215c54c46e7ebfea882",
+      "size": 14711
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_stable_timing_protocol.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "dba0823a9ccf7fbf2aa67a40260f2c846ab61dc0",
+      "size": 9626
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_supplement_artifacts.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0b2130eee9ba5e199bdebc9dfb74577444bf6ddd",
+      "size": 2843
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_timeout_repeat_policy.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "21a3e0f3335994535389672ff46590bb80290a8f",
+      "size": 1146
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_update_final13_eggpu_uniform_20260729.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cb19307e5dc0d8ef52db76d81f3dabf6bdaf7cec",
+      "size": 56932
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_v15_pagerank_protocol_correction_20260730.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "23c8694d0938ab6000bcf49e80b12af78f728c87",
+      "size": 28126
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_v15_paper_sync_facts_20260730.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "813647549f6025ba6d6a12fb9b1de3d9f2495c18",
+      "size": 52636
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_v15_release_merge_guards_20260730.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ac4794fed0740332c3f8be5e09fd60091969191d",
+      "size": 5277
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tests/test_verify_v10_uniform_assets_gate.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8edb5592505d254243987949b849dee2b79f8a1e",
+      "size": 1932
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tools/csr_to_matrix_market.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "de78ed5044447aa46b2cfae6b2e4594617ec2caf",
+      "size": 4467
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tools/edge_list_to_eggpu_csr.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "83257f4a5c73dc91a80e9bb49a8ff4688405f014",
+      "size": 14533
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tools/generate_rmat_csr.cu",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "870e5e584e91e7bc9ab60bb7e3c7e2965049ee79",
+      "size": 21905
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/tools/prepare_graphscope_dataset.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d1e3c92b5e4e87563ae0eae2d9d041f93a1b371b",
+      "size": 16403
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/update_final13_eggpu_gap_v11.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e81d5d71b0429c3f8ee712f3f824a770c46ccfbb",
+      "size": 10134
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/update_final13_eggpu_uniform_20260729.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "af3da7566cc0f05439b6af9f16fff1dbc894d3fa",
+      "size": 122452
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/validate_bulk_csr_manifests.py",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "ad391835f8affa98c4ca870d38ddeefd426784dd",
+      "size": 2057
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/validate_bulk_mst_bc_scc_regression.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "190c89e190e0d92325d399de54129f6bcbd9452c",
+      "size": 5191
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/validate_correctness.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8fffdfb23942c10205424569f0a2aa08ed609802",
+      "size": 32797
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/validate_device_graph_cache_identity.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "08227cb7073e0980f0db9179b1b782130b170f44",
+      "size": 3268
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/validate_ego_edge_statistics.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "69d0243f1f5a8369a5dc7373697d793f43483f70",
+      "size": 6839
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/validate_graphscope_results.py",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "4f67a518436917855f139c9f8cbe44a4667006da",
+      "size": 14948
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/validate_nxcugraph_device_timer_semantics.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "14ec03b795823a5fe02ffc31fbe810051bd2c238",
+      "size": 7582
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/validate_projection_algorithms.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0c7611e15d3adaca9f163de7a7779305227ac4f2",
+      "size": 7452
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/validate_projection_mst_randomized.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "577384d104309e4894520c8db18efe9a43cb3ad2",
+      "size": 7537
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/validate_rmat_reference_gate.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0aacd44f3fcbb93e661a28e7f8347f5966ba0ee3",
+      "size": 4248
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/validate_structural_hybrid_dispatch.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "98b6702710963d033bc0d207e1575e0be7c7988c",
+      "size": 2553
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/validate_structural_reverse_cache.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a3bee4f057d5d9c5165c0528785f9b9a17085e9b",
+      "size": 2473
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/validate_v10_dijkstra_edge_cases.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d81faeb9c9b1dd13ec11a46706ae8e43089aefa0",
+      "size": 5508
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/verify_v10_uniform_assets_gate.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7dad19315970985f5938fd756c1e6aff44253f07",
+      "size": 9102
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/verify_v10_uniform_overlay_gate.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "38e9228d00273238df0b0a475efda5e52270e25b",
+      "size": 10120
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/verify_v15_pagerank_worker_protocol_20260730.py",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "530648e3e28c570927bc7e235d066d7685b6a26f",
+      "size": 21582
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/verify_visibility_marker_neutrality.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b3b1c97f4f411c051c90e36d81688a9910cbe5e2",
+      "size": 10235
+    },
+    {
+      "path": "EG_Evaluation/benchmarking/wait_for_idle_gpu.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a03e3319f589765e405056e7ca5e9ffff259e8f2",
+      "size": 2312
+    },
+    {
+      "path": "EG_Evaluation/datasets/DATASETS.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6ff2110de0100107af682a01f9859a6f517893b7",
+      "size": 1518
+    },
+    {
+      "path": "EG_Evaluation/datasets/DATASET_PROVENANCE_20260710.csv",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a7da700a79fbd1c0d7a713638ed9e997faefd4db",
+      "size": 6344
+    },
+    {
+      "path": "EG_Evaluation/datasets/MANIFEST_20260609.tsv",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c20c4649155677773728f89b26e264b05c8e32e1",
+      "size": 2930
+    },
+    {
+      "path": "EG_Evaluation/environment_eggpu_cuda128.yml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4a87bb741c86a92fb239fa4f86ebfc0f191aa805",
+      "size": 465
+    },
+    {
+      "path": "EG_Evaluation/finalize_final_13_paper_assets.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "af69718935ff2c2b38deb01df03fa706caaa26f3",
+      "size": 8894
+    },
+    {
+      "path": "EG_Evaluation/paper_table_function_support.csv",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5ec0d074ef29e80d93c98611d2f24584bdea5e8f",
+      "size": 507
+    },
+    {
+      "path": "EG_Evaluation/prepare_rmat_scaling_datasets.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ba3149dbab945ad70b27ac00e3afae5b7041e074",
+      "size": 2768
+    },
+    {
+      "path": "EG_Evaluation/prepare_scaling_datasets.sh",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "5febedca29821e476ea215d238e293f5b8b7a652",
+      "size": 6670
+    },
+    {
+      "path": "EG_Evaluation/run_complete_paper_experiments.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "10631d95f59dc1aba160a29d8af6fd1fb1b562b0",
+      "size": 10066
+    },
+    {
+      "path": "EG_Evaluation/run_final_13_missing_core.sh",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "505f72d13fedb531ac33387699f463b7f124291d",
+      "size": 4834
+    },
+    {
+      "path": "EG_Evaluation/run_final_13_missing_followup.sh",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "83f07ac0acda688d160672e7f3bdc4dd0580986a",
+      "size": 5334
+    },
+    {
+      "path": "EG_Evaluation/run_final_13_recovery_and_followup.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f086ef9355b5e07eb60c2fa32de1f49161ad87ae",
+      "size": 6003
+    },
+    {
+      "path": "EG_Evaluation/run_final_13_wait_recover_finalize.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e8482cf5ac8abb47e1e02de6fa0f57ddb6db77be",
+      "size": 2054
+    },
+    {
+      "path": "EG_Evaluation/run_final_gpu5_gate_and_full.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3b81c372e2a09b9c65d8024f7f4c0f59bbc9bcaf",
+      "size": 9006
+    },
+    {
+      "path": "EG_Evaluation/run_gpu_baseline_gap_recovery.sh",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "bae5f6d1f8adbf6b2842f932d39397b7808492df",
+      "size": 5904
+    },
+    {
+      "path": "EG_Evaluation/run_graphscope_final13_pipeline.sh",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "37aee41194086522440445c63f0ab0b577cbc232",
+      "size": 4265
+    },
+    {
+      "path": "EG_Evaluation/run_latest_v3_eggpu_main11.sh",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "1ce6a5356af45fd3045b0fdc05ad66ba48392b9c",
+      "size": 1388
+    },
+    {
+      "path": "EG_Evaluation/run_latest_v4_eggpu_refresh.sh",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "89b0e9a92338b5d3dbb079ed84ddbc7051837260",
+      "size": 4209
+    },
+    {
+      "path": "EG_Evaluation/run_latest_v5_eggpu_refresh.sh",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "06305e49a709d7cba2e924d46000e0aebb1ea197",
+      "size": 8825
+    },
+    {
+      "path": "EG_Evaluation/run_main_and_ablation.sh",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "1a4c99b3269188e026e27061724d39191e53b2c1",
+      "size": 32628
+    },
+    {
+      "path": "EG_Evaluation/run_missing_paper_supplements.sh",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "b25a58fa23cd6b08dbda852623ce207fa60b3f78",
+      "size": 10630
+    },
+    {
+      "path": "EG_Evaluation/run_queued_gunrock_lcc_v3.sh",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "29c55f769254de8fc1c6477f19e316077fdd85e0",
+      "size": 1384
+    },
+    {
+      "path": "EG_Evaluation/run_second_supplement.sh",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "72ca973c8525eace7961162deebb8ed8ed811742",
+      "size": 6694
+    },
+    {
+      "path": "EG_Evaluation/run_sygraph_qualification.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e155db9b1fd7e073100e5c9eb6aca6d2441d8885",
+      "size": 4349
+    },
+    {
+      "path": "EG_Evaluation/run_v4_targeted_large_and_scaling.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9587dabba0fd86a15472302e381e3028b20cd05d",
+      "size": 4745
+    },
+    {
+      "path": "artifact/ARCHITECTURE.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5b61de8227e0cb907ef38f8d4ba2a80c367732a9",
+      "size": 1941
+    },
+    {
+      "path": "artifact/CORRECTNESS.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d2c46a8010d72aa486ee58a4f1a41b557f1b6ef0",
+      "size": 1330
+    },
+    {
+      "path": "artifact/FUNCTION_SUPPORT.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d6b1ed44a91a8bc44b68719ef3bd5415c09e49b2",
+      "size": 1920
+    },
+    {
+      "path": "artifact/PAPER_CODE_MAP.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "af299c5786abb58f6c2156062053811db8a1db5d",
+      "size": 1931
+    },
+    {
+      "path": "artifact/datasets/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "53d09cf792e4562e8d68b3d878cc05d4f7c404e2",
+      "size": 1390
+    },
+    {
+      "path": "artifact/datasets/manifest.tsv",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b82a162269e266bfa63de358c737ef8c30853d81",
+      "size": 3170
+    },
+    {
+      "path": "environment.yml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fa5402a04305a96d28dfc972141fa2b55044a5a6",
+      "size": 543
+    },
+    {
+      "path": "scripts/build_eggpu.sh",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "6378411976c269f901c1519054fe9cbd97476461",
+      "size": 5974
+    },
+    {
+      "path": "scripts/check_eggpu_compat.py",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "5358c8908837886ac508d39e13ae1802b3f15a5e",
+      "size": 6668
+    },
+    {
+      "path": "scripts/correctness_smoke.py",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "ea97e9f999cd1e7f4f28840a117b342b49419b56",
+      "size": 6147
+    },
+    {
+      "path": "scripts/run_smoke.sh",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "667b714115e6fc41b42c0c7272f2965f9a2991a8",
+      "size": 812
+    },
+    {
+      "path": "scripts/verify_release.py",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "cd7cf86d7b865a1ac46652e0c7f9e1f2821fbcc8",
+      "size": 4190
+    }
+  ]
+}
