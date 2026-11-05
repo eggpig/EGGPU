@@ -1,0 +1,15 @@
+{
+  "schema": "eggpu.intro.ownership_counterexample.v1",
+  "evidence_kind": "CONSTRUCTED_COUNTEREXAMPLE_NOT_MEASUREMENT",
+  "unit": "illustrative buffer units",
+  "assumptions": ["All physical holders are shown.", "At this later reclamation boundary all shown cached views are evictable; no active reader, external pin, or workspace holds an array.", "The two G views share topology and own distinct immutable weight-version arrays.", "This is retained input-state accounting, not a device peak-memory or out-of-core claim."],
+  "arrays": [
+    {"id": "T", "units": 8, "owners": ["G0", "G1"]},
+    {"id": "W0", "units": 1, "owners": ["G0"]},
+    {"id": "W1", "units": 1, "owners": ["G1"]},
+    {"id": "H", "units": 6, "owners": ["H"]}
+  ],
+  "budget_units": 10,
+  "candidates": [["G0"], ["G0", "G1"], ["H"]],
+  "interpretation": "Referenced bytes are not independently reclaimable bytes. The figure compares feasible releases, not an optimal policy or a measured speedup."
+}

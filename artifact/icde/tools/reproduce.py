@@ -12,6 +12,15 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[3]
 TARGETS = {
+    "test-followup-cpu": "artifact/icde/tools/test_followup_cpu.py",
+    "state-protocol-prepare": "artifact/icde/campaign/state_protocol_completion_v1/prepare.py",
+    "state-protocol-test": "artifact/icde/campaign/state_protocol_completion_v1/run_cpu_tests.py",
+    "e6-protocol-worker": "artifact/icde/campaign/e6_protocol_completion_v2/e6_worker.py",
+    "e6-protocol-plan": "artifact/icde/campaign/e6_protocol_completion_v2/build_plans.py",
+    "e4s-archive": "artifact/icde/campaign/e4s_recoverable_outputs_v1/archive_outputs.py",
+    "e4s-export-check": "artifact/icde/campaign/e4s_recoverable_outputs_v1/export_eligible.py",
+    "formal-disposition-inspect": "artifact/icde/campaign/formal_admission_disposition_v1/inspect_ledger.py",
+    "external-formal-watch": "artifact/icde/campaign/watch_external_formals_v4.py",
     "state-deployment-template": "artifact/icde/tools/state_deployment_template.py",
     "paper-e2-e6": "artifact/icde/paper_results/render.py",
     "capacity-results": "artifact/icde/paper_results/capacity.py",

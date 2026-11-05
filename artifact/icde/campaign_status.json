@@ -3,7 +3,7 @@
   "date": "2026-11-05",
   "source_candidate": "native_memory_input_v1",
   "source_sha256": "d84ff388e1e40d1fd6ed83fcaceecd0491fc0451adffaff657a95940b1803f84",
-  "source_status": "DEVELOPMENT_CHECKPOINT_CPU_PASS_GPU_QUALIFICATION_IN_PROGRESS",
+  "source_status": "DEVELOPMENT_CHECKPOINT_FORMAL_QUEUES_STARTED_RESULTS_INCOMPLETE",
   "datasets": [
     "US",
     "EP",
@@ -29,10 +29,9 @@
     "completion_evidence": "inputs/completion.json"
   },
   "formal_repetitions": 10,
-  "formal_configurations": 0,
   "formal_results_in_this_publication": false,
   "single_gpu_leading_target": 0.9,
-  "target_status": "OPTIMIZATION_TARGET_NOT_FORMALLY_MEASURED",
+  "target_status": "OPTIMIZATION_TARGET_NOT_ACHIEVED_OR_ESTABLISHED_BY_COMPLETE_FORMAL_MATRIX",
   "experiments": {
     "E1": {
       "design": "FROZEN",
@@ -74,8 +73,23 @@
     "framework": "RESERVED_FOR_COLLABORATOR"
   },
   "presentation_tools": "presentation/README_CN.md and paper_results/README_CN.md: CPU-tested E1 tables, continuous16 and E2–E6 vector renderers; formal output requires exact complete evidence",
-  "current_private_campaign": "New d84 GPU qualification is in progress. At least one qualification has passed in each of preflight, SG, continuous16, state main, hotspot, PR control, E6 memory and GUM FP32; this package does not relabel that progress as complete coverage or a relocated build qualification.",
+  "current_private_campaign": "Formal queues launched; results incomplete and no final performance claims.",
   "progress_evidence_scope": "Progress checkpoint reported by the campaign controller owner; raw source-bound admission proofs remain in the private campaign and are not reusable public proofs.",
   "publication_kind": "DEVELOPMENT_CHECKPOINT",
-  "e4s_formal_export": "HELD_UNTIL_RECOVERABLE_OUTPUT_ARCHIVE_INTEGRATION"
+  "e4s_formal_export": "RECOVERABLE_OUTPUT_TOOLING_INCLUDED; REQUIRES_ACTUAL_SUCCESSFUL_ARCHIVE_AND_MAINTENANCE_PROOFS",
+  "formal_campaign_status": "LAUNCHED_INCOMPLETE",
+  "progress_snapshot": {
+    "observed_at": "2026-11-05T10:32:00Z",
+    "observer": "campaign controller owner",
+    "external_formal_passed": 2,
+    "external_formal_queue_jobs": 300,
+    "e6_v2_qualification_submitted": 60,
+    "wcc_v2_qualification_submitted": 80,
+    "scope": "Owner-reported progress only; original machine-bound receipts are not distributed as portable qualification proofs."
+  },
+  "experimental_protocols": {
+    "state_protocol_completion_v1": "CPU_VALIDATED; NEW_PROTOCOL_GPU_QUALIFICATION_REQUIRED",
+    "e6_protocol_completion_v2": "CPU_VALIDATED; GPU_QUALIFICATION_SUBMITTED_INCOMPLETE",
+    "native_wcc_wide_v2": "SEPARATE_6CCE_OVERLAY; GPU_QUALIFICATION_SUBMITTED_INCOMPLETE; NOT_MAIN_SOURCE"
+  }
 }

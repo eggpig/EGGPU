@@ -1,0 +1,31 @@
+{
+  "schema": "eggpu.e6.independent-reference-manifest/v1",
+  "protocol": {
+    "input": "same source-bound canonical host CSR; construct simple unweighted weak projection inside T_first; retain every canonical vertex including isolates",
+    "weights": "original w16-v1 files remain input-bound; all E6 operators are explicitly unweighted",
+    "selection": "all finite ES/Constraint rows; descending ES, ascending Constraint, canonical ID, after fixed round-to-even 1e-6 quantization; first min(32, finite vertices)",
+    "winner": "maximum exact Wasserman-Faust closeness among actual selected vertices; fixed 1e-6 rounding then minimum canonical ID",
+    "closeness": "32 exact sources, not a full all-vertex closeness ranking; r^2/((n-1)*sum_distance), zero for r=0",
+    "complete": "all ES and Constraint values, candidate IDs, every candidate closeness value, winner, full BFS distances and full canonical WCC partition on host",
+    "timing": "T_first starts with common host CSR ready and includes weak projection, imports, graph formats, uploads, all five calls, host materialization, both dependent selections; T_ready retains graph state after one full warmup; close recorded separately",
+    "ablation": "one of four fixed groups delegates its actual work to igraph C/derived CPU; unchanged groups use the same native ABI; no precomputed outputs or omitted functions",
+    "mg": "whole graph replicated on each GPU; ego-vertex shards for structural metrics and selected-source shards for closeness; BFS/WCC on logical GPU0; not partitioned capacity scaling",
+    "quality": {
+      "rtol": 1e-08,
+      "atol": 1e-10,
+      "bfs_exact": true,
+      "wcc_partition_exact": true,
+      "nan_mask_exact": true,
+      "selection_exact": true,
+      "owning_immutable": true
+    },
+    "formal_repetitions": 10,
+    "timeout_seconds": 1800,
+    "task_origin": "controlled structural screening workflow, not an observed production trace"
+  },
+  "gpu_executed": false,
+  "performance_eligible": false,
+  "fixture_only": true,
+  "producer": {},
+  "references": []
+}

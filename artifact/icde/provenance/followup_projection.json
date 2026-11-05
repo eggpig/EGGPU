@@ -1,0 +1,844 @@
+{
+  "schema": "eggpu.public.followup-projection/v1",
+  "publication_kind": "DEVELOPMENT_CHECKPOINT",
+  "source_sha256": "d84ff388e1e40d1fd6ed83fcaceecd0491fc0451adffaff657a95940b1803f84",
+  "expected_parent_commit": "a94150b380b25453ca66f3ec4eb945b3c18fd2b7",
+  "source_replaced": false,
+  "files": [
+    {
+      "source": "experiments/campaign_20261104/e4s_recoverable_outputs_v1/README_CN.txt",
+      "source_sha256": "9d3c9c020578c354ae7777c3a0acef823f60e46734d0255ad8a71be659b4f228",
+      "public_path": "artifact/icde/campaign/e4s_recoverable_outputs_v1/README_CN.txt",
+      "public_sha256": "9d3c9c020578c354ae7777c3a0acef823f60e46734d0255ad8a71be659b4f228",
+      "projection": "documentation_projection",
+      "reason": "Private location labels only; this is narrative/source metadata, never an original measurement receipt"
+    },
+    {
+      "source": "experiments/campaign_20261104/e4s_recoverable_outputs_v1/archive_outputs.py",
+      "source_sha256": "52c61d293c49ccb7b562f9cd59e566a4f4a6747a416dedc697b4bf230760fd78",
+      "public_path": "artifact/icde/campaign/e4s_recoverable_outputs_v1/archive_outputs.py",
+      "public_sha256": "52c61d293c49ccb7b562f9cd59e566a4f4a6747a416dedc697b4bf230760fd78",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/e4s_recoverable_outputs_v1/backfill_qualification.py",
+      "source_sha256": "0cbb0c52240bc3255f368faef73a9a55af152f163a98e2297c54b6c51511453a",
+      "public_path": "artifact/icde/campaign/e4s_recoverable_outputs_v1/backfill_qualification.py",
+      "public_sha256": "0cbb0c52240bc3255f368faef73a9a55af152f163a98e2297c54b6c51511453a",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/e4s_recoverable_outputs_v1/decorate_formal_plan.py",
+      "source_sha256": "15b59db8d5e96332924b9822f2ebface315e50690b0cfa025003ae1f2f6f92de",
+      "public_path": "artifact/icde/campaign/e4s_recoverable_outputs_v1/decorate_formal_plan.py",
+      "public_sha256": "15b59db8d5e96332924b9822f2ebface315e50690b0cfa025003ae1f2f6f92de",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/e4s_recoverable_outputs_v1/export_eligible.py",
+      "source_sha256": "d329a4ed08561322a4ddba0ac9d57f56e7b05cd7c5a8bca050ea2681b55eb461",
+      "public_path": "artifact/icde/campaign/e4s_recoverable_outputs_v1/export_eligible.py",
+      "public_sha256": "d329a4ed08561322a4ddba0ac9d57f56e7b05cd7c5a8bca050ea2681b55eb461",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/e4s_recoverable_outputs_v1/maintain_e4s_outputs.py",
+      "source_sha256": "50b178ce93235ff0766cbff813d59a8e62c0e1450fb143284a229967ebb61293",
+      "public_path": "artifact/icde/campaign/e4s_recoverable_outputs_v1/maintain_e4s_outputs.py",
+      "public_sha256": "50b178ce93235ff0766cbff813d59a8e62c0e1450fb143284a229967ebb61293",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/e4s_recoverable_outputs_v1/owned_process_supervisor_v2.py",
+      "source_sha256": "3cca4c300d88547b610669b4f6f4621b808e3986a104548759546239f6cf6c81",
+      "public_path": "artifact/icde/campaign/e4s_recoverable_outputs_v1/owned_process_supervisor_v2.py",
+      "public_sha256": "3cca4c300d88547b610669b4f6f4621b808e3986a104548759546239f6cf6c81",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/e4s_recoverable_outputs_v1/run_e4s_formal_queue_v1.py",
+      "source_sha256": "a94a0154a07044bd3dbc72705be4c57350517105ddebf95e92040811bf40c34c",
+      "public_path": "artifact/icde/campaign/e4s_recoverable_outputs_v1/run_e4s_formal_queue_v1.py",
+      "public_sha256": "a94a0154a07044bd3dbc72705be4c57350517105ddebf95e92040811bf40c34c",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/e4s_recoverable_outputs_v1/test_admission_integration.py",
+      "source_sha256": "b1c59dd73dd54cd56fcd80bc035b9b0b44467ff4d806b2ca9761ad9983237c90",
+      "public_path": "artifact/icde/campaign/e4s_recoverable_outputs_v1/test_admission_integration.py",
+      "public_sha256": "b1c59dd73dd54cd56fcd80bc035b9b0b44467ff4d806b2ca9761ad9983237c90",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/e4s_recoverable_outputs_v1/test_archive_outputs.py",
+      "source_sha256": "bf7c0e5db40a23d7246b15b95941a703d89ed7ef543efe150c0119968ad68cc1",
+      "public_path": "artifact/icde/campaign/e4s_recoverable_outputs_v1/test_archive_outputs.py",
+      "public_sha256": "bf7c0e5db40a23d7246b15b95941a703d89ed7ef543efe150c0119968ad68cc1",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/e4s_recoverable_outputs_v1/test_backfill.py",
+      "source_sha256": "86914f28464364e9ec37d9674fbbb88c629f42d6036c3865517f6f89bbe8a634",
+      "public_path": "artifact/icde/campaign/e4s_recoverable_outputs_v1/test_backfill.py",
+      "public_sha256": "86914f28464364e9ec37d9674fbbb88c629f42d6036c3865517f6f89bbe8a634",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/e4s_recoverable_outputs_v1/test_maintenance_export.py",
+      "source_sha256": "dc21bc46a6941a3992b964f69529c9b9695de955735705a23d2cca0788250d02",
+      "public_path": "artifact/icde/campaign/e4s_recoverable_outputs_v1/test_maintenance_export.py",
+      "public_sha256": "dc21bc46a6941a3992b964f69529c9b9695de955735705a23d2cca0788250d02",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/e4s_recoverable_outputs_v1/test_queue_postprocessing.py",
+      "source_sha256": "fc0c906a090f3f7cef5e3b120bf9eb4967e587c8e20c92828254960b3c9e10c6",
+      "public_path": "artifact/icde/campaign/e4s_recoverable_outputs_v1/test_queue_postprocessing.py",
+      "public_sha256": "fc0c906a090f3f7cef5e3b120bf9eb4967e587c8e20c92828254960b3c9e10c6",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/formal_admission_disposition_v1/README_CN.md",
+      "source_sha256": "ede612a75f766c24ff37e0e7ec85f302fd521c1a71b8a0729b9c6f2ae1cccab5",
+      "public_path": "artifact/icde/campaign/formal_admission_disposition_v1/README_CN.md",
+      "public_sha256": "ede612a75f766c24ff37e0e7ec85f302fd521c1a71b8a0729b9c6f2ae1cccab5",
+      "projection": "documentation_projection",
+      "reason": "Private location labels only; this is narrative/source metadata, never an original measurement receipt"
+    },
+    {
+      "source": "experiments/campaign_20261104/formal_admission_disposition_v1/inspect_ledger.py",
+      "source_sha256": "0d2c0343caec9f6cac08c5ef5aae621e5cf45812e8f33e58deac40923de21e75",
+      "public_path": "artifact/icde/campaign/formal_admission_disposition_v1/inspect_ledger.py",
+      "public_sha256": "0d2c0343caec9f6cac08c5ef5aae621e5cf45812e8f33e58deac40923de21e75",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/formal_admission_disposition_v1/test_inspect_ledger.py",
+      "source_sha256": "d4c67086de5dae1b5d266a416f72eb05dd8d261c29650418bc15073e839268a1",
+      "public_path": "artifact/icde/campaign/formal_admission_disposition_v1/test_inspect_ledger.py",
+      "public_sha256": "03a2dc1e8c71536343efcc6cbe30acd90d7f1d0b5f19aaabda65da0bd9ee6ac4",
+      "projection": "portable_projection",
+      "reason": "Test scratch is an explicit existing caller-selected directory"
+    },
+    {
+      "source": "experiments/campaign_20261104/formal_admission_d84_v2/admit.py",
+      "source_sha256": "467c9b4cddd1c21d43c848b74364c6f817b51da14fd0bc6aba26531030ae54cc",
+      "public_path": "artifact/icde/campaign/formal_admission_d84_v2/admit.py",
+      "public_sha256": "467c9b4cddd1c21d43c848b74364c6f817b51da14fd0bc6aba26531030ae54cc",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/formal_admission_d84_v2/test_admit.py",
+      "source_sha256": "fd28cf169a9d21cb3ccc5caf007ee273227d3ef54ded0a0ddbf4b38bbf4d1541",
+      "public_path": "artifact/icde/campaign/formal_admission_d84_v2/test_admit.py",
+      "public_sha256": "ac957cb07d444fdd602e081917d0b273933e79ae5aacaadaad3e7f86d48f78a3",
+      "projection": "portable_projection",
+      "reason": "Runner public-directory aliases; private deployment-only test requires explicit supplied evidence, never synthetic original measurements"
+    },
+    {
+      "source": "experiments/campaign_20261104/watch_external_formals_v4.py",
+      "source_sha256": "38b75509f8e7b7c2b6f5a3bb52ecc8f26ccc58744de43b601e6bcc6c80e985ec",
+      "public_path": "artifact/icde/campaign/watch_external_formals_v4.py",
+      "public_sha256": "38b75509f8e7b7c2b6f5a3bb52ecc8f26ccc58744de43b601e6bcc6c80e985ec",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/test_watch_external_formals_v3_cpu.py",
+      "source_sha256": "245b781fead52c8dd334c7a1c93002ce28e8d77eeb2019670cb35c804529fa02",
+      "public_path": "artifact/icde/campaign/test_watch_external_formals_v4_cpu.py",
+      "public_sha256": "15a3d404eac5bf5ed7e1a0bff2fe35cb25ed99e82a36400ae59d6160d4f10b9c",
+      "projection": "portable_projection",
+      "reason": "Exercise the corrected 2-field/3-field binding watcher; no launch in CPU fixtures"
+    },
+    {
+      "source": "experiments/campaign_20261104/e6_protocol_completion_v2/README_CN.md",
+      "source_sha256": "75938453c750f258254936362600c7d5f1bf4492cb0dba8574ba0ecfcd09398d",
+      "public_path": "artifact/icde/campaign/e6_protocol_completion_v2/README_CN.md",
+      "public_sha256": "6f10cc49ae7b773819fa5347776f10729d9a2e2db52599ca79c2fa5b28cc0949",
+      "projection": "documentation_projection",
+      "reason": "Private location labels only; this is narrative/source metadata, never an original measurement receipt"
+    },
+    {
+      "source": "experiments/campaign_20261104/e6_protocol_completion_v2/build_plans.py",
+      "source_sha256": "568c23741b222f00186e2e1d33e054bc6ddd79b3de259afc7686aad4b5295d04",
+      "public_path": "artifact/icde/campaign/e6_protocol_completion_v2/build_plans.py",
+      "public_sha256": "568c23741b222f00186e2e1d33e054bc6ddd79b3de259afc7686aad4b5295d04",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/e6_protocol_completion_v2/cugraph_csr_adapter.py",
+      "source_sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7",
+      "public_path": "artifact/icde/campaign/e6_protocol_completion_v2/cugraph_csr_adapter.py",
+      "public_sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/e6_protocol_completion_v2/e6_cpu_reference.py",
+      "source_sha256": "cde01429b01c5c38fc1bed2c7e3468d334cf456d55f4330ebbcafbc1737afce3",
+      "public_path": "artifact/icde/campaign/e6_protocol_completion_v2/e6_cpu_reference.py",
+      "public_sha256": "cde01429b01c5c38fc1bed2c7e3468d334cf456d55f4330ebbcafbc1737afce3",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/e6_protocol_completion_v2/e6_reuse_provenance.json",
+      "source_sha256": "49bab07cfcfe263ed3b1e12b2316557640c99e8e032b3ec9e7b30d0199df42f6",
+      "public_path": "artifact/icde/campaign/e6_protocol_completion_v2/e6_reuse_provenance.json",
+      "public_sha256": "49bab07cfcfe263ed3b1e12b2316557640c99e8e032b3ec9e7b30d0199df42f6",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/e6_protocol_completion_v2/e6_reused.py",
+      "source_sha256": "44704d165a4b87de73152592c18efaebfa280286722b98bcd5d665487bee8af9",
+      "public_path": "artifact/icde/campaign/e6_protocol_completion_v2/e6_reused.py",
+      "public_sha256": "44704d165a4b87de73152592c18efaebfa280286722b98bcd5d665487bee8af9",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/e6_protocol_completion_v2/e6_worker.py",
+      "source_sha256": "44e165da21017e6bd20ebede60058702f68086514a08caf0812ba4e2fb07b0fb",
+      "public_path": "artifact/icde/campaign/e6_protocol_completion_v2/e6_worker.py",
+      "public_sha256": "44e165da21017e6bd20ebede60058702f68086514a08caf0812ba4e2fb07b0fb",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/e6_protocol_completion_v2/legacy_contract.json",
+      "source_sha256": "47cb9d2a8f0b72ed6bb040dcc3af418c8b06c5738c772402b898b521c73399fa",
+      "public_path": "artifact/icde/campaign/e6_protocol_completion_v2/legacy_contract.json",
+      "public_sha256": "47cb9d2a8f0b72ed6bb040dcc3af418c8b06c5738c772402b898b521c73399fa",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/e6_protocol_completion_v2/legacy_cpu_reference.py",
+      "source_sha256": "7ced877ef6ce588ac04bf7816b0bd67e252c7331f7f3ce8268940c3f698f3811",
+      "public_path": "artifact/icde/campaign/e6_protocol_completion_v2/legacy_cpu_reference.py",
+      "public_sha256": "7ced877ef6ce588ac04bf7816b0bd67e252c7331f7f3ce8268940c3f698f3811",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/e6_protocol_completion_v2/sg_worker.py",
+      "source_sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf",
+      "public_path": "artifact/icde/campaign/e6_protocol_completion_v2/sg_worker.py",
+      "public_sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/e6_protocol_completion_v2/test_protocol_cpu.py",
+      "source_sha256": "7d9e32c00d9f4187e9772db5180e74e8d5856c027f1169f40a022b2b480c9b33",
+      "public_path": "artifact/icde/campaign/e6_protocol_completion_v2/test_protocol_cpu.py",
+      "public_sha256": "62b21f92ba99df7d4890734fc8a7e085f47e9d8dde437a888ccd9d382bec3517",
+      "projection": "portable_projection",
+      "reason": "Draft tests use explicitly labelled portable fixtures; real reference/plan bindings must be rebuilt by the reproducer"
+    },
+    {
+      "source": "experiments/campaign_20261104/e6_protocol_completion_v2/upstream_bindings.json",
+      "source_sha256": "43ad74068f9b48e350a6f89a1dc65bae5d7ff4891a1f5fa728698567a6755b8a",
+      "public_path": "artifact/icde/campaign/e6_protocol_completion_v2/upstream_bindings.json",
+      "public_sha256": "84186c0c15ea0dae29dc0e9a3fd04173a5f535ac37c77dde5a39feeab8164169",
+      "projection": "provenance_projection",
+      "reason": "Preserve original byte identities as source references; no fabricated relocated bindings"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/Easy-Graph/cpp_easygraph/runtime/egmgpu_bfs_serial.inc",
+      "source_sha256": "a2621ef1dcef21ad17b80e2eabd71b509c83cb165a4f7e05b192d72247ef13b8",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/source_overlay/cpp_easygraph/runtime/egmgpu_bfs_serial.inc",
+      "public_sha256": "a2621ef1dcef21ad17b80e2eabd71b509c83cb165a4f7e05b192d72247ef13b8",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/Easy-Graph/cpp_easygraph/runtime/egmgpu_pagerank_serial.inc",
+      "source_sha256": "b251616fd781fa2902033adad1c150c3924399f0d9fb1f11f956a195ab92efe5",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/source_overlay/cpp_easygraph/runtime/egmgpu_pagerank_serial.inc",
+      "public_sha256": "b251616fd781fa2902033adad1c150c3924399f0d9fb1f11f956a195ab92efe5",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/Easy-Graph/cpp_easygraph/runtime/egmgpu_partition_loader.cpp",
+      "source_sha256": "18e51b54223cabfbfeee9ab74ea29310331e4f3d72675235a345401b7f12f52b",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/source_overlay/cpp_easygraph/runtime/egmgpu_partition_loader.cpp",
+      "public_sha256": "18e51b54223cabfbfeee9ab74ea29310331e4f3d72675235a345401b7f12f52b",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/Easy-Graph/cpp_easygraph/runtime/egmgpu_partition_loader.h",
+      "source_sha256": "0d1cf638e3c71626f47327d33742822a29b3851aaf390826d22da9b102075ceb",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/source_overlay/cpp_easygraph/runtime/egmgpu_partition_loader.h",
+      "public_sha256": "0d1cf638e3c71626f47327d33742822a29b3851aaf390826d22da9b102075ceb",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/Easy-Graph/cpp_easygraph/runtime/egmgpu_partition_loader_bindings.cpp",
+      "source_sha256": "a197181a745a55239d1ec9e74920617b63d862abc0f6c93d45521b417af36611",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/source_overlay/cpp_easygraph/runtime/egmgpu_partition_loader_bindings.cpp",
+      "public_sha256": "a197181a745a55239d1ec9e74920617b63d862abc0f6c93d45521b417af36611",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/Easy-Graph/cpp_easygraph/runtime/egmgpu_partitioned_bfs.cpp",
+      "source_sha256": "c184e9d407daea1ac1b00362028a2269d639a2213cf1d8332a6a6a93ece0257e",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/source_overlay/cpp_easygraph/runtime/egmgpu_partitioned_bfs.cpp",
+      "public_sha256": "c184e9d407daea1ac1b00362028a2269d639a2213cf1d8332a6a6a93ece0257e",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/Easy-Graph/cpp_easygraph/runtime/egmgpu_partitioned_pagerank.cpp",
+      "source_sha256": "0dfb7564945646f2514bfd7adf7ce7bd276bbc4806a4c83002cc8f3f5a67ed27",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/source_overlay/cpp_easygraph/runtime/egmgpu_partitioned_pagerank.cpp",
+      "public_sha256": "0dfb7564945646f2514bfd7adf7ce7bd276bbc4806a4c83002cc8f3f5a67ed27",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/Easy-Graph/cpp_easygraph/runtime/egmgpu_partitioned_sssp.cpp",
+      "source_sha256": "ad333dcd4cf07301fb4c4b9c198483cfada83945224bed818b355949e155efb1",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/source_overlay/cpp_easygraph/runtime/egmgpu_partitioned_sssp.cpp",
+      "public_sha256": "ad333dcd4cf07301fb4c4b9c198483cfada83945224bed818b355949e155efb1",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/Easy-Graph/cpp_easygraph/runtime/egmgpu_partitioned_structural_holes.cpp",
+      "source_sha256": "0890fe13196474a7d1ca635eb656ec5825443e8d23edea6f41485671b412d348",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/source_overlay/cpp_easygraph/runtime/egmgpu_partitioned_structural_holes.cpp",
+      "public_sha256": "0890fe13196474a7d1ca635eb656ec5825443e8d23edea6f41485671b412d348",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/Easy-Graph/cpp_easygraph/runtime/egmgpu_partitioned_wcc.cpp",
+      "source_sha256": "eed5f599cc8c196d6f433830213eec9687218001fe9e3466e22b12767435800b",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/source_overlay/cpp_easygraph/runtime/egmgpu_partitioned_wcc.cpp",
+      "public_sha256": "eed5f599cc8c196d6f433830213eec9687218001fe9e3466e22b12767435800b",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/Easy-Graph/easygraph/egmgpu_control/partition_manifest.py",
+      "source_sha256": "2dfe649fcca687b3a06d7ba6e3f00acc3757ee2338d6506d5d9dfb78dc1758d3",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/source_overlay/easygraph/egmgpu_control/partition_manifest.py",
+      "public_sha256": "2dfe649fcca687b3a06d7ba6e3f00acc3757ee2338d6506d5d9dfb78dc1758d3",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/Easy-Graph/easygraph/gpu/_dynamic.py",
+      "source_sha256": "d48a7d38d14a110d9533c9d20e1bae90405280d7e0a5eb110cc41d0fb472c80a",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/source_overlay/easygraph/gpu/_dynamic.py",
+      "public_sha256": "d48a7d38d14a110d9533c9d20e1bae90405280d7e0a5eb110cc41d0fb472c80a",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/Easy-Graph/easygraph/gpu/_native.py",
+      "source_sha256": "678d23479a874937149874c84cbae96bfd9a02f1725c330655658f59449ba6f9",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/source_overlay/easygraph/gpu/_native.py",
+      "public_sha256": "678d23479a874937149874c84cbae96bfd9a02f1725c330655658f59449ba6f9",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/Easy-Graph/gpu_easygraph/functions/partitioned/wcc_partitioned.cu",
+      "source_sha256": "242d97436bc9817e1f2876a11eabe359977932d5cd57303a1595e2de56f5bfb4",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/source_overlay/gpu_easygraph/functions/partitioned/wcc_partitioned.cu",
+      "public_sha256": "242d97436bc9817e1f2876a11eabe359977932d5cd57303a1595e2de56f5bfb4",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/Easy-Graph/gpu_easygraph/functions/partitioned/wcc_partitioned.cuh",
+      "source_sha256": "fd2c3e586194cf25fb02cfcb17f1062522f43afc0b2a1e0f91e356f6ef98dbcc",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/source_overlay/gpu_easygraph/functions/partitioned/wcc_partitioned.cuh",
+      "public_sha256": "fd2c3e586194cf25fb02cfcb17f1062522f43afc0b2a1e0f91e356f6ef98dbcc",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/Easy-Graph/gpu_easygraph/runtime/partitioned_wcc_plan.cpp",
+      "source_sha256": "653f868d72eddb4d3bf7ed819f78b92c86d720dcc545d840ca0f7c9f10922686",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/source_overlay/gpu_easygraph/runtime/partitioned_wcc_plan.cpp",
+      "public_sha256": "653f868d72eddb4d3bf7ed819f78b92c86d720dcc545d840ca0f7c9f10922686",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/Easy-Graph/gpu_easygraph/runtime/partitioned_wcc_plan.h",
+      "source_sha256": "e65241ae0a328e99547e795937773d66ceb7cbca86869b339e866cfa2197ba3d",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/source_overlay/gpu_easygraph/runtime/partitioned_wcc_plan.h",
+      "public_sha256": "e65241ae0a328e99547e795937773d66ceb7cbca86869b339e866cfa2197ba3d",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/Easy-Graph/gpu_easygraph/runtime/partitioned_wcc_state.cpp",
+      "source_sha256": "40921f76f4537869ada029a46d1e16dc200eb9fe05f1922a0e311fd2bdcd574b",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/source_overlay/gpu_easygraph/runtime/partitioned_wcc_state.cpp",
+      "public_sha256": "40921f76f4537869ada029a46d1e16dc200eb9fe05f1922a0e311fd2bdcd574b",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/Easy-Graph/gpu_easygraph/runtime/partitioned_wcc_state.h",
+      "source_sha256": "f53e71c242e09343bf6eb412930482324151a7e06dafa16fe6aad2a6c89d978b",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/source_overlay/gpu_easygraph/runtime/partitioned_wcc_state.h",
+      "public_sha256": "f53e71c242e09343bf6eb412930482324151a7e06dafa16fe6aad2a6c89d978b",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/Easy-Graph/gpu_easygraph/runtime/wcc_offset_pointer.h",
+      "source_sha256": "79674acd4b5b79adc97d8f67718d5af24cc65feb49af8ab3b12d6384ca882866",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/source_overlay/gpu_easygraph/runtime/wcc_offset_pointer.h",
+      "public_sha256": "79674acd4b5b79adc97d8f67718d5af24cc65feb49af8ab3b12d6384ca882866",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/test_dynamic_wide_gate.py",
+      "source_sha256": "b52a6ca1a1197d634bb5b6d4197669b3cbb96a0a918deacd6deead9d0ba0cb48",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/test_dynamic_wide_gate.py",
+      "public_sha256": "b52a6ca1a1197d634bb5b6d4197669b3cbb96a0a918deacd6deead9d0ba0cb48",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/test_wcc_wide_host.cpp",
+      "source_sha256": "0639dc69a65ac17d581512b95d2792a2bd65d5375aece4f54d330058536ab464",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/test_wcc_wide_host.cpp",
+      "public_sha256": "0639dc69a65ac17d581512b95d2792a2bd65d5375aece4f54d330058536ab464",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/test_wide_adapter.py",
+      "source_sha256": "30ea0ad28f49a74259520ee236b1b51a4cc157c44df0eaf6d4b6374007fa8a05",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/test_wide_adapter.py",
+      "public_sha256": "30ea0ad28f49a74259520ee236b1b51a4cc157c44df0eaf6d4b6374007fa8a05",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/test_wide_compiled.py",
+      "source_sha256": "3eb55f7f04cd8e19e90899ec9ad9130b60b5a07dfb8766a647cb94df917ec206",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/test_wide_compiled.py",
+      "public_sha256": "3eb55f7f04cd8e19e90899ec9ad9130b60b5a07dfb8766a647cb94df917ec206",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/test_wide_offsets.py",
+      "source_sha256": "681b72529bc2941a43083f7d1f77057638f161490e91fedcece936152167a502",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/test_wide_offsets.py",
+      "public_sha256": "d07669c805e02df6153e3e7638ba97f4780edd217e1c45941e04fa907a71673f",
+      "projection": "portable_projection",
+      "reason": "Independent narrow baseline comes from explicit EGGPU_BASE_SOURCE"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/runner/native_worker.py",
+      "source_sha256": "7bf0d94f3947824e5e70fa2674751e729592df2d13a1e495e70b46b44d1d476d",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/runner/native_worker.py",
+      "public_sha256": "7bf0d94f3947824e5e70fa2674751e729592df2d13a1e495e70b46b44d1d476d",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/runner/native_input.py",
+      "source_sha256": "8edeaa51ae5cd9460f6784afc3703a10128073f765ec30e9dbf6a780d1fd1e51",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/runner/native_input.py",
+      "public_sha256": "8edeaa51ae5cd9460f6784afc3703a10128073f765ec30e9dbf6a780d1fd1e51",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/runner/sg_worker.py",
+      "source_sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/runner/sg_worker.py",
+      "public_sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/runner/cugraph_csr_adapter.py",
+      "source_sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/runner/cugraph_csr_adapter.py",
+      "public_sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/runner/test_static_runner_cpu.py",
+      "source_sha256": "a413eaa3861e8651db6f6d4fddc16ea70db9baa23ab8e5f2293c13ac2e3ba824",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/runner/test_static_runner_cpu.py",
+      "public_sha256": "a413eaa3861e8651db6f6d4fddc16ea70db9baa23ab8e5f2293c13ac2e3ba824",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/runner/qualify_static_native_domains.py",
+      "source_sha256": "27af686ede9a6441adc66e1565bba2220fdd92e64a12bee59e4c75702c9b4778",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/runner/qualify_static_native_domains.py",
+      "public_sha256": "27af686ede9a6441adc66e1565bba2220fdd92e64a12bee59e4c75702c9b4778",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/runner/native_profile.py",
+      "source_sha256": "230b76d86bf8c2af354c9a432239d348092e47531ae4dbde5c8e66f27681d392",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/runner/native_profile.py",
+      "public_sha256": "230b76d86bf8c2af354c9a432239d348092e47531ae4dbde5c8e66f27681d392",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/runner/test_native_profile_cpu.py",
+      "source_sha256": "e3a25b177239181c188d2cce67329d3e6ba154b385fa9d5c22a4cd91ee8b7649",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/runner/test_native_profile_cpu.py",
+      "public_sha256": "e3a25b177239181c188d2cce67329d3e6ba154b385fa9d5c22a4cd91ee8b7649",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/runner/test_metric_json_cpu.py",
+      "source_sha256": "ac350dc4e0bbf8bba7edd4e6089bc24d4381ddbe5c7f7f2a36478daefda0cf39",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/runner/test_metric_json_cpu.py",
+      "public_sha256": "ac350dc4e0bbf8bba7edd4e6089bc24d4381ddbe5c7f7f2a36478daefda0cf39",
+      "projection": "byte_identical",
+      "reason": "No transformation"
+    },
+    {
+      "source": "docs/RELATED_WORK_NARRATIVE_20261104_CN.md",
+      "source_sha256": "985c17b3e3d4bbd94083ddce183e618e2bffad3e0827ecc028e44dad55b9a602",
+      "public_path": "artifact/icde/paper/RELATED_WORK_NARRATIVE_20261104_CN.md",
+      "public_sha256": "985c17b3e3d4bbd94083ddce183e618e2bffad3e0827ecc028e44dad55b9a602",
+      "projection": "documentation_projection",
+      "reason": "Private location labels only; this is narrative/source metadata, never an original measurement receipt"
+    },
+    {
+      "source": "docs/PAPER_EXPERIMENT_DESIGN_20261104_CN.md",
+      "source_sha256": "53f7abfb4fc19e9f980f99f600adbdfe87aea53f86cc912c7456bf398f0e4f86",
+      "public_path": "artifact/icde/paper/PAPER_EXPERIMENT_DESIGN_20261104_CN.md",
+      "public_sha256": "ef2b02ffb9b2ddea5127d9ae28fcc55a50402e35e492e1583015ededa2ec8931",
+      "projection": "documentation_projection",
+      "reason": "Private location labels only; this is narrative/source metadata, never an original measurement receipt"
+    },
+    {
+      "source": "docs/references_20261105/papers.json",
+      "source_sha256": "835fb53010ed858615f2635126bc68a298045d07b4380ca1e5cd880c5227aa85",
+      "public_path": "artifact/icde/paper/references_20261105/papers.json",
+      "public_sha256": "835fb53010ed858615f2635126bc68a298045d07b4380ca1e5cd880c5227aa85",
+      "projection": "documentation_projection",
+      "reason": "Private location labels only; this is narrative/source metadata, never an original measurement receipt"
+    },
+    {
+      "source": "docs/references_20261105/ccf_audit.json",
+      "source_sha256": "135854fb3c4551b7f71a8c545c8ab53a0dacd9b4a499429c6c0af2f363c609fc",
+      "public_path": "artifact/icde/paper/references_20261105/ccf_audit.json",
+      "public_sha256": "135854fb3c4551b7f71a8c545c8ab53a0dacd9b4a499429c6c0af2f363c609fc",
+      "projection": "documentation_projection",
+      "reason": "Private location labels only; this is narrative/source metadata, never an original measurement receipt"
+    },
+    {
+      "source": "docs/references_20261105/source_audit.json",
+      "source_sha256": "c4fc78931540b355a54864a480969d856d1611decc8ba1384be9a46b6aff8fc1",
+      "public_path": "artifact/icde/paper/references_20261105/source_audit.json",
+      "public_sha256": "c5feb7d60b870be6c1ebbc8eb00174f42eb308447e959c75055422c411791d83",
+      "projection": "documentation_projection",
+      "reason": "Private location labels only; this is narrative/source metadata, never an original measurement receipt"
+    },
+    {
+      "source": "docs/references_20261105/paper_crosscheck.csv",
+      "source_sha256": "aff2743a83fc7e73c30ad2817cb3fcda3f4f531ad9033f125661a248156174d6",
+      "public_path": "artifact/icde/paper/references_20261105/paper_crosscheck.csv",
+      "public_sha256": "f9d80bf4de89718464533c9c988c90448507ba339ee67a50087aca99d558730b",
+      "projection": "documentation_projection",
+      "reason": "Private location labels only; this is narrative/source metadata, never an original measurement receipt"
+    },
+    {
+      "source": "paper/intro_20261105/current/first_page_example.json",
+      "source_sha256": "a348feb7f516f15c0a2e31c33067b60828530c4eae800ab945e554e459b26064",
+      "public_path": "artifact/icde/paper/intro/first_page_example.json",
+      "public_sha256": "a348feb7f516f15c0a2e31c33067b60828530c4eae800ab945e554e459b26064",
+      "projection": "documentation_projection",
+      "reason": "Private location labels only; this is narrative/source metadata, never an original measurement receipt"
+    },
+    {
+      "source": "paper/intro_20261105/current/render_first_page.py",
+      "source_sha256": "6fd21f67b7476e9d783e7a861140011692877da78a04efa91c70702c87afe294",
+      "public_path": "artifact/icde/paper/intro/render_first_page.py",
+      "public_sha256": "6fd21f67b7476e9d783e7a861140011692877da78a04efa91c70702c87afe294",
+      "projection": "documentation_projection",
+      "reason": "Private location labels only; this is narrative/source metadata, never an original measurement receipt"
+    },
+    {
+      "source": "paper/intro_20261105/current/INTRO_DRAFT_CN.md",
+      "source_sha256": "b44dfb811b90893938cfbd8ffe973886ed1dd57735eb89dd5adecb8b3bc8e15e",
+      "public_path": "artifact/icde/paper/intro/INTRO_DRAFT_CN.md",
+      "public_sha256": "955e657e2bab6ec2154a44602180753e4fc0f418eb38d5dcc60343ce8501b718",
+      "projection": "documentation_projection",
+      "reason": "Private location labels only; this is narrative/source metadata, never an original measurement receipt"
+    },
+    {
+      "source": "paper/intro_20261105/current/SOURCE_AND_FIGURE_NOTES_CN.md",
+      "source_sha256": "41d9aa08c47cbbe56442c990df8f3425853a485fc2d30e2dda1919aaa5c9978b",
+      "public_path": "artifact/icde/paper/intro/SOURCE_AND_FIGURE_NOTES_CN.md",
+      "public_sha256": "e849512d72fd28caf80f95e261d440c123fad76d14774f27d0ed0f0e572fb5ea",
+      "projection": "documentation_projection",
+      "reason": "Private location labels only; this is narrative/source metadata, never an original measurement receipt"
+    },
+    {
+      "source": "paper/intro_20261105/current/first_page_problem_85mm.svg",
+      "source_sha256": "007387ca712be874627897c12beb306fd583f6ca69968e93a230c1fd9bb3f601",
+      "public_path": "artifact/icde/paper/intro/first_page_problem_85mm.svg",
+      "public_sha256": "007387ca712be874627897c12beb306fd583f6ca69968e93a230c1fd9bb3f601",
+      "projection": "documentation_projection",
+      "reason": "Private location labels only; this is narrative/source metadata, never an original measurement receipt"
+    },
+    {
+      "source": "paper/intro_20261105/current/first_page_problem_175mm.svg",
+      "source_sha256": "8052609ab99a843d33f7648673bc35bc650a77a4dc3e699a9b4ee69472db1ee0",
+      "public_path": "artifact/icde/paper/intro/first_page_problem_175mm.svg",
+      "public_sha256": "8052609ab99a843d33f7648673bc35bc650a77a4dc3e699a9b4ee69472db1ee0",
+      "projection": "documentation_projection",
+      "reason": "Private location labels only; this is narrative/source metadata, never an original measurement receipt"
+    },
+    {
+      "source": "paper/intro_20261105/current/figure_provenance.json",
+      "source_sha256": "9ef2744b83f84723a1ec25f9c223c0bd2821eee12774a3d191cf49a3632c65b1",
+      "public_path": "artifact/icde/paper/intro/figure_provenance.json",
+      "public_sha256": "9ef2744b83f84723a1ec25f9c223c0bd2821eee12774a3d191cf49a3632c65b1",
+      "projection": "documentation_projection",
+      "reason": "Private location labels only; this is narrative/source metadata, never an original measurement receipt"
+    },
+    {
+      "source": "paper/intro_20261105/current/example_calculation.json",
+      "source_sha256": "f22dac2852d1922ff75d0fe464a3bb9a96c5a392ec20a835f00e7246d941ef92",
+      "public_path": "artifact/icde/paper/intro/example_calculation.json",
+      "public_sha256": "f22dac2852d1922ff75d0fe464a3bb9a96c5a392ec20a835f00e7246d941ef92",
+      "projection": "documentation_projection",
+      "reason": "Private location labels only; this is narrative/source metadata, never an original measurement receipt"
+    },
+    {
+      "source": "experiments/campaign_20261104/state_protocol_completion_v1/state_worker.py",
+      "source_sha256": "1e28df7ba3985a38ceccd065e3f3dea88b912d295eedc668c4d4f9f11b3a98dc",
+      "public_path": "artifact/icde/campaign/state_protocol_completion_v1/state_worker.py",
+      "public_sha256": "1e28df7ba3985a38ceccd065e3f3dea88b912d295eedc668c4d4f9f11b3a98dc",
+      "projection": "byte_identical",
+      "reason": "Frozen portable state protocol; paths in provenance are location labels only, not relocated original GPU proofs"
+    },
+    {
+      "source": "experiments/campaign_20261104/state_protocol_completion_v1/state_contract.py",
+      "source_sha256": "ea0b3bb95bf037031f8bb8993f0990fca8f918951bcc406e48993cec92a41f8e",
+      "public_path": "artifact/icde/campaign/state_protocol_completion_v1/state_contract.py",
+      "public_sha256": "ea0b3bb95bf037031f8bb8993f0990fca8f918951bcc406e48993cec92a41f8e",
+      "projection": "byte_identical",
+      "reason": "Frozen portable state protocol; paths in provenance are location labels only, not relocated original GPU proofs"
+    },
+    {
+      "source": "experiments/campaign_20261104/state_protocol_completion_v1/state_protocol.py",
+      "source_sha256": "98767a15e659dd96ee041bdb3e642861e701decb78b77b2052e5bf9cc938a21c",
+      "public_path": "artifact/icde/campaign/state_protocol_completion_v1/state_protocol.py",
+      "public_sha256": "98767a15e659dd96ee041bdb3e642861e701decb78b77b2052e5bf9cc938a21c",
+      "projection": "byte_identical",
+      "reason": "Frozen portable state protocol; paths in provenance are location labels only, not relocated original GPU proofs"
+    },
+    {
+      "source": "experiments/campaign_20261104/state_protocol_completion_v1/state_reference.py",
+      "source_sha256": "59c16ece7d79498264566a25040e5808f039bd1b6ddee22c546aacbce26e6fc0",
+      "public_path": "artifact/icde/campaign/state_protocol_completion_v1/state_reference.py",
+      "public_sha256": "59c16ece7d79498264566a25040e5808f039bd1b6ddee22c546aacbce26e6fc0",
+      "projection": "byte_identical",
+      "reason": "Frozen portable state protocol; paths in provenance are location labels only, not relocated original GPU proofs"
+    },
+    {
+      "source": "experiments/campaign_20261104/state_protocol_completion_v1/state_inputs.py",
+      "source_sha256": "2c36cc9c2fc20d1d556467cd35077b889895daad4d395a213073478712f98e63",
+      "public_path": "artifact/icde/campaign/state_protocol_completion_v1/state_inputs.py",
+      "public_sha256": "2c36cc9c2fc20d1d556467cd35077b889895daad4d395a213073478712f98e63",
+      "projection": "byte_identical",
+      "reason": "Frozen portable state protocol; paths in provenance are location labels only, not relocated original GPU proofs"
+    },
+    {
+      "source": "experiments/campaign_20261104/state_protocol_completion_v1/state_controls.py",
+      "source_sha256": "9496c4e4e0234abec7d1df0f7db7f52784210246fd0991acb1fed5d8e12b0559",
+      "public_path": "artifact/icde/campaign/state_protocol_completion_v1/state_controls.py",
+      "public_sha256": "9496c4e4e0234abec7d1df0f7db7f52784210246fd0991acb1fed5d8e12b0559",
+      "projection": "byte_identical",
+      "reason": "Frozen portable state protocol; paths in provenance are location labels only, not relocated original GPU proofs"
+    },
+    {
+      "source": "experiments/campaign_20261104/state_protocol_completion_v1/state_rebuild.py",
+      "source_sha256": "5420982fc9f847bd4bee0ccdf89e049b6f348b3bc1c676aa69abc0afeed36975",
+      "public_path": "artifact/icde/campaign/state_protocol_completion_v1/state_rebuild.py",
+      "public_sha256": "5420982fc9f847bd4bee0ccdf89e049b6f348b3bc1c676aa69abc0afeed36975",
+      "projection": "byte_identical",
+      "reason": "Frozen portable state protocol; paths in provenance are location labels only, not relocated original GPU proofs"
+    },
+    {
+      "source": "experiments/campaign_20261104/state_protocol_completion_v1/baselines/hytgraph_qualify.py",
+      "source_sha256": "6aa0832cd8c27eb91dde7e728dabdbf24d499f4a837c82053bbf8d4e8ab66da8",
+      "public_path": "artifact/icde/campaign/state_protocol_completion_v1/baselines/hytgraph_qualify.py",
+      "public_sha256": "6aa0832cd8c27eb91dde7e728dabdbf24d499f4a837c82053bbf8d4e8ab66da8",
+      "projection": "byte_identical",
+      "reason": "Frozen portable state protocol; paths in provenance are location labels only, not relocated original GPU proofs"
+    },
+    {
+      "source": "experiments/campaign_20261104/state_protocol_completion_v1/state_plan.py",
+      "source_sha256": "f70a81d12657ddba505c10db4ab34a08f204ed43beb271156c2490f2bd5cba75",
+      "public_path": "artifact/icde/campaign/state_protocol_completion_v1/state_plan.py",
+      "public_sha256": "f70a81d12657ddba505c10db4ab34a08f204ed43beb271156c2490f2bd5cba75",
+      "projection": "byte_identical",
+      "reason": "Frozen portable state protocol; paths in provenance are location labels only, not relocated original GPU proofs"
+    },
+    {
+      "source": "experiments/campaign_20261104/state_protocol_completion_v1/prepare.py",
+      "source_sha256": "9f16d42d92ba5d1a7d5a669a7ecd2462729df1e71c6dc58c65e6a8a6873e369e",
+      "public_path": "artifact/icde/campaign/state_protocol_completion_v1/prepare.py",
+      "public_sha256": "9f16d42d92ba5d1a7d5a669a7ecd2462729df1e71c6dc58c65e6a8a6873e369e",
+      "projection": "byte_identical",
+      "reason": "Frozen portable state protocol; paths in provenance are location labels only, not relocated original GPU proofs"
+    },
+    {
+      "source": "experiments/campaign_20261104/state_protocol_completion_v1/run_cpu_tests.py",
+      "source_sha256": "f2b48dc563825b5537bd621fea5d33e0720cd2a1d93a5f10b818cee26cd93dff",
+      "public_path": "artifact/icde/campaign/state_protocol_completion_v1/run_cpu_tests.py",
+      "public_sha256": "f2b48dc563825b5537bd621fea5d33e0720cd2a1d93a5f10b818cee26cd93dff",
+      "projection": "byte_identical",
+      "reason": "Frozen portable state protocol; paths in provenance are location labels only, not relocated original GPU proofs"
+    },
+    {
+      "source": "experiments/campaign_20261104/state_protocol_completion_v1/test_completion_cpu.py",
+      "source_sha256": "f9d6a6fa7e43bf69bf0b59e34ddaec9cfaa54bb392c792ce994fed894d410352",
+      "public_path": "artifact/icde/campaign/state_protocol_completion_v1/test_completion_cpu.py",
+      "public_sha256": "f9d6a6fa7e43bf69bf0b59e34ddaec9cfaa54bb392c792ce994fed894d410352",
+      "projection": "byte_identical",
+      "reason": "Frozen portable state protocol; paths in provenance are location labels only, not relocated original GPU proofs"
+    },
+    {
+      "source": "experiments/campaign_20261104/state_protocol_completion_v1/test_original_contract_cpu.py",
+      "source_sha256": "357583ca9e1eecc1a1ce29e5b58d4587d712f83ddab2172cbf7e5332181efe87",
+      "public_path": "artifact/icde/campaign/state_protocol_completion_v1/test_original_contract_cpu.py",
+      "public_sha256": "357583ca9e1eecc1a1ce29e5b58d4587d712f83ddab2172cbf7e5332181efe87",
+      "projection": "byte_identical",
+      "reason": "Frozen portable state protocol; paths in provenance are location labels only, not relocated original GPU proofs"
+    },
+    {
+      "source": "experiments/campaign_20261104/state_protocol_completion_v1/cpu_ownership_oracle.py",
+      "source_sha256": "124c237c92ab343b5b3d88a7ca9546295f40eb9ef077e946d46d8935afa56e1f",
+      "public_path": "artifact/icde/campaign/state_protocol_completion_v1/cpu_ownership_oracle.py",
+      "public_sha256": "124c237c92ab343b5b3d88a7ca9546295f40eb9ef077e946d46d8935afa56e1f",
+      "projection": "byte_identical",
+      "reason": "Frozen portable state protocol; paths in provenance are location labels only, not relocated original GPU proofs"
+    },
+    {
+      "source": "experiments/campaign_20261104/state_protocol_completion_v1/cpu_oracle_provenance.json",
+      "source_sha256": "c3253a576f594310cbc8a09038cda55c7392a1386ab5b689d76a9d1773937d90",
+      "public_path": "artifact/icde/campaign/state_protocol_completion_v1/cpu_oracle_provenance.json",
+      "public_sha256": "c3253a576f594310cbc8a09038cda55c7392a1386ab5b689d76a9d1773937d90",
+      "projection": "byte_identical",
+      "reason": "Frozen portable state protocol; paths in provenance are location labels only, not relocated original GPU proofs"
+    },
+    {
+      "source": "experiments/campaign_20261104/state_protocol_completion_v1/README_CN.md",
+      "source_sha256": "c29287ee87740af052eb536f64663acb0cdf768eaf7cda3f7c252a317b4d641b",
+      "public_path": "artifact/icde/campaign/state_protocol_completion_v1/README_CN.md",
+      "public_sha256": "c29287ee87740af052eb536f64663acb0cdf768eaf7cda3f7c252a317b4d641b",
+      "projection": "byte_identical",
+      "reason": "Frozen portable state protocol; paths in provenance are location labels only, not relocated original GPU proofs"
+    },
+    {
+      "source": "experiments/campaign_20261104/state_protocol_completion_v1/manifest.json",
+      "source_sha256": "e3d6f6722dca821a18f726592e8b1c734eeaa62209dbe29037c1e9fa431d9e95",
+      "public_path": "artifact/icde/campaign/state_protocol_completion_v1/manifest.json",
+      "public_sha256": "e3d6f6722dca821a18f726592e8b1c734eeaa62209dbe29037c1e9fa431d9e95",
+      "projection": "byte_identical",
+      "reason": "Frozen portable state protocol; paths in provenance are location labels only, not relocated original GPU proofs"
+    },
+    {
+      "source": "experiments/campaign_20261104/state_protocol_completion_v1/freeze.json",
+      "source_sha256": "3effb2e67f56acbb57a437c28d10dbca294485d00e3b7b80ccdc18ff4cbb24f5",
+      "public_path": "artifact/icde/campaign/state_protocol_completion_v1/freeze.json",
+      "public_sha256": "3effb2e67f56acbb57a437c28d10dbca294485d00e3b7b80ccdc18ff4cbb24f5",
+      "projection": "byte_identical",
+      "reason": "Frozen portable state protocol; paths in provenance are location labels only, not relocated original GPU proofs"
+    },
+    {
+      "source": "docs/DATASET_REGISTRY_20261104.json",
+      "source_sha256": "03b067b284a147a1b2f80fbc37773e85f4955e5f918e9595fbec4cd86ad948f8",
+      "public_path": "artifact/icde/paper/DATASET_REGISTRY_20261104.json",
+      "public_sha256": "b6e23a33e4bd657c43cf73eca167c62fdb88fa50fa51a195f484fa5a82c79236",
+      "projection": "documentation_projection",
+      "reason": "Narrative/source metadata; private location labels only"
+    },
+    {
+      "source": "docs/EXPERIMENT_SCOPE_RECONCILIATION_20261105_CN.md",
+      "source_sha256": "bd2517a9a55c4eb32ad5ad067abc32e38d32a40810cdae709f5460623da2b717",
+      "public_path": "artifact/icde/paper/EXPERIMENT_SCOPE_RECONCILIATION_20261105_CN.md",
+      "public_sha256": "515c8aa4f15c4beb78ae8c09895629edf67cb5448a891a6b0739adb791fd00b2",
+      "projection": "documentation_projection",
+      "reason": "Narrative/source metadata; private location labels only"
+    },
+    {
+      "source": "docs/BASELINE_CAPABILITY_MATRIX_20261104_CN.md",
+      "source_sha256": "51bf40ff42445bedee89aad0e2fe7972f31efa052e83fa5a4e7ec732ce120bb9",
+      "public_path": "artifact/icde/paper/BASELINE_CAPABILITY_MATRIX_20261104_CN.md",
+      "public_sha256": "71235edbc6323bf80df0d3c2895f799b14d75d582ad558a2f9cd8f7776d0c35c",
+      "projection": "documentation_projection",
+      "reason": "Narrative/source metadata; private location labels only"
+    },
+    {
+      "source": "docs/BASELINE_CAPABILITY_MATRIX_20261104.json",
+      "source_sha256": "3aca30ec25f04498576c22d63dd26f5d138218e10b666e037c68b78360285c5c",
+      "public_path": "artifact/icde/paper/BASELINE_CAPABILITY_MATRIX_20261104.json",
+      "public_sha256": "3aca30ec25f04498576c22d63dd26f5d138218e10b666e037c68b78360285c5c",
+      "projection": "documentation_projection",
+      "reason": "Narrative/source metadata; private location labels only"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v2/runner/historical_profile.json",
+      "source_sha256": "693d58bcffdcef34ba2c2bebdd0ddf19f648c73a8239b03e0565661d43f49d4f",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v2/runner/historical_profile.json",
+      "public_sha256": "067b50883e01426c808f1fa4a5613f22c9bc0050e54db9b8b37eecbc791afa93",
+      "projection": "configuration_projection",
+      "reason": "Reuse previously published profile: all 16 environment and policy records verified equal; omit private origin paths, retain source hash. This is configuration, not a measurement receipt."
+    }
+  ],
+  "original_measurement_receipts_modified": false,
+  "gpu_executed_by_packager": false,
+  "formal_status": "Queues launched; results incomplete and no final performance claims.",
+  "status": "PASS_PUBLIC_CPU_AND_PRIVACY_REVIEW_PENDING_ROOT_PUBLICATION",
+  "adaptation_notes": [
+    "Runtime E4-S helpers, read-only disposition inspector, watcher v4, E6 implementation and state execution files preserve source bytes.",
+    "Tests map public sibling modules and explicitly use generated CPU draft fixtures. Private frozen-plan-only cardinality checks need EGGPU_PRIVATE_FROZEN_PLAN_ROOT; their default public skip is declared.",
+    "Paper local links are relocated where files are public; unbundled private evidence is labelled as text. No original measurement receipt is edited or distributed as a relocated proof.",
+    "The WCC profile reuses already-public metadata after all 16 environment/policy records were proven identical to the candidate."
+  ],
+  "public_cpu_validation": "provenance/followup_cpu_validation.json"
+}

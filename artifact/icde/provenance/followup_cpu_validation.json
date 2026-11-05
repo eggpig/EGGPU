@@ -1,0 +1,40 @@
+{
+  "schema": "eggpu.followup.cpu-validation/v1",
+  "status": "PASS_CPU_SCOPE_ONLY",
+  "gpu_executed": false,
+  "main_source_sha256": "d84ff388e1e40d1fd6ed83fcaceecd0491fc0451adffaff657a95940b1803f84",
+  "checks": [
+    {
+      "scope": "E4-S recoverable outputs and admission integration",
+      "passed": 29
+    },
+    {
+      "scope": "Read-only disposition inspector",
+      "passed": 35,
+      "skipped": 1,
+      "skip_reason": "Original private frozen-plan cardinality check requires explicitly supplied original deployment evidence"
+    },
+    {
+      "scope": "External watcher v4 and optional binding-size regression",
+      "passed": 20
+    },
+    {
+      "scope": "E6 v2 actual routing/reference bridge/complete matrix CPU checks",
+      "passed": 59
+    },
+    {
+      "scope": "State completion original contracts and ownership/planner checks",
+      "passed": 65
+    },
+    {
+      "scope": "WCC overlay metadata/actual tiny file IO/dynamic entry checks, no compiled DSO",
+      "passed": 65,
+      "scope_detail": "40 offset/adapter cases plus 25 dynamic-gate cases; profile projection corrected and affected 25 cases rerun"
+    }
+  ],
+  "passed": 273,
+  "skipped": 1,
+  "native_dso_tests": "NOT_RUN_IN_PUBLIC_RELOCATION",
+  "gpu_qualification": "REQUIRED_FOR_NEW_BUILD_OR_RELOCATION",
+  "original_machine_gpu_proofs_distributed": false
+}

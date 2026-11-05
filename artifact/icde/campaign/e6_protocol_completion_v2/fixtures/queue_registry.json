@@ -1,0 +1,97 @@
+{
+  "schema": "completed.output.incremental.registry.v1",
+  "deduplicator": {
+    "path": "/fixture/experimental/campaign_20261104/incremental_completed_output_v1.py",
+    "bytes": 12790,
+    "sha256": "96aaff1ceba6d7aac13fc355ac6c118d37a6e3a1a982701b5ec8daab443eeb62"
+  },
+  "index": "/fixture/experimental/campaign_20261104/storage_cleanup/current_completed_output_index_v1.json",
+  "controller_lock": "/fixture/experimental/campaign_20261104/root_controller.lock",
+  "gpu_lock": "/fixture/gpu_experiment.lock",
+  "queue_states": [
+    "/fixture/experimental/campaign_20261104/author_qualification_v3/state.json",
+    "/fixture/experimental/campaign_20261104/author_qualification_v3_finish/state.json",
+    "/fixture/experimental/campaign_20261104/author_target_admission_v1/queue/state.json",
+    "/fixture/experimental/campaign_20261104/author_target_resume_expansion200_v1/queue/state.json",
+    "/fixture/experimental/campaign_20261104/author_target_resume_expansion_v1/queue/state.json",
+    "/fixture/experimental/campaign_20261104/c2p_qualification_v1/state.json",
+    "/fixture/experimental/campaign_20261104/c2p_target_qualification_v1/state.json",
+    "/fixture/experimental/campaign_20261104/cold_large_target_v2/state.json",
+    "/fixture/experimental/campaign_20261104/corrected_sg_dtype_v2/state.json",
+    "/fixture/experimental/campaign_20261104/cugraph_i64_qualification_v2/queue/state.json",
+    "/fixture/experimental/campaign_20261104/cugraph_i64_qualification_v3/queue/state.json",
+    "/fixture/experimental/campaign_20261104/cugraph_mg_qualification_v4/state.json",
+    "/fixture/experimental/campaign_20261104/cugraph_mg_target_qualification_v4/state.json",
+    "/fixture/experimental/campaign_20261104/e4s_qualification_v1/state.json",
+    "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/formal_queue/state.json",
+    "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/queue/state.json",
+    "/fixture/experimental/campaign_20261104/e6_memory_input_v1/queue/state.json",
+    "/fixture/experimental/campaign_20261104/e6_registration_qualification_v1/queue/state.json",
+    "/fixture/experimental/campaign_20261104/final_source_e6_sequence_tiny_v2/state.json",
+    "/fixture/experimental/campaign_20261104/final_source_qualification_v2/guarded_v1/e6_main/state.json",
+    "/fixture/experimental/campaign_20261104/final_source_qualification_v2/guarded_v1/native/state.json",
+    "/fixture/experimental/campaign_20261104/final_source_qualification_v2/guarded_v1/sequence/state.json",
+    "/fixture/experimental/campaign_20261104/final_source_qualification_v2/guarded_v1/sg/state.json",
+    "/fixture/experimental/campaign_20261104/final_source_qualification_v2/guarded_v1/state/state.json",
+    "/fixture/experimental/campaign_20261104/final_source_qualification_v2/sg_preflight/state.json",
+    "/fixture/experimental/campaign_20261104/formal_stable_external_v1/c2p/queue/state.json",
+    "/fixture/experimental/campaign_20261104/formal_stable_external_v1/cugraph_mg/queue/state.json",
+    "/fixture/experimental/campaign_20261104/formal_stable_external_v1/gum/queue/state.json",
+    "/fixture/experimental/campaign_20261104/full_profile_final_guarded_v2/e4s/state.json",
+    "/fixture/experimental/campaign_20261104/full_profile_final_guarded_v2/native/state.json",
+    "/fixture/experimental/campaign_20261104/full_profile_final_guarded_v2/sequence/state.json",
+    "/fixture/experimental/campaign_20261104/full_profile_final_guarded_v2/sg/state.json",
+    "/fixture/experimental/campaign_20261104/gum_target_qualification_v2/state.json",
+    "/fixture/experimental/campaign_20261104/maintenance_incremental_v1/plans/author/queue/state.json",
+    "/fixture/experimental/campaign_20261104/maintenance_incremental_v1/plans/c2p/queue/state.json",
+    "/fixture/experimental/campaign_20261104/maintenance_incremental_v1/plans/cugraph_mg/queue/state.json",
+    "/fixture/experimental/campaign_20261104/maintenance_incremental_v1/plans/diagnostic/queue/state.json",
+    "/fixture/experimental/campaign_20261104/maintenance_incremental_v1/plans/gum/queue/state.json",
+    "/fixture/experimental/campaign_20261104/maintenance_incremental_v1/plans/native/queue/state.json",
+    "/fixture/experimental/campaign_20261104/maintenance_incremental_v1/plans/sequence/queue/state.json",
+    "/fixture/experimental/campaign_20261104/maintenance_incremental_v1/plans/sg/queue/state.json",
+    "/fixture/experimental/campaign_20261104/native_cold_qualification_v3/state.json",
+    "/fixture/experimental/campaign_20261104/native_hostv2_probe/state.json",
+    "/fixture/experimental/campaign_20261104/native_scope_repaired_v1/diagnostic_queue/state.json",
+    "/fixture/experimental/campaign_20261104/native_scope_repaired_v1/main_queue/state.json",
+    "/fixture/experimental/campaign_20261104/recovery_expansion200_v1/c2p_tw/state.json",
+    "/fixture/experimental/campaign_20261104/recovery_expansion200_v1/e6/state.json",
+    "/fixture/experimental/campaign_20261104/recovery_expansion200_v1/native_preflight/state.json",
+    "/fixture/experimental/campaign_20261104/recovery_expansion200_v1/pr_control/state.json",
+    "/fixture/experimental/campaign_20261104/recovery_expansion200_v1/state/state.json",
+    "/fixture/experimental/campaign_20261104/state_v4_qualification_v1/state.json",
+    "/fixture/experimental/campaign_20261104/static_full_profile_qualification_v1/preflight_v2/state.json",
+    "/fixture/experimental/campaign_20261104/static_full_profile_qualification_v2/preflight/state.json",
+    "/fixture/experimental/campaign_20261104/wcc_host_sg_qualification_v1/state.json",
+    "/fixture/experimental/campaign_20261104/wcc_paired_qualification_v1/state.json"
+  ],
+  "parent_registries": [
+    {
+      "path": "/fixture/experimental/campaign_20261104/full_profile_final_guarded_v2/queue_registry.json",
+      "bytes": 3823,
+      "sha256": "821e157f860e2524974effe982ad5542ceb11d0502fce74046dc27221f42f2ee"
+    },
+    {
+      "path": "/fixture/experimental/campaign_20261104/author_target_resume_expansion200_v1/queue_registry.json",
+      "bytes": 3100,
+      "sha256": "21a6a6d2b9dbaf9e524987a68d6127579960c9cbf3804393d082f250924e944a"
+    },
+    {
+      "path": "/fixture/experimental/campaign_20261104/native_scope_repaired_v1/queue_registry.json",
+      "bytes": 2869,
+      "sha256": "5ce722a48d937a63f62a4b217c39b08a9f7e6580b413e02421067d8cc0bdba7d"
+    },
+    {
+      "path": "/fixture/experimental/campaign_20261104/formal_stable_external_v1/queue_registry.json",
+      "bytes": 947,
+      "sha256": "4bae78c75b83cd3305c51455b1f86d0bb957be96cdbe14db5a3211de72e70fb2"
+    },
+    {
+      "path": "/fixture/experimental/campaign_20261104/maintenance_incremental_v1/plans/queue_registry.json",
+      "bytes": 7772,
+      "sha256": "b7135d33406cc8579dd3133c9e6ca9a33935a4c08a38b7b6bcba411f8166a1ae"
+    }
+  ],
+  "scope": "Completed-only incremental maintenance for the new E6 source epoch, retaining explicit prior registered queues and the shared content index.",
+  "fixture_only": true
+}

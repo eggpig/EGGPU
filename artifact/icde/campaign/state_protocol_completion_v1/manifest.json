@@ -1,0 +1,132 @@
+{
+  "schema": "state.protocol.completion.manifest.v1",
+  "status": "CPU_VALIDATED_GPU_NOT_SUBMITTED",
+  "source_tree_sha256": "d84ff388e1e40d1fd6ed83fcaceecd0491fc0451adffaff657a95940b1803f84",
+  "native_dso_sha256": "6dfc1c03f249900afc216163d7b59d40da3dce19efdacc6eb60d198724801bac",
+  "runner_sha256": "073f21d6da0c2595b144cf4dea926e99ac60e5e6a58344328303a32ce1081d4d",
+  "cpu_tests_passed": 65,
+  "gpu_executed": false,
+  "formal_measurements": 0,
+  "grid": {
+    "E3": 300,
+    "E4": 160,
+    "E3R": 20,
+    "qualification_planned": 664,
+    "formal_repeats_planned": 4800
+  },
+  "files": {
+    "README_CN.md": {
+      "bytes": 6873,
+      "sha256": "c29287ee87740af052eb536f64663acb0cdf768eaf7cda3f7c252a317b4d641b"
+    },
+    "baselines/hytgraph_qualify.py": {
+      "bytes": 10820,
+      "sha256": "6aa0832cd8c27eb91dde7e728dabdbf24d499f4a837c82053bbf8d4e8ab66da8"
+    },
+    "cpu_oracle_provenance.json": {
+      "bytes": 600,
+      "sha256": "c3253a576f594310cbc8a09038cda55c7392a1386ab5b689d76a9d1773937d90"
+    },
+    "cpu_ownership_oracle.py": {
+      "bytes": 10794,
+      "sha256": "124c237c92ab343b5b3d88a7ca9546295f40eb9ef077e946d46d8935afa56e1f"
+    },
+    "cpu_validation/current/cpu_receipt.json": {
+      "bytes": 7983,
+      "sha256": "d33964bd37a85979baacd9c099e33d61e5915f0b10cf277cdef992836f3247a2"
+    },
+    "cpu_validation/current/cpu_test.log": {
+      "bytes": 100,
+      "sha256": "8ff9d5a75f22151838cf6a4b623d9ebbe97caa9cb2058c0a04eaff855e773215"
+    },
+    "draft/coverage.json": {
+      "bytes": 346481,
+      "sha256": "ef2e78623a58eb4d368f239ad1b7b69ddbbe08a1fb52265e5f39d580db9a8d9a"
+    },
+    "draft/formal_pending.json": {
+      "bytes": 4596728,
+      "sha256": "9c2efb0b55227e10a3f972914f18180772c6fb741097d0a4b019bc8d33a67628"
+    },
+    "draft/qualification_draft.json": {
+      "bytes": 424632,
+      "sha256": "3b9ae9774fe37870b75faff3813fd5357475dd0aa363b4278523d3a37fab1238"
+    },
+    "freeze.json": {
+      "bytes": 1563,
+      "sha256": "3effb2e67f56acbb57a437c28d10dbca294485d00e3b7b80ccdc18ff4cbb24f5"
+    },
+    "prepare.py": {
+      "bytes": 5866,
+      "sha256": "9f16d42d92ba5d1a7d5a669a7ecd2462729df1e71c6dc58c65e6a8a6873e369e"
+    },
+    "run_cpu_tests.py": {
+      "bytes": 3032,
+      "sha256": "f2b48dc563825b5537bd621fea5d33e0720cd2a1d93a5f10b818cee26cd93dff"
+    },
+    "state_contract.py": {
+      "bytes": 14016,
+      "sha256": "ea0b3bb95bf037031f8bb8993f0990fca8f918951bcc406e48993cec92a41f8e"
+    },
+    "state_controls.py": {
+      "bytes": 6243,
+      "sha256": "9496c4e4e0234abec7d1df0f7db7f52784210246fd0991acb1fed5d8e12b0559"
+    },
+    "state_inputs.py": {
+      "bytes": 10881,
+      "sha256": "2c36cc9c2fc20d1d556467cd35077b889895daad4d395a213073478712f98e63"
+    },
+    "state_plan.py": {
+      "bytes": 41884,
+      "sha256": "f70a81d12657ddba505c10db4ab34a08f204ed43beb271156c2490f2bd5cba75"
+    },
+    "state_protocol.py": {
+      "bytes": 5692,
+      "sha256": "98767a15e659dd96ee041bdb3e642861e701decb78b77b2052e5bf9cc938a21c"
+    },
+    "state_rebuild.py": {
+      "bytes": 7248,
+      "sha256": "5420982fc9f847bd4bee0ccdf89e049b6f348b3bc1c676aa69abc0afeed36975"
+    },
+    "state_reference.py": {
+      "bytes": 8995,
+      "sha256": "59c16ece7d79498264566a25040e5808f039bd1b6ddee22c546aacbce26e6fc0"
+    },
+    "state_worker.py": {
+      "bytes": 23636,
+      "sha256": "1e28df7ba3985a38ceccd065e3f3dea88b912d295eedc668c4d4f9f11b3a98dc"
+    },
+    "test_completion_cpu.py": {
+      "bytes": 14992,
+      "sha256": "f9d6a6fa7e43bf69bf0b59e34ddaec9cfaa54bb392c792ce994fed894d410352"
+    },
+    "test_original_contract_cpu.py": {
+      "bytes": 14012,
+      "sha256": "357583ca9e1eecc1a1ce29e5b58d4587d712f83ddab2172cbf7e5332181efe87"
+    }
+  },
+  "public_execution_files": [
+    "state_worker.py",
+    "state_contract.py",
+    "state_protocol.py",
+    "state_reference.py",
+    "state_inputs.py",
+    "state_controls.py",
+    "state_rebuild.py",
+    "baselines/hytgraph_qualify.py",
+    "state_plan.py",
+    "prepare.py"
+  ],
+  "public_cpu_test_files": [
+    "run_cpu_tests.py",
+    "test_completion_cpu.py",
+    "test_original_contract_cpu.py",
+    "cpu_ownership_oracle.py",
+    "cpu_oracle_provenance.json"
+  ],
+  "public_test_dependencies": [
+    "numpy",
+    "scipy",
+    "pytest"
+  ],
+  "draft_status": "Bound remote input paths are evidence only; regenerate deployment on chosen machine. jobs arrays are empty."
+}

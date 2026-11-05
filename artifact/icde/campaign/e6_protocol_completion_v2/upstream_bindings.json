@@ -1,0 +1,32 @@
+{
+  "e6_worker.py": {
+    "source": "e6_memory_input_v1/e6_worker.py",
+    "bytes": 38811,
+    "sha256": "ef895fc0dcb397547fd8d81a5ebeb2dd1d362c539390d3aec352b18f648a99ce"
+  },
+  "e6_reused.py": {
+    "source": "e6_memory_input_v1/e6_reused.py",
+    "bytes": 14948,
+    "sha256": "44704d165a4b87de73152592c18efaebfa280286722b98bcd5d665487bee8af9"
+  },
+  "e6_reuse_provenance.json": {
+    "source": "e6_memory_input_v1/e6_reuse_provenance.json",
+    "bytes": 1480,
+    "sha256": "49bab07cfcfe263ed3b1e12b2316557640c99e8e032b3ec9e7b30d0199df42f6"
+  },
+  "sg_worker.py": {
+    "source": "e6_memory_input_v1/sg_worker.py",
+    "bytes": 41355,
+    "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+  },
+  "cugraph_csr_adapter.py": {
+    "source": "e6_memory_input_v1/cugraph_csr_adapter.py",
+    "bytes": 6682,
+    "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+  },
+  "e6_cpu_reference.py": {
+    "source": "e6_memory_input_v1/e6_cpu_reference.py",
+    "bytes": 3116,
+    "sha256": "7ced877ef6ce588ac04bf7816b0bd67e252c7331f7f3ce8268940c3f698f3811"
+  }
+}

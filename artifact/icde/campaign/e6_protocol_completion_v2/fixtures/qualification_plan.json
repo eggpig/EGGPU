@@ -1,0 +1,2411 @@
+{
+  "schema": "e6.explicit-oracle.final-source-plan/v2",
+  "source": {
+    "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/freeze.json",
+    "bytes": 193911,
+    "sha256": "919f46cefa4d8616a8294df411f367e7e48cd8e6f13f423c4ec6ff8d46f43d96"
+  },
+  "source_tree_sha256": "d84ff388e1e40d1fd6ed83fcaceecd0491fc0451adffaff657a95940b1803f84",
+  "environment": {
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "EGGPU_COMM_BACKEND": "host_staging",
+    "LD_PRELOAD": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6:/fixture/system/miniconda3/lib/python3.12/site-packages/nvidia/nccl/lib/libnccl.so.2",
+    "LD_LIBRARY_PATH": "/usr/lib/x86_64-linux-gnu:/usr/local/cuda-13.0/lib64",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "PYTHONPATH": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/native:/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/Easy-Graph",
+    "EGGPU_ARENA_LIBRARY_DIR": "/fixture/experimental/campaign_20261104/build/integrated_v1/arena",
+    "EASYGRAPH_GPU_HOST_REGISTER": "1"
+  },
+  "gpu_executed": false,
+  "formal_measurements": 0,
+  "oracle": {
+    "path": "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/independent_reference_manifest.json",
+    "bytes": 5538,
+    "sha256": "67ff33938f0093dd950720853a04ed95d173f104f957269ac9be2a335e43897f"
+  },
+  "original_template": {
+    "path": "/fixture/experimental/campaign_20261104/final_source_qualification_v2/guarded_v1/e6_main_plan.json",
+    "bytes": 172522,
+    "sha256": "6e3e54611ebccb839e7ad84eaec02019173a81f245554884bdf9fee841790ed6"
+  },
+  "storage_poll_seconds": 15,
+  "protocol_boundary": "E6 replicated-graph structural and selected-source execution stays fixed; E1/E2 static SSSP/B+1 and PR/NCCL settings are not applied to this different API.",
+  "status": "CPU_PLAN_ONLY_REQUIRES_ROOT_LAUNCH",
+  "jobs": [
+    {
+      "id": "tiny_E6_TINY_U_eggpu_none_p1_r00",
+      "command": [
+        "/fixture/envs/core/bin/python",
+        "-B",
+        "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_worker.py",
+        "--execute-gpu",
+        "--system",
+        "eggpu",
+        "--ablate",
+        "none",
+        "--dataset",
+        "E6_TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--gpu-count",
+        "1",
+        "--gpu-uuids",
+        "GPU-TEST-0",
+        "--output",
+        "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/runs/tiny_E6_TINY_U_eggpu_none_p1_r00",
+        "--input-root",
+        "/fixture/experimental/campaign_20261104/e6_tiny_inputs",
+        "--release",
+        "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/Easy-Graph",
+        "--native-dso",
+        "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/native/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--arena-library-dir",
+        "/fixture/experimental/campaign_20261104/build/integrated_v1/arena",
+        "--setup",
+        "/fixture/experimental/campaign_20261104/setup.json",
+        "--lock-file",
+        "/fixture/gpu_experiment.lock",
+        "--reference-cache",
+        "/fixture/experimental/campaign_20261104/e6_references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0",
+        "--fallback-site",
+        "/fixture/envs/core/lib/python3.12/site-packages",
+        "--build-receipt",
+        "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/build_receipt.json",
+        "--reference-manifest",
+        "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/independent_reference_manifest.json"
+      ],
+      "receipt": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/runs/tiny_E6_TINY_U_eggpu_none_p1_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/freeze.json",
+          "bytes": 193911,
+          "sha256": "919f46cefa4d8616a8294df411f367e7e48cd8e6f13f423c4ec6ff8d46f43d96"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/independent_reference_manifest.json",
+          "bytes": 2072,
+          "sha256": "165045fd19eed0a2b7015b4c2a03354c6970c4f184bfd7a033f522e5b4e77463"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/build_plans.py",
+          "bytes": 5431,
+          "sha256": "3022c93d64fc0e2387b608f19295a1cd51c2b1242ff82eb3450b0e9b447ccfc2"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_worker.py",
+          "bytes": 38811,
+          "sha256": "ef895fc0dcb397547fd8d81a5ebeb2dd1d362c539390d3aec352b18f648a99ce"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_cpu_reference.py",
+          "bytes": 3116,
+          "sha256": "7ced877ef6ce588ac04bf7816b0bd67e252c7331f7f3ce8268940c3f698f3811"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_reused.py",
+          "bytes": 14948,
+          "sha256": "44704d165a4b87de73152592c18efaebfa280286722b98bcd5d665487bee8af9"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_reuse_provenance.json",
+          "bytes": 1480,
+          "sha256": "49bab07cfcfe263ed3b1e12b2316557640c99e8e032b3ec9e7b30d0199df42f6"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/sg_worker.py",
+          "bytes": 41355,
+          "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/cugraph_csr_adapter.py",
+          "bytes": 6682,
+          "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/core_oracle_readback_v2.json",
+          "bytes": 1289,
+          "sha256": "06dd3ee0db6bf5160699768f998b8330a82c94f980ae3c7e842bb900a1745498"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/rapids_oracle_readback_v2.json",
+          "bytes": 1291,
+          "sha256": "2ff2ae6a829c8517cbeec5d6c65069a50cb8b350afd1e21498cdf8768b1d1daf"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/build_receipt.json",
+          "bytes": 106356,
+          "sha256": "dc194f2f8e5ed46b58dac20bcea85ac6f84b2608324f11a5c1a6d8986029942f"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/native/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+          "bytes": 8537064,
+          "sha256": "6dfc1c03f249900afc216163d7b59d40da3dce19efdacc6eb60d198724801bac"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/array_cpu_receipt.json",
+          "bytes": 7543,
+          "sha256": "b857fac8e5d070863a4e41de20685e7e57a3b9c82d7567df87bd7c14523384b7"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/runner_manifest.json",
+          "bytes": 1536,
+          "sha256": "0b288d48bd3ca90e3ed3267d600d2efee8269c7d91e93133b5b061ff3c167f9b"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/lj_array_equivalence_receipt.json",
+          "bytes": 6179,
+          "sha256": "02803c08df6479680d3b03cae87e79760f803dfe00cdf14cbfbacdd14e1b03df"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/cpu_regression_d84ff_v1/receipt.json",
+          "bytes": 9134,
+          "sha256": "11949f3706e8bdfa8759ae2c64072c02e5a79b3f58d67817203a722ceb627322"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/build_memory_full_plans_v1.py",
+          "bytes": 7062,
+          "sha256": "e421d10627b009fa12df5e1f2834374423027b234d90368a06e325d0ac67697b"
+        }
+      ],
+      "depends_on": [],
+      "phase": "tiny",
+      "repeat": 0,
+      "dataset": "E6_TINY_U",
+      "system": "eggpu",
+      "ablate": "none",
+      "gpu_count": 1,
+      "disk_guard": {
+        "path": "/fixture/experimental/campaign_20261104",
+        "min_free_bytes": 2147505664
+      },
+      "maintenance": {
+        "command": [
+          "/fixture/envs/core/bin/python",
+          "-B",
+          "/fixture/experimental/campaign_20261104/completed_job_audit_maintenance_v2.py",
+          "--registry",
+          "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/queue_registry.json",
+          "--output",
+          "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/maintenance/tiny_E6_TINY_U_eggpu_none_p1_r00",
+          "--gpu-lock",
+          "/fixture/gpu_experiment.lock",
+          "--job-result",
+          "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/runs/tiny_E6_TINY_U_eggpu_none_p1_r00/result.json",
+          "--dedup-wrapper",
+          "/fixture/experimental/campaign_20261104/completed_output_maintenance_incremental_v1.py"
+        ],
+        "command_sha256": "b0028a2b9a432b88805bc418968913dd5a97405234dd7c37e1b05489f0cf4f86",
+        "bindings": [
+          {
+            "path": "/fixture/envs/core/bin/python",
+            "bytes": 30627224,
+            "sha256": "0c05a22b0b180580a76437114a95cf138f67c8f46245acad26017c803b42b8c1"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/completed_job_audit_maintenance_v2.py",
+            "bytes": 4638,
+            "sha256": "d479619310cd2cfeb08d081eb504a47c206b4fb25958f896e5c4d0b3ef7d256e"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/completed_output_maintenance_incremental_v1.py",
+            "bytes": 1434,
+            "sha256": "9c784af1aa4c9760742b399e992af5abe8899c879afe520ad5d1dc17a975bd53"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/incremental_completed_output_v1.py",
+            "bytes": 12790,
+            "sha256": "96aaff1ceba6d7aac13fc355ac6c118d37a6e3a1a982701b5ec8daab443eeb62"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/queue_registry.json",
+            "bytes": 8513,
+            "sha256": "bbdd48b67efd15c157a5316804d3e649b4972a5d3c6ae62521c230681ed07abe"
+          }
+        ],
+        "gpu_lock": "/fixture/gpu_experiment.lock",
+        "environment": {
+          "CUDA_VISIBLE_DEVICES": ""
+        },
+        "receipt": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/maintenance/tiny_E6_TINY_U_eggpu_none_p1_r00/receipt.json",
+        "expected_statuses": [
+          "PASS_INCREMENTAL_HARDLINKED_OUTPUTS"
+        ],
+        "timeout": 3600
+      },
+      "environment": {
+        "PYTHONPATH": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/native:/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/Easy-Graph",
+        "EASYGRAPH_GPU_HOST_REGISTER": "1"
+      }
+    },
+    {
+      "id": "tiny_E6_TINY_U_eggpu_none_p2_r00",
+      "command": [
+        "/fixture/envs/core/bin/python",
+        "-B",
+        "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_worker.py",
+        "--execute-gpu",
+        "--system",
+        "eggpu",
+        "--ablate",
+        "none",
+        "--dataset",
+        "E6_TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--gpu-count",
+        "2",
+        "--gpu-uuids",
+        "GPU-TEST-0,GPU-TEST-1",
+        "--output",
+        "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/runs/tiny_E6_TINY_U_eggpu_none_p2_r00",
+        "--input-root",
+        "/fixture/experimental/campaign_20261104/e6_tiny_inputs",
+        "--release",
+        "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/Easy-Graph",
+        "--native-dso",
+        "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/native/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--arena-library-dir",
+        "/fixture/experimental/campaign_20261104/build/integrated_v1/arena",
+        "--setup",
+        "/fixture/experimental/campaign_20261104/setup.json",
+        "--lock-file",
+        "/fixture/gpu_experiment.lock",
+        "--reference-cache",
+        "/fixture/experimental/campaign_20261104/e6_references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0",
+        "--fallback-site",
+        "/fixture/envs/core/lib/python3.12/site-packages",
+        "--build-receipt",
+        "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/build_receipt.json",
+        "--reference-manifest",
+        "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/independent_reference_manifest.json"
+      ],
+      "receipt": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/runs/tiny_E6_TINY_U_eggpu_none_p2_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/freeze.json",
+          "bytes": 193911,
+          "sha256": "919f46cefa4d8616a8294df411f367e7e48cd8e6f13f423c4ec6ff8d46f43d96"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/independent_reference_manifest.json",
+          "bytes": 2072,
+          "sha256": "165045fd19eed0a2b7015b4c2a03354c6970c4f184bfd7a033f522e5b4e77463"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/build_plans.py",
+          "bytes": 5431,
+          "sha256": "3022c93d64fc0e2387b608f19295a1cd51c2b1242ff82eb3450b0e9b447ccfc2"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_worker.py",
+          "bytes": 38811,
+          "sha256": "ef895fc0dcb397547fd8d81a5ebeb2dd1d362c539390d3aec352b18f648a99ce"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_cpu_reference.py",
+          "bytes": 3116,
+          "sha256": "7ced877ef6ce588ac04bf7816b0bd67e252c7331f7f3ce8268940c3f698f3811"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_reused.py",
+          "bytes": 14948,
+          "sha256": "44704d165a4b87de73152592c18efaebfa280286722b98bcd5d665487bee8af9"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_reuse_provenance.json",
+          "bytes": 1480,
+          "sha256": "49bab07cfcfe263ed3b1e12b2316557640c99e8e032b3ec9e7b30d0199df42f6"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/sg_worker.py",
+          "bytes": 41355,
+          "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/cugraph_csr_adapter.py",
+          "bytes": 6682,
+          "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/core_oracle_readback_v2.json",
+          "bytes": 1289,
+          "sha256": "06dd3ee0db6bf5160699768f998b8330a82c94f980ae3c7e842bb900a1745498"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/rapids_oracle_readback_v2.json",
+          "bytes": 1291,
+          "sha256": "2ff2ae6a829c8517cbeec5d6c65069a50cb8b350afd1e21498cdf8768b1d1daf"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/build_receipt.json",
+          "bytes": 106356,
+          "sha256": "dc194f2f8e5ed46b58dac20bcea85ac6f84b2608324f11a5c1a6d8986029942f"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/native/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+          "bytes": 8537064,
+          "sha256": "6dfc1c03f249900afc216163d7b59d40da3dce19efdacc6eb60d198724801bac"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/array_cpu_receipt.json",
+          "bytes": 7543,
+          "sha256": "b857fac8e5d070863a4e41de20685e7e57a3b9c82d7567df87bd7c14523384b7"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/runner_manifest.json",
+          "bytes": 1536,
+          "sha256": "0b288d48bd3ca90e3ed3267d600d2efee8269c7d91e93133b5b061ff3c167f9b"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/lj_array_equivalence_receipt.json",
+          "bytes": 6179,
+          "sha256": "02803c08df6479680d3b03cae87e79760f803dfe00cdf14cbfbacdd14e1b03df"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/cpu_regression_d84ff_v1/receipt.json",
+          "bytes": 9134,
+          "sha256": "11949f3706e8bdfa8759ae2c64072c02e5a79b3f58d67817203a722ceb627322"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/build_memory_full_plans_v1.py",
+          "bytes": 7062,
+          "sha256": "e421d10627b009fa12df5e1f2834374423027b234d90368a06e325d0ac67697b"
+        }
+      ],
+      "depends_on": [],
+      "phase": "tiny",
+      "repeat": 0,
+      "dataset": "E6_TINY_U",
+      "system": "eggpu",
+      "ablate": "none",
+      "gpu_count": 2,
+      "disk_guard": {
+        "path": "/fixture/experimental/campaign_20261104",
+        "min_free_bytes": 2147505664
+      },
+      "maintenance": {
+        "command": [
+          "/fixture/envs/core/bin/python",
+          "-B",
+          "/fixture/experimental/campaign_20261104/completed_job_audit_maintenance_v2.py",
+          "--registry",
+          "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/queue_registry.json",
+          "--output",
+          "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/maintenance/tiny_E6_TINY_U_eggpu_none_p2_r00",
+          "--gpu-lock",
+          "/fixture/gpu_experiment.lock",
+          "--job-result",
+          "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/runs/tiny_E6_TINY_U_eggpu_none_p2_r00/result.json",
+          "--dedup-wrapper",
+          "/fixture/experimental/campaign_20261104/completed_output_maintenance_incremental_v1.py"
+        ],
+        "command_sha256": "9886b16cd089f165014696ba095671b1165d309e8b80ca0a67d27911c06981ae",
+        "bindings": [
+          {
+            "path": "/fixture/envs/core/bin/python",
+            "bytes": 30627224,
+            "sha256": "0c05a22b0b180580a76437114a95cf138f67c8f46245acad26017c803b42b8c1"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/completed_job_audit_maintenance_v2.py",
+            "bytes": 4638,
+            "sha256": "d479619310cd2cfeb08d081eb504a47c206b4fb25958f896e5c4d0b3ef7d256e"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/completed_output_maintenance_incremental_v1.py",
+            "bytes": 1434,
+            "sha256": "9c784af1aa4c9760742b399e992af5abe8899c879afe520ad5d1dc17a975bd53"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/incremental_completed_output_v1.py",
+            "bytes": 12790,
+            "sha256": "96aaff1ceba6d7aac13fc355ac6c118d37a6e3a1a982701b5ec8daab443eeb62"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/queue_registry.json",
+            "bytes": 8513,
+            "sha256": "bbdd48b67efd15c157a5316804d3e649b4972a5d3c6ae62521c230681ed07abe"
+          }
+        ],
+        "gpu_lock": "/fixture/gpu_experiment.lock",
+        "environment": {
+          "CUDA_VISIBLE_DEVICES": ""
+        },
+        "receipt": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/maintenance/tiny_E6_TINY_U_eggpu_none_p2_r00/receipt.json",
+        "expected_statuses": [
+          "PASS_INCREMENTAL_HARDLINKED_OUTPUTS"
+        ],
+        "timeout": 3600
+      },
+      "environment": {
+        "PYTHONPATH": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/native:/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/Easy-Graph",
+        "EASYGRAPH_GPU_HOST_REGISTER": "1"
+      }
+    },
+    {
+      "id": "tiny_E6_TINY_U_eggpu_none_p4_r00",
+      "command": [
+        "/fixture/envs/core/bin/python",
+        "-B",
+        "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_worker.py",
+        "--execute-gpu",
+        "--system",
+        "eggpu",
+        "--ablate",
+        "none",
+        "--dataset",
+        "E6_TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--gpu-count",
+        "4",
+        "--gpu-uuids",
+        "GPU-TEST-0,GPU-TEST-1,GPU-TEST-2,GPU-TEST-3",
+        "--output",
+        "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/runs/tiny_E6_TINY_U_eggpu_none_p4_r00",
+        "--input-root",
+        "/fixture/experimental/campaign_20261104/e6_tiny_inputs",
+        "--release",
+        "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/Easy-Graph",
+        "--native-dso",
+        "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/native/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--arena-library-dir",
+        "/fixture/experimental/campaign_20261104/build/integrated_v1/arena",
+        "--setup",
+        "/fixture/experimental/campaign_20261104/setup.json",
+        "--lock-file",
+        "/fixture/gpu_experiment.lock",
+        "--reference-cache",
+        "/fixture/experimental/campaign_20261104/e6_references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0",
+        "--fallback-site",
+        "/fixture/envs/core/lib/python3.12/site-packages",
+        "--build-receipt",
+        "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/build_receipt.json",
+        "--reference-manifest",
+        "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/independent_reference_manifest.json"
+      ],
+      "receipt": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/runs/tiny_E6_TINY_U_eggpu_none_p4_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/freeze.json",
+          "bytes": 193911,
+          "sha256": "919f46cefa4d8616a8294df411f367e7e48cd8e6f13f423c4ec6ff8d46f43d96"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/independent_reference_manifest.json",
+          "bytes": 2072,
+          "sha256": "165045fd19eed0a2b7015b4c2a03354c6970c4f184bfd7a033f522e5b4e77463"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/build_plans.py",
+          "bytes": 5431,
+          "sha256": "3022c93d64fc0e2387b608f19295a1cd51c2b1242ff82eb3450b0e9b447ccfc2"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_worker.py",
+          "bytes": 38811,
+          "sha256": "ef895fc0dcb397547fd8d81a5ebeb2dd1d362c539390d3aec352b18f648a99ce"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_cpu_reference.py",
+          "bytes": 3116,
+          "sha256": "7ced877ef6ce588ac04bf7816b0bd67e252c7331f7f3ce8268940c3f698f3811"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_reused.py",
+          "bytes": 14948,
+          "sha256": "44704d165a4b87de73152592c18efaebfa280286722b98bcd5d665487bee8af9"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_reuse_provenance.json",
+          "bytes": 1480,
+          "sha256": "49bab07cfcfe263ed3b1e12b2316557640c99e8e032b3ec9e7b30d0199df42f6"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/sg_worker.py",
+          "bytes": 41355,
+          "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/cugraph_csr_adapter.py",
+          "bytes": 6682,
+          "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/core_oracle_readback_v2.json",
+          "bytes": 1289,
+          "sha256": "06dd3ee0db6bf5160699768f998b8330a82c94f980ae3c7e842bb900a1745498"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/rapids_oracle_readback_v2.json",
+          "bytes": 1291,
+          "sha256": "2ff2ae6a829c8517cbeec5d6c65069a50cb8b350afd1e21498cdf8768b1d1daf"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/build_receipt.json",
+          "bytes": 106356,
+          "sha256": "dc194f2f8e5ed46b58dac20bcea85ac6f84b2608324f11a5c1a6d8986029942f"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/native/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+          "bytes": 8537064,
+          "sha256": "6dfc1c03f249900afc216163d7b59d40da3dce19efdacc6eb60d198724801bac"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/array_cpu_receipt.json",
+          "bytes": 7543,
+          "sha256": "b857fac8e5d070863a4e41de20685e7e57a3b9c82d7567df87bd7c14523384b7"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/runner_manifest.json",
+          "bytes": 1536,
+          "sha256": "0b288d48bd3ca90e3ed3267d600d2efee8269c7d91e93133b5b061ff3c167f9b"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/lj_array_equivalence_receipt.json",
+          "bytes": 6179,
+          "sha256": "02803c08df6479680d3b03cae87e79760f803dfe00cdf14cbfbacdd14e1b03df"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/cpu_regression_d84ff_v1/receipt.json",
+          "bytes": 9134,
+          "sha256": "11949f3706e8bdfa8759ae2c64072c02e5a79b3f58d67817203a722ceb627322"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/build_memory_full_plans_v1.py",
+          "bytes": 7062,
+          "sha256": "e421d10627b009fa12df5e1f2834374423027b234d90368a06e325d0ac67697b"
+        }
+      ],
+      "depends_on": [],
+      "phase": "tiny",
+      "repeat": 0,
+      "dataset": "E6_TINY_U",
+      "system": "eggpu",
+      "ablate": "none",
+      "gpu_count": 4,
+      "disk_guard": {
+        "path": "/fixture/experimental/campaign_20261104",
+        "min_free_bytes": 2147505664
+      },
+      "maintenance": {
+        "command": [
+          "/fixture/envs/core/bin/python",
+          "-B",
+          "/fixture/experimental/campaign_20261104/completed_job_audit_maintenance_v2.py",
+          "--registry",
+          "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/queue_registry.json",
+          "--output",
+          "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/maintenance/tiny_E6_TINY_U_eggpu_none_p4_r00",
+          "--gpu-lock",
+          "/fixture/gpu_experiment.lock",
+          "--job-result",
+          "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/runs/tiny_E6_TINY_U_eggpu_none_p4_r00/result.json",
+          "--dedup-wrapper",
+          "/fixture/experimental/campaign_20261104/completed_output_maintenance_incremental_v1.py"
+        ],
+        "command_sha256": "1dfba066f606599a5a98b09cde09963dbd2d249d4d12beb1a0c137eac8923e6f",
+        "bindings": [
+          {
+            "path": "/fixture/envs/core/bin/python",
+            "bytes": 30627224,
+            "sha256": "0c05a22b0b180580a76437114a95cf138f67c8f46245acad26017c803b42b8c1"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/completed_job_audit_maintenance_v2.py",
+            "bytes": 4638,
+            "sha256": "d479619310cd2cfeb08d081eb504a47c206b4fb25958f896e5c4d0b3ef7d256e"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/completed_output_maintenance_incremental_v1.py",
+            "bytes": 1434,
+            "sha256": "9c784af1aa4c9760742b399e992af5abe8899c879afe520ad5d1dc17a975bd53"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/incremental_completed_output_v1.py",
+            "bytes": 12790,
+            "sha256": "96aaff1ceba6d7aac13fc355ac6c118d37a6e3a1a982701b5ec8daab443eeb62"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/queue_registry.json",
+            "bytes": 8513,
+            "sha256": "bbdd48b67efd15c157a5316804d3e649b4972a5d3c6ae62521c230681ed07abe"
+          }
+        ],
+        "gpu_lock": "/fixture/gpu_experiment.lock",
+        "environment": {
+          "CUDA_VISIBLE_DEVICES": ""
+        },
+        "receipt": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/maintenance/tiny_E6_TINY_U_eggpu_none_p4_r00/receipt.json",
+        "expected_statuses": [
+          "PASS_INCREMENTAL_HARDLINKED_OUTPUTS"
+        ],
+        "timeout": 3600
+      },
+      "environment": {
+        "PYTHONPATH": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/native:/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/Easy-Graph",
+        "EASYGRAPH_GPU_HOST_REGISTER": "1"
+      }
+    },
+    {
+      "id": "tiny_E6_TINY_U_eggpu_none_p8_r00",
+      "command": [
+        "/fixture/envs/core/bin/python",
+        "-B",
+        "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_worker.py",
+        "--execute-gpu",
+        "--system",
+        "eggpu",
+        "--ablate",
+        "none",
+        "--dataset",
+        "E6_TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--gpu-count",
+        "8",
+        "--gpu-uuids",
+        "GPU-TEST-0,GPU-TEST-1,GPU-TEST-2,GPU-TEST-3,GPU-TEST-4,GPU-TEST-5,GPU-TEST-6,GPU-TEST-7",
+        "--output",
+        "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/runs/tiny_E6_TINY_U_eggpu_none_p8_r00",
+        "--input-root",
+        "/fixture/experimental/campaign_20261104/e6_tiny_inputs",
+        "--release",
+        "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/Easy-Graph",
+        "--native-dso",
+        "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/native/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--arena-library-dir",
+        "/fixture/experimental/campaign_20261104/build/integrated_v1/arena",
+        "--setup",
+        "/fixture/experimental/campaign_20261104/setup.json",
+        "--lock-file",
+        "/fixture/gpu_experiment.lock",
+        "--reference-cache",
+        "/fixture/experimental/campaign_20261104/e6_references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0",
+        "--fallback-site",
+        "/fixture/envs/core/lib/python3.12/site-packages",
+        "--build-receipt",
+        "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/build_receipt.json",
+        "--reference-manifest",
+        "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/independent_reference_manifest.json"
+      ],
+      "receipt": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/runs/tiny_E6_TINY_U_eggpu_none_p8_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/freeze.json",
+          "bytes": 193911,
+          "sha256": "919f46cefa4d8616a8294df411f367e7e48cd8e6f13f423c4ec6ff8d46f43d96"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/independent_reference_manifest.json",
+          "bytes": 2072,
+          "sha256": "165045fd19eed0a2b7015b4c2a03354c6970c4f184bfd7a033f522e5b4e77463"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/build_plans.py",
+          "bytes": 5431,
+          "sha256": "3022c93d64fc0e2387b608f19295a1cd51c2b1242ff82eb3450b0e9b447ccfc2"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_worker.py",
+          "bytes": 38811,
+          "sha256": "ef895fc0dcb397547fd8d81a5ebeb2dd1d362c539390d3aec352b18f648a99ce"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_cpu_reference.py",
+          "bytes": 3116,
+          "sha256": "7ced877ef6ce588ac04bf7816b0bd67e252c7331f7f3ce8268940c3f698f3811"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_reused.py",
+          "bytes": 14948,
+          "sha256": "44704d165a4b87de73152592c18efaebfa280286722b98bcd5d665487bee8af9"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_reuse_provenance.json",
+          "bytes": 1480,
+          "sha256": "49bab07cfcfe263ed3b1e12b2316557640c99e8e032b3ec9e7b30d0199df42f6"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/sg_worker.py",
+          "bytes": 41355,
+          "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/cugraph_csr_adapter.py",
+          "bytes": 6682,
+          "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/core_oracle_readback_v2.json",
+          "bytes": 1289,
+          "sha256": "06dd3ee0db6bf5160699768f998b8330a82c94f980ae3c7e842bb900a1745498"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/rapids_oracle_readback_v2.json",
+          "bytes": 1291,
+          "sha256": "2ff2ae6a829c8517cbeec5d6c65069a50cb8b350afd1e21498cdf8768b1d1daf"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/build_receipt.json",
+          "bytes": 106356,
+          "sha256": "dc194f2f8e5ed46b58dac20bcea85ac6f84b2608324f11a5c1a6d8986029942f"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/native/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+          "bytes": 8537064,
+          "sha256": "6dfc1c03f249900afc216163d7b59d40da3dce19efdacc6eb60d198724801bac"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/array_cpu_receipt.json",
+          "bytes": 7543,
+          "sha256": "b857fac8e5d070863a4e41de20685e7e57a3b9c82d7567df87bd7c14523384b7"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/runner_manifest.json",
+          "bytes": 1536,
+          "sha256": "0b288d48bd3ca90e3ed3267d600d2efee8269c7d91e93133b5b061ff3c167f9b"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/lj_array_equivalence_receipt.json",
+          "bytes": 6179,
+          "sha256": "02803c08df6479680d3b03cae87e79760f803dfe00cdf14cbfbacdd14e1b03df"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/cpu_regression_d84ff_v1/receipt.json",
+          "bytes": 9134,
+          "sha256": "11949f3706e8bdfa8759ae2c64072c02e5a79b3f58d67817203a722ceb627322"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/build_memory_full_plans_v1.py",
+          "bytes": 7062,
+          "sha256": "e421d10627b009fa12df5e1f2834374423027b234d90368a06e325d0ac67697b"
+        }
+      ],
+      "depends_on": [],
+      "phase": "tiny",
+      "repeat": 0,
+      "dataset": "E6_TINY_U",
+      "system": "eggpu",
+      "ablate": "none",
+      "gpu_count": 8,
+      "disk_guard": {
+        "path": "/fixture/experimental/campaign_20261104",
+        "min_free_bytes": 2147505664
+      },
+      "maintenance": {
+        "command": [
+          "/fixture/envs/core/bin/python",
+          "-B",
+          "/fixture/experimental/campaign_20261104/completed_job_audit_maintenance_v2.py",
+          "--registry",
+          "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/queue_registry.json",
+          "--output",
+          "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/maintenance/tiny_E6_TINY_U_eggpu_none_p8_r00",
+          "--gpu-lock",
+          "/fixture/gpu_experiment.lock",
+          "--job-result",
+          "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/runs/tiny_E6_TINY_U_eggpu_none_p8_r00/result.json",
+          "--dedup-wrapper",
+          "/fixture/experimental/campaign_20261104/completed_output_maintenance_incremental_v1.py"
+        ],
+        "command_sha256": "d3792d5debfd20b9613a987f4f7203d769c0707ce737d466d3305550e78d84cf",
+        "bindings": [
+          {
+            "path": "/fixture/envs/core/bin/python",
+            "bytes": 30627224,
+            "sha256": "0c05a22b0b180580a76437114a95cf138f67c8f46245acad26017c803b42b8c1"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/completed_job_audit_maintenance_v2.py",
+            "bytes": 4638,
+            "sha256": "d479619310cd2cfeb08d081eb504a47c206b4fb25958f896e5c4d0b3ef7d256e"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/completed_output_maintenance_incremental_v1.py",
+            "bytes": 1434,
+            "sha256": "9c784af1aa4c9760742b399e992af5abe8899c879afe520ad5d1dc17a975bd53"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/incremental_completed_output_v1.py",
+            "bytes": 12790,
+            "sha256": "96aaff1ceba6d7aac13fc355ac6c118d37a6e3a1a982701b5ec8daab443eeb62"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/queue_registry.json",
+            "bytes": 8513,
+            "sha256": "bbdd48b67efd15c157a5316804d3e649b4972a5d3c6ae62521c230681ed07abe"
+          }
+        ],
+        "gpu_lock": "/fixture/gpu_experiment.lock",
+        "environment": {
+          "CUDA_VISIBLE_DEVICES": ""
+        },
+        "receipt": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/maintenance/tiny_E6_TINY_U_eggpu_none_p8_r00/receipt.json",
+        "expected_statuses": [
+          "PASS_INCREMENTAL_HARDLINKED_OUTPUTS"
+        ],
+        "timeout": 3600
+      },
+      "environment": {
+        "PYTHONPATH": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/native:/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/Easy-Graph",
+        "EASYGRAPH_GPU_HOST_REGISTER": "1"
+      }
+    },
+    {
+      "id": "tiny_E6_TINY_U_eggpu_structural_p1_r00",
+      "command": [
+        "/fixture/envs/core/bin/python",
+        "-B",
+        "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_worker.py",
+        "--execute-gpu",
+        "--system",
+        "eggpu",
+        "--ablate",
+        "structural",
+        "--dataset",
+        "E6_TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--gpu-count",
+        "1",
+        "--gpu-uuids",
+        "GPU-TEST-0",
+        "--output",
+        "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/runs/tiny_E6_TINY_U_eggpu_structural_p1_r00",
+        "--input-root",
+        "/fixture/experimental/campaign_20261104/e6_tiny_inputs",
+        "--release",
+        "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/Easy-Graph",
+        "--native-dso",
+        "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/native/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--arena-library-dir",
+        "/fixture/experimental/campaign_20261104/build/integrated_v1/arena",
+        "--setup",
+        "/fixture/experimental/campaign_20261104/setup.json",
+        "--lock-file",
+        "/fixture/gpu_experiment.lock",
+        "--reference-cache",
+        "/fixture/experimental/campaign_20261104/e6_references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0",
+        "--fallback-site",
+        "/fixture/envs/core/lib/python3.12/site-packages",
+        "--build-receipt",
+        "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/build_receipt.json",
+        "--reference-manifest",
+        "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/independent_reference_manifest.json"
+      ],
+      "receipt": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/runs/tiny_E6_TINY_U_eggpu_structural_p1_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/freeze.json",
+          "bytes": 193911,
+          "sha256": "919f46cefa4d8616a8294df411f367e7e48cd8e6f13f423c4ec6ff8d46f43d96"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/independent_reference_manifest.json",
+          "bytes": 2072,
+          "sha256": "165045fd19eed0a2b7015b4c2a03354c6970c4f184bfd7a033f522e5b4e77463"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/build_plans.py",
+          "bytes": 5431,
+          "sha256": "3022c93d64fc0e2387b608f19295a1cd51c2b1242ff82eb3450b0e9b447ccfc2"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_worker.py",
+          "bytes": 38811,
+          "sha256": "ef895fc0dcb397547fd8d81a5ebeb2dd1d362c539390d3aec352b18f648a99ce"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_cpu_reference.py",
+          "bytes": 3116,
+          "sha256": "7ced877ef6ce588ac04bf7816b0bd67e252c7331f7f3ce8268940c3f698f3811"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_reused.py",
+          "bytes": 14948,
+          "sha256": "44704d165a4b87de73152592c18efaebfa280286722b98bcd5d665487bee8af9"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_reuse_provenance.json",
+          "bytes": 1480,
+          "sha256": "49bab07cfcfe263ed3b1e12b2316557640c99e8e032b3ec9e7b30d0199df42f6"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/sg_worker.py",
+          "bytes": 41355,
+          "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/cugraph_csr_adapter.py",
+          "bytes": 6682,
+          "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/core_oracle_readback_v2.json",
+          "bytes": 1289,
+          "sha256": "06dd3ee0db6bf5160699768f998b8330a82c94f980ae3c7e842bb900a1745498"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/rapids_oracle_readback_v2.json",
+          "bytes": 1291,
+          "sha256": "2ff2ae6a829c8517cbeec5d6c65069a50cb8b350afd1e21498cdf8768b1d1daf"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/build_receipt.json",
+          "bytes": 106356,
+          "sha256": "dc194f2f8e5ed46b58dac20bcea85ac6f84b2608324f11a5c1a6d8986029942f"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/native/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+          "bytes": 8537064,
+          "sha256": "6dfc1c03f249900afc216163d7b59d40da3dce19efdacc6eb60d198724801bac"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/array_cpu_receipt.json",
+          "bytes": 7543,
+          "sha256": "b857fac8e5d070863a4e41de20685e7e57a3b9c82d7567df87bd7c14523384b7"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/runner_manifest.json",
+          "bytes": 1536,
+          "sha256": "0b288d48bd3ca90e3ed3267d600d2efee8269c7d91e93133b5b061ff3c167f9b"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/lj_array_equivalence_receipt.json",
+          "bytes": 6179,
+          "sha256": "02803c08df6479680d3b03cae87e79760f803dfe00cdf14cbfbacdd14e1b03df"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/cpu_regression_d84ff_v1/receipt.json",
+          "bytes": 9134,
+          "sha256": "11949f3706e8bdfa8759ae2c64072c02e5a79b3f58d67817203a722ceb627322"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/build_memory_full_plans_v1.py",
+          "bytes": 7062,
+          "sha256": "e421d10627b009fa12df5e1f2834374423027b234d90368a06e325d0ac67697b"
+        }
+      ],
+      "depends_on": [],
+      "phase": "tiny",
+      "repeat": 0,
+      "dataset": "E6_TINY_U",
+      "system": "eggpu",
+      "ablate": "structural",
+      "gpu_count": 1,
+      "disk_guard": {
+        "path": "/fixture/experimental/campaign_20261104",
+        "min_free_bytes": 2147505664
+      },
+      "maintenance": {
+        "command": [
+          "/fixture/envs/core/bin/python",
+          "-B",
+          "/fixture/experimental/campaign_20261104/completed_job_audit_maintenance_v2.py",
+          "--registry",
+          "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/queue_registry.json",
+          "--output",
+          "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/maintenance/tiny_E6_TINY_U_eggpu_structural_p1_r00",
+          "--gpu-lock",
+          "/fixture/gpu_experiment.lock",
+          "--job-result",
+          "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/runs/tiny_E6_TINY_U_eggpu_structural_p1_r00/result.json",
+          "--dedup-wrapper",
+          "/fixture/experimental/campaign_20261104/completed_output_maintenance_incremental_v1.py"
+        ],
+        "command_sha256": "6ec7dcc7c263716b78dd068899a09f10a9b843d35d66edbc6675ed2f00ff5592",
+        "bindings": [
+          {
+            "path": "/fixture/envs/core/bin/python",
+            "bytes": 30627224,
+            "sha256": "0c05a22b0b180580a76437114a95cf138f67c8f46245acad26017c803b42b8c1"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/completed_job_audit_maintenance_v2.py",
+            "bytes": 4638,
+            "sha256": "d479619310cd2cfeb08d081eb504a47c206b4fb25958f896e5c4d0b3ef7d256e"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/completed_output_maintenance_incremental_v1.py",
+            "bytes": 1434,
+            "sha256": "9c784af1aa4c9760742b399e992af5abe8899c879afe520ad5d1dc17a975bd53"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/incremental_completed_output_v1.py",
+            "bytes": 12790,
+            "sha256": "96aaff1ceba6d7aac13fc355ac6c118d37a6e3a1a982701b5ec8daab443eeb62"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/queue_registry.json",
+            "bytes": 8513,
+            "sha256": "bbdd48b67efd15c157a5316804d3e649b4972a5d3c6ae62521c230681ed07abe"
+          }
+        ],
+        "gpu_lock": "/fixture/gpu_experiment.lock",
+        "environment": {
+          "CUDA_VISIBLE_DEVICES": ""
+        },
+        "receipt": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/maintenance/tiny_E6_TINY_U_eggpu_structural_p1_r00/receipt.json",
+        "expected_statuses": [
+          "PASS_INCREMENTAL_HARDLINKED_OUTPUTS"
+        ],
+        "timeout": 3600
+      },
+      "environment": {
+        "PYTHONPATH": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/native:/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/Easy-Graph",
+        "EASYGRAPH_GPU_HOST_REGISTER": "1"
+      }
+    },
+    {
+      "id": "tiny_E6_TINY_U_eggpu_closeness_p1_r00",
+      "command": [
+        "/fixture/envs/core/bin/python",
+        "-B",
+        "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_worker.py",
+        "--execute-gpu",
+        "--system",
+        "eggpu",
+        "--ablate",
+        "closeness",
+        "--dataset",
+        "E6_TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--gpu-count",
+        "1",
+        "--gpu-uuids",
+        "GPU-TEST-0",
+        "--output",
+        "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/runs/tiny_E6_TINY_U_eggpu_closeness_p1_r00",
+        "--input-root",
+        "/fixture/experimental/campaign_20261104/e6_tiny_inputs",
+        "--release",
+        "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/Easy-Graph",
+        "--native-dso",
+        "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/native/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--arena-library-dir",
+        "/fixture/experimental/campaign_20261104/build/integrated_v1/arena",
+        "--setup",
+        "/fixture/experimental/campaign_20261104/setup.json",
+        "--lock-file",
+        "/fixture/gpu_experiment.lock",
+        "--reference-cache",
+        "/fixture/experimental/campaign_20261104/e6_references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0",
+        "--fallback-site",
+        "/fixture/envs/core/lib/python3.12/site-packages",
+        "--build-receipt",
+        "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/build_receipt.json",
+        "--reference-manifest",
+        "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/independent_reference_manifest.json"
+      ],
+      "receipt": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/runs/tiny_E6_TINY_U_eggpu_closeness_p1_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/freeze.json",
+          "bytes": 193911,
+          "sha256": "919f46cefa4d8616a8294df411f367e7e48cd8e6f13f423c4ec6ff8d46f43d96"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/independent_reference_manifest.json",
+          "bytes": 2072,
+          "sha256": "165045fd19eed0a2b7015b4c2a03354c6970c4f184bfd7a033f522e5b4e77463"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/build_plans.py",
+          "bytes": 5431,
+          "sha256": "3022c93d64fc0e2387b608f19295a1cd51c2b1242ff82eb3450b0e9b447ccfc2"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_worker.py",
+          "bytes": 38811,
+          "sha256": "ef895fc0dcb397547fd8d81a5ebeb2dd1d362c539390d3aec352b18f648a99ce"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_cpu_reference.py",
+          "bytes": 3116,
+          "sha256": "7ced877ef6ce588ac04bf7816b0bd67e252c7331f7f3ce8268940c3f698f3811"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_reused.py",
+          "bytes": 14948,
+          "sha256": "44704d165a4b87de73152592c18efaebfa280286722b98bcd5d665487bee8af9"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_reuse_provenance.json",
+          "bytes": 1480,
+          "sha256": "49bab07cfcfe263ed3b1e12b2316557640c99e8e032b3ec9e7b30d0199df42f6"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/sg_worker.py",
+          "bytes": 41355,
+          "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/cugraph_csr_adapter.py",
+          "bytes": 6682,
+          "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/core_oracle_readback_v2.json",
+          "bytes": 1289,
+          "sha256": "06dd3ee0db6bf5160699768f998b8330a82c94f980ae3c7e842bb900a1745498"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/rapids_oracle_readback_v2.json",
+          "bytes": 1291,
+          "sha256": "2ff2ae6a829c8517cbeec5d6c65069a50cb8b350afd1e21498cdf8768b1d1daf"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/build_receipt.json",
+          "bytes": 106356,
+          "sha256": "dc194f2f8e5ed46b58dac20bcea85ac6f84b2608324f11a5c1a6d8986029942f"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/native/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+          "bytes": 8537064,
+          "sha256": "6dfc1c03f249900afc216163d7b59d40da3dce19efdacc6eb60d198724801bac"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/array_cpu_receipt.json",
+          "bytes": 7543,
+          "sha256": "b857fac8e5d070863a4e41de20685e7e57a3b9c82d7567df87bd7c14523384b7"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/runner_manifest.json",
+          "bytes": 1536,
+          "sha256": "0b288d48bd3ca90e3ed3267d600d2efee8269c7d91e93133b5b061ff3c167f9b"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/lj_array_equivalence_receipt.json",
+          "bytes": 6179,
+          "sha256": "02803c08df6479680d3b03cae87e79760f803dfe00cdf14cbfbacdd14e1b03df"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/cpu_regression_d84ff_v1/receipt.json",
+          "bytes": 9134,
+          "sha256": "11949f3706e8bdfa8759ae2c64072c02e5a79b3f58d67817203a722ceb627322"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/build_memory_full_plans_v1.py",
+          "bytes": 7062,
+          "sha256": "e421d10627b009fa12df5e1f2834374423027b234d90368a06e325d0ac67697b"
+        }
+      ],
+      "depends_on": [],
+      "phase": "tiny",
+      "repeat": 0,
+      "dataset": "E6_TINY_U",
+      "system": "eggpu",
+      "ablate": "closeness",
+      "gpu_count": 1,
+      "disk_guard": {
+        "path": "/fixture/experimental/campaign_20261104",
+        "min_free_bytes": 2147505664
+      },
+      "maintenance": {
+        "command": [
+          "/fixture/envs/core/bin/python",
+          "-B",
+          "/fixture/experimental/campaign_20261104/completed_job_audit_maintenance_v2.py",
+          "--registry",
+          "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/queue_registry.json",
+          "--output",
+          "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/maintenance/tiny_E6_TINY_U_eggpu_closeness_p1_r00",
+          "--gpu-lock",
+          "/fixture/gpu_experiment.lock",
+          "--job-result",
+          "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/runs/tiny_E6_TINY_U_eggpu_closeness_p1_r00/result.json",
+          "--dedup-wrapper",
+          "/fixture/experimental/campaign_20261104/completed_output_maintenance_incremental_v1.py"
+        ],
+        "command_sha256": "10c8957de64e6014fcb2aef0c8f2f5df7a02f44715ddbd7b1b666d9bd06ff9e4",
+        "bindings": [
+          {
+            "path": "/fixture/envs/core/bin/python",
+            "bytes": 30627224,
+            "sha256": "0c05a22b0b180580a76437114a95cf138f67c8f46245acad26017c803b42b8c1"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/completed_job_audit_maintenance_v2.py",
+            "bytes": 4638,
+            "sha256": "d479619310cd2cfeb08d081eb504a47c206b4fb25958f896e5c4d0b3ef7d256e"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/completed_output_maintenance_incremental_v1.py",
+            "bytes": 1434,
+            "sha256": "9c784af1aa4c9760742b399e992af5abe8899c879afe520ad5d1dc17a975bd53"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/incremental_completed_output_v1.py",
+            "bytes": 12790,
+            "sha256": "96aaff1ceba6d7aac13fc355ac6c118d37a6e3a1a982701b5ec8daab443eeb62"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/queue_registry.json",
+            "bytes": 8513,
+            "sha256": "bbdd48b67efd15c157a5316804d3e649b4972a5d3c6ae62521c230681ed07abe"
+          }
+        ],
+        "gpu_lock": "/fixture/gpu_experiment.lock",
+        "environment": {
+          "CUDA_VISIBLE_DEVICES": ""
+        },
+        "receipt": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/maintenance/tiny_E6_TINY_U_eggpu_closeness_p1_r00/receipt.json",
+        "expected_statuses": [
+          "PASS_INCREMENTAL_HARDLINKED_OUTPUTS"
+        ],
+        "timeout": 3600
+      },
+      "environment": {
+        "PYTHONPATH": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/native:/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/Easy-Graph",
+        "EASYGRAPH_GPU_HOST_REGISTER": "1"
+      }
+    },
+    {
+      "id": "tiny_E6_TINY_U_eggpu_bfs_p1_r00",
+      "command": [
+        "/fixture/envs/core/bin/python",
+        "-B",
+        "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_worker.py",
+        "--execute-gpu",
+        "--system",
+        "eggpu",
+        "--ablate",
+        "bfs",
+        "--dataset",
+        "E6_TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--gpu-count",
+        "1",
+        "--gpu-uuids",
+        "GPU-TEST-0",
+        "--output",
+        "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/runs/tiny_E6_TINY_U_eggpu_bfs_p1_r00",
+        "--input-root",
+        "/fixture/experimental/campaign_20261104/e6_tiny_inputs",
+        "--release",
+        "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/Easy-Graph",
+        "--native-dso",
+        "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/native/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--arena-library-dir",
+        "/fixture/experimental/campaign_20261104/build/integrated_v1/arena",
+        "--setup",
+        "/fixture/experimental/campaign_20261104/setup.json",
+        "--lock-file",
+        "/fixture/gpu_experiment.lock",
+        "--reference-cache",
+        "/fixture/experimental/campaign_20261104/e6_references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0",
+        "--fallback-site",
+        "/fixture/envs/core/lib/python3.12/site-packages",
+        "--build-receipt",
+        "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/build_receipt.json",
+        "--reference-manifest",
+        "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/independent_reference_manifest.json"
+      ],
+      "receipt": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/runs/tiny_E6_TINY_U_eggpu_bfs_p1_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/freeze.json",
+          "bytes": 193911,
+          "sha256": "919f46cefa4d8616a8294df411f367e7e48cd8e6f13f423c4ec6ff8d46f43d96"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/independent_reference_manifest.json",
+          "bytes": 2072,
+          "sha256": "165045fd19eed0a2b7015b4c2a03354c6970c4f184bfd7a033f522e5b4e77463"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/build_plans.py",
+          "bytes": 5431,
+          "sha256": "3022c93d64fc0e2387b608f19295a1cd51c2b1242ff82eb3450b0e9b447ccfc2"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_worker.py",
+          "bytes": 38811,
+          "sha256": "ef895fc0dcb397547fd8d81a5ebeb2dd1d362c539390d3aec352b18f648a99ce"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_cpu_reference.py",
+          "bytes": 3116,
+          "sha256": "7ced877ef6ce588ac04bf7816b0bd67e252c7331f7f3ce8268940c3f698f3811"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_reused.py",
+          "bytes": 14948,
+          "sha256": "44704d165a4b87de73152592c18efaebfa280286722b98bcd5d665487bee8af9"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_reuse_provenance.json",
+          "bytes": 1480,
+          "sha256": "49bab07cfcfe263ed3b1e12b2316557640c99e8e032b3ec9e7b30d0199df42f6"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/sg_worker.py",
+          "bytes": 41355,
+          "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/cugraph_csr_adapter.py",
+          "bytes": 6682,
+          "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/core_oracle_readback_v2.json",
+          "bytes": 1289,
+          "sha256": "06dd3ee0db6bf5160699768f998b8330a82c94f980ae3c7e842bb900a1745498"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/rapids_oracle_readback_v2.json",
+          "bytes": 1291,
+          "sha256": "2ff2ae6a829c8517cbeec5d6c65069a50cb8b350afd1e21498cdf8768b1d1daf"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/build_receipt.json",
+          "bytes": 106356,
+          "sha256": "dc194f2f8e5ed46b58dac20bcea85ac6f84b2608324f11a5c1a6d8986029942f"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/native/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+          "bytes": 8537064,
+          "sha256": "6dfc1c03f249900afc216163d7b59d40da3dce19efdacc6eb60d198724801bac"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/array_cpu_receipt.json",
+          "bytes": 7543,
+          "sha256": "b857fac8e5d070863a4e41de20685e7e57a3b9c82d7567df87bd7c14523384b7"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/runner_manifest.json",
+          "bytes": 1536,
+          "sha256": "0b288d48bd3ca90e3ed3267d600d2efee8269c7d91e93133b5b061ff3c167f9b"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/lj_array_equivalence_receipt.json",
+          "bytes": 6179,
+          "sha256": "02803c08df6479680d3b03cae87e79760f803dfe00cdf14cbfbacdd14e1b03df"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/cpu_regression_d84ff_v1/receipt.json",
+          "bytes": 9134,
+          "sha256": "11949f3706e8bdfa8759ae2c64072c02e5a79b3f58d67817203a722ceb627322"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/build_memory_full_plans_v1.py",
+          "bytes": 7062,
+          "sha256": "e421d10627b009fa12df5e1f2834374423027b234d90368a06e325d0ac67697b"
+        }
+      ],
+      "depends_on": [],
+      "phase": "tiny",
+      "repeat": 0,
+      "dataset": "E6_TINY_U",
+      "system": "eggpu",
+      "ablate": "bfs",
+      "gpu_count": 1,
+      "disk_guard": {
+        "path": "/fixture/experimental/campaign_20261104",
+        "min_free_bytes": 2147505664
+      },
+      "maintenance": {
+        "command": [
+          "/fixture/envs/core/bin/python",
+          "-B",
+          "/fixture/experimental/campaign_20261104/completed_job_audit_maintenance_v2.py",
+          "--registry",
+          "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/queue_registry.json",
+          "--output",
+          "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/maintenance/tiny_E6_TINY_U_eggpu_bfs_p1_r00",
+          "--gpu-lock",
+          "/fixture/gpu_experiment.lock",
+          "--job-result",
+          "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/runs/tiny_E6_TINY_U_eggpu_bfs_p1_r00/result.json",
+          "--dedup-wrapper",
+          "/fixture/experimental/campaign_20261104/completed_output_maintenance_incremental_v1.py"
+        ],
+        "command_sha256": "76433ac755729874a31ad59955be54d0937ba7c2c18b2981e751655213767df4",
+        "bindings": [
+          {
+            "path": "/fixture/envs/core/bin/python",
+            "bytes": 30627224,
+            "sha256": "0c05a22b0b180580a76437114a95cf138f67c8f46245acad26017c803b42b8c1"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/completed_job_audit_maintenance_v2.py",
+            "bytes": 4638,
+            "sha256": "d479619310cd2cfeb08d081eb504a47c206b4fb25958f896e5c4d0b3ef7d256e"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/completed_output_maintenance_incremental_v1.py",
+            "bytes": 1434,
+            "sha256": "9c784af1aa4c9760742b399e992af5abe8899c879afe520ad5d1dc17a975bd53"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/incremental_completed_output_v1.py",
+            "bytes": 12790,
+            "sha256": "96aaff1ceba6d7aac13fc355ac6c118d37a6e3a1a982701b5ec8daab443eeb62"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/queue_registry.json",
+            "bytes": 8513,
+            "sha256": "bbdd48b67efd15c157a5316804d3e649b4972a5d3c6ae62521c230681ed07abe"
+          }
+        ],
+        "gpu_lock": "/fixture/gpu_experiment.lock",
+        "environment": {
+          "CUDA_VISIBLE_DEVICES": ""
+        },
+        "receipt": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/maintenance/tiny_E6_TINY_U_eggpu_bfs_p1_r00/receipt.json",
+        "expected_statuses": [
+          "PASS_INCREMENTAL_HARDLINKED_OUTPUTS"
+        ],
+        "timeout": 3600
+      },
+      "environment": {
+        "PYTHONPATH": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/native:/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/Easy-Graph",
+        "EASYGRAPH_GPU_HOST_REGISTER": "1"
+      }
+    },
+    {
+      "id": "tiny_E6_TINY_U_eggpu_wcc_p1_r00",
+      "command": [
+        "/fixture/envs/core/bin/python",
+        "-B",
+        "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_worker.py",
+        "--execute-gpu",
+        "--system",
+        "eggpu",
+        "--ablate",
+        "wcc",
+        "--dataset",
+        "E6_TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--gpu-count",
+        "1",
+        "--gpu-uuids",
+        "GPU-TEST-0",
+        "--output",
+        "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/runs/tiny_E6_TINY_U_eggpu_wcc_p1_r00",
+        "--input-root",
+        "/fixture/experimental/campaign_20261104/e6_tiny_inputs",
+        "--release",
+        "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/Easy-Graph",
+        "--native-dso",
+        "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/native/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--arena-library-dir",
+        "/fixture/experimental/campaign_20261104/build/integrated_v1/arena",
+        "--setup",
+        "/fixture/experimental/campaign_20261104/setup.json",
+        "--lock-file",
+        "/fixture/gpu_experiment.lock",
+        "--reference-cache",
+        "/fixture/experimental/campaign_20261104/e6_references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0",
+        "--fallback-site",
+        "/fixture/envs/core/lib/python3.12/site-packages",
+        "--build-receipt",
+        "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/build_receipt.json",
+        "--reference-manifest",
+        "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/independent_reference_manifest.json"
+      ],
+      "receipt": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/runs/tiny_E6_TINY_U_eggpu_wcc_p1_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/freeze.json",
+          "bytes": 193911,
+          "sha256": "919f46cefa4d8616a8294df411f367e7e48cd8e6f13f423c4ec6ff8d46f43d96"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/independent_reference_manifest.json",
+          "bytes": 2072,
+          "sha256": "165045fd19eed0a2b7015b4c2a03354c6970c4f184bfd7a033f522e5b4e77463"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/build_plans.py",
+          "bytes": 5431,
+          "sha256": "3022c93d64fc0e2387b608f19295a1cd51c2b1242ff82eb3450b0e9b447ccfc2"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_worker.py",
+          "bytes": 38811,
+          "sha256": "ef895fc0dcb397547fd8d81a5ebeb2dd1d362c539390d3aec352b18f648a99ce"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_cpu_reference.py",
+          "bytes": 3116,
+          "sha256": "7ced877ef6ce588ac04bf7816b0bd67e252c7331f7f3ce8268940c3f698f3811"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_reused.py",
+          "bytes": 14948,
+          "sha256": "44704d165a4b87de73152592c18efaebfa280286722b98bcd5d665487bee8af9"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_reuse_provenance.json",
+          "bytes": 1480,
+          "sha256": "49bab07cfcfe263ed3b1e12b2316557640c99e8e032b3ec9e7b30d0199df42f6"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/sg_worker.py",
+          "bytes": 41355,
+          "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/cugraph_csr_adapter.py",
+          "bytes": 6682,
+          "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/core_oracle_readback_v2.json",
+          "bytes": 1289,
+          "sha256": "06dd3ee0db6bf5160699768f998b8330a82c94f980ae3c7e842bb900a1745498"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/rapids_oracle_readback_v2.json",
+          "bytes": 1291,
+          "sha256": "2ff2ae6a829c8517cbeec5d6c65069a50cb8b350afd1e21498cdf8768b1d1daf"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/build_receipt.json",
+          "bytes": 106356,
+          "sha256": "dc194f2f8e5ed46b58dac20bcea85ac6f84b2608324f11a5c1a6d8986029942f"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/native/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+          "bytes": 8537064,
+          "sha256": "6dfc1c03f249900afc216163d7b59d40da3dce19efdacc6eb60d198724801bac"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/array_cpu_receipt.json",
+          "bytes": 7543,
+          "sha256": "b857fac8e5d070863a4e41de20685e7e57a3b9c82d7567df87bd7c14523384b7"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/runner_manifest.json",
+          "bytes": 1536,
+          "sha256": "0b288d48bd3ca90e3ed3267d600d2efee8269c7d91e93133b5b061ff3c167f9b"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/lj_array_equivalence_receipt.json",
+          "bytes": 6179,
+          "sha256": "02803c08df6479680d3b03cae87e79760f803dfe00cdf14cbfbacdd14e1b03df"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/cpu_regression_d84ff_v1/receipt.json",
+          "bytes": 9134,
+          "sha256": "11949f3706e8bdfa8759ae2c64072c02e5a79b3f58d67817203a722ceb627322"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/build_memory_full_plans_v1.py",
+          "bytes": 7062,
+          "sha256": "e421d10627b009fa12df5e1f2834374423027b234d90368a06e325d0ac67697b"
+        }
+      ],
+      "depends_on": [],
+      "phase": "tiny",
+      "repeat": 0,
+      "dataset": "E6_TINY_U",
+      "system": "eggpu",
+      "ablate": "wcc",
+      "gpu_count": 1,
+      "disk_guard": {
+        "path": "/fixture/experimental/campaign_20261104",
+        "min_free_bytes": 2147505664
+      },
+      "maintenance": {
+        "command": [
+          "/fixture/envs/core/bin/python",
+          "-B",
+          "/fixture/experimental/campaign_20261104/completed_job_audit_maintenance_v2.py",
+          "--registry",
+          "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/queue_registry.json",
+          "--output",
+          "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/maintenance/tiny_E6_TINY_U_eggpu_wcc_p1_r00",
+          "--gpu-lock",
+          "/fixture/gpu_experiment.lock",
+          "--job-result",
+          "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/runs/tiny_E6_TINY_U_eggpu_wcc_p1_r00/result.json",
+          "--dedup-wrapper",
+          "/fixture/experimental/campaign_20261104/completed_output_maintenance_incremental_v1.py"
+        ],
+        "command_sha256": "58f787c9e43a118a84a2bcc6636d6cf9036661e65ab8ebb4945558cdf217c007",
+        "bindings": [
+          {
+            "path": "/fixture/envs/core/bin/python",
+            "bytes": 30627224,
+            "sha256": "0c05a22b0b180580a76437114a95cf138f67c8f46245acad26017c803b42b8c1"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/completed_job_audit_maintenance_v2.py",
+            "bytes": 4638,
+            "sha256": "d479619310cd2cfeb08d081eb504a47c206b4fb25958f896e5c4d0b3ef7d256e"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/completed_output_maintenance_incremental_v1.py",
+            "bytes": 1434,
+            "sha256": "9c784af1aa4c9760742b399e992af5abe8899c879afe520ad5d1dc17a975bd53"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/incremental_completed_output_v1.py",
+            "bytes": 12790,
+            "sha256": "96aaff1ceba6d7aac13fc355ac6c118d37a6e3a1a982701b5ec8daab443eeb62"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/queue_registry.json",
+            "bytes": 8513,
+            "sha256": "bbdd48b67efd15c157a5316804d3e649b4972a5d3c6ae62521c230681ed07abe"
+          }
+        ],
+        "gpu_lock": "/fixture/gpu_experiment.lock",
+        "environment": {
+          "CUDA_VISIBLE_DEVICES": ""
+        },
+        "receipt": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/maintenance/tiny_E6_TINY_U_eggpu_wcc_p1_r00/receipt.json",
+        "expected_statuses": [
+          "PASS_INCREMENTAL_HARDLINKED_OUTPUTS"
+        ],
+        "timeout": 3600
+      },
+      "environment": {
+        "PYTHONPATH": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/native:/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/Easy-Graph",
+        "EASYGRAPH_GPU_HOST_REGISTER": "1"
+      }
+    },
+    {
+      "id": "tiny_E6_TINY_U_igraph_none_p0_r00",
+      "command": [
+        "/fixture/envs/core/bin/python",
+        "-B",
+        "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_worker.py",
+        "--execute-gpu",
+        "--system",
+        "igraph",
+        "--ablate",
+        "none",
+        "--dataset",
+        "E6_TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--gpu-count",
+        "0",
+        "--gpu-uuids",
+        "",
+        "--output",
+        "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/runs/tiny_E6_TINY_U_igraph_none_p0_r00",
+        "--input-root",
+        "/fixture/experimental/campaign_20261104/e6_tiny_inputs",
+        "--release",
+        "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/Easy-Graph",
+        "--native-dso",
+        "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/native/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--arena-library-dir",
+        "/fixture/experimental/campaign_20261104/build/integrated_v1/arena",
+        "--setup",
+        "/fixture/experimental/campaign_20261104/setup.json",
+        "--lock-file",
+        "/fixture/gpu_experiment.lock",
+        "--reference-cache",
+        "/fixture/experimental/campaign_20261104/e6_references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0",
+        "--fallback-site",
+        "/fixture/envs/core/lib/python3.12/site-packages",
+        "--build-receipt",
+        "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/build_receipt.json",
+        "--reference-manifest",
+        "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/independent_reference_manifest.json"
+      ],
+      "receipt": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/runs/tiny_E6_TINY_U_igraph_none_p0_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/freeze.json",
+          "bytes": 193911,
+          "sha256": "919f46cefa4d8616a8294df411f367e7e48cd8e6f13f423c4ec6ff8d46f43d96"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/independent_reference_manifest.json",
+          "bytes": 2072,
+          "sha256": "165045fd19eed0a2b7015b4c2a03354c6970c4f184bfd7a033f522e5b4e77463"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/build_plans.py",
+          "bytes": 5431,
+          "sha256": "3022c93d64fc0e2387b608f19295a1cd51c2b1242ff82eb3450b0e9b447ccfc2"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_worker.py",
+          "bytes": 38811,
+          "sha256": "ef895fc0dcb397547fd8d81a5ebeb2dd1d362c539390d3aec352b18f648a99ce"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_cpu_reference.py",
+          "bytes": 3116,
+          "sha256": "7ced877ef6ce588ac04bf7816b0bd67e252c7331f7f3ce8268940c3f698f3811"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_reused.py",
+          "bytes": 14948,
+          "sha256": "44704d165a4b87de73152592c18efaebfa280286722b98bcd5d665487bee8af9"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_reuse_provenance.json",
+          "bytes": 1480,
+          "sha256": "49bab07cfcfe263ed3b1e12b2316557640c99e8e032b3ec9e7b30d0199df42f6"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/sg_worker.py",
+          "bytes": 41355,
+          "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/cugraph_csr_adapter.py",
+          "bytes": 6682,
+          "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/core_oracle_readback_v2.json",
+          "bytes": 1289,
+          "sha256": "06dd3ee0db6bf5160699768f998b8330a82c94f980ae3c7e842bb900a1745498"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/rapids_oracle_readback_v2.json",
+          "bytes": 1291,
+          "sha256": "2ff2ae6a829c8517cbeec5d6c65069a50cb8b350afd1e21498cdf8768b1d1daf"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/build_receipt.json",
+          "bytes": 106356,
+          "sha256": "dc194f2f8e5ed46b58dac20bcea85ac6f84b2608324f11a5c1a6d8986029942f"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/native/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+          "bytes": 8537064,
+          "sha256": "6dfc1c03f249900afc216163d7b59d40da3dce19efdacc6eb60d198724801bac"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/array_cpu_receipt.json",
+          "bytes": 7543,
+          "sha256": "b857fac8e5d070863a4e41de20685e7e57a3b9c82d7567df87bd7c14523384b7"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/runner_manifest.json",
+          "bytes": 1536,
+          "sha256": "0b288d48bd3ca90e3ed3267d600d2efee8269c7d91e93133b5b061ff3c167f9b"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/lj_array_equivalence_receipt.json",
+          "bytes": 6179,
+          "sha256": "02803c08df6479680d3b03cae87e79760f803dfe00cdf14cbfbacdd14e1b03df"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/cpu_regression_d84ff_v1/receipt.json",
+          "bytes": 9134,
+          "sha256": "11949f3706e8bdfa8759ae2c64072c02e5a79b3f58d67817203a722ceb627322"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/build_memory_full_plans_v1.py",
+          "bytes": 7062,
+          "sha256": "e421d10627b009fa12df5e1f2834374423027b234d90368a06e325d0ac67697b"
+        }
+      ],
+      "depends_on": [],
+      "phase": "tiny",
+      "repeat": 0,
+      "dataset": "E6_TINY_U",
+      "system": "igraph",
+      "ablate": "none",
+      "gpu_count": 0,
+      "disk_guard": {
+        "path": "/fixture/experimental/campaign_20261104",
+        "min_free_bytes": 2147505664
+      },
+      "maintenance": {
+        "command": [
+          "/fixture/envs/core/bin/python",
+          "-B",
+          "/fixture/experimental/campaign_20261104/completed_job_audit_maintenance_v2.py",
+          "--registry",
+          "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/queue_registry.json",
+          "--output",
+          "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/maintenance/tiny_E6_TINY_U_igraph_none_p0_r00",
+          "--gpu-lock",
+          "/fixture/gpu_experiment.lock",
+          "--job-result",
+          "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/runs/tiny_E6_TINY_U_igraph_none_p0_r00/result.json",
+          "--dedup-wrapper",
+          "/fixture/experimental/campaign_20261104/completed_output_maintenance_incremental_v1.py"
+        ],
+        "command_sha256": "053bb9350dc01a28c540565a9732d7020d1a7175e8647adde36c60b044e9f8bc",
+        "bindings": [
+          {
+            "path": "/fixture/envs/core/bin/python",
+            "bytes": 30627224,
+            "sha256": "0c05a22b0b180580a76437114a95cf138f67c8f46245acad26017c803b42b8c1"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/completed_job_audit_maintenance_v2.py",
+            "bytes": 4638,
+            "sha256": "d479619310cd2cfeb08d081eb504a47c206b4fb25958f896e5c4d0b3ef7d256e"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/completed_output_maintenance_incremental_v1.py",
+            "bytes": 1434,
+            "sha256": "9c784af1aa4c9760742b399e992af5abe8899c879afe520ad5d1dc17a975bd53"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/incremental_completed_output_v1.py",
+            "bytes": 12790,
+            "sha256": "96aaff1ceba6d7aac13fc355ac6c118d37a6e3a1a982701b5ec8daab443eeb62"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/queue_registry.json",
+            "bytes": 8513,
+            "sha256": "bbdd48b67efd15c157a5316804d3e649b4972a5d3c6ae62521c230681ed07abe"
+          }
+        ],
+        "gpu_lock": "/fixture/gpu_experiment.lock",
+        "environment": {
+          "CUDA_VISIBLE_DEVICES": ""
+        },
+        "receipt": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/maintenance/tiny_E6_TINY_U_igraph_none_p0_r00/receipt.json",
+        "expected_statuses": [
+          "PASS_INCREMENTAL_HARDLINKED_OUTPUTS"
+        ],
+        "timeout": 3600
+      },
+      "environment": {
+        "PYTHONPATH": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/native:/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/Easy-Graph",
+        "EASYGRAPH_GPU_HOST_REGISTER": "1"
+      }
+    },
+    {
+      "id": "tiny_E6_TINY_U_cugraph_igraph_none_p1_r00",
+      "command": [
+        "/fixture/envs/rapids/bin/python",
+        "-B",
+        "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_worker.py",
+        "--execute-gpu",
+        "--system",
+        "cugraph_igraph",
+        "--ablate",
+        "none",
+        "--dataset",
+        "E6_TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--gpu-count",
+        "1",
+        "--gpu-uuids",
+        "GPU-TEST-0",
+        "--output",
+        "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/runs/tiny_E6_TINY_U_cugraph_igraph_none_p1_r00",
+        "--input-root",
+        "/fixture/experimental/campaign_20261104/e6_tiny_inputs",
+        "--release",
+        "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/Easy-Graph",
+        "--native-dso",
+        "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/native/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--arena-library-dir",
+        "/fixture/experimental/campaign_20261104/build/integrated_v1/arena",
+        "--setup",
+        "/fixture/experimental/campaign_20261104/setup.json",
+        "--lock-file",
+        "/fixture/gpu_experiment.lock",
+        "--reference-cache",
+        "/fixture/experimental/campaign_20261104/e6_references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0",
+        "--fallback-site",
+        "/fixture/envs/core/lib/python3.12/site-packages",
+        "--build-receipt",
+        "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/build_receipt.json",
+        "--reference-manifest",
+        "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/independent_reference_manifest.json"
+      ],
+      "receipt": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/runs/tiny_E6_TINY_U_cugraph_igraph_none_p1_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/freeze.json",
+          "bytes": 193911,
+          "sha256": "919f46cefa4d8616a8294df411f367e7e48cd8e6f13f423c4ec6ff8d46f43d96"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/independent_reference_manifest.json",
+          "bytes": 2072,
+          "sha256": "165045fd19eed0a2b7015b4c2a03354c6970c4f184bfd7a033f522e5b4e77463"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/build_plans.py",
+          "bytes": 5431,
+          "sha256": "3022c93d64fc0e2387b608f19295a1cd51c2b1242ff82eb3450b0e9b447ccfc2"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_worker.py",
+          "bytes": 38811,
+          "sha256": "ef895fc0dcb397547fd8d81a5ebeb2dd1d362c539390d3aec352b18f648a99ce"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_cpu_reference.py",
+          "bytes": 3116,
+          "sha256": "7ced877ef6ce588ac04bf7816b0bd67e252c7331f7f3ce8268940c3f698f3811"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_reused.py",
+          "bytes": 14948,
+          "sha256": "44704d165a4b87de73152592c18efaebfa280286722b98bcd5d665487bee8af9"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_reuse_provenance.json",
+          "bytes": 1480,
+          "sha256": "49bab07cfcfe263ed3b1e12b2316557640c99e8e032b3ec9e7b30d0199df42f6"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/sg_worker.py",
+          "bytes": 41355,
+          "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/cugraph_csr_adapter.py",
+          "bytes": 6682,
+          "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/core_oracle_readback_v2.json",
+          "bytes": 1289,
+          "sha256": "06dd3ee0db6bf5160699768f998b8330a82c94f980ae3c7e842bb900a1745498"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/rapids_oracle_readback_v2.json",
+          "bytes": 1291,
+          "sha256": "2ff2ae6a829c8517cbeec5d6c65069a50cb8b350afd1e21498cdf8768b1d1daf"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/build_receipt.json",
+          "bytes": 106356,
+          "sha256": "dc194f2f8e5ed46b58dac20bcea85ac6f84b2608324f11a5c1a6d8986029942f"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/native/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+          "bytes": 8537064,
+          "sha256": "6dfc1c03f249900afc216163d7b59d40da3dce19efdacc6eb60d198724801bac"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/array_cpu_receipt.json",
+          "bytes": 7543,
+          "sha256": "b857fac8e5d070863a4e41de20685e7e57a3b9c82d7567df87bd7c14523384b7"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/runner_manifest.json",
+          "bytes": 1536,
+          "sha256": "0b288d48bd3ca90e3ed3267d600d2efee8269c7d91e93133b5b061ff3c167f9b"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/lj_array_equivalence_receipt.json",
+          "bytes": 6179,
+          "sha256": "02803c08df6479680d3b03cae87e79760f803dfe00cdf14cbfbacdd14e1b03df"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/cpu_regression_d84ff_v1/receipt.json",
+          "bytes": 9134,
+          "sha256": "11949f3706e8bdfa8759ae2c64072c02e5a79b3f58d67817203a722ceb627322"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/build_memory_full_plans_v1.py",
+          "bytes": 7062,
+          "sha256": "e421d10627b009fa12df5e1f2834374423027b234d90368a06e325d0ac67697b"
+        }
+      ],
+      "depends_on": [],
+      "phase": "tiny",
+      "repeat": 0,
+      "dataset": "E6_TINY_U",
+      "system": "cugraph_igraph",
+      "ablate": "none",
+      "gpu_count": 1,
+      "disk_guard": {
+        "path": "/fixture/experimental/campaign_20261104",
+        "min_free_bytes": 2147505664
+      },
+      "maintenance": {
+        "command": [
+          "/fixture/envs/core/bin/python",
+          "-B",
+          "/fixture/experimental/campaign_20261104/completed_job_audit_maintenance_v2.py",
+          "--registry",
+          "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/queue_registry.json",
+          "--output",
+          "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/maintenance/tiny_E6_TINY_U_cugraph_igraph_none_p1_r00",
+          "--gpu-lock",
+          "/fixture/gpu_experiment.lock",
+          "--job-result",
+          "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/runs/tiny_E6_TINY_U_cugraph_igraph_none_p1_r00/result.json",
+          "--dedup-wrapper",
+          "/fixture/experimental/campaign_20261104/completed_output_maintenance_incremental_v1.py"
+        ],
+        "command_sha256": "b23cde21a25df701fab77a90679223d02dc1f0cc1607b811db5708f990e1e73c",
+        "bindings": [
+          {
+            "path": "/fixture/envs/core/bin/python",
+            "bytes": 30627224,
+            "sha256": "0c05a22b0b180580a76437114a95cf138f67c8f46245acad26017c803b42b8c1"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/completed_job_audit_maintenance_v2.py",
+            "bytes": 4638,
+            "sha256": "d479619310cd2cfeb08d081eb504a47c206b4fb25958f896e5c4d0b3ef7d256e"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/completed_output_maintenance_incremental_v1.py",
+            "bytes": 1434,
+            "sha256": "9c784af1aa4c9760742b399e992af5abe8899c879afe520ad5d1dc17a975bd53"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/incremental_completed_output_v1.py",
+            "bytes": 12790,
+            "sha256": "96aaff1ceba6d7aac13fc355ac6c118d37a6e3a1a982701b5ec8daab443eeb62"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/queue_registry.json",
+            "bytes": 8513,
+            "sha256": "bbdd48b67efd15c157a5316804d3e649b4972a5d3c6ae62521c230681ed07abe"
+          }
+        ],
+        "gpu_lock": "/fixture/gpu_experiment.lock",
+        "environment": {
+          "CUDA_VISIBLE_DEVICES": ""
+        },
+        "receipt": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/maintenance/tiny_E6_TINY_U_cugraph_igraph_none_p1_r00/receipt.json",
+        "expected_statuses": [
+          "PASS_INCREMENTAL_HARDLINKED_OUTPUTS"
+        ],
+        "timeout": 3600
+      },
+      "environment": {
+        "PYTHONPATH": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/native:/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/Easy-Graph",
+        "EASYGRAPH_GPU_HOST_REGISTER": "1"
+      }
+    },
+    {
+      "id": "tiny_E6_TINY_U_cugraph_composite_none_p1_r00",
+      "command": [
+        "/fixture/envs/rapids/bin/python",
+        "-B",
+        "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_worker.py",
+        "--execute-gpu",
+        "--system",
+        "cugraph_composite",
+        "--ablate",
+        "none",
+        "--dataset",
+        "E6_TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--gpu-count",
+        "1",
+        "--gpu-uuids",
+        "GPU-TEST-0",
+        "--output",
+        "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/runs/tiny_E6_TINY_U_cugraph_composite_none_p1_r00",
+        "--input-root",
+        "/fixture/experimental/campaign_20261104/e6_tiny_inputs",
+        "--release",
+        "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/Easy-Graph",
+        "--native-dso",
+        "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/native/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--arena-library-dir",
+        "/fixture/experimental/campaign_20261104/build/integrated_v1/arena",
+        "--setup",
+        "/fixture/experimental/campaign_20261104/setup.json",
+        "--lock-file",
+        "/fixture/gpu_experiment.lock",
+        "--reference-cache",
+        "/fixture/experimental/campaign_20261104/e6_references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0",
+        "--fallback-site",
+        "/fixture/envs/core/lib/python3.12/site-packages",
+        "--build-receipt",
+        "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/build_receipt.json",
+        "--reference-manifest",
+        "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/independent_reference_manifest.json"
+      ],
+      "receipt": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/runs/tiny_E6_TINY_U_cugraph_composite_none_p1_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/freeze.json",
+          "bytes": 193911,
+          "sha256": "919f46cefa4d8616a8294df411f367e7e48cd8e6f13f423c4ec6ff8d46f43d96"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/independent_reference_manifest.json",
+          "bytes": 2072,
+          "sha256": "165045fd19eed0a2b7015b4c2a03354c6970c4f184bfd7a033f522e5b4e77463"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/build_plans.py",
+          "bytes": 5431,
+          "sha256": "3022c93d64fc0e2387b608f19295a1cd51c2b1242ff82eb3450b0e9b447ccfc2"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_worker.py",
+          "bytes": 38811,
+          "sha256": "ef895fc0dcb397547fd8d81a5ebeb2dd1d362c539390d3aec352b18f648a99ce"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_cpu_reference.py",
+          "bytes": 3116,
+          "sha256": "7ced877ef6ce588ac04bf7816b0bd67e252c7331f7f3ce8268940c3f698f3811"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_reused.py",
+          "bytes": 14948,
+          "sha256": "44704d165a4b87de73152592c18efaebfa280286722b98bcd5d665487bee8af9"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/e6_reuse_provenance.json",
+          "bytes": 1480,
+          "sha256": "49bab07cfcfe263ed3b1e12b2316557640c99e8e032b3ec9e7b30d0199df42f6"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/sg_worker.py",
+          "bytes": 41355,
+          "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/cugraph_csr_adapter.py",
+          "bytes": 6682,
+          "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/core_oracle_readback_v2.json",
+          "bytes": 1289,
+          "sha256": "06dd3ee0db6bf5160699768f998b8330a82c94f980ae3c7e842bb900a1745498"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/rapids_oracle_readback_v2.json",
+          "bytes": 1291,
+          "sha256": "2ff2ae6a829c8517cbeec5d6c65069a50cb8b350afd1e21498cdf8768b1d1daf"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/build_receipt.json",
+          "bytes": 106356,
+          "sha256": "dc194f2f8e5ed46b58dac20bcea85ac6f84b2608324f11a5c1a6d8986029942f"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/native/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+          "bytes": 8537064,
+          "sha256": "6dfc1c03f249900afc216163d7b59d40da3dce19efdacc6eb60d198724801bac"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/array_cpu_receipt.json",
+          "bytes": 7543,
+          "sha256": "b857fac8e5d070863a4e41de20685e7e57a3b9c82d7567df87bd7c14523384b7"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/runner_manifest.json",
+          "bytes": 1536,
+          "sha256": "0b288d48bd3ca90e3ed3267d600d2efee8269c7d91e93133b5b061ff3c167f9b"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/lj_array_equivalence_receipt.json",
+          "bytes": 6179,
+          "sha256": "02803c08df6479680d3b03cae87e79760f803dfe00cdf14cbfbacdd14e1b03df"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/cpu_regression_d84ff_v1/receipt.json",
+          "bytes": 9134,
+          "sha256": "11949f3706e8bdfa8759ae2c64072c02e5a79b3f58d67817203a722ceb627322"
+        },
+        {
+          "path": "/fixture/experimental/campaign_20261104/build_memory_full_plans_v1.py",
+          "bytes": 7062,
+          "sha256": "e421d10627b009fa12df5e1f2834374423027b234d90368a06e325d0ac67697b"
+        }
+      ],
+      "depends_on": [],
+      "phase": "tiny",
+      "repeat": 0,
+      "dataset": "E6_TINY_U",
+      "system": "cugraph_composite",
+      "ablate": "none",
+      "gpu_count": 1,
+      "disk_guard": {
+        "path": "/fixture/experimental/campaign_20261104",
+        "min_free_bytes": 2147505664
+      },
+      "maintenance": {
+        "command": [
+          "/fixture/envs/core/bin/python",
+          "-B",
+          "/fixture/experimental/campaign_20261104/completed_job_audit_maintenance_v2.py",
+          "--registry",
+          "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/queue_registry.json",
+          "--output",
+          "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/maintenance/tiny_E6_TINY_U_cugraph_composite_none_p1_r00",
+          "--gpu-lock",
+          "/fixture/gpu_experiment.lock",
+          "--job-result",
+          "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/runs/tiny_E6_TINY_U_cugraph_composite_none_p1_r00/result.json",
+          "--dedup-wrapper",
+          "/fixture/experimental/campaign_20261104/completed_output_maintenance_incremental_v1.py"
+        ],
+        "command_sha256": "883a14c8eaab2ca649839117fa9779c8aded006d3eedf5688a3df0e4f49ae56a",
+        "bindings": [
+          {
+            "path": "/fixture/envs/core/bin/python",
+            "bytes": 30627224,
+            "sha256": "0c05a22b0b180580a76437114a95cf138f67c8f46245acad26017c803b42b8c1"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/completed_job_audit_maintenance_v2.py",
+            "bytes": 4638,
+            "sha256": "d479619310cd2cfeb08d081eb504a47c206b4fb25958f896e5c4d0b3ef7d256e"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/completed_output_maintenance_incremental_v1.py",
+            "bytes": 1434,
+            "sha256": "9c784af1aa4c9760742b399e992af5abe8899c879afe520ad5d1dc17a975bd53"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/incremental_completed_output_v1.py",
+            "bytes": 12790,
+            "sha256": "96aaff1ceba6d7aac13fc355ac6c118d37a6e3a1a982701b5ec8daab443eeb62"
+          },
+          {
+            "path": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/queue_registry.json",
+            "bytes": 8513,
+            "sha256": "bbdd48b67efd15c157a5316804d3e649b4972a5d3c6ae62521c230681ed07abe"
+          }
+        ],
+        "gpu_lock": "/fixture/gpu_experiment.lock",
+        "environment": {
+          "CUDA_VISIBLE_DEVICES": ""
+        },
+        "receipt": "/fixture/experimental/campaign_20261104/e6_memory_input_v1/full_profile/maintenance/tiny_E6_TINY_U_cugraph_composite_none_p1_r00/receipt.json",
+        "expected_statuses": [
+          "PASS_INCREMENTAL_HARDLINKED_OUTPUTS"
+        ],
+        "timeout": 3600
+      },
+      "environment": {
+        "PYTHONPATH": "/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/native:/fixture/experimental/campaign_20261104/candidates/native_memory_input_v1/Easy-Graph",
+        "EASYGRAPH_GPU_HOST_REGISTER": "1"
+      }
+    }
+  ],
+  "original_plan": {
+    "path": "/fixture/experimental/campaign_20261104/e6_reference_binding_v2/full_profile/qualification_plan.json",
+    "bytes": 359829,
+    "sha256": "f7b29c076bf50e78d78a91a9ed59011fcf6186880dee4db2a068fd9bdd27ae61"
+  },
+  "scope": "Same semantic contract and fixed EP/LJ/OR scope; owned memory CSR replaces the timed private file roundtrip for EGGPU. Every proof must match the unchanged strict current epoch validator.",
+  "fixture_only": true
+}

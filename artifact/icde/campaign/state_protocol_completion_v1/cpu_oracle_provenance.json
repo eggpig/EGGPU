@@ -1,0 +1,20 @@
+{
+  "OwnerGraphCpp": {
+    "source": "tests/test_native_view_management_v1.py",
+    "source_sha256": "d276123ab54c0a61adf76b6ef32190e849be21cd322aa48077a2f5a5cd00c497",
+    "class_sha256": "aed87de279eee64efa174e007e76b772c74b1f45ae2af648049db7ac7c453e31",
+    "lines": [
+      26,
+      120
+    ]
+  },
+  "NativeReferenceCpp": {
+    "source": "tests/test_state_switch_v1.py",
+    "source_sha256": "d590eaec0b2fa2eaa1064f47a0dc482cc364ecbbcfcf6cecaa5e12348fd59bbe",
+    "class_sha256": "27a8a611efcbe1e227dbaa23e2a022aaedd4649c75c559ec68de45c70a111483",
+    "lines": [
+      28,
+      141
+    ]
+  }
+}

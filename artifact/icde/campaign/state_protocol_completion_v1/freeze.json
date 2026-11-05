@@ -1,0 +1,47 @@
+{
+  "schema": "state.completion.runner.freeze.v1",
+  "files": {
+    "state_worker.py": {
+      "bytes": 23636,
+      "sha256": "1e28df7ba3985a38ceccd065e3f3dea88b912d295eedc668c4d4f9f11b3a98dc"
+    },
+    "state_contract.py": {
+      "bytes": 14016,
+      "sha256": "ea0b3bb95bf037031f8bb8993f0990fca8f918951bcc406e48993cec92a41f8e"
+    },
+    "state_protocol.py": {
+      "bytes": 5692,
+      "sha256": "98767a15e659dd96ee041bdb3e642861e701decb78b77b2052e5bf9cc938a21c"
+    },
+    "state_reference.py": {
+      "bytes": 8995,
+      "sha256": "59c16ece7d79498264566a25040e5808f039bd1b6ddee22c546aacbce26e6fc0"
+    },
+    "state_inputs.py": {
+      "bytes": 10881,
+      "sha256": "2c36cc9c2fc20d1d556467cd35077b889895daad4d395a213073478712f98e63"
+    },
+    "state_controls.py": {
+      "bytes": 6243,
+      "sha256": "9496c4e4e0234abec7d1df0f7db7f52784210246fd0991acb1fed5d8e12b0559"
+    },
+    "state_rebuild.py": {
+      "bytes": 7248,
+      "sha256": "5420982fc9f847bd4bee0ccdf89e049b6f348b3bc1c676aa69abc0afeed36975"
+    },
+    "baselines/hytgraph_qualify.py": {
+      "bytes": 10820,
+      "sha256": "6aa0832cd8c27eb91dde7e728dabdbf24d499f4a837c82053bbf8d4e8ab66da8"
+    },
+    "state_plan.py": {
+      "bytes": 41884,
+      "sha256": "f70a81d12657ddba505c10db4ab34a08f204ed43beb271156c2490f2bd5cba75"
+    },
+    "prepare.py": {
+      "bytes": 5866,
+      "sha256": "9f16d42d92ba5d1a7d5a669a7ecd2462729df1e71c6dc58c65e6a8a6873e369e"
+    }
+  },
+  "runner_sha256": "073f21d6da0c2595b144cf4dea926e99ac60e5e6a58344328303a32ce1081d4d",
+  "gpu_executed": false
+}

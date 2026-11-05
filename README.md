@@ -13,6 +13,8 @@ python -B artifact/icde/tools/build.py --build-dir /outside/new-build --cuda-roo
 
 The build command prints a plan unless `--execute` is supplied. Build artifacts, input payloads and results belong outside this checkout. Rebuilt binaries and relocated runners require new matching qualifications before formal timing.
 
-The fixed graphs are US, EP, LJ, OR, IN, UK and TW. Exact source variants and normalization are documented in `artifact/icde/datasets.json` and `artifact/icde/paper/DATASET_AND_EXPERIMENT_FREEZE_20261104_CN.md`. The new source campaign is running qualification. This checkpoint contains no completed formal result matrix or claim of a measured SOTA percentage.
+The fixed graphs are US, EP, LJ, OR, IN, UK and TW. Exact source variants and normalization are documented in `artifact/icde/datasets.json` and `artifact/icde/paper/DATASET_AND_EXPERIMENT_FREEZE_20261104_CN.md`. The formal queues have started; results and qualification coverage remain incomplete. This checkpoint contains no completed formal result matrix or claim of a measured SOTA percentage.
 
 See `artifact/icde/README.md` for current entry points, timing boundaries, baseline precision, reproduction checks and pending work. Mechanism and framework artwork remain reserved for the collaborator.
+
+The followup includes recoverable E4-S output archival, a read-only per-cell disposition inspector, watcher binding-schema fixes, the new E3/E4 and E6 protocol candidates, twenty primary Related Work sources, and the Chinese introduction with a reproducible first-page counterexample. The independent WCC int64-offset candidate is an overlay under `artifact/icde/experimental/native_wcc_wide_v2`; main `Easy-Graph/` remains d84. See `artifact/icde/FOLLOWUP_CN.md`.

@@ -1,6 +1,6 @@
 # Current ICDE reproduction checkpoint
 
-This is a development checkpoint, with formal results still pending. The 1162 implementation files match the d84ff source freeze byte for byte. Current private-machine qualification does not authorize relocated public runners or rebuilt binaries to reuse those proofs. No formal E1–E6 result matrix is bundled.
+This is a development checkpoint. Formal queues have started; complete formal results are still pending. The 1162 implementation files match the d84ff source freeze byte for byte. Current private-machine qualification does not authorize relocated public runners or rebuilt binaries to reuse those proofs. No formal E1–E6 result matrix is bundled.
 
 Current modules are selected explicitly by `tools/reproduce.py`: single-GPU `campaign/sg_current`, static native `campaign/native_load_p1`, E6 `campaign/e6_memory`, state `campaign/state_worker.py`, state planner `campaign/state_final_plan`, PR negative control `campaign/e3_unweighted_control`, and separate original-precision GUM candidate `campaign/gum_fp32_author`. `campaign/latest.json` is the selection authority. Unlisted older top-level runners are historical support files.
 
@@ -40,4 +40,6 @@ For E3–E5, `state-deployment-template` builds the local P1/P8 resource templat
 
 Native manifests retain a checked signed-32-bit local adjacency domain. A global weak WCC projection may be wider; every local partition must still satisfy its declared index type. An index-capacity rejection is distinct from GPU OOM.
 
-E4-S formal figure export is held in this checkpoint until its mandatory byte-identical recoverable-output archive is integrated. Existing complete-vector quality checks and hashes remain useful qualification evidence; a hash-only acknowledgement cannot authorize a formal figure.
+E4-S recoverable-output tooling is included under `campaign/e4s_recoverable_outputs_v1`. Formal eligibility still requires the actual exact-output archive, successful original maintenance and complete source-bound qualification; a hash-only acknowledgement cannot authorize a formal figure.
+
+See [FOLLOWUP_CN.md](FOLLOWUP_CN.md) for the new experimental protocol commands, CPU validation scopes, portable reference prerequisites, separate WCC overlay and current queue observation. The earlier state/E6 commands above remain their named frozen protocols; they do not silently select the new protocol candidates.

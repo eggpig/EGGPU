@@ -1,0 +1,44 @@
+{
+  "status": "PASS_DETERMINISTIC_COUNTEREXAMPLE_RENDER",
+  "performance_measurement": false,
+  "gpu_executed": false,
+  "claims": "Exact set-ownership arithmetic for the stated constructed model only; no empirical superiority claim.",
+  "input": {
+    "bytes": 975,
+    "sha256": "a348feb7f516f15c0a2e31c33067b60828530c4eae800ab945e554e459b26064"
+  },
+  "generator": {
+    "bytes": 7108,
+    "sha256": "6fd21f67b7476e9d783e7a861140011692877da78a04efa91c70702c87afe294"
+  },
+  "widths_mm": [
+    85,
+    175
+  ],
+  "files": {
+    "first_page_problem_85mm.pdf": {
+      "bytes": 25925,
+      "sha256": "40719bc94a858878e73e032644640c8d5821c344e09afb987bc27b2ebac15a00"
+    },
+    "first_page_problem_85mm.svg": {
+      "bytes": 26500,
+      "sha256": "007387ca712be874627897c12beb306fd583f6ca69968e93a230c1fd9bb3f601"
+    },
+    "first_page_problem_85mm.png": {
+      "bytes": 145071,
+      "sha256": "9fa61e0ea5e289aef47f54270d92520b1fd7f455599311d122c106017694e454"
+    },
+    "first_page_problem_175mm.pdf": {
+      "bytes": 25946,
+      "sha256": "2b0a87d80e1d4ecdc50cc2811b8f52d3d434c1a951e9cda119a0f0f64fa7759c"
+    },
+    "first_page_problem_175mm.svg": {
+      "bytes": 26527,
+      "sha256": "8052609ab99a843d33f7648673bc35bc650a77a4dc3e699a9b4ee69472db1ee0"
+    },
+    "first_page_problem_175mm.png": {
+      "bytes": 154121,
+      "sha256": "c2d582972cb1d9e0141280bc345b1eb4fa7cc13a596aedb588646e30fe5f6816"
+    }
+  }
+}

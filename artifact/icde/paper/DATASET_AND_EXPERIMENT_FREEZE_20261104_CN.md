@@ -45,7 +45,7 @@ US、OR 是无向图，分别为28,854,312和106,349,209条无向关系。其他
 
 ### 3.1 当前规范化输入状态
 
-七图均已完成规范化，当前字节级输入与完整回执以 [本轮输入 registry](../experiments/campaign_20261104/input_registry_20261104.json) 为唯一执行状态入口，状态为 `ALL_SEVEN_CANONICAL_READY`。原始格式重建资格见 [portable v4 完成回执](../experiments/campaign_20261104/input_portable_v4_completion.json)。这两个入口取代早期 US/LJ/TW 待下载表；选图、版本、方向和预处理规则未改变。
+七图均已完成规范化，当前字节级输入与完整回执以 本轮输入 registry（内部证据位置：`../experiments/campaign_20261104/input_registry_20261104.json`，未随公开包分发） 为唯一执行状态入口，状态为 `ALL_SEVEN_CANONICAL_READY`。原始格式重建资格见 portable v4 完成回执（内部证据位置：`../experiments/campaign_20261104/input_portable_v4_completion.json`，未随公开包分发）。这两个入口取代早期 US/LJ/TW 待下载表；选图、版本、方向和预处理规则未改变。
 
 | 简称 | 类别 | 方向 | 规范化 N | 规范化存储弧 A | A/N |
 |---|---|---|---:|---:|---:|
@@ -123,22 +123,22 @@ E1/E2 的 SSSP 和 E3–E5 的受控权重使用固定正整数1–16，固定�
 
 共同主机输入已通过规范化、完整文件 hash 和全数组访问，因此 `T_first` 表示 **host-CSR-ready 到首次完整结果**，不表示从压缩下载文件开始的端到端磁盘延迟。共同离线准备已有独立回执；每次公共 input-validation/prefault 的时间也应独列为复现成本，不伪称已并入当前 `T_first`。可复用的是系统无关、对所有系统相同的规范输入；系统特有压缩、分区、投影、内存转换、GPU状态不能借这一规则免费缓存。
 
-当前已资格通过的 GUM 标准路径展示名为 **GUM (standard)**，既有 PR 数据必须注明 **FP64 compatibility variant，117 fixed iterations，经过共同输出质量门禁**。24个 standard target 与240个 formal job 已逐项绑定 [`standard_display_binding.json`](../experiments/campaign_20261104/gum_rws_audit_v1/standard_display_binding.json)，源码差异见同目录 `standard_patch_sidecar.json` 与 `standard_pr_fp64.diff`。原始结果 ID 保留 `gum` 以免破坏血缘。真正的 RWS P8 探测为 `FAIL_PLATFORM_PEER_ACCESS`，在能力表独列；不当作标准路径失败，更不计为 EGGPU 数值胜利。
+当前已资格通过的 GUM 标准路径展示名为 **GUM (standard)**，既有 PR 数据必须注明 **FP64 compatibility variant，117 fixed iterations，经过共同输出质量门禁**。24个 standard target 与240个 formal job 已逐项绑定 `standard_display_binding.json`（内部证据位置：`../experiments/campaign_20261104/gum_rws_audit_v1/standard_display_binding.json`，未随公开包分发），源码差异见同目录 `standard_patch_sidecar.json` 与 `standard_pr_fp64.diff`。原始结果 ID 保留 `gum` 以免破坏血缘。真正的 RWS P8 探测为 `FAIL_PLATFORM_PEER_ACCESS`，在能力表独列；不当作标准路径失败，更不计为 EGGPU 数值胜利。
 
-**原精度资格补审。** 不能据既有 FP64 结果反推作者 FP32 必然不满足本轮精度。实际历史记录有12次原 FP32 运行（去掉父/子重复记录），包括 NR 的 P1/P2/P4/P8，均为64轮；它们通过旧 `1e-4` 残差/概率总质量误差标准，却未满足本轮残差 `1e-6`、概率总质量误差 `1e-6`、参考向量 L1 误差 `1e-5`。零初始化的精确算术概率总质量亏损本就是 `0.85^64 ≈ 3.04×10^-5`，因此不能将截断误差归因为 FP32 精度下限。旧 FP64 适配采用117轮是针对当时 `1e-9` 残差目标的选择；详见 [`fp32_precision_audit.json`](../experiments/campaign_20261104/gum_rws_audit_v1/fp32_precision_audit.json)。
+**原精度资格补审。** 不能据既有 FP64 结果反推作者 FP32 必然不满足本轮精度。实际历史记录有12次原 FP32 运行（去掉父/子重复记录），包括 NR 的 P1/P2/P4/P8，均为64轮；它们通过旧 `1e-4` 残差/概率总质量误差标准，却未满足本轮残差 `1e-6`、概率总质量误差 `1e-6`、参考向量 L1 误差 `1e-5`。零初始化的精确算术概率总质量亏损本就是 `0.85^64 ≈ 3.04×10^-5`，因此不能将截断误差归因为 FP32 精度下限。旧 FP64 适配采用117轮是针对当时 `1e-9` 残差目标的选择；详见 `fp32_precision_audit.json`（内部证据位置：`../experiments/campaign_20261104/gum_rws_audit_v1/fp32_precision_audit.json`，未随公开包分发）。
 
 独立 `gum_fp32_author_v1` 已保留作者原 `float` rank/damping、8字节消息和原算法头文件，仅用公开CLI设置117轮；完整FP32结果在每次query时钟内转成独立拥有的FP64主机数组。质量仍按数学 `alpha=0.85` 和本轮共同阈值检查，不能用作者 `float(.85)` 舍入放宽标准。新候选只有CPU构建/入口检查，必须完成当前机器tiny和同图同卡数target实测；通过后优先原精度，FP64作为明示兼容对照。当前既有FP64计划和结果血缘保持原精度标签，不得悄然重新命名成原作者实现。
 
 
 ### 4.2.2 读取/格式优化的当前候选与适用范围
 
-七图原始格式重建已经过 [`input_portable_v4_completion.json`](../experiments/campaign_20261104/input_portable_v4_completion.json) 核验：EP/LJ边列表、OR固定NR版本、US固定DIMACS10版本、IN/UK/TW的LAW输入保持来源哈希和同一规范化合同。原始格式统一处理一次；正式查询读取固定二进制 CSR，不在每次查询重复解压文本，也不静默换成不同来源的预制图。规范化 N/A 与源计数分开，生成权重及ID映射单独绑定。
+七图原始格式重建已经过 `input_portable_v4_completion.json`（内部证据位置：`../experiments/campaign_20261104/input_portable_v4_completion.json`，未随公开包分发） 核验：EP/LJ边列表、OR固定NR版本、US固定DIMACS10版本、IN/UK/TW的LAW输入保持来源哈希和同一规范化合同。原始格式统一处理一次；正式查询读取固定二进制 CSR，不在每次查询重复解压文本，也不静默换成不同来源的预制图。规范化 N/A 与源计数分开，生成权重及ID映射单独绑定。
 
-独立候选 [`native_load_p1_v1`](../experiments/campaign_20261104/runner_candidates/native_load_p1_v1/) 去掉 P1 为“发现不存在的 halo”而进行的全邻接扫描和无用 inverse 数组。P1仍输出完整 owners、local-to-global、offsets、indices、weights（按需）和签名；完整文件 SHA、索引范围检查、后置全量 round-trip 保留，`P>1` 保持原分区算法。64种方向/offset宽度/mmap/设备数/权重组合逐字节相同，空弧与孤立点、损坏载荷和非法索引也有验证；本地及实验机均45项CPU检查通过。**尚无该候选的GPU性能/完整任务资格结果**。
+独立候选 `native_load_p1_v1`（内部证据位置：`../experiments/campaign_20261104/runner_candidates/native_load_p1_v1/`，未随公开包分发） 去掉 P1 为“发现不存在的 halo”而进行的全邻接扫描和无用 inverse 数组。P1仍输出完整 owners、local-to-global、offsets、indices、weights（按需）和签名；完整文件 SHA、索引范围检查、后置全量 round-trip 保留，`P>1` 保持原分区算法。64种方向/offset宽度/mmap/设备数/权重组合逐字节相同，空弧与孤立点、损坏载荷和非法索引也有验证；本地及实验机均45项CPU检查通过。**尚无该候选的GPU性能/完整任务资格结果**。
 
 该准备函数目前属于 artifact/benchmark 适配入口；公开 `Session.native` 与 `Session.native_static` 接收已生成 manifest，不自动执行它。因此目前可宣称“优化 EGGPU artifact 的单卡输入准备”，不能声称所有公开生产调用自动提速。该独立候选最初保留了447c运行源码/DSO；最新已统一为 d84ff 源码和 6dfc 原生库，`unified_release_d84_v2` 的 native 计划明确绑定 `native_load_p1_v1` 准备入口，旧447c结果仅保留为历史诊断，不代表当前部署。后续将该通用准备能力接入公开输入 API 时，再以相同完整任务合同验证，不能把优化工作移出 `T_first`。
 
-公开 Native 权重入口另有独立候选 [`native_weight_admission_v1`](../experiments/campaign_20261104/candidates/native_weight_admission_v1/)：`_native.verify_manifest`（静态/精确u8资格）和 `_dynamic.verify_manifest`（权重状态）共同使用有界chunk扫描，在同一批FP64字节上完成完整SHA和原数值检查，省去随后另一次mmap扫描。它不缓存验证结论、不缩减校验范围；损坏hash仍先于NaN/Inf/负权/非整数报错，多chunk错误顺序和uint32不可达哨兵边界保持一致。该优化在公开Session初始化内生效，仍完整计入首次任务。 这3个公开入口文件已并入统一 `native_memory_input_v1` 源 `d84ff388…`；精确源/DSO绑定的260项公开/核心CPU回归与10项权重拒绝语义检查已通过，见 [`cpu_regression_d84ff_v1/receipt.json`](../experiments/campaign_20261104/cpu_regression_d84ff_v1/receipt.json)。这是CPU证明，GPU数值和性能资格仍以统一队列实测回执为准。
+公开 Native 权重入口另有独立候选 `native_weight_admission_v1`（内部证据位置：`../experiments/campaign_20261104/candidates/native_weight_admission_v1/`，未随公开包分发）：`_native.verify_manifest`（静态/精确u8资格）和 `_dynamic.verify_manifest`（权重状态）共同使用有界chunk扫描，在同一批FP64字节上完成完整SHA和原数值检查，省去随后另一次mmap扫描。它不缓存验证结论、不缩减校验范围；损坏hash仍先于NaN/Inf/负权/非整数报错，多chunk错误顺序和uint32不可达哨兵边界保持一致。该优化在公开Session初始化内生效，仍完整计入首次任务。 这3个公开入口文件已并入统一 `native_memory_input_v1` 源 `d84ff388…`；精确源/DSO绑定的260项公开/核心CPU回归与10项权重拒绝语义检查已通过，见 `cpu_regression_d84ff_v1/receipt.json`（内部证据位置：`../experiments/campaign_20261104/cpu_regression_d84ff_v1/receipt.json`，未随公开包分发）。这是CPU证明，GPU数值和性能资格仍以统一队列实测回执为准。
 
 原生SSSP计划已经在必需的edge扫描中同时验证端点、统计权重、认证并编码u8；不能凭Python证书跳过这一所有权边界。当前公开 Native C++导入用 `import_policy='structural'`，其后读取的自有数组会做结构/数值检查，**并非第二次完整SHA**；原有不可变文件假设保持不变，没有宣称能抵御非合作外部进程在校验后改写文件。新的融合检查至少保证Python的完整hash和数值证书来自同一批读取字节。
 
@@ -154,7 +154,7 @@ BFS/SSSP 固定三源：有向图最大 SCC（并列用最小 canonical ID）内
 
 超时合同：E1/E2 每个完整任务30分钟，E3–E6 每条完整轨迹/应用60分钟；系统专有准备计入T_first及其超时，单列仅指拆项展示，共同离线规范化另计。所有系统使用相同硬件限额。超时是删失数据，不能把上限当作真实耗时做加速比。OOM、不支持、错误、超时分别标记；报告完成覆盖率和可配对速度，不把未完成当无限加速。输出不合格时不纳入性能胜率。资源资格可以先做，不能据资格或速度删图；需要改协议时留正式版本差异，旧配置保留。
 
-C²graph-P 的 TW 资格实际停在 CPU 压缩阶段，记为 **TO（preprocessing，30 min）**：GPU入口未启动，`T_ready` 未测，不应归类OOM或GPU迭代慢。该worker已把队列外层的OMP1覆盖为OMP16且限16核；上游压缩源码的OpenMP pragma本来就是注释，现有 `-O3 -fopenmp` 构建未漏掉作者并行选项。外层22200秒是三个source、每source压缩与三次独立query的进程监管余量，不能替代每个完整请求1800秒的门槛。逐项源代码/ELF/epoch/失败日志证据见 [`compression_audit_v1`](../experiments/campaign_20261104/c2p_tw_guarded_v1/compression_audit_v1/receipt.json) 和 [`upstream_audit.json`](../experiments/campaign_20261104/c2p_tw_guarded_v1/compression_audit_v1/upstream_audit.json)；作者版本和现有正确性补丁明确分列，没有另行优化作者算法。
+C²graph-P 的 TW 资格实际停在 CPU 压缩阶段，记为 **TO（preprocessing，30 min）**：GPU入口未启动，`T_ready` 未测，不应归类OOM或GPU迭代慢。该worker已把队列外层的OMP1覆盖为OMP16且限16核；上游压缩源码的OpenMP pragma本来就是注释，现有 `-O3 -fopenmp` 构建未漏掉作者并行选项。外层22200秒是三个source、每source压缩与三次独立query的进程监管余量，不能替代每个完整请求1800秒的门槛。逐项源代码/ELF/epoch/失败日志证据见 `compression_audit_v1`（内部证据位置：`../experiments/campaign_20261104/c2p_tw_guarded_v1/compression_audit_v1/receipt.json`，未随公开包分发） 和 `upstream_audit.json`（内部证据位置：`../experiments/campaign_20261104/c2p_tw_guarded_v1/compression_audit_v1/upstream_audit.json`，未随公开包分发）；作者版本和现有正确性补丁明确分列，没有另行优化作者算法。
 
 
 ## 5. 实验总表
