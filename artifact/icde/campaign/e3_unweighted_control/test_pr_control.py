@@ -40,7 +40,7 @@ def result(values,arm='D1C1',h2d=0,graph_id='US@topology'):
         contract=SimpleNamespace(algorithm='pr',weight_projection='unweighted'),
         backend_metrics={'iterations':50,'converged':True,'native_dynamic_patch':{
             'route':c.ARMS[arm],'retirement_policy':'lineage',
-            'per_device_delta':{'0':{'weight_full_h2d_bytes':h2d}}},
+            'per_device_delta':{0:{'weight_full_h2d_bytes':h2d}}},
             'resource_management':{'state_switch_policy':'closure'}})
 
 
@@ -102,7 +102,7 @@ def test_only_weight_maintenance_transfer_is_zero(graph):
         c.query_evidence(result(reference.copy(),h2d=100),'US@topology','D1C1',1,1)
 
 
-@pytest.mark.parametrize('kind',('algorithm','graph','weight_semantics','no_iterations','wrong_route','wrong_policy','missing_device'))
+@pytest.mark.parametrize('kind',('algorithm','graph','weight_semantics','no_iterations','wrong_route','wrong_policy','missing_device','string_device','boolean_device','extra_device'))
 def test_query_rejects_wrong_execution(graph,kind):
     _,reference,_=c.unit_oracle(graph);r=result(reference.copy())
     if kind=='algorithm':r.algorithm='weighted_pr'
@@ -112,6 +112,9 @@ def test_query_rejects_wrong_execution(graph,kind):
     if kind=='wrong_route':r.backend_metrics['native_dynamic_patch']['route']='persistent_full'
     if kind=='wrong_policy':r.backend_metrics['resource_management']['state_switch_policy']='closure_lru'
     if kind=='missing_device':r.backend_metrics['native_dynamic_patch']['per_device_delta']={}
+    if kind=='string_device':r.backend_metrics['native_dynamic_patch']['per_device_delta']={'0':{}}
+    if kind=='boolean_device':r.backend_metrics['native_dynamic_patch']['per_device_delta']={False:{}}
+    if kind=='extra_device':r.backend_metrics['native_dynamic_patch']['per_device_delta']={0:{},1:{}}
     with pytest.raises(ValueError):c.query_evidence(r,'US@topology','D1C1',1,1)
 
 
@@ -149,3 +152,30 @@ def test_imports_and_cpu_entry_never_execute_gpu():
     assert 'cupy' not in __import__('sys').modules
     with pytest.raises(ValueError,match='owned by the root'):
         c.execute(SimpleNamespace(execute_gpu=False))
+
+
+def test_actual_frozen_observer_contract(graph):
+    import ast
+    source=Path(__file__).resolve().parents[4]/'Easy-Graph/easygraph/gpu/_dynamic.py'
+    function=next(x for x in ast.parse(source.read_text()).body if isinstance(x,ast.FunctionDef) and x.name=='_dynamic_totals')
+    namespace={};exec(compile(ast.Module(body=[function],type_ignores=[]),str(source),'exec'),namespace)
+    actual=namespace['_dynamic_totals']({'per_device':[{'device_id':0,'counters':{'dynamic.weight_full_h2d_bytes':0,'dynamic.abi_version':1}}]})
+    assert set(actual)=={0} and all(type(x) is int for x in actual)
+    _,reference,_=c.unit_oracle(graph);r=result(reference.copy())
+    r.backend_metrics['native_dynamic_patch']['per_device_delta']=actual
+    assert not any(c.query_evidence(r,'US@topology','D1C1',1,1)['weighted_view_transfer_counters'].values())
+
+
+def test_counter_failure_preserves_actual_output_and_metrics(graph):
+    _,reference,_=c.unit_oracle(graph);session=FakeSession(reference,'D1C1')
+    original=session.query
+    def broken(*args):
+        answer=original(*args);answer.backend_metrics['native_dynamic_patch']['per_device_delta']={'0':{}}
+        return answer
+    session.query=broken
+    held,before,record=c.run_workflow(SimpleNamespace(dataset='US',arm='D1C1',partitions=1),graph,
+                              lambda:session,lambda row,version:())
+    assert not record['execution_complete'] and record['events']==[]
+    assert len(held)==len(before)==1 and session.closed
+    assert record['failed_event']['observed_query']['metrics']['native_dynamic_patch']['per_device_delta']=={'0':{}}
+    assert 'native integer device IDs' in record['execution_error']

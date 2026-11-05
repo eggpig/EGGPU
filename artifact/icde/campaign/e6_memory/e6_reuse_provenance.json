@@ -1,0 +1,40 @@
+{
+  "schema": "eggpu.e6.reused_algorithms/v1",
+  "source_files": [
+    {
+      "path": "experiments/rtx4090d_20261031/extended_workflow_20261101/v2/workflow.py",
+      "sha256": "fd9ee79b7f92bdb13191d9c0d9b831bcb88753c6493968367ae1b499d350e8a9"
+    },
+    {
+      "path": "experiments/rtx4090d_20261031/extended_workflow_20261101/addon_direct_v1/workflow_addon.py",
+      "sha256": "83d93c72265f3aea7656a2902618875cb8f4b4fcf40f61cc61917563562f10d1"
+    },
+    {
+      "path": "experiments/rtx4090d_20261031/extended_workflow_20261101/dense_v1/workflow_dense.py",
+      "sha256": "82f2f994643f6ec5e79aea7e17276a1da8dda0b318428deeaaa433e94f400235"
+    }
+  ],
+  "output_file": "e6_reused.py",
+  "output_sha256": "71c2b8bf3f3f08df97b1beaf0905ddbeec6e592330c6a51985b3dd59d08e450a",
+  "mechanical_extraction": [
+    "IgraphBackend",
+    "MixedBackend",
+    "NativeBackend",
+    "canonical_labels",
+    "own",
+    "select_candidates",
+    "select_winner",
+    "product_blocks",
+    "StrongMixed -> GPUCompositeBackend; w.own -> own"
+  ],
+  "new_algorithms": false,
+  "historical_results_reused_as_new_results": false,
+  "gpu_executed": false,
+  "complete_output_contract_adaptation": {
+    "files": [
+      "e6_reused.py"
+    ],
+    "validation": "IDs must be exactly one permutation of all canonical vertices before mixed scatter, GPU BFS/reductions, or triangle normalization; reject partial isolate output. Included inside complete-call timing.",
+    "algorithm_changed": false
+  }
+}

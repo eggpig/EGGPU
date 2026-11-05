@@ -1,0 +1,90 @@
+--- parent/adapters/pr/gum_stage2.cu
++++ candidate/adapters/pr_fp32/gum_stage2.cu
+@@ -1,5 +1,5 @@
+ #include "baseline_memory_clock.h"
+-// FP64 compatibility adapter for official GUM PageRank. See precision patch receipt.
++// Original author FP32 PageRank; only complete host output is normalized to FP64 within the query clock.
+ #include <gflags/gflags.h>
+ #include <glog/logging.h>
+ #include <grape/grape.h>
+@@ -13,7 +13,8 @@
+ #include <cstring>
+ #include "numa_pinned_host_standalone.h"
+ #include "examples/flags.h"
+-#include "pagerank_fp64.h"
++#include "pagerank_author.h"
++#include "fp32_owned_output.h"
+ #include <thrust/sequence.h>
+ #include "grape_gpu/fragment/host_fragment.h"
+ #include "grape_gpu/fragment/loader.h"
+@@ -127,12 +128,12 @@
+   using gpu_easygraph::runtime::make_gpu_local_pinned_host_buffer;
+   using gpu_easygraph::runtime::json_quoted;
+   GpuLocalPinnedAllocationInfo pinned_info;
+-  const size_t local_bytes = static_cast<size_t>(count) * sizeof(double);
++  const size_t local_bytes = static_cast<size_t>(count) * sizeof(float);
+   auto local_pinned = make_gpu_local_pinned_host_buffer(local_bytes, comm.local_id(), &pinned_info);
+-  double* const local_output = static_cast<double*>(local_pinned->data());
+-  // The sole gather workspace is cached and needed only for nonidentity OIDs
+-  // with multiple ranks. Identity MPI concatenation writes the new final owner.
+-  std::vector<double> gathered(comm.worker_id() == 0 && comm.worker_num() > 1 && !identity_order ? total : 0);
++  float* const local_output = static_cast<float*>(local_pinned->data());
++  // Multi-rank gather preserves author FP32 values; conversion to each new
++  // owned final FP64 output occurs inside the timed dense scatter below.
++  std::vector<float> gathered(comm.worker_id() == 0 && comm.worker_num() > 1 ? total : 0);
+   std::vector<std::unique_ptr<double[]>> retained_outputs;
+   retained_outputs.reserve(FLAGS_stage2_rounds);
+   const double output_static_ready = MPI_Wtime();
+@@ -146,7 +147,8 @@
+   CHECK_CUDA(cudaDeviceSynchronize());
+   MPI_Barrier(comm.comm());
+   const double runtime_ready = MPI_Wtime();
+-  static_assert(std::is_same<typename App::rank_t, double>::value, "PR output must be FP64");
++  static_assert(std::is_same<typename App::rank_t, float>::value, "Author PR compute must be FP32");
++  static_assert(sizeof(thrust::pair<uint32_t,typename App::rank_t>) == 8, "Author PR message must remain 8 bytes");
+   const auto context = worker->GetContext();
+   const auto& rank_range = context->rank.GetVertexRange();
+   const auto& next_range = context->next_rank.GetVertexRange();
+@@ -155,14 +157,14 @@
+       owned_range.end().GetValue() > rank_range.end().GetValue() ||
+       next_range.begin().GetValue() != rank_range.begin().GetValue() ||
+       next_range.end().GetValue() != rank_range.end().GetValue())
+-    throw std::runtime_error("GUM owned vertices are not a contained contiguous FP64 range");
++    throw std::runtime_error("GUM owned vertices are not a contained contiguous FP32 range");
+   const size_t owned_offset = owned_range.begin().GetValue() - rank_range.begin().GetValue();
+   const double output_plan_ready = MPI_Wtime();
+   std::ofstream detail(FLAGS_out_prefix + "/timings-rank-" + std::to_string(comm.worker_id()) + ".jsonl");
+   detail << std::setprecision(17);
+   detail << "{\"phase\":\"output_static_prepare\",\"rank\":" << comm.worker_id()
+          << ",\"seconds\":" << output_static_ready-immutable_ready << ",\"owned_vertices\":" << count
+-         << ",\"vertices\":" << total << ",\"element_bytes\":" << sizeof(double)
++         << ",\"vertices\":" << total << ",\"element_bytes\":" << sizeof(float)
+          << ",\"identity_oid_concatenation\":" << (identity_order ? "true" : "false")
+          << ",\"pinned_bytes\":" << local_bytes << ",\"pinned_address\":"
+          << json_quoted(std::to_string(reinterpret_cast<std::uintptr_t>(local_output)))
+@@ -252,19 +254,15 @@
+     }
+     const double d2h_complete = MPI_Wtime();
+     if (comm.worker_num() > 1) {
+-      double* destination = comm.worker_id() == 0 ?
+-          (identity_order ? dense.get() : gathered.data()) : nullptr;
+-      MPI_Gatherv(local_output, count, MPI_DOUBLE, destination, counts.data(),
+-                  offsets.data(), MPI_DOUBLE, 0, comm.comm());
++      float* destination = comm.worker_id() == 0 ? gathered.data() : nullptr;
++      MPI_Gatherv(local_output, count, MPI_FLOAT, destination, counts.data(),
++                  offsets.data(), MPI_FLOAT, 0, comm.comm());
+     }
+     const double gather_complete = MPI_Wtime();
+     if (comm.worker_id() == 0) {
+-      if (comm.worker_num() == 1 && identity_order) {
+-        if (total) std::memcpy(dense.get(), local_output, local_bytes);
+-      } else if (!identity_order) {
+-        const double* values = comm.worker_num() == 1 ? local_output : gathered.data();
+-        for (int i = 0; i < total; ++i) dense[all_ids[i]] = values[i];
+-      }
++      const float* values = comm.worker_num() == 1 ? local_output : gathered.data();
++      gum_fp32_dense_output(dense.get(), values, all_ids.data(),
++                            static_cast<size_t>(total), identity_order);
+     }
+     const double scatter_complete = MPI_Wtime();
+     MPI_Barrier(comm.comm());

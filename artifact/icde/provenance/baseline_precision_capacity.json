@@ -1,0 +1,20 @@
+{
+  "status": "SOURCE_AUDIT_NOT_FORMAL_RESULTS",
+  "gum": {
+    "standard_pr": "FP64 compatibility variant; label separately",
+    "fp32": "Original FP32 rank/damping and eight-byte wire retained; final owned FP64 conversion is inside query time",
+    "historical_64_iterations": "Twelve original FP32 runs used 64 iterations; failure of the new quality threshold cannot be attributed to FP32 alone",
+    "candidate": "FP32 117-iteration candidate has CPU contracts; new actual GPU qualification required",
+    "rws_p8": "FAIL_PLATFORM_PEER_ACCESS; separate platform condition"
+  },
+  "c2graph_tw": {
+    "status": "TIMEOUT_CPU_COMPRESSION",
+    "limit_seconds": 1800,
+    "gpu_executed": false,
+    "T_ready_measured": false,
+    "openmp_threads": 16,
+    "author_parallelism": "The upstream compression parallel pragma is commented out; not a missing launcher/build optimization",
+    "interpretation": "Do not classify this timeout as OOM or slow GPU iteration"
+  },
+  "failure_policy": "Keep OOM, storage, host-memory, index-domain, platform and quality failures distinct; no zero-time or infinite speedup substitution."
+}

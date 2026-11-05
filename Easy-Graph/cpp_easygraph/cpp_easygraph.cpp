@@ -182,6 +182,15 @@ PYBIND11_MODULE(cpp_easygraph, m) {
         py::arg("weight_key") = "weight",
         py::arg("undirected_projection") = py::none());
     m.def(
+        "cpp_graph_from_csr_arrays", &cpp_graph_from_csr_arrays,
+        "Copy exact native int32 CSR arrays into an owned bulk graph; validate all topology views.",
+        py::arg("offsets").noconvert(), py::arg("indices").noconvert(),
+        py::arg("directed") = false, py::arg("validate") = true,
+        py::arg("weights") = py::none(), py::arg("weight_key") = "weight",
+        py::arg("undirected_projection") = py::none());
+    m.def("cpp_graph_csr_arrays", &cpp_graph_csr_arrays, py::arg("G"),
+        "Return independent array copies of a materialized CSR and its projection views.");
+    m.def(
         "cpp_graph_undirected_projection_info",
         &cpp_graph_undirected_projection_info,
         py::arg("G"));

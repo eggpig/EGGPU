@@ -10,7 +10,7 @@
 
 新论文组织为 E1 整体同资源比较、E2 固定工作强扩展、E3 D-Maintain、E4 C-Retain、E5 D×C 联合干预、E6 扩展函数的完整任务价值。历史 E5 中的应用材料迁入新 E6，联合消融归新 E5；原始路径和 ID 不改名。
 
-## 2. 四篇论文的采纳与边界
+## 2. 参考论文的采纳与边界
 
 | 一手来源与位置 | 本方案采用 | 不直接沿用的部分 |
 |---|---|---|
@@ -18,6 +18,8 @@
 | [GRACE，ICDE 2026](https://me.sage.org.ai/contents/research_papers/2026/2026_grace_icde_2026.pdf)，表 II，物理第8页，实验节 | 社交图的不同密度；更新、重建、内存和后续计算共同测量 | 文中静态边洗牌、从空图分批插入/删除，不是自然时间轨迹；更不是本系统已经实现的 FP64 权重维护。其 LJ/Orkut 处理后计数不能直接套用原始数据。 |
 | [C²graph，ICDE 2026](https://wzgcs.github.io/papers/32_ICDE_2026.pdf)，表 I，物理第9页，§VI；DOI 10.1109/ICDE65706.2026.00225 | 低度路网到大规模 Web 的跨度；准备、查询和摊销成本分开 | 主查询时间排除压缩；多请求是同图不同源的独立遍历。PPR 与全局 PR 不同，社区生成权重与本文权重合同不同。 |
 | [GUM，ICDE 2023](https://graphscope.io/publication/gum.pdf)，表 II、实验节，物理第8–11页 | SN/WG/RN 三类；同资源比较与强扩展分开；模块收益、开销与边界 | 表中多图计数与本文源版本不同，例如 UK 约524M条目，不能当作 LAW 原始298M弧；可能涉及输入版本或投影差异，原文不足以恢复完整转换。系统在具体机器上的 P2P/RWS 可用性必须实测登记。 |
+
+补充参考 [KGraph，ICDE 2025](https://gaosen.org/resources/papers/KGraph.pdf) §VI：采用 RN/SN/WG 分类、完整多查询任务与 memoization 开销拆分。它排除磁盘读取和分区、保留 memoization 时间；其并发同函数查询不是本文多图多函数依赖轨迹的现成复现。
 
 第三篇 IEEE 11629388 已通过用户补充和 [IEEE 元数据](https://xplorestaging.ieee.org/document/11629388/) 确认为 C²graph，已阅读作者 PDF。四篇均已核查数据表与实验正文；详细审计和截图保存在 `../../EGGPU_TMP/EGGPU_ICDE_20261017/dataset_freeze_20261104/`。
 
@@ -45,15 +47,15 @@ US、OR 是无向图，分别为28,854,312和106,349,209条无向关系。其他
 
 七图均已完成规范化，当前字节级输入与完整回执以 [本轮输入 registry](../experiments/campaign_20261104/input_registry_20261104.json) 为唯一执行状态入口，状态为 `ALL_SEVEN_CANONICAL_READY`。原始格式重建资格见 [portable v4 完成回执](../experiments/campaign_20261104/input_portable_v4_completion.json)。这两个入口取代早期 US/LJ/TW 待下载表；选图、版本、方向和预处理规则未改变。
 
-| 简称 | 规范化 N | 规范化存储弧 A |
-|---|---:|---:|
-| EP | 75,879 | 508,837 |
-| OR | 2,997,166 | 212,698,418 |
-| IN | 7,414,866 | 191,606,827 |
-| UK | 18,520,486 | 292,243,663 |
-| US | 23,947,347 | 57,708,624 |
-| LJ | 4,847,571 | 68,475,391 |
-| TW | 41,652,230 | 1,468,364,884 |
+| 简称 | 类别 | 方向 | 规范化 N | 规范化存储弧 A | A/N |
+|---|---|---|---:|---:|---:|
+| US | RN | 无向 | 23,947,347 | 57,708,624 | 2.410 |
+| EP | SN | 有向 | 75,879 | 508,837 | 6.706 |
+| LJ | SN | 有向 | 4,847,571 | 68,475,391 | 14.126 |
+| OR | SN | 无向 | 2,997,166 | 212,698,418 | 70.967 |
+| IN | WG | 有向 | 7,414,866 | 191,606,827 | 25.841 |
+| UK | WG | 有向 | 18,520,486 | 292,243,663 | 15.779 |
+| TW | SN | 有向 | 41,652,230 | 1,468,364,884 | 35.253 |
 
 规范输入完成不代表每个算法、索引布局、GPU数量均已通过资格，更不代表正式十次测量完成。US 从同一 DIMACS10 原发布站恢复，来源链已记入回执；未声称与不可下载的 SuiteSparse 压缩包逐字节一致。TW保留LAW版完整原始文件MD5/SHA与规范化回执，不用原始弧量替代上表A。
 
@@ -90,13 +92,57 @@ E1/E2 的 SSSP 和 E3–E5 的受控权重使用固定正整数1–16，固定�
 ### 4.2 四个计时边界
 
 - **共同输入准备**：原文件读取、解压、统一规范化单独记录；系统无关部分可在主比较计时外，但必须所有系统一致。
-- **首次完整任务 T_first**：从相同、已在主机的规范化边数组输入开始，包含系统专有执行器/worker/MPI进程启动、CUDA上下文初始化、格式转换、压缩/分区、图对象创建、上传、计算、同步、输出恢复到统一 ID/类型及拥有独立生命周期的结果返回。共同测量控制进程可以预先启动，但不得仅让某个被测系统预建CUDA context、进程池或图状态；启动成本另列拆项仍计入T_first。已准备好的 Native CSR/分区不能只给 EGGPU 免费使用。
+- **首次完整任务 T_first**：从相同、已在主机的规范化 CSR 数组输入开始，包含系统专有执行器/worker/MPI进程启动、CUDA上下文初始化、格式转换、压缩/分区、图对象创建、上传、计算、同步、输出恢复到统一 ID/类型及拥有独立生命周期的结果返回。共同测量控制进程可以预先启动，但不得仅让某个被测系统预建CUDA context、进程池或图状态；启动成本另列拆项仍计入T_first。已准备好的 Native CSR/分区不能只给 EGGPU 免费使用。
 - **已准备完整调用 T_ready**：图已建且上一请求完成，从本次请求进入，到完整输出与必要的预算修剪完成。每次重新执行算法，不缓存答案。单独给出内核时间作解释。
 - **整段任务 T_workflow**：首次初始化 + 全部提交/更新/维护 + 全部计算与依赖步骤 + 传输/输出 + 保留策略开销；最终销毁单列并同时给出包含销毁的总时间。不得只报告去掉重建的循环时间。
 
 准备成本的摊销直接用实测前缀总时间，E1 固定前缀长度1/4/16，E4 给全轨迹；没有在观察窗口内交叉就报告“未达到盈亏平衡”。异步阶段的墙钟覆盖区间不直接加和，跨卡取关键路径；避免把嵌套计时重复计入。
 
 输出验算在返回后的统一校验阶段完成，校验耗时独立记录；返回所必需的D2H、映射和结果物化在主计时内。所有正式重复都保存完整输出或无损压缩/内容寻址的等价可恢复副本。
+
+### 4.2.1 2026-11-05 原文与实际 runner 对照
+
+参考论文支持按研究问题分层计时，**没有一条所有论文共同采用的时钟边界**。本文必须重新测同机器、同输入、同输出合同，不能把作者论文的秒数与本轮 `T_first` 或 `T_ready` 拼成速度比。
+
+| 参考与实际证据 | 原文/作者实现的范围 | 本文如何对应 |
+|---|---|---|
+| [GUM](https://graphscope.io/publication/gum.pdf)，§VI-A，物理第9页 | 原文明确排除 I/O；未细化到本文的完整独立 host output 合同 | 同时给完整 `T_first` 与 `T_ready`；不得仅据“排除 I/O”推断它的所有启动/上传阶段也被排除 |
+| [HyTGraph](https://arxiv.org/pdf/2208.14935)，§VII-A/B；[作者 framework.cuh](https://github.com/iDC-NEU/HyTGraph/blob/3e5b0e47035972cd8ba1e0a9c89d99c108041de9/include/framework/framework.cuh) | 作者实现 `LoadGraph` 的读取时间标为 excluded；`Start` 计迭代调度/传输/计算；示例 `GatherValue` 在 `Start` 后执行，不在该内层时钟内 | 作者内层时间只作解释。主比较仍计完整输出，不能把 EGGPU 的 D2H/物化时间与对方不含输出的值直接对比 |
+| [C²graph](https://wzgcs.github.io/papers/32_ICDE_2026.pdf)，§VI-A.3、VI-C | 主查询时间排除压缩；10次随机源均值；多请求面板研究多次查询累计计算 | 同时保留含压缩的首次时间及准备后的调用；多请求用实测前缀累计时间，不把一次批量总时除以请求数冒充单次延迟 |
+| [GRACE](https://me.sage.org.ai/contents/research_papers/2026/2026_grace_icde_2026.pdf)，§V-A–C、Fig.9/11/12 | 分别报告重建、更新和图计算；静态图洗牌后按10M边批次插入/删除，PR固定15轮 | 借鉴阶段拆解及更新后计算的动机。本文权重维护不冒充拓扑插删；固定15轮PR不等同于本文共同残差合格的PR |
+| [KGraph](https://gaosen.org/resources/papers/KGraph.pdf)，§VI-A、Fig.16 | 排除磁盘读取和图分区；memoization 是运行时组成部分，计入完整并发查询处理时间 | 复用、维护和策略开销不得免费移到计时外；引用它支持多查询/复用研究动机，不宣称本文受控多图序列取自其原始应用 |
+
+当前实现绑定：
+
+| 路线 | 起点到终点 | 已核查的计时外工作及限制 |
+|---|---|---|
+| SG `pr_global_l1_i64_v6/sg_worker.py` | 第513行起点→backend 创建→查询完整 host 结果→第516行终点；热调用独立计时 | 共同输入加载、全 SHA 与全数组 checksum 在起点前；输出持久化和独立参考在后。Python 测量 worker 本身可预启动，系统专有 backend 创建仍收费 |
+| Native `native_full_profile_v2/native_worker.py` | 第277行起点→必要弱投影→分区文件/manifest→Session 上传→完整查询结果→第281行终点 | 本系统特有的格式生成及其文件 SHA 在 `T_first` 内；完整 partition round-trip 是后置审计。不能预先生成 manifest 后声称含准备 |
+| E6 `e6_reference_binding_v2/e6_worker.py` | 第500行起点→投影和 backend→所有依赖阶段→第509行终点；每次重新计算候选和 winner | 当前 Native 路线先写9个输入文件再读取，属于已计时开销；后续内存入口优化必须保持同一边界。冷/热指 backend 状态，均不是操作系统页缓存的“冷盘读” |
+| E3–E5 `state_v4_candidate/state_worker.py` | 第94行起点→Session/初始状态→全部更新、查询、reader acquire/close及相同事件记录→第141行终点 | `first_complete_workflow_seconds` 含初始化；`workflow_complete_host_seconds` 不含E3初始基线查询，两者不能混名。第142–159行 inventory、输出hash、Session.close 合并为 `audit_and_close_seconds`，名称准确且**不是纯 teardown**；独立reference和输出文件写入也在主计时外。本轮完整state保持冻结v4，不为可选纯销毁拆项改epoch |
+
+共同主机输入已通过规范化、完整文件 hash 和全数组访问，因此 `T_first` 表示 **host-CSR-ready 到首次完整结果**，不表示从压缩下载文件开始的端到端磁盘延迟。共同离线准备已有独立回执；每次公共 input-validation/prefault 的时间也应独列为复现成本，不伪称已并入当前 `T_first`。可复用的是系统无关、对所有系统相同的规范输入；系统特有压缩、分区、投影、内存转换、GPU状态不能借这一规则免费缓存。
+
+当前已资格通过的 GUM 标准路径展示名为 **GUM (standard)**，既有 PR 数据必须注明 **FP64 compatibility variant，117 fixed iterations，经过共同输出质量门禁**。24个 standard target 与240个 formal job 已逐项绑定 [`standard_display_binding.json`](../experiments/campaign_20261104/gum_rws_audit_v1/standard_display_binding.json)，源码差异见同目录 `standard_patch_sidecar.json` 与 `standard_pr_fp64.diff`。原始结果 ID 保留 `gum` 以免破坏血缘。真正的 RWS P8 探测为 `FAIL_PLATFORM_PEER_ACCESS`，在能力表独列；不当作标准路径失败，更不计为 EGGPU 数值胜利。
+
+**原精度资格补审。** 不能据既有 FP64 结果反推作者 FP32 必然不满足本轮精度。实际历史记录有12次原 FP32 运行（去掉父/子重复记录），包括 NR 的 P1/P2/P4/P8，均为64轮；它们通过旧 `1e-4` 残差/概率总质量误差标准，却未满足本轮残差 `1e-6`、概率总质量误差 `1e-6`、参考向量 L1 误差 `1e-5`。零初始化的精确算术概率总质量亏损本就是 `0.85^64 ≈ 3.04×10^-5`，因此不能将截断误差归因为 FP32 精度下限。旧 FP64 适配采用117轮是针对当时 `1e-9` 残差目标的选择；详见 [`fp32_precision_audit.json`](../experiments/campaign_20261104/gum_rws_audit_v1/fp32_precision_audit.json)。
+
+独立 `gum_fp32_author_v1` 已保留作者原 `float` rank/damping、8字节消息和原算法头文件，仅用公开CLI设置117轮；完整FP32结果在每次query时钟内转成独立拥有的FP64主机数组。质量仍按数学 `alpha=0.85` 和本轮共同阈值检查，不能用作者 `float(.85)` 舍入放宽标准。新候选只有CPU构建/入口检查，必须完成当前机器tiny和同图同卡数target实测；通过后优先原精度，FP64作为明示兼容对照。当前既有FP64计划和结果血缘保持原精度标签，不得悄然重新命名成原作者实现。
+
+
+### 4.2.2 读取/格式优化的当前候选与适用范围
+
+七图原始格式重建已经过 [`input_portable_v4_completion.json`](../experiments/campaign_20261104/input_portable_v4_completion.json) 核验：EP/LJ边列表、OR固定NR版本、US固定DIMACS10版本、IN/UK/TW的LAW输入保持来源哈希和同一规范化合同。原始格式统一处理一次；正式查询读取固定二进制 CSR，不在每次查询重复解压文本，也不静默换成不同来源的预制图。规范化 N/A 与源计数分开，生成权重及ID映射单独绑定。
+
+独立候选 [`native_load_p1_v1`](../experiments/campaign_20261104/runner_candidates/native_load_p1_v1/) 去掉 P1 为“发现不存在的 halo”而进行的全邻接扫描和无用 inverse 数组。P1仍输出完整 owners、local-to-global、offsets、indices、weights（按需）和签名；完整文件 SHA、索引范围检查、后置全量 round-trip 保留，`P>1` 保持原分区算法。64种方向/offset宽度/mmap/设备数/权重组合逐字节相同，空弧与孤立点、损坏载荷和非法索引也有验证；本地及实验机均45项CPU检查通过。**尚无该候选的GPU性能/完整任务资格结果**。
+
+该准备函数目前属于 artifact/benchmark 适配入口；公开 `Session.native` 与 `Session.native_static` 接收已生成 manifest，不自动执行它。因此目前可宣称“优化 EGGPU artifact 的单卡输入准备”，不能声称所有公开生产调用自动提速。该独立候选最初保留了447c运行源码/DSO；最新已统一为 d84ff 源码和 6dfc 原生库，`unified_release_d84_v2` 的 native 计划明确绑定 `native_load_p1_v1` 准备入口，旧447c结果仅保留为历史诊断，不代表当前部署。后续将该通用准备能力接入公开输入 API 时，再以相同完整任务合同验证，不能把优化工作移出 `T_first`。
+
+公开 Native 权重入口另有独立候选 [`native_weight_admission_v1`](../experiments/campaign_20261104/candidates/native_weight_admission_v1/)：`_native.verify_manifest`（静态/精确u8资格）和 `_dynamic.verify_manifest`（权重状态）共同使用有界chunk扫描，在同一批FP64字节上完成完整SHA和原数值检查，省去随后另一次mmap扫描。它不缓存验证结论、不缩减校验范围；损坏hash仍先于NaN/Inf/负权/非整数报错，多chunk错误顺序和uint32不可达哨兵边界保持一致。该优化在公开Session初始化内生效，仍完整计入首次任务。 这3个公开入口文件已并入统一 `native_memory_input_v1` 源 `d84ff388…`；精确源/DSO绑定的260项公开/核心CPU回归与10项权重拒绝语义检查已通过，见 [`cpu_regression_d84ff_v1/receipt.json`](../experiments/campaign_20261104/cpu_regression_d84ff_v1/receipt.json)。这是CPU证明，GPU数值和性能资格仍以统一队列实测回执为准。
+
+原生SSSP计划已经在必需的edge扫描中同时验证端点、统计权重、认证并编码u8；不能凭Python证书跳过这一所有权边界。当前公开 Native C++导入用 `import_policy='structural'`，其后读取的自有数组会做结构/数值检查，**并非第二次完整SHA**；原有不可变文件假设保持不变，没有宣称能抵御非合作外部进程在校验后改写文件。新的融合检查至少保证Python的完整hash和数值证书来自同一批读取字节。
+
+输入producer与执行consumer分开绑定。`_manifest_signatures.py` 仅根据图/分区/owner/布局及payload hash签名，不依赖整个Python实现源码；现有P1部分base来自f1a2、P8新base来自447c，均保留真实producer标记。相同签名合同和完整payload验证允许新consumer只读复用原文件，不为换Python入口而复制或重建整套图。消费者资格仍需要独立记录，旧producer数据通过验证不等于新GPU执行已经通过。
 
 ### 4.3 语义与统计
 
@@ -107,6 +153,9 @@ BFS/SSSP 固定三源：有向图最大 SCC（并列用最小 canonical ID）内
 新测每个资格通过的完整配置固定十个独立进程重复；同一输入/轨迹种子对各变体配对，执行顺序在重复间平衡。冷任务每次从无图状态开始，热任务有完全相同预热前缀。保存均值、样本SD、95%CI、原始十次；历史n=3保持原样。均值区间采用Student-t，机制配对差/交互以每个配对块为样本；源点不能充当额外独立进程样本。CV>20%明确标为不稳定，不以当前CV决定停止或删重复。p95仅对足够长的请求序列报告，不拿十个进程均值冒充尾延迟分布。
 
 超时合同：E1/E2 每个完整任务30分钟，E3–E6 每条完整轨迹/应用60分钟；系统专有准备计入T_first及其超时，单列仅指拆项展示，共同离线规范化另计。所有系统使用相同硬件限额。超时是删失数据，不能把上限当作真实耗时做加速比。OOM、不支持、错误、超时分别标记；报告完成覆盖率和可配对速度，不把未完成当无限加速。输出不合格时不纳入性能胜率。资源资格可以先做，不能据资格或速度删图；需要改协议时留正式版本差异，旧配置保留。
+
+C²graph-P 的 TW 资格实际停在 CPU 压缩阶段，记为 **TO（preprocessing，30 min）**：GPU入口未启动，`T_ready` 未测，不应归类OOM或GPU迭代慢。该worker已把队列外层的OMP1覆盖为OMP16且限16核；上游压缩源码的OpenMP pragma本来就是注释，现有 `-O3 -fopenmp` 构建未漏掉作者并行选项。外层22200秒是三个source、每source压缩与三次独立query的进程监管余量，不能替代每个完整请求1800秒的门槛。逐项源代码/ELF/epoch/失败日志证据见 [`compression_audit_v1`](../experiments/campaign_20261104/c2p_tw_guarded_v1/compression_audit_v1/receipt.json) 和 [`upstream_audit.json`](../experiments/campaign_20261104/c2p_tw_guarded_v1/compression_audit_v1/upstream_audit.json)；作者版本和现有正确性补丁明确分列，没有另行优化作者算法。
+
 
 ## 5. 实验总表
 

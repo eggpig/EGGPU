@@ -32,7 +32,7 @@
 | E1 Overall Performance | 0.8–1.0页 | 相同资源与质量下实际位置；准备成本如何摊销 | 单卡/多卡分块时间表；16请求累计时间小图 |
 | E2 Multi-GPU Scalability | 0.4–0.5页 | 固定后端扩展；资源增多为何有时无益 | 四算法小分面曲线，代表性时间分解 |
 | E3 Dependency-Aware Maintenance | 0.5页 | 哪些变化需要维护，少维护是否影响完整时间 | 更新比例曲线与维护字节面板 |
-| E4 Closure-Aware Retention | 0.5页 | 共享物理对象如何影响释放与回访成本 | 预算曲线、重载字节；共同状态复用副面板 |
+| E4 Closure-Aware Retention | 0.5页 | 共享物理对象如何影响释放与回访成本 | 预算曲线、真实分配/释放字节；共同状态复用副面板 |
 | E5 Joint Effects | 0.3–0.4页 | D/C 是否存在完整时间交互，证据是否稳定 | 四组配对时间；交互区间或传输量小面板 |
 | E6 Application and Function Coverage | 0.5页 | 扩展函数对完整依赖任务的真实贡献 | 阶段堆叠图与最终输出一致性简表 |
 
@@ -54,6 +54,8 @@
 | 扩展函数与独立参考 | 已有 CuPy + direct pylibcugraph 组合、igraph、其他确有同义函数的作者实现 | E6 共同阶段、完整组合；数值参考 | 不只挑慢 CPU 代表全部外部实现；不把拼接组合包装成原作者独立系统 |
 
 **当前 PR 资格修正。** cuGraph SG 旧适配器的 `epsilon=1e-9/n` 与实装 C++ 的全图 L1 停止式不符；新的共同协议使用 `epsilon=1e-9`、FP64、2000 次上限，外部残差/质量门槛不变。旧 cuGraph PR 和包含它的16请求轨迹保留原始证据，但不得进入比较或胜率，必须新 epoch 重测。US 的旧非收敛不算性能胜利。这属于修正实验调用协议，不属于额外优化 baseline；多卡 cuGraph 已直接使用全局 `1e-9`，应按其独立资格与迭代上限记录，不能把 SG 修改机械套用到已有正确路线。
+
+GUM 必须按真实执行路线标识：原生远程工作窃取、作者标准路径及 PR FP64 兼容变体分别资格和计时。当前标准路径的六图通过不能作为原生 RWS 可用的证明；原生路径在本机若因明确 P2P 限制不能运行，应列平台限制和实际失败阶段，不把它计为 EGGPU 胜出，也不悄悄换成标准路径仍沿用相同名称。
 
 候选清单不等于全部已经跑通。最终图表只展示适用实验的系统，但所有候选的结论、源码与失败原因在[当前能力矩阵](BASELINE_CAPABILITY_MATRIX_20261104_CN.md)及其[机器可读记录](BASELINE_CAPABILITY_MATRIX_20261104.json)可查。只有语义不相交或实验问题不相交才排除；性能慢不构成排除理由。
 
@@ -89,13 +91,13 @@ US、OR、IN、UK、TW，四算法，P=1/2/4/8；只有实际获授权且可用�
 
 两个主面板：横轴 `Updated edges (%)`（定义为变化存储位置占 A，且与无向配对规则一致），纵轴分别 `Workflow time (s)` 与 `Transferred data (GiB)`。ρ=0 是独立左端类别/小面板，不把0放进对数坐标；ρ>0使用明确对数刻度。每面板只画上述两种变体；局部性和 lease 用分面，不用十几种颜色混在一张图。
 
-记录提交/哈希、主机复制、视图维护、真实 H2D/D2D、算法及输出；将 packet 载荷与实际总传输分开。当前精确 packet 限 SSSP，WPR 仍可能有主机差分成本，不能将后者画成同样的常数维护。ρ=0 的管理开销、ρ=1 的退化及旧读者引发的 COW 都是必要结果。无权PR权重不变性负控制仍列为待完成的独立控制；当前四函数主trace未包含它，不能声称已测。将它直接加进主trace会把80查询改成100查询，须另立入口及资格。多卡分区集中轴同样仍缺明确输入协议，不能将普通行聚集冒称已覆盖。
+记录提交/哈希、主机复制、视图维护、真实 H2D/D2D、算法及输出；将 packet 载荷与实际总传输分开。当前精确 packet 限 SSSP，WPR 仍可能有主机差分成本，不能将后者画成同样的常数维护。ρ=0 的管理开销、ρ=1 的退化及旧读者引发的 COW 都是必要结果。无权PR权重不变性已有独立 `e3_unweighted_control` 入口与CPU测试，GPU资格及正式测量待完成。该控制在US/IN/OR上作base PR加20次权重提交后的PR，共21次真实调用，D0C1/D1C1、C固定、只允许none；现有weighted-view租约在纯无权PR轨迹不适用。它不改变80查询主trace，也不能在未测前写成已有控制结果。多卡分区集中轴同样仍缺明确输入协议，不能将普通行聚集冒称已覆盖。
 
 ### E4：C-Retain 的保留与状态复用
 
 主机制实验使用 US/OR/IN/UK 固定池、32次访问和128查询，比较同一请求多集合的 grouped/interleaved/permuted 三种顺序；不更新，D固定为D1。当前 `state_v4` 主比较仅 **closure-LRU（D1C0）与 C-Retain（D1C1）**，都按真实物理占用和相同lease约束作决策。预算取冻结 β=0/0.25/0.5/0.75/1；每个当前源码/图池/GPU配置先独立运行实际物理字节pilot，以逐卡 `floor(B_min+β(B_all−B_min))` 冻结字节预算，禁止按速度选预算。旧稿的 No-retention、view-LRU、logical-size demand 未作为本轮已实现臂，不绘制它们的结果。
 
-主图横轴 `Memory budget (GiB)`；多卡不均匀预算时使用 `Budget fraction` 并在表注给 β 与逐卡字节向量的定义，不能用所有卡显存相加掩盖某张卡溢出。纵轴 `Workflow time (s)`；第二面板为 `Reloaded data (GiB)`。β=1全驻留与β=0.25的once无回访控制都保留；once为4次访问、16查询，单独展示，不和128查询主项混合。另用一个真实日志片段连接“撤销视图—实际释放数组—下一次重载”，帮助读者理解命中率相近为何仍可能不同。
+主图横轴 `Memory budget (GiB)`；多卡不均匀预算时使用 `Budget fraction` 并在表注给 β 与逐卡字节向量的定义，不能用所有卡显存相加掩盖某张卡溢出。纵轴 `Workflow time (s)`；第二面板使用已实际记录的 `New shared arrays (GiB)` 与 `Freed memory (GiB)`。新共享数组字节属于分配证据，不等于所有重载/H2D；当前没有全拷贝计数时，不能标成 `Reloaded data`。β=1全驻留与β=0.25的once无回访控制都保留；once为4次访问、16查询，单独展示，不和128查询主项混合。另用一个真实日志片段连接“撤销视图—实际释放数组—下一次重载”，帮助读者理解命中率相近为何仍可能不同。
 
 **E4-S 共同状态复用副面板（本轮已纳入设计，待执行资格化）：** 在相同静态图上的不同源 SSSP 批任务，比较 EGGPU、KGraph、C²graph-PM，以及已接入的适用强静态系统。仍使用 US/OR/IN/UK，不增加新图；批长128为主点，32/512作敏感性，源点按冻结的拓扑散列规则扩展成不重复列表。所有请求都要返回全距离，不使用预存答案。允许作者已有 memoization，但其构建与有效性维护进入总时间；CPU 核数和主机内存上限一致，标明 CPU-only 与 CPU+GPU 的资源构成。横轴 `Queries`，纵轴 `Total time (s)`，准备与查询另作分解。该面板不计入 E1 单卡28格或90%目标的分母。
 
@@ -105,7 +107,7 @@ E4-S 是“已有状态复用系统如何完成共同任务”的比较，不是
 
 IN/UK/OR 固定交错轨迹、96请求；主点ρ=10⁻⁴、β=0.25，ρ=0和β=1为负控制。D0为Reuse+Full、C0为closure-LRU，比较D0C0、D1C0、D0C1、D1C1；其他开关和输入完全相同。
 
-横轴只写四个组合，纵轴 `Workflow time (s)`；图例/图注解释D0/C0。采用配对重复，误差条表示同一统计合同的95%CI。下方可以画 `Maintenance H2D (MiB)` 与 `Total H2D (MiB)` 两个独立面板，不能用一个“Transfer”标签混称。交互 `I=T11−T10−T01+T00` 单独给估计值和区间；时间越小越好，因此负交互表示超出加和的节省。
+横轴只写四个组合，纵轴 `Workflow time (s)`；图例/图注解释D0/C0。采用配对重复，误差条表示同一统计合同的95%CI。下方画真实 `Weight H2D (GiB)`（full-weight + patch，dense-lease 子集不重复加）与 `COW D2D (GiB)`；当前未完整记录全部 CUDA 拷贝，不能生成 `Total H2D` 曲线或推断它为零。交互 `I=T11−T10−T01+T00` 单独给估计值和区间；时间越小越好，因此负交互表示超出加和的节省。
 
 沿日志解释 C 是否保留了 D 后续可合法维护的对象。字节下降、时间下降和时间交互是三个不同结论。已有历史联合结果是维护载荷下降而完整时间交互区间跨零；新正式测量完成前不得将它改写成已证实的时间协同。
 
@@ -157,8 +159,8 @@ EP-U、LJ-U 主任务：**全图 Effective Size + Constraint → 排名取32候�
 - **E1表注：** “Complete-task time on seven graphs. Single-GPU and multi-GPU results use the same input and output-quality contract. Values are means of ten independent runs; dispersion and source-level results are provided in the artifact. Bold marks the lowest qualified mean in each case. OOM, TO, NS, and QF denote out-of-memory, timeout, unsupported semantics, and quality failure.” 实际还在待核资格时用 `Pending`，不能误用 QF。
 - **E2图注：** “Strong scaling of the fixed partitioned backend. Speedup is relative to the same backend on one GPU; the dashed line denotes ideal scaling. Error bars show 95% confidence intervals.” 多条系统线各自以本系统P1为分母；不同系统间性能用绝对时间补充。
 - **E3图注：** “Effect of update density on complete workflow time and transferred bytes. Full weight maintenance and dependency-aware maintenance share the executor and version/reader semantics; retention policy is fixed. Zero updates are shown separately from the logarithmic density axis.”
-- **E4图注：** “Effect of retained-memory budget on workflow time and reload volume. Policies process the same request sequence and enforce the same physical-memory accounting. The full-residency endpoint measures policy overhead when eviction is unnecessary.”
-- **E5图注：** “Joint effect of dependency-aware maintenance and closure-aware retention under the same paired workload. D0 uses reuse with full maintenance; C0 uses closure-LRU. Interactions are computed from paired repetitions.”
+- **E4图注：** “Effect of retained-memory budget on workflow time and measured shared-array allocation/release. Policies process the same request sequence and enforce the same physical-memory accounting. The full-residency endpoint measures policy overhead when eviction is unnecessary.”
+- **E5图注：** “Joint effect of dependency-aware maintenance and closure-aware retention under the same paired workload. D0 uses reuse with full maintenance; C0 uses closure-LRU. Interactions require ten source-bound, explicitly matched four-arm execution blocks; repeat indices alone do not establish pairing.”
 - **E6图注：** “Contribution of extended function groups to the dependent application. Stacks include computation and cross-implementation handoff. Candidate selection and final outputs are recomputed in every run.”
 
 状态缩写须在表注解释一次；只在确实未实现相同语义时用NS。OOM、索引范围不足、超时、构建失败、输出不合格和未完成资格分别记录。表里不使用一个破折号覆盖所有原因。
@@ -195,3 +197,16 @@ artifact 至少提供：环境与构建、七图获取和校验、确定性规�
 **输出管理统一为当前成功版本和上一个成功版本。** 每个实验/图表拥有稳定路径与唯一源绑定，重复生成同内容不再另存日期副本；新运行只有完成正确性和数据完整性检查后才能替换当前入口。原始十次重复属于一次运行的证据，不能为了“只保留最新”压成一个均值；历史引用仍需保留的证据用内容寻址或明确存档，不继续作为当前图表入口。未完成新campaign不能导致最后一套可追溯结果被误删；所有旧结果即使保留也必须标明历史身份。
 
 最终论文主张由新结果决定：单卡领先目标指导优化，落后格子指导瓶颈分析；数据集、基线、源点、质量和分母不能随胜负改变。尚未达到目标时继续优化或如实缩小结论，不通过删负例、混源码、换计时边界或使用不合格输出来满足百分比。
+# 显存容量边界补充（2026-11-05）
+
+显存不足是独立的可执行性结果，必须保留并展示。E1 的时间比较和容量面板回答不同问题：前者只统计完成且通过数值验证的完整任务；后者说明固定七图从小到大时，各系统在哪一阶段仍能完成、何时达到容量边界。容量证据可以来自本轮源码/输入绑定的资格运行，但必须标明该阶段，不能把一次资格耗时当正式均值。
+
+E1 增加一张紧凑的容量矩阵或表，按规范化存储 arcs 数递增排列固定七图。行是适用的系统与函数，列是图；单卡与八卡分组。单元格用 Complete、OOM、Timeout、Index limit、Failed 和 Pending 等互斥状态；OOM 用浅红色与斜线同时编码，避免只凭颜色辨认。时间表中的 OOM 不填零，不产生无穷大加速比，也不补成一次胜利。失败必须绑定原始结果、源码 epoch 和完整异常日志，并注明发生于 graph construction、upload、workspace allocation 或 execution 等实际阶段；没有足够证据时保留 Failed，不把一般 GPU error 判成 OOM。
+
+显存列仅填真实测量。完整周期采样的最大值称为 **Sampled peak VRAM (GiB)**；分配器提供的高水位另写 **Allocator peak (GiB)**。二者不混用，未采集填“—”。多卡同时报告最繁忙卡的峰值与设备数，必要时在补充表列每卡值；累计显存和最大单卡显存不能互相代替。发生分配失败不意味着已用显存恰好等于卡容量，不将 OOM 点画在任意的容量线处。
+
+E4 的 β 是 **managed retention budget** 的归一化预算，不是人为修改24GiB物理显存上限。不能将预算下的状态管理收益写成解决单图物理显存不足。E4 另用工作集压力面板解释 C-Retain：所有单次任务在最小必要工作集可容纳的条件下，多个图和多个函数的派生状态合计超过驻留预算，固定 US/OR/IN/UK 池与调用顺序，扫描事前定义的预算比例。主轴保持 **Budget fraction** 和 **Workflow time (s)**；配套表列真实每卡预算、完整任务完成状态、驱逐/重新创建的派生状态字节和实测显存。不要把“新共享数组分配字节”改名为全部重载流量。低于物理字节 pilot 给出的最小工作集的配置是 Infeasible，不通过隐藏所需内存或改变图来强行完成。
+
+两类边界必须分开解释：**单个任务的工作集能否装入显存**，以及 **多图/多函数状态不能同时驻留时能否完成连续任务**。C-Retain 针对后者，不宣称能够处理任意单图的 out-of-core 情况；D-Maintain 维护版本所需的复制峰值也需要实际测量。E6 的多卡实现复制整图、分摊 ego/source 工作，不能用来证明分区系统的聚合显存容量。外部基线只纳入其实际支持的资源和任务边界，OOM 既不隐去，也不作为改变数据集或绕过正确性门禁的理由。
+
+建议容量图注： “Execution feasibility on the fixed graph suite, ordered by normalized stored arcs. OOM denotes an observed device-memory allocation failure in the source-bound execution; the failed stage is reported in the accompanying table. Qualification failures establish feasibility boundaries and are excluded from formal time averages. Sampled peaks are reported only when the complete sampling record is available.”

@@ -10,6 +10,38 @@ import pytest
 import state_plan as p
 
 
+def profile_deployment(tmp_path):
+    extras={'1':{'EGMGPU_CORE_OUTPUT_CPUS':'0,1','EGMGPU_BFS_SPARSE_SCHEDULE':'cta4'},
+            '8':{'EGMGPU_CORE_OUTPUT_CPUS':'0;1','EGMGPU_BFS_SPARSE_SCHEDULE':'cta1'}}
+    profile=write(tmp_path/'profile.json',{'environment_additions_by_count':extras})
+    return {'environment':{'PYTHONPATH':'selected-source'},'profile_environment':profile,
+            'resources':{k:{'environment_additions':v} for k,v in extras.items()}}
+
+
+def test_resource_environment_is_explicit_and_separate(tmp_path):
+    dep=profile_deployment(tmp_path)
+    before=deepcopy(dep)
+    one,eight=p.environment_for(dep,1),p.environment_for(dep,8)
+    assert one['EGMGPU_BFS_SPARSE_SCHEDULE']=='cta4'
+    assert eight['EGMGPU_BFS_SPARSE_SCHEDULE']=='cta1'
+    assert one['PYTHONPATH']==eight['PYTHONPATH']=='selected-source'
+    assert dep==before
+
+
+def test_resource_environment_cannot_relabel_profile(tmp_path):
+    dep=profile_deployment(tmp_path)
+    dep['resources']['8']['environment_additions']['EGMGPU_BFS_SPARSE_SCHEDULE']='cta4'
+    with pytest.raises(ValueError,match='differs'):
+        p.environment_for(dep,8)
+
+
+def test_resource_profile_file_change_rejected(tmp_path):
+    dep=profile_deployment(tmp_path)
+    Path(dep['profile_environment']['path']).write_text('{}')
+    with pytest.raises(ValueError,match='changed'):
+        p.environment_for(dep,1)
+
+
 def write(path, value):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(value))
@@ -200,13 +232,17 @@ def test_real_symlink_venv_must_preserve_invocation(tmp_path):
     root=tmp_path/'venv'
     venv.EnvBuilder(with_pip=False,symlinks=True).create(root)
     invocation=str(root/'bin/python')
-    runtime=p.runtime_probe(invocation,{})
+    # A fresh no-pip venv has no numerical packages. Bind the test's actual
+    # installed package roots explicitly while preserving lexical venv identity.
+    import numpy, scipy
+    environment={'PYTHONPATH':':'.join(sorted({str(Path(m.__file__).parent.parent) for m in (numpy,scipy)}))}
+    runtime=p.runtime_probe(invocation,environment)
     assert runtime['invocation']==invocation
     assert runtime['prefix']==str(root)
     assert runtime['prefix']!=runtime['base_prefix']
     resolved=p.bind(invocation)['path']
     assert resolved!=invocation
-    base=p.runtime_probe(resolved,{})
+    base=p.runtime_probe(resolved,environment)
     assert p.bind(invocation)['sha256']==p.bind(resolved)['sha256']
     assert base['prefix']!=runtime['prefix']  # Same ELF is insufficient.
     with pytest.raises(ValueError,match='lexical'):

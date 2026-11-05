@@ -17,3 +17,9 @@ py::object cpp_graph_from_csr_files(
     const std::string& weight_key,
     const py::object& undirected_projection);
 py::dict cpp_graph_undirected_projection_info(const Graph& graph);
+
+py::object cpp_graph_from_csr_arrays(
+    const py::array& offsets, const py::array& indices, bool directed,
+    bool validate, const py::object& weights, const std::string& weight_key,
+    const py::object& undirected_projection);
+py::dict cpp_graph_csr_arrays(const Graph& graph);

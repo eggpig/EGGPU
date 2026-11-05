@@ -1,0 +1,583 @@
+{
+  "schema": "state.full.main.input_grid.v1",
+  "gpu_executed": false,
+  "source_grid": "haorandu/EGGPU_ICDE/experiments/campaign_20261104/state_final_plan_v3/state_plan.py",
+  "execution_configurations": 288,
+  "cells": [
+    {
+      "experiment": "E3",
+      "datasets": [
+        "US"
+      ],
+      "partitions": 1,
+      "rho": 0.0,
+      "locality": "uniform",
+      "id": "E3_US_p1_rho0_uniform_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "US"
+      ],
+      "partitions": 1,
+      "rho": 1e-06,
+      "locality": "uniform",
+      "id": "E3_US_p1_rho1e-06_uniform_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "US"
+      ],
+      "partitions": 1,
+      "rho": 1e-06,
+      "locality": "clustered",
+      "id": "E3_US_p1_rho1e-06_clustered_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "US"
+      ],
+      "partitions": 1,
+      "rho": 0.0001,
+      "locality": "uniform",
+      "id": "E3_US_p1_rho0.0001_uniform_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "US"
+      ],
+      "partitions": 1,
+      "rho": 0.0001,
+      "locality": "clustered",
+      "id": "E3_US_p1_rho0.0001_clustered_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "US"
+      ],
+      "partitions": 1,
+      "rho": 0.01,
+      "locality": "uniform",
+      "id": "E3_US_p1_rho0.01_uniform_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "US"
+      ],
+      "partitions": 1,
+      "rho": 0.01,
+      "locality": "clustered",
+      "id": "E3_US_p1_rho0.01_clustered_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "US"
+      ],
+      "partitions": 1,
+      "rho": 0.1,
+      "locality": "uniform",
+      "id": "E3_US_p1_rho0.1_uniform_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "US"
+      ],
+      "partitions": 1,
+      "rho": 0.1,
+      "locality": "clustered",
+      "id": "E3_US_p1_rho0.1_clustered_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "US"
+      ],
+      "partitions": 1,
+      "rho": 1.0,
+      "locality": "uniform",
+      "id": "E3_US_p1_rho1_uniform_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "IN"
+      ],
+      "partitions": 1,
+      "rho": 0.0,
+      "locality": "uniform",
+      "id": "E3_IN_p1_rho0_uniform_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "IN"
+      ],
+      "partitions": 1,
+      "rho": 1e-06,
+      "locality": "uniform",
+      "id": "E3_IN_p1_rho1e-06_uniform_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "IN"
+      ],
+      "partitions": 1,
+      "rho": 1e-06,
+      "locality": "clustered",
+      "id": "E3_IN_p1_rho1e-06_clustered_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "IN"
+      ],
+      "partitions": 1,
+      "rho": 0.0001,
+      "locality": "uniform",
+      "id": "E3_IN_p1_rho0.0001_uniform_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "IN"
+      ],
+      "partitions": 1,
+      "rho": 0.0001,
+      "locality": "clustered",
+      "id": "E3_IN_p1_rho0.0001_clustered_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "IN"
+      ],
+      "partitions": 1,
+      "rho": 0.01,
+      "locality": "uniform",
+      "id": "E3_IN_p1_rho0.01_uniform_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "IN"
+      ],
+      "partitions": 1,
+      "rho": 0.01,
+      "locality": "clustered",
+      "id": "E3_IN_p1_rho0.01_clustered_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "IN"
+      ],
+      "partitions": 1,
+      "rho": 0.1,
+      "locality": "uniform",
+      "id": "E3_IN_p1_rho0.1_uniform_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "IN"
+      ],
+      "partitions": 1,
+      "rho": 0.1,
+      "locality": "clustered",
+      "id": "E3_IN_p1_rho0.1_clustered_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "IN"
+      ],
+      "partitions": 1,
+      "rho": 1.0,
+      "locality": "uniform",
+      "id": "E3_IN_p1_rho1_uniform_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "OR"
+      ],
+      "partitions": 1,
+      "rho": 0.0,
+      "locality": "uniform",
+      "id": "E3_OR_p1_rho0_uniform_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "OR"
+      ],
+      "partitions": 1,
+      "rho": 1e-06,
+      "locality": "uniform",
+      "id": "E3_OR_p1_rho1e-06_uniform_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "OR"
+      ],
+      "partitions": 1,
+      "rho": 1e-06,
+      "locality": "clustered",
+      "id": "E3_OR_p1_rho1e-06_clustered_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "OR"
+      ],
+      "partitions": 1,
+      "rho": 0.0001,
+      "locality": "uniform",
+      "id": "E3_OR_p1_rho0.0001_uniform_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "OR"
+      ],
+      "partitions": 1,
+      "rho": 0.0001,
+      "locality": "clustered",
+      "id": "E3_OR_p1_rho0.0001_clustered_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "OR"
+      ],
+      "partitions": 1,
+      "rho": 0.01,
+      "locality": "uniform",
+      "id": "E3_OR_p1_rho0.01_uniform_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "OR"
+      ],
+      "partitions": 1,
+      "rho": 0.01,
+      "locality": "clustered",
+      "id": "E3_OR_p1_rho0.01_clustered_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "OR"
+      ],
+      "partitions": 1,
+      "rho": 0.1,
+      "locality": "uniform",
+      "id": "E3_OR_p1_rho0.1_uniform_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "OR"
+      ],
+      "partitions": 1,
+      "rho": 0.1,
+      "locality": "clustered",
+      "id": "E3_OR_p1_rho0.1_clustered_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "OR"
+      ],
+      "partitions": 1,
+      "rho": 1.0,
+      "locality": "uniform",
+      "id": "E3_OR_p1_rho1_uniform_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "IN"
+      ],
+      "partitions": 8,
+      "rho": 0.0,
+      "locality": "uniform",
+      "id": "E3_IN_p8_rho0_uniform_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "IN"
+      ],
+      "partitions": 8,
+      "rho": 1e-06,
+      "locality": "uniform",
+      "id": "E3_IN_p8_rho1e-06_uniform_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "IN"
+      ],
+      "partitions": 8,
+      "rho": 1e-06,
+      "locality": "clustered",
+      "id": "E3_IN_p8_rho1e-06_clustered_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "IN"
+      ],
+      "partitions": 8,
+      "rho": 0.0001,
+      "locality": "uniform",
+      "id": "E3_IN_p8_rho0.0001_uniform_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "IN"
+      ],
+      "partitions": 8,
+      "rho": 0.0001,
+      "locality": "clustered",
+      "id": "E3_IN_p8_rho0.0001_clustered_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "IN"
+      ],
+      "partitions": 8,
+      "rho": 0.01,
+      "locality": "uniform",
+      "id": "E3_IN_p8_rho0.01_uniform_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "IN"
+      ],
+      "partitions": 8,
+      "rho": 0.01,
+      "locality": "clustered",
+      "id": "E3_IN_p8_rho0.01_clustered_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "IN"
+      ],
+      "partitions": 8,
+      "rho": 0.1,
+      "locality": "uniform",
+      "id": "E3_IN_p8_rho0.1_uniform_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "IN"
+      ],
+      "partitions": 8,
+      "rho": 0.1,
+      "locality": "clustered",
+      "id": "E3_IN_p8_rho0.1_clustered_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "IN"
+      ],
+      "partitions": 8,
+      "rho": 1.0,
+      "locality": "uniform",
+      "id": "E3_IN_p8_rho1_uniform_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "OR"
+      ],
+      "partitions": 8,
+      "rho": 0.0,
+      "locality": "uniform",
+      "id": "E3_OR_p8_rho0_uniform_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "OR"
+      ],
+      "partitions": 8,
+      "rho": 1e-06,
+      "locality": "uniform",
+      "id": "E3_OR_p8_rho1e-06_uniform_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "OR"
+      ],
+      "partitions": 8,
+      "rho": 1e-06,
+      "locality": "clustered",
+      "id": "E3_OR_p8_rho1e-06_clustered_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "OR"
+      ],
+      "partitions": 8,
+      "rho": 0.0001,
+      "locality": "uniform",
+      "id": "E3_OR_p8_rho0.0001_uniform_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "OR"
+      ],
+      "partitions": 8,
+      "rho": 0.0001,
+      "locality": "clustered",
+      "id": "E3_OR_p8_rho0.0001_clustered_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "OR"
+      ],
+      "partitions": 8,
+      "rho": 0.01,
+      "locality": "uniform",
+      "id": "E3_OR_p8_rho0.01_uniform_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "OR"
+      ],
+      "partitions": 8,
+      "rho": 0.01,
+      "locality": "clustered",
+      "id": "E3_OR_p8_rho0.01_clustered_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "OR"
+      ],
+      "partitions": 8,
+      "rho": 0.1,
+      "locality": "uniform",
+      "id": "E3_OR_p8_rho0.1_uniform_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "OR"
+      ],
+      "partitions": 8,
+      "rho": 0.1,
+      "locality": "clustered",
+      "id": "E3_OR_p8_rho0.1_clustered_typed_v3"
+    },
+    {
+      "experiment": "E3",
+      "datasets": [
+        "OR"
+      ],
+      "partitions": 8,
+      "rho": 1.0,
+      "locality": "uniform",
+      "id": "E3_OR_p8_rho1_uniform_typed_v3"
+    },
+    {
+      "experiment": "E4",
+      "datasets": [
+        "US",
+        "OR",
+        "IN",
+        "UK"
+      ],
+      "partitions": 1,
+      "rho": 0.0,
+      "locality": "uniform",
+      "id": "E4_US-OR-IN-UK_p1_rho0_uniform_typed_v3"
+    },
+    {
+      "experiment": "E5",
+      "datasets": [
+        "IN",
+        "UK",
+        "OR"
+      ],
+      "partitions": 1,
+      "rho": 0.0001,
+      "locality": "uniform",
+      "id": "E5_IN-UK-OR_p1_rho0.0001_uniform_typed_v3"
+    },
+    {
+      "experiment": "E5",
+      "datasets": [
+        "IN",
+        "UK",
+        "OR"
+      ],
+      "partitions": 1,
+      "rho": 0.0,
+      "locality": "uniform",
+      "id": "E5_IN-UK-OR_p1_rho0_uniform_typed_v3"
+    },
+    {
+      "experiment": "E4",
+      "datasets": [
+        "US",
+        "OR",
+        "IN",
+        "UK"
+      ],
+      "partitions": 8,
+      "rho": 0.0,
+      "locality": "uniform",
+      "id": "E4_US-OR-IN-UK_p8_rho0_uniform_typed_v3"
+    },
+    {
+      "experiment": "E5",
+      "datasets": [
+        "IN",
+        "UK",
+        "OR"
+      ],
+      "partitions": 8,
+      "rho": 0.0001,
+      "locality": "uniform",
+      "id": "E5_IN-UK-OR_p8_rho0.0001_uniform_typed_v3"
+    },
+    {
+      "experiment": "E5",
+      "datasets": [
+        "IN",
+        "UK",
+        "OR"
+      ],
+      "partitions": 8,
+      "rho": 0.0,
+      "locality": "uniform",
+      "id": "E5_IN-UK-OR_p8_rho0_uniform_typed_v3"
+    }
+  ],
+  "separate_pending_control": "Explicit partition hotspots need their own selector; unweighted PR uses the same canonical base/weight-update positions."
+}

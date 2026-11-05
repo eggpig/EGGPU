@@ -5,6 +5,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <cstring>
 #include <fstream>
 #include <limits>
 #include <set>
@@ -316,72 +317,10 @@ ProjectionFingerprint validate_projection_forward(
     return fingerprint;
 }
 
-void load_undirected_projection(
-    const py::object& projection_spec,
-    const std::shared_ptr<CSRGraph>& csr,
-    std::int64_t num_nodes,
-    bool validate) {
-    if (projection_spec.is_none()) {
-        return;
-    }
-    if (!py::isinstance<py::dict>(projection_spec)) {
-        throw py::type_error(
-            "undirected_projection must be a dictionary or None");
-    }
-    const py::dict spec =
-        py::reinterpret_borrow<py::dict>(projection_spec);
-    if (!spec.contains("unique_edge_count")) {
-        throw py::value_error(
-            "undirected projection is missing unique_edge_count");
-    }
-    const std::int64_t unique_edge_count =
-        py::cast<std::int64_t>(spec["unique_edge_count"]);
-    if (unique_edge_count < 0 ||
-        unique_edge_count >= std::numeric_limits<int>::max()) {
-        throw py::value_error(
-            "undirected projection unique_edge_count exceeds int32");
-    }
-
-    auto projection = std::make_shared<UndirectedProjection>();
-    projection->unique_edge_count = unique_edge_count;
-    read_exact_vector<int>(
-        required_projection_path(spec, "lower_V_path"),
-        projection->lower_V,
-        static_cast<std::size_t>(num_nodes) + 1);
-    read_exact_vector<int>(
-        required_projection_path(spec, "lower_E_path"),
-        projection->lower_E,
-        static_cast<std::size_t>(unique_edge_count));
-    read_exact_vector<int>(
-        required_projection_path(spec, "upper_V_path"),
-        projection->upper_V,
-        static_cast<std::size_t>(num_nodes) + 1);
-    read_exact_vector<int>(
-        required_projection_path(spec, "upper_E_path"),
-        projection->upper_E,
-        static_cast<std::size_t>(unique_edge_count));
-    read_exact_vector<int>(
-        required_projection_path(spec, "degree_path"),
-        projection->degree,
-        static_cast<std::size_t>(num_nodes));
-    read_exact_vector<int>(
-        required_projection_path(spec, "forward_V_path"),
-        projection->forward_V,
-        static_cast<std::size_t>(num_nodes) + 1);
-    read_exact_vector<int>(
-        required_projection_path(spec, "forward_E_path"),
-        projection->forward_E,
-        static_cast<std::size_t>(unique_edge_count));
-    if (spec.contains("weights_path")) {
-        read_exact_vector<double>(
-            required_projection_path(spec, "weights_path"),
-            projection->lower_W,
-            static_cast<std::size_t>(unique_edge_count));
-        projection->weight_key = spec.contains("weight_key")
-            ? py::cast<std::string>(spec["weight_key"])
-            : std::string("weight");
-    }
-
+void validate_loaded_projection(
+    const std::shared_ptr<UndirectedProjection>& projection,
+    std::int64_t num_nodes, bool validate) {
+    const std::int64_t unique_edge_count = projection->unique_edge_count;
     const bool endpoint_offsets_valid =
         !projection->lower_V.empty() &&
         !projection->upper_V.empty() &&
@@ -449,7 +388,117 @@ void load_undirected_projection(
                 "undirected projection views contain different edge sets");
         }
     }
+}
+
+void load_undirected_projection(
+    const py::object& projection_spec,
+    const std::shared_ptr<CSRGraph>& csr,
+    std::int64_t num_nodes,
+    bool validate) {
+    if (projection_spec.is_none()) {
+        return;
+    }
+    if (!py::isinstance<py::dict>(projection_spec)) {
+        throw py::type_error(
+            "undirected_projection must be a dictionary or None");
+    }
+    const py::dict spec =
+        py::reinterpret_borrow<py::dict>(projection_spec);
+    if (!spec.contains("unique_edge_count")) {
+        throw py::value_error(
+            "undirected projection is missing unique_edge_count");
+    }
+    const std::int64_t unique_edge_count =
+        py::cast<std::int64_t>(spec["unique_edge_count"]);
+    if (unique_edge_count < 0 ||
+        unique_edge_count >= std::numeric_limits<int>::max()) {
+        throw py::value_error(
+            "undirected projection unique_edge_count exceeds int32");
+    }
+
+    auto projection = std::make_shared<UndirectedProjection>();
+    projection->unique_edge_count = unique_edge_count;
+    read_exact_vector<int>(
+        required_projection_path(spec, "lower_V_path"),
+        projection->lower_V,
+        static_cast<std::size_t>(num_nodes) + 1);
+    read_exact_vector<int>(
+        required_projection_path(spec, "lower_E_path"),
+        projection->lower_E,
+        static_cast<std::size_t>(unique_edge_count));
+    read_exact_vector<int>(
+        required_projection_path(spec, "upper_V_path"),
+        projection->upper_V,
+        static_cast<std::size_t>(num_nodes) + 1);
+    read_exact_vector<int>(
+        required_projection_path(spec, "upper_E_path"),
+        projection->upper_E,
+        static_cast<std::size_t>(unique_edge_count));
+    read_exact_vector<int>(
+        required_projection_path(spec, "degree_path"),
+        projection->degree,
+        static_cast<std::size_t>(num_nodes));
+    read_exact_vector<int>(
+        required_projection_path(spec, "forward_V_path"),
+        projection->forward_V,
+        static_cast<std::size_t>(num_nodes) + 1);
+    read_exact_vector<int>(
+        required_projection_path(spec, "forward_E_path"),
+        projection->forward_E,
+        static_cast<std::size_t>(unique_edge_count));
+    if (spec.contains("weights_path")) {
+        read_exact_vector<double>(
+            required_projection_path(spec, "weights_path"),
+            projection->lower_W,
+            static_cast<std::size_t>(unique_edge_count));
+        projection->weight_key = spec.contains("weight_key")
+            ? py::cast<std::string>(spec["weight_key"])
+            : std::string("weight");
+    }
+
+    validate_loaded_projection(projection, num_nodes, validate);
     csr->undirected_projection = projection;
+}
+
+void validate_loaded_csr(
+    const std::shared_ptr<CSRGraph>& csr, std::int64_t num_nodes,
+    std::int64_t num_entries, bool validate, bool implicit_unit_weights) {
+    if (csr->V.empty() || csr->V.front() != 0 || csr->V.back() != num_entries) {
+        throw py::value_error("invalid CSR offsets: first offset must be zero and final offset must equal num_entries");
+    }
+    if (validate) {
+        int previous = 0;
+        for (std::size_t i = 0; i < csr->V.size(); ++i) {
+            const int offset = csr->V[i];
+            if (offset < previous || offset < 0 || offset > num_entries) {
+                throw py::value_error("invalid CSR offsets: offsets must be monotonic and in range");
+            }
+            previous = offset;
+        }
+        bool simple_sorted = true;
+        for (std::int64_t source = 0; source < num_nodes; ++source) {
+            int previous_target = -1;
+            for (int edge = csr->V[static_cast<std::size_t>(source)];
+                 edge < csr->V[static_cast<std::size_t>(source) + 1];
+                 ++edge) {
+                const int dst = csr->E[static_cast<std::size_t>(edge)];
+                if (dst < 0 || dst >= num_nodes) {
+                    throw py::value_error(
+                        "invalid CSR index: endpoint is outside "
+                        "[0, num_nodes)");
+                }
+                if (dst == source || dst <= previous_target) {
+                    simple_sorted = false;
+                }
+                previous_target = dst;
+            }
+        }
+        csr->simple_sorted_topology = simple_sorted;
+    }
+
+    csr->contiguous_zero_based = true;
+    csr->implicit_unit_weights = implicit_unit_weights;
+    csr->node_count = num_nodes;
 }
 
 std::shared_ptr<CSRGraph> load_csr_files(
@@ -494,42 +543,116 @@ std::shared_ptr<CSRGraph> load_csr_files(
         csr->W_map[weight_key] = weights;
     }
 
-    if (csr->V.empty() || csr->V.front() != 0 || csr->V.back() != num_entries) {
-        throw py::value_error("invalid CSR offsets: first offset must be zero and final offset must equal num_entries");
-    }
-    if (validate) {
-        int previous = 0;
-        for (std::size_t i = 0; i < csr->V.size(); ++i) {
-            const int offset = csr->V[i];
-            if (offset < previous || offset < 0 || offset > num_entries) {
-                throw py::value_error("invalid CSR offsets: offsets must be monotonic and in range");
-            }
-            previous = offset;
-        }
-        bool simple_sorted = true;
-        for (std::int64_t source = 0; source < num_nodes; ++source) {
-            int previous_target = -1;
-            for (int edge = csr->V[static_cast<std::size_t>(source)];
-                 edge < csr->V[static_cast<std::size_t>(source) + 1];
-                 ++edge) {
-                const int dst = csr->E[static_cast<std::size_t>(edge)];
-                if (dst < 0 || dst >= num_nodes) {
-                    throw py::value_error(
-                        "invalid CSR index: endpoint is outside "
-                        "[0, num_nodes)");
-                }
-                if (dst == source || dst <= previous_target) {
-                    simple_sorted = false;
-                }
-                previous_target = dst;
-            }
-        }
-        csr->simple_sorted_topology = simple_sorted;
-    }
+    validate_loaded_csr(csr, num_nodes, num_entries, validate, weights_path.empty());
+    return csr;
+}
 
-    csr->contiguous_zero_based = true;
-    csr->implicit_unit_weights = weights_path.empty();
-    csr->node_count = num_nodes;
+
+// Array imports require an exact native-endian, C-contiguous dtype.  They
+// deliberately do not force-cast or alias caller-owned storage.
+template <typename T>
+py::array checked_csr_array(const py::handle& value, const char* name) {
+    if (!py::isinstance<py::array>(value) ||
+        !py::array_t<T, py::array::c_style>::check_(value)) {
+        throw py::type_error(std::string(name) +
+            " must be a native-endian C-contiguous array of the exact CSR dtype");
+    }
+    const py::array array = py::reinterpret_borrow<py::array>(value);
+    if (array.ndim() != 1) {
+        throw py::value_error(std::string(name) + " must have one dimension");
+    }
+    return array;
+}
+
+template <typename T>
+void copy_csr_array(const py::handle& value, const char* name,
+                    std::size_t count, std::vector<T>& out) {
+    const py::array array = checked_csr_array<T>(value, name);
+    if (static_cast<std::size_t>(array.size()) != count) {
+        throw py::value_error(std::string(name) + " has an incorrect element count");
+    }
+    out.resize(count);
+    if (count != 0) std::memcpy(out.data(), array.data(), count * sizeof(T));
+}
+
+template <typename T>
+py::array_t<T> copy_csr_vector(const std::vector<T>& values) {
+    py::array_t<T> result(static_cast<py::ssize_t>(values.size()));
+    if (!values.empty()) {
+        std::memcpy(result.mutable_data(), values.data(), values.size() * sizeof(T));
+    }
+    return result;
+}
+
+void load_projection_arrays(const py::object& projection_spec,
+    const std::shared_ptr<CSRGraph>& csr, std::int64_t num_nodes, bool validate) {
+    if (projection_spec.is_none()) return;
+    if (!py::isinstance<py::dict>(projection_spec)) {
+        throw py::type_error("undirected_projection must be a dictionary or None");
+    }
+    const py::dict spec = py::reinterpret_borrow<py::dict>(projection_spec);
+    if (!spec.contains("unique_edge_count")) {
+        throw py::value_error("undirected projection is missing unique_edge_count");
+    }
+    const std::int64_t edge_count = py::cast<std::int64_t>(spec["unique_edge_count"]);
+    if (edge_count < 0 || edge_count >= std::numeric_limits<int>::max()) {
+        throw py::value_error("undirected projection unique_edge_count exceeds int32");
+    }
+    auto projection = std::make_shared<UndirectedProjection>();
+    projection->unique_edge_count = edge_count;
+    const std::size_t n = static_cast<std::size_t>(num_nodes);
+    const std::size_t m = static_cast<std::size_t>(edge_count);
+    auto load = [&](const char* key, std::size_t count, std::vector<int>& out) {
+        if (!spec.contains(key)) {
+            throw py::value_error(std::string("undirected projection is missing ") + key);
+        }
+        copy_csr_array<int>(spec[key], key, count, out);
+    };
+    load("lower_V", n + 1, projection->lower_V);
+    load("lower_E", m, projection->lower_E);
+    load("upper_V", n + 1, projection->upper_V);
+    load("upper_E", m, projection->upper_E);
+    load("degree", n, projection->degree);
+    load("forward_V", n + 1, projection->forward_V);
+    load("forward_E", m, projection->forward_E);
+    if (spec.contains("weights")) {
+        copy_csr_array<double>(spec["weights"], "projection weights", m, projection->lower_W);
+        projection->weight_key = spec.contains("weight_key")
+            ? py::cast<std::string>(spec["weight_key"]) : std::string("weight");
+    }
+    validate_loaded_projection(projection, num_nodes, validate);
+    csr->undirected_projection = projection;
+}
+
+std::shared_ptr<CSRGraph> load_csr_arrays(const py::array& offsets,
+    const py::array& indices, bool validate, const py::object& weights,
+    const std::string& weight_key) {
+    static_assert(sizeof(int) == 4, "EGGPU bulk CSR requires 32-bit int");
+    const py::array checked_offsets = checked_csr_array<int>(offsets, "offsets");
+    const py::array checked_indices = checked_csr_array<int>(indices, "indices");
+    const std::int64_t n = checked_offsets.size() - 1;
+    const std::int64_t m = checked_indices.size();
+    if (n < 0 || n >= std::numeric_limits<int>::max()) {
+        throw py::value_error("num_nodes exceeds the signed 32-bit EGGPU CSR limit");
+    }
+    if (m < 0 || m >= std::numeric_limits<int>::max()) {
+        throw py::value_error("num_entries exceeds the signed 32-bit EGGPU CSR limit");
+    }
+    auto csr = std::make_shared<CSRGraph>();
+    copy_csr_array<int>(checked_offsets, "offsets", static_cast<std::size_t>(n) + 1, csr->V);
+    copy_csr_array<int>(checked_indices, "indices", static_cast<std::size_t>(m), csr->E);
+    if (!weights.is_none()) {
+        if (weight_key.empty()) {
+            throw py::value_error("weight_key must be non-empty when weights are provided");
+        }
+        auto values = std::make_shared<std::vector<double>>();
+        copy_csr_array<double>(weights, "weights", static_cast<std::size_t>(m), *values);
+        for (double value : *values) {
+            if (!std::isfinite(value)) throw py::value_error("bulk CSR weights must be finite");
+        }
+        csr->W_map[weight_key] = values;
+    }
+    validate_loaded_csr(csr, n, m, validate, weights.is_none());
     return csr;
 }
 
@@ -686,6 +809,48 @@ py::object cpp_graph_from_csr_files(
         return py::cast(graph_with_bulk_csr<DiGraph>(csr));
     }
     return py::cast(graph_with_bulk_csr<Graph>(csr));
+}
+
+
+py::object cpp_graph_from_csr_arrays(const py::array& offsets,
+    const py::array& indices, bool directed, bool validate,
+    const py::object& weights, const std::string& weight_key,
+    const py::object& undirected_projection) {
+    auto csr = load_csr_arrays(offsets, indices, validate, weights, weight_key);
+    load_projection_arrays(undirected_projection, csr, csr->node_count, validate);
+    if (directed) return py::cast(graph_with_bulk_csr<DiGraph>(csr));
+    return py::cast(graph_with_bulk_csr<Graph>(csr));
+}
+
+py::dict cpp_graph_csr_arrays(const Graph& graph) {
+    if (!graph.csr_graph) throw py::value_error("graph has no materialized CSR");
+    const auto& csr = graph.csr_graph;
+    py::dict result;
+    result["offsets"] = copy_csr_vector(csr->V);
+    result["indices"] = copy_csr_vector(csr->E);
+    result["num_nodes"] = csr->node_count;
+    result["implicit_unit_weights"] = csr->implicit_unit_weights;
+    result["simple_sorted_topology"] = csr->simple_sorted_topology;
+    py::dict weights;
+    for (const auto& item : csr->W_map) weights[py::str(item.first)] = copy_csr_vector(*item.second);
+    result["weights"] = weights;
+    result["undirected_projection"] = py::none();
+    if (csr->undirected_projection) {
+        const auto& p = csr->undirected_projection;
+        py::dict projection;
+        projection["unique_edge_count"] = p->unique_edge_count;
+        projection["lower_V"] = copy_csr_vector(p->lower_V);
+        projection["lower_E"] = copy_csr_vector(p->lower_E);
+        projection["upper_V"] = copy_csr_vector(p->upper_V);
+        projection["upper_E"] = copy_csr_vector(p->upper_E);
+        projection["degree"] = copy_csr_vector(p->degree);
+        projection["forward_V"] = copy_csr_vector(p->forward_V);
+        projection["forward_E"] = copy_csr_vector(p->forward_E);
+        projection["weights"] = copy_csr_vector(p->lower_W);
+        projection["weight_key"] = p->weight_key;
+        result["undirected_projection"] = projection;
+    }
+    return result;
 }
 
 py::dict cpp_graph_undirected_projection_info(const Graph& graph) {

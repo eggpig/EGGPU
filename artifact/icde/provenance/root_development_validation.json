@@ -1,0 +1,10 @@
+{
+  "status": "PASS_DEVELOPMENT_SUPPLEMENTAL_CPU",
+  "passed": 51,
+  "gpu_executed": false,
+  "formal_results": 0,
+  "log_sha256": "e944c3da5d8f04025af9634745d6052bc54e9e7635d03e251783cb6e70e110fe",
+  "scope": "Root E4-S hash-only formal rejection plus existing actual vector rendering and continuous workflow proof tests.",
+  "overlap": "The 51 checks include existing rendering and protocol tests; do not add them to the earlier 400 as disjoint cases.",
+  "private_cpu_receipt_sha256": "b930ecbe8ba2131426e92a896238d298b76ca3c7b9c414e707ecf8ee87c2ffd8"
+}

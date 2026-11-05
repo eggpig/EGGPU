@@ -12,6 +12,7 @@ import copy,errno,hashlib,json,operator,os,shutil,tempfile
 import numpy as np
 from easygraph.gpu._manifest_signatures import sign
 from easygraph.gpu._native import UnifiedNativeSession
+from easygraph.gpu._weight_admission import scan_weight_payload
 from easygraph.gpu.contracts import NodeDomain
 from easygraph.gpu._controller import StateSwitchController
 
@@ -31,8 +32,14 @@ def verify_manifest(path,document):
   for name,item in part['files'].items():
    target=(path.parent/item['path']).resolve();target.relative_to(path.parent)
    if item['dtype'] not in allowed:raise ValueError('Unsupported dtype')
-   if target.stat().st_size!=item['byte_size'] or item['count']*allowed[item['dtype']]!=item['byte_size'] or sha(target)!=item['sha256']:raise ValueError('Snapshot payload identity mismatch')
+   if target.stat().st_size!=item['byte_size'] or item['count']*allowed[item['dtype']]!=item['byte_size']:raise ValueError('Snapshot payload identity mismatch')
+   fused=scan_weight_payload(target) if name=='weights' and item['dtype']=='float64' else None
+   observed_sha=fused[0] if fused is not None else sha(target)
+   if observed_sha!=item['sha256']:raise ValueError('Snapshot payload identity mismatch')
    if name=='weights' and item['count']:
+    if fused is not None:
+     if fused[1] is not None:raise ValueError(fused[1])
+     continue
     weights=np.memmap(target,mode='r',dtype='<f8')
     for first in range(0,len(weights),1<<18):
      block=weights[first:first+(1<<18)]

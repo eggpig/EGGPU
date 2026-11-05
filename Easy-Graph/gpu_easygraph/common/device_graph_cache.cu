@@ -11,6 +11,7 @@
 #include <cuda_runtime.h>
 
 #include "buffer_cache.h"
+#include "csr_h2d_source.h"
 
 namespace gpu_easygraph {
 
@@ -436,24 +437,28 @@ int acquire_device_csr(
             : HostCsrStats();
         bool reg_V = false;
         bool reg_E = false;
-        const int* h_V = prepare_h2d_source(
-            V, static_cast<std::size_t>(len_V) + 1, g_csr_registry.h_V_stage, &reg_V
-        );
-        const int* h_E = prepare_h2d_source(
-            E, static_cast<std::size_t>(len_E), g_csr_registry.h_E_stage, &reg_E
-        );
-        if (h_V == nullptr) h_V = V;
-        if (h_E == nullptr) h_E = E;
+        const int* h_V = nullptr;
+        const int* h_E = nullptr;
+        int prepare_status = prepare_csr_h2d_source(
+            V, static_cast<std::size_t>(len_V) + 1, g_csr_registry.h_V_stage, &h_V, &reg_V);
+        if (prepare_status != EG_GPU_SUCC) return prepare_status;
+        prepare_status = prepare_csr_h2d_source(
+            E, static_cast<std::size_t>(len_E), g_csr_registry.h_E_stage, &h_E, &reg_E);
+        if (prepare_status != EG_GPU_SUCC) {
+            const int cleanup_status = release_csr_h2d_source(h_V, reg_V);
+            return cleanup_status != EG_GPU_SUCC ? cleanup_status : prepare_status;
+        }
         cudaError_t ret = cudaMemcpy(d_V, h_V, v_bytes, cudaMemcpyHostToDevice);
-        release_h2d_source(h_V, reg_V);
-        if (ret != cudaSuccess) {
-            return (ret == cudaErrorMemoryAllocation)
+        const int release_V_status = release_csr_h2d_source(h_V, reg_V);
+        if (ret != cudaSuccess || release_V_status != EG_GPU_SUCC) {
+            (void)release_csr_h2d_source(h_E, reg_E);
+            return ret == cudaErrorMemoryAllocation
                 ? EG_GPU_FAILED_TO_ALLOCATE_DEVICE_MEM : EG_GPU_DEVICE_ERR;
         }
         ret = e_bytes ? cudaMemcpy(d_E, h_E, e_bytes, cudaMemcpyHostToDevice) : cudaSuccess;
-        release_h2d_source(h_E, reg_E);
-        if (ret != cudaSuccess) {
-            return (ret == cudaErrorMemoryAllocation)
+        const int release_E_status = release_csr_h2d_source(h_E, reg_E);
+        if (ret != cudaSuccess || release_E_status != EG_GPU_SUCC) {
+            return ret == cudaErrorMemoryAllocation
                 ? EG_GPU_FAILED_TO_ALLOCATE_DEVICE_MEM : EG_GPU_DEVICE_ERR;
         }
         g_csr_registry.counters.structure_bytes_copied += v_bytes + e_bytes;
@@ -470,14 +475,14 @@ int acquire_device_csr(
 
     if (require_weights && out->weights_changed) {
         bool reg_W = false;
-        const double* h_W = prepare_h2d_source(
-            W, static_cast<std::size_t>(len_E), g_csr_registry.h_W_stage, &reg_W
-        );
-        if (h_W == nullptr) h_W = W;
+        const double* h_W = nullptr;
+        const int prepare_status = prepare_csr_h2d_source(
+            W, static_cast<std::size_t>(len_E), g_csr_registry.h_W_stage, &h_W, &reg_W);
+        if (prepare_status != EG_GPU_SUCC) return prepare_status;
         const cudaError_t ret = w_bytes ? cudaMemcpy(d_W, h_W, w_bytes, cudaMemcpyHostToDevice) : cudaSuccess;
-        release_h2d_source(h_W, reg_W);
-        if (ret != cudaSuccess) {
-            return (ret == cudaErrorMemoryAllocation)
+        const int release_status = release_csr_h2d_source(h_W, reg_W);
+        if (ret != cudaSuccess || release_status != EG_GPU_SUCC) {
+            return ret == cudaErrorMemoryAllocation
                 ? EG_GPU_FAILED_TO_ALLOCATE_DEVICE_MEM : EG_GPU_DEVICE_ERR;
         }
         g_csr_registry.counters.weight_bytes_copied += w_bytes;

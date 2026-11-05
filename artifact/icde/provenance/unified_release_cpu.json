@@ -1,0 +1,93 @@
+{
+  "status": "PASS_REAL_ENTRYPOINTS_CPU",
+  "source_sha256": "d84ff388e1e40d1fd6ed83fcaceecd0491fc0451adffaff657a95940b1803f84",
+  "gpu_executed": false,
+  "tested_jobs": 2128,
+  "failed": [],
+  "origin_receipt_sha256": "62d6e586c5d63064ce450118b180b6a7c903ceb1178d543cf9323ba899dc644d",
+  "scope": "Actual private deployment entrypoints before GPU execution. This summary is not GPU correctness or public projection qualification.",
+  "plans": [
+    {
+      "name": "preflight/plan.json",
+      "bytes": 268054,
+      "sha256": "881277e81132af30a6cd6b776d37a4a5c280b6a3685b6ee08831f615666934f8"
+    },
+    {
+      "name": "sg/plan.json",
+      "bytes": 538729,
+      "sha256": "c367b6b93f03eb35070338b89d1e2388867723745855ecebc6b18bb73cac2419"
+    },
+    {
+      "name": "native/plan.json",
+      "bytes": 912612,
+      "sha256": "02d6254a0fd94bcd472c5f954ea802077af49164840b8ce2e6017dbd496e8c2d"
+    },
+    {
+      "name": "diagnostic/plan.json",
+      "bytes": 23181,
+      "sha256": "eb4073b57fea4a9baaf75d31fa4e8778cc9a5f52925f55dee3c46bb821604b65"
+    },
+    {
+      "name": "sequence/plan.json",
+      "bytes": 83850,
+      "sha256": "cca9c6fe53e7277955c94893719ec3f7ae19812b179c610dde6a5868b27eea49"
+    },
+    {
+      "name": "e4s/plan.json",
+      "bytes": 937488,
+      "sha256": "f7cb19e037f918e781b34f41c6355e696b3d988e9ca2883d7b4d0ad1235f6790"
+    },
+    {
+      "name": "sg_formal/pending.json",
+      "bytes": 4310376,
+      "sha256": "2071356ae59b4c3d2bd6a118841a063e82a3b6ed2a30eb03f0ea98a2976e4fa7"
+    },
+    {
+      "name": "native_formal/pending.json",
+      "bytes": 9351568,
+      "sha256": "9adf023302c3252184c712145a44cc75871e94576c7efff35ec95b566b9fefba"
+    },
+    {
+      "name": "sequence_formal/pending.json",
+      "bytes": 509247,
+      "sha256": "4ddf5d3f68cae02879ec462e1a36187244554a2b8c93aa12ee3e646ccf91fe9c"
+    },
+    {
+      "name": "e4s_formal/pending.json",
+      "bytes": 6406677,
+      "sha256": "1784d52432326426f040adfb0822b0b9b9e5e1cd107f4a9358a07eceda29f214"
+    }
+  ],
+  "groups": [
+    {
+      "worker": "qualify_static_native_domains.py",
+      "returncode": 0,
+      "checks": 4
+    },
+    {
+      "worker": "native_worker.py",
+      "returncode": 0,
+      "checks": 1000
+    },
+    {
+      "worker": "sg_worker.py",
+      "returncode": 0,
+      "checks": 632
+    },
+    {
+      "worker": "native_worker.py",
+      "returncode": 0,
+      "checks": 2
+    },
+    {
+      "worker": "sequence16_worker.py",
+      "returncode": 0,
+      "checks": 70
+    },
+    {
+      "worker": "worker.py",
+      "returncode": 0,
+      "checks": 420
+    }
+  ]
+}

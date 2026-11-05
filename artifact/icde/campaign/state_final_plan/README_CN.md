@@ -1,3 +1,5 @@
+当前公开版本以 artifact/icde/provenance/current_source.json 的 d84 源码为准。以下旧部署叙述仅说明历史计划格式；原 GPU 证明不能用于当前源码。可运行生成器为本目录 state_plan.py（v7），当前完整主网格288格、hotspot另32格。
+
 # E3–E5 最终源码计划与准入 v3
 
 本工具只生成计划、验证证据；不会自行启动 GPU。v3修复旧v2计划对Python符号链接调用路径的错误解析：调用保留`core/bin/python`词法路径，同时另绑实际ELF字节、`sys.prefix/base_prefix`以及NumPy/SciPy版本和实际文件。相同解释器ELF不代表相同虚拟环境。旧v2两次prelaunch的SciPy缺失失败保留，不算算法失败或性能结果。冻结 `state_v4`、既有输入和既有运行记录均未修改。`guard --execute-gpu` 是主代理统一队列调用的显式执行入口，最终仍由原 worker 获取全局 GPU 锁并检查 GPU 空闲、主机/cgroup 余量和磁盘。

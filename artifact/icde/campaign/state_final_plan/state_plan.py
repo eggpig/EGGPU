@@ -156,6 +156,45 @@ def grid():
     return result
 
 
+def hotspot_grid():
+    """Predeclared E3 intervention; fixed density, explicit touched owner count."""
+    rows=[]
+    for name in ('IN','OR'):
+        for k in (1,2,4,8):
+            for old in ('none','per_update'):
+                for arm in ('D0C1','D1C1'):
+                    row=dict(experiment='E3',datasets=[name],partitions=8,rho=1e-4,
+                        locality='partition_hotspot_k'+str(k),old_readers=old,arm=arm,
+                        beta=.25,order='interleaved',role='fixed_density_partition_coverage',hotspot_k=k)
+                    row['id']=f"E3_{name}_p8_rho0.0001_{row['locality']}_{arm}_{old}_b0.25_interleaved"
+                    rows.append(row)
+    return rows
+
+
+def validate_hotspot(record):
+    cell=record['cell']
+    require(cell['experiment']=='E3' and cell['partitions']==8 and cell['rho']==1e-4 and
+            len(cell['datasets'])==1 and cell['datasets'][0] in ('IN','OR'), 'Hotspot input domain differs')
+    k=cell['hotspot_k']
+    require(k in (1,2,4,8) and cell['locality']=='partition_hotspot_k'+str(k),'Hotspot owner intervention differs')
+    prep=record['hotspot_preparation'];checked(prep['controller']);checked(prep['selector'])
+    row=record['datasets'][cell['datasets'][0]];proof=read(checked(row['hotspot_selection']))
+    require(proof['status']=='PASS_CPU_SELECTION' and proof['k']==k and proof['rho_requested']==1e-4 and
+            proof['selected_owners']==list(range(k)) and proof['affected_owners']==list(range(k)), 'Hotspot owner coverage differs')
+    require(proof['positions']==row['positions'] and proof['base']==row['shared_base'] and
+            proof['canonical']==row['canonical'] and proof['selector']==prep['selector'], 'Hotspot payload provenance differs')
+    require(proof['seed']==20261104 and proof['changed_positions']==row['changed_positions'] and
+            proof['actual_rho']==row['actual_rho'], 'Hotspot count/seed differs')
+    # The frozen selector tests reverse arcs; admission additionally verifies
+    # actual stored positions, exact count, strict order, and owner domain.
+    import numpy as np
+    positions=np.load(checked(row['positions']),allow_pickle=False,mmap_mode='r')
+    require(positions.dtype==np.dtype('<i8') and positions.ndim==1 and len(positions)==proof['changed_positions'], 'Hotspot positions dtype/count differs')
+    require(not len(positions) or (positions[0]>=0 and positions[-1]<row['m'] and np.all(positions[1:]>positions[:-1])), 'Hotspot positions are not unique/in range')
+    actual=np.unique(np.searchsorted(row['edge_cuts'],positions,side='right')-1).tolist()
+    require(actual==list(range(k)), 'Actual hotspot owner coverage differs')
+
+
 def input_key(cell):
     return (cell['experiment'], tuple(cell['datasets']), cell['partitions'],
             cell['rho'], cell['locality'])
@@ -173,6 +212,8 @@ def validate_input_metadata(record, freeze, registry, *, tiny=False):
     else:
         require({k: signer[k] for k in ('sha256', 'bytes')} == freeze['source_files'][SIGNER],
                 'Input signer differs from final source; regenerate inputs')
+    if not tiny and record.get('cell',{}).get('locality','').startswith('partition_hotspot_'):
+        validate_hotspot(record)
     if tiny:
         require(set(record['datasets']) == {'TINY_A', 'TINY_B', 'TINY_C'}, 'Wrong tiny graph pool')
         return
@@ -202,6 +243,35 @@ def initial(row):
     return row['experiment'] == 'E4' or (row['rho'] == 1e-4 and row['locality'] == 'uniform')
 
 
+def validate_algorithm_environment(environment):
+    """Validate actual C++ PR option prerequisites before any GPU admission.
+
+    This checks deployment compatibility only. It does not select a faster
+    strategy or alter the frozen state worker COMMON_ENV / D/C interventions.
+    """
+    env = environment
+    require(env.get('EGMGPU_CORE_OUTPUT_CPU_PLACEMENT', 'inherited') == 'inherited',
+            'Four-function state workflow requires inherited output CPU placement; PR lacks explicit placement support')
+    streamed = env.get('EGMGPU_PAGERANK_SCHEDULE', 'legacy') == 'streamed'
+    if env.get('EGMGPU_PAGERANK_OUTPUT', 'copy') == 'pinned':
+        require(streamed, 'Pinned PageRank output requires streamed schedule')
+    if env.get('EGMGPU_CORE_OUTPUT_TEAM', 'original') == 'team16':
+        require(streamed, 'Core PR output team16 requires streamed execution')
+    halo = env.get('EGMGPU_PAGERANK_HALO_EXCHANGE', 'peer_gather')
+    explicit_halo = halo in ('nccl_allgather', 'nccl_variable_gather', 'nccl_sparse_halo', 'host_pinned_parallel')
+    if explicit_halo:
+        require(streamed, 'Explicit bulk halo requires streamed PageRank')
+        require(env.get('EGMGPU_PAGERANK_SCALAR_REDUCTION', 'auto') == 'host',
+                'Explicit bulk halo requires host scalar reduction')
+    if halo.startswith('nccl_'):
+        require(env.get('EGGPU_COMM_BACKEND') == 'nccl', 'NCCL halo requires an NCCL deployment')
+    if env.get('EGMGPU_PAGERANK_SPARSE_STATE', 'call') == 'retained':
+        require(halo == 'nccl_sparse_halo' and env.get('EGMGPU_WORKSPACE_POLICY') == 'per_worker',
+                'Retained sparse state requires nccl_sparse_halo and per_worker')
+    if halo == 'host_pinned_parallel':
+        require(env.get('OMP_WAIT_POLICY') == 'PASSIVE', 'Pinned parallel halo requires passive OpenMP wait')
+
+
 def deployment(a):
     freeze = read(a.freeze)
     require(freeze['source_tree_sha256'] == a.expected_source_sha256, 'Explicit final source SHA differs')
@@ -228,17 +298,43 @@ def deployment(a):
         else:
             require(command[0] == python and option(command, 'native-dso') == dso, 'Runtime differs across profiles')
     env = dict(template['environment'])
+    profile_path = getattr(a, 'profile_environment', None)
+    profile = read(profile_path) if profile_path else None
+    if profile:
+        common = imports(a.runner)[0].COMMON_ENV
+        for count, resource in resources.items():
+            extra = profile['environment_additions_by_count'][count]
+            require(not any(key in common and common[key] != value for key, value in extra.items()),
+                    'Profile must not override frozen state COMMON_ENV')
+            require(not any(key in env and env[key] != value for key, value in extra.items()),
+                    'Profile must not override the deployment template environment')
+            validate_algorithm_environment(dict(env, **extra))
+            resource['environment_additions'] = extra
     env['PYTHONPATH'] = str(Path(dso).parent) + ':' + str(a.source.resolve())
     invocation = str(Path(python).absolute())
     runtime = runtime_probe(invocation, env)
-    return dict(schema='state.final.deployment.v3', source_root=str(a.source.resolve()),
+    return dict(schema='state.final.deployment.v4', source_root=str(a.source.resolve()),
         source_freeze=bind(a.freeze), source_tree_sha256=freeze['source_tree_sha256'],
         runner_root=str(a.runner.resolve()), runner_freeze=bind(a.runner / 'freeze.json'),
         registry=bind(a.registry), python=bind(python), python_invocation=invocation,
         python_runtime=runtime, native_dso=bind(dso),
         native_build_receipt=bind(a.native_build_receipt),
         environment=env, resources=resources, template=bind(a.deployment_template),
+        profile_environment=bind(profile_path) if profile_path else None,
         planner=bind(__file__), timeout_seconds=3600)
+
+
+def environment_for(dep, partitions):
+    """One predeclared per-resource profile, shared by every graph/arm."""
+    profile = dep.get('profile_environment')
+    extra = dep['resources'][str(partitions)].get('environment_additions', {})
+    if profile:
+        record = read(checked(profile))
+        require(extra == record['environment_additions_by_count'][str(partitions)],
+                'Per-resource environment differs from bound profile')
+    environment = dict(dep['environment'], **extra)
+    validate_algorithm_environment(environment)
+    return environment
 
 
 def build(a):
@@ -254,7 +350,7 @@ def build(a):
         catalog[key] = (bind(path), record)
     for resource in dep['resources'].values():
         validate_input_metadata(read(resource['tiny_inputs']['path']), freeze, registry, tiny=True)
-    rows = grid()
+    rows = hotspot_grid() if getattr(a,'grid_domain','main') == 'partition-hotspot' else grid()
     selected = []
     for row in rows:
         key = input_key(row)
@@ -309,6 +405,7 @@ def build(a):
                 'PASS_PHYSICAL_BYTE_PILOT' if action == 'pilot' else
                 'PASS_STATE_COMPLETE_WORKFLOW' if phase == 'formal' else 'PASS_STATE_GPU_QUALIFICATION'],
             depends_on=list(depends), timeout=dep['timeout_seconds'],
+            environment=environment_for(dep, p),
             bindings=[bind(__file__), bind(a.output / 'jobs' / (identity + '.json')), dep_binding])
         (formal if phase == 'formal' else qualify).append(item)
         return identity
@@ -380,8 +477,8 @@ def build(a):
         pending_protocol_controls=[
             dict(control='unweighted_PR_weight_invariance', status='PENDING_SEPARATE_RUNNER',
                  reason='Frozen state_v4 has BFS/SSSP/WCC/weighted_PR only; adding PR changes query counts.'),
-            dict(control='partition_concentration', status='PENDING_INPUT_PROTOCOL',
-                 reason='Current locality uniform/clustered is not an explicit cross-partition concentration axis.'),
+            dict(control='partition_concentration', status='SEPARATE_SOURCE_BOUND_HOTSPOT_PLAN',
+                 reason='32 predeclared P8 configurations at fixed density use exact K=1/2/4/8 touched owners; same D and old-reader arms.'),
             dict(control='cold_full_graph_rebuild', status='NOT_IMPLEMENTED_IN_STATE_V4',
                  reason='D0 persistent_full reuses unchanged topology and fully uploads new uncached weight identities.')]))
     return dict(status='CPU_PLAN_ONLY', output=str(a.output), configurations=len(selected),
@@ -488,7 +585,8 @@ def check_spec(spec_path):
     require(args.gpu_uuids == resource['gpu-uuids'] and args.cpu_set == resource['cpu-set'] and
             str(args.lock) == resource['lock'], 'Command resources differ')
     contract.validate_arguments(args, inputs, spec['datasets'])
-    environment = controlled_environment(dep['environment'], worker.COMMON_ENV, args.gpu_uuids)
+    selected_environment = environment_for(dep, spec['partitions'])
+    environment = controlled_environment(selected_environment, worker.COMMON_ENV, args.gpu_uuids)
     affinity = sorted(int(x) for x in args.cpu_set.split(','))
     require(set(affinity) <= set(os.sched_getaffinity(0)), 'Requested CPU affinity unavailable')
     binding = contract.source_binding(Path(dep['source_root']), SimpleNamespace(__file__=dep['native_dso']['path']))
@@ -518,7 +616,7 @@ def check_spec(spec_path):
     return dict(status='PASS_CPU_ADMISSION', gpu_executed=False, formal_measurements=0,
                 spec=bind(spec_path), source_tree_sha256=dep['source_tree_sha256'],
                 configuration_sha256=contract.digest(config), proof_bindings=evidence,
-                physical_budget=budget, command=spec['command'], environment=dep['environment'],
+                physical_budget=budget, command=spec['command'], environment=selected_environment,
                 python_runtime=runtime)
 
 
@@ -574,9 +672,11 @@ def main():
     b = sub.add_parser('build')
     for name in ('source', 'freeze', 'runner', 'registry', 'deployment-template', 'native-build-receipt', 'output', 'results-root'):
         b.add_argument('--' + name, type=Path, required=True)
+    b.add_argument('--profile-environment', type=Path)
     b.add_argument('--expected-source-sha256', required=True)
     b.add_argument('--inputs', type=Path, nargs='+', required=True)
     b.add_argument('--scope', choices=('initial', 'available'), default='initial')
+    b.add_argument('--grid-domain', choices=('main','partition-hotspot'), default='main')
     b.add_argument('--enable-p8-targets', action='store_true')
     g = sub.add_parser('guard')
     g.add_argument('--spec', type=Path, required=True)

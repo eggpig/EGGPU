@@ -53,6 +53,7 @@ def build(a):
         return dict(id=identity,command=cmd,receipt=str(out/'receipt.json'),
             expected_statuses=['PASS_UNWEIGHTED_PR_FORMAL' if phase=='formal' else 'PASS_UNWEIGHTED_PR_QUALIFICATION'],
             depends_on=list(depends),timeout=3600,bindings=bindings+[input_binding],
+            environment=support.environment_for(dep,a.partitions),
             arm=arm,dataset=name,phase=phase,repeat=repeat,input_binding=input_binding)
     for arm in c.ARMS:
         tiny_jobs.append(job(f'tiny_{arm}_p{a.partitions}','tiny','TINY_A',arm,resource['tiny_inputs']))
@@ -103,7 +104,7 @@ def admit(a):
         key=(job['dataset'],job['arm'])
         seen.setdefault(key,[]).append(job['repeat'])
         if key not in validated:
-            env=support.controlled_environment(dep['environment'],worker.COMMON_ENV,args.gpu_uuids)
+            env=support.controlled_environment(support.environment_for(dep,pending['partitions']),worker.COMMON_ENV,args.gpu_uuids)
             config=dict(protocol=c.PROTOCOL,source_binding=binding,source_tree_sha256=freeze['source_tree_sha256'],
                 deployment=pending['deployment'],arm=args.arm,route=c.ARMS[args.arm],policy='closure',old_readers='none',
                 tiny_inputs=dep['resources'][str(pending['partitions'])]['tiny_inputs'],

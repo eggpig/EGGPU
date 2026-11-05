@@ -1,81 +1,50 @@
 {
-  "schema": "eggpu.runner.latest.v1",
-  "source_candidate": "arena_output_ownership_v2",
-  "source_sha256": "cb14360e2dfb934b8a28f9875fb80639ce4503bc6ed27956201b18e9edec6869",
+  "schema": "eggpu.runner.latest.v2",
+  "source_sha256": "d84ff388e1e40d1fd6ed83fcaceecd0491fc0451adffaff657a95940b1803f84",
   "formal_results": 0,
-  "runners": {
-    "native_v2": {
-      "manifest": "releases/native_v2.json",
-      "sha256": "79bf20bf3383b042bedd180c64170e1a9b27bc89728405bd33bcc1035f3482e8",
-      "status": "EARLIER_SOURCE_TINY_PASS_CURRENT_TARGET_PENDING"
+  "default_runners": {
+    "native_load_p1": {
+      "directory": "campaign/native_load_p1",
+      "status": "PUBLIC_PROJECTED_CPU_CHECKED_GPU_UNQUALIFIED"
     },
-    "e6_v2": {
-      "manifest": "releases/e6_v2.json",
-      "sha256": "7fbe5950fe488917bc311acccae5324746e81f97d988848e259b2d6e9687ad65",
-      "status": "EARLIER_SOURCE_11_TINY_PASS_FORMAL_PENDING"
+    "sg_current": {
+      "directory": "campaign/sg_current",
+      "status": "PUBLIC_PROJECTED_CPU_CHECKED_GPU_UNQUALIFIED"
     },
-    "sequence16_v2": {
-      "manifest": "releases/sequence16_v2.json",
-      "sha256": "438f51a0f36ae9b725ff1eae25a5fa8cf6d98176ffe104d0ddb7fc4d73a38b7b",
-      "status": "CPU_PASS_EXACT_CURRENT_PUBLIC_PROOFS_REQUIRED"
+    "e6_memory": {
+      "directory": "campaign/e6_memory",
+      "status": "PUBLIC_PROJECTED_CPU_CHECKED_GPU_UNQUALIFIED"
     },
-    "gum_v2": {
-      "manifest": "releases/gum_v2.json",
-      "sha256": "b1a02362f147a1ccf7f44e7b0b06d67d54150ca39096666799b73009888171d6",
-      "status": "AUTHOR_TINY_SCOPE_SEPARATE_CURRENT_PUBLIC_PROOFS_REQUIRED"
-    },
-    "state_v4": {
-      "manifest": "releases/state_v4.json",
-      "sha256": "4884d5ba4835925dd29ffa17f2bbe5f4b0cab98250ffa89c1300098f8d50590c",
-      "status": "87_CPU_PASS_NEW_GPU_PROOFS_PENDING"
-    },
-    "cugraph_mg_v4": {
-      "manifest": "releases/cugraph_mg_v4.json",
-      "sha256": "3d3837e8db3dce5d41181f13843512835af5831555528964f7ab7dd7f4edea64",
-      "status": "CPU_RESOURCE_DOMAIN_PASS_GPU_PENDING"
-    },
-    "sg_author_clock_v3": {
-      "manifest": "releases/sg_author_clock_v3.json",
-      "sha256": "fa08af441b5e0cd99fd3c08b81102fc3367266ecf3cfba89afbf62915b1fd6da",
-      "status": "CPU_PASS_CONTINUOUS_TIMING_GPU_PENDING"
-    },
-    "c2p_e1_v1": {
-      "manifest": "releases/c2p_e1_v1.json",
-      "sha256": "a47f9ccf101eb6e7963cc778d017928b4f9a62780bd534b5b63b1b869477dfc0",
-      "status": "AUTHOR_CPU_COMPRESSOR_CONTRACT_PASS_GPU_PENDING"
-    },
-    "sg_public_csr_pr_global_l1_v3": {
-      "manifest": "releases/sg_public_csr_pr_global_l1_v3.json",
-      "sha256": "169ba7f6734ab5c43e4c944445ee311dfc23d46bc343e203ae6d9f15db18406c",
-      "status": "CURRENT_SOURCE_16_TINY_PASS_TARGET_QUALIFICATION_ONGOING"
-    }
-  },
-  "tools": {
-    "queue_v4": {
-      "path": "run_campaign_queue_v4.py",
-      "sha256": "a8225d3eb60c5fa5cecc9f5802603614460ad8523d500d1f015edddfb40b3901",
-      "cpu_tests": 8,
-      "outer_timeout_descendant_sessions": "OPERATOR_CLEANUP_REQUIRED_SUCCESSOR_PENDING"
+    "gum_fp32_author": {
+      "directory": "campaign/gum_fp32_author",
+      "status": "PUBLIC_PROJECTED_CPU_CHECKED_GPU_UNQUALIFIED"
     },
     "state_final_plan": {
-      "manifest": "state_final_plan/manifest.json",
-      "sha256": "c58d75745c18c87fb7d0c56053bfb6270bde14b84cfd94a512a422562ecb285f",
-      "cpu_tests": 27,
-      "version": "state_final_plan_v3",
-      "status": "CPU_RUNTIME_INVOCATION_PASS_GPU_QUALIFICATION_PENDING"
-    },
-    "e1_presentation": {
-      "manifest": "../presentation/manifest.json",
-      "sha256": "e4e0156daa259bccc5019e1487c8ffd5404660d357848ad4faacede7685520c4",
-      "cpu_tests": 33,
-      "real_formal_export": false
+      "directory": "campaign/state_final_plan",
+      "status": "PUBLIC_PROJECTED_CPU_CHECKED_GPU_UNQUALIFIED"
     },
     "e3_unweighted_control": {
-      "manifest": "e3_unweighted_control/manifest.json",
-      "sha256": "fa8fe1d393d4a4ec6ab6ff59e73e3118d57e8e70e80e576c02927e5055a874ee",
-      "status": "CPU_RUNTIME_INVOCATION_PASS_GPU_QUALIFICATION_PENDING",
-      "cpu_tests": 17,
-      "version": "e3_unweighted_control_v2"
+      "directory": "campaign/e3_unweighted_control",
+      "status": "PUBLIC_PROJECTED_CPU_CHECKED_GPU_UNQUALIFIED"
+    },
+    "state_grid_prepare_v2": {
+      "directory": "campaign/state_grid_prepare_v2",
+      "status": "PUBLIC_PROJECTED_CPU_CHECKED_GPU_UNQUALIFIED"
+    },
+    "state_grid_prepare_v3": {
+      "directory": "campaign/state_grid_prepare_v3",
+      "status": "PUBLIC_PROJECTED_CPU_CHECKED_GPU_UNQUALIFIED"
+    },
+    "state_partition_hotspot": {
+      "directory": "campaign/state_partition_hotspot",
+      "status": "PUBLIC_PROJECTED_CPU_CHECKED_GPU_UNQUALIFIED"
     }
+  },
+  "historical_top_level_entrypoints": "Unlisted old entrypoints are retained only as historical support; reproduce.py selects explicit current paths.",
+  "status": "DEVELOPMENT_CHECKPOINT_CPU_CHECKED_GPU_UNQUALIFIED",
+  "additional_entrypoints": {
+    "continuous_and_e2_to_e6_figures": "artifact/icde/paper_results/render.py",
+    "capacity": "artifact/icde/paper_results/capacity.py",
+    "state_resource_template": "artifact/icde/tools/state_deployment_template.py"
   }
 }

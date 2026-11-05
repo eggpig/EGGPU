@@ -1,0 +1,1188 @@
+{
+  "schema": "eggpu.public_projection/v3",
+  "status": "DEVELOPMENT_CHECKPOINT_PROJECTED_CPU_PASS",
+  "source_sha256": "d84ff388e1e40d1fd6ed83fcaceecd0491fc0451adffaff657a95940b1803f84",
+  "publication_parent": "a5ac6cc0a94d0e343a25da1972c9a1e8a950bec5",
+  "files": [
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/native_load_p1_v1/native_worker.py",
+      "source_sha256": "0e4bb3d393287f9e986934b4dcf53711003fa936b21515710b018185f5a31816",
+      "public_path": "artifact/icde/campaign/native_load_p1/native_worker.py",
+      "public_sha256": "0e4bb3d393287f9e986934b4dcf53711003fa936b21515710b018185f5a31816",
+      "adaptations": [],
+      "public_bytes": 28106
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/native_load_p1_v1/native_input.py",
+      "source_sha256": "e2b5acf9c9dc264ac96a56df8bbf5b2de49558a9c56e06acc10d47ee350a251c",
+      "public_path": "artifact/icde/campaign/native_load_p1/native_input.py",
+      "public_sha256": "e2b5acf9c9dc264ac96a56df8bbf5b2de49558a9c56e06acc10d47ee350a251c",
+      "adaptations": [],
+      "public_bytes": 12636
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/native_load_p1_v1/sg_worker.py",
+      "source_sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf",
+      "public_path": "artifact/icde/campaign/native_load_p1/sg_worker.py",
+      "public_sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf",
+      "adaptations": [],
+      "public_bytes": 41355
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/native_load_p1_v1/cugraph_csr_adapter.py",
+      "source_sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7",
+      "public_path": "artifact/icde/campaign/native_load_p1/cugraph_csr_adapter.py",
+      "public_sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7",
+      "adaptations": [],
+      "public_bytes": 6682
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/native_load_p1_v1/test_static_runner_cpu.py",
+      "source_sha256": "a413eaa3861e8651db6f6d4fddc16ea70db9baa23ab8e5f2293c13ac2e3ba824",
+      "public_path": "artifact/icde/campaign/native_load_p1/test_static_runner_cpu.py",
+      "public_sha256": "a413eaa3861e8651db6f6d4fddc16ea70db9baa23ab8e5f2293c13ac2e3ba824",
+      "adaptations": [],
+      "public_bytes": 1916
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/native_load_p1_v1/qualify_static_native_domains.py",
+      "source_sha256": "27af686ede9a6441adc66e1565bba2220fdd92e64a12bee59e4c75702c9b4778",
+      "public_path": "artifact/icde/campaign/native_load_p1/qualify_static_native_domains.py",
+      "public_sha256": "27af686ede9a6441adc66e1565bba2220fdd92e64a12bee59e4c75702c9b4778",
+      "adaptations": [],
+      "public_bytes": 5683
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/native_load_p1_v1/native_profile.py",
+      "source_sha256": "230b76d86bf8c2af354c9a432239d348092e47531ae4dbde5c8e66f27681d392",
+      "public_path": "artifact/icde/campaign/native_load_p1/native_profile.py",
+      "public_sha256": "2e5791b66c84293be05778b880f3f5ebc611612163a818e78a9f8d6bd2bd2cd4",
+      "adaptations": [],
+      "final_public_adaptation": "Explicit portability: source-relative test references, scrubbed historical origin paths, configurable CPU IDs, or current launcher defaults; exact diff is in the review patch.",
+      "public_bytes": 7941
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/native_load_p1_v1/test_native_profile_cpu.py",
+      "source_sha256": "e3a25b177239181c188d2cce67329d3e6ba154b385fa9d5c22a4cd91ee8b7649",
+      "public_path": "artifact/icde/campaign/native_load_p1/test_native_profile_cpu.py",
+      "public_sha256": "e3a25b177239181c188d2cce67329d3e6ba154b385fa9d5c22a4cd91ee8b7649",
+      "adaptations": [],
+      "public_bytes": 3903
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/native_load_p1_v1/test_metric_json_cpu.py",
+      "source_sha256": "ac350dc4e0bbf8bba7edd4e6089bc24d4381ddbe5c7f7f2a36478daefda0cf39",
+      "public_path": "artifact/icde/campaign/native_load_p1/test_metric_json_cpu.py",
+      "public_sha256": "ac350dc4e0bbf8bba7edd4e6089bc24d4381ddbe5c7f7f2a36478daefda0cf39",
+      "adaptations": [],
+      "public_bytes": 714
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/native_load_p1_v1/test_load_preparation_cpu.py",
+      "source_sha256": "9aef7dc8478c18507fae942b10cdb093ce12ef5b698e11a1930ba82515813081",
+      "public_path": "artifact/icde/campaign/native_load_p1/test_load_preparation_cpu.py",
+      "public_sha256": "53314b3b47250151d0418a859772d6f5e6a05e0a81cef6e2384739404d18a751",
+      "adaptations": [
+        {
+          "original": "HERE.parent / 'native_full_profile_v2' / 'native_input.py'",
+          "replacement": "HERE.parent / 'native_parent' / 'native_input.py'"
+        },
+        {
+          "original": "HERE.parents[1] / 'candidates/static_full_profile_v1/Easy-Graph'",
+          "replacement": "HERE.parents[3] / 'Easy-Graph'"
+        }
+      ],
+      "public_bytes": 6046
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/native_load_p1_v1/historical_profile.json",
+      "source_sha256": "693d58bcffdcef34ba2c2bebdd0ddf19f648c73a8239b03e0565661d43f49d4f",
+      "public_path": "artifact/icde/campaign/native_load_p1/historical_profile.json",
+      "public_sha256": "067b50883e01426c808f1fa4a5613f22c9bc0050e54db9b8b37eecbc791afa93",
+      "adaptations": [],
+      "final_public_adaptation": "Explicit portability: source-relative test references, scrubbed historical origin paths, configurable CPU IDs, or current launcher defaults; exact diff is in the review patch.",
+      "public_bytes": 92783
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/native_full_profile_v2/native_input.py",
+      "source_sha256": "927a9194b15b6dfaf91ff829f2476a676c7828ba4071607497ef308789d10152",
+      "public_path": "artifact/icde/campaign/native_parent/native_input.py",
+      "public_sha256": "927a9194b15b6dfaf91ff829f2476a676c7828ba4071607497ef308789d10152",
+      "adaptations": [],
+      "public_bytes": 11994
+    },
+    {
+      "source": "experiments/campaign_20261104/run_native.py",
+      "source_sha256": "89630d55c6691d1649144d8d05fe8753f921097415c0cbcb38f85f13d441954e",
+      "public_path": "artifact/icde/campaign/native_load_p1/run_native.py",
+      "public_sha256": "49e4666f233bc2b85fc21e98f6a648d02ea93795de2e326dd1d2023f7693fe3c",
+      "adaptations": [],
+      "final_public_adaptation": "Explicit portability: source-relative test references, scrubbed historical origin paths, configurable CPU IDs, or current launcher defaults; exact diff is in the review patch.",
+      "public_bytes": 8252
+    },
+    {
+      "source": "experiments/campaign_20261104/run_sg.py",
+      "source_sha256": "addae8997b5aad71a5037b10b870c3bc30424b483bc5ba637ae4513fc2811613",
+      "public_path": "artifact/icde/campaign/native_load_p1/run_sg.py",
+      "public_sha256": "addae8997b5aad71a5037b10b870c3bc30424b483bc5ba637ae4513fc2811613",
+      "adaptations": [],
+      "public_bytes": 7154
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/pr_global_l1_i64_v6/sg_worker.py",
+      "source_sha256": "225bbd84957278295c200ef90f3b6b0136b44d8085d6ffd91e7f2a864a965867",
+      "public_path": "artifact/icde/campaign/sg_current/sg_worker.py",
+      "public_sha256": "225bbd84957278295c200ef90f3b6b0136b44d8085d6ffd91e7f2a864a965867",
+      "adaptations": [],
+      "public_bytes": 40940
+    },
+    {
+      "source": "experiments/campaign_20261104/run_sg.py",
+      "source_sha256": "addae8997b5aad71a5037b10b870c3bc30424b483bc5ba637ae4513fc2811613",
+      "public_path": "artifact/icde/campaign/sg_current/run_sg.py",
+      "public_sha256": "addae8997b5aad71a5037b10b870c3bc30424b483bc5ba637ae4513fc2811613",
+      "adaptations": [],
+      "public_bytes": 7154
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/pr_global_l1_i64_v6/cugraph_csr_adapter.py",
+      "source_sha256": "a91460d8ff6a4402d8e4e7619fef295aa36fd9b1e4aa92d56eed762b723f89e3",
+      "public_path": "artifact/icde/campaign/sg_current/cugraph_csr_adapter.py",
+      "public_sha256": "a91460d8ff6a4402d8e4e7619fef295aa36fd9b1e4aa92d56eed762b723f89e3",
+      "adaptations": [],
+      "public_bytes": 9928
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/pr_global_l1_i64_v6/test_sg_campaign.py",
+      "source_sha256": "59860f9373faed2aa53055ccde028877c978aed33dac6f4d6f43d8a499954e20",
+      "public_path": "artifact/icde/campaign/sg_current/test_sg_campaign.py",
+      "public_sha256": "59860f9373faed2aa53055ccde028877c978aed33dac6f4d6f43d8a499954e20",
+      "adaptations": [],
+      "public_bytes": 13147
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/pr_global_l1_i64_v6/sequence16_worker.py",
+      "source_sha256": "b4f33528ba83585e2dfb9fc567bc07dde857f3f71d24eb29008b02a2c7cd54ed",
+      "public_path": "artifact/icde/campaign/sg_current/sequence16_worker.py",
+      "public_sha256": "b4f33528ba83585e2dfb9fc567bc07dde857f3f71d24eb29008b02a2c7cd54ed",
+      "adaptations": [],
+      "public_bytes": 14527
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/pr_global_l1_i64_v6/sequence16_adapter.py",
+      "source_sha256": "de759c61a3f1fcee9c89fc34e44322210c24fdb1b38b4f14d1cb7cc5c1bfbac6",
+      "public_path": "artifact/icde/campaign/sg_current/sequence16_adapter.py",
+      "public_sha256": "de759c61a3f1fcee9c89fc34e44322210c24fdb1b38b4f14d1cb7cc5c1bfbac6",
+      "adaptations": [],
+      "public_bytes": 4066
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/pr_global_l1_i64_v6/run_sequence16.py",
+      "source_sha256": "adf10f7c8f30b647ab440a190b239c400ebed7483a6171433e6472953413ca37",
+      "public_path": "artifact/icde/campaign/sg_current/run_sequence16.py",
+      "public_sha256": "adf10f7c8f30b647ab440a190b239c400ebed7483a6171433e6472953413ca37",
+      "adaptations": [],
+      "public_bytes": 4818
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/pr_global_l1_i64_v6/test_pr_global_l1.py",
+      "source_sha256": "520fe807d75e88ba9dc0e782e6290963587d17bf81ca7ab42f0b8d69b4f7c285",
+      "public_path": "artifact/icde/campaign/sg_current/test_pr_global_l1.py",
+      "public_sha256": "520fe807d75e88ba9dc0e782e6290963587d17bf81ca7ab42f0b8d69b4f7c285",
+      "adaptations": [],
+      "public_bytes": 3605
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/pr_global_l1_i64_v6/test_sequence16_campaign.py",
+      "source_sha256": "2bce0f8549cce131665d64bb262953d0b8723c8f0dc99c738eb9a951d5b7b429",
+      "public_path": "artifact/icde/campaign/sg_current/test_sequence16_campaign.py",
+      "public_sha256": "2bce0f8549cce131665d64bb262953d0b8723c8f0dc99c738eb9a951d5b7b429",
+      "adaptations": [],
+      "public_bytes": 7600
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/pr_global_l1_i64_v6/test_csr_runner_contract.py",
+      "source_sha256": "73f9eec69cd218faf8b9677ba3d25e4efbb75e36cc42d1ef6dca99ad8a0f3b23",
+      "public_path": "artifact/icde/campaign/sg_current/test_csr_runner_contract.py",
+      "public_sha256": "73f9eec69cd218faf8b9677ba3d25e4efbb75e36cc42d1ef6dca99ad8a0f3b23",
+      "adaptations": [],
+      "public_bytes": 1989
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/pr_global_l1_i64_v6/test_cugraph_i64_cpu.py",
+      "source_sha256": "f05352a5ea502c4cb89075bf87a93f1a4d0e2899890e2410693b0559d782e887",
+      "public_path": "artifact/icde/campaign/sg_current/test_cugraph_i64_cpu.py",
+      "public_sha256": "f05352a5ea502c4cb89075bf87a93f1a4d0e2899890e2410693b0559d782e887",
+      "adaptations": [],
+      "public_bytes": 3709
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/pr_global_l1_i64_v6/qualify_cugraph_i64.py",
+      "source_sha256": "9ae45ddfe36b17e0b990d2e9b36878985e97830e643f52b26f67fa0965540ca8",
+      "public_path": "artifact/icde/campaign/sg_current/qualify_cugraph_i64.py",
+      "public_sha256": "9ae45ddfe36b17e0b990d2e9b36878985e97830e643f52b26f67fa0965540ca8",
+      "adaptations": [],
+      "public_bytes": 2562
+    },
+    {
+      "source": "experiments/campaign_20261104/e6_memory_input_v1/cugraph_csr_adapter.py",
+      "source_sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7",
+      "public_path": "artifact/icde/campaign/e6_memory/cugraph_csr_adapter.py",
+      "public_sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7",
+      "adaptations": [],
+      "public_bytes": 6682
+    },
+    {
+      "source": "experiments/campaign_20261104/e6_memory_input_v1/e6_cpu_reference.py",
+      "source_sha256": "7ced877ef6ce588ac04bf7816b0bd67e252c7331f7f3ce8268940c3f698f3811",
+      "public_path": "artifact/icde/campaign/e6_memory/e6_cpu_reference.py",
+      "public_sha256": "7ced877ef6ce588ac04bf7816b0bd67e252c7331f7f3ce8268940c3f698f3811",
+      "adaptations": [],
+      "public_bytes": 3116
+    },
+    {
+      "source": "experiments/campaign_20261104/e6_memory_input_v1/e6_reuse_provenance.json",
+      "source_sha256": "49bab07cfcfe263ed3b1e12b2316557640c99e8e032b3ec9e7b30d0199df42f6",
+      "public_path": "artifact/icde/campaign/e6_memory/e6_reuse_provenance.json",
+      "public_sha256": "49bab07cfcfe263ed3b1e12b2316557640c99e8e032b3ec9e7b30d0199df42f6",
+      "adaptations": [],
+      "public_bytes": 1480
+    },
+    {
+      "source": "experiments/campaign_20261104/e6_memory_input_v1/e6_reused.py",
+      "source_sha256": "44704d165a4b87de73152592c18efaebfa280286722b98bcd5d665487bee8af9",
+      "public_path": "artifact/icde/campaign/e6_memory/e6_reused.py",
+      "public_sha256": "44704d165a4b87de73152592c18efaebfa280286722b98bcd5d665487bee8af9",
+      "adaptations": [],
+      "public_bytes": 14948
+    },
+    {
+      "source": "experiments/campaign_20261104/e6_memory_input_v1/e6_worker.py",
+      "source_sha256": "ef895fc0dcb397547fd8d81a5ebeb2dd1d362c539390d3aec352b18f648a99ce",
+      "public_path": "artifact/icde/campaign/e6_memory/e6_worker.py",
+      "public_sha256": "ef895fc0dcb397547fd8d81a5ebeb2dd1d362c539390d3aec352b18f648a99ce",
+      "adaptations": [],
+      "public_bytes": 38811
+    },
+    {
+      "source": "experiments/campaign_20261104/e6_memory_input_v1/sg_worker.py",
+      "source_sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf",
+      "public_path": "artifact/icde/campaign/e6_memory/sg_worker.py",
+      "public_sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf",
+      "adaptations": [],
+      "public_bytes": 41355
+    },
+    {
+      "source": "experiments/campaign_20261104/run_e6.py",
+      "source_sha256": "348b343da25ebff877a08173f19b6ed5333bd3e4beec6b436e4e767da08364bc",
+      "public_path": "artifact/icde/campaign/e6_memory/run_e6.py",
+      "public_sha256": "d085a4523e2e307c418f22eac01c3a23904d508df8954ca9071f1964e153d49a",
+      "adaptations": [
+        {
+          "original": "'reference_cache', 'budget_mib'",
+          "replacement": "'reference_cache', 'reference_manifest', 'budget_mib'"
+        },
+        {
+          "original": "'reference-cache', 'output', 'python-core'",
+          "replacement": "'reference-cache', 'reference-manifest', 'output', 'python-core'"
+        }
+      ],
+      "public_bytes": 7978
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/gum_fp32_author_v1/test_fp32_contract.py",
+      "source_sha256": "af045c72ac183ff31ee2e641aa0b7ac4818c353b76ad15e4e1e1ef0502c47051",
+      "public_path": "artifact/icde/campaign/gum_fp32_author/test_fp32_contract.py",
+      "public_sha256": "af045c72ac183ff31ee2e641aa0b7ac4818c353b76ad15e4e1e1ef0502c47051",
+      "adaptations": [],
+      "public_bytes": 2726
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/gum_fp32_author_v1/cugraph_csr_adapter.py",
+      "source_sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7",
+      "public_path": "artifact/icde/campaign/gum_fp32_author/cugraph_csr_adapter.py",
+      "public_sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7",
+      "adaptations": [],
+      "public_bytes": 6682
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/gum_fp32_author_v1/gum_clock.py",
+      "source_sha256": "5056dfb14ff268774938f798f92e638f3d5256b7883a52c896d5b63585441ee8",
+      "public_path": "artifact/icde/campaign/gum_fp32_author/gum_clock.py",
+      "public_sha256": "5056dfb14ff268774938f798f92e638f3d5256b7883a52c896d5b63585441ee8",
+      "adaptations": [],
+      "public_bytes": 5445
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/gum_fp32_author_v1/gum_rank_exec.py",
+      "source_sha256": "750a85e8b27522179b7de858f3832fc87c89de89820ecf55209b7e9f1e10a1e5",
+      "public_path": "artifact/icde/campaign/gum_fp32_author/gum_rank_exec.py",
+      "public_sha256": "750a85e8b27522179b7de858f3832fc87c89de89820ecf55209b7e9f1e10a1e5",
+      "adaptations": [],
+      "public_bytes": 1636
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/gum_fp32_author_v1/gum_reused.py",
+      "source_sha256": "e43709a4e6a87def0a994f3d6af8611da143bbbd31b37fed63b9fd0cbe2ac8f1",
+      "public_path": "artifact/icde/campaign/gum_fp32_author/gum_reused.py",
+      "public_sha256": "e43709a4e6a87def0a994f3d6af8611da143bbbd31b37fed63b9fd0cbe2ac8f1",
+      "adaptations": [],
+      "public_bytes": 7866
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/gum_fp32_author_v1/gum_worker.py",
+      "source_sha256": "a919502b73a15cba54b8d93f0dc2d24e3ea86b469aa3ae205ba88c0a04774b1f",
+      "public_path": "artifact/icde/campaign/gum_fp32_author/gum_worker.py",
+      "public_sha256": "a919502b73a15cba54b8d93f0dc2d24e3ea86b469aa3ae205ba88c0a04774b1f",
+      "adaptations": [],
+      "public_bytes": 15849
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/gum_fp32_author_v1/mg_process_observer.py",
+      "source_sha256": "368c4d858da8dc5a2833dd2cd2dd30d0ab9df75940968c181a1537c2e30426a7",
+      "public_path": "artifact/icde/campaign/gum_fp32_author/mg_process_observer.py",
+      "public_sha256": "368c4d858da8dc5a2833dd2cd2dd30d0ab9df75940968c181a1537c2e30426a7",
+      "adaptations": [],
+      "public_bytes": 2499
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/gum_fp32_author_v1/native_input.py",
+      "source_sha256": "927a9194b15b6dfaf91ff829f2476a676c7828ba4071607497ef308789d10152",
+      "public_path": "artifact/icde/campaign/gum_fp32_author/native_input.py",
+      "public_sha256": "927a9194b15b6dfaf91ff829f2476a676c7828ba4071607497ef308789d10152",
+      "adaptations": [],
+      "public_bytes": 11994
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/gum_fp32_author_v1/native_worker.py",
+      "source_sha256": "12f183d6ff969e4c1921e388546a70a102d8ff22e1c9cb39df9a1b56b6b390f6",
+      "public_path": "artifact/icde/campaign/gum_fp32_author/native_worker.py",
+      "public_sha256": "12f183d6ff969e4c1921e388546a70a102d8ff22e1c9cb39df9a1b56b6b390f6",
+      "adaptations": [],
+      "public_bytes": 23833
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/gum_fp32_author_v1/run_gum.py",
+      "source_sha256": "91fd53c689d98052865455fb9064e29eaaf48d5d4be8d2a949307498a9606a14",
+      "public_path": "artifact/icde/campaign/gum_fp32_author/run_gum.py",
+      "public_sha256": "91fd53c689d98052865455fb9064e29eaaf48d5d4be8d2a949307498a9606a14",
+      "adaptations": [],
+      "public_bytes": 3738
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/gum_fp32_author_v1/sg_worker.py",
+      "source_sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf",
+      "public_path": "artifact/icde/campaign/gum_fp32_author/sg_worker.py",
+      "public_sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf",
+      "adaptations": [],
+      "public_bytes": 41355
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/gum_fp32_author_v1/test_gum_clock.py",
+      "source_sha256": "7ce468cf1879b2174fe778a52c027465b1f57f0abe450384c730d8d654305f16",
+      "public_path": "artifact/icde/campaign/gum_fp32_author/test_gum_clock.py",
+      "public_sha256": "7ce468cf1879b2174fe778a52c027465b1f57f0abe450384c730d8d654305f16",
+      "adaptations": [],
+      "public_bytes": 3418
+    },
+    {
+      "source": "experiments/campaign_20261104/gum_fp32_author_v1/source/adapters/pr_fp32/baseline_memory_clock.h",
+      "source_sha256": "275647ff48152b7bf5c41b4d5898cac3f4c16125bf94aef8bc9406be520a292f",
+      "public_path": "artifact/icde/campaign/gum_fp32_author/author_adapter/baseline_memory_clock.h",
+      "public_sha256": "275647ff48152b7bf5c41b4d5898cac3f4c16125bf94aef8bc9406be520a292f",
+      "adaptations": [],
+      "public_bytes": 821
+    },
+    {
+      "source": "experiments/campaign_20261104/gum_fp32_author_v1/source/adapters/pr_fp32/fp32_owned_output.h",
+      "source_sha256": "d5f61ab25f9396723805ad69298b01d8dc127c712f07f017aeeaaa0c58b28b25",
+      "public_path": "artifact/icde/campaign/gum_fp32_author/author_adapter/fp32_owned_output.h",
+      "public_sha256": "d5f61ab25f9396723805ad69298b01d8dc127c712f07f017aeeaaa0c58b28b25",
+      "adaptations": [],
+      "public_bytes": 500
+    },
+    {
+      "source": "experiments/campaign_20261104/gum_fp32_author_v1/source/adapters/pr_fp32/gum_stage2.cu",
+      "source_sha256": "b6eaa0a475bbbc405b2dbd838e0fa2145e3e8a8f815a656536da48823c3ce9a1",
+      "public_path": "artifact/icde/campaign/gum_fp32_author/author_adapter/gum_stage2.cu",
+      "public_sha256": "b6eaa0a475bbbc405b2dbd838e0fa2145e3e8a8f815a656536da48823c3ce9a1",
+      "adaptations": [],
+      "public_bytes": 18263
+    },
+    {
+      "source": "experiments/campaign_20261104/gum_fp32_author_v1/source/adapters/pr_fp32/numa_pinned_host_standalone.h",
+      "source_sha256": "bf648296555089aff22ba69ec422930c9514417eb3c463249bc69d6700de2e11",
+      "public_path": "artifact/icde/campaign/gum_fp32_author/author_adapter/numa_pinned_host_standalone.h",
+      "public_sha256": "bf648296555089aff22ba69ec422930c9514417eb3c463249bc69d6700de2e11",
+      "adaptations": [],
+      "public_bytes": 6772
+    },
+    {
+      "source": "experiments/campaign_20261104/gum_fp32_author_v1/source/adapters/pr_fp32/pagerank_author.h",
+      "source_sha256": "0fc6b99274d26c58187a10cedb9a678cb6facbbc970daac38a5a0fcf6c68f65c",
+      "public_path": "artifact/icde/campaign/gum_fp32_author/author_adapter/pagerank_author.h",
+      "public_sha256": "0fc6b99274d26c58187a10cedb9a678cb6facbbc970daac38a5a0fcf6c68f65c",
+      "adaptations": [],
+      "public_bytes": 5496
+    },
+    {
+      "source": "experiments/campaign_20261104/gum_fp32_author_v1/test_owned_output.cpp",
+      "source_sha256": "61f79b9d46a8223ca80e9f7ef61cc4eafe9626aea3edaaef121c419553c1652f",
+      "public_path": "artifact/icde/campaign/gum_fp32_author/author_adapter/test_owned_output.cpp",
+      "public_sha256": "61f79b9d46a8223ca80e9f7ef61cc4eafe9626aea3edaaef121c419553c1652f",
+      "adaptations": [],
+      "public_bytes": 1119
+    },
+    {
+      "source": "experiments/campaign_20261104/gum_fp32_author_v1/output_adapter.diff",
+      "source_sha256": "18cac14f5b9986c52b79e67df9f33a5eef7d4316ca8347bd5b5330993ab440a4",
+      "public_path": "artifact/icde/campaign/gum_fp32_author/author_adapter/output_adapter.diff",
+      "public_sha256": "18cac14f5b9986c52b79e67df9f33a5eef7d4316ca8347bd5b5330993ab440a4",
+      "adaptations": [],
+      "public_bytes": 5249
+    },
+    {
+      "source": "experiments/campaign_20261104/state_v4_candidate/state_protocol.py",
+      "source_sha256": "85fb5df29ca2ec60b38f29be8c5e57333d5fe55cfa5354b1c449d0426d314047",
+      "public_path": "artifact/icde/campaign/state_protocol.py",
+      "public_sha256": "85fb5df29ca2ec60b38f29be8c5e57333d5fe55cfa5354b1c449d0426d314047",
+      "adaptations": [],
+      "public_bytes": 4274
+    },
+    {
+      "source": "experiments/campaign_20261104/state_v4_candidate/state_inputs.py",
+      "source_sha256": "2c36cc9c2fc20d1d556467cd35077b889895daad4d395a213073478712f98e63",
+      "public_path": "artifact/icde/campaign/state_inputs.py",
+      "public_sha256": "2c36cc9c2fc20d1d556467cd35077b889895daad4d395a213073478712f98e63",
+      "adaptations": [],
+      "public_bytes": 10881
+    },
+    {
+      "source": "experiments/campaign_20261104/state_v4_candidate/state_worker.py",
+      "source_sha256": "5b1987137cdf11ad1b9156f348837b91d69d170b22585a50e664e692154ebbfc",
+      "public_path": "artifact/icde/campaign/state_worker.py",
+      "public_sha256": "5b1987137cdf11ad1b9156f348837b91d69d170b22585a50e664e692154ebbfc",
+      "adaptations": [],
+      "public_bytes": 21550
+    },
+    {
+      "source": "experiments/campaign_20261104/state_v4_candidate/state_reference.py",
+      "source_sha256": "59c16ece7d79498264566a25040e5808f039bd1b6ddee22c546aacbce26e6fc0",
+      "public_path": "artifact/icde/campaign/state_reference.py",
+      "public_sha256": "59c16ece7d79498264566a25040e5808f039bd1b6ddee22c546aacbce26e6fc0",
+      "adaptations": [],
+      "public_bytes": 8995
+    },
+    {
+      "source": "experiments/campaign_20261104/state_v4_candidate/test_state_reference_cpu.py",
+      "source_sha256": "6c84892ec74d208aba85f2cfbc15bb2bea83e432df16ac7d57e7709ed6f5ecc5",
+      "public_path": "artifact/icde/campaign/test_state_reference_cpu.py",
+      "public_sha256": "6c84892ec74d208aba85f2cfbc15bb2bea83e432df16ac7d57e7709ed6f5ecc5",
+      "adaptations": [],
+      "public_bytes": 3590
+    },
+    {
+      "source": "experiments/campaign_20261104/state_v4_candidate/state_contract.py",
+      "source_sha256": "06f9613f73ce5e4216ed9cbd9516c06230e85a0ba0d0a3f435b80ed9130840b0",
+      "public_path": "artifact/icde/campaign/state_contract.py",
+      "public_sha256": "06f9613f73ce5e4216ed9cbd9516c06230e85a0ba0d0a3f435b80ed9130840b0",
+      "adaptations": [],
+      "public_bytes": 13110
+    },
+    {
+      "source": "experiments/campaign_20261104/state_v4_candidate/test_state_v4_cpu.py",
+      "source_sha256": "63f119df53228abf11038e92a9070fc4db099689964a29def1949ddafe6d3c73",
+      "public_path": "artifact/icde/campaign/test_state_v4_cpu.py",
+      "public_sha256": "63f119df53228abf11038e92a9070fc4db099689964a29def1949ddafe6d3c73",
+      "adaptations": [],
+      "public_bytes": 14002
+    },
+    {
+      "source": "experiments/campaign_20261104/state_v4_candidate/state_projection_cpu_tests.py",
+      "source_sha256": "ba291f54c6ffc86ea174b688391700f12c6d4179b04785b5060282036bff53f3",
+      "public_path": "artifact/icde/campaign/state_projection_cpu_tests.py",
+      "public_sha256": "ba291f54c6ffc86ea174b688391700f12c6d4179b04785b5060282036bff53f3",
+      "adaptations": [],
+      "public_bytes": 8588
+    },
+    {
+      "source": "experiments/campaign_20261104/state_v4_candidate/STATE_V4_PROTOCOL_CN.md",
+      "source_sha256": "847cb085f050e5ccbb12e75113d76fedfdd54f9d6018b3a3d207ee1f49762f49",
+      "public_path": "artifact/icde/campaign/STATE_V4_PROTOCOL_CN.md",
+      "public_sha256": "847cb085f050e5ccbb12e75113d76fedfdd54f9d6018b3a3d207ee1f49762f49",
+      "adaptations": [],
+      "public_bytes": 6409
+    },
+    {
+      "source": "experiments/campaign_20261104/state_v4_candidate/baselines/hytgraph_qualify.py",
+      "source_sha256": "6aa0832cd8c27eb91dde7e728dabdbf24d499f4a837c82053bbf8d4e8ab66da8",
+      "public_path": "artifact/icde/campaign/baselines/hytgraph_qualify.py",
+      "public_sha256": "6aa0832cd8c27eb91dde7e728dabdbf24d499f4a837c82053bbf8d4e8ab66da8",
+      "adaptations": [],
+      "public_bytes": 10820
+    },
+    {
+      "source": "experiments/campaign_20261104/state_final_plan_v7/state_plan.py",
+      "source_sha256": "5d317223c46852ee60a9a622a2f53b5c23704aace3733dc0731d29edfffc2f46",
+      "public_path": "artifact/icde/campaign/state_final_plan/state_plan.py",
+      "public_sha256": "5d317223c46852ee60a9a622a2f53b5c23704aace3733dc0731d29edfffc2f46",
+      "adaptations": [],
+      "public_bytes": 41075
+    },
+    {
+      "source": "experiments/campaign_20261104/state_final_plan_v7/test_state_plan.py",
+      "source_sha256": "d74f38728d0008fc1df7fccc84cb733e80a65e0ec650eab2ab64faa0c5ab3bbc",
+      "public_path": "artifact/icde/campaign/state_final_plan/test_state_plan.py",
+      "public_sha256": "d74f38728d0008fc1df7fccc84cb733e80a65e0ec650eab2ab64faa0c5ab3bbc",
+      "adaptations": [],
+      "public_bytes": 12150
+    },
+    {
+      "source": "experiments/campaign_20261104/e3_unweighted_control_v4/pr_control.py",
+      "source_sha256": "8726ecfee943fd8a8ba3e92d3deb324daf77acea6e74872bb4627219b2deb1be",
+      "public_path": "artifact/icde/campaign/e3_unweighted_control/pr_control.py",
+      "public_sha256": "8726ecfee943fd8a8ba3e92d3deb324daf77acea6e74872bb4627219b2deb1be",
+      "adaptations": [],
+      "public_bytes": 22799
+    },
+    {
+      "source": "experiments/campaign_20261104/e3_unweighted_control_v4/pr_plan.py",
+      "source_sha256": "f0facbc7aac9e69551be220ceca69095db96998881ec018aed63dd75e7d7dd59",
+      "public_path": "artifact/icde/campaign/e3_unweighted_control/pr_plan.py",
+      "public_sha256": "f0facbc7aac9e69551be220ceca69095db96998881ec018aed63dd75e7d7dd59",
+      "adaptations": [],
+      "public_bytes": 8278
+    },
+    {
+      "source": "experiments/campaign_20261104/e3_unweighted_control_v4/test_pr_control.py",
+      "source_sha256": "b3105f079e3373f648e4702b8851484b3485ca8f60cf75d55a40bd587ea65561",
+      "public_path": "artifact/icde/campaign/e3_unweighted_control/test_pr_control.py",
+      "public_sha256": "42153019ce5fda26c562d99a5c767c49265cb82d46475ad9695a99698bcc0ee5",
+      "adaptations": [],
+      "final_public_adaptation": "Explicit portability: source-relative test references, scrubbed historical origin paths, configurable CPU IDs, or current launcher defaults; exact diff is in the review patch.",
+      "public_bytes": 10179
+    },
+    {
+      "source": "experiments/campaign_20261104/state_grid_prepare_v2/prepare_state_grid.py",
+      "source_sha256": "7afdfd44ad0c8395e0e3a8609f7891a4c5a191887aa3d25997140cf20452aae4",
+      "public_path": "artifact/icde/campaign/state_grid_prepare_v2/prepare_state_grid.py",
+      "public_sha256": "7afdfd44ad0c8395e0e3a8609f7891a4c5a191887aa3d25997140cf20452aae4",
+      "adaptations": [],
+      "public_bytes": 17197
+    },
+    {
+      "source": "experiments/campaign_20261104/state_grid_prepare_v2/test_state_grid_cpu.py",
+      "source_sha256": "4f17cdac26c4cc8682ea95bc8f6951bae76860e5f1e6fdf21135082e2a822ed1",
+      "public_path": "artifact/icde/campaign/state_grid_prepare_v2/test_state_grid_cpu.py",
+      "public_sha256": "4afdbec8f3b1a03ba9636c9b9a4b5d883f3eb485d3a96750a3b525e67539fcc0",
+      "adaptations": [
+        {
+          "original": "CAMPAIGN/'candidates/csr_search_dtype_v1/Easy-Graph'",
+          "replacement": "CAMPAIGN.parents[2]/'Easy-Graph'"
+        },
+        {
+          "original": "SOURCE.parent/'freeze.json'",
+          "replacement": "CAMPAIGN.parent/'provenance/runtime_source_freeze.json'"
+        },
+        {
+          "original": "CAMPAIGN/'state_v4_candidate'",
+          "replacement": "CAMPAIGN"
+        }
+      ],
+      "public_bytes": 7421
+    },
+    {
+      "source": "experiments/campaign_20261104/state_grid_prepare_v3/prepare_state_grid.py",
+      "source_sha256": "26d39039e0386c62c729b7c0378714b04f6bf8994755e345d72581ea6a4dbc73",
+      "public_path": "artifact/icde/campaign/state_grid_prepare_v3/prepare_state_grid.py",
+      "public_sha256": "26d39039e0386c62c729b7c0378714b04f6bf8994755e345d72581ea6a4dbc73",
+      "adaptations": [],
+      "public_bytes": 19838
+    },
+    {
+      "source": "experiments/campaign_20261104/state_grid_prepare_v3/test_state_grid_cpu.py",
+      "source_sha256": "f49620f67aaff9c004491c43833849c7f980016766f711ac845aa78c0c9a7ff4",
+      "public_path": "artifact/icde/campaign/state_grid_prepare_v3/test_state_grid_cpu.py",
+      "public_sha256": "fe705fcd307aad60d965e357b355a5710880fee145a345bf9229892a8613bbda",
+      "adaptations": [
+        {
+          "original": "CAMPAIGN/'candidates/csr_search_dtype_v1/Easy-Graph'",
+          "replacement": "CAMPAIGN.parents[2]/'Easy-Graph'"
+        },
+        {
+          "original": "SOURCE.parent/'freeze.json'",
+          "replacement": "CAMPAIGN.parent/'provenance/runtime_source_freeze.json'"
+        },
+        {
+          "original": "CAMPAIGN/'state_v4_candidate'",
+          "replacement": "CAMPAIGN"
+        }
+      ],
+      "public_bytes": 9838
+    },
+    {
+      "source": "experiments/campaign_20261104/state_grid_prepare_v3/full_grid.json",
+      "source_sha256": "bf1da12566197ee383ec7b1c4964cf0d3a67b1386e8853ab025120b8d3917226",
+      "public_path": "artifact/icde/campaign/state_grid_prepare_v3/full_grid.json",
+      "public_sha256": "bf1da12566197ee383ec7b1c4964cf0d3a67b1386e8853ab025120b8d3917226",
+      "adaptations": [],
+      "public_bytes": 11893
+    },
+    {
+      "source": "experiments/campaign_20261104/state_grid_prepare_v3/positions.py",
+      "source_sha256": "7a2d158ab8b0dca6601acaf465fe61a35557e155f34d18a4f78a9daae96b6a99",
+      "public_path": "artifact/icde/campaign/state_grid_prepare_v3/positions.py",
+      "public_sha256": "7a2d158ab8b0dca6601acaf465fe61a35557e155f34d18a4f78a9daae96b6a99",
+      "adaptations": [],
+      "public_bytes": 1616
+    },
+    {
+      "source": "experiments/campaign_20261104/state_partition_hotspot_v1/hotspot_positions.py",
+      "source_sha256": "bb4f35a97c4b33bac0d94c25631f403320e11400bc74fe33710cb311015f64d3",
+      "public_path": "artifact/icde/campaign/state_partition_hotspot/hotspot_positions.py",
+      "public_sha256": "bb4f35a97c4b33bac0d94c25631f403320e11400bc74fe33710cb311015f64d3",
+      "adaptations": [],
+      "public_bytes": 6505
+    },
+    {
+      "source": "experiments/campaign_20261104/state_partition_hotspot_v1/prepare_hotspot_inputs.py",
+      "source_sha256": "cd5878f3402879e48883375940652cd075aa4a27b7ef7ab770e7a664d100dc9e",
+      "public_path": "artifact/icde/campaign/state_partition_hotspot/prepare_hotspot_inputs.py",
+      "public_sha256": "cd5878f3402879e48883375940652cd075aa4a27b7ef7ab770e7a664d100dc9e",
+      "adaptations": [],
+      "public_bytes": 4708
+    },
+    {
+      "source": "experiments/campaign_20261104/state_partition_hotspot_v1/test_hotspot_positions.py",
+      "source_sha256": "a3deb7c1c1b75bfdff9680d17af8de2a1258a51f1e72931201be3e5c40ef2f75",
+      "public_path": "artifact/icde/campaign/state_partition_hotspot/test_hotspot_positions.py",
+      "public_sha256": "a3deb7c1c1b75bfdff9680d17af8de2a1258a51f1e72931201be3e5c40ef2f75",
+      "adaptations": [],
+      "public_bytes": 2688
+    },
+    {
+      "source": "experiments/campaign_20261104/state_partition_hotspot_v1/test_hotspot_integration.py",
+      "source_sha256": "178bf6afbf90be248d12d8e547614bcb90af543c71caceaffb91e153357bed5e",
+      "public_path": "artifact/icde/campaign/state_partition_hotspot/test_hotspot_integration.py",
+      "public_sha256": "92cbb82a1186a2ae6ac1212222fb9fe088685cfe4d61ecccf856aa858bfeb828",
+      "adaptations": [
+        {
+          "original": "'state_final_plan_v7/state_plan.py'",
+          "replacement": "'state_final_plan/state_plan.py'"
+        }
+      ],
+      "public_bytes": 3564
+    },
+    {
+      "source": "experiments/campaign_20261104/state_partition_hotspot_v1/README.md",
+      "source_sha256": "945f17a7ce2ca7b3fff6f300ccd0ac1cd2d4cf8144fe92f0c35eb0389459e2d3",
+      "public_path": "artifact/icde/campaign/state_partition_hotspot/README.md",
+      "public_sha256": "945f17a7ce2ca7b3fff6f300ccd0ac1cd2d4cf8144fe92f0c35eb0389459e2d3",
+      "adaptations": [],
+      "public_bytes": 1884
+    },
+    {
+      "source": "experiments/campaign_20261104/run_campaign_queue_v8.py",
+      "source_sha256": "8f01302aa5ff9e9df53a849139814b8b9c836333ef8b8e3703152a300d3b79ea",
+      "public_path": "artifact/icde/campaign/run_campaign_queue_v8.py",
+      "public_sha256": "8f01302aa5ff9e9df53a849139814b8b9c836333ef8b8e3703152a300d3b79ea",
+      "adaptations": [],
+      "public_bytes": 27647
+    },
+    {
+      "source": "experiments/campaign_20261104/owned_process_supervisor_v2.py",
+      "source_sha256": "3cca4c300d88547b610669b4f6f4621b808e3986a104548759546239f6cf6c81",
+      "public_path": "artifact/icde/campaign/owned_process_supervisor_v2.py",
+      "public_sha256": "3cca4c300d88547b610669b4f6f4621b808e3986a104548759546239f6cf6c81",
+      "adaptations": [],
+      "public_bytes": 8708
+    },
+    {
+      "source": "experiments/campaign_20261104/incremental_completed_output_v1.py",
+      "source_sha256": "96aaff1ceba6d7aac13fc355ac6c118d37a6e3a1a982701b5ec8daab443eeb62",
+      "public_path": "artifact/icde/campaign/incremental_completed_output_v1.py",
+      "public_sha256": "96aaff1ceba6d7aac13fc355ac6c118d37a6e3a1a982701b5ec8daab443eeb62",
+      "adaptations": [],
+      "public_bytes": 12790
+    },
+    {
+      "source": "experiments/campaign_20261104/completed_output_maintenance_incremental_v1.py",
+      "source_sha256": "9c784af1aa4c9760742b399e992af5abe8899c879afe520ad5d1dc17a975bd53",
+      "public_path": "artifact/icde/campaign/completed_output_maintenance_incremental_v1.py",
+      "public_sha256": "9c784af1aa4c9760742b399e992af5abe8899c879afe520ad5d1dc17a975bd53",
+      "adaptations": [],
+      "public_bytes": 1434
+    },
+    {
+      "source": "experiments/campaign_20261104/completed_job_audit_maintenance_v2.py",
+      "source_sha256": "d479619310cd2cfeb08d081eb504a47c206b4fb25958f896e5c4d0b3ef7d256e",
+      "public_path": "artifact/icde/campaign/completed_job_audit_maintenance_v2.py",
+      "public_sha256": "d479619310cd2cfeb08d081eb504a47c206b4fb25958f896e5c4d0b3ef7d256e",
+      "adaptations": [],
+      "public_bytes": 4638
+    },
+    {
+      "source": "experiments/campaign_20261104/test_campaign_queue_v8_cpu.py",
+      "source_sha256": "4bffde6e613d1af9ac42547c577ddceccf4eacedf15cc02c233e2832693e790b",
+      "public_path": "artifact/icde/campaign/test_campaign_queue_v8_cpu.py",
+      "public_sha256": "4bffde6e613d1af9ac42547c577ddceccf4eacedf15cc02c233e2832693e790b",
+      "adaptations": [],
+      "public_bytes": 5302
+    },
+    {
+      "source": "experiments/campaign_20261104/test_incremental_completed_output_cpu.py",
+      "source_sha256": "e191e8a5399832bc32df7a68c8ec69203de291952ec26088c9e9dc598ed6a0c1",
+      "public_path": "artifact/icde/campaign/test_incremental_completed_output_cpu.py",
+      "public_sha256": "e191e8a5399832bc32df7a68c8ec69203de291952ec26088c9e9dc598ed6a0c1",
+      "adaptations": [],
+      "public_bytes": 7584
+    },
+    {
+      "source": "experiments/campaign_20261104/run_campaign_queue_v7.py",
+      "source_sha256": "776f7a6ad9423725003f4b30489c5695fef59868a745c3b3255721dc4cf736b4",
+      "public_path": "artifact/icde/campaign/run_campaign_queue_v7.py",
+      "public_sha256": "776f7a6ad9423725003f4b30489c5695fef59868a745c3b3255721dc4cf736b4",
+      "adaptations": [],
+      "public_bytes": 23637
+    },
+    {
+      "source": "experiments/campaign_20261104/test_campaign_queue_v7_cpu.py",
+      "source_sha256": "06b43bf6de3e04b6520a7feb13695898080fa4914dbb5a4cc8c87d92289805a5",
+      "public_path": "artifact/icde/campaign/test_campaign_queue_v7_cpu.py",
+      "public_sha256": "06b43bf6de3e04b6520a7feb13695898080fa4914dbb5a4cc8c87d92289805a5",
+      "adaptations": [],
+      "public_bytes": 10221
+    },
+    {
+      "source": "experiments/campaign_20261104/e4s/author_build.py",
+      "source_sha256": "9830ac1329731206ab54c5cc39e446dd3a82cab67efbd21a9e20b1b4da160c38",
+      "public_path": "artifact/icde/campaign/e4s/author_build.py",
+      "public_sha256": "9830ac1329731206ab54c5cc39e446dd3a82cab67efbd21a9e20b1b4da160c38",
+      "public_bytes": 8086,
+      "adaptations": []
+    },
+    {
+      "source": "experiments/campaign_20261104/e4s/input_contract.py",
+      "source_sha256": "d1a32401134c0630863e2a1f2eeb23234f6db6cf050984c8bbd3587a3582f78a",
+      "public_path": "artifact/icde/campaign/e4s/input_contract.py",
+      "public_sha256": "d1a32401134c0630863e2a1f2eeb23234f6db6cf050984c8bbd3587a3582f78a",
+      "public_bytes": 7199,
+      "adaptations": []
+    },
+    {
+      "source": "experiments/campaign_20261104/e4s/worker.py",
+      "source_sha256": "4a18e906b21593d817ff02f3c1e65665c97ff088f51501f98792c32c831e9db1",
+      "public_path": "artifact/icde/campaign/e4s/worker.py",
+      "public_sha256": "4a18e906b21593d817ff02f3c1e65665c97ff088f51501f98792c32c831e9db1",
+      "public_bytes": 21722,
+      "adaptations": []
+    },
+    {
+      "source": "experiments/campaign_20261104/e4s/test_e4s_cpu.py",
+      "source_sha256": "79b7c8d05f4cb86aaa43e8a3f07497cd39aa015d73715f8967a6c316c325579e",
+      "public_path": "artifact/icde/campaign/e4s/test_e4s_cpu.py",
+      "public_sha256": "79b7c8d05f4cb86aaa43e8a3f07497cd39aa015d73715f8967a6c316c325579e",
+      "public_bytes": 8259,
+      "adaptations": []
+    },
+    {
+      "source": "experiments/campaign_20261104/e4s/run_e4s.py",
+      "source_sha256": "04d16d20287ce52463e17f5a7b4ed2d051e8abae0fd7349f9b468ec914bc2fd2",
+      "public_path": "artifact/icde/campaign/e4s/run_e4s.py",
+      "public_sha256": "04d16d20287ce52463e17f5a7b4ed2d051e8abae0fd7349f9b468ec914bc2fd2",
+      "public_bytes": 5237,
+      "adaptations": []
+    },
+    {
+      "source": "experiments/campaign_20261104/e4s/sg_clock.py",
+      "source_sha256": "5dad61de081647fa64cfe3257a6cecfd9abc846937d0624429203bdffc9c1113",
+      "public_path": "artifact/icde/campaign/e4s/sg_clock.py",
+      "public_sha256": "5dad61de081647fa64cfe3257a6cecfd9abc846937d0624429203bdffc9c1113",
+      "public_bytes": 3088,
+      "adaptations": []
+    },
+    {
+      "source": "experiments/campaign_20261104/e4s/sg_clock_exec.py",
+      "source_sha256": "c7c02c776a084fee4bfac9146a22f366bd92eda66fbe980f15fc5b8f0f612dad",
+      "public_path": "artifact/icde/campaign/e4s/sg_clock_exec.py",
+      "public_sha256": "c7c02c776a084fee4bfac9146a22f366bd92eda66fbe980f15fc5b8f0f612dad",
+      "public_bytes": 864,
+      "adaptations": []
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/native_sg_diagnostic_load_v2/cugraph_csr_adapter.py",
+      "source_sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7",
+      "public_path": "artifact/icde/campaign/native_diagnostic/cugraph_csr_adapter.py",
+      "public_sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7",
+      "public_bytes": 6682,
+      "adaptations": []
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/native_sg_diagnostic_load_v2/native_input.py",
+      "source_sha256": "e2b5acf9c9dc264ac96a56df8bbf5b2de49558a9c56e06acc10d47ee350a251c",
+      "public_path": "artifact/icde/campaign/native_diagnostic/native_input.py",
+      "public_sha256": "e2b5acf9c9dc264ac96a56df8bbf5b2de49558a9c56e06acc10d47ee350a251c",
+      "public_bytes": 12636,
+      "adaptations": []
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/native_sg_diagnostic_load_v2/native_profile.py",
+      "source_sha256": "230b76d86bf8c2af354c9a432239d348092e47531ae4dbde5c8e66f27681d392",
+      "public_path": "artifact/icde/campaign/native_diagnostic/native_profile.py",
+      "public_sha256": "2e5791b66c84293be05778b880f3f5ebc611612163a818e78a9f8d6bd2bd2cd4",
+      "public_bytes": 7941,
+      "adaptations": [
+        "Public relative imports and explicit current protocol/grid gates."
+      ]
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/native_sg_diagnostic_load_v2/native_worker.py",
+      "source_sha256": "6965da25409d649e5e5504b05f5af1404e9037b526c428439d9545026ea37e46",
+      "public_path": "artifact/icde/campaign/native_diagnostic/native_worker.py",
+      "public_sha256": "6965da25409d649e5e5504b05f5af1404e9037b526c428439d9545026ea37e46",
+      "public_bytes": 28177,
+      "adaptations": []
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/native_sg_diagnostic_load_v2/qualify_static_native_domains.py",
+      "source_sha256": "27af686ede9a6441adc66e1565bba2220fdd92e64a12bee59e4c75702c9b4778",
+      "public_path": "artifact/icde/campaign/native_diagnostic/qualify_static_native_domains.py",
+      "public_sha256": "27af686ede9a6441adc66e1565bba2220fdd92e64a12bee59e4c75702c9b4778",
+      "public_bytes": 5683,
+      "adaptations": []
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/native_sg_diagnostic_load_v2/sg_worker.py",
+      "source_sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf",
+      "public_path": "artifact/icde/campaign/native_diagnostic/sg_worker.py",
+      "public_sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf",
+      "public_bytes": 41355,
+      "adaptations": []
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/native_sg_diagnostic_load_v2/test_diagnostic_scope_cpu.py",
+      "source_sha256": "59a9e991e416d8fda2af1975e52eaea9a97bd12f284e57a8d5edc5476ab2479a",
+      "public_path": "artifact/icde/campaign/native_diagnostic/test_diagnostic_scope_cpu.py",
+      "public_sha256": "59a9e991e416d8fda2af1975e52eaea9a97bd12f284e57a8d5edc5476ab2479a",
+      "public_bytes": 892,
+      "adaptations": []
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/native_sg_diagnostic_load_v2/test_metric_json_cpu.py",
+      "source_sha256": "ac350dc4e0bbf8bba7edd4e6089bc24d4381ddbe5c7f7f2a36478daefda0cf39",
+      "public_path": "artifact/icde/campaign/native_diagnostic/test_metric_json_cpu.py",
+      "public_sha256": "ac350dc4e0bbf8bba7edd4e6089bc24d4381ddbe5c7f7f2a36478daefda0cf39",
+      "public_bytes": 714,
+      "adaptations": []
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/native_sg_diagnostic_load_v2/test_native_profile_cpu.py",
+      "source_sha256": "e3a25b177239181c188d2cce67329d3e6ba154b385fa9d5c22a4cd91ee8b7649",
+      "public_path": "artifact/icde/campaign/native_diagnostic/test_native_profile_cpu.py",
+      "public_sha256": "e3a25b177239181c188d2cce67329d3e6ba154b385fa9d5c22a4cd91ee8b7649",
+      "public_bytes": 3903,
+      "adaptations": []
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/native_sg_diagnostic_load_v2/test_static_runner_cpu.py",
+      "source_sha256": "a413eaa3861e8651db6f6d4fddc16ea70db9baa23ab8e5f2293c13ac2e3ba824",
+      "public_path": "artifact/icde/campaign/native_diagnostic/test_static_runner_cpu.py",
+      "public_sha256": "a413eaa3861e8651db6f6d4fddc16ea70db9baa23ab8e5f2293c13ac2e3ba824",
+      "public_bytes": 1916,
+      "adaptations": []
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/native_sg_diagnostic_load_v2/test_load_preparation_cpu.py",
+      "source_sha256": "52517b80757541a4e2a8721d1cc218ced6b2ecfd2addee0bb8a2a0fa79d61952",
+      "public_path": "artifact/icde/campaign/native_diagnostic/test_load_preparation_cpu.py",
+      "public_sha256": "53314b3b47250151d0418a859772d6f5e6a05e0a81cef6e2384739404d18a751",
+      "public_bytes": 6046,
+      "adaptations": [
+        "Public relative imports and explicit current protocol/grid gates."
+      ]
+    },
+    {
+      "source": "experiments/campaign_20261104/runner_candidates/native_sg_diagnostic_load_v2/historical_profile.json",
+      "source_sha256": "693d58bcffdcef34ba2c2bebdd0ddf19f648c73a8239b03e0565661d43f49d4f",
+      "public_path": "artifact/icde/campaign/native_diagnostic/historical_profile.json",
+      "public_sha256": "067b50883e01426c808f1fa4a5613f22c9bc0050e54db9b8b37eecbc791afa93",
+      "public_bytes": 92783,
+      "adaptations": [
+        "Public relative imports and explicit current protocol/grid gates."
+      ]
+    },
+    {
+      "source": "experiments/campaign_20261104/paper_results_v1/analysis.py",
+      "source_sha256": "7ea9416e9f54638d8ea0be43adc0838ae1ec649f3c3f57529a6d087405ffd4a7",
+      "public_path": "artifact/icde/paper_results/analysis.py",
+      "public_sha256": "7ea9416e9f54638d8ea0be43adc0838ae1ec649f3c3f57529a6d087405ffd4a7",
+      "public_bytes": 8788,
+      "adaptations": []
+    },
+    {
+      "source": "experiments/campaign_20261104/paper_results_v1/normalize.py",
+      "source_sha256": "e68a4b6261bde1b22eeb79333a00f51d2ab6e046f99c4d8d1370ee9eab344013",
+      "public_path": "artifact/icde/paper_results/normalize.py",
+      "public_sha256": "1baeb8ce38957ddd6fee9a6ef950760752583cbadb865bdfaae38d86dc574361",
+      "public_bytes": 38623,
+      "adaptations": [
+        "Public relative imports and explicit current protocol/grid gates."
+      ],
+      "root_supplemental_adaptation": "Formal E4-S publication fails closed pending recoverable-output archive integration; validated by root supplemental CPU evidence."
+    },
+    {
+      "source": "experiments/campaign_20261104/paper_results_v1/render.py",
+      "source_sha256": "ebcd7cd6fea27c3d6731f553567b15905d6d5d8af84a906c53498c5187fa03e0",
+      "public_path": "artifact/icde/paper_results/render.py",
+      "public_sha256": "9a0c0660bb6f40f89df0981de6d0d8cbce8d9f8a647c5598d2ae3f34491ff64a",
+      "public_bytes": 31992,
+      "adaptations": [
+        "Public relative imports and explicit current protocol/grid gates."
+      ]
+    },
+    {
+      "source": "experiments/campaign_20261104/paper_results_v1/capacity.py",
+      "source_sha256": "5df9cd98b088602473e4f1c4a7f08626a0a6dba5c76a7eaceb3c4d52a043a3cd",
+      "public_path": "artifact/icde/paper_results/capacity.py",
+      "public_sha256": "5df9cd98b088602473e4f1c4a7f08626a0a6dba5c76a7eaceb3c4d52a043a3cd",
+      "public_bytes": 13129,
+      "adaptations": []
+    },
+    {
+      "source": "experiments/campaign_20261104/paper_results_v1/test_paper_results.py",
+      "source_sha256": "9ce127da6deba0099fd821d9a465e3ce1ed11e73c0675a72e2e0b942942e7a84",
+      "public_path": "artifact/icde/paper_results/test_paper_results.py",
+      "public_sha256": "9ce127da6deba0099fd821d9a465e3ce1ed11e73c0675a72e2e0b942942e7a84",
+      "public_bytes": 21617,
+      "adaptations": []
+    },
+    {
+      "source": "experiments/campaign_20261104/paper_results_v1/test_capacity.py",
+      "source_sha256": "2af435eeecaa9a4713def57d8ab357ad18b2388ccd818b3b6b80244cbe415dfe",
+      "public_path": "artifact/icde/paper_results/test_capacity.py",
+      "public_sha256": "2af435eeecaa9a4713def57d8ab357ad18b2388ccd818b3b6b80244cbe415dfe",
+      "public_bytes": 5082,
+      "adaptations": []
+    },
+    {
+      "source": "experiments/campaign_20261104/paper_results_v1/README_CN.md",
+      "source_sha256": "83361e9ede6614a23d2c178775673e37fd0773d47656e5e28a64d3502ace5f26",
+      "public_path": "artifact/icde/paper_results/README_CN.md",
+      "public_sha256": "d41e455b67441a661aec9f10daf0d662571d0edca57c126b2f624c1e81bd833f",
+      "public_bytes": 9567,
+      "adaptations": [
+        "Public relative imports and explicit current protocol/grid gates."
+      ]
+    },
+    {
+      "source": "experiments/campaign_20261104/paper_results_v1/requirements.txt",
+      "source_sha256": "a11bc8ed12f445aeeee44ab021abf9547d49b26f77294cc66b6fc454c094d8b9",
+      "public_path": "artifact/icde/paper_results/requirements.txt",
+      "public_sha256": "a11bc8ed12f445aeeee44ab021abf9547d49b26f77294cc66b6fc454c094d8b9",
+      "public_bytes": 46,
+      "adaptations": []
+    },
+    {
+      "source": "experiments/campaign_20261104/paper_results_v1/selection.example.json",
+      "source_sha256": "f7e31e6d263cf205780b6555707291640533a40036b1ebd1d3a21d4d5c32ebf1",
+      "public_path": "artifact/icde/paper_results/selection.example.json",
+      "public_sha256": "f7e31e6d263cf205780b6555707291640533a40036b1ebd1d3a21d4d5c32ebf1",
+      "public_bytes": 839,
+      "adaptations": []
+    },
+    {
+      "source": "experiments/campaign_20261104/cpu_regression_d84ff_v1/test_weight_admission_cpu.py",
+      "source_sha256": "35733167eca465372e9375822f2363bacead3653ed908f5dcfd2c1d4a5f4e533",
+      "public_path": "artifact/icde/tests/test_weight_admission_cpu.py",
+      "public_sha256": "cafd0e84de393b671350cd547c759b7c64780bcb762a73566b356097fc8716e8",
+      "public_bytes": 8245,
+      "adaptations": [
+        "Explicit public paths/build arguments; historical origin removed without inheriting qualification."
+      ]
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_memory_input_v1/test_memory_input.py",
+      "source_sha256": "3369f4377883556e161edc482f1b37ca41e2abfc3223e57f384f946bb4d881c6",
+      "public_path": "artifact/icde/tools/test_native_array_cpu.py",
+      "public_sha256": "e5bc8da453b009a20757c43c919c436fb77f56bf47a2bf65d464c5004d8d5e52",
+      "public_bytes": 7985,
+      "adaptations": [
+        "Explicit public paths/build arguments; historical origin removed without inheriting qualification."
+      ]
+    },
+    {
+      "source": "experiments/campaign_20261104/state_final_plan_v6/profile_environment_v3.json",
+      "source_sha256": "e58184914c48b1e91db22477b794d083f750b83ec3c5dc74ff9da9f894bc2287",
+      "public_path": "artifact/icde/campaign/state_profile_environment.json",
+      "public_sha256": "78a8457d2e331d5c98ced86544c8ef1cd9f667364618dbd070e0da00f4dca140",
+      "public_bytes": 8649,
+      "adaptations": [
+        "Explicit public paths/build arguments; historical origin removed without inheriting qualification."
+      ]
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/static_full_profile_v1/Easy-Graph/easygraph/gpu/_native.py",
+      "source_sha256": "818328327ef557ab3572f821a3b725c7c1cadd2686dd14c8efa63e86847df53a",
+      "public_path": "artifact/icde/tests/fixtures/weight_admission_447c/_native.py",
+      "public_sha256": "818328327ef557ab3572f821a3b725c7c1cadd2686dd14c8efa63e86847df53a",
+      "public_bytes": 30484,
+      "adaptations": [],
+      "scope": "Historical CPU parity fixture only; not a second runtime source."
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/static_full_profile_v1/Easy-Graph/easygraph/gpu/_dynamic.py",
+      "source_sha256": "69d12ea05bce00ef1161796e3f36d75c4870a6181925708b5b76d11726de6c9b",
+      "public_path": "artifact/icde/tests/fixtures/weight_admission_447c/_dynamic.py",
+      "public_sha256": "69d12ea05bce00ef1161796e3f36d75c4870a6181925708b5b76d11726de6c9b",
+      "public_bytes": 18070,
+      "adaptations": [],
+      "scope": "Historical CPU parity fixture only; not a second runtime source."
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/static_full_profile_v1/Easy-Graph/easygraph/gpu/_manifest_signatures.py",
+      "source_sha256": "98fcb74a7a3b97bfa6aa9e325894f634e09084a8aff58a2b62ab773cc94526ee",
+      "public_path": "artifact/icde/tests/fixtures/weight_admission_447c/_manifest_signatures.py",
+      "public_sha256": "98fcb74a7a3b97bfa6aa9e325894f634e09084a8aff58a2b62ab773cc94526ee",
+      "public_bytes": 1991,
+      "adaptations": [],
+      "scope": "Historical CPU parity fixture only; not a second runtime source."
+    }
+  ],
+  "groups": {
+    "native_load_p1": [
+      "artifact/icde/campaign/native_load_p1/native_worker.py",
+      "artifact/icde/campaign/native_load_p1/native_input.py",
+      "artifact/icde/campaign/native_load_p1/sg_worker.py",
+      "artifact/icde/campaign/native_load_p1/cugraph_csr_adapter.py",
+      "artifact/icde/campaign/native_load_p1/test_static_runner_cpu.py",
+      "artifact/icde/campaign/native_load_p1/qualify_static_native_domains.py",
+      "artifact/icde/campaign/native_load_p1/native_profile.py",
+      "artifact/icde/campaign/native_load_p1/test_native_profile_cpu.py",
+      "artifact/icde/campaign/native_load_p1/test_metric_json_cpu.py",
+      "artifact/icde/campaign/native_load_p1/test_load_preparation_cpu.py",
+      "artifact/icde/campaign/native_load_p1/historical_profile.json",
+      "artifact/icde/campaign/native_load_p1/run_native.py",
+      "artifact/icde/campaign/native_load_p1/run_sg.py"
+    ],
+    "sg_current": [
+      "artifact/icde/campaign/sg_current/sg_worker.py",
+      "artifact/icde/campaign/sg_current/run_sg.py",
+      "artifact/icde/campaign/sg_current/cugraph_csr_adapter.py",
+      "artifact/icde/campaign/sg_current/test_sg_campaign.py",
+      "artifact/icde/campaign/sg_current/sequence16_worker.py",
+      "artifact/icde/campaign/sg_current/sequence16_adapter.py",
+      "artifact/icde/campaign/sg_current/run_sequence16.py",
+      "artifact/icde/campaign/sg_current/test_pr_global_l1.py",
+      "artifact/icde/campaign/sg_current/test_sequence16_campaign.py",
+      "artifact/icde/campaign/sg_current/test_csr_runner_contract.py",
+      "artifact/icde/campaign/sg_current/test_cugraph_i64_cpu.py",
+      "artifact/icde/campaign/sg_current/qualify_cugraph_i64.py",
+      "artifact/icde/campaign/sg_current/run_sg.py"
+    ],
+    "e6_memory": [
+      "artifact/icde/campaign/e6_memory/cugraph_csr_adapter.py",
+      "artifact/icde/campaign/e6_memory/e6_cpu_reference.py",
+      "artifact/icde/campaign/e6_memory/e6_reuse_provenance.json",
+      "artifact/icde/campaign/e6_memory/e6_reused.py",
+      "artifact/icde/campaign/e6_memory/e6_worker.py",
+      "artifact/icde/campaign/e6_memory/sg_worker.py",
+      "artifact/icde/campaign/e6_memory/run_e6.py"
+    ],
+    "gum_fp32_author": [
+      "artifact/icde/campaign/gum_fp32_author/test_fp32_contract.py",
+      "artifact/icde/campaign/gum_fp32_author/cugraph_csr_adapter.py",
+      "artifact/icde/campaign/gum_fp32_author/gum_clock.py",
+      "artifact/icde/campaign/gum_fp32_author/gum_rank_exec.py",
+      "artifact/icde/campaign/gum_fp32_author/gum_reused.py",
+      "artifact/icde/campaign/gum_fp32_author/gum_worker.py",
+      "artifact/icde/campaign/gum_fp32_author/mg_process_observer.py",
+      "artifact/icde/campaign/gum_fp32_author/native_input.py",
+      "artifact/icde/campaign/gum_fp32_author/native_worker.py",
+      "artifact/icde/campaign/gum_fp32_author/run_gum.py",
+      "artifact/icde/campaign/gum_fp32_author/sg_worker.py",
+      "artifact/icde/campaign/gum_fp32_author/test_gum_clock.py"
+    ],
+    "state_final_plan": [
+      "artifact/icde/campaign/state_final_plan/state_plan.py",
+      "artifact/icde/campaign/state_final_plan/test_state_plan.py"
+    ],
+    "e3_unweighted_control": [
+      "artifact/icde/campaign/e3_unweighted_control/pr_control.py",
+      "artifact/icde/campaign/e3_unweighted_control/pr_plan.py",
+      "artifact/icde/campaign/e3_unweighted_control/test_pr_control.py"
+    ],
+    "state_grid_prepare_v2": [
+      "artifact/icde/campaign/state_grid_prepare_v2/prepare_state_grid.py",
+      "artifact/icde/campaign/state_grid_prepare_v2/test_state_grid_cpu.py"
+    ],
+    "state_grid_prepare_v3": [
+      "artifact/icde/campaign/state_grid_prepare_v3/prepare_state_grid.py",
+      "artifact/icde/campaign/state_grid_prepare_v3/test_state_grid_cpu.py",
+      "artifact/icde/campaign/state_grid_prepare_v3/full_grid.json",
+      "artifact/icde/campaign/state_grid_prepare_v3/positions.py"
+    ],
+    "state_partition_hotspot": [
+      "artifact/icde/campaign/state_partition_hotspot/hotspot_positions.py",
+      "artifact/icde/campaign/state_partition_hotspot/prepare_hotspot_inputs.py",
+      "artifact/icde/campaign/state_partition_hotspot/test_hotspot_positions.py",
+      "artifact/icde/campaign/state_partition_hotspot/test_hotspot_integration.py",
+      "artifact/icde/campaign/state_partition_hotspot/README.md"
+    ]
+  },
+  "gpu_executed": false,
+  "formal_results": false,
+  "upstream_reference_manifests": "Not copied as portable proofs: regenerate independent CPU references and exact path/byte bindings in the reproducer workspace.",
+  "cpu_receipt": "artifact/icde/provenance/current_cpu_validation.json",
+  "public_gpu_qualified": false,
+  "new_public_tools": {
+    "artifact/icde/campaign/native_load_p1/test_public_cpu_mapping.py": {
+      "bytes": 1372,
+      "sha256": "65447d7ddb35b354b5629897295e08a8d732f68e94312f5202fd508963de2a9a"
+    },
+    "artifact/icde/paper_results/sequence.py": {
+      "bytes": 6668,
+      "sha256": "b68355c49feeb818c5fa30352eb6d353a94918e2382fe3d0d19237131565401a"
+    },
+    "artifact/icde/paper_results/test_sequence.py": {
+      "bytes": 5347,
+      "sha256": "a061caa627f2985eda327d88e7fd7f4354140e3777f197db2786d03847df21e3"
+    },
+    "artifact/icde/paper_results/test_public_paper_gates.py": {
+      "bytes": 1937,
+      "sha256": "587a0e3c9add78b60ffd46dfb8d0f1ba8d4ccf2865f3d17fc049ed576bee3085"
+    },
+    "artifact/icde/campaign/e6_memory/bind_references.py": {
+      "bytes": 1972,
+      "sha256": "e6f83eaef1011a3aca3ab09edc9d7bd09c909bf9d98e08227c515c6d17f42844"
+    },
+    "artifact/icde/campaign/e6_memory/test_reference_binding.py": {
+      "bytes": 1854,
+      "sha256": "9141c3f6dda5c28b37ec8785873d53d8f86f690c6f763eed8103b38e10c17b79"
+    },
+    "artifact/icde/tools/state_deployment_template.py": {
+      "bytes": 1879,
+      "sha256": "5405158f6a98cb45e25873656e8056297a642bb5d23ae7ef66d665eb249ad26a"
+    },
+    "artifact/icde/tools/test_projection_cpu.py": {
+      "bytes": 4062,
+      "sha256": "64668334ef17f06873a3fe595073e276b098a071472128ed167984558e09a8f3"
+    },
+    "artifact/icde/tools/protocol_grid.py": {
+      "bytes": 1304,
+      "sha256": "5a051de4cc3d72e29aae0f98af906fb452e41fc054a42cd7ff3db0c4155df130"
+    },
+    "artifact/icde/tools/test_d84_projection.py": {
+      "bytes": 1926,
+      "sha256": "7eeaff92fd1638ed12ee92990ed012c764f6248f00fe28886ab4b51839cfa849"
+    },
+    "artifact/icde/presentation/paper_results.py": {
+      "bytes": 804,
+      "sha256": "3c6fbea659a80c7b94f94e336d70fdc247b10cffc1c481d14051ce37ce09a0ab"
+    },
+    "artifact/icde/campaign/freeze.json": {
+      "bytes": 1119,
+      "sha256": "0492d754193e36157426e83fa748488e234adb6f93b90f119852b717bc5aef86"
+    }
+  },
+  "root_validation": "artifact/icde/provenance/root_development_validation.json"
+}

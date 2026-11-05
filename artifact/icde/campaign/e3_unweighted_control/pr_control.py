@@ -17,7 +17,7 @@ import os
 import sys
 import time
 
-PROTOCOL = 'e3-unweighted-pr-negative-v2'
+PROTOCOL = 'e3-unweighted-pr-negative-v3-native-device-keys'
 QUALITY = {'alpha': .85, 'residual_l1': 1e-6, 'mass_error': 1e-6,
            'reference_l1': 1e-5, 'reference_stop_l1': 1e-12,
            'reference_cap': 2000, 'invariance_l1': 2e-8}
@@ -165,7 +165,8 @@ def query_evidence(result, topology_name, arm, partitions, version):
     resource = metrics['resource_management']
     need(resource['state_switch_policy'] == 'closure', 'C must remain fixed')
     delta = dynamic['per_device_delta']
-    need(set(delta) == {str(x) for x in range(partitions)}, 'Incomplete actual device counters')
+    need(all(type(device) is int for device in delta) and set(delta) == set(range(partitions)),
+         'Incomplete actual device counters: expected native integer device IDs, got '+repr(list(delta)))
     totals = {key: sum(row.get(key, 0) for row in delta.values()) for key in WEIGHT_TRANSFER_COUNTERS}
     need(all(type(value) in (int,float) and math.isfinite(value) and value >= 0
              for value in totals.values()), 'Invalid actual weighted-view byte counter')
@@ -191,11 +192,13 @@ def run_workflow(a, row, make_session, packet):
     initialized = None
     failure = None
     final_inventory = None
+    failed_event = None
     try:
         session = make_session()
         initialized = time.perf_counter_ns()
         for event in trace(a.dataset):
             begin = time.perf_counter_ns()
+            failed_event = dict(event)
             if event['kind'] == 'commit':
                 details = session.commit_weights(event['base'], event['snapshot'],
                     packet(row, event['version']), storage='native_memory')
@@ -204,15 +207,20 @@ def run_workflow(a, row, make_session, packet):
             else:
                 result = session.query(topology_name, 'pr', {})  # New native invocation on every event.
                 values = result.values
+                failed_event['observed_query'] = dict(public_seconds=result.seconds,
+                    algorithm=result.algorithm, graph_id=result.graph_id,
+                    output_shape=list(values.shape), output_dtype=str(values.dtype),
+                    metrics=result.backend_metrics)
                 need(values.shape == (row['n'],) and values.dtype == np.float64 and
                      values.flags.owndata and not values.flags.writeable and values.base is None,
                      'PR did not return a complete independent public vector')
                 need(not any(np.shares_memory(values, old) for _, old in held), 'Output buffer reused across requests')
-                dependency = query_evidence(result, topology_name, a.arm, a.partitions, event['version'])
                 held.append((event, values))
+                dependency = query_evidence(result, topology_name, a.arm, a.partitions, event['version'])
                 details = dict(public_seconds=result.seconds, execution_snapshot=topology_name,
                                algorithm='pr', dependency_audit=dependency, metrics=result.backend_metrics)
             events.append(dict(event, interval_seconds=(time.perf_counter_ns()-begin)/1e9, details=details))
+            failed_event = None
         ended = time.perf_counter_ns()
         final_inventory = session.inventory()
     except BaseException as error:
@@ -227,7 +235,7 @@ def run_workflow(a, row, make_session, packet):
                 failure = (failure or '') + '; close: ' + type(error).__name__ + ': ' + str(error)
     complete = failure is None and len(events) == 41 and len(held) == 21
     return held, before_close, dict(execution_complete=complete, execution_error=failure,
-        events=events, final_inventory=final_inventory,
+        events=events, failed_event=failed_event, final_inventory=final_inventory,
         first_complete_workflow_seconds=(ended-started)/1e9 if complete else None,
         workflow_complete_host_seconds=(ended-initialized)/1e9 if complete else None,
         continuous_interval=True, sum_of_phases_used_as_total=False,
@@ -345,8 +353,8 @@ def execute(a):
             need(shutil.disk_usage(a.output_store).free >= reserve, 'Insufficient complete-output disk reserve')
             record['output_admission'] = dict(vector_bytes=21*row['n']*8,reserve_bytes=2<<30,
                                              dedup_savings_assumed=False,minimum_host_bytes=host)
-            environment = support.controlled_environment(dep['environment'], worker.COMMON_ENV, a.gpu_uuids)
-            os.environ.update(dep['environment'], **worker.COMMON_ENV,
+            environment = support.controlled_environment(support.environment_for(dep, a.partitions), worker.COMMON_ENV, a.gpu_uuids)
+            os.environ.update(support.environment_for(dep, a.partitions), **worker.COMMON_ENV,
                               CUDA_VISIBLE_DEVICES=a.gpu_uuids,CUDA_DEVICE_ORDER='PCI_BUS_ID')
             sys.path.insert(0, dep['source_root']);sys.path.insert(1,str(Path(dep['native_dso']['path']).parent))
             import cpp_easygraph as cpp

@@ -1,0 +1,9 @@
+# Controlled partition locality
+
+This CPU selector isolates the effect of **how many owner partitions an update touches**, at fixed update density. It uses the unchanged eight-way even vertex partition and the prefix owners `0..K-1`, for K = 1/2/4/8. It selects exactly `floor(m*rho)` stored arcs, rounded down to an even number for undirected input. An undirected logical edge is eligible only when both endpoints lie inside the selected prefix; its reverse arc is included. A topology-only coverage anchor ensures every selected owner is touched, followed by uniform sampling without replacement from the remaining eligible logical edges. The seed is fixed before measurement.
+
+This is an explicit controlled intervention, not a claim that every natural update batch is uniformly sampled or that a paper used this exact trace. Insufficient eligible edges, owner coverage or update count yields `INFEASIBLE`; it never silently widens K, changes rho or returns a partial batch. Actual affected owners must equal exactly the selected prefix. The canonical source and shared P8 base are bound before selecting positions; output indices and selector code are hashed in the receipt.
+
+The intended E3 control is IN/OR at P=8, rho=1e-4, K=1/2/4/8, D0C1/D1C1, and old readers none/per_update: 32 configurations before repetition. It supplements the fixed main grid; it must not replace unfavorable main cells. The selector has 13 CPU tests, including reverse pairs, exact counts, reproducibility across processing chunk sizes, insufficient capacity and broken reverse arcs.
+
+Status: CPU selector validated only. Shared real P8 bases, signed hotspot input manifests, source-bound qualification plans, GPU validation and all formal measurements remain outstanding. The current main state grid supports uniform/clustered inputs only; this README does not imply hotspot integration is complete.

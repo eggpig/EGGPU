@@ -18,7 +18,7 @@ import state_worker as worker
 
 
 SOURCE = Path(os.environ.get('EGGPU_TEST_SOURCE', str(
-    Path(__file__).resolve().parents[3] / 'Easy-Graph')))
+    Path(__file__).resolve().parents[1] / 'candidates/cold_import_v1/Easy-Graph')))
 
 
 def args(tmp_path, **changes):

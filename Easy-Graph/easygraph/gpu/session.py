@@ -149,6 +149,32 @@ are exposed by ``capabilities`` and ``inventory``.
                    kind="native")
 
     @classmethod
+    def native_static(cls, manifests, *, devices=(0,), cpp=None,
+                      sssp_encoding='u8_exact_u32_exact', sssp_delta_rule='fixed16', **options):
+        """Create immutable native inputs with one explicit exact SSSP policy.
+
+        Compact encoding accepts original FP64 integer weights in [0,255]
+        only when (N-1)*maxW is strictly below the uint32 unreachable sentinel.
+        All weights are certified during creation, before runtime startup.
+        Invalid inputs raise; no silent casting, fallback, or graph-specific
+        policy selection occurs. Public results remain independent readonly
+        FP64 arrays. Choose ``sssp_encoding='f64'`` for the general FP64 domain.
+        ``sssp_delta_rule='certified_bound_plus_one'`` explicitly uses B+1
+        for each certified compact graph; it rejects B+1 < maxW. The default
+        ``fixed16`` preserves the existing numerical scheduling policy.
+
+        This static factory has no dynamic commits, snapshot registration,
+        retention requests, or readonly device lease capability. Existing
+        ``Session.native`` retains its FP64 dynamic/lease execution contract.
+        """
+        _require_gpu_python()
+        from ._static_native import StaticNativeSession
+        if cpp is None:
+            import cpp_easygraph as cpp
+        return cls(StaticNativeSession(cpp, manifests, devices=devices,
+            sssp_encoding=sssp_encoding, sssp_delta_rule=sssp_delta_rule, **options), kind='native')
+
+    @classmethod
     def arena(cls, graphs, *, budget_bytes, device=0,
               pr_tolerance_l1=1e-6, pr_max_iter=10000, input_format='coo'):
         """Create one bounded arena with an explicit PageRank stopping contract.

@@ -14,6 +14,7 @@ import numpy as np
 from easygraph.gpu._bridge import NativePartitionSession, source_parameter, _NATIVE_WCC_OWNED_OUTPUT, _NATIVE_BFS_OWNED_OUTPUT, _NATIVE_SSSP_OWNED_OUTPUT, _NATIVE_PR_OWNED_OUTPUT
 from easygraph.gpu.contracts import NodeDomain, QueryContract
 from easygraph.gpu._core import native_policy, canonical_wcc, wcc_contract
+from easygraph.gpu._weight_admission import scan_weight_payload
 from easygraph.gpu import _core as _wcc_core
 from easygraph.gpu._receipts import ManagedNativeSession, ReceiptRetentionController
 from easygraph.gpu._controller import StateSwitchController, POLICIES
@@ -26,25 +27,58 @@ def _sha(path):
     return h.hexdigest()
 
 
-def verify_manifest(path, document):
+def verify_manifest(path, document, *, numeric_certificate=None):
     """Bind immutable topology/value bytes; native importer also checks structure."""
-    path=Path(path).resolve(); graph=document['graph']; total=0
+    path=Path(path).resolve(); graph=document['graph']; total=0; maximum=0; weight_count=0
     if int(graph['vertex_count'])<=0:raise ValueError('Empty vertex domain')
     allowed={'int32':4,'uint64':8,'float64':8}
     for part in document['partitions']:
         for name,item in part['files'].items():
             payload=(path.parent/item['path']).resolve();payload.relative_to(path.parent)
             if item['dtype'] not in allowed:raise ValueError('Unsupported manifest dtype')
-            if (payload.stat().st_size!=item['byte_size'] or item['count']*allowed[item['dtype']]!=item['byte_size'] or _sha(payload)!=item['sha256']):
+            if (payload.stat().st_size!=item['byte_size'] or item['count']*allowed[item['dtype']]!=item['byte_size']):
+                raise ValueError('Snapshot payload identity mismatch')
+            fused = None
+            if name == 'weights' and item['dtype'] == 'float64':
+                fused = scan_weight_payload(payload, certify=numeric_certificate is not None)
+                observed_sha = fused[0]
+            else:
+                observed_sha = _sha(payload)
+            if observed_sha != item['sha256']:
                 raise ValueError('Snapshot payload identity mismatch')
             if name=='weights':
+                if numeric_certificate is not None and (item['dtype']!='float64' or item['count']!=part['adjacency_count']):
+                    raise ValueError('Static compact SSSP requires complete original float64 weights')
+                if not item['count']:continue
+                if fused is not None:
+                    if fused[1] is not None:
+                        raise ValueError(fused[1])
+                    maximum = max(maximum, fused[2])
+                    weight_count += fused[3]
+                    continue
+                # Preserve legacy rejection behavior for malformed non-FP64
+                # declarations; valid native FP64 payloads take the fused path.
                 weights=np.memmap(payload,mode='r',dtype='<f8')
                 for first in range(0,len(weights),1<<18):
                     block=weights[first:first+(1<<18)]
                     if not np.all(np.isfinite(block)) or np.any(block<0):raise ValueError('Weights must be finite nonnegative f64')
+                    if numeric_certificate is not None:
+                        if np.any(block>255) or np.any(block!=np.floor(block)):
+                            raise ValueError('Static compact SSSP requires exact integer weights in [0,255]')
+                        maximum=max(maximum,int(block.max(initial=0)));weight_count+=len(block)
                 del weights
         total+=part['owned_vertex_count']
     if total!=graph['vertex_count']:raise ValueError('Incomplete snapshot ownership')
+    if numeric_certificate is not None:
+        if not graph.get('weighted',False) or weight_count!=graph['adjacency_count']:
+            raise ValueError('Static compact SSSP requires complete weighted input')
+        bound=(int(graph['vertex_count'])-1)*maximum
+        if bound>=2**32-1:raise ValueError('Static compact finite distance bound collides with u32 unreachable sentinel')
+        numeric_certificate.update(encoding='u8_exact_u32_exact',vertex_count=int(graph['vertex_count']),
+            weights_count=weight_count,max_weight=maximum,finite_distance_upper_bound=bound,
+            public_input_dtype='float64',public_output_dtype='float64',unreachable='+inf',
+            rule='Every original weight is an integer in [0,255]; (N-1)*maxW < UINT32_MAX.',
+            timing='Full certification in manifest admission inside session initialization; native plan encoding also remains inside the first query.')
     return _sha(path)
 
 

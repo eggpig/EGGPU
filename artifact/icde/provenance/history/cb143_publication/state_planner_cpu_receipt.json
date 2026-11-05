@@ -1,0 +1,15 @@
+{
+  "status": "PASS_CPU_AND_EXACT_VENV_ARGV_REGRESSION",
+  "gpu_executed": false,
+  "formal_measurements": 0,
+  "tests": 27,
+  "actual_argv_cpu_receipt": {
+    "sha256": "5f05906fb0f94870dc6a41a7eefd78e337c0e42dc9370b4e5de7253e45c5c4aa",
+    "bytes": 7558
+  },
+  "evidence_archive": {
+    "sha256": "5922e95d922e1825a3a9623c6e6bb87906338d7e62fa82a522d561ed0400a16a",
+    "bytes": 86652
+  },
+  "notes": "P1/P8 complete tiny CPU guard from original planned interpreter/env with execute-gpu flag withheld; negative control same interpreter/env and original args parsed, executor not called; legacy plans retained"
+}

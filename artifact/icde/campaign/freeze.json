@@ -1,0 +1,34 @@
+{
+  "schema": "eggpu.runner.freeze.v1",
+  "candidate": "public_state_v4_d84",
+  "status": "CPU_TESTED_GPU_UNQUALIFIED",
+  "files": {
+    "state_worker.py": {
+      "sha256": "5b1987137cdf11ad1b9156f348837b91d69d170b22585a50e664e692154ebbfc",
+      "bytes": 21550
+    },
+    "state_contract.py": {
+      "sha256": "06f9613f73ce5e4216ed9cbd9516c06230e85a0ba0d0a3f435b80ed9130840b0",
+      "bytes": 13110
+    },
+    "state_protocol.py": {
+      "sha256": "85fb5df29ca2ec60b38f29be8c5e57333d5fe55cfa5354b1c449d0426d314047",
+      "bytes": 4274
+    },
+    "state_reference.py": {
+      "sha256": "59c16ece7d79498264566a25040e5808f039bd1b6ddee22c546aacbce26e6fc0",
+      "bytes": 8995
+    },
+    "state_inputs.py": {
+      "sha256": "2c36cc9c2fc20d1d556467cd35077b889895daad4d395a213073478712f98e63",
+      "bytes": 10881
+    },
+    "baselines/hytgraph_qualify.py": {
+      "sha256": "6aa0832cd8c27eb91dde7e728dabdbf24d499f4a837c82053bbf8d4e8ab66da8",
+      "bytes": 10820
+    }
+  },
+  "bundle_sha256": "e14862a183ae3696257331f42e59cfc632e6bc432ad653c43b58204ed860c514",
+  "gpu_executed": false,
+  "formal_measurements": 0
+}

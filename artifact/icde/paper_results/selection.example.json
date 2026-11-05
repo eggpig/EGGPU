@@ -1,0 +1,17 @@
+{
+  "schema": "eggpu.paper.selection.v1",
+  "status": "FROZEN_EXPLICIT_SELECTION",
+  "mode": "qualification",
+  "final_eggpu_release": {"path": "SOURCE_FREEZE.json", "sha256": "REPLACE_WITH_FILE_SHA256", "bytes": 0},
+  "input_registry": {"path": "input_registry.json", "sha256": "REPLACE_WITH_FILE_SHA256", "bytes": 0},
+  "path_remap": [],
+  "required_cells": ["E6_EP_eggpu_none_p1"],
+  "cells": [{
+    "id": "E6_EP_eggpu_none_p1", "experiment": "E6", "adapter": "e6",
+    "role": "eggpu", "system": "eggpu", "ablate": "none", "dataset": "EP", "gpu_count": 1,
+    "epoch": {"path": "target/epoch.json", "sha256": "REPLACE_WITH_FILE_SHA256", "bytes": 0},
+    "epoch_sha256": "REPLACE_WITH_CANONICAL_JSON_DIGEST",
+    "runs": [{"path": "target/result.json", "sha256": "REPLACE_WITH_FILE_SHA256", "bytes": 0}]
+  }],
+  "attempt_history": []
+}

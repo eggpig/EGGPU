@@ -1,25 +1,21 @@
 {
-  "schema": "eggpu.tool.freeze.v1",
-  "candidate": "state_final_plan_v3",
+  "schema": "eggpu.tool.freeze.v2",
+  "candidate": "public_state_final_plan_v7",
   "status": "CPU_PASS_GPU_PENDING",
   "files": {
     "state_plan.py": {
-      "sha256": "c0883c881520e0bcbd519465a57f13cc031ae160ebc831402c1fc630ee1a8edd",
-      "bytes": 34645
+      "sha256": "5d317223c46852ee60a9a622a2f53b5c23704aace3733dc0731d29edfffc2f46",
+      "bytes": 41075
     },
     "test_state_plan.py": {
-      "sha256": "ecab0b906588eb817fdc700a8351dcec915c4659b410cf114f07caf45415b90e",
-      "bytes": 10459
+      "sha256": "d74f38728d0008fc1df7fccc84cb733e80a65e0ec650eab2ab64faa0c5ab3bbc",
+      "bytes": 12150
     },
     "README_CN.md": {
-      "sha256": "d56aa35b798f775e916b107c1372eca71599f4c92f50a6a6e61afb323a8bfb89",
-      "bytes": 7508
-    },
-    "cpu_receipt.json": {
-      "sha256": "da5b5c0a32941dd45ff0a36f541c953acc010e5ee80a35d928260fb7caa8268a",
-      "bytes": 613
+      "sha256": "6db8d6e7413653d253c00402b356d91816d02a9daf95b92130750ae7d2997b57",
+      "bytes": 7795
     }
   },
-  "tree_sha256": "87d9f1ddab5830da99d69a5bb2ad0e305d44ad0aa0631dadb29c95375c030c46",
-  "gpu_executed": false
+  "gpu_executed": false,
+  "formal_measurements": 0
 }

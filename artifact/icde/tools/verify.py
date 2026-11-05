@@ -10,7 +10,12 @@ def digest(value):
 def verify(root=ROOT):
     root = Path(root).resolve()
     manifest = json.loads((root / "artifact/icde/manifest.json").read_text())
+    observed = {str(p.relative_to(root)) for p in root.rglob("*") if p.is_file() and ".git" not in p.relative_to(root).parts and str(p.relative_to(root)) != "artifact/icde/manifest.json"}
+    if observed != set(manifest["files"]):
+        raise ValueError("Undeclared or missing release members")
     for name, expected in manifest["files"].items():
+        if Path(name).is_absolute() or ".." in Path(name).parts:
+            raise ValueError("Release member escapes package")
         path = root / name
         if path.is_symlink() or not path.is_file() or path.stat().st_size != expected["bytes"] or sha(path) != expected["sha256"]:
             raise ValueError("Release member changed: " + name)
