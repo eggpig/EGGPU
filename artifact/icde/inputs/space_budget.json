@@ -1,0 +1,98 @@
+{
+  "status": "EXACT_PAYLOAD_SIZES_AND_CONSERVATIVE_ADMISSION",
+  "gpu_executed": false,
+  "datasets": [
+    {
+      "dataset": "US",
+      "vertices": 23947347,
+      "stored_arcs_bound": 57708624,
+      "canonical_size_exact": true,
+      "offsets_bytes": 95789392,
+      "indices_bytes": 230834496,
+      "weights_bytes": 461668992,
+      "canonical_payload_bytes": 788292880,
+      "compressed_source_bytes": 152394085,
+      "host_admission_bytes": 8906096000
+    },
+    {
+      "dataset": "EP",
+      "vertices": 75879,
+      "stored_arcs_bound": 508837,
+      "canonical_size_exact": true,
+      "offsets_bytes": 303520,
+      "indices_bytes": 2035348,
+      "weights_bytes": 4070696,
+      "canonical_payload_bytes": 6409564,
+      "compressed_source_bytes": 1630437,
+      "host_admission_bytes": 2189761728
+    },
+    {
+      "dataset": "LJ",
+      "vertices": 4847571,
+      "stored_arcs_bound": 68475391,
+      "canonical_size_exact": true,
+      "offsets_bytes": 19390288,
+      "indices_bytes": 273901564,
+      "weights_bytes": 547803128,
+      "canonical_payload_bytes": 841094980,
+      "compressed_source_bytes": 259619239,
+      "host_admission_bytes": 7150397760
+    },
+    {
+      "dataset": "UK",
+      "vertices": 18520486,
+      "stored_arcs_bound": 292243663,
+      "canonical_size_exact": true,
+      "offsets_bytes": 74081948,
+      "indices_bytes": 1168974652,
+      "weights_bytes": 2337949304,
+      "canonical_payload_bytes": 3581005904,
+      "compressed_source_bytes": 84628743,
+      "host_admission_bytes": 23221700288
+    },
+    {
+      "dataset": "IN",
+      "vertices": 7414866,
+      "stored_arcs_bound": 191606827,
+      "canonical_size_exact": true,
+      "offsets_bytes": 29659468,
+      "indices_bytes": 766427308,
+      "weights_bytes": 1532854616,
+      "canonical_payload_bytes": 2328941392,
+      "compressed_source_bytes": 35359729,
+      "host_admission_bytes": 15359423424
+    },
+    {
+      "dataset": "TW",
+      "vertices": 41652230,
+      "stored_arcs_bound": 1468365182,
+      "canonical_size_exact": false,
+      "offsets_bytes": 166608924,
+      "indices_bytes": 5873460728,
+      "weights_bytes": 11746921456,
+      "canonical_payload_bytes": 17786991108,
+      "compressed_source_bytes": 2591016472,
+      "host_admission_bytes": 101454340736
+    },
+    {
+      "dataset": "OR",
+      "vertices": 2997166,
+      "stored_arcs_bound": 212698418,
+      "canonical_size_exact": true,
+      "offsets_bytes": 11988668,
+      "indices_bytes": 850793672,
+      "weights_bytes": 1701587344,
+      "canonical_payload_bytes": 2564369684,
+      "compressed_source_bytes": 407333189,
+      "host_admission_bytes": 16143819648
+    }
+  ],
+  "canonical_payload_bytes_bound": 27897105512,
+  "compressed_source_bytes": 3531981894,
+  "java_jar_bytes": 33477194,
+  "python_wheel_bytes": 52071482,
+  "reserve_bytes": 6442450944,
+  "host_admission_bytes": 101454340736,
+  "fresh_data_disk_bytes_bound": 37905015544,
+  "notes": "TW canonical nnz remains unknown until normalization; its source-arcs bound is used. Host admission is a conservative formula, not a measured peak. Data disk bound excludes a separately installed JDK/Python environment, test repetitions and previous copies."
+}

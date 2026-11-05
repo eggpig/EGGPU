@@ -476,6 +476,10 @@ class Executor:
                 start=time.perf_counter();self.patch_v[:count].get(out=output[lo:lo+count])
                 d2h+=time.perf_counter()-start;launches+=1
                 gather_device+=cp.cuda.get_elapsed_time(start_event,end_event)/1000
+        # Only these fresh .get()/np.empty allocations may enter the private
+        # request-scoped bridge transfer. No array is retained by the registry.
+        from easygraph.gpu._arena_output import _register_download
+        _register_download(output)
         return output,dict(download_seconds=time.perf_counter()-t,d2h_seconds=d2h,
                            result_d2h_bytes=output.nbytes,result_indices_h2d_bytes=index_bytes,
                            result_gather_launches=launches,result_gather_device_seconds=gather_device,

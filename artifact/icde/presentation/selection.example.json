@@ -1,0 +1,190 @@
+{
+  "schema": "eggpu.e1.selection.v1",
+  "status": "DRAFT_EXPLICIT_SELECTION",
+  "mode": "qualification",
+  "final_eggpu_release": {
+    "path": "REPLACE_WITH_FINAL_SOURCE_FREEZE_JSON"
+  },
+  "input_registry": {
+    "path": "REPLACE_WITH_SEVEN_INPUT_REGISTRY_JSON"
+  },
+  "systems": [
+    {
+      "id": "eggpu_p1",
+      "label": "eggpu",
+      "role": "eggpu",
+      "system": "eggpu",
+      "gpu_count": 1,
+      "algorithms": {
+        "bfs": {
+          "schema": "eggpu.e1.sg.job.v1",
+          "protocol": "e1-host-csr-complete-v1",
+          "epoch": {
+            "path": "REPLACE_WITH_EXACT_eggpu_P1_bfs_EPOCH_JSON"
+          }
+        },
+        "sssp": {
+          "schema": "eggpu.e1.sg.job.v1",
+          "protocol": "e1-host-csr-complete-v1",
+          "epoch": {
+            "path": "REPLACE_WITH_EXACT_eggpu_P1_sssp_EPOCH_JSON"
+          }
+        },
+        "wcc": {
+          "schema": "eggpu.e1.sg.job.v1",
+          "protocol": "e1-host-csr-complete-v1",
+          "epoch": {
+            "path": "REPLACE_WITH_EXACT_eggpu_P1_wcc_EPOCH_JSON"
+          }
+        },
+        "pr": {
+          "schema": "eggpu.e1.sg.job.v1",
+          "protocol": "e1-host-csr-complete-v1",
+          "epoch": {
+            "path": "REPLACE_WITH_EXACT_eggpu_P1_pr_EPOCH_JSON"
+          }
+        }
+      },
+      "not_applicable": {},
+      "runs": [
+        {
+          "path": "REPLACE_WITH_EXPLICIT_RESULT_JSON"
+        }
+      ],
+      "terminal_cells": []
+    },
+    {
+      "id": "cugraph_p1",
+      "label": "cugraph",
+      "role": "external",
+      "system": "cugraph",
+      "gpu_count": 1,
+      "algorithms": {
+        "bfs": {
+          "schema": "eggpu.e1.sg.job.v1",
+          "protocol": "e1-host-csr-complete-v1",
+          "epoch": {
+            "path": "REPLACE_WITH_EXACT_cugraph_P1_bfs_EPOCH_JSON"
+          }
+        },
+        "sssp": {
+          "schema": "eggpu.e1.sg.job.v1",
+          "protocol": "e1-host-csr-complete-v1",
+          "epoch": {
+            "path": "REPLACE_WITH_EXACT_cugraph_P1_sssp_EPOCH_JSON"
+          }
+        },
+        "wcc": {
+          "schema": "eggpu.e1.sg.job.v1",
+          "protocol": "e1-host-csr-complete-v1",
+          "epoch": {
+            "path": "REPLACE_WITH_EXACT_cugraph_P1_wcc_EPOCH_JSON"
+          }
+        },
+        "pr": {
+          "schema": "eggpu.e1.sg.job.v1",
+          "protocol": "e1-host-csr-complete-v1",
+          "epoch": {
+            "path": "REPLACE_WITH_EXACT_cugraph_P1_pr_EPOCH_JSON"
+          }
+        }
+      },
+      "not_applicable": {},
+      "runs": [
+        {
+          "path": "REPLACE_WITH_EXPLICIT_RESULT_JSON"
+        }
+      ],
+      "terminal_cells": []
+    },
+    {
+      "id": "eggpu_p8",
+      "label": "eggpu",
+      "role": "eggpu",
+      "system": "eggpu",
+      "gpu_count": 8,
+      "algorithms": {
+        "bfs": {
+          "schema": "eggpu.native.job.v1",
+          "protocol": "REPLACE_WITH_EXACT_NATIVE_PROTOCOL",
+          "epoch": {
+            "path": "REPLACE_WITH_EXACT_eggpu_P8_bfs_EPOCH_JSON"
+          }
+        },
+        "sssp": {
+          "schema": "eggpu.native.job.v1",
+          "protocol": "REPLACE_WITH_EXACT_NATIVE_PROTOCOL",
+          "epoch": {
+            "path": "REPLACE_WITH_EXACT_eggpu_P8_sssp_EPOCH_JSON"
+          }
+        },
+        "wcc": {
+          "schema": "eggpu.native.job.v1",
+          "protocol": "REPLACE_WITH_EXACT_NATIVE_PROTOCOL",
+          "epoch": {
+            "path": "REPLACE_WITH_EXACT_eggpu_P8_wcc_EPOCH_JSON"
+          }
+        },
+        "pr": {
+          "schema": "eggpu.native.job.v1",
+          "protocol": "REPLACE_WITH_EXACT_NATIVE_PROTOCOL",
+          "epoch": {
+            "path": "REPLACE_WITH_EXACT_eggpu_P8_pr_EPOCH_JSON"
+          }
+        }
+      },
+      "not_applicable": {},
+      "runs": [
+        {
+          "path": "REPLACE_WITH_EXPLICIT_RESULT_JSON"
+        }
+      ],
+      "terminal_cells": []
+    },
+    {
+      "id": "cugraph_mg_p8",
+      "label": "cugraph_mg",
+      "role": "external",
+      "system": "cugraph_mg",
+      "gpu_count": 8,
+      "algorithms": {
+        "bfs": {
+          "schema": "cugraph-mg-host-csr-complete-v1",
+          "protocol": "cugraph-mg-host-csr-complete-v1",
+          "epoch": {
+            "path": "REPLACE_WITH_EXACT_cugraph_mg_P8_bfs_EPOCH_JSON"
+          }
+        },
+        "sssp": {
+          "schema": "cugraph-mg-host-csr-complete-v1",
+          "protocol": "cugraph-mg-host-csr-complete-v1",
+          "epoch": {
+            "path": "REPLACE_WITH_EXACT_cugraph_mg_P8_sssp_EPOCH_JSON"
+          }
+        },
+        "wcc": {
+          "schema": "cugraph-mg-host-csr-complete-v1",
+          "protocol": "cugraph-mg-host-csr-complete-v1",
+          "epoch": {
+            "path": "REPLACE_WITH_EXACT_cugraph_mg_P8_wcc_EPOCH_JSON"
+          }
+        },
+        "pr": {
+          "schema": "cugraph-mg-host-csr-complete-v1",
+          "protocol": "cugraph-mg-host-csr-complete-v1",
+          "epoch": {
+            "path": "REPLACE_WITH_EXACT_cugraph_mg_P8_pr_EPOCH_JSON"
+          }
+        }
+      },
+      "not_applicable": {},
+      "runs": [
+        {
+          "path": "REPLACE_WITH_EXPLICIT_RESULT_JSON"
+        }
+      ],
+      "terminal_cells": []
+    }
+  ],
+  "_note": "This incomplete path template is not a result selection. Add every predeclared applicable external baseline and exact author variant. Do not omit a slow/failed system or auto-select latest/best runs."
+}

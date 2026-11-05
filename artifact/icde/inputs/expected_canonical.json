@@ -1,0 +1,147 @@
+{
+  "scope": "Full canonical payload hashes from qualified current six-graph inputs; validates regeneration, not an upstream content signature. TW remains unqualified.",
+  "datasets": {
+    "EP": {
+      "receipt_sha256": "17956beb481428fb39d347b399216b045f4564e9da225fa17af20e0fb2751987",
+      "vertices": 75879,
+      "stored_arcs": 508837,
+      "files": {
+        "offsets": {
+          "bytes": 303520,
+          "sha256": "375c0caa7d48d6d83ccc1f0999a6fdbea2188c17ee278c83698035c53f75be32"
+        },
+        "indices": {
+          "bytes": 2035348,
+          "sha256": "22ee28285e20dba428e9352e6e85e6b35f73cdf83fa1760ba7edca8db49f6eb9"
+        },
+        "weights": {
+          "bytes": 4070696,
+          "sha256": "c89da8e0a9b66ffffb74c9ff151c0b10369ee4360201dba48833bf7b77c4fba6"
+        },
+        "sources": {
+          "bytes": 279,
+          "sha256": "d5b71af0ba301736b0f725e8128b585de091c689cc73b1c80e64e72d92e5bd00"
+        },
+        "source_labels": {
+          "bytes": 607160,
+          "sha256": "4c62265926e258eee782e4cf1bbcd9a57af6d2e5ebd1c4b5faa16a4d7569ab97"
+        }
+      }
+    },
+    "OR": {
+      "receipt_sha256": "4f56328912eab4d6a293e654212d058a02df08c527184d67bfe27a5093a67d71",
+      "vertices": 2997166,
+      "stored_arcs": 212698418,
+      "files": {
+        "offsets": {
+          "bytes": 11988668,
+          "sha256": "d757999c9f2c56a674939df13146e4dd49bac26a602f48f947e7e0133b6ddb74"
+        },
+        "indices": {
+          "bytes": 850793672,
+          "sha256": "77037087cd93214a9deccfba0d2f4415d44f9c9e7c2036a1e33e39e7c32b4805"
+        },
+        "weights": {
+          "bytes": 1701587344,
+          "sha256": "8a889efd189aac1771adbef559979c7fa1c15904dda7aa8e70dd4088d447cb8b"
+        },
+        "sources": {
+          "bytes": 286,
+          "sha256": "153494485ee1075c1dde1967ec1d0a21e2efb8ec850ce5d47ea96f743dd7ce3c"
+        }
+      }
+    },
+    "IN": {
+      "receipt_sha256": "47efc5dc8f15ecf892770df4a27a825184f1e0b3fac85e9fa52ee5f3a295016d",
+      "vertices": 7414866,
+      "stored_arcs": 191606827,
+      "files": {
+        "offsets": {
+          "bytes": 29659468,
+          "sha256": "1e5d839e17dbf4fec57285fcc654d6f66f995b6c32ac10547da2ecab63a76217"
+        },
+        "indices": {
+          "bytes": 766427308,
+          "sha256": "5ec8800637c05c7bfaa6ceda0bad7f89ac7e3ecbce8b4ac8580000ca5faa379d"
+        },
+        "weights": {
+          "bytes": 1532854616,
+          "sha256": "7be6d005329034c14a0c6088123affefb9f42a0075f74b0e5e4bdc1ade9010a4"
+        },
+        "sources": {
+          "bytes": 293,
+          "sha256": "e2aa2c3bbe64b3b732de412d17267fba72692c846b763011c22e6fc3659f5ee9"
+        }
+      }
+    },
+    "UK": {
+      "receipt_sha256": "80cd9366bae37cf821ffaf589e0b8c75b3e9860471e305ae273fa5a231467141",
+      "vertices": 18520486,
+      "stored_arcs": 292243663,
+      "files": {
+        "offsets": {
+          "bytes": 74081948,
+          "sha256": "9f67d77a34a550856fc4d3693828257ccedf09874c1ebd67331edf9bd10957c8"
+        },
+        "indices": {
+          "bytes": 1168974652,
+          "sha256": "3f18b486895b144d85d2c260567b9ff90b5b449917cfc3a666f1328d61c4f460"
+        },
+        "weights": {
+          "bytes": 2337949304,
+          "sha256": "303e4a8e0875cf5d15fab6f58bf2a0da24d249f7552eb833a5069e7f2782e071"
+        },
+        "sources": {
+          "bytes": 294,
+          "sha256": "f50c0d81adb26ca2c2e9aea695006e72a743a6118d9cda26a70ac4bdbd5a65b5"
+        }
+      }
+    },
+    "LJ": {
+      "receipt_sha256": "861679fb2d57fc95f9a600ca338022ec3a98381a24a084c20506638359203fc9",
+      "vertices": 4847571,
+      "stored_arcs": 68475391,
+      "files": {
+        "offsets": {
+          "bytes": 19390288,
+          "sha256": "c87112805ff0cbd6522c6e1846d55ab6a3239a791ec726e1bddfbc0b599cda5f"
+        },
+        "indices": {
+          "bytes": 273901564,
+          "sha256": "bc2f8f12740b2d592f4966a8ff4ede57bd57e39e88f9f0b5b76e3c40b1356bd6"
+        },
+        "weights": {
+          "bytes": 547803128,
+          "sha256": "cb5bcc830f8a3a04cba38f45e21efc2355acf7f2c7cdcd813e5b15f2aa80aa68"
+        },
+        "sources": {
+          "bytes": 290,
+          "sha256": "26d725016bbaf17043ce1a270f663b3d4afb592772146c398d21d2904df3448a"
+        }
+      }
+    },
+    "US": {
+      "receipt_sha256": "7df8d1c8fc7a1dd44d4cf4d80cf4eef97da8b1006d5c259471902e7b58e73c25",
+      "vertices": 23947347,
+      "stored_arcs": 57708624,
+      "files": {
+        "offsets": {
+          "bytes": 95789392,
+          "sha256": "709111d5faff7d7e0c1f91fd8b1a3c8e731cffce8eb9091bc04e42f1db591aec"
+        },
+        "indices": {
+          "bytes": 230834496,
+          "sha256": "d2f2702567d4b274174f42a09678a170173bf229b2dcf14b13dfbc5b76d9526e"
+        },
+        "weights": {
+          "bytes": 461668992,
+          "sha256": "b487a1fc45fa894d0ee3f37d9bc162023c7a01c011ea27fe0ec708bd9d582c45"
+        },
+        "sources": {
+          "bytes": 291,
+          "sha256": "04c390da074e4ef8c544f386a5eb676d8b74959f7de1ab246856361c4f8568fe"
+        }
+      }
+    }
+  }
+}

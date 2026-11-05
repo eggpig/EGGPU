@@ -1,0 +1,237 @@
+{
+  "schema": "eggpu.public_runner_dependencies/v2",
+  "status": "PASS_STATIC_DEPENDENCIES_AND_CPU_EXECUTION",
+  "local_campaign_dependencies": {
+    "sg_worker.py": [
+      "cugraph_csr_adapter.py"
+    ],
+    "run_sg.py": [
+      "sg_worker.py"
+    ],
+    "cugraph_csr_adapter.py": [],
+    "test_sg_campaign.py": [
+      "cugraph_csr_adapter.py",
+      "run_sg.py",
+      "sg_worker.py"
+    ],
+    "native_worker.py": [
+      "native_input.py",
+      "sg_worker.py"
+    ],
+    "native_input.py": [
+      "sg_worker.py"
+    ],
+    "run_native.py": [
+      "native_worker.py",
+      "run_sg.py",
+      "sg_worker.py"
+    ],
+    "test_native_campaign.py": [
+      "native_input.py",
+      "native_worker.py",
+      "run_native.py",
+      "sg_worker.py"
+    ],
+    "state_worker.py": [
+      "baselines/hytgraph_qualify.py",
+      "state_contract.py",
+      "state_protocol.py",
+      "state_reference.py"
+    ],
+    "state_inputs.py": [
+      "state_protocol.py"
+    ],
+    "state_protocol.py": [],
+    "state_cpu_tests.py": [
+      "state_protocol.py"
+    ],
+    "e6_worker.py": [
+      "e6_reused.py",
+      "sg_worker.py"
+    ],
+    "e6_reused.py": [],
+    "run_e6.py": [
+      "e6_worker.py",
+      "sg_worker.py"
+    ],
+    "test_e6_campaign.py": [
+      "e6_reused.py",
+      "e6_worker.py",
+      "run_e6.py",
+      "sg_worker.py"
+    ],
+    "state_projection_cpu_tests.py": [
+      "state_inputs.py",
+      "state_protocol.py",
+      "state_worker.py"
+    ],
+    "sequence16_worker.py": [
+      "sequence16_adapter.py",
+      "sg_worker.py"
+    ],
+    "sequence16_adapter.py": [
+      "cugraph_csr_adapter.py",
+      "sg_worker.py"
+    ],
+    "run_sequence16.py": [
+      "sequence16_worker.py",
+      "sg_worker.py"
+    ],
+    "test_sequence16_campaign.py": [
+      "cugraph_csr_adapter.py",
+      "run_sequence16.py",
+      "sequence16_adapter.py",
+      "sequence16_worker.py",
+      "sg_worker.py"
+    ],
+    "gum_worker.py": [
+      "gum_clock.py",
+      "gum_reused.py",
+      "mg_process_observer.py",
+      "native_input.py",
+      "native_worker.py",
+      "sg_worker.py"
+    ],
+    "gum_clock.py": [
+      "sg_worker.py"
+    ],
+    "gum_rank_exec.py": [
+      "gum_clock.py"
+    ],
+    "gum_reused.py": [
+      "sg_worker.py"
+    ],
+    "run_gum.py": [
+      "gum_worker.py",
+      "sg_worker.py"
+    ],
+    "test_gum_campaign.py": [
+      "gum_reused.py",
+      "gum_worker.py",
+      "native_worker.py",
+      "run_gum.py",
+      "sg_worker.py"
+    ],
+    "test_gum_clock.py": [
+      "gum_clock.py"
+    ],
+    "cugraph_mg_worker.py": [
+      "cugraph_mg_adapter.py",
+      "cugraph_mg_platform.py",
+      "mg_process_observer.py",
+      "native_input.py",
+      "native_worker.py",
+      "sg_worker.py"
+    ],
+    "cugraph_mg_adapter.py": [
+      "cugraph_mg_platform.py"
+    ],
+    "cugraph_mg_platform.py": [],
+    "run_cugraph_mg.py": [
+      "cugraph_mg_worker.py",
+      "sg_worker.py"
+    ],
+    "test_cugraph_mg_campaign.py": [
+      "cugraph_mg_adapter.py",
+      "cugraph_mg_worker.py",
+      "native_worker.py",
+      "run_cugraph_mg.py",
+      "sg_worker.py"
+    ],
+    "mg_process_observer.py": [],
+    "state_contract.py": [
+      "state_protocol.py",
+      "state_reference.py"
+    ],
+    "state_reference.py": [
+      "state_protocol.py"
+    ],
+    "test_state_v4_cpu.py": [
+      "state_contract.py",
+      "state_inputs.py",
+      "state_protocol.py",
+      "state_reference.py",
+      "state_worker.py"
+    ],
+    "test_state_reference_cpu.py": [
+      "state_protocol.py",
+      "state_reference.py",
+      "state_worker.py"
+    ],
+    "baselines/hytgraph_qualify.py": [],
+    "baselines/hytgraph_adapter.py": [
+      "baselines/source_lock.py"
+    ],
+    "baselines/hytgraph_cpu_check.py": [
+      "baselines/hytgraph_adapter.py"
+    ],
+    "baselines/kgraph_adapter.py": [
+      "baselines/source_lock.py"
+    ],
+    "baselines/cggraph_legacy_full_build.py": [],
+    "baselines/gunrock_cc_timer_build.py": [],
+    "baselines/sg_author_worker.py": [
+      "baselines/sg_clock.py",
+      "sg_worker.py"
+    ],
+    "baselines/run_sg_authors.py": [
+      "baselines/sg_author_worker.py"
+    ],
+    "baselines/test_sg_author_cpu.py": [
+      "baselines/run_sg_authors.py",
+      "baselines/sg_author_worker.py"
+    ],
+    "baselines/check_sg_author_runtime_cpu.py": [
+      "baselines/run_sg_authors.py",
+      "baselines/sg_author_worker.py"
+    ],
+    "baselines/source_lock.py": [],
+    "baselines/sg_clock.py": [],
+    "baselines/sg_clock_exec.py": [
+      "baselines/sg_clock.py"
+    ],
+    "baselines/test_sg_clock_cpu.py": [
+      "baselines/sg_clock.py"
+    ],
+    "baselines/sg_clock_build.py": [],
+    "baselines/sg_clock_build_bfs_reset.py": [],
+    "baselines/c2p_clock_build.py": [],
+    "c2p_v1/c2p_worker.py": [
+      "baselines/sg_clock.py",
+      "sg_worker.py"
+    ],
+    "c2p_v1/run_c2p.py": [],
+    "c2p_v1/sg_clock.py": [],
+    "c2p_v1/sg_clock_exec.py": [
+      "baselines/sg_clock.py"
+    ],
+    "c2p_v1/sg_worker.py": [
+      "cugraph_csr_adapter.py"
+    ],
+    "c2p_v1/test_c2p_cpu.py": [],
+    "c2p_v1/test_sg_clock_cpu.py": [
+      "baselines/sg_clock.py"
+    ],
+    "test_pr_global_l1.py": [
+      "cugraph_csr_adapter.py",
+      "sequence16_adapter.py"
+    ],
+    "test_csr_runner_contract.py": [
+      "sg_worker.py"
+    ]
+  },
+  "E6_historical_workflow_runtime_dependency": "None: e6_reused.py is shipped and source-bound, including complete returned-ID coverage checks",
+  "state_input_schema": "state.inputs.v2",
+  "source_tree_changed": true,
+  "shared_sg_worker": "Qualified public CSR version; no COO expansion in the EGGPU SG entry",
+  "explicit_remaining_prerequisites": [
+    "Rebuilt EGGPU CUDA DSO and arena libraries",
+    "Author baseline source/build receipts/binaries and runtime libraries",
+    "NumPy/SciPy; pytest for CPU tests; NetworkX/python-igraph where external E6 composition requires them",
+    "RAPIDS/cuGraph/Dask and compatible CUDA/RAFT/NCCL for GPU baselines",
+    "Canonical graph payloads; TW qualification still pending",
+    "Machine-local UUID/setup/CPU affinity/resource lock and external process-group supervisor"
+  ],
+  "input_tools_manifest": "artifact/icde/inputs/manifest.json",
+  "all_gpu_launches_explicit": true
+}

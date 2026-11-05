@@ -1,68 +1,98 @@
 {
-  "schema": "eggpu.public_campaign_status/v1",
-  "date": "2026-11-04",
-  "source_status": "Capability patch passed 46 CPU checks and closure-LRU passed 10 CPU checks; current source GPU qualification awaiting bound readback",
+  "schema": "eggpu.public_campaign_status/v3",
+  "date": "2026-11-05",
+  "source_candidate": "arena_output_ownership_v2",
+  "source_sha256": "cb14360e2dfb934b8a28f9875fb80639ce4503bc6ed27956201b18e9edec6869",
+  "source_status": "PASS_CURRENT_SOURCE_33_SEMANTICS_AND_16_CORRECTED_CSR_SG_TINY",
   "datasets": [
     "US",
     "EP",
     "LJ",
-    "UK",
+    "OR",
     "IN",
-    "TW",
-    "OR"
+    "UK",
+    "TW"
   ],
+  "canonical_inputs": {
+    "complete": [
+      "US",
+      "EP",
+      "LJ",
+      "OR",
+      "IN",
+      "UK",
+      "TW"
+    ],
+    "pending": [],
+    "portable_original_source_rebuild": "SIX_INDEPENDENT_FULL_HASH_MATCHES_AND_TW_ORIGINAL_FORMAT_PREPARATION_PASS",
+    "scope": "All seven original-format preparation paths executed; existing compressed sources verified, not all redownloaded on a new machine",
+    "completion_evidence": "inputs/completion.json"
+  },
   "formal_repetitions": 10,
+  "formal_configurations": 0,
   "formal_results_in_this_publication": false,
   "single_gpu_leading_target": 0.9,
-  "target_status": "OPTIMIZATION_TARGET_NOT_MEASURED",
+  "target_status": "OPTIMIZATION_TARGET_NOT_FORMALLY_MEASURED",
   "experiments": {
     "E1": {
       "design": "FROZEN",
-      "portable_formal_runner": "PENDING",
       "current_source_formal_results": "PENDING"
     },
     "E2": {
       "design": "FROZEN",
-      "portable_formal_runner": "PENDING",
       "current_source_formal_results": "PENDING"
     },
     "E3": {
       "design": "FROZEN",
-      "portable_formal_runner": "PENDING",
       "current_source_formal_results": "PENDING"
     },
     "E4": {
       "design": "FROZEN",
-      "portable_formal_runner": "PENDING",
       "current_source_formal_results": "PENDING"
     },
     "E5": {
       "design": "FROZEN",
-      "portable_formal_runner": "PENDING",
       "current_source_formal_results": "PENDING"
     },
     "E6": {
       "design": "FROZEN",
-      "portable_formal_runner": "PENDING",
       "current_source_formal_results": "PENDING"
     }
   },
-  "provided": [
-    "source and fixed capability policy",
-    "CPU and explicit tiny GPU qualification source",
-    "input fetch/conversion/weight tools with documented inherited prerequisites",
-    "public baseline capabilities and author revisions",
-    "paper narrative and experiment design"
-  ],
+  "runner_versions": "campaign/latest.json",
+  "gpu_qualification": {
+    "current_source_sg_semantics": 33,
+    "current_source_sg_tiny_configurations": 16,
+    "current_source_ep_target_configurations": 0,
+    "earlier_source_native_tiny_configurations": 32,
+    "integrated_parent_native_fp64_lease_gpu_counts": [
+      1,
+      8
+    ],
+    "earlier_source_state_base_arms": 4,
+    "earlier_source_E6_tiny_configurations": 11,
+    "earlier_sequence16_tiny_configurations": 4,
+    "state_v4": "PENDING_SEPARATE_PROOFS",
+    "external_continuous_timing": "PENDING",
+    "summary": "provenance/current_gpu_qualification.json",
+    "historical_cold_source_sg_tiny_configurations": 16,
+    "historical_cold_source_ep_target_configurations": 8,
+    "current_source_target_status": "IN_PROGRESS_SEPARATELY_RECORDED"
+  },
   "not_provided": [
-    "complete baseline build/run bundle",
-    "all seven fresh-machine graph converters",
-    "E1-E6 portable formal orchestrators",
-    "current-source formal measurement matrix",
-    "raw-to-paper figure/table regeneration for the new campaign"
+    "Complete new E1-E6 formal measurement matrix",
+    "Completed all-baseline build/run and continuous timing qualification",
+    "All-seven fresh-network reproduction on a new machine",
+    "Qualification graph payloads, binary DSOs, or complete raw output vector payloads"
   ],
   "figure_slots": {
     "mechanism": "RESERVED_FOR_COLLABORATOR",
     "framework": "RESERVED_FOR_COLLABORATOR"
-  }
+  },
+  "pr_protocol_correction": {
+    "record": "provenance/pr_protocol_correction.json",
+    "status": "CURRENT_SOURCE_CORRECTED_CSR_SG_TINY_PASS",
+    "historical_counts_are_not_current_runner_proofs": true
+  },
+  "presentation_tools": "presentation/README_CN.md; CPU qualified, no real formal export in this checkpoint"
 }

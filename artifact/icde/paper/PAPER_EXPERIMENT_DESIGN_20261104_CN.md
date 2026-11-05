@@ -1,6 +1,6 @@
 # EGGPU ICDE：实验章节与图表呈现方案
 
-更新：2026-11-04。本文件组织当前论文的实验问题、比较对象和呈现方式；**设计不是实测结果**。七图、数值语义、输入和计时合同以 [冻结协议](DATASET_AND_EXPERIMENT_FREEZE_20261104_CN.md) 与 [数据注册表](../datasets.json) 为准。公开执行状态见 `../campaign_status.json`，经过筛选的机器信息见 `../setup_public.json`。本文提供设计骨架，不代表当前代码已经完成所有正式实验。
+更新：2026-11-04。本文件组织当前论文的实验问题、比较对象和呈现方式；**设计不是实测结果**。七图、数值语义、输入和计时合同以 [冻结协议](DATASET_AND_EXPERIMENT_FREEZE_20261104_CN.md) 与 [数据注册表](DATASET_REGISTRY_20261104.json) 为准。本轮执行状态、最新结果入口和替换关系由 `../CURRENT_DELIVERY_CN.md` 统一维护，机器采样及执行清单位于 `../experiments/campaign_20261104/setup.json`、`campaign.json`；这些执行文件未生成或字段未核实时，正文保持待填，不能抄旧报告的机器或数字。
 
 ## 1. 实验章节要回答的一个问题
 
@@ -47,11 +47,13 @@
 | 比较角色 | 本轮须核验/接入的系统 | 适用位置 | 不应做的比较 |
 |---|---|---|---|
 | 通用单卡/异构执行 | cuGraph、Gunrock、Grapin、CGgraph、HyTGraph；SYgraph 按实际函数进入 | E1 共同语义格子；E3/E4 的完整任务外部参照 | 未实现的 PR 不用 PPR 顶替；FP32 结果未满足统一质量前，不与 FP64 主表直接合并 |
-| 加权遍历和多查询协作 | C²graph-P / PM | E1 的共同 SSSP；E4-S 同图不同源完整批任务 | 不能把其 PPR/Adsorption 数字当全局 PR；不能省略首次压缩 |
+| 加权遍历和多查询协作 | C²graph-P / PM | E1 单源 SSSP 使用 P；E4-S 同图不同源完整批任务使用 PM | 两模式独立资格；不能用 PM 批时间除以批长填 E1，不能把其 PPR/Adsorption 数字当全局 PR；首次压缩计入完整任务 |
 | 多 GPU 执行 | GUM、cuGraph 的真正多卡路线；Gunrock/Groute 按作者多卡实现与本机资格决定 | E1 多卡分块、E2 共同后端强扩展 | 单卡实现不进入 P>1 曲线；CPU fallback 不标成正常 GPU 执行；不同机器数字不拼在同一行 |
 | 查询结果复用 | KGraph；其作者对照 ForkGraph/Glign 作为必要时的复用机制参照 | E4-S；与 D/C 讨论衔接 | 不直接当作 GPU 物理闭包淘汰算法，不强塞进属性 patch 微基准 |
 | 动态存储/重建 | GRACE 及其 PPCSR/Terrace/VCSR 接入 | Related Work、语义边界；若另有共同更新任务才做性能对照 | 当前固定拓扑权重任务不能冒充拓扑插删；不能为“都有更新”强行列同一速度表 |
 | 扩展函数与独立参考 | 已有 CuPy + direct pylibcugraph 组合、igraph、其他确有同义函数的作者实现 | E6 共同阶段、完整组合；数值参考 | 不只挑慢 CPU 代表全部外部实现；不把拼接组合包装成原作者独立系统 |
+
+**当前 PR 资格修正。** cuGraph SG 旧适配器的 `epsilon=1e-9/n` 与实装 C++ 的全图 L1 停止式不符；新的共同协议使用 `epsilon=1e-9`、FP64、2000 次上限，外部残差/质量门槛不变。旧 cuGraph PR 和包含它的16请求轨迹保留原始证据，但不得进入比较或胜率，必须新 epoch 重测。US 的旧非收敛不算性能胜利。这属于修正实验调用协议，不属于额外优化 baseline；多卡 cuGraph 已直接使用全局 `1e-9`，应按其独立资格与迭代上限记录，不能把 SG 修改机械套用到已有正确路线。
 
 候选清单不等于全部已经跑通。最终图表只展示适用实验的系统，但所有候选的结论、源码与失败原因在[当前能力矩阵](BASELINE_CAPABILITY_MATRIX_20261104_CN.md)及其[机器可读记录](BASELINE_CAPABILITY_MATRIX_20261104.json)可查。只有语义不相交或实验问题不相交才排除；性能慢不构成排除理由。
 
@@ -65,7 +67,7 @@
 
 七图固定为 **US、EP、LJ、OR、IN、UK、TW**，四函数 BFS、SSSP、WCC、PR。图类型统一 RN/SN/WG，主表可按 `US | EP LJ OR TW | IN UK` 分组；所有图表采用同一顺序。曲线上的数值型横轴才按数值排序，不把无序数据集名称连成一条暗示连续性的折线。
 
-分别测 T_first 与 T_ready，BFS/SSSP 三源等权归并；另外测 `[BFS,SSSP,WCC,PR]×4` 的16请求静态任务，显示前缀1/4/16及完整累计曲线。首次任务包括系统专有准备、启动、上传、输出恢复；准备后任务仍然重新计算并返回完整结果。具体边界沿用冻结协议。
+分别测 T_first 与 T_ready，BFS/SSSP 三源等权归并；另外测 `[BFS,SSSP,WCC,PR]×4` 的16请求静态任务，显示前缀1/4/16及完整累计曲线。首次任务用一个连续主计时器，从共同 host CSR ready 开始，包含系统专有准备、启动、上传直至完整 host 输出；布局时间与原生时间的分解和式不能代替该端到端主计时。准备后任务仍然重新计算并返回完整结果，重复 BFS 等状态须正确复位。C²graph-P 的三个主源分别独立初始化图，不能以 PM 的批时间折算共同单源延迟。具体边界沿用冻结协议。
 
 **主表优先于几十组柱子。** 每行是算法×系统，列是七图，一卡和目标多卡资源分成明确表块。正文主表给完整时间，另一计时边界放正文紧凑配对表或 artifact 源表；不能只给加速比而无法恢复绝对量。统一单位可用秒，保留三位有效数字；毫秒级值以同单位小数显示，不能每格换单位。真正最快且正确的已测均值加粗；EGGPU 行可以浅灰底便于定位，但不预先加粗所有 EGGPU 数字。表注注明重复数、误差位置与缺失原因。
 
@@ -83,17 +85,17 @@ US、OR、IN、UK、TW，四算法，P=1/2/4/8；只有实际获授权且可用�
 
 ### E3：D-Maintain 的合法维护与代价
 
-沿用冻结协议：US/IN/OR，FP64 权重，更新比例 `ρ={0,10⁻⁶,10⁻⁴,10⁻²,0.1,1}`，均匀/行聚集、旧读者轴分开控制；每次更新后 `[BFS,SSSP,WCC,WPR]`，无权 PR 作为负控制。比较 **Rebuild、Reuse+Full、D-Maintain**，相同执行器、布局、所有权保护和初始状态。主图做 P1；分区多卡复核 IN/OR。
+冻结主协议为 US/IN/OR、FP64 权重、`ρ={0,10⁻⁶,10⁻⁴,10⁻²,0.1,1}`，均匀/行聚集与旧读者 none/per_update 分面；ρ=0/1 不重复等价的局部性输入。每条轨迹20次提交、80次 `[BFS,SSSP,WCC,WPR]` 查询，另有相同的四次初始查询。当前 `state_v4` 的 E3 主比较仅 **Reuse+Full（D0C1）与 D-Maintain（D1C1）**，C固定且不施加容量预算；相同执行器、布局、所有权保护和初始状态。P1覆盖三图，P8复核IN/OR。D0的 `persistent_full` 复用未变拓扑，对新的未命中权重身份执行全量上传；ρ=0仍可命中，不能称为每次无条件重建整图。旧方案的独立Rebuild第三臂当前未实现，不绘制其结果。
 
-两个主面板：横轴 `Updated edges (%)`（定义为变化存储位置占 A，且与无向配对规则一致），纵轴分别 `Workflow time (s)` 与 `Transferred data (GiB)`。ρ=0 是独立左端类别/小面板，不把0放进对数坐标；ρ>0使用明确对数刻度。每条线不超过三种变体；局部性和 lease 用分面，不用十几种颜色混在一张图。
+两个主面板：横轴 `Updated edges (%)`（定义为变化存储位置占 A，且与无向配对规则一致），纵轴分别 `Workflow time (s)` 与 `Transferred data (GiB)`。ρ=0 是独立左端类别/小面板，不把0放进对数坐标；ρ>0使用明确对数刻度。每面板只画上述两种变体；局部性和 lease 用分面，不用十几种颜色混在一张图。
 
-记录提交/哈希、主机复制、视图维护、真实 H2D/D2D、算法及输出；将 packet 载荷与实际总传输分开。当前精确 packet 限 SSSP，WPR 仍可能有主机差分成本，不能将后者画成同样的常数维护。ρ=0 的管理开销、ρ=1 的退化及旧读者引发的 COW 都是必要结果。
+记录提交/哈希、主机复制、视图维护、真实 H2D/D2D、算法及输出；将 packet 载荷与实际总传输分开。当前精确 packet 限 SSSP，WPR 仍可能有主机差分成本，不能将后者画成同样的常数维护。ρ=0 的管理开销、ρ=1 的退化及旧读者引发的 COW 都是必要结果。无权PR权重不变性负控制仍列为待完成的独立控制；当前四函数主trace未包含它，不能声称已测。将它直接加进主trace会把80查询改成100查询，须另立入口及资格。多卡分区集中轴同样仍缺明确输入协议，不能将普通行聚集冒称已覆盖。
 
 ### E4：C-Retain 的保留与状态复用
 
-主机制实验使用 US/OR/IN/UK 固定池、128请求、相同请求多集合的三种顺序；不更新，D 配置固定。预算取冻结 β=0/0.25/0.5/0.75/1，各卡绝对字节向量由同一资格基准生成并记录。比较 **No-retention、view-LRU、closure-LRU、logical-size demand、C-Retain**。它们都按真实物理占用判断是否达标，都保护合法 lease，view-LRU 遇到释放0字节必须继续合法驱逐。
+主机制实验使用 US/OR/IN/UK 固定池、32次访问和128查询，比较同一请求多集合的 grouped/interleaved/permuted 三种顺序；不更新，D固定为D1。当前 `state_v4` 主比较仅 **closure-LRU（D1C0）与 C-Retain（D1C1）**，都按真实物理占用和相同lease约束作决策。预算取冻结 β=0/0.25/0.5/0.75/1；每个当前源码/图池/GPU配置先独立运行实际物理字节pilot，以逐卡 `floor(B_min+β(B_all−B_min))` 冻结字节预算，禁止按速度选预算。旧稿的 No-retention、view-LRU、logical-size demand 未作为本轮已实现臂，不绘制它们的结果。
 
-主图横轴 `Memory budget (GiB)`；多卡不均匀预算时使用 `Budget fraction` 并在表注给 β 与逐卡字节向量的定义，不能用所有卡显存相加掩盖某张卡溢出。纵轴 `Workflow time (s)`；第二面板为 `Reloaded data (GiB)`。全驻留和无回访控制都保留。另用一个真实日志片段连接“撤销视图—实际释放数组—下一次重载”，帮助读者理解命中率相近为何仍可能不同。
+主图横轴 `Memory budget (GiB)`；多卡不均匀预算时使用 `Budget fraction` 并在表注给 β 与逐卡字节向量的定义，不能用所有卡显存相加掩盖某张卡溢出。纵轴 `Workflow time (s)`；第二面板为 `Reloaded data (GiB)`。β=1全驻留与β=0.25的once无回访控制都保留；once为4次访问、16查询，单独展示，不和128查询主项混合。另用一个真实日志片段连接“撤销视图—实际释放数组—下一次重载”，帮助读者理解命中率相近为何仍可能不同。
 
 **E4-S 共同状态复用副面板（本轮已纳入设计，待执行资格化）：** 在相同静态图上的不同源 SSSP 批任务，比较 EGGPU、KGraph、C²graph-PM，以及已接入的适用强静态系统。仍使用 US/OR/IN/UK，不增加新图；批长128为主点，32/512作敏感性，源点按冻结的拓扑散列规则扩展成不重复列表。所有请求都要返回全距离，不使用预存答案。允许作者已有 memoization，但其构建与有效性维护进入总时间；CPU 核数和主机内存上限一致，标明 CPU-only 与 CPU+GPU 的资源构成。横轴 `Queries`，纵轴 `Total time (s)`，准备与查询另作分解。该面板不计入 E1 单卡28格或90%目标的分母。
 
@@ -111,9 +113,9 @@ IN/UK/OR 固定交错轨迹、96请求；主点ρ=10⁻⁴、β=0.25，ρ=0和β
 
 EP-U、LJ-U 主任务：**全图 Effective Size + Constraint → 排名取32候选 → 候选精确 WF Closeness → 选一个节点 → 该点 BFS + 全图 WCC → 输出**。OR 保留预注册压力面板。候选和 winner 必须在本次计时内由前序结果产生，所有变体返回相同候选、winner、距离和连通划分。
 
-四变体按两个扩展函数组做2×2替换：结构洞组外部/EGGPU，Closeness组外部/EGGPU；BFS/WCC固定同一EGGPU核心以隔离功能贡献，另列从头到尾全外部组合。外部采用现成、最强且质量合格的函数，正常复用图对象。其真实交接/格式成本要计入，也要分开显示以解释来源。
+按冻结 `e6_worker` 的四组 structural/closeness/bfs/wcc 分别做单组覆盖消融：完整EGGPU（none）加四种仅将其中一组回退的配置，共五个单卡EGGPU配置；不是两扩展组的2×2。另列三种已接入的外部共同任务路线，各自独立资格。11项tiny资格由四种卡数的完整EGGPU、四个单组回退和三个外部路线构成，不能当作11种正式性能结果。外部用其现成函数与正常图对象复用，真实交接/格式成本计入并单列解释。
 
-主图横轴 `Configuration`（四变体与全外部），纵轴 `Application time (s)`；按 `Structural holes / Ranking / Closeness / BFS+WCC / Handoff` 堆叠。返回和初始准备如占比大，可明确增加段，不能藏到“其他”。第一次和热应用分面，每次重算候选；短表列最终决策一致性及各阶段是否完成。
+主图横轴 `Configuration`（完整EGGPU、四个单组回退与合格外部路线），纵轴 `Application time (s)`；按 `Structural holes / Ranking / Closeness / BFS+WCC / Handoff` 堆叠。返回和初始准备如占比大，可明确增加段，不能藏到“其他”。第一次和热应用分面，每次重算候选；短表列最终决策一致性及各阶段是否完成。
 
 多卡补图逐阶段注明结构洞为整图复制+ego分工、Closeness为整图复制+source分工、尾部既定GPU路线。它证明功能组合或并行工作分配的价值，不证明这些扩展函数都能用聚合显存容纳超单卡图。BC、LCC、K-core、SCC、MST 等未进入主任务的函数在能力矩阵保留，不借 E6 声称全部完成大图多卡验证。
 
@@ -154,7 +156,7 @@ EP-U、LJ-U 主任务：**全图 Effective Size + Constraint → 排名取32候�
 
 - **E1表注：** “Complete-task time on seven graphs. Single-GPU and multi-GPU results use the same input and output-quality contract. Values are means of ten independent runs; dispersion and source-level results are provided in the artifact. Bold marks the lowest qualified mean in each case. OOM, TO, NS, and QF denote out-of-memory, timeout, unsupported semantics, and quality failure.” 实际还在待核资格时用 `Pending`，不能误用 QF。
 - **E2图注：** “Strong scaling of the fixed partitioned backend. Speedup is relative to the same backend on one GPU; the dashed line denotes ideal scaling. Error bars show 95% confidence intervals.” 多条系统线各自以本系统P1为分母；不同系统间性能用绝对时间补充。
-- **E3图注：** “Effect of update density on complete workflow time and transferred bytes. All variants preserve the same version and reader semantics. Zero updates are shown separately from the logarithmic density axis.”
+- **E3图注：** “Effect of update density on complete workflow time and transferred bytes. Full weight maintenance and dependency-aware maintenance share the executor and version/reader semantics; retention policy is fixed. Zero updates are shown separately from the logarithmic density axis.”
 - **E4图注：** “Effect of retained-memory budget on workflow time and reload volume. Policies process the same request sequence and enforce the same physical-memory accounting. The full-residency endpoint measures policy overhead when eviction is unnecessary.”
 - **E5图注：** “Joint effect of dependency-aware maintenance and closure-aware retention under the same paired workload. D0 uses reuse with full maintenance; C0 uses closure-LRU. Interactions are computed from paired repetitions.”
 - **E6图注：** “Contribution of extended function groups to the dependent application. Stacks include computation and cross-implementation handoff. Candidate selection and final outputs are recomputed in every run.”
@@ -163,7 +165,7 @@ EP-U、LJ-U 主任务：**全图 Effective Size + Constraint → 排名取32候�
 
 ## 8. Setup 与 artifact 记录要求
 
-论文 Setup 用一段紧凑正文加一张表，机器实采 JSON 是唯一来源。当前已核快照为 `../setup_public.json` 对应采样的 `observed_utc=2026-11-04T12:49:49.958543+00:00`（北京时间20:49）：
+论文 Setup 用一段紧凑正文加一张表，机器实采 JSON 是唯一来源。当前已核快照为 `setup.json` 的 `observed_utc=2026-11-04T12:49:49.958543+00:00`（北京时间20:49）：
 
 | 已核项目 | 当前机器 |
 |---|---|

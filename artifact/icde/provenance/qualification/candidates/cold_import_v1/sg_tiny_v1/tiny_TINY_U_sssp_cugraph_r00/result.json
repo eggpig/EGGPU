@@ -1,0 +1,542 @@
+{
+  "T_first_seconds": 2.0594280237952867,
+  "T_ready_seconds": 0.0014655167857805889,
+  "algorithm": "sssp",
+  "complete_task_timeout_seconds": 1800.0,
+  "dataset": "TINY_U",
+  "directed": false,
+  "epoch": {
+    "bytes": 539743,
+    "path": "<campaign>/candidates/cold_import_v1/sg_tiny_v1/tiny_TINY_U_sssp_cugraph_r00/epoch.json",
+    "sha256": "c8995a87a6c6ef9a60a781843e52b5a266e68bfa297efdc5210d30fcf442427a"
+  },
+  "epoch_sha256": "35817a8ab2d06a88c252c1d396338e3aa5724db00c91c1e90362c10d9c999b75",
+  "experiment": "E1",
+  "finished_unix": 1793804107.4072948,
+  "gpu_count": 1,
+  "input": {
+    "directed": false,
+    "files": {
+      "canonical": {
+        "bytes": 559,
+        "sha256": "71d861d5bbeaefed194201294264631af1bf36443cab36baf122825a43009b11"
+      },
+      "indices": {
+        "bytes": 40,
+        "sha256": "ab989e582b153458f51744ca71425fde94891d96b47208c5c51b4a279a65be3f"
+      },
+      "offsets": {
+        "bytes": 32,
+        "sha256": "2529eff76e8491f3497de20fa36a5ccccafa31c9fcfc84b7593311226e545d53"
+      },
+      "sources": {
+        "bytes": 162,
+        "sha256": "7a71572d49f64e21c7e8be6926ce4880dd2e56f352ca61ea127f285b67125f58"
+      },
+      "weights": {
+        "bytes": 80,
+        "sha256": "803fedb904f95d8a59f88c20c44f7c0976cb5fe234144d2489622613286327a6"
+      }
+    },
+    "m": 10,
+    "n": 7,
+    "receipt": {
+      "bytes": 1391,
+      "sha256": "5ded9aa86f3327deb5d335253f88f3887fa3d239ca028f2cefca29a1d78c19ae"
+    },
+    "sources": [
+      0,
+      1,
+      2
+    ]
+  },
+  "input_sha256": "4a5224f2ab5adc419d14e3e79c235440fb7fefb503e186aad8d10cef3fa2921f",
+  "performance_eligible": false,
+  "phase": "tiny",
+  "protocol": "e1-host-csr-complete-v1",
+  "quality_pass": true,
+  "repeat": 0,
+  "schema": "eggpu.e1.sg.job.v1",
+  "source_aggregation": "arithmetic equal-weight mean; this entire job is one repeat",
+  "source_processes": "fresh process per source",
+  "sources": [
+    {
+      "admission": {
+        "checked_unix": 1793804095.5380018,
+        "gpus": [
+          {
+            "driver": "580.105.08",
+            "index": "0",
+            "name": "NVIDIA GeForce RTX 4090 D",
+            "total_mib": "24564",
+            "used_mib": "0",
+            "utilization": "0",
+            "uuid": "<device-0>"
+          },
+          {
+            "driver": "580.105.08",
+            "index": "1",
+            "name": "NVIDIA GeForce RTX 4090 D",
+            "total_mib": "24564",
+            "used_mib": "0",
+            "utilization": "0",
+            "uuid": "<device-1>"
+          },
+          {
+            "driver": "580.105.08",
+            "index": "2",
+            "name": "NVIDIA GeForce RTX 4090 D",
+            "total_mib": "24564",
+            "used_mib": "0",
+            "utilization": "0",
+            "uuid": "<device-2>"
+          },
+          {
+            "driver": "580.105.08",
+            "index": "3",
+            "name": "NVIDIA GeForce RTX 4090 D",
+            "total_mib": "24564",
+            "used_mib": "0",
+            "utilization": "0",
+            "uuid": "<device-3>"
+          },
+          {
+            "driver": "580.105.08",
+            "index": "4",
+            "name": "NVIDIA GeForce RTX 4090 D",
+            "total_mib": "24564",
+            "used_mib": "0",
+            "utilization": "0",
+            "uuid": "<device-4>"
+          },
+          {
+            "driver": "580.105.08",
+            "index": "5",
+            "name": "NVIDIA GeForce RTX 4090 D",
+            "total_mib": "24564",
+            "used_mib": "0",
+            "utilization": "0",
+            "uuid": "<device-5>"
+          },
+          {
+            "driver": "580.105.08",
+            "index": "6",
+            "name": "NVIDIA GeForce RTX 4090 D",
+            "total_mib": "24564",
+            "used_mib": "0",
+            "utilization": "0",
+            "uuid": "<device-6>"
+          },
+          {
+            "driver": "580.105.08",
+            "index": "7",
+            "name": "NVIDIA GeForce RTX 4090 D",
+            "total_mib": "24564",
+            "used_mib": "0",
+            "utilization": "0",
+            "uuid": "<device-7>"
+          }
+        ],
+        "host": "<redacted-host>",
+        "processes": "",
+        "required_host_bytes": 8589934592,
+        "selected": {
+          "driver": "580.105.08",
+          "index": "0",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-0>"
+        }
+      },
+      "calls": {
+        "first": {
+          "output": {
+            "bytes": 184,
+            "path": "<campaign>/candidates/cold_import_v1/sg_tiny_v1/tiny_TINY_U_sssp_cugraph_r00/source_0/0fba396234a3b4540583a7cc21638e40a734fca796c6dc311f29e6ac023ce60f.npy",
+            "sha256": "a6a4bd4dd01d6ad33a82454afbb688972824a2e144c828d8e72b58c4e700f2ac"
+          },
+          "quality": {
+            "complete": true,
+            "dtype": "float64",
+            "exact_reference_match": true,
+            "immutable": true,
+            "owning": true,
+            "pass": true,
+            "rmse_finite": 0.0,
+            "unreachable_match": true
+          },
+          "seconds": 1.5445047095417976
+        },
+        "ready": {
+          "output": {
+            "bytes": 184,
+            "path": "<campaign>/candidates/cold_import_v1/sg_tiny_v1/tiny_TINY_U_sssp_cugraph_r00/source_0/0fba396234a3b4540583a7cc21638e40a734fca796c6dc311f29e6ac023ce60f.npy",
+            "sha256": "a6a4bd4dd01d6ad33a82454afbb688972824a2e144c828d8e72b58c4e700f2ac"
+          },
+          "quality": {
+            "complete": true,
+            "dtype": "float64",
+            "exact_reference_match": true,
+            "immutable": true,
+            "owning": true,
+            "pass": true,
+            "rmse_finite": 0.0,
+            "unreachable_match": true
+          },
+          "seconds": 0.001362144947052002
+        },
+        "warmup": {
+          "count": 1,
+          "output": {
+            "bytes": 184,
+            "path": "<campaign>/candidates/cold_import_v1/sg_tiny_v1/tiny_TINY_U_sssp_cugraph_r00/source_0/0fba396234a3b4540583a7cc21638e40a734fca796c6dc311f29e6ac023ce60f.npy",
+            "sha256": "a6a4bd4dd01d6ad33a82454afbb688972824a2e144c828d8e72b58c4e700f2ac"
+          },
+          "quality": {
+            "complete": true,
+            "dtype": "float64",
+            "exact_reference_match": true,
+            "immutable": true,
+            "owning": true,
+            "pass": true,
+            "rmse_finite": 0.0,
+            "unreachable_match": true
+          },
+          "timed": false
+        }
+      },
+      "index": 0,
+      "quality_pass": true,
+      "result": {
+        "bytes": 3484,
+        "path": "<campaign>/candidates/cold_import_v1/sg_tiny_v1/tiny_TINY_U_sssp_cugraph_r00/source_0/result.json",
+        "sha256": "d9aada8a7b66477d103807afb9f3d46eff38c006e4004d9f1c2dba26b651a962"
+      },
+      "returncode": 0,
+      "source": 0,
+      "status": "PASS"
+    },
+    {
+      "admission": {
+        "checked_unix": 1793804098.1248457,
+        "gpus": [
+          {
+            "driver": "580.105.08",
+            "index": "0",
+            "name": "NVIDIA GeForce RTX 4090 D",
+            "total_mib": "24564",
+            "used_mib": "0",
+            "utilization": "0",
+            "uuid": "<device-0>"
+          },
+          {
+            "driver": "580.105.08",
+            "index": "1",
+            "name": "NVIDIA GeForce RTX 4090 D",
+            "total_mib": "24564",
+            "used_mib": "0",
+            "utilization": "0",
+            "uuid": "<device-1>"
+          },
+          {
+            "driver": "580.105.08",
+            "index": "2",
+            "name": "NVIDIA GeForce RTX 4090 D",
+            "total_mib": "24564",
+            "used_mib": "0",
+            "utilization": "0",
+            "uuid": "<device-2>"
+          },
+          {
+            "driver": "580.105.08",
+            "index": "3",
+            "name": "NVIDIA GeForce RTX 4090 D",
+            "total_mib": "24564",
+            "used_mib": "0",
+            "utilization": "0",
+            "uuid": "<device-3>"
+          },
+          {
+            "driver": "580.105.08",
+            "index": "4",
+            "name": "NVIDIA GeForce RTX 4090 D",
+            "total_mib": "24564",
+            "used_mib": "0",
+            "utilization": "0",
+            "uuid": "<device-4>"
+          },
+          {
+            "driver": "580.105.08",
+            "index": "5",
+            "name": "NVIDIA GeForce RTX 4090 D",
+            "total_mib": "24564",
+            "used_mib": "0",
+            "utilization": "0",
+            "uuid": "<device-5>"
+          },
+          {
+            "driver": "580.105.08",
+            "index": "6",
+            "name": "NVIDIA GeForce RTX 4090 D",
+            "total_mib": "24564",
+            "used_mib": "0",
+            "utilization": "0",
+            "uuid": "<device-6>"
+          },
+          {
+            "driver": "580.105.08",
+            "index": "7",
+            "name": "NVIDIA GeForce RTX 4090 D",
+            "total_mib": "24564",
+            "used_mib": "0",
+            "utilization": "0",
+            "uuid": "<device-7>"
+          }
+        ],
+        "host": "<redacted-host>",
+        "processes": "",
+        "required_host_bytes": 8589934592,
+        "selected": {
+          "driver": "580.105.08",
+          "index": "0",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-0>"
+        }
+      },
+      "calls": {
+        "first": {
+          "output": {
+            "bytes": 184,
+            "path": "<campaign>/candidates/cold_import_v1/sg_tiny_v1/tiny_TINY_U_sssp_cugraph_r00/source_1/3fc50126e89c8cef04077eb3a72ed6c44e1cd6ed1a90d9897f76d24711b9bbc3.npy",
+            "sha256": "21b0428e73e08aebe6096a00fc47eb58c0bd1e46702f1bb258cf2758489cf8f5"
+          },
+          "quality": {
+            "complete": true,
+            "dtype": "float64",
+            "exact_reference_match": true,
+            "immutable": true,
+            "owning": true,
+            "pass": true,
+            "rmse_finite": 0.0,
+            "unreachable_match": true
+          },
+          "seconds": 2.3465216793119907
+        },
+        "ready": {
+          "output": {
+            "bytes": 184,
+            "path": "<campaign>/candidates/cold_import_v1/sg_tiny_v1/tiny_TINY_U_sssp_cugraph_r00/source_1/3fc50126e89c8cef04077eb3a72ed6c44e1cd6ed1a90d9897f76d24711b9bbc3.npy",
+            "sha256": "21b0428e73e08aebe6096a00fc47eb58c0bd1e46702f1bb258cf2758489cf8f5"
+          },
+          "quality": {
+            "complete": true,
+            "dtype": "float64",
+            "exact_reference_match": true,
+            "immutable": true,
+            "owning": true,
+            "pass": true,
+            "rmse_finite": 0.0,
+            "unreachable_match": true
+          },
+          "seconds": 0.001504264771938324
+        },
+        "warmup": {
+          "count": 1,
+          "output": {
+            "bytes": 184,
+            "path": "<campaign>/candidates/cold_import_v1/sg_tiny_v1/tiny_TINY_U_sssp_cugraph_r00/source_1/3fc50126e89c8cef04077eb3a72ed6c44e1cd6ed1a90d9897f76d24711b9bbc3.npy",
+            "sha256": "21b0428e73e08aebe6096a00fc47eb58c0bd1e46702f1bb258cf2758489cf8f5"
+          },
+          "quality": {
+            "complete": true,
+            "dtype": "float64",
+            "exact_reference_match": true,
+            "immutable": true,
+            "owning": true,
+            "pass": true,
+            "rmse_finite": 0.0,
+            "unreachable_match": true
+          },
+          "timed": false
+        }
+      },
+      "index": 1,
+      "quality_pass": true,
+      "result": {
+        "bytes": 3484,
+        "path": "<campaign>/candidates/cold_import_v1/sg_tiny_v1/tiny_TINY_U_sssp_cugraph_r00/source_1/result.json",
+        "sha256": "2fdfecb4f86cd59888743fd80eb1f00b1d0ba38391826e08938f2d79a27d5ace"
+      },
+      "returncode": 0,
+      "source": 1,
+      "status": "PASS"
+    },
+    {
+      "admission": {
+        "checked_unix": 1793804101.4063752,
+        "gpus": [
+          {
+            "driver": "580.105.08",
+            "index": "0",
+            "name": "NVIDIA GeForce RTX 4090 D",
+            "total_mib": "24564",
+            "used_mib": "0",
+            "utilization": "0",
+            "uuid": "<device-0>"
+          },
+          {
+            "driver": "580.105.08",
+            "index": "1",
+            "name": "NVIDIA GeForce RTX 4090 D",
+            "total_mib": "24564",
+            "used_mib": "0",
+            "utilization": "0",
+            "uuid": "<device-1>"
+          },
+          {
+            "driver": "580.105.08",
+            "index": "2",
+            "name": "NVIDIA GeForce RTX 4090 D",
+            "total_mib": "24564",
+            "used_mib": "0",
+            "utilization": "0",
+            "uuid": "<device-2>"
+          },
+          {
+            "driver": "580.105.08",
+            "index": "3",
+            "name": "NVIDIA GeForce RTX 4090 D",
+            "total_mib": "24564",
+            "used_mib": "0",
+            "utilization": "0",
+            "uuid": "<device-3>"
+          },
+          {
+            "driver": "580.105.08",
+            "index": "4",
+            "name": "NVIDIA GeForce RTX 4090 D",
+            "total_mib": "24564",
+            "used_mib": "0",
+            "utilization": "0",
+            "uuid": "<device-4>"
+          },
+          {
+            "driver": "580.105.08",
+            "index": "5",
+            "name": "NVIDIA GeForce RTX 4090 D",
+            "total_mib": "24564",
+            "used_mib": "0",
+            "utilization": "0",
+            "uuid": "<device-5>"
+          },
+          {
+            "driver": "580.105.08",
+            "index": "6",
+            "name": "NVIDIA GeForce RTX 4090 D",
+            "total_mib": "24564",
+            "used_mib": "0",
+            "utilization": "0",
+            "uuid": "<device-6>"
+          },
+          {
+            "driver": "580.105.08",
+            "index": "7",
+            "name": "NVIDIA GeForce RTX 4090 D",
+            "total_mib": "24564",
+            "used_mib": "0",
+            "utilization": "0",
+            "uuid": "<device-7>"
+          }
+        ],
+        "host": "<redacted-host>",
+        "processes": "",
+        "required_host_bytes": 8589934592,
+        "selected": {
+          "driver": "580.105.08",
+          "index": "0",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-0>"
+        }
+      },
+      "calls": {
+        "first": {
+          "output": {
+            "bytes": 184,
+            "path": "<campaign>/candidates/cold_import_v1/sg_tiny_v1/tiny_TINY_U_sssp_cugraph_r00/source_2/4c01c0f61719e9f4783b02ae414a90cf0d96fec65cdd6d7058cc5cf457142667.npy",
+            "sha256": "fbca7fbc5d502d371b49456159cfcf820fb9e2bc05cd022a8ea7220d5d6e3923"
+          },
+          "quality": {
+            "complete": true,
+            "dtype": "float64",
+            "exact_reference_match": true,
+            "immutable": true,
+            "owning": true,
+            "pass": true,
+            "rmse_finite": 0.0,
+            "unreachable_match": true
+          },
+          "seconds": 2.287257682532072
+        },
+        "ready": {
+          "output": {
+            "bytes": 184,
+            "path": "<campaign>/candidates/cold_import_v1/sg_tiny_v1/tiny_TINY_U_sssp_cugraph_r00/source_2/4c01c0f61719e9f4783b02ae414a90cf0d96fec65cdd6d7058cc5cf457142667.npy",
+            "sha256": "fbca7fbc5d502d371b49456159cfcf820fb9e2bc05cd022a8ea7220d5d6e3923"
+          },
+          "quality": {
+            "complete": true,
+            "dtype": "float64",
+            "exact_reference_match": true,
+            "immutable": true,
+            "owning": true,
+            "pass": true,
+            "rmse_finite": 0.0,
+            "unreachable_match": true
+          },
+          "seconds": 0.0015301406383514404
+        },
+        "warmup": {
+          "count": 1,
+          "output": {
+            "bytes": 184,
+            "path": "<campaign>/candidates/cold_import_v1/sg_tiny_v1/tiny_TINY_U_sssp_cugraph_r00/source_2/4c01c0f61719e9f4783b02ae414a90cf0d96fec65cdd6d7058cc5cf457142667.npy",
+            "sha256": "fbca7fbc5d502d371b49456159cfcf820fb9e2bc05cd022a8ea7220d5d6e3923"
+          },
+          "quality": {
+            "complete": true,
+            "dtype": "float64",
+            "exact_reference_match": true,
+            "immutable": true,
+            "owning": true,
+            "pass": true,
+            "rmse_finite": 0.0,
+            "unreachable_match": true
+          },
+          "timed": false
+        }
+      },
+      "index": 2,
+      "quality_pass": true,
+      "result": {
+        "bytes": 3484,
+        "path": "<campaign>/candidates/cold_import_v1/sg_tiny_v1/tiny_TINY_U_sssp_cugraph_r00/source_2/result.json",
+        "sha256": "81613138e68656b6735145ea751b59bd2a59a39468d6e289ae7ca82b34292258"
+      },
+      "returncode": 0,
+      "source": 2,
+      "status": "PASS"
+    }
+  ],
+  "started_unix": 1793804092.5760634,
+  "status": "PASS_QUALIFICATION",
+  "system": "cugraph",
+  "public_projection_note": "Host paths/UUIDs redacted. This is qualification evidence, not an executable tiny/target proof or a formal performance repetition. Original bytes are retained by the operator."
+}

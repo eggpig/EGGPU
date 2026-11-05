@@ -1,0 +1,37 @@
+{
+  "schema": "eggpu.runner.release.v1",
+  "version": "native_v2",
+  "status": "EARLIER_SOURCE_TINY_PASS_CURRENT_TARGET_PENDING",
+  "files": {
+    "native_worker.py": {
+      "sha256": "12f183d6ff969e4c1921e388546a70a102d8ff22e1c9cb39df9a1b56b6b390f6",
+      "bytes": 23833
+    },
+    "native_input.py": {
+      "sha256": "927a9194b15b6dfaf91ff829f2476a676c7828ba4071607497ef308789d10152",
+      "bytes": 11994
+    },
+    "run_native.py": {
+      "sha256": "89630d55c6691d1649144d8d05fe8753f921097415c0cbcb38f85f13d441954e",
+      "bytes": 8072
+    },
+    "test_native_campaign.py": {
+      "sha256": "b5ccdc514e298fa02b77af0e71253e0a62630513c961479e491b3d3f35fc4bee",
+      "bytes": 12350
+    },
+    "sg_worker.py": {
+      "sha256": "7ab87843b24df60ad1372bee6383ec2c9d75227031a8343c439a6cca0ddbde43",
+      "bytes": 41183
+    },
+    "cugraph_csr_adapter.py": {
+      "sha256": "36e57e6dd8764e5b27db5a21a8b7b0c712f9c42d434636744c4e29997b2447cf",
+      "bytes": 7465
+    },
+    "mg_process_observer.py": {
+      "sha256": "368c4d858da8dc5a2833dd2cd2dd30d0ab9df75940968c181a1537c2e30426a7",
+      "bytes": 2499
+    }
+  },
+  "formal_results": 0,
+  "qualification_note": "Public source/path changes require exact local tiny/target proofs. Earlier operator scope evidence is not a proof shortcut."
+}

@@ -100,7 +100,7 @@ are exposed by ``capabilities`` and ``inventory``.
 
     @classmethod
     def create(cls, inputs, *, devices=(0,), state_model="static",
-               algorithms=("bfs", "sssp", "wcc", "pr"), budget_bytes=None, **options):
+               algorithms=("bfs", "sssp", "wcc", "pr"), budget_bytes=None, input_format=None, **options):
         """Create the route selected by a fixed workload capability policy.
 
         Use ``plan_session`` to inspect the decision without importing CUDA.
@@ -110,15 +110,26 @@ are exposed by ``capabilities`` and ``inventory``.
         manifests; their optional per-device budget uses ``budgets`` in options.
         These budget meanings are intentionally not silently converted.
 
+        ``input_format='csr'`` selects the existing owned-CSR admission on the
+        same single-device arena. Each graph supplies sorted original ``nodes``,
+        canonical ``offsets`` and destination-position ``indices``, plus optional
+        nonnegative ``weights`` (unit weights when absent). Rows are explicit
+        outgoing arcs; reciprocal graphs supply both orientations. All validation
+        and owned copying happen during creation. Journal updates retain their
+        existing directed-arc semantics.
+
         The selected backend is never changed after an error. This factory does
         not convert inputs or choose a different implementation for each graph.
         Fixed-backend scaling should use ``Session.native`` for every GPU count.
         """
         from ._dispatch import plan_session
-        plan = plan_session(devices=devices, state_model=state_model, algorithms=algorithms)
+        plan = plan_session(devices=devices, state_model=state_model, algorithms=algorithms,
+                            input_format=input_format)
         if plan.backend == "arena":
             if budget_bytes is None:
                 raise ValueError("The single-device arena requires explicit budget_bytes")
+            if plan.input_kind == 'owned_csr':
+                options['input_format'] = 'csr'
             result = cls.arena(inputs, budget_bytes=budget_bytes,
                                device=plan.devices[0], **options)
         else:
@@ -139,14 +150,19 @@ are exposed by ``capabilities`` and ``inventory``.
 
     @classmethod
     def arena(cls, graphs, *, budget_bytes, device=0,
-              pr_tolerance_l1=1e-6, pr_max_iter=10000):
+              pr_tolerance_l1=1e-6, pr_max_iter=10000, input_format='coo'):
         """Create one bounded arena with an explicit PageRank stopping contract.
 
         ``pr_tolerance_l1`` bounds the sum of consecutive-iterate differences,
         not a per-vertex tolerance or an independently certified final residual.
         Defaults preserve the historical arena behavior.
+
+        ``input_format='csr'`` accepts canonical outgoing CSR as documented by
+        ``create``; it does not infer symmetry or add reverse arcs.
         """
         _require_gpu_python()
+        if input_format not in ('coo', 'csr'):
+            raise ValueError('Arena input_format must be coo or csr')
         if isinstance(device, bool):
             raise ValueError("device must be a nonnegative integer")
         device = operator.index(device)
@@ -155,9 +171,10 @@ are exposed by ``capabilities`` and ``inventory``.
         import cupy as cp
         from ._core import CoreManagedSession
         with cp.cuda.Device(device):
+            options = {'input_format': 'csr'} if input_format == 'csr' else {}
             backend = CoreManagedSession(graphs, budget_bytes=budget_bytes,
                                      pr_tolerance_l1=pr_tolerance_l1,
-                                     pr_max_iter=pr_max_iter)
+                                     pr_max_iter=pr_max_iter, **options)
         result = cls(backend, kind="arena")
         result._device = device
         return result

@@ -233,6 +233,9 @@ private:
 
 class PartitionedDeviceStateRegistry {
 public:
+    // Fixed-worker, read-only lease of existing immutable views; never uploads.
+    std::vector<std::shared_ptr<ResidentPartitionView> > hold_graph_views(
+        const std::string& graph_id, std::uint64_t generation) const;
     std::shared_ptr<ResidentPartitionView> acquire(
         const PartitionDeviceUpload& upload,
         bool* cache_hit = nullptr,

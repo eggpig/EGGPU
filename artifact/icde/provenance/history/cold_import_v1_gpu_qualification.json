@@ -1,0 +1,32 @@
+{
+  "schema": "eggpu.public_gpu_qualification/v3",
+  "status": "EGGPU_SOURCE_QUALIFIED_CORRECTED_CUGRAPH_PR_GPU_PENDING",
+  "source_candidate": "cold_import_v1",
+  "source_sha256": "fb1a378c021e3153cfc4b2e32e5aa03d57788f42682c57dd653498e3b43a23b2",
+  "native_dso_sha256": "bc1b7cf247222beec1f33afe4d184bdc715eea4ac65a07e8e2a567ec196aec46",
+  "sg_semantic_checks": 33,
+  "counts": {
+    "sg_tiny": 16,
+    "sg_ep_target": 8,
+    "earlier_E6_tiny": 11,
+    "earlier_sequence16_tiny": 4
+  },
+  "formal_configurations": 0,
+  "performance_eligible": false,
+  "record_projection": "qualification/",
+  "evidence_index": "qualification/index.json",
+  "scope": "Only SG semantics/tiny/EP target are bound to the current cold source. E6/sequence and failed earlier author/MG attempts retain their separate runner/source identities.",
+  "pending": [
+    "Corrected global-L1 SG cuGraph PR and cuGraph sequence16 exact runner qualification",
+    "All new formal E1-E6 repetitions",
+    "New state-v4 exact proofs",
+    "External continuous-timing qualification",
+    "Remaining graph targets and TW preparation"
+  ],
+  "historical_source_832": "history/source_832_gpu_qualification.json",
+  "pr_protocol_correction": {
+    "record": "pr_protocol_correction.json",
+    "status": "CPU_PASS_CURRENT_CUGRAPH_PR_REQUALIFICATION_PENDING",
+    "historical_counts_are_not_current_runner_proofs": true
+  }
+}

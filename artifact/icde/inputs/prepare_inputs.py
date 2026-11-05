@@ -6,6 +6,7 @@ Source payloads, graph preparation and benchmark timings remain separate.
 from pathlib import Path
 import argparse
 import gzip
+import bz2
 import hashlib
 import heapq
 import json
@@ -41,79 +42,94 @@ def link_checked(source, destination, expected=None):
 def topology(args, spec, out):
     import numpy as np
     from scipy.sparse import csr_matrix
+    import zipfile
     name = spec['abbreviation']; n = spec['canonical_vertices']
-    old = args.legacy / 'experimental/performance_revision_20261102/large_graphs'
-    source = args.root / 'source' / name
-    provenance = {}
-    if name in ('IN', 'UK'):
-        original = old / 'canonical' / spec['source_name']
-        for role in ('offsets', 'indices'):
-            provenance[role] = link_checked(original / (role + '.bin'), out / (role + '.bin'),
-                                           spec['archived_topology_sha256'][role])
-        info = json.loads((original / 'conversion.json').read_text())
-        provenance['receipt'] = binding(original / 'receipt.json')
-    elif name == 'OR':
-        original = args.legacy / 'data/nr_v2'
-        for role in ('offsets', 'indices'):
-            provenance[role] = link_checked(original / ('NR-soc-orkut.' + role + '.i32'), out / (role + '.bin'))
-        info = {'vertices': n, 'arcs': spec['canonical_stored_arcs'], 'raw_arcs': spec['source_stored_arcs'],
-                'normalization': 'reuse existing simple reciprocal CSR; symmetry rechecked'}
-        provenance['receipt'] = binding(original / 'receipt.json')
-    elif name == 'EP':
-        original = args.legacy / 'data/canonical/epinions_input.npz'
-        with np.load(original, allow_pickle=False) as data:
-            edges = data['edges']; nodes = data['nodes']
-            if len(nodes) != n or not np.array_equal(nodes, np.arange(n)):
-                raise ValueError('Existing EP canonical domain differs')
-            graph = csr_matrix((np.ones(len(edges), dtype=np.uint8), (edges[:, 0], edges[:, 1])), shape=(n, n))
-            graph.sum_duplicates(); graph.setdiag(0); graph.eliminate_zeros(); graph.sort_indices()
-            graph.indptr.astype('<i4').tofile(out / 'offsets.bin')
-            graph.indices.astype('<i4').tofile(out / 'indices.bin')
-            info = {'vertices': n, 'arcs': graph.nnz, 'raw_arcs': spec['source_stored_arcs'],
-                    'normalization': 'reuse canonical source arcs; remove loops and ordered duplicates'}
-        provenance['input'] = binding(original)
-        label = args.legacy / 'data/canonical/epinions_original_labels.npy'
-        provenance['source_labels'] = link_checked(label, out / 'source_labels.npy')
-    elif name in ('LJ', 'US'):
-        files = list(source.glob('*.gz'))
-        if len(files) != 1: raise ValueError('Need one qualified official compressed source')
-        provenance['source'] = binding(files[0])
+    directory = args.root / 'source' / name
+    receipt_path = directory / 'source_receipt.json'
+    downloaded = json.loads(receipt_path.read_text())
+    if downloaded['status'] != 'PASS_SOURCE_FILES':
+        raise ValueError('Original source is not qualified')
+    provenance = {'source_receipt': binding(receipt_path), 'source_files': []}
+    payloads = {}
+    for item in downloaded['files']:
+        path = directory / Path(item['path']).name
+        observed = binding(path)
+        if any(observed[k] != item[k] for k in ('bytes', 'sha256')):
+            raise ValueError('Original source payload changed')
+        provenance['source_files'].append(observed); payloads[path.name] = path
+    if name == 'EP':
+        with gzip.open(payloads['soc-Epinions1.txt.gz'], 'rt') as stream:
+            edges = np.loadtxt(stream, dtype=np.int64, comments='#', ndmin=2)
+        if edges.shape != (spec['source_stored_arcs'], 2):
+            raise ValueError('Official Epinions source row count differs')
+        labels = np.unique(edges)
+        if len(labels) != n or np.any(labels < 0):
+            raise ValueError('Official Epinions complete label domain differs')
+        canonical = np.searchsorted(labels, edges)
+        graph = csr_matrix((np.ones(len(edges), dtype=np.bool_),
+                            (canonical[:, 0], canonical[:, 1])), shape=(n, n))
+        graph.sum_duplicates(); graph.setdiag(0); graph.eliminate_zeros(); graph.sort_indices()
+        graph.indptr.astype('<i4').tofile(out / 'offsets.bin')
+        graph.indices.astype('<i4').tofile(out / 'indices.bin')
+        np.save(out / 'source_labels.npy', labels.astype('<i8'), allow_pickle=False)
+        info = dict(vertices=n, arcs=graph.nnz, raw_arcs=len(edges),
+                    normalization='sorted unique official labels; remove loops and ordered duplicates',
+                    source_label_count=len(labels), all_published_vertices_accounted_for=True)
+    elif name in ('LJ', 'US', 'OR'):
+        mode = 'snap' if name == 'LJ' else 'mm'
+        command = ([str(args.tools / 'metis_to_csr'), str(n), str(spec['source_logical_edges']), str(out)]
+                   if name == 'US' else
+                   [str(args.tools / 'edge_list_to_csr'), mode, str(n), str(spec['source_stored_arcs']), str(out)])
+        provenance['converter'] = binding(command[0])
+        provenance['converter_source'] = binding(Path(__file__).with_name(Path(command[0]).name + '.cpp'))
         with (out / 'topology.log').open('wb') as log:
-            proc = subprocess.Popen([str(args.tools / 'edge_list_to_csr'), 'mm' if name == 'US' else 'snap',
-                                     str(n), str(spec['source_stored_arcs']), str(out)],
-                                    stdin=subprocess.PIPE, stdout=log, stderr=subprocess.STDOUT)
+            proc = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=log, stderr=subprocess.STDOUT)
             try:
-                if name == 'LJ':
-                    with gzip.open(files[0], 'rb') as f: shutil.copyfileobj(f, proc.stdin, 8 << 20)
+                if name == 'US':
+                    with bz2.open(payloads['road_usa.graph.bz2'], 'rb') as stream:
+                        shutil.copyfileobj(stream, proc.stdin, 8 << 20)
+                    provenance['origin_identity_basis'] = downloaded['identity_basis']
+                    provenance['suitesparse_byte_hash_verified'] = False
+                elif name == 'LJ':
+                    with gzip.open(payloads['soc-LiveJournal1.txt.gz'], 'rb') as stream:
+                        shutil.copyfileobj(stream, proc.stdin, 8 << 20)
                 else:
-                    with tarfile.open(files[0], 'r:gz') as archive:
-                        members = [m for m in archive.getmembers() if m.isfile() and m.name.endswith('/road_usa.mtx')]
-                        if len(members) != 1: raise ValueError('Unexpected official MatrixMarket archive')
-                        with archive.extractfile(members[0]) as f: shutil.copyfileobj(f, proc.stdin, 8 << 20)
+                    with zipfile.ZipFile(payloads['soc-orkut.zip']) as archive:
+                        members = [item for item in archive.infolist() if item.filename == 'soc-orkut.mtx']
+                        if len(members) != 1: raise ValueError('Unexpected original NR Orkut archive member')
+                        with archive.open(members[0]) as stream:
+                            first = stream.readline()
+                            if first.rstrip(b' \t\r\n') != b'%MatrixMarket matrix coordinate pattern symmetric':
+                                raise ValueError('Original NR single-percent Matrix Market header differs')
+                            proc.stdin.write(b'%' + first)
+                            shutil.copyfileobj(stream, proc.stdin, 8 << 20)
+                    provenance['header_adapter'] = 'Exactly prepend one percent to the known original NR header; no edge or label changes'
                 proc.stdin.close()
-                if proc.wait(): raise RuntimeError('Topology converter failed; see topology.log')
+                if proc.wait(): raise RuntimeError('Topology conversion failed; see topology.log')
             except BaseException:
                 proc.kill(); proc.wait(); raise
         info = json.loads((out / 'conversion.json').read_text())
-    elif name == 'TW':
-        receipt = json.loads((args.root / 'source/fetch_state.json').read_text())['datasets']['TW']
-        if receipt['status'] != 'PASS_SOURCE_FILES': raise ValueError('TW official checksums not qualified')
-        for item in receipt['files']:
-            if binding(item['path'])['sha256'] != item['sha256']: raise ValueError('TW source changed')
-        provenance['source_files'] = receipt['files']
-        java = old / 'toolchain/debian-root/usr/lib/jvm/java-17-openjdk-amd64/bin/java'
-        classpath = str(old / 'classes/indochina-2004') + ':' + str(old / 'webgraph-jars/*')
-        # The existing exporter requires a new directory; the outer preparation owns its parent.
+    elif name in ('IN', 'UK', 'TW'):
+        source_name = {'IN': 'indochina-2004', 'UK': 'uk-2002', 'TW': 'twitter-2010'}[name]
         temporary = out / 'converted'
+        classpath = str(args.tools / 'classes') + os.pathsep + str(args.tools / 'jars/*')
         with (out / 'topology.log').open('wb') as log:
-            subprocess.run([str(java), '-Xmx2g', '-cp', classpath, 'LawToCsr',
-                            str(source / 'twitter-2010'), str(temporary)], check=True, stdout=log, stderr=subprocess.STDOUT)
-        for role in ('offsets.bin', 'indices.bin', 'conversion.json'): (temporary / role).replace(out / role)
+            subprocess.run([args.java, '-Xmx2g', '-cp', classpath, 'LawToCsr',
+                            str(directory / source_name), str(temporary)], check=True,
+                           env=dict(os.environ, CUDA_VISIBLE_DEVICES=''), stdout=log, stderr=subprocess.STDOUT)
+        for role in ('offsets.bin', 'indices.bin', 'conversion.json'):
+            (temporary / role).replace(out / role)
         temporary.rmdir(); info = json.loads((out / 'conversion.json').read_text())
-        if info['vertices'] != n or info['raw_arcs'] != spec['source_stored_arcs']:
-            raise ValueError('TW official dimensions differ')
-        provenance['exporter'] = binding(old / 'classes/indochina-2004/LawToCsr.class')
-    else: raise ValueError('Unknown frozen graph')
+        provenance['toolchain'] = binding(args.tools / 'toolchain.json')
+        provenance['exporter_source'] = binding(Path(__file__).with_name('LawToCsr.java'))
+        provenance['java_executable'] = binding(shutil.which(args.java) or args.java)
+        for role, expected in spec.get('archived_topology_sha256', {}).items():
+            if binding(out / (role + '.bin'))['sha256'] != expected:
+                raise ValueError('Fresh LAW export differs from frozen canonical topology: ' + role)
+    else:
+        raise ValueError('Unknown frozen graph')
+    if info['vertices'] != n or info['raw_arcs'] != spec['source_stored_arcs']:
+        raise ValueError('Published source dimensions differ')
     save(out / 'conversion.json', info)
     return info, provenance
 
@@ -146,16 +162,18 @@ def validate_and_select(args, spec, out, info):
     sizes = np.bincount(labels); maximum = int(sizes.max()); largest = np.flatnonzero(sizes == maximum)
     # Among tied maximum components, the one containing the smallest canonical ID wins.
     target = int(labels[np.flatnonzero(np.isin(labels, largest))[0]])
-    selected = np.flatnonzero(labels == target); fallback = False
+    selected = np.flatnonzero(labels == target); fallback = False; supplement = np.empty(0, dtype=np.int64)
     if len(selected) < 3:
         _, weak = connected_components(graph, directed=False, return_labels=True)
         sizes2 = np.bincount(weak); tied = np.flatnonzero(sizes2 == sizes2.max())
         chosen = int(weak[np.flatnonzero(np.isin(weak, tied))[0]])
         supplement = np.flatnonzero((weak == chosen) & (np.diff(offsets) > 0))
-        selected = np.unique(np.r_[selected, supplement]); fallback = True
+        supplement = np.setdiff1d(supplement, selected, assume_unique=True); fallback = True
     prefix = ('eggpu-source-v1|20261104|' + spec['dataset_id'] + '|').encode()
     rank = lambda v: (hashlib.sha256(prefix + str(int(v)).encode()).digest(), int(v))
     sources = [v for _, v in heapq.nsmallest(3, map(rank, selected))]
+    if len(sources) < 3:
+        sources += [v for _, v in heapq.nsmallest(3-len(sources), map(rank, supplement))]
     diagnostic = min(map(rank, range(n)))[1]
     source_record = {'primary_sources': sources, 'diagnostic_source': diagnostic,
                      'largest_component_vertices': maximum, 'component_count': int(count),
@@ -172,7 +190,8 @@ def prepare(args, spec):
         record = json.loads((out / 'receipt.json').read_text())
         if record['status'] == 'PASS_CANONICAL_INPUT':
             for item in record['files'].values():
-                if binding(item['path']) != item: raise ValueError('Existing qualified input changed')
+                observed=binding(out/Path(item['path']).name)
+                if any(observed[k] != item[k] for k in ('bytes','sha256')): raise ValueError('Existing qualified input changed')
             return record
         raise ValueError('Previous failed preparation requires inspection; do not overwrite')
     out.mkdir(parents=True, exist_ok=False)
@@ -209,8 +228,20 @@ def prepare(args, spec):
                 'offsets_path':'offsets.bin','indices_path':'indices.bin','weights_path':'weights.bin',
                 'weight_key':'weight','weight_rule':'w16-v1','source':spec['source_url']}
         save(out / 'canonical.json',meta)
+        mapping = {'canonical_domain': [0,n-1], 'preserves_all_source_vertices': True,
+                   'rule': 'source_labels.npy' if spec['abbreviation']=='EP' else
+                           'canonical ID = official one-based ID - 1' if spec['abbreviation']=='US' else
+                           'identity in the official contiguous ordering' if spec['abbreviation'] in ('LJ','IN','UK','TW') else
+                           'canonical ID = official one-based Matrix Market ID - 1'}
+        save(out / 'id_mapping.json', mapping)
         files = {role:binding(out/name) for role,name in [('offsets','offsets.bin'),('indices','indices.bin'),
-                 ('weights','weights.bin'),('canonical','canonical.json'),('sources','sources.json')]}
+                 ('weights','weights.bin'),('canonical','canonical.json'),('sources','sources.json'),('id_mapping','id_mapping.json')]}
+        if (out/'source_labels.npy').exists(): files['source_labels']=binding(out/'source_labels.npy')
+        expected=json.loads(Path(__file__).with_name('expected_canonical.json').read_text())['datasets'].get(spec['abbreviation'])
+        if expected:
+            for role, wanted in expected['files'].items():
+                if any(files[role][k] != wanted[k] for k in ('bytes','sha256')): raise ValueError('Fresh payload differs from qualified reference: '+role)
+            record['exact_reference_payload_match']=list(expected['files'])
         record.update(status='PASS_CANONICAL_INPUT',vertices=n,stored_arcs=m,normalization=info,
                       source_bindings=provenance,source_selection=sources,files=files,
                       generator=binding(args.tools/'weights'),generator_source=binding(Path(__file__).with_name('weights.cpp')),
@@ -224,9 +255,14 @@ def prepare(args, spec):
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--root',type=Path,required=True)
-    p.add_argument('--legacy',type=Path,required=True);p.add_argument('--tools',type=Path,required=True)
+    p.add_argument('--tools',type=Path,required=True);p.add_argument('--java',default='java')
     p.add_argument('--registry',type=Path,required=True);p.add_argument('--datasets',default='EP,OR,IN,UK,LJ,US,TW')
     a=p.parse_args();os.environ['CUDA_VISIBLE_DEVICES']=''
+    toolchain=json.loads((a.tools/'toolchain.json').read_text())
+    if toolchain.get('status') != 'PASS_CPU_TOOLCHAIN': raise ValueError('CPU toolchain is not qualified')
+    for relative, item in toolchain['files'].items():
+        observed=binding(a.tools/relative)
+        if any(observed[k] != item[k] for k in ('bytes','sha256')): raise ValueError('CPU toolchain file changed: '+relative)
     registry=json.loads(a.registry.read_text());specs={d['abbreviation']:d for d in registry['datasets']}
     for name in a.datasets.split(','):
         record=prepare(a,specs[name]);print(json.dumps({'dataset':name,'status':record['status'],'arcs':record['stored_arcs']}),flush=True)

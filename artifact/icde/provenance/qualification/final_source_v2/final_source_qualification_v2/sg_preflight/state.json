@@ -1,0 +1,1210 @@
+{
+  "status": "PASS_REQUESTED_QUALIFICATIONS",
+  "plan": {
+    "path": "<campaign>/final_source_qualification_v2/sg_preflight_plan.json",
+    "sha256": "d2abacc210d8eded9b7643e62fa88458d27ebc0a3f4b42d49efbec834d580065",
+    "bytes": 42072
+  },
+  "controller": {
+    "path": "<campaign>/run_campaign_queue_v2.py",
+    "sha256": "ecc32cc148e9b686826f6b8886def92cc23f136e0ecebfc1ea19cf17d0d8acfc",
+    "bytes": 4722
+  },
+  "jobs": [
+    {
+      "id": "ownership_semantics",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/final_source_qualification_v2/ownership_semantics.py"
+      ],
+      "receipt": "<campaign>/candidates/arena_output_ownership_v2/validation_state.json",
+      "expected_statuses": [
+        "PASS_ARENA_OWNERSHIP_SEMANTICS"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/final_source_qualification_v2/ownership_semantics.py",
+          "sha256": "25c706546351be4c11c4191d4961341c31b1d016859a5391b069970f45d5a4bd"
+        },
+        {
+          "path": "<campaign>/candidates/arena_output_ownership_v2/freeze.json",
+          "sha256": "f3d7c78b0279cb6c9109087b8af2fd0f7eb1545fe52f1f34da05657e221fe9bf"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_D_bfs_eggpu_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "<campaign>/runner_candidates/pr_global_l1_v3/sg_worker.py",
+        "--execute-gpu",
+        "--system",
+        "eggpu",
+        "--dataset",
+        "TINY_D",
+        "--algorithm",
+        "bfs",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_D_bfs_eggpu_r00",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--release",
+        "<campaign>/candidates/arena_output_ownership_v2/Easy-Graph",
+        "--arena-library-dir",
+        "<campaign>/build/integrated_v1/arena",
+        "--native-dso",
+        "<campaign>/build/integrated_v1/native/cpp_easygraph/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--setup",
+        "<campaign>/setup.json",
+        "--gpu-uuid",
+        "<device>",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_D_bfs_eggpu_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 1800,
+      "depends_on": [
+        "ownership_semantics"
+      ],
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/pr_global_l1_v3/sg_worker.py",
+          "sha256": "7ab87843b24df60ad1372bee6383ec2c9d75227031a8343c439a6cca0ddbde43"
+        },
+        {
+          "path": "<campaign>/runner_candidates/pr_global_l1_v3/cugraph_csr_adapter.py",
+          "sha256": "36e57e6dd8764e5b27db5a21a8b7b0c712f9c42d434636744c4e29997b2447cf"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_D_bfs_cugraph_r00",
+      "command": [
+        "<artifact-work>/envs/rapids/bin/python",
+        "<campaign>/runner_candidates/pr_global_l1_v3/sg_worker.py",
+        "--execute-gpu",
+        "--system",
+        "cugraph",
+        "--dataset",
+        "TINY_D",
+        "--algorithm",
+        "bfs",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_D_bfs_cugraph_r00",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--release",
+        "<campaign>/candidates/arena_output_ownership_v2/Easy-Graph",
+        "--arena-library-dir",
+        "<campaign>/build/integrated_v1/arena",
+        "--native-dso",
+        "<campaign>/build/integrated_v1/native/cpp_easygraph/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--setup",
+        "<campaign>/setup.json",
+        "--gpu-uuid",
+        "<device>",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_D_bfs_cugraph_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 1800,
+      "depends_on": [
+        "ownership_semantics"
+      ],
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/pr_global_l1_v3/sg_worker.py",
+          "sha256": "7ab87843b24df60ad1372bee6383ec2c9d75227031a8343c439a6cca0ddbde43"
+        },
+        {
+          "path": "<campaign>/runner_candidates/pr_global_l1_v3/cugraph_csr_adapter.py",
+          "sha256": "36e57e6dd8764e5b27db5a21a8b7b0c712f9c42d434636744c4e29997b2447cf"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_D_sssp_eggpu_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "<campaign>/runner_candidates/pr_global_l1_v3/sg_worker.py",
+        "--execute-gpu",
+        "--system",
+        "eggpu",
+        "--dataset",
+        "TINY_D",
+        "--algorithm",
+        "sssp",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_D_sssp_eggpu_r00",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--release",
+        "<campaign>/candidates/arena_output_ownership_v2/Easy-Graph",
+        "--arena-library-dir",
+        "<campaign>/build/integrated_v1/arena",
+        "--native-dso",
+        "<campaign>/build/integrated_v1/native/cpp_easygraph/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--setup",
+        "<campaign>/setup.json",
+        "--gpu-uuid",
+        "<device>",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_D_sssp_eggpu_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 1800,
+      "depends_on": [
+        "ownership_semantics"
+      ],
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/pr_global_l1_v3/sg_worker.py",
+          "sha256": "7ab87843b24df60ad1372bee6383ec2c9d75227031a8343c439a6cca0ddbde43"
+        },
+        {
+          "path": "<campaign>/runner_candidates/pr_global_l1_v3/cugraph_csr_adapter.py",
+          "sha256": "36e57e6dd8764e5b27db5a21a8b7b0c712f9c42d434636744c4e29997b2447cf"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_D_sssp_cugraph_r00",
+      "command": [
+        "<artifact-work>/envs/rapids/bin/python",
+        "<campaign>/runner_candidates/pr_global_l1_v3/sg_worker.py",
+        "--execute-gpu",
+        "--system",
+        "cugraph",
+        "--dataset",
+        "TINY_D",
+        "--algorithm",
+        "sssp",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_D_sssp_cugraph_r00",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--release",
+        "<campaign>/candidates/arena_output_ownership_v2/Easy-Graph",
+        "--arena-library-dir",
+        "<campaign>/build/integrated_v1/arena",
+        "--native-dso",
+        "<campaign>/build/integrated_v1/native/cpp_easygraph/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--setup",
+        "<campaign>/setup.json",
+        "--gpu-uuid",
+        "<device>",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_D_sssp_cugraph_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 1800,
+      "depends_on": [
+        "ownership_semantics"
+      ],
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/pr_global_l1_v3/sg_worker.py",
+          "sha256": "7ab87843b24df60ad1372bee6383ec2c9d75227031a8343c439a6cca0ddbde43"
+        },
+        {
+          "path": "<campaign>/runner_candidates/pr_global_l1_v3/cugraph_csr_adapter.py",
+          "sha256": "36e57e6dd8764e5b27db5a21a8b7b0c712f9c42d434636744c4e29997b2447cf"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_D_wcc_eggpu_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "<campaign>/runner_candidates/pr_global_l1_v3/sg_worker.py",
+        "--execute-gpu",
+        "--system",
+        "eggpu",
+        "--dataset",
+        "TINY_D",
+        "--algorithm",
+        "wcc",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_D_wcc_eggpu_r00",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--release",
+        "<campaign>/candidates/arena_output_ownership_v2/Easy-Graph",
+        "--arena-library-dir",
+        "<campaign>/build/integrated_v1/arena",
+        "--native-dso",
+        "<campaign>/build/integrated_v1/native/cpp_easygraph/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--setup",
+        "<campaign>/setup.json",
+        "--gpu-uuid",
+        "<device>",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_D_wcc_eggpu_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 1800,
+      "depends_on": [
+        "ownership_semantics"
+      ],
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/pr_global_l1_v3/sg_worker.py",
+          "sha256": "7ab87843b24df60ad1372bee6383ec2c9d75227031a8343c439a6cca0ddbde43"
+        },
+        {
+          "path": "<campaign>/runner_candidates/pr_global_l1_v3/cugraph_csr_adapter.py",
+          "sha256": "36e57e6dd8764e5b27db5a21a8b7b0c712f9c42d434636744c4e29997b2447cf"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_D_wcc_cugraph_r00",
+      "command": [
+        "<artifact-work>/envs/rapids/bin/python",
+        "<campaign>/runner_candidates/pr_global_l1_v3/sg_worker.py",
+        "--execute-gpu",
+        "--system",
+        "cugraph",
+        "--dataset",
+        "TINY_D",
+        "--algorithm",
+        "wcc",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_D_wcc_cugraph_r00",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--release",
+        "<campaign>/candidates/arena_output_ownership_v2/Easy-Graph",
+        "--arena-library-dir",
+        "<campaign>/build/integrated_v1/arena",
+        "--native-dso",
+        "<campaign>/build/integrated_v1/native/cpp_easygraph/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--setup",
+        "<campaign>/setup.json",
+        "--gpu-uuid",
+        "<device>",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_D_wcc_cugraph_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 1800,
+      "depends_on": [
+        "ownership_semantics"
+      ],
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/pr_global_l1_v3/sg_worker.py",
+          "sha256": "7ab87843b24df60ad1372bee6383ec2c9d75227031a8343c439a6cca0ddbde43"
+        },
+        {
+          "path": "<campaign>/runner_candidates/pr_global_l1_v3/cugraph_csr_adapter.py",
+          "sha256": "36e57e6dd8764e5b27db5a21a8b7b0c712f9c42d434636744c4e29997b2447cf"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_D_pr_eggpu_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "<campaign>/runner_candidates/pr_global_l1_v3/sg_worker.py",
+        "--execute-gpu",
+        "--system",
+        "eggpu",
+        "--dataset",
+        "TINY_D",
+        "--algorithm",
+        "pr",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_D_pr_eggpu_r00",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--release",
+        "<campaign>/candidates/arena_output_ownership_v2/Easy-Graph",
+        "--arena-library-dir",
+        "<campaign>/build/integrated_v1/arena",
+        "--native-dso",
+        "<campaign>/build/integrated_v1/native/cpp_easygraph/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--setup",
+        "<campaign>/setup.json",
+        "--gpu-uuid",
+        "<device>",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_D_pr_eggpu_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 1800,
+      "depends_on": [
+        "ownership_semantics"
+      ],
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/pr_global_l1_v3/sg_worker.py",
+          "sha256": "7ab87843b24df60ad1372bee6383ec2c9d75227031a8343c439a6cca0ddbde43"
+        },
+        {
+          "path": "<campaign>/runner_candidates/pr_global_l1_v3/cugraph_csr_adapter.py",
+          "sha256": "36e57e6dd8764e5b27db5a21a8b7b0c712f9c42d434636744c4e29997b2447cf"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_D_pr_cugraph_r00",
+      "command": [
+        "<artifact-work>/envs/rapids/bin/python",
+        "<campaign>/runner_candidates/pr_global_l1_v3/sg_worker.py",
+        "--execute-gpu",
+        "--system",
+        "cugraph",
+        "--dataset",
+        "TINY_D",
+        "--algorithm",
+        "pr",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_D_pr_cugraph_r00",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--release",
+        "<campaign>/candidates/arena_output_ownership_v2/Easy-Graph",
+        "--arena-library-dir",
+        "<campaign>/build/integrated_v1/arena",
+        "--native-dso",
+        "<campaign>/build/integrated_v1/native/cpp_easygraph/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--setup",
+        "<campaign>/setup.json",
+        "--gpu-uuid",
+        "<device>",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_D_pr_cugraph_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 1800,
+      "depends_on": [
+        "ownership_semantics"
+      ],
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/pr_global_l1_v3/sg_worker.py",
+          "sha256": "7ab87843b24df60ad1372bee6383ec2c9d75227031a8343c439a6cca0ddbde43"
+        },
+        {
+          "path": "<campaign>/runner_candidates/pr_global_l1_v3/cugraph_csr_adapter.py",
+          "sha256": "36e57e6dd8764e5b27db5a21a8b7b0c712f9c42d434636744c4e29997b2447cf"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_U_bfs_eggpu_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "<campaign>/runner_candidates/pr_global_l1_v3/sg_worker.py",
+        "--execute-gpu",
+        "--system",
+        "eggpu",
+        "--dataset",
+        "TINY_U",
+        "--algorithm",
+        "bfs",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_bfs_eggpu_r00",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--release",
+        "<campaign>/candidates/arena_output_ownership_v2/Easy-Graph",
+        "--arena-library-dir",
+        "<campaign>/build/integrated_v1/arena",
+        "--native-dso",
+        "<campaign>/build/integrated_v1/native/cpp_easygraph/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--setup",
+        "<campaign>/setup.json",
+        "--gpu-uuid",
+        "<device>",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_bfs_eggpu_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 1800,
+      "depends_on": [
+        "ownership_semantics"
+      ],
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/pr_global_l1_v3/sg_worker.py",
+          "sha256": "7ab87843b24df60ad1372bee6383ec2c9d75227031a8343c439a6cca0ddbde43"
+        },
+        {
+          "path": "<campaign>/runner_candidates/pr_global_l1_v3/cugraph_csr_adapter.py",
+          "sha256": "36e57e6dd8764e5b27db5a21a8b7b0c712f9c42d434636744c4e29997b2447cf"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_U_bfs_cugraph_r00",
+      "command": [
+        "<artifact-work>/envs/rapids/bin/python",
+        "<campaign>/runner_candidates/pr_global_l1_v3/sg_worker.py",
+        "--execute-gpu",
+        "--system",
+        "cugraph",
+        "--dataset",
+        "TINY_U",
+        "--algorithm",
+        "bfs",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_bfs_cugraph_r00",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--release",
+        "<campaign>/candidates/arena_output_ownership_v2/Easy-Graph",
+        "--arena-library-dir",
+        "<campaign>/build/integrated_v1/arena",
+        "--native-dso",
+        "<campaign>/build/integrated_v1/native/cpp_easygraph/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--setup",
+        "<campaign>/setup.json",
+        "--gpu-uuid",
+        "<device>",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_bfs_cugraph_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 1800,
+      "depends_on": [
+        "ownership_semantics"
+      ],
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/pr_global_l1_v3/sg_worker.py",
+          "sha256": "7ab87843b24df60ad1372bee6383ec2c9d75227031a8343c439a6cca0ddbde43"
+        },
+        {
+          "path": "<campaign>/runner_candidates/pr_global_l1_v3/cugraph_csr_adapter.py",
+          "sha256": "36e57e6dd8764e5b27db5a21a8b7b0c712f9c42d434636744c4e29997b2447cf"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_U_sssp_eggpu_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "<campaign>/runner_candidates/pr_global_l1_v3/sg_worker.py",
+        "--execute-gpu",
+        "--system",
+        "eggpu",
+        "--dataset",
+        "TINY_U",
+        "--algorithm",
+        "sssp",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_sssp_eggpu_r00",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--release",
+        "<campaign>/candidates/arena_output_ownership_v2/Easy-Graph",
+        "--arena-library-dir",
+        "<campaign>/build/integrated_v1/arena",
+        "--native-dso",
+        "<campaign>/build/integrated_v1/native/cpp_easygraph/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--setup",
+        "<campaign>/setup.json",
+        "--gpu-uuid",
+        "<device>",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_sssp_eggpu_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 1800,
+      "depends_on": [
+        "ownership_semantics"
+      ],
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/pr_global_l1_v3/sg_worker.py",
+          "sha256": "7ab87843b24df60ad1372bee6383ec2c9d75227031a8343c439a6cca0ddbde43"
+        },
+        {
+          "path": "<campaign>/runner_candidates/pr_global_l1_v3/cugraph_csr_adapter.py",
+          "sha256": "36e57e6dd8764e5b27db5a21a8b7b0c712f9c42d434636744c4e29997b2447cf"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_U_sssp_cugraph_r00",
+      "command": [
+        "<artifact-work>/envs/rapids/bin/python",
+        "<campaign>/runner_candidates/pr_global_l1_v3/sg_worker.py",
+        "--execute-gpu",
+        "--system",
+        "cugraph",
+        "--dataset",
+        "TINY_U",
+        "--algorithm",
+        "sssp",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_sssp_cugraph_r00",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--release",
+        "<campaign>/candidates/arena_output_ownership_v2/Easy-Graph",
+        "--arena-library-dir",
+        "<campaign>/build/integrated_v1/arena",
+        "--native-dso",
+        "<campaign>/build/integrated_v1/native/cpp_easygraph/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--setup",
+        "<campaign>/setup.json",
+        "--gpu-uuid",
+        "<device>",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_sssp_cugraph_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 1800,
+      "depends_on": [
+        "ownership_semantics"
+      ],
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/pr_global_l1_v3/sg_worker.py",
+          "sha256": "7ab87843b24df60ad1372bee6383ec2c9d75227031a8343c439a6cca0ddbde43"
+        },
+        {
+          "path": "<campaign>/runner_candidates/pr_global_l1_v3/cugraph_csr_adapter.py",
+          "sha256": "36e57e6dd8764e5b27db5a21a8b7b0c712f9c42d434636744c4e29997b2447cf"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_U_wcc_eggpu_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "<campaign>/runner_candidates/pr_global_l1_v3/sg_worker.py",
+        "--execute-gpu",
+        "--system",
+        "eggpu",
+        "--dataset",
+        "TINY_U",
+        "--algorithm",
+        "wcc",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_wcc_eggpu_r00",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--release",
+        "<campaign>/candidates/arena_output_ownership_v2/Easy-Graph",
+        "--arena-library-dir",
+        "<campaign>/build/integrated_v1/arena",
+        "--native-dso",
+        "<campaign>/build/integrated_v1/native/cpp_easygraph/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--setup",
+        "<campaign>/setup.json",
+        "--gpu-uuid",
+        "<device>",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_wcc_eggpu_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 1800,
+      "depends_on": [
+        "ownership_semantics"
+      ],
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/pr_global_l1_v3/sg_worker.py",
+          "sha256": "7ab87843b24df60ad1372bee6383ec2c9d75227031a8343c439a6cca0ddbde43"
+        },
+        {
+          "path": "<campaign>/runner_candidates/pr_global_l1_v3/cugraph_csr_adapter.py",
+          "sha256": "36e57e6dd8764e5b27db5a21a8b7b0c712f9c42d434636744c4e29997b2447cf"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_U_wcc_cugraph_r00",
+      "command": [
+        "<artifact-work>/envs/rapids/bin/python",
+        "<campaign>/runner_candidates/pr_global_l1_v3/sg_worker.py",
+        "--execute-gpu",
+        "--system",
+        "cugraph",
+        "--dataset",
+        "TINY_U",
+        "--algorithm",
+        "wcc",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_wcc_cugraph_r00",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--release",
+        "<campaign>/candidates/arena_output_ownership_v2/Easy-Graph",
+        "--arena-library-dir",
+        "<campaign>/build/integrated_v1/arena",
+        "--native-dso",
+        "<campaign>/build/integrated_v1/native/cpp_easygraph/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--setup",
+        "<campaign>/setup.json",
+        "--gpu-uuid",
+        "<device>",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_wcc_cugraph_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 1800,
+      "depends_on": [
+        "ownership_semantics"
+      ],
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/pr_global_l1_v3/sg_worker.py",
+          "sha256": "7ab87843b24df60ad1372bee6383ec2c9d75227031a8343c439a6cca0ddbde43"
+        },
+        {
+          "path": "<campaign>/runner_candidates/pr_global_l1_v3/cugraph_csr_adapter.py",
+          "sha256": "36e57e6dd8764e5b27db5a21a8b7b0c712f9c42d434636744c4e29997b2447cf"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_U_pr_eggpu_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "<campaign>/runner_candidates/pr_global_l1_v3/sg_worker.py",
+        "--execute-gpu",
+        "--system",
+        "eggpu",
+        "--dataset",
+        "TINY_U",
+        "--algorithm",
+        "pr",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_pr_eggpu_r00",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--release",
+        "<campaign>/candidates/arena_output_ownership_v2/Easy-Graph",
+        "--arena-library-dir",
+        "<campaign>/build/integrated_v1/arena",
+        "--native-dso",
+        "<campaign>/build/integrated_v1/native/cpp_easygraph/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--setup",
+        "<campaign>/setup.json",
+        "--gpu-uuid",
+        "<device>",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_pr_eggpu_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 1800,
+      "depends_on": [
+        "ownership_semantics"
+      ],
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/pr_global_l1_v3/sg_worker.py",
+          "sha256": "7ab87843b24df60ad1372bee6383ec2c9d75227031a8343c439a6cca0ddbde43"
+        },
+        {
+          "path": "<campaign>/runner_candidates/pr_global_l1_v3/cugraph_csr_adapter.py",
+          "sha256": "36e57e6dd8764e5b27db5a21a8b7b0c712f9c42d434636744c4e29997b2447cf"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_U_pr_cugraph_r00",
+      "command": [
+        "<artifact-work>/envs/rapids/bin/python",
+        "<campaign>/runner_candidates/pr_global_l1_v3/sg_worker.py",
+        "--execute-gpu",
+        "--system",
+        "cugraph",
+        "--dataset",
+        "TINY_U",
+        "--algorithm",
+        "pr",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_pr_cugraph_r00",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--release",
+        "<campaign>/candidates/arena_output_ownership_v2/Easy-Graph",
+        "--arena-library-dir",
+        "<campaign>/build/integrated_v1/arena",
+        "--native-dso",
+        "<campaign>/build/integrated_v1/native/cpp_easygraph/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--setup",
+        "<campaign>/setup.json",
+        "--gpu-uuid",
+        "<device>",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_pr_cugraph_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 1800,
+      "depends_on": [
+        "ownership_semantics"
+      ],
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/pr_global_l1_v3/sg_worker.py",
+          "sha256": "7ab87843b24df60ad1372bee6383ec2c9d75227031a8343c439a6cca0ddbde43"
+        },
+        {
+          "path": "<campaign>/runner_candidates/pr_global_l1_v3/cugraph_csr_adapter.py",
+          "sha256": "36e57e6dd8764e5b27db5a21a8b7b0c712f9c42d434636744c4e29997b2447cf"
+        }
+      ]
+    }
+  ],
+  "completed": [
+    {
+      "id": "ownership_semantics",
+      "outcome": "PASS",
+      "started_unix": 1793809832.7551372,
+      "pid": 328852,
+      "returncode": 0,
+      "status": "PASS_ARENA_OWNERSHIP_SEMANTICS",
+      "receipt": {
+        "path": "<campaign>/candidates/arena_output_ownership_v2/validation_state.json",
+        "sha256": "7f10dca2f75611172336fc93dec56049d720306745ef7b3387c4889d9ffae0a0",
+        "bytes": 443
+      },
+      "seconds": 1.7703227140009403
+    },
+    {
+      "id": "tiny_TINY_D_bfs_eggpu_r00",
+      "outcome": "PASS",
+      "started_unix": 1793809834.530104,
+      "pid": 328862,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_D_bfs_eggpu_r00/result.json",
+        "sha256": "11c73155e4d3abac0d70acf42cb1ef629178d006e9bebc3534324fc3a358659c",
+        "bytes": 19701
+      },
+      "seconds": 11.547441989183426
+    },
+    {
+      "id": "tiny_TINY_D_bfs_cugraph_r00",
+      "outcome": "PASS",
+      "started_unix": 1793809846.0823603,
+      "pid": 328908,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_D_bfs_cugraph_r00/result.json",
+        "sha256": "7fccf29405ce6a3cad3717d05254139383f6a872dcd567987ddfc301264ad2d1",
+        "bytes": 19727
+      },
+      "seconds": 14.357260014861822
+    },
+    {
+      "id": "tiny_TINY_D_sssp_eggpu_r00",
+      "outcome": "PASS",
+      "started_unix": 1793809860.442443,
+      "pid": 328949,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_D_sssp_eggpu_r00/result.json",
+        "sha256": "64b27df87447b78405c56c28e6e15e1f890c63b5c50a351dd6a1acd46d63f1e5",
+        "bytes": 19714
+      },
+      "seconds": 11.247405666857958
+    },
+    {
+      "id": "tiny_TINY_D_sssp_cugraph_r00",
+      "outcome": "PASS",
+      "started_unix": 1793809871.6948166,
+      "pid": 328993,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_D_sssp_cugraph_r00/result.json",
+        "sha256": "c444cb3dad1a15b46911785ce9e35d30fc9bedbceddedce783409cb4eab10f55",
+        "bytes": 19740
+      },
+      "seconds": 15.459833160042763
+    },
+    {
+      "id": "tiny_TINY_D_wcc_eggpu_r00",
+      "outcome": "PASS",
+      "started_unix": 1793809887.1597073,
+      "pid": 329047,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_D_wcc_eggpu_r00/result.json",
+        "sha256": "9d2acd6f85b7d8ce24ef44f86e85cc4fc7592fdb3dd2b48fffdf9bec95125290",
+        "bytes": 7733
+      },
+      "seconds": 5.280910238623619
+    },
+    {
+      "id": "tiny_TINY_D_wcc_cugraph_r00",
+      "outcome": "PASS",
+      "started_unix": 1793809892.4426455,
+      "pid": 329063,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_D_wcc_cugraph_r00/result.json",
+        "sha256": "5aaec3616a4cf538c85ef325841c3fb9317b92c019c4f94b2ac7e13f19a7aed0",
+        "bytes": 7739
+      },
+      "seconds": 9.442555475980043
+    },
+    {
+      "id": "tiny_TINY_D_pr_eggpu_r00",
+      "outcome": "PASS",
+      "started_unix": 1793809901.8906205,
+      "pid": 329082,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_D_pr_eggpu_r00/result.json",
+        "sha256": "549870edc420c3ab3ebd25bc1fac2c7994da1ea49f432669d7c9d4b72650d6e6",
+        "bytes": 7999
+      },
+      "seconds": 5.380755465477705
+    },
+    {
+      "id": "tiny_TINY_D_pr_cugraph_r00",
+      "outcome": "PASS",
+      "started_unix": 1793809907.276622,
+      "pid": 329110,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_D_pr_cugraph_r00/result.json",
+        "sha256": "7a05b2f7d7891f7ecf314dfca0b61adc2a9ec86a28eb68d516aed634e986d9b3",
+        "bytes": 8010
+      },
+      "seconds": 8.090120375156403
+    },
+    {
+      "id": "tiny_TINY_U_bfs_eggpu_r00",
+      "outcome": "PASS",
+      "started_unix": 1793809915.372072,
+      "pid": 329153,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_bfs_eggpu_r00/result.json",
+        "sha256": "fff2674bdaed8ccbafdaceac1b7004ce6e86bdd3dc969e6c490673d2482aec7f",
+        "bytes": 19704
+      },
+      "seconds": 8.489390529692173
+    },
+    {
+      "id": "tiny_TINY_U_bfs_cugraph_r00",
+      "outcome": "PASS",
+      "started_unix": 1793809923.8675416,
+      "pid": 329213,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_bfs_cugraph_r00/result.json",
+        "sha256": "690cb846dcf3bd0d6b81443ce582ddad29d0894ff54e8a4e1c6d272a2fd9ba51",
+        "bytes": 19729
+      },
+      "seconds": 15.105724710971117
+    },
+    {
+      "id": "tiny_TINY_U_sssp_eggpu_r00",
+      "outcome": "PASS",
+      "started_unix": 1793809938.9788191,
+      "pid": 329255,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_sssp_eggpu_r00/result.json",
+        "sha256": "cb783faeb86ff222b8684f19a9e3dc14080e33d447b2f7422233848de2159903",
+        "bytes": 19716
+      },
+      "seconds": 9.039078909903765
+    },
+    {
+      "id": "tiny_TINY_U_sssp_cugraph_r00",
+      "outcome": "PASS",
+      "started_unix": 1793809948.0235362,
+      "pid": 329291,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_sssp_cugraph_r00/result.json",
+        "sha256": "d9ffcb13f4309cd499e28c0f4581b3333e6f04840a44a61a658b86d1c70c3127",
+        "bytes": 19746
+      },
+      "seconds": 16.006181094795465
+    },
+    {
+      "id": "tiny_TINY_U_wcc_eggpu_r00",
+      "outcome": "PASS",
+      "started_unix": 1793809964.0354066,
+      "pid": 329333,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_wcc_eggpu_r00/result.json",
+        "sha256": "f74626739071a4eb674f3527ebfd488ebe088bd3269747dc23d5b949473dd8d1",
+        "bytes": 7738
+      },
+      "seconds": 4.877928473055363
+    },
+    {
+      "id": "tiny_TINY_U_wcc_cugraph_r00",
+      "outcome": "PASS",
+      "started_unix": 1793809968.9190075,
+      "pid": 329349,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_wcc_cugraph_r00/result.json",
+        "sha256": "8304027f199ebf267c2ad31da5ba0e8bd6fb87fcd6ddb0d8f2ae9b39b5f37609",
+        "bytes": 7742
+      },
+      "seconds": 8.48620731383562
+    },
+    {
+      "id": "tiny_TINY_U_pr_eggpu_r00",
+      "outcome": "PASS",
+      "started_unix": 1793809977.411127,
+      "pid": 329396,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_pr_eggpu_r00/result.json",
+        "sha256": "de5bea640258aad328e9d68c963e404ff098bab781979289cac02d540a5cc48f",
+        "bytes": 8003
+      },
+      "seconds": 5.329880777746439
+    },
+    {
+      "id": "tiny_TINY_U_pr_cugraph_r00",
+      "outcome": "PASS",
+      "started_unix": 1793809982.7469327,
+      "pid": 329412,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_pr_cugraph_r00/result.json",
+        "sha256": "dd9e48b207e6e370e22f9b28ad4b9ed95f627857fe915c674f206d8afb04d52d",
+        "bytes": 8016
+      },
+      "seconds": 9.440946746617556
+    }
+  ],
+  "formal_measurements": 0,
+  "active_job": "tiny_TINY_U_pr_cugraph_r00",
+  "finished_unix": 1793809992.1892226,
+  "public_projection_note": "Private paths/UUIDs redacted; exact original retained. This readable evidence projection is not an executable proof or a formal performance measurement."
+}

@@ -1,0 +1,43 @@
+{
+  "schema": "eggpu.gum.reuse/v1",
+  "new_algorithm": false,
+  "T_first_available": true,
+  "files": [
+    {
+      "origin": "experiments/rtx4090d_20261031/performance_revision_20261102/gum_runner_v1/worker.py",
+      "sha256": "459522dd1f54c69729f25b6b3dbd4ec7308005d9ce8b6ed2f4a302248712f158"
+    },
+    {
+      "origin": "experiments/rtx4090d_20261031/performance_revision_20261102/gum_runner_v1/rank_exec.py",
+      "sha256": "9d6324e10a546fff008f77fd895fc618fb592e12ed243e11bd9fefcc9ceb3302"
+    },
+    {
+      "origin": "experiments/rtx4090d_20261031/nr_baseline_experiment.py",
+      "sha256": "80402e1fe844d7e0a9f187643cb32fcac4251f377c4978f8c8dd8891ab8f7f91"
+    }
+  ],
+  "adaptations": [
+    "Extract selected existing functions; resolve shared binding locally",
+    "Rename rank_exec.py companion to gum_rank_exec.py",
+    "Parent CLOCK_MONOTONIC origin + same-host/time-namespace exec evidence; consume already compiled full-output monotonic markers, no C++ or binary change"
+  ],
+  "author_execution": {
+    "work_stealing": false,
+    "sssp": "standard author path, not RWS",
+    "partitioner": "seg",
+    "load_balance": "cm",
+    "pagerank_iterations": 117
+  },
+  "T_first_gpu_qualified": false,
+  "timing_source_audit": {
+    "reviewed_remote_existing_build": "gum_law_build_v1",
+    "adapters": {
+      "bfs_wcc": "017e9ef420290d0e3ab9d3a1401b7597e45974b370f5d1c7d6e0ddcb3a9862a6",
+      "pr": "7678128a2a3ceb03573235ab166a9945951f303e52353dea2de63f32fa667884",
+      "sssp_standard": "5fb050d17484469e503f7c68e1d713f447e08f01803824b3fe0f39c7733dd4ac"
+    },
+    "clock_header": "275647ff48152b7bf5c41b4d5898cac3f4c16125bf94aef8bc9406be520a292f",
+    "native_endpoint": "memory_query_end after complete dense host scatter and MPI_Barrier",
+    "modified_cpp_files": []
+  }
+}

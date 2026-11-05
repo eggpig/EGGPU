@@ -1,0 +1,29 @@
+{
+  "schema": "eggpu.tool.freeze.v1",
+  "candidate": "e3_unweighted_control_v2",
+  "status": "CPU_PASS_GPU_PENDING",
+  "files": {
+    "pr_control.py": {
+      "sha256": "0fd0fed43fe6b1bba1c1a6d44d7f366323416ab5ffedeb79b29087eb5af76648",
+      "bytes": 22209
+    },
+    "pr_plan.py": {
+      "sha256": "2030b1b2fc016a38133b968d5d8e472fa448341aed1c391b2073408d17227f9a",
+      "bytes": 8179
+    },
+    "test_pr_control.py": {
+      "sha256": "b13f1487a606e8bdce0712442d65e1dee94c850afddd8ac09967166e5f121e4f",
+      "bytes": 8153
+    },
+    "README_CN.md": {
+      "sha256": "717f9d91c0a0dbb4dd563b64bb302d0165b71c57adcb2adc909047689ce8a045",
+      "bytes": 6683
+    },
+    "cpu_receipt.json": {
+      "sha256": "9c6e6bf1936b0db1c25415523f18e4e894516b0ed5c6ea72deb627185c5ca28c",
+      "bytes": 613
+    }
+  },
+  "tree_sha256": "31730412e1ea4bf1eb1753899a38728cae5a0bd4d6ecbb7f7587fe8029b9016e",
+  "gpu_executed": false
+}

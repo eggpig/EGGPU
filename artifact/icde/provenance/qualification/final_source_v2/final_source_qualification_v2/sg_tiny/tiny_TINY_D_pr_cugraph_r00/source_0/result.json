@@ -1,0 +1,97 @@
+{
+  "backend": {
+    "backend": "cuGraph",
+    "complete_output": true,
+    "gpu_count": 1,
+    "input_array_format": "CSR",
+    "pr_epsilon_global_l1": 1e-09,
+    "pr_initial_guess_reused": false,
+    "pr_max_iterations": 2000,
+    "pr_protocol": "global_l1_v2",
+    "pr_stopping_norm": "sum(abs(new-old))",
+    "pr_stopping_source": "https://github.com/rapidsai/cugraph/blob/c1ea267a3d42311f0f81a93846538e7bd8e49466/cpp/src/link_analysis/pagerank_impl.cuh#L311-L329",
+    "pr_value_dtype": "float64",
+    "status": "GPU_QUALIFICATION_REQUIRED",
+    "store_transposed": true,
+    "topology_dtype": "int32",
+    "vertices": 7,
+    "vertices_domain": "CSR offset length n+1; every output ID checked",
+    "weight_semantics": "unweighted"
+  },
+  "backend_input_semantics": "original canonical CSR; directed WCC builds explicit weak CSR inside T_first",
+  "calls": {
+    "first": {
+      "output": {
+        "bytes": 184,
+        "path": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_D_pr_cugraph_r00/source_0/4c71fcadfb435422b384efa048441a8a0c9c650528c4bad87d52a0462a054296.npy",
+        "sha256": "714ed485b2c50cf3366cbfde4f84f2ffc8382c5620544359428d80c27249b96b"
+      },
+      "quality": {
+        "complete": true,
+        "dtype": "float64",
+        "immutable": true,
+        "mass_error": 0.0,
+        "owning": true,
+        "pass": true,
+        "reference_l1": 3.034720010008929e-09,
+        "residual_l1": 6.313758751930187e-10
+      },
+      "seconds": 2.2715299166738987
+    },
+    "ready": {
+      "output": {
+        "bytes": 184,
+        "path": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_D_pr_cugraph_r00/source_0/4c71fcadfb435422b384efa048441a8a0c9c650528c4bad87d52a0462a054296.npy",
+        "sha256": "714ed485b2c50cf3366cbfde4f84f2ffc8382c5620544359428d80c27249b96b"
+      },
+      "quality": {
+        "complete": true,
+        "dtype": "float64",
+        "immutable": true,
+        "mass_error": 0.0,
+        "owning": true,
+        "pass": true,
+        "reference_l1": 3.034720010008929e-09,
+        "residual_l1": 6.313758751930187e-10
+      },
+      "seconds": 0.0037162229418754578
+    },
+    "warmup": {
+      "count": 1,
+      "output": {
+        "bytes": 184,
+        "path": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_D_pr_cugraph_r00/source_0/4c71fcadfb435422b384efa048441a8a0c9c650528c4bad87d52a0462a054296.npy",
+        "sha256": "714ed485b2c50cf3366cbfde4f84f2ffc8382c5620544359428d80c27249b96b"
+      },
+      "quality": {
+        "complete": true,
+        "dtype": "float64",
+        "immutable": true,
+        "mass_error": 0.0,
+        "owning": true,
+        "pass": true,
+        "reference_l1": 3.034720010008929e-09,
+        "residual_l1": 6.313758751930187e-10
+      },
+      "timed": false
+    }
+  },
+  "host_ready_checksum": [
+    28,
+    15,
+    54.0
+  ],
+  "input_sha256": "9316925e606ebfd50de39d1f046846786e73c65ba6677f7b2b730a71b60373b3",
+  "outputs_survive_close": true,
+  "quality_pass": true,
+  "reference_receipt": {
+    "bytes": 550,
+    "path": "<campaign>/references/5d64c4970fdbe00b2fb8e6cc1a1d48095045bb6e39c212ee66d7e98a2754a9f0.json",
+    "sha256": "44d59af8504bb38f8172cd341385984c3ca9548ec45c16921117c5ed29566be4"
+  },
+  "source": null,
+  "source_index": 0,
+  "status": "PASS",
+  "timing_start": "common immutable host CSR ready; fresh Python backend process",
+  "public_projection_note": "Private paths/UUIDs redacted; exact original retained. This readable evidence projection is not an executable proof or a formal performance measurement."
+}

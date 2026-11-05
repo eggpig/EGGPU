@@ -441,12 +441,34 @@ void PartitionedSsspStateRegistry::touch_and_trim(const RegistryKey& key) {
         else ++item;
     }
     lru_.push_back(key);
-    while (lru_.size() > capacity) {
+    std::size_t remaining = lru_.size();
+    while (lru_.size() > capacity && remaining--) {
         const RegistryKey victim = lru_.front();
         lru_.pop_front();
+        const auto view = views_.find(victim);
+        const auto workspace = workspaces_.find(victim);
+        if ((view != views_.end() && view->second.use_count() > 1U) ||
+            (workspace != workspaces_.end() && workspace->second.use_count() > 1U)) {
+            // A live readonly view remains inventoried until its lease ends.
+            // Cache entry count is a soft bound while every victim is leased.
+            lru_.push_back(victim);
+            continue;
+        }
         views_.erase(victim);
         workspaces_.erase(victim);
     }
+}
+
+std::vector<std::shared_ptr<ResidentSsspPartitionView> >
+PartitionedSsspStateRegistry::hold_graph_views(
+    const std::string& graph_id, std::uint64_t generation) const {
+    std::vector<std::shared_ptr<ResidentSsspPartitionView> > held;
+    for (const auto& item : views_) {
+        if (item.second->graph_identity_text() == graph_id &&
+            item.second->state_key().generation == generation)
+            held.push_back(item.second);
+    }
+    return held;
 }
 
 std::shared_ptr<ResidentSsspPartitionView>

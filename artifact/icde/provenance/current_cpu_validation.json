@@ -1,0 +1,22 @@
+{
+  "schema": "eggpu.cpu.qualification.v3",
+  "status": "PASS_CPU_ONLY",
+  "gpu_executed": false,
+  "source_tree_sha256": "cb14360e2dfb934b8a28f9875fb80639ce4503bc6ed27956201b18e9edec6869",
+  "tests": {
+    "passed": 178,
+    "scope": "Seven declared public host/dispatch/CSR/lazy import/WCC/ownership suites, normal public imports; full native unified-contract suite is a separate build-dependent test"
+  },
+  "previous_source_sha256": "a6ad286df344858561a172076831387f14d0c7df29b9eafb640422f0f8991ee8",
+  "production_changed_files": [
+    "easygraph/gpu/_arena/gpu_runtime.py",
+    "easygraph/gpu/_arena_output.py",
+    "easygraph/gpu/_bridge.py",
+    "easygraph/gpu/_core.py"
+  ],
+  "compiled_source_bytes_unchanged": 397,
+  "limitations": "CPU checks alone establish neither GPU correctness nor performance. Actual GPU checks are separately source-bound.",
+  "historical_candidate_cpu_tests": 153,
+  "historical_candidate_receipt": "qualification/final_source_v2/candidates/arena_output_ownership_v2/cpu_receipt.json",
+  "receipt": "public_cpu_rerun/source.json"
+}

@@ -1,0 +1,94 @@
+{
+  "backend": {
+    "algorithms": [
+      "bfs",
+      "sssp",
+      "wcc",
+      "pr"
+    ],
+    "backend": "arena",
+    "budget_scope": "single-device backing arena including workspace",
+    "devices": [
+      0
+    ],
+    "input_kind": "owned_csr",
+    "policy": "capability_v2",
+    "state_model": "static"
+  },
+  "backend_input_semantics": "stored directed arcs; reciprocal canonical input already contains both orientations",
+  "calls": {
+    "first": {
+      "output": {
+        "bytes": 607160,
+        "path": "<campaign>/candidates/cold_import_v1/sg_ep_target_v1/target_EP_bfs_eggpu_r00/source_0/396a25a5bb6c5e1ac92e50e7aced4537a3b9c22e53381a0f891ebe4218d4d687.npy",
+        "sha256": "0cdce8fb56f26d14a3a9176017416160b4d62bb5dcbda5f30d6f0619bad9730e"
+      },
+      "quality": {
+        "complete": true,
+        "dtype": "float64",
+        "exact_reference_match": true,
+        "immutable": true,
+        "owning": true,
+        "pass": true,
+        "rmse_finite": 0.0,
+        "unreachable_match": true
+      },
+      "seconds": 0.8834207504987717
+    },
+    "ready": {
+      "output": {
+        "bytes": 607160,
+        "path": "<campaign>/candidates/cold_import_v1/sg_ep_target_v1/target_EP_bfs_eggpu_r00/source_0/396a25a5bb6c5e1ac92e50e7aced4537a3b9c22e53381a0f891ebe4218d4d687.npy",
+        "sha256": "0cdce8fb56f26d14a3a9176017416160b4d62bb5dcbda5f30d6f0619bad9730e"
+      },
+      "quality": {
+        "complete": true,
+        "dtype": "float64",
+        "exact_reference_match": true,
+        "immutable": true,
+        "owning": true,
+        "pass": true,
+        "rmse_finite": 0.0,
+        "unreachable_match": true
+      },
+      "seconds": 0.002292819321155548
+    },
+    "warmup": {
+      "count": 1,
+      "output": {
+        "bytes": 607160,
+        "path": "<campaign>/candidates/cold_import_v1/sg_ep_target_v1/target_EP_bfs_eggpu_r00/source_0/396a25a5bb6c5e1ac92e50e7aced4537a3b9c22e53381a0f891ebe4218d4d687.npy",
+        "sha256": "0cdce8fb56f26d14a3a9176017416160b4d62bb5dcbda5f30d6f0619bad9730e"
+      },
+      "quality": {
+        "complete": true,
+        "dtype": "float64",
+        "exact_reference_match": true,
+        "immutable": true,
+        "owning": true,
+        "pass": true,
+        "rmse_finite": 0.0,
+        "unreachable_match": true
+      },
+      "timed": false
+    }
+  },
+  "host_ready_checksum": [
+    32534476664,
+    5361904553,
+    4320634.0
+  ],
+  "input_sha256": "7f4a01dbe703c5145342e36875b059e7dc2d6d0e1df25a3a7d314df4de4f5f61",
+  "outputs_survive_close": true,
+  "quality_pass": true,
+  "reference_receipt": {
+    "bytes": 554,
+    "path": "<campaign>/references/3758118834a2fec63de1c73643c06ab20e4dbeb646b2b12b27614c4908d112c9.json",
+    "sha256": "73147d5f39dd0edab01896f94dcf8f1a5ddb9d1ee5e7136f8832448ec30b6161"
+  },
+  "source": 2055,
+  "source_index": 0,
+  "status": "PASS",
+  "timing_start": "common immutable host CSR ready; fresh Python backend process",
+  "public_projection_note": "Host paths/UUIDs redacted. This is qualification evidence, not an executable tiny/target proof or a formal performance repetition. Original bytes are retained by the operator."
+}

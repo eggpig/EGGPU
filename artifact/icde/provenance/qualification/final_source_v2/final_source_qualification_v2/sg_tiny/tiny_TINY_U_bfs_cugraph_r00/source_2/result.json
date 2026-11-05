@@ -1,0 +1,90 @@
+{
+  "backend": {
+    "backend": "cuGraph",
+    "complete_output": true,
+    "gpu_count": 1,
+    "input_array_format": "CSR",
+    "status": "GPU_QUALIFICATION_REQUIRED",
+    "store_transposed": false,
+    "topology_dtype": "int32",
+    "vertices": 7,
+    "vertices_domain": "CSR offset length n+1; every output ID checked",
+    "weight_semantics": "unweighted"
+  },
+  "backend_input_semantics": "original canonical CSR; directed WCC builds explicit weak CSR inside T_first",
+  "calls": {
+    "first": {
+      "output": {
+        "bytes": 184,
+        "path": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_bfs_cugraph_r00/source_2/074ab9d190ca1250d87b542d97e1034a866b755cf1aaa2fc3528e4a8f19aaf23.npy",
+        "sha256": "459326d97d0683afc77c6179cd203f29159074df53ce0acc2567dfa3e5cb4110"
+      },
+      "quality": {
+        "complete": true,
+        "dtype": "float64",
+        "exact_reference_match": true,
+        "immutable": true,
+        "owning": true,
+        "pass": true,
+        "rmse_finite": 0.0,
+        "unreachable_match": true
+      },
+      "seconds": 2.3552055694162846
+    },
+    "ready": {
+      "output": {
+        "bytes": 184,
+        "path": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_bfs_cugraph_r00/source_2/074ab9d190ca1250d87b542d97e1034a866b755cf1aaa2fc3528e4a8f19aaf23.npy",
+        "sha256": "459326d97d0683afc77c6179cd203f29159074df53ce0acc2567dfa3e5cb4110"
+      },
+      "quality": {
+        "complete": true,
+        "dtype": "float64",
+        "exact_reference_match": true,
+        "immutable": true,
+        "owning": true,
+        "pass": true,
+        "rmse_finite": 0.0,
+        "unreachable_match": true
+      },
+      "seconds": 0.0008674710988998413
+    },
+    "warmup": {
+      "count": 1,
+      "output": {
+        "bytes": 184,
+        "path": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_bfs_cugraph_r00/source_2/074ab9d190ca1250d87b542d97e1034a866b755cf1aaa2fc3528e4a8f19aaf23.npy",
+        "sha256": "459326d97d0683afc77c6179cd203f29159074df53ce0acc2567dfa3e5cb4110"
+      },
+      "quality": {
+        "complete": true,
+        "dtype": "float64",
+        "exact_reference_match": true,
+        "immutable": true,
+        "owning": true,
+        "pass": true,
+        "rmse_finite": 0.0,
+        "unreachable_match": true
+      },
+      "timed": false
+    }
+  },
+  "host_ready_checksum": [
+    50,
+    20,
+    82.0
+  ],
+  "input_sha256": "4a5224f2ab5adc419d14e3e79c235440fb7fefb503e186aad8d10cef3fa2921f",
+  "outputs_survive_close": true,
+  "quality_pass": true,
+  "reference_receipt": {
+    "bytes": 548,
+    "path": "<campaign>/references/6921dce096301c508508f4b591fe2090e7cbe46a84249009cdf6ff0301531495.json",
+    "sha256": "98ea109c70a7bdc8a1eb161f2815a80efc6d7a24cab6ea96b2c034877622e936"
+  },
+  "source": 2,
+  "source_index": 2,
+  "status": "PASS",
+  "timing_start": "common immutable host CSR ready; fresh Python backend process",
+  "public_projection_note": "Private paths/UUIDs redacted; exact original retained. This readable evidence projection is not an executable proof or a formal performance measurement."
+}

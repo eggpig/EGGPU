@@ -1,0 +1,22 @@
+{
+  "schema": "eggpu.cugraph_mg.reuse/v1",
+  "files": [
+    {
+      "origin": "experiments/rtx4090d_20261031/performance_revision_20261102/cugraph_mg_law_v1/adapter.py",
+      "source_sha256": "2ff4ed13427ecc3fce634b6803e1f479959b6684e6dabffbbdf6ee959b62e849",
+      "target": "cugraph_mg_adapter.py",
+      "sha256": "e609646606f5e690eef5cf88388529ec037a0ef96dc11366bbd76314eb9fdeb2"
+    },
+    {
+      "origin": "experiments/rtx4090d_20261031/performance_revision_20261102/cugraph_mg_law_v1/platform_probe.py",
+      "source_sha256": "17b29773a72d01c70d404c326ddda40964cff44dd7887e58d6896ce315c24aec",
+      "target": "cugraph_mg_platform.py",
+      "sha256": "17b29773a72d01c70d404c326ddda40964cff44dd7887e58d6896ce315c24aec"
+    }
+  ],
+  "adaptations": [
+    "Rename only companion platform_probe import; existing author API, timers and algorithm parameters unchanged"
+  ],
+  "new_algorithm": false,
+  "gpu_executed": false
+}

@@ -10,7 +10,7 @@ def main():
     p.add_argument('--cuda-root',type=Path,required=True);p.add_argument('--architecture',required=True)
     p.add_argument('--nccl-include',type=Path);p.add_argument('--nccl-library',type=Path)
     p.add_argument('--cmake',default='cmake');p.add_argument('--jobs',type=int,choices=(1,2),default=2)
-    p.add_argument('--arena',action='store_true',help='Also build legacy standalone Session.arena libraries; not needed for the native single-owner dispatcher')
+    p.add_argument('--arena',action='store_true',help='Build the libraries required by the public single-GPU owned-CSR route as well as the native extension')
     p.add_argument('--execute',action='store_true');a=p.parse_args();m=verify.verify(ROOT)
     if bool(a.nccl_include)!=bool(a.nccl_library):p.error('NCCL requires both include and library')
     if not a.architecture.isdigit():p.error('Explicit numeric CUDA architecture required, for example 89')

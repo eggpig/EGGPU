@@ -1,0 +1,239 @@
+{
+  "T_first_seconds": 2.289475254714489,
+  "T_ready_seconds": 0.05326910689473152,
+  "algorithm": "pr",
+  "complete_task_timeout_seconds": 1800.0,
+  "dataset": "EP",
+  "directed": true,
+  "epoch": {
+    "bytes": 539743,
+    "path": "<campaign>/candidates/cold_import_v1/sg_ep_target_v1/target_EP_pr_cugraph_r00/epoch.json",
+    "sha256": "c8995a87a6c6ef9a60a781843e52b5a266e68bfa297efdc5210d30fcf442427a"
+  },
+  "epoch_sha256": "35817a8ab2d06a88c252c1d396338e3aa5724db00c91c1e90362c10d9c999b75",
+  "experiment": "E1",
+  "finished_unix": 1793804216.9723117,
+  "gpu_count": 1,
+  "input": {
+    "directed": true,
+    "files": {
+      "canonical": {
+        "bytes": 670,
+        "sha256": "5e473715f996776df736595ebdbe884725853640d4a9aa625648ca3de13978a1"
+      },
+      "id_mapping": {
+        "bytes": 121,
+        "sha256": "f1d932229e67f5e12ba51a74fe8438e3b7ab17529ecb65d7acb9a21694e44ae2"
+      },
+      "indices": {
+        "bytes": 2035348,
+        "sha256": "22ee28285e20dba428e9352e6e85e6b35f73cdf83fa1760ba7edca8db49f6eb9"
+      },
+      "offsets": {
+        "bytes": 303520,
+        "sha256": "375c0caa7d48d6d83ccc1f0999a6fdbea2188c17ee278c83698035c53f75be32"
+      },
+      "source_labels": {
+        "bytes": 607160,
+        "sha256": "4c62265926e258eee782e4cf1bbcd9a57af6d2e5ebd1c4b5faa16a4d7569ab97"
+      },
+      "sources": {
+        "bytes": 279,
+        "sha256": "d5b71af0ba301736b0f725e8128b585de091c689cc73b1c80e64e72d92e5bd00"
+      },
+      "weights": {
+        "bytes": 4070696,
+        "sha256": "c89da8e0a9b66ffffb74c9ff151c0b10369ee4360201dba48833bf7b77c4fba6"
+      }
+    },
+    "m": 508837,
+    "n": 75879,
+    "receipt": {
+      "bytes": 4432,
+      "sha256": "17956beb481428fb39d347b399216b045f4564e9da225fa17af20e0fb2751987"
+    },
+    "sources": [
+      2055,
+      24078,
+      18398
+    ]
+  },
+  "input_sha256": "7f4a01dbe703c5145342e36875b059e7dc2d6d0e1df25a3a7d314df4de4f5f61",
+  "performance_eligible": false,
+  "phase": "target",
+  "protocol": "e1-host-csr-complete-v1",
+  "quality_pass": true,
+  "repeat": 0,
+  "schema": "eggpu.e1.sg.job.v1",
+  "source_aggregation": "arithmetic equal-weight mean; this entire job is one repeat",
+  "source_processes": "fresh process per source",
+  "sources": [
+    {
+      "admission": {
+        "checked_unix": 1793804210.7967033,
+        "gpus": [
+          {
+            "driver": "580.105.08",
+            "index": "0",
+            "name": "NVIDIA GeForce RTX 4090 D",
+            "total_mib": "24564",
+            "used_mib": "0",
+            "utilization": "0",
+            "uuid": "<device-0>"
+          },
+          {
+            "driver": "580.105.08",
+            "index": "1",
+            "name": "NVIDIA GeForce RTX 4090 D",
+            "total_mib": "24564",
+            "used_mib": "0",
+            "utilization": "0",
+            "uuid": "<device-1>"
+          },
+          {
+            "driver": "580.105.08",
+            "index": "2",
+            "name": "NVIDIA GeForce RTX 4090 D",
+            "total_mib": "24564",
+            "used_mib": "0",
+            "utilization": "0",
+            "uuid": "<device-2>"
+          },
+          {
+            "driver": "580.105.08",
+            "index": "3",
+            "name": "NVIDIA GeForce RTX 4090 D",
+            "total_mib": "24564",
+            "used_mib": "0",
+            "utilization": "0",
+            "uuid": "<device-3>"
+          },
+          {
+            "driver": "580.105.08",
+            "index": "4",
+            "name": "NVIDIA GeForce RTX 4090 D",
+            "total_mib": "24564",
+            "used_mib": "0",
+            "utilization": "0",
+            "uuid": "<device-4>"
+          },
+          {
+            "driver": "580.105.08",
+            "index": "5",
+            "name": "NVIDIA GeForce RTX 4090 D",
+            "total_mib": "24564",
+            "used_mib": "0",
+            "utilization": "0",
+            "uuid": "<device-5>"
+          },
+          {
+            "driver": "580.105.08",
+            "index": "6",
+            "name": "NVIDIA GeForce RTX 4090 D",
+            "total_mib": "24564",
+            "used_mib": "0",
+            "utilization": "0",
+            "uuid": "<device-6>"
+          },
+          {
+            "driver": "580.105.08",
+            "index": "7",
+            "name": "NVIDIA GeForce RTX 4090 D",
+            "total_mib": "24564",
+            "used_mib": "0",
+            "utilization": "0",
+            "uuid": "<device-7>"
+          }
+        ],
+        "host": "<redacted-host>",
+        "processes": "",
+        "required_host_bytes": 8589934592,
+        "selected": {
+          "driver": "580.105.08",
+          "index": "0",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-0>"
+        }
+      },
+      "calls": {
+        "first": {
+          "output": {
+            "bytes": 607160,
+            "path": "<campaign>/candidates/cold_import_v1/sg_ep_target_v1/target_EP_pr_cugraph_r00/source_0/37acac78587a13848fa9831ffc7aea460c242f764303cf9d9cadc33aa58f28d1.npy",
+            "sha256": "ee42f75a60526602529ccbee1ec58f8c3616f205e00ef1a790ff1298de27dffa"
+          },
+          "quality": {
+            "complete": true,
+            "dtype": "float64",
+            "immutable": true,
+            "mass_error": 0.0,
+            "owning": true,
+            "pass": true,
+            "reference_l1": 1.4317305644375659e-12,
+            "residual_l1": 1.0119218864809796e-14
+          },
+          "seconds": 2.289475254714489
+        },
+        "ready": {
+          "output": {
+            "bytes": 607160,
+            "path": "<campaign>/candidates/cold_import_v1/sg_ep_target_v1/target_EP_pr_cugraph_r00/source_0/37acac78587a13848fa9831ffc7aea460c242f764303cf9d9cadc33aa58f28d1.npy",
+            "sha256": "ee42f75a60526602529ccbee1ec58f8c3616f205e00ef1a790ff1298de27dffa"
+          },
+          "quality": {
+            "complete": true,
+            "dtype": "float64",
+            "immutable": true,
+            "mass_error": 0.0,
+            "owning": true,
+            "pass": true,
+            "reference_l1": 1.4317305644375659e-12,
+            "residual_l1": 1.0119218864809796e-14
+          },
+          "seconds": 0.05326910689473152
+        },
+        "warmup": {
+          "count": 1,
+          "output": {
+            "bytes": 607160,
+            "path": "<campaign>/candidates/cold_import_v1/sg_ep_target_v1/target_EP_pr_cugraph_r00/source_0/37acac78587a13848fa9831ffc7aea460c242f764303cf9d9cadc33aa58f28d1.npy",
+            "sha256": "ee42f75a60526602529ccbee1ec58f8c3616f205e00ef1a790ff1298de27dffa"
+          },
+          "quality": {
+            "complete": true,
+            "dtype": "float64",
+            "immutable": true,
+            "mass_error": 0.0,
+            "owning": true,
+            "pass": true,
+            "reference_l1": 1.4317305644375659e-12,
+            "residual_l1": 1.0119218864809796e-14
+          },
+          "timed": false
+        }
+      },
+      "index": 0,
+      "quality_pass": true,
+      "result": {
+        "bytes": 3245,
+        "path": "<campaign>/candidates/cold_import_v1/sg_ep_target_v1/target_EP_pr_cugraph_r00/source_0/result.json",
+        "sha256": "66a864f5e2ddd62e9f6d1474a17d95a524f589ce38973bfa6ccbecb991363f6a"
+      },
+      "returncode": 0,
+      "source": null,
+      "status": "PASS"
+    }
+  ],
+  "started_unix": 1793804207.6785753,
+  "status": "PASS_QUALIFICATION",
+  "system": "cugraph",
+  "tiny_proof": {
+    "bytes": 8003,
+    "path": "<campaign>/candidates/cold_import_v1/sg_tiny_v1/tiny_TINY_D_pr_cugraph_r00/result.json",
+    "sha256": "c2d364ef252a72d2b25e1e9c686627b04fd5f55815960e6c505f3168f1ae3ef6"
+  },
+  "public_projection_note": "Host paths/UUIDs redacted. This is qualification evidence, not an executable tiny/target proof or a formal performance repetition. Original bytes are retained by the operator."
+}

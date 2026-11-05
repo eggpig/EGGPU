@@ -1,0 +1,429 @@
+{
+  "schema": "baseline.binary.registry.v1",
+  "status": "READ_EXISTING_BUILD_RECEIPTS_NO_NEW_GPU_QUALIFICATION",
+  "gpu_executed": false,
+  "rows": [
+    {
+      "receipt": "/YOUR/ARTIFACT_WORK/build/gunrock/receipt.json",
+      "status": "PASS",
+      "binary": {
+        "path": "/YOUR/ARTIFACT_WORK/build/gunrock/gunrock",
+        "sha256": "e205391ad309fb3aab4d007f76095b575bd68570e7bef9a68c4b4371f57d5873"
+      },
+      "binaries": null,
+      "system": "Gunrock",
+      "functions": [
+        "bfs",
+        "sssp",
+        "pr"
+      ],
+      "input_contract": "CSR offsets uint32 / indices uint32 / weights float64; stdin G/C trace",
+      "existing_adapter": "migration/eight_gpu_20261025/sg_baselines/native/adapters/gunrock_rebuild_v1/gunrock_rebuild_v1.cu",
+      "author_commit": "748f79e66cc26762cd3f99422b028e742a737bde",
+      "new_canonical_gpu_qualified": false,
+      "variant": "gunrock_essentials"
+    },
+    {
+      "receipt": "/YOUR/ARTIFACT_WORK/build/gunrock_wcc_v2/receipt.json",
+      "status": "PASS",
+      "binary": {
+        "path": "/YOUR/ARTIFACT_WORK/build/gunrock_wcc_v2/gunrock_wcc",
+        "sha256": "8ddea19225adf897f69d0b9003506996627cbbd17ae998ceface14615f2f2c8f"
+      },
+      "binaries": null,
+      "system": "Gunrock",
+      "functions": [
+        "wcc"
+      ],
+      "input_contract": "MatrixMarket symmetric upper triangle (one-based) including explicit n; argv market file --quick --quiet --iteration-num=3 --device=0; EGGPU_PANEL_OUTPUT_PREFIX environment",
+      "existing_adapter": "migration/eight_gpu_20261025/sg_baselines/workers/gunrock_cc_worker_v2.py",
+      "author_commit": "0c9a96dd64ddeecae9208644631983fc889b32b4",
+      "new_canonical_gpu_qualified": false,
+      "variant": "gunrock_legacy_cc"
+    },
+    {
+      "receipt": "/YOUR/ARTIFACT_WORK/build/cggraph/receipt.json",
+      "status": "PASS",
+      "binary": {
+        "path": "/YOUR/ARTIFACT_WORK/build/cggraph/cggraph",
+        "sha256": "b019b0403b396e0d975a8c155d707ad2e7257321a03716e6ddbbf8a84f12544c"
+      },
+      "binaries": null,
+      "system": "CGgraph",
+      "functions": [
+        "bfs",
+        "sssp"
+      ],
+      "input_contract": "CSR u32/u32/u32; weights_u32.bin; trace file + output prefix",
+      "existing_adapter": "migration/eight_gpu_20261025/sg_baselines/native/adapters/cggraph_code_warm_v8.cu",
+      "author_commit": "5945816f4ccf63fce8d13eac84c09bbbb4c7e58a",
+      "new_canonical_gpu_qualified": false,
+      "variant": "cggraph_v15"
+    },
+    {
+      "receipt": "/YOUR/ARTIFACT_WORK/build/cggraph_wcc_coverage_v3/receipt.json",
+      "status": "PASS_BUILD_ONLY",
+      "binary": {
+        "path": "/YOUR/ARTIFACT_WORK/build/cggraph_wcc_coverage_v3/native",
+        "sha256": "7552f8f8e206bfb74f16f7138643641878e31a5944999bbbb5afbc081660c2c9"
+      },
+      "binaries": null,
+      "system": "CGgraph",
+      "functions": [
+        "wcc"
+      ],
+      "input_contract": "CSR u32/u32/u32; reorder nonzero-outdegree vertices first, order.bin u32/degrees.bin u64; CLI flags",
+      "existing_adapter": "experiments/rtx4090d_20261031/coverage_experiment_v3.py",
+      "author_commit": "3b23a7d7384fab283952c84ae60e491d58e50ccd",
+      "new_canonical_gpu_qualified": false,
+      "variant": "cggraph_legacy_wcc_u32"
+    },
+    {
+      "receipt": "/YOUR/ARTIFACT_WORK/build/cggraph_pr_coverage_v3/receipt.json",
+      "status": "PASS_BUILD_ONLY",
+      "binary": {
+        "path": "/YOUR/ARTIFACT_WORK/build/cggraph_pr_coverage_v3/native",
+        "sha256": "c5e288dab17bd2411bc984503d32095e5840aa4c67145de9fdbd01ef79a77355"
+      },
+      "binaries": null,
+      "system": "CGgraph",
+      "functions": [
+        "pr"
+      ],
+      "input_contract": "CSR u32/u32/u32; reorder + order.bin u32/degrees.bin u64; CLI flags",
+      "existing_adapter": "experiments/rtx4090d_20261031/coverage_experiment_v3.py",
+      "author_commit": "3b23a7d7384fab283952c84ae60e491d58e50ccd",
+      "new_canonical_gpu_qualified": false,
+      "variant": "cggraph_legacy_pr_fp64"
+    },
+    {
+      "receipt": "/YOUR/ARTIFACT_WORK/build/cggraph_pr_gpu100_v1/receipt.json",
+      "status": "PASS_BUILD_ONLY",
+      "binary": {
+        "path": "/YOUR/ARTIFACT_WORK/build/cggraph_pr_gpu100_v1/native",
+        "sha256": "a545dbda6bc3f1b2137ba424cad5cdd7bbc87f79eb4ca205ef47063aa28208a0"
+      },
+      "binaries": null,
+      "system": "CGgraph",
+      "functions": [
+        "pr"
+      ],
+      "input_contract": "Same CSR remap; distinct fixed GPU100 configuration, not automatically preferred",
+      "existing_adapter": "experiments/rtx4090d_20261031/coverage_pr_revision.py",
+      "author_commit": "3b23a7d7384fab283952c84ae60e491d58e50ccd",
+      "new_canonical_gpu_qualified": false,
+      "variant": "cggraph_legacy_pr_fp64_gpu100"
+    },
+    {
+      "receipt": "/YOUR/ARTIFACT_WORK/build/sygraph_v6/receipt.json",
+      "status": "PASS_BUILD_ONLY",
+      "binary": {
+        "path": "/YOUR/ARTIFACT_WORK/build/sygraph_v6/native",
+        "sha256": "040f45e27860640dda48500c5c5b7948117c75dade6572b4c292d45e8e03d357"
+      },
+      "binaries": null,
+      "system": "SYgraph",
+      "functions": [
+        "bfs",
+        "sssp"
+      ],
+      "input_contract": "CSR u32/u32/f64 + trace file + output prefix",
+      "existing_adapter": "experiments/rtx4090d_20261031/baseline_extension/sygraph_code_warm_v8.cpp",
+      "author_commit": "71dcb56aed0cd43fefa5752a552e0a10cb69a758",
+      "new_canonical_gpu_qualified": false,
+      "variant": "sygraph_author"
+    },
+    {
+      "receipt": "/YOUR/ARTIFACT_WORK/build/sygraph_coverage_v2/receipt.json",
+      "status": "PASS_BUILD_ONLY",
+      "binary": {
+        "path": "/YOUR/ARTIFACT_WORK/build/sygraph_coverage_v2/sygraph_coverage",
+        "sha256": "aa64887cd90cc003bd9ccffa8d60b5f9358588cd4af340d5517216ac27cafdf9"
+      },
+      "binaries": null,
+      "system": "SYgraph",
+      "functions": [
+        "wcc",
+        "bc",
+        "tc"
+      ],
+      "input_contract": "Weak CSR u32/u32 + sources.bin u32; n m dir CC|BC32|TC source-count rounds output",
+      "existing_adapter": "experiments/rtx4090d_20261031/coverage_sygraph.cpp",
+      "author_commit": "71dcb56aed0cd43fefa5752a552e0a10cb69a758",
+      "new_canonical_gpu_qualified": false,
+      "variant": "sygraph_author"
+    },
+    {
+      "receipt": "/YOUR/ARTIFACT_WORK/build/grapin_static_sssp_v1/receipt.json",
+      "status": "PASS_BUILD_ONLY",
+      "binary": null,
+      "binaries": {
+        "sssp": {
+          "path": "/YOUR/ARTIFACT_WORK/build/grapin_static_sssp_v1/build/grapin_sssp",
+          "sha256": "22f269979268ee56a42c32a53c7e025a89ada63fa5fb9c3344ace70bb31b8f00"
+        }
+      },
+      "system": "Grapin",
+      "functions": [
+        "sssp"
+      ],
+      "input_contract": "market_big text src dst weight; explicit integer-weight table; empty updates file",
+      "existing_adapter": "experiments/rtx4090d_20261031/grapin_static_sssp_experiment.py",
+      "author_commit": "7ffcb2949837ad9f05d5d77afe54c698e2887479",
+      "new_canonical_gpu_qualified": false,
+      "variant": "grapin_author"
+    },
+    {
+      "receipt": "/YOUR/ARTIFACT_WORK/build/grapin_pma_boundary_v1/static/receipt.json",
+      "status": "PASS_BUILD_ONLY",
+      "binary": null,
+      "binaries": {
+        "bfs": {
+          "path": "/YOUR/ARTIFACT_WORK/build/grapin_pma_boundary_v1/static/build/grapin_bfs",
+          "sha256": "3f7c0ce39932d077681118f12d20db7d2bd8807980d3bb2a53673c17aa1a9ae8"
+        },
+        "pr": {
+          "path": "/YOUR/ARTIFACT_WORK/build/grapin_pma_boundary_v1/static/build/grapin_pr",
+          "sha256": "5c2261979bbed0968c54966a548b154b2c59657213f6bb1104dd440246b18628"
+        }
+      },
+      "system": "Grapin",
+      "functions": [
+        "bfs",
+        "pr"
+      ],
+      "input_contract": "market_big text src dst weight; empty updates; cache edges explicit",
+      "existing_adapter": "experiments/rtx4090d_20261031/grapin_static_experiment_v2.py",
+      "author_commit": "7ffcb2949837ad9f05d5d77afe54c698e2887479",
+      "new_canonical_gpu_qualified": false,
+      "variant": "grapin_author"
+    },
+    {
+      "receipt": "/YOUR/ARTIFACT_WORK/build/grapin_pma_boundary_v1/cc/receipt.json",
+      "status": "PASS_BUILD_ONLY",
+      "binary": {
+        "path": "/YOUR/ARTIFACT_WORK/build/grapin_pma_boundary_v1/cc/build/grapin_cc",
+        "sha256": "21de81ef6e369a68832900c4ce1793e879bc9cb1c2662aaeaaf706514dfeb617"
+      },
+      "binaries": {
+        "cc": {
+          "path": "/YOUR/ARTIFACT_WORK/build/grapin_pma_boundary_v1/cc/build/grapin_cc",
+          "sha256": "21de81ef6e369a68832900c4ce1793e879bc9cb1c2662aaeaaf706514dfeb617"
+        }
+      },
+      "system": "Grapin",
+      "functions": [
+        "wcc"
+      ],
+      "input_contract": "market_big weak text; empty updates; full domain size explicit",
+      "existing_adapter": "experiments/rtx4090d_20261031/grapin_cc_return_experiment_v3.py",
+      "author_commit": "7ffcb2949837ad9f05d5d77afe54c698e2887479",
+      "new_canonical_gpu_qualified": false,
+      "variant": "grapin_author"
+    },
+    {
+      "receipt": "/YOUR/ARTIFACT_WORK/build/gum/receipt.json",
+      "status": "BUILT_GPU_UNTESTED",
+      "binary": null,
+      "binaries": {
+        "gum_bfs_wcc": {
+          "path": "/YOUR/ARTIFACT_WORK/build/gum/build/gum_bfs_wcc",
+          "sha256": "bbd19a95135dcadb880aa6858222bf647fd9264bf81482a8121d70372793c144"
+        },
+        "gum_pr_fp64": {
+          "path": "/YOUR/ARTIFACT_WORK/build/gum/build/gum_pr_fp64",
+          "sha256": "ebee2117b5f34cd7ffed01bc3db3c897b3c8d7065edeb7db910df5150377e905"
+        },
+        "gum_sssp_ws": {
+          "path": "/YOUR/ARTIFACT_WORK/build/gum/build/gum_sssp_ws",
+          "sha256": "9e9fce28c4ebd0f5a672eeef257c302640c5d5afccda02d7d6590c848b5ab51d"
+        }
+      },
+      "system": "GUM historical",
+      "functions": [
+        "bfs",
+        "wcc",
+        "pr",
+        "sssp"
+      ],
+      "input_contract": "Earlier format; use gum_law_build_v1 CSR overlay for new canonical",
+      "existing_adapter": "migration/eight_gpu_20261025/bundle/baselines/gum/build.py",
+      "author_commit": "267ffdd345cc65e7b5541fabd9e94c70e2fd8141",
+      "new_canonical_gpu_qualified": false,
+      "variant": "gum_historical_author"
+    },
+    {
+      "receipt": "/YOUR/ARTIFACT_WORK/experimental/performance_revision_20261102/gum_law_build_v1/receipt.json",
+      "status": "BUILT_GPU_UNTESTED",
+      "binary": null,
+      "binaries": {
+        "gum_bfs_wcc": {
+          "path": "/YOUR/ARTIFACT_WORK/experimental/performance_revision_20261102/gum_law_build_v1/build/gum_bfs_wcc",
+          "bytes": 5406696,
+          "sha256": "e364434aa66718ff4e297af718c54dad79c9ae4ac433c30ad15ace4acacc2af7"
+        },
+        "gum_pr_fp64": {
+          "path": "/YOUR/ARTIFACT_WORK/experimental/performance_revision_20261102/gum_law_build_v1/build/gum_pr_fp64",
+          "bytes": 5067760,
+          "sha256": "d1f2cfbce5fb5867adac892cfadd70d97faebefd428f34996027e665561a1716"
+        },
+        "gum_sssp_standard": {
+          "path": "/YOUR/ARTIFACT_WORK/experimental/performance_revision_20261102/gum_law_build_v1/build/gum_sssp_standard",
+          "bytes": 4844528,
+          "sha256": "4a0da90e455184b1994a94e23d6925bf5f46fa09974fffa19fda3ea03f34ad06"
+        }
+      },
+      "system": "GUM",
+      "functions": [
+        "bfs",
+        "wcc",
+        "pr",
+        "sssp"
+      ],
+      "input_contract": "Seven-line eggpu-law-csr-v1 descriptor: magic,n,m,SSSP_weighted_1_else0,offsets_i32_path,indices_i32_path,weights_f64_path_or_dash",
+      "existing_adapter": "experiments/rtx4090d_20261031/performance_revision_20261102/gum_runner_v1/worker.py",
+      "author_commit": "267ffdd345cc65e7b5541fabd9e94c70e2fd8141",
+      "new_canonical_gpu_qualified": false,
+      "variant": "gum_author"
+    },
+    {
+      "system": "HyTGraph",
+      "functions": [
+        "bfs",
+        "sssp",
+        "wcc",
+        "pr"
+      ],
+      "receipt": "/YOUR/ARTIFACT_WORK/experimental/campaign_20261104/baselines/hytgraph_build_v3/receipt.json",
+      "existing_adapter": "experiments/campaign_20261104/baselines/hytgraph_adapter.py",
+      "input_contract": "market_big text src dst integer_weight; preserve with weight_num=0",
+      "new_canonical_gpu_qualified": false,
+      "local_build_evidence": [
+        "experiments/campaign_20261104/baselines/evidence/hytgraph_build.json"
+      ],
+      "variant": "hytgraph_author"
+    },
+    {
+      "system": "KGraph",
+      "functions": [
+        "sssp"
+      ],
+      "receipt": "/YOUR/ARTIFACT_WORK/experimental/campaign_20261104/baselines/kgraph_build_v1/receipt.json",
+      "existing_adapter": "experiments/campaign_20261104/baselines/kgraph_adapter.py",
+      "input_contract": "Partitioned inter/intra WeightedAdjacencyGraph, sparse/dense variants",
+      "new_canonical_gpu_qualified": false,
+      "local_build_evidence": [
+        "experiments/campaign_20261104/baselines/evidence/kgraph_build.json"
+      ],
+      "variant": "kgraph_author"
+    },
+    {
+      "system": "HyTGraph",
+      "variant": "hytgraph_author",
+      "functions": [
+        "bfs",
+        "sssp",
+        "wcc",
+        "pr"
+      ],
+      "receipt": "/YOUR/ARTIFACT_WORK/experimental/campaign_20261104/baselines/hytgraph_build_v4/receipt.json",
+      "status": "PASS_BUILD_ONLY",
+      "binary": null,
+      "binary_sha256": null,
+      "binaries": {
+        "bfs": {
+          "path": "/YOUR/ARTIFACT_WORK/experimental/campaign_20261104/baselines/hytgraph_build_v4/build/hytgraph_bfs",
+          "sha256": "6ee176fdeb9b60ddf3b85d6d8b54e7021f4d7b39b26a25c7025a5a2dbac8287c"
+        },
+        "sssp": {
+          "path": "/YOUR/ARTIFACT_WORK/experimental/campaign_20261104/baselines/hytgraph_build_v4/build/hytgraph_sssp",
+          "sha256": "90980636180d59fe2d1498aa9d1629c7b928844784b65048cd506219db1281b8"
+        },
+        "cc": {
+          "path": "/YOUR/ARTIFACT_WORK/experimental/campaign_20261104/baselines/hytgraph_build_v4/build/hytgraph_cc",
+          "sha256": "eaa2d85d3544f053fc4c4799f1b333997ae36811e8cf325d8f0b3f68ef8b588f"
+        },
+        "pr": {
+          "path": "/YOUR/ARTIFACT_WORK/experimental/campaign_20261104/baselines/hytgraph_build_v4/build/hytgraph_pr",
+          "sha256": "8cde1b02eb8e417d6379bab74f0ef65759632d6c55352028a6f0d5123c21d910"
+        }
+      },
+      "new_canonical_gpu_qualified": false,
+      "existing_adapter": "experiments/campaign_20261104/baselines/sg_author_worker.py",
+      "scope": "Same author kernels; mandatory launcher/complete-output/first-timer adaptation"
+    },
+    {
+      "system": "Gunrock",
+      "variant": "gunrock_legacy_cc",
+      "functions": [
+        "wcc"
+      ],
+      "receipt": "/YOUR/ARTIFACT_WORK/experimental/campaign_20261104/baselines/gunrock_cc_timer_build_v1/receipt.json",
+      "status": "PASS_BUILD_ONLY",
+      "binary": "/YOUR/ARTIFACT_WORK/experimental/campaign_20261104/baselines/gunrock_cc_timer_build_v1/gunrock_wcc",
+      "binary_sha256": "01c9422d83028d5990e5d1fbca0b24e8d675b088a24348a2b60a65ef81b31576",
+      "binaries": null,
+      "new_canonical_gpu_qualified": false,
+      "existing_adapter": "experiments/campaign_20261104/baselines/sg_author_worker.py",
+      "scope": "Same author kernels; mandatory launcher/complete-output/first-timer adaptation"
+    },
+    {
+      "system": "CGgraph",
+      "variant": "cggraph_legacy_full",
+      "functions": [
+        "bfs",
+        "sssp",
+        "wcc",
+        "pr"
+      ],
+      "status": "PASS_BUILD_ONLY",
+      "source_commit": "3b23a7d7384fab283952c84ae60e491d58e50ccd",
+      "receipt": "/YOUR/ARTIFACT_WORK/experimental/campaign_20261104/baselines/cggraph_legacy_full_build_v1/receipt.json",
+      "binary": {
+        "path": "/YOUR/ARTIFACT_WORK/experimental/campaign_20261104/baselines/cggraph_legacy_full_build_v1/native",
+        "sha256": "03809a80de18ef1bdbff9e4b8adc315d70e90ab33b21f1b1dcf717f11b2fae3f"
+      },
+      "new_canonical_gpu_qualified": false,
+      "existing_adapter": "experiments/campaign_20261104/baselines/sg_author_worker.py",
+      "numeric_profile": "Existing legacy global-PR FP64 correctness port, same binary and source for all four functions; exact w16 distance domain",
+      "additional_adaptation": "Native unreachable sentinel converted to public +inf in owning full output"
+    }
+  ],
+  "canonical_contract": "u32-compatible nonnegative int32 offsets/indices, positive integer-valued f64 weights; no text/edge expansion unless required by author loader",
+  "notes": [
+    "Native author capability is distinct from adapter scope and common semantic qualification.",
+    "WCC consumes weak undirected projection; global PR consumes original directed graph and ignores weights.",
+    "Full outputs and first/warm query timing must be re-qualified on new source-bound canonical inputs.",
+    "GUM is 1/2/4/8-GPU MPI; SG-only systems are not duplicated into multi-GPU panels.",
+    "CGgraph legacy/full and newer BFS/SSSP revisions are explicitly versioned, not silently conflated.",
+    "CGgraph V1.5 BFS/SSSP and legacy full source are distinct variants, never selected per graph by observed timing.",
+    "Gunrock Essentials and legacy CC remain separate variant IDs even when a paper groups them by system family."
+  ],
+  "hytgraph_v4_author_tiny_qualification": {
+    "status": "PASS_TINY_GPU_ONLY",
+    "gpu_executed_by": "primary agent",
+    "receipt": {
+      "path": "experiments/campaign_20261104/baselines/evidence/hytgraph_tiny_gpu_v2_receipt.json",
+      "sha256": "db98ef7c0fc4af6676bd608ddff7beb9bd246c5fed8b3bed5b98bfc77b3a408c"
+    },
+    "checks": 12,
+    "formal_performance_eligible": false,
+    "scope": "Author v4 binary, four functions, native tiny fixtures and strict full-output quality. Generic E1 worker tiny/target still needs its own source-bound proof."
+  },
+  "cggraph_legacy_full_fixed_function_builds": {
+    "commit": "3b23a7d7384fab283952c84ae60e491d58e50ccd",
+    "traversal_functions": [
+      "bfs",
+      "sssp",
+      "wcc"
+    ],
+    "traversal_build": {
+      "path": "/YOUR/ARTIFACT_WORK/experimental/campaign_20261104/baselines/cggraph_legacy_traversal_build_v2/native",
+      "sha256": "f2406e7aa0317c97ea1fbf0b3206b2450ad446c87f9751115db827c097913610"
+    },
+    "pr_build": "baselines/cggraph_legacy_full_build_v1/receipt.json",
+    "selection": "Fixed by operator only; integer traversal gate remains unchanged; no per-graph version/precision selection",
+    "gpu_qualification": "New42-cell author_tiny_v2 plan pending root result"
+  },
+  "public_template_notice": "Measured binary identities with placeholder installation paths. This is not an executable local registry; rebuild and generate a source-bound local registry, then rerun qualification. No binaries are bundled."
+}

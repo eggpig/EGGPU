@@ -3,7 +3,7 @@
   "date": "2026-11-04",
   "timezone": "Asia/Shanghai",
   "status": "dataset_selection_and_protocol_frozen_not_all_payloads_qualified",
-  "protocol_document": "paper/DATASET_AND_EXPERIMENT_FREEZE_20261104_CN.md",
+  "protocol_document": "DATASET_AND_EXPERIMENT_FREEZE_20261104_CN.md",
   "main_dataset_count": 7,
   "categories": {
     "RN": "道路网络",
@@ -54,9 +54,9 @@
       "source_logical_edges": 28854312,
       "source_average_stored_outdegree": 2.4098128281182882,
       "canonical_vertices": 23947347,
-      "canonical_stored_arcs": null,
+      "canonical_stored_arcs": 57708624,
       "canonical_average_stored_outdegree": null,
-      "qualification_status": "source_verified_payload_preparation_pending",
+      "qualification_status": "reference_payload_qualified_fresh_regeneration_requires_local_receipt",
       "new_campaign_weight_sha256": null,
       "core_view": "undirected_simple_reciprocal"
     },
@@ -74,7 +74,7 @@
       "canonical_vertices": 75879,
       "canonical_stored_arcs": 508837,
       "canonical_average_stored_outdegree": 6.7059001831863885,
-      "qualification_status": "existing_normalized_input_evidence_new_hash_binding_pending",
+      "qualification_status": "reference_payload_qualified_fresh_regeneration_requires_local_receipt",
       "new_campaign_weight_sha256": null,
       "core_view": "directed_simple",
       "application_projection": {
@@ -97,9 +97,9 @@
       "source_logical_edges": 68993773,
       "source_average_stored_outdegree": 14.232648268586473,
       "canonical_vertices": 4847571,
-      "canonical_stored_arcs": null,
+      "canonical_stored_arcs": 68475391,
       "canonical_average_stored_outdegree": null,
-      "qualification_status": "source_verified_payload_preparation_pending",
+      "qualification_status": "reference_payload_qualified_fresh_regeneration_requires_local_receipt",
       "new_campaign_weight_sha256": null,
       "core_view": "directed_simple"
     },
@@ -117,9 +117,10 @@
       "canonical_vertices": 18520486,
       "canonical_stored_arcs": 292243663,
       "canonical_average_stored_outdegree": 15.779481326785916,
-      "qualification_status": "archived_remote_receipt_not_fresh_remote_probe",
+      "qualification_status": "reference_payload_qualified_fresh_regeneration_requires_local_receipt",
       "new_campaign_weight_sha256": null,
       "core_view": "directed_simple",
+      "archived_preparation_receipt": "experiments/rtx4090d_20261031/performance_revision_20261102/evidence/large_graphs/canonical/uk-2002/receipt.json",
       "normalization_evidence": {
         "vertices": 18520486,
         "raw_arcs": 298113762,
@@ -152,9 +153,10 @@
       "canonical_vertices": 7414866,
       "canonical_stored_arcs": 191606827,
       "canonical_average_stored_outdegree": 25.840902182183736,
-      "qualification_status": "archived_remote_receipt_not_fresh_remote_probe",
+      "qualification_status": "reference_payload_qualified_fresh_regeneration_requires_local_receipt",
       "new_campaign_weight_sha256": null,
       "core_view": "directed_simple",
+      "archived_preparation_receipt": "experiments/rtx4090d_20261031/performance_revision_20261102/evidence/large_graphs/canonical/indochina-2004/receipt.json",
       "normalization_evidence": {
         "vertices": 7414866,
         "raw_arcs": 194109311,
@@ -205,9 +207,10 @@
       "canonical_vertices": 2997166,
       "canonical_stored_arcs": 212698418,
       "canonical_average_stored_outdegree": 70.9665123653478,
-      "qualification_status": "metadata_and_local_file_existence_checked_not_rehashed",
+      "qualification_status": "reference_payload_qualified_fresh_regeneration_requires_local_receipt",
       "new_campaign_weight_sha256": null,
-      "core_view": "undirected_simple_reciprocal"
+      "core_view": "undirected_simple_reciprocal",
+      "metadata_evidence": "historical metadata: NR-soc-orkut.json; private workspace path omitted in public projection"
     }
   ],
   "experiment_subsets": {

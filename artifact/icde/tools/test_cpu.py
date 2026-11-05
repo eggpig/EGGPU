@@ -1,16 +1,14 @@
 #!/usr/bin/env python3
-"""Run the CPU capability/numerical-contract suite without loading CUDA.
+"""Run public import, capability, CSR and numerical CPU contracts without CUDA.
 
-A package namespace skips unrelated EasyGraph root-package optional imports.
-The actual easygraph.gpu modules and the published tests are imported normally.
-Requires NumPy and pytest in the caller's selected environment.
+Requires NumPy, SciPy and pytest in the caller's selected environment.
 """
 import argparse
 import hashlib
 import json
 from pathlib import Path
 import sys
-import types
+import os
 
 
 def main():
@@ -21,15 +19,18 @@ def main():
         raise ValueError("Choose an absent CPU-test output directory")
     args.work.mkdir(parents=True)
     source = Path(__file__).resolve().parents[3] / "Easy-Graph"
-    package = types.ModuleType("easygraph")
-    package.__path__ = [str(source / "easygraph")]
-    sys.modules["easygraph"] = package
+    sys.path.insert(0, str(source))
+    os.environ.update(CUDA_VISIBLE_DEVICES='', PYTEST_DISABLE_PLUGIN_AUTOLOAD='1', PYTHONDONTWRITEBYTECODE='1')
     import pytest
-    tests = [source / "tests/gpu/test_capability_dispatch.py", source / "tests/gpu/test_arena_numerical_contract.py"]
-    status = pytest.main(["-q", "-p", "no:cacheprovider", "--basetemp", str(args.work / "temporary"), *map(str, tests)])
+    tests = [source / 'tests/gpu' / name for name in (
+        'test_capability_dispatch.py', 'test_arena_numerical_contract.py',
+        'test_public_csr_input.py', 'test_public_lazy_import.py', 'test_arena_cold_import.py',
+        'test_wcc_chunked_host.py', 'test_arena_output_ownership.py')]
+    status = pytest.main(["-q", "-p", "no:cacheprovider", '--confcutdir=' + str(source/'tests/gpu'),
+                         "--basetemp", str(args.work / "temporary"), *map(str, tests)])
     receipt = dict(status="PASS_CPU_SUITE" if status == 0 else "FAIL_CPU_SUITE", gpu_executed=False,
                    tests={str(path.relative_to(source)): hashlib.sha256(path.read_bytes()).hexdigest() for path in tests},
-                   scope="Actual GPU Python modules under an EasyGraph package namespace; no CUDA/DSO qualification.")
+                   scope="Normal public EasyGraph imports and actual host/dispatch code; no CUDA/DSO qualification.")
     (args.work / "receipt.json").write_text(json.dumps(receipt, indent=2) + "\n")
     return status
 

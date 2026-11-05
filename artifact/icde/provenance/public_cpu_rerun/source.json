@@ -1,0 +1,18 @@
+{
+  "status": "PASS_CPU_SUITE",
+  "gpu_executed": false,
+  "tests": {
+    "tests/gpu/test_capability_dispatch.py": "8199b63d055bda448267a214ceb98a6bbc8addc700a3df0587ec24086c40b5b5",
+    "tests/gpu/test_arena_numerical_contract.py": "7cbaf80b739628e172a05ee651406b53814f5abe5d59a0a96bd765db603dce7a",
+    "tests/gpu/test_public_csr_input.py": "e982d90e6dec75a70d0e1ead64bf08f0b6b14aadde00723466d6bb2124902cf6",
+    "tests/gpu/test_public_lazy_import.py": "f4bfc8f40af5507c01f9b0d5d43e382f506f317d533a1dae75bfb520527ccb73",
+    "tests/gpu/test_arena_cold_import.py": "d7fb49b85e8d5eb76f65ce411f202d385594741f347edf554161bec2aef578b0",
+    "tests/gpu/test_wcc_chunked_host.py": "a79440305c37bc467e78a53f1223c1c26f688f0b50215da7bdd633ce42308402",
+    "tests/gpu/test_arena_output_ownership.py": "cbb532d6f2a547bc636123c697475b0b47f582a8df138749e8c0163b11780ecc"
+  },
+  "scope": "Normal public EasyGraph imports and actual host/dispatch code; no CUDA/DSO qualification.",
+  "observed_test_count": 178,
+  "source_sha256": "cb14360e2dfb934b8a28f9875fb80639ce4503bc6ed27956201b18e9edec6869",
+  "scope_note": "Public-projection CPU rerun. Counts overlap previous source/campaign suites; never sum them as distinct qualification cases.",
+  "original_receipt_sha256": "99281e8871f8044f88098afcb3fcf06767b68d90b2000409e7b23c4a2327fe32"
+}

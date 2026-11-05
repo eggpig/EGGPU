@@ -1,0 +1,448 @@
+{
+  "status": "READ_ONLY_AUTHOR_STOPPING_AUDIT",
+  "gpu_executed": false,
+  "source_mutated": false,
+  "rows": [
+    {
+      "system": "HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "build_receipt": {
+        "path": "<campaign>/baselines/hytgraph_build_v4/receipt.json",
+        "sha256": "760cab43252c39c6db40c6feef84e387fb09509739f805f702f9fab5185ad873"
+      },
+      "stop": "unnormalized positive residual per vertex > error; residual starts 1-alpha; host rank normalized by raw sum",
+      "threshold": 1e-07,
+      "precision": "FP32 ranks/residuals; FP64 owning normalized output",
+      "sources": [
+        {
+          "file": {
+            "path": "<campaign>/baselines/hytgraph_build_v4/source/samples/hybrid_pr/hybrid_pr.cu",
+            "sha256": "465f63fe7ea966ad35aef72e70bdf05e1e75682617d76009e331d4356f3538e7"
+          },
+          "lines": [
+            {
+              "line": 59,
+              "text": "        TBuffer GetInitBuffer(index_t node) const override"
+            },
+            {
+              "line": 61,
+              "text": "            return 1 - ALPHA;"
+            },
+            {
+              "line": 79,
+              "text": "            TBuffer buffer = atomicExch(p_buffer, IDENTITY_ELEMENT);"
+            },
+            {
+              "line": 81,
+              "text": "            if (buffer > m_error)"
+            },
+            {
+              "line": 84,
+              "text": "                *p_value += buffer;"
+            },
+            {
+              "line": 88,
+              "text": "                buffer = ALPHA * buffer / out_degree;"
+            },
+            {
+              "line": 108,
+              "text": "        bool IsActiveNode(index_t node, TBuffer buffer, TValue value) const override"
+            },
+            {
+              "line": 110,
+              "text": "            return buffer > m_error;"
+            },
+            {
+              "line": 155,
+              "text": "        engine.InitGraph(FLAGS_error);"
+            },
+            {
+              "line": 159,
+              "text": "        double mass=0; for(auto value:host) mass+=double(value); if(!(mass>0) || !std::isfinite(mass)) throw std::runtime_error(\"Invalid PR mass\"); for(size_t i=0;i<host.size();++i)owning[i]=double(host[i])/mass;"
+            }
+          ]
+        },
+        {
+          "file": {
+            "path": "<campaign>/baselines/hytgraph_build_v4/source/samples/hybrid_pr/hybrid_pr_common.h",
+            "sha256": "3a4e0aed21005081e4607535639ae279553d15574cfe391eb01afc975df0a1ee"
+          },
+          "lines": [
+            {
+              "line": 36,
+              "text": "typedef float rank_t;"
+            },
+            {
+              "line": 39,
+              "text": "#define ALPHA 0.85"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "system": "Grapin",
+      "commit": "7ffcb2949837ad9f05d5d77afe54c698e2887479",
+      "build_receipt": {
+        "path": "<artifact-work>/build/grapin_pma_boundary_v1/static/receipt.json",
+        "sha256": "38986194582e6a7e8801cca084586ec0abe9378c79ac9410040794c06bb18325"
+      },
+      "stop": "unnormalized residual per vertex active predicate > error; Combine consumes nonzero buffer; final host normalization",
+      "threshold": 1e-07,
+      "precision": "FP32 ranks/residuals; FP64 owning normalized output",
+      "sources": [
+        {
+          "file": {
+            "path": "<artifact-work>/build/grapin_pma_boundary_v1/static/source/source/samples/hybrid_pr/hybrid_pr.cu",
+            "sha256": "d02473899547031ace9f17d99d76f163d4ba0372ed76045089ba6287bbb6a471"
+          },
+          "lines": [
+            {
+              "line": 58,
+              "text": "        TBuffer GetInitBuffer(index_t node) const override"
+            },
+            {
+              "line": 60,
+              "text": "            return (1 - ALPHA);"
+            },
+            {
+              "line": 78,
+              "text": "            TBuffer buffer = atomicExch(p_buffer, IDENTITY_ELEMENT);"
+            },
+            {
+              "line": 83,
+              "text": "            if (buffer != 0)"
+            },
+            {
+              "line": 86,
+              "text": "                *p_value += buffer;"
+            },
+            {
+              "line": 89,
+              "text": "                buffer = ALPHA * buffer / out_degree;"
+            },
+            {
+              "line": 134,
+              "text": "        bool IsActiveNode(index_t node, TBuffer buffer, TValue value) const override"
+            },
+            {
+              "line": 136,
+              "text": "            return buffer > m_error;"
+            },
+            {
+              "line": 181,
+              "text": "        engine.InitGraph(FLAGS_error);"
+            },
+            {
+              "line": 186,
+              "text": "        double mass=0;for(auto x:host)mass+=double(x);for(size_t i=0;i<host.size();++i)owning[i]=double(host[i])/mass;"
+            }
+          ]
+        },
+        {
+          "file": {
+            "path": "<artifact-work>/build/grapin_pma_boundary_v1/static/source/source/samples/hybrid_pr/hybrid_pr_common.h",
+            "sha256": "5cd27123553f33b1ca0d33a0e7f69ed43342d5c11049f65c9432e6162416dc11"
+          },
+          "lines": [
+            {
+              "line": 36,
+              "text": "typedef float rank_t;"
+            },
+            {
+              "line": 39,
+              "text": "#define ALPHA 0.85"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "system": "CGgraph legacy",
+      "commit": "3b23a7d7384fab283952c84ae60e491d58e50ccd",
+      "build_receipt": {
+        "path": "<campaign>/baselines/cggraph_legacy_full_build_v1/receipt.json",
+        "sha256": "a562648168d84f98bdc43f8ec8b6b7dd9b5c41dec4a4f26858759b3b7afaec42"
+      },
+      "stop": "global sum(abs(new_probability_rank-old_probability_rank)); dangling mass included",
+      "threshold": 1e-10,
+      "precision": "FP64",
+      "sources": [
+        {
+          "file": {
+            "path": "<campaign>/baselines/cggraph_legacy_full_build_v1/source/project/algorithm_host.hpp",
+            "sha256": "7e7b085ea2fa463ce369d7ff3236823fee6a9ad82920c42c33e08b80dfb75385"
+          },
+          "lines": [
+            {
+              "line": 149,
+              "text": "template <typename Graph> count_type UpdateCoprocess(Graph &graph)"
+            },
+            {
+              "line": 150,
+              "text": "{"
+            },
+            {
+              "line": 151,
+              "text": "    double dangling=0.0, difference=0.0;"
+            },
+            {
+              "line": 152,
+              "text": "#pragma omp parallel for reduction(+ : dangling)"
+            },
+            {
+              "line": 153,
+              "text": "    for(vertex_id_type v=0;v<graph.vertexNum;++v)"
+            },
+            {
+              "line": 154,
+              "text": "        if(graph.outDegree[v]==0) dangling+=graph.vertexValue_in[v];"
+            },
+            {
+              "line": 155,
+              "text": "    const double base=(1.0-Alpha+Alpha*dangling)/double(graph.vertexNum);"
+            },
+            {
+              "line": 156,
+              "text": "#pragma omp parallel for reduction(+ : difference)"
+            },
+            {
+              "line": 157,
+              "text": "    for(vertex_id_type v=0;v<graph.vertexNum;++v){"
+            },
+            {
+              "line": 158,
+              "text": "        const double degree=double(graph.outDegree[v]);"
+            },
+            {
+              "line": 159,
+              "text": "        const double old_rank=graph.vertexValue_in[v]*(degree>0.0?degree:1.0);"
+            },
+            {
+              "line": 160,
+              "text": "        const double rank=base+Alpha*graph.vertexValue_out[v];"
+            },
+            {
+              "line": 161,
+              "text": "        difference+=std::abs(rank-old_rank);"
+            },
+            {
+              "line": 162,
+              "text": "        graph.vertexValue_out[v]=rank/(degree>0.0?degree:1.0);"
+            },
+            {
+              "line": 163,
+              "text": "        graph.vertexValue_in[v]=0.0;"
+            },
+            {
+              "line": 164,
+              "text": "    }"
+            },
+            {
+              "line": 165,
+              "text": "    // This is full-rank scatter. All source contributions must remain active"
+            },
+            {
+              "line": 166,
+              "text": "    // until the common global L1 convergence condition is met."
+            },
+            {
+              "line": 167,
+              "text": "    if(difference>1e-10){graph.active.out().fill_smart();return graph.noZeroOutDegreeNum;}"
+            },
+            {
+              "line": 168,
+              "text": "    return 0;"
+            }
+          ]
+        },
+        {
+          "file": {
+            "path": "<campaign>/baselines/cggraph_legacy_full_build_v1/source/src/Basic/Type/data_type.hpp",
+            "sha256": "fdc177712069edf075bf46d7a89e0bb733f0339c23d01d1fc3b83163fbbe5f58"
+          },
+          "lines": [
+            {
+              "line": 12,
+              "text": "typedef double vertex_data_type;"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "system": "GUM",
+      "commit": "267ffdd345cc65e7b5541fabd9e94c70e2fd8141",
+      "build_receipt": {
+        "path": "<artifact-work>/experimental/performance_revision_20261102/gum_law_build_v1/receipt.json",
+        "sha256": "daadaffdaad6b8fe475117916eb2d9c79f842f67741255e04aa848e222695cbf"
+      },
+      "stop": "fixed max_iter parameter, no epsilon stopping; curr_iter++ >= max_iter",
+      "threshold": null,
+      "fixed_iterations": 117,
+      "precision": "FP64 rank and collective",
+      "sources": [
+        {
+          "file": {
+            "path": "<artifact-work>/experimental/performance_revision_20261102/gum_law_build_v1/source/adapters/pr/pagerank_fp64.h",
+            "sha256": "9d9f1d2cea4991e810c60224d001739c8fe715b4151a1c417a9f5950e5c8f26a"
+          },
+          "lines": [
+            {
+              "line": 11,
+              "text": "  using rank_t = double;"
+            },
+            {
+              "line": 70,
+              "text": "  void PEval(const fragment_t& frag, context_t& ctx,"
+            },
+            {
+              "line": 72,
+              "text": "    ctx.curr_iter = 0;"
+            },
+            {
+              "line": 102,
+              "text": "    if (ctx.curr_iter++ >= ctx.max_iter) {"
+            },
+            {
+              "line": 115,
+              "text": "    rank_t local_dangling_sum = thrust::transform_reduce("
+            },
+            {
+              "line": 125,
+              "text": "    Sum(local_dangling_sum, dangling_sum);"
+            },
+            {
+              "line": 128,
+              "text": "      d_next_rank[v] = (1 - damping_factor) / total_vertices_num +"
+            },
+            {
+              "line": 129,
+              "text": "                       damping_factor * dangling_sum / total_vertices_num;"
+            }
+          ]
+        },
+        {
+          "file": {
+            "path": "<artifact-work>/experimental/performance_revision_20261102/gum_law_build_v1/source/adapters/pr/gum_stage2.cu",
+            "sha256": "7678128a2a3ceb03573235ab166a9945951f303e52353dea2de63f32fa667884"
+          },
+          "lines": [
+            {
+              "line": 145,
+              "text": "  worker->Init(comm, config, FLAGS_pr_d, FLAGS_pr_mr);"
+            },
+            {
+              "line": 228,
+              "text": "    context->rank.SetValue(0.0);"
+            },
+            {
+              "line": 229,
+              "text": "    context->rank.H2D();"
+            },
+            {
+              "line": 230,
+              "text": "    context->next_rank.SetValue(0.0);"
+            },
+            {
+              "line": 231,
+              "text": "    context->next_rank.H2D();"
+            },
+            {
+              "line": 232,
+              "text": "    context->curr_iter = 0;"
+            },
+            {
+              "line": 233,
+              "text": "    context->dangling_sum = 0;"
+            }
+          ]
+        },
+        {
+          "file": {
+            "path": "<campaign>/runner_candidates/gum_v2/gum_reused.py",
+            "sha256": "466e408ae6c10627aa647ad6424c0b0ecf80910f872efa8299c999269f9d3537"
+          },
+          "lines": [
+            {
+              "line": 74,
+              "text": "    if args.function == 'pr': argv += ['--pr_d=0.85', '--pr_mr=117']"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "system": "Gunrock Essentials",
+      "commit": "748f79e66cc26762cd3f99422b028e742a737bde",
+      "build_receipt": {
+        "path": "<artifact-work>/build/gunrock/receipt.json",
+        "sha256": "80231f32986fb44e413d89b078a95e0ac0326a66f0fa71e3e61111691d3e7d35"
+      },
+      "stop": "max(abs(p-plast)) on probability ranks; L-infinity, not global L1",
+      "threshold": 1e-12,
+      "precision": "FP64 rank/tolerance; local convergence accumulator declared float after maximum reduction",
+      "sources": [
+        {
+          "file": {
+            "path": "<artifact-work>/sources/EGGPU_ICDE_portable_20261025/sg_baselines/native/gunrock_modern/include/gunrock/algorithms/pr.hxx",
+            "sha256": "6f39ce4110131c69b186e9f3cc086120273e289f22b59a99025ce529e4533446"
+          },
+          "lines": [
+            {
+              "line": 20,
+              "text": "struct param_t {"
+            },
+            {
+              "line": 21,
+              "text": "  weight_t alpha;"
+            },
+            {
+              "line": 22,
+              "text": "  weight_t tol;"
+            },
+            {
+              "line": 74,
+              "text": "    thrust::fill_n(policy, this->result.p, n_vertices, 1.0 / n_vertices);"
+            },
+            {
+              "line": 184,
+              "text": "    auto abs_diff = [=] __host__ __device__(const int& i) -> weight_t {"
+            },
+            {
+              "line": 185,
+              "text": "      return abs(p[i] - plast[i]);"
+            },
+            {
+              "line": 189,
+              "text": "    float err = thrust::transform_reduce("
+            },
+            {
+              "line": 190,
+              "text": "        policy, thrust::counting_iterator<vertex_t>(0),"
+            },
+            {
+              "line": 191,
+              "text": "        thrust::counting_iterator<vertex_t>(n_vertices), abs_diff,"
+            },
+            {
+              "line": 192,
+              "text": "        (weight_t)0.0, thrust::maximum<weight_t>());"
+            },
+            {
+              "line": 194,
+              "text": "    return err < tol;"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "common_external_quality": {
+    "residual_l1_max": 1e-06,
+    "mass_error_max": 1e-06,
+    "reference_l1_max": 1e-05
+  },
+  "warning": "Author scalar tolerances have different norms, scales and precisions. They are recorded, not claimed identical. Do not divide unnormalized residual thresholds by n. Existing v3 observation wrappers change only completion timestamp plus independent BFS lifecycle reset.",
+  "public_projection_note": "Operator paths redacted; official source audit, not runtime GPU qualification."
+}

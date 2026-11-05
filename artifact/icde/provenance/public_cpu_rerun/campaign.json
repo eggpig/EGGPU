@@ -1,0 +1,246 @@
+{
+  "schema": "eggpu.public_campaign_cpu/v1",
+  "status": "PASS_CPU_ONLY",
+  "gpu_executed": false,
+  "scope": "SG/native/E6/sequence/MG CPU contracts and state v4/controls/reference checks; no GPU or network requests",
+  "files": {
+    "artifact/icde/campaign/baselines/c2p_clock_build.py": "c5e8726bb2a2c1ba75282a913ad5e88fb57084225cec79d5f1fb552097ec6c7c",
+    "artifact/icde/campaign/baselines/cggraph_legacy_full_build.py": "cd7224c898611ad4a0f562b305603b257f3218d777e15ecf67c0a555734984d3",
+    "artifact/icde/campaign/baselines/check_sg_author_runtime_cpu.py": "74ab60036629c0306334c370df8addedb2a516bb5b75c3683c71e9d5ecd9b887",
+    "artifact/icde/campaign/baselines/gunrock_cc_timer_build.py": "a66224b17cee8d9f5d32d77c56ec9f979f5a7ccd2c604f0d9c1c509ed00ba401",
+    "artifact/icde/campaign/baselines/hytgraph_adapter.py": "7f80ef8487f6f28af0f2255462b81f7d6269e5173521d79b90b7b0cc364b99c5",
+    "artifact/icde/campaign/baselines/hytgraph_cpu_check.py": "918ae75b5f9fd9bd66295fb74f51a6c0240b1c0e1be0f286342e98bf8110691c",
+    "artifact/icde/campaign/baselines/hytgraph_qualify.py": "6aa0832cd8c27eb91dde7e728dabdbf24d499f4a837c82053bbf8d4e8ab66da8",
+    "artifact/icde/campaign/baselines/kgraph_adapter.py": "3b865877bb9c422d001179a2378d111b80fcb2b3adfe5f67358934b4e8c33f9e",
+    "artifact/icde/campaign/baselines/run_sg_authors.py": "e3bf17ff7b3addc6b3f8ec65dec3dcd453ecf3fdd5bc6ed5dd626684d3274e99",
+    "artifact/icde/campaign/baselines/sg_author_worker.py": "6bf142f74d5e621b03ebe143914f197957f156c2887805e052573e626e26b137",
+    "artifact/icde/campaign/baselines/sg_clock.py": "5dad61de081647fa64cfe3257a6cecfd9abc846937d0624429203bdffc9c1113",
+    "artifact/icde/campaign/baselines/sg_clock_build.py": "5c2f382916fbb79382af3bf733d6754a083bd0489d3672d220fecd62e0d98d51",
+    "artifact/icde/campaign/baselines/sg_clock_build_bfs_reset.py": "f123f49f1ecfc3d326beecab2878a32eb286502aa8369b55f297e2245807fb41",
+    "artifact/icde/campaign/baselines/sg_clock_exec.py": "c7c02c776a084fee4bfac9146a22f366bd92eda66fbe980f15fc5b8f0f612dad",
+    "artifact/icde/campaign/baselines/source_lock.py": "64a3483017fb4a71aa62a604237ed34d38937bbc83f6335156c865dea8b6cbb1",
+    "artifact/icde/campaign/baselines/test_sg_author_cpu.py": "49a20b25f576ef17a983f9570c490483ec53910407f16d257695c146ef44d45b",
+    "artifact/icde/campaign/baselines/test_sg_clock_cpu.py": "c08cd230c8e60d314c696142958fe2e913b90b5da214d574efa54e38d6c07aed",
+    "artifact/icde/campaign/c2p_v1/c2p_worker.py": "e4762d6bc84ad4128a95ba7cc2e83e47412fd0f490e3811c1b766b5512b59814",
+    "artifact/icde/campaign/c2p_v1/run_c2p.py": "0e3692a18bac81cdf5313044ae7578a4d5be881bb075c1dfb2bf46f9ce952b5f",
+    "artifact/icde/campaign/c2p_v1/sg_clock.py": "5dad61de081647fa64cfe3257a6cecfd9abc846937d0624429203bdffc9c1113",
+    "artifact/icde/campaign/c2p_v1/sg_clock_exec.py": "c7c02c776a084fee4bfac9146a22f366bd92eda66fbe980f15fc5b8f0f612dad",
+    "artifact/icde/campaign/c2p_v1/sg_worker.py": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf",
+    "artifact/icde/campaign/c2p_v1/test_c2p_cpu.py": "9c1d82b21d1013b8a6fb9289476c887c6e18dc203631d557e0ff627c5ff9f49e",
+    "artifact/icde/campaign/c2p_v1/test_sg_clock_cpu.py": "c08cd230c8e60d314c696142958fe2e913b90b5da214d574efa54e38d6c07aed",
+    "artifact/icde/campaign/cugraph_csr_adapter.py": "36e57e6dd8764e5b27db5a21a8b7b0c712f9c42d434636744c4e29997b2447cf",
+    "artifact/icde/campaign/cugraph_mg_adapter.py": "901753ff1d50c588eb3c167a5959cf5a9db171f266fa724d00c4c383f92f74cc",
+    "artifact/icde/campaign/cugraph_mg_platform.py": "17b29773a72d01c70d404c326ddda40964cff44dd7887e58d6896ce315c24aec",
+    "artifact/icde/campaign/cugraph_mg_worker.py": "d5502e18c149d99bc7400a662c5b7df6570980cdbd33e3964680fc04659127e4",
+    "artifact/icde/campaign/e3_unweighted_control/pr_control.py": "0fd0fed43fe6b1bba1c1a6d44d7f366323416ab5ffedeb79b29087eb5af76648",
+    "artifact/icde/campaign/e3_unweighted_control/pr_plan.py": "2030b1b2fc016a38133b968d5d8e472fa448341aed1c391b2073408d17227f9a",
+    "artifact/icde/campaign/e3_unweighted_control/test_pr_control.py": "b13f1487a606e8bdce0712442d65e1dee94c850afddd8ac09967166e5f121e4f",
+    "artifact/icde/campaign/e6_reused.py": "44704d165a4b87de73152592c18efaebfa280286722b98bcd5d665487bee8af9",
+    "artifact/icde/campaign/e6_worker.py": "526ff0cb9b0caa1cc5ea63e8f3d7972e3fdccfd498eb7f32c38270392677afb0",
+    "artifact/icde/campaign/gum_clock.py": "1ac3b7d75d453a352c32f3e4a1ee65cf533f0d0814385ed033b6998b1073d3e5",
+    "artifact/icde/campaign/gum_rank_exec.py": "750a85e8b27522179b7de858f3832fc87c89de89820ecf55209b7e9f1e10a1e5",
+    "artifact/icde/campaign/gum_reused.py": "466e408ae6c10627aa647ad6424c0b0ecf80910f872efa8299c999269f9d3537",
+    "artifact/icde/campaign/gum_worker.py": "a293f8375c3781d98c9ed34bf01ea283504854c678ec64e412bfadd9bd76f522",
+    "artifact/icde/campaign/mg_process_observer.py": "368c4d858da8dc5a2833dd2cd2dd30d0ab9df75940968c181a1537c2e30426a7",
+    "artifact/icde/campaign/native_input.py": "927a9194b15b6dfaf91ff829f2476a676c7828ba4071607497ef308789d10152",
+    "artifact/icde/campaign/native_worker.py": "12f183d6ff969e4c1921e388546a70a102d8ff22e1c9cb39df9a1b56b6b390f6",
+    "artifact/icde/campaign/run_campaign_queue_v4.py": "a8225d3eb60c5fa5cecc9f5802603614460ad8523d500d1f015edddfb40b3901",
+    "artifact/icde/campaign/run_cugraph_mg.py": "d10eb0d030c181e7c03f4a5bc4c66d4629d64672a7ed3c859e28bb4415cc9856",
+    "artifact/icde/campaign/run_e6.py": "348b343da25ebff877a08173f19b6ed5333bd3e4beec6b436e4e767da08364bc",
+    "artifact/icde/campaign/run_gum.py": "ede6dabc7db3c8caa5710cc2c0b3c345e71273748057de6998e724ec29e3eb30",
+    "artifact/icde/campaign/run_native.py": "89630d55c6691d1649144d8d05fe8753f921097415c0cbcb38f85f13d441954e",
+    "artifact/icde/campaign/run_sequence16.py": "adf10f7c8f30b647ab440a190b239c400ebed7483a6171433e6472953413ca37",
+    "artifact/icde/campaign/run_sg.py": "addae8997b5aad71a5037b10b870c3bc30424b483bc5ba637ae4513fc2811613",
+    "artifact/icde/campaign/sequence16_adapter.py": "c8570223af589b4e10d36e6e2a3c143fd42cd89b18ed021a7dd75eb27a5d9087",
+    "artifact/icde/campaign/sequence16_worker.py": "10b9fa54f99d2055263146512fbcea8e2d2733f39a08baedb88778fa1d1f7a99",
+    "artifact/icde/campaign/sg_worker.py": "7ab87843b24df60ad1372bee6383ec2c9d75227031a8343c439a6cca0ddbde43",
+    "artifact/icde/campaign/state_contract.py": "06f9613f73ce5e4216ed9cbd9516c06230e85a0ba0d0a3f435b80ed9130840b0",
+    "artifact/icde/campaign/state_cpu_tests.py": "d8cf3fec5f1491640dd33a74932fc9dc007584e7a6e24d9a647554f088b89c7c",
+    "artifact/icde/campaign/state_final_plan/state_plan.py": "c0883c881520e0bcbd519465a57f13cc031ae160ebc831402c1fc630ee1a8edd",
+    "artifact/icde/campaign/state_final_plan/test_state_plan.py": "ecab0b906588eb817fdc700a8351dcec915c4659b410cf114f07caf45415b90e",
+    "artifact/icde/campaign/state_inputs.py": "2c36cc9c2fc20d1d556467cd35077b889895daad4d395a213073478712f98e63",
+    "artifact/icde/campaign/state_projection_cpu_tests.py": "ba291f54c6ffc86ea174b688391700f12c6d4179b04785b5060282036bff53f3",
+    "artifact/icde/campaign/state_protocol.py": "85fb5df29ca2ec60b38f29be8c5e57333d5fe55cfa5354b1c449d0426d314047",
+    "artifact/icde/campaign/state_reference.py": "59c16ece7d79498264566a25040e5808f039bd1b6ddee22c546aacbce26e6fc0",
+    "artifact/icde/campaign/state_worker.py": "5b1987137cdf11ad1b9156f348837b91d69d170b22585a50e664e692154ebbfc",
+    "artifact/icde/campaign/test_campaign_queue_v4_cpu.py": "444361bebb6d0f21f08f25186125e688c77ffb40eb5d66fd71a5e34ffdd8cf16",
+    "artifact/icde/campaign/test_csr_runner_contract.py": "73f9eec69cd218faf8b9677ba3d25e4efbb75e36cc42d1ef6dca99ad8a0f3b23",
+    "artifact/icde/campaign/test_cugraph_mg_campaign.py": "a78f3a17806414a05b5efbec7d349696480cd0f4d9fd147fc374a0872a49a927",
+    "artifact/icde/campaign/test_e6_campaign.py": "b024fb766aac6c23f20e8cfcc6701aae0594c40179d4a38eedcb421988ca8307",
+    "artifact/icde/campaign/test_gum_campaign.py": "e997788ab29bc32802657efa4282263a43666561f265304f3a73e8175014ad20",
+    "artifact/icde/campaign/test_gum_clock.py": "7ce468cf1879b2174fe778a52c027465b1f57f0abe450384c730d8d654305f16",
+    "artifact/icde/campaign/test_native_campaign.py": "b5ccdc514e298fa02b77af0e71253e0a62630513c961479e491b3d3f35fc4bee",
+    "artifact/icde/campaign/test_pr_global_l1.py": "520fe807d75e88ba9dc0e782e6290963587d17bf81ca7ab42f0b8d69b4f7c285",
+    "artifact/icde/campaign/test_sequence16_campaign.py": "d7e625e5ee08c92662446ce0a3a301a6fb20870361ebfe7da5ca760802c12bb1",
+    "artifact/icde/campaign/test_sg_campaign.py": "59860f9373faed2aa53055ccde028877c978aed33dac6f4d6f43d8a499954e20",
+    "artifact/icde/campaign/test_state_reference_cpu.py": "6c84892ec74d208aba85f2cfbc15bb2bea83e432df16ac7d57e7709ed6f5ecc5",
+    "artifact/icde/campaign/test_state_v4_cpu.py": "172c9b299a0e02a6b30142ce2600a7789eb15691167a03d480fab709340a84dd"
+  },
+  "steps": [
+    {
+      "command": [
+        "<operator-home>/miniconda3/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "<workspace>/haorandu/EGGPU_ICDE/artifact/icde_increment_stage_20261104_cb143_next/artifact/icde/campaign",
+        "-p",
+        "test_*campaign.py",
+        "-v"
+      ],
+      "returncode": 0
+    },
+    {
+      "command": [
+        "<operator-home>/miniconda3/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "<workspace>/haorandu/EGGPU_ICDE/artifact/icde_increment_stage_20261104_cb143_next/artifact/icde/campaign",
+        "-p",
+        "test_gum_clock.py",
+        "-v"
+      ],
+      "returncode": 0
+    },
+    {
+      "command": [
+        "<operator-home>/miniconda3/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "<workspace>/haorandu/EGGPU_ICDE/artifact/icde_increment_stage_20261104_cb143_next/artifact/icde/campaign",
+        "-p",
+        "test_pr_global_l1.py",
+        "-v"
+      ],
+      "returncode": 0
+    },
+    {
+      "command": [
+        "<operator-home>/miniconda3/bin/python3",
+        "-B",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--confcutdir=<workspace>/haorandu/EGGPU_ICDE/artifact/icde_increment_stage_20261104_cb143_next/artifact/icde/campaign",
+        "--basetemp=<workspace>/haorandu/EGGPU_TMP/EGGPU_ICDE_20261017/artifact_integration_20261104/public_campaign_planner_v3/csr_entry_tmp",
+        "<workspace>/haorandu/EGGPU_ICDE/artifact/icde_increment_stage_20261104_cb143_next/artifact/icde/campaign/test_csr_runner_contract.py"
+      ],
+      "returncode": 0
+    },
+    {
+      "command": [
+        "<operator-home>/miniconda3/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "<workspace>/haorandu/EGGPU_ICDE/artifact/icde_increment_stage_20261104_cb143_next/artifact/icde/campaign/baselines",
+        "-p",
+        "test_sg*cpu.py",
+        "-v"
+      ],
+      "returncode": 0
+    },
+    {
+      "command": [
+        "<operator-home>/miniconda3/bin/python3",
+        "-B",
+        "<workspace>/haorandu/EGGPU_ICDE/artifact/icde_increment_stage_20261104_cb143_next/artifact/icde/campaign/state_cpu_tests.py",
+        "--source",
+        "<workspace>/haorandu/EGGPU_ICDE/artifact/icde_increment_stage_20261104_cb143_next/Easy-Graph",
+        "--output",
+        "<workspace>/haorandu/EGGPU_TMP/EGGPU_ICDE_20261017/artifact_integration_20261104/public_campaign_planner_v3/state_cpu.json"
+      ],
+      "returncode": 0
+    },
+    {
+      "command": [
+        "<operator-home>/miniconda3/bin/python3",
+        "-B",
+        "<workspace>/haorandu/EGGPU_ICDE/artifact/icde_increment_stage_20261104_cb143_next/artifact/icde/campaign/state_inputs.py",
+        "--source",
+        "<workspace>/haorandu/EGGPU_ICDE/artifact/icde_increment_stage_20261104_cb143_next/Easy-Graph",
+        "--tiny",
+        "--rho",
+        ".1",
+        "--output",
+        "<workspace>/haorandu/EGGPU_TMP/EGGPU_ICDE_20261017/artifact_integration_20261104/public_campaign_planner_v3/state_inputs"
+      ],
+      "returncode": 0
+    },
+    {
+      "command": [
+        "<operator-home>/miniconda3/bin/python3",
+        "-B",
+        "<workspace>/haorandu/EGGPU_ICDE/artifact/icde_increment_stage_20261104_cb143_next/artifact/icde/campaign/state_projection_cpu_tests.py",
+        "--source",
+        "<workspace>/haorandu/EGGPU_ICDE/artifact/icde_increment_stage_20261104_cb143_next/Easy-Graph",
+        "--inputs",
+        "<workspace>/haorandu/EGGPU_TMP/EGGPU_ICDE_20261017/artifact_integration_20261104/public_campaign_planner_v3/state_inputs/inputs.json",
+        "--output",
+        "<workspace>/haorandu/EGGPU_TMP/EGGPU_ICDE_20261017/artifact_integration_20261104/public_campaign_planner_v3/state_projection_cpu.json"
+      ],
+      "returncode": 0
+    },
+    {
+      "command": [
+        "<operator-home>/miniconda3/bin/python3",
+        "-B",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--confcutdir=<workspace>/haorandu/EGGPU_ICDE/artifact/icde_increment_stage_20261104_cb143_next/artifact/icde/campaign",
+        "--basetemp=<workspace>/haorandu/EGGPU_TMP/EGGPU_ICDE_20261017/artifact_integration_20261104/public_campaign_planner_v3/state_v4_tmp",
+        "<workspace>/haorandu/EGGPU_ICDE/artifact/icde_increment_stage_20261104_cb143_next/artifact/icde/campaign/test_state_v4_cpu.py"
+      ],
+      "returncode": 0
+    },
+    {
+      "command": [
+        "<operator-home>/miniconda3/bin/python3",
+        "-B",
+        "<workspace>/haorandu/EGGPU_ICDE/artifact/icde_increment_stage_20261104_cb143_next/artifact/icde/campaign/test_state_reference_cpu.py",
+        "--inputs",
+        "<workspace>/haorandu/EGGPU_TMP/EGGPU_ICDE_20261017/artifact_integration_20261104/public_campaign_planner_v3/state_inputs/inputs.json",
+        "--output",
+        "<workspace>/haorandu/EGGPU_TMP/EGGPU_ICDE_20261017/artifact_integration_20261104/public_campaign_planner_v3/state_reference_cpu.json"
+      ],
+      "returncode": 0
+    },
+    {
+      "command": [
+        "<operator-home>/miniconda3/bin/python3",
+        "-B",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--confcutdir=<workspace>/haorandu/EGGPU_ICDE/artifact/icde_increment_stage_20261104_cb143_next/artifact/icde",
+        "--basetemp=<workspace>/haorandu/EGGPU_TMP/EGGPU_ICDE_20261017/artifact_integration_20261104/public_campaign_planner_v3/planning_tmp",
+        "<workspace>/haorandu/EGGPU_ICDE/artifact/icde_increment_stage_20261104_cb143_next/artifact/icde/presentation/test_e1_summary.py",
+        "<workspace>/haorandu/EGGPU_ICDE/artifact/icde_increment_stage_20261104_cb143_next/artifact/icde/campaign/state_final_plan/test_state_plan.py",
+        "<workspace>/haorandu/EGGPU_ICDE/artifact/icde_increment_stage_20261104_cb143_next/artifact/icde/campaign/test_campaign_queue_v4_cpu.py",
+        "<workspace>/haorandu/EGGPU_ICDE/artifact/icde_increment_stage_20261104_cb143_next/artifact/icde/campaign/e3_unweighted_control/test_pr_control.py"
+      ],
+      "returncode": 0
+    }
+  ],
+  "observed_test_count": 313,
+  "source_sha256": "cb14360e2dfb934b8a28f9875fb80639ce4503bc6ed27956201b18e9edec6869",
+  "scope_note": "Public checkpoint rerun after runtime-aware state planner v3 and unweighted control v2. Counts overlap previous suites and are not additive.",
+  "original_receipt_sha256": "06c9623fdd4cd2873db3e2fda15169aa69414be64fc4195ac8fca1ee97319d56"
+}

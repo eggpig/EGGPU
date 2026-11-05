@@ -1,0 +1,94 @@
+{
+  "backend": {
+    "algorithms": [
+      "bfs",
+      "sssp",
+      "wcc",
+      "pr"
+    ],
+    "backend": "arena",
+    "budget_scope": "single-device backing arena including workspace",
+    "devices": [
+      0
+    ],
+    "input_kind": "owned_csr",
+    "policy": "capability_v2",
+    "state_model": "static"
+  },
+  "backend_input_semantics": "stored directed arcs; reciprocal canonical input already contains both orientations",
+  "calls": {
+    "first": {
+      "output": {
+        "bytes": 184,
+        "path": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_sssp_eggpu_r00/source_1/3fc50126e89c8cef04077eb3a72ed6c44e1cd6ed1a90d9897f76d24711b9bbc3.npy",
+        "sha256": "21b0428e73e08aebe6096a00fc47eb58c0bd1e46702f1bb258cf2758489cf8f5"
+      },
+      "quality": {
+        "complete": true,
+        "dtype": "float64",
+        "exact_reference_match": true,
+        "immutable": true,
+        "owning": true,
+        "pass": true,
+        "rmse_finite": 0.0,
+        "unreachable_match": true
+      },
+      "seconds": 0.8600228503346443
+    },
+    "ready": {
+      "output": {
+        "bytes": 184,
+        "path": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_sssp_eggpu_r00/source_1/3fc50126e89c8cef04077eb3a72ed6c44e1cd6ed1a90d9897f76d24711b9bbc3.npy",
+        "sha256": "21b0428e73e08aebe6096a00fc47eb58c0bd1e46702f1bb258cf2758489cf8f5"
+      },
+      "quality": {
+        "complete": true,
+        "dtype": "float64",
+        "exact_reference_match": true,
+        "immutable": true,
+        "owning": true,
+        "pass": true,
+        "rmse_finite": 0.0,
+        "unreachable_match": true
+      },
+      "seconds": 0.0010791197419166565
+    },
+    "warmup": {
+      "count": 1,
+      "output": {
+        "bytes": 184,
+        "path": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_sssp_eggpu_r00/source_1/3fc50126e89c8cef04077eb3a72ed6c44e1cd6ed1a90d9897f76d24711b9bbc3.npy",
+        "sha256": "21b0428e73e08aebe6096a00fc47eb58c0bd1e46702f1bb258cf2758489cf8f5"
+      },
+      "quality": {
+        "complete": true,
+        "dtype": "float64",
+        "exact_reference_match": true,
+        "immutable": true,
+        "owning": true,
+        "pass": true,
+        "rmse_finite": 0.0,
+        "unreachable_match": true
+      },
+      "timed": false
+    }
+  },
+  "host_ready_checksum": [
+    50,
+    20,
+    82.0
+  ],
+  "input_sha256": "4a5224f2ab5adc419d14e3e79c235440fb7fefb503e186aad8d10cef3fa2921f",
+  "outputs_survive_close": true,
+  "quality_pass": true,
+  "reference_receipt": {
+    "bytes": 549,
+    "path": "<campaign>/references/5a988f1e91e8bfda4570462d4af884ab41d1a8a8326fc900f31d0335d2e2b423.json",
+    "sha256": "9a9d83cd41f2a92e1a6d78482b60d7d053d7a373098c6c211785c99bd4cd6316"
+  },
+  "source": 1,
+  "source_index": 1,
+  "status": "PASS",
+  "timing_start": "common immutable host CSR ready; fresh Python backend process",
+  "public_projection_note": "Private paths/UUIDs redacted; exact original retained. This readable evidence projection is not an executable proof or a formal performance measurement."
+}

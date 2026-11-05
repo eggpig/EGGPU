@@ -1,0 +1,1913 @@
+{
+  "status": "COMPLETE_WITH_FAILURES",
+  "plan": {
+    "path": "<campaign>/gum_and_mg_qualification_v4_plan.json",
+    "sha256": "4a08952fa3ec661196460d712b22ce2932b809e6ad71787b04fa59ed46fcaa6b",
+    "bytes": 85353
+  },
+  "controller": {
+    "path": "<campaign>/run_campaign_queue_v2.py",
+    "sha256": "ecc32cc148e9b686826f6b8886def92cc23f136e0ecebfc1ea19cf17d0d8acfc",
+    "bytes": 4722
+  },
+  "jobs": [
+    {
+      "id": "cugraph_mg_context_probe_p2",
+      "command": [
+        "<artifact-work>/envs/rapids/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/cugraph_mg_v3/cugraph_mg_worker.py",
+        "--execute-gpu",
+        "--phase",
+        "tiny",
+        "--dataset",
+        "TINY_D",
+        "--algorithm",
+        "bfs",
+        "--count",
+        "2",
+        "--gpu-uuids",
+        "<device-0>,<device-1>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/native_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/mg_tiny_v3/cugraph_mg_TINY_D_bfs_p2"
+      ],
+      "receipt": "<campaign>/mg_tiny_v3/cugraph_mg_TINY_D_bfs_p2/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/cugraph_mg_v3/cugraph_mg_worker.py",
+          "sha256": "d5502e18c149d99bc7400a662c5b7df6570980cdbd33e3964680fc04659127e4"
+        }
+      ],
+      "environment": {
+        "PATH": "/usr/bin:/bin",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "EGGPU_COMM_BACKEND": "host_staging",
+        "LD_PRELOAD": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6:<python-install>/lib/python3.12/site-packages/nvidia/nccl/lib/libnccl.so.2",
+        "LD_LIBRARY_PATH": "/usr/lib/x86_64-linux-gnu:/usr/local/cuda-13.0/lib64",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "PYTHONPATH": "<campaign>/build/integrated_v1/native/cpp_easygraph:<campaign>/candidates/integrated_v1/Easy-Graph",
+        "EGGPU_ARENA_LIBRARY_DIR": "<campaign>/build/integrated_v1/arena"
+      }
+    },
+    {
+      "id": "gum_TINY_D_bfs_p2",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/gum_v2/gum_worker.py",
+        "--execute-gpu",
+        "--phase",
+        "tiny",
+        "--dataset",
+        "TINY_D",
+        "--function",
+        "bfs",
+        "--count",
+        "2",
+        "--gpu-uuids",
+        "<device-0>,<device-1>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/native_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/gum_tiny_v2/gum_TINY_D_bfs_p2",
+        "--build-receipt",
+        "<artifact-work>/experimental/performance_revision_20261102/gum_law_build_v1/receipt.json",
+        "--mpiexec",
+        "/usr/bin/mpiexec",
+        "--core-python",
+        "<artifact-work>/envs/core/bin/python",
+        "--ld-preload",
+        "/usr/lib/x86_64-linux-gnu/libstdc++.so.6:<python-install>/lib/python3.12/site-packages/nvidia/nccl/lib/libnccl.so.2",
+        "--ld-library-path",
+        "/usr/lib/x86_64-linux-gnu:/usr/local/cuda-13.0/lib64"
+      ],
+      "receipt": "<campaign>/gum_tiny_v2/gum_TINY_D_bfs_p2/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/check_gum_dispatch_cpu.py",
+          "sha256": "4307c7b49f85d34eefddf7edf9d5719949d2d6a754fccfd5cb0e790a382d70d0"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/cugraph_csr_adapter.py",
+          "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_clock.py",
+          "sha256": "1ac3b7d75d453a352c32f3e4a1ee65cf533f0d0814385ed033b6998b1073d3e5"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_rank_exec.py",
+          "sha256": "750a85e8b27522179b7de858f3832fc87c89de89820ecf55209b7e9f1e10a1e5"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_reused.py",
+          "sha256": "466e408ae6c10627aa647ad6424c0b0ecf80910f872efa8299c999269f9d3537"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_worker.py",
+          "sha256": "a293f8375c3781d98c9ed34bf01ea283504854c678ec64e412bfadd9bd76f522"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/mg_process_observer.py",
+          "sha256": "368c4d858da8dc5a2833dd2cd2dd30d0ab9df75940968c181a1537c2e30426a7"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/native_input.py",
+          "sha256": "927a9194b15b6dfaf91ff829f2476a676c7828ba4071607497ef308789d10152"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/native_worker.py",
+          "sha256": "12f183d6ff969e4c1921e388546a70a102d8ff22e1c9cb39df9a1b56b6b390f6"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/run_gum.py",
+          "sha256": "ede6dabc7db3c8caa5710cc2c0b3c345e71273748057de6998e724ec29e3eb30"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/sg_worker.py",
+          "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/test_gum_campaign.py",
+          "sha256": "a5763a20ca57b179ddf427467ce0c227487f4127bcda8d0c44aab056c6e9cf67"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/test_gum_clock.py",
+          "sha256": "7ce468cf1879b2174fe778a52c027465b1f57f0abe450384c730d8d654305f16"
+        }
+      ]
+    },
+    {
+      "id": "gum_TINY_D_bfs_p8",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/gum_v2/gum_worker.py",
+        "--execute-gpu",
+        "--phase",
+        "tiny",
+        "--dataset",
+        "TINY_D",
+        "--function",
+        "bfs",
+        "--count",
+        "8",
+        "--gpu-uuids",
+        "<device-0>,<device-1>,<device-2>,<device-3>,<device-4>,<device-5>,<device-6>,<device-7>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/native_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/gum_tiny_v2/gum_TINY_D_bfs_p8",
+        "--build-receipt",
+        "<artifact-work>/experimental/performance_revision_20261102/gum_law_build_v1/receipt.json",
+        "--mpiexec",
+        "/usr/bin/mpiexec",
+        "--core-python",
+        "<artifact-work>/envs/core/bin/python",
+        "--ld-preload",
+        "/usr/lib/x86_64-linux-gnu/libstdc++.so.6:<python-install>/lib/python3.12/site-packages/nvidia/nccl/lib/libnccl.so.2",
+        "--ld-library-path",
+        "/usr/lib/x86_64-linux-gnu:/usr/local/cuda-13.0/lib64"
+      ],
+      "receipt": "<campaign>/gum_tiny_v2/gum_TINY_D_bfs_p8/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/check_gum_dispatch_cpu.py",
+          "sha256": "4307c7b49f85d34eefddf7edf9d5719949d2d6a754fccfd5cb0e790a382d70d0"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/cugraph_csr_adapter.py",
+          "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_clock.py",
+          "sha256": "1ac3b7d75d453a352c32f3e4a1ee65cf533f0d0814385ed033b6998b1073d3e5"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_rank_exec.py",
+          "sha256": "750a85e8b27522179b7de858f3832fc87c89de89820ecf55209b7e9f1e10a1e5"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_reused.py",
+          "sha256": "466e408ae6c10627aa647ad6424c0b0ecf80910f872efa8299c999269f9d3537"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_worker.py",
+          "sha256": "a293f8375c3781d98c9ed34bf01ea283504854c678ec64e412bfadd9bd76f522"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/mg_process_observer.py",
+          "sha256": "368c4d858da8dc5a2833dd2cd2dd30d0ab9df75940968c181a1537c2e30426a7"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/native_input.py",
+          "sha256": "927a9194b15b6dfaf91ff829f2476a676c7828ba4071607497ef308789d10152"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/native_worker.py",
+          "sha256": "12f183d6ff969e4c1921e388546a70a102d8ff22e1c9cb39df9a1b56b6b390f6"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/run_gum.py",
+          "sha256": "ede6dabc7db3c8caa5710cc2c0b3c345e71273748057de6998e724ec29e3eb30"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/sg_worker.py",
+          "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/test_gum_campaign.py",
+          "sha256": "a5763a20ca57b179ddf427467ce0c227487f4127bcda8d0c44aab056c6e9cf67"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/test_gum_clock.py",
+          "sha256": "7ce468cf1879b2174fe778a52c027465b1f57f0abe450384c730d8d654305f16"
+        }
+      ]
+    },
+    {
+      "id": "gum_TINY_D_sssp_p2",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/gum_v2/gum_worker.py",
+        "--execute-gpu",
+        "--phase",
+        "tiny",
+        "--dataset",
+        "TINY_D",
+        "--function",
+        "sssp",
+        "--count",
+        "2",
+        "--gpu-uuids",
+        "<device-0>,<device-1>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/native_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/gum_tiny_v2/gum_TINY_D_sssp_p2",
+        "--build-receipt",
+        "<artifact-work>/experimental/performance_revision_20261102/gum_law_build_v1/receipt.json",
+        "--mpiexec",
+        "/usr/bin/mpiexec",
+        "--core-python",
+        "<artifact-work>/envs/core/bin/python",
+        "--ld-preload",
+        "/usr/lib/x86_64-linux-gnu/libstdc++.so.6:<python-install>/lib/python3.12/site-packages/nvidia/nccl/lib/libnccl.so.2",
+        "--ld-library-path",
+        "/usr/lib/x86_64-linux-gnu:/usr/local/cuda-13.0/lib64"
+      ],
+      "receipt": "<campaign>/gum_tiny_v2/gum_TINY_D_sssp_p2/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/check_gum_dispatch_cpu.py",
+          "sha256": "4307c7b49f85d34eefddf7edf9d5719949d2d6a754fccfd5cb0e790a382d70d0"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/cugraph_csr_adapter.py",
+          "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_clock.py",
+          "sha256": "1ac3b7d75d453a352c32f3e4a1ee65cf533f0d0814385ed033b6998b1073d3e5"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_rank_exec.py",
+          "sha256": "750a85e8b27522179b7de858f3832fc87c89de89820ecf55209b7e9f1e10a1e5"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_reused.py",
+          "sha256": "466e408ae6c10627aa647ad6424c0b0ecf80910f872efa8299c999269f9d3537"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_worker.py",
+          "sha256": "a293f8375c3781d98c9ed34bf01ea283504854c678ec64e412bfadd9bd76f522"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/mg_process_observer.py",
+          "sha256": "368c4d858da8dc5a2833dd2cd2dd30d0ab9df75940968c181a1537c2e30426a7"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/native_input.py",
+          "sha256": "927a9194b15b6dfaf91ff829f2476a676c7828ba4071607497ef308789d10152"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/native_worker.py",
+          "sha256": "12f183d6ff969e4c1921e388546a70a102d8ff22e1c9cb39df9a1b56b6b390f6"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/run_gum.py",
+          "sha256": "ede6dabc7db3c8caa5710cc2c0b3c345e71273748057de6998e724ec29e3eb30"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/sg_worker.py",
+          "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/test_gum_campaign.py",
+          "sha256": "a5763a20ca57b179ddf427467ce0c227487f4127bcda8d0c44aab056c6e9cf67"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/test_gum_clock.py",
+          "sha256": "7ce468cf1879b2174fe778a52c027465b1f57f0abe450384c730d8d654305f16"
+        }
+      ]
+    },
+    {
+      "id": "gum_TINY_D_sssp_p8",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/gum_v2/gum_worker.py",
+        "--execute-gpu",
+        "--phase",
+        "tiny",
+        "--dataset",
+        "TINY_D",
+        "--function",
+        "sssp",
+        "--count",
+        "8",
+        "--gpu-uuids",
+        "<device-0>,<device-1>,<device-2>,<device-3>,<device-4>,<device-5>,<device-6>,<device-7>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/native_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/gum_tiny_v2/gum_TINY_D_sssp_p8",
+        "--build-receipt",
+        "<artifact-work>/experimental/performance_revision_20261102/gum_law_build_v1/receipt.json",
+        "--mpiexec",
+        "/usr/bin/mpiexec",
+        "--core-python",
+        "<artifact-work>/envs/core/bin/python",
+        "--ld-preload",
+        "/usr/lib/x86_64-linux-gnu/libstdc++.so.6:<python-install>/lib/python3.12/site-packages/nvidia/nccl/lib/libnccl.so.2",
+        "--ld-library-path",
+        "/usr/lib/x86_64-linux-gnu:/usr/local/cuda-13.0/lib64"
+      ],
+      "receipt": "<campaign>/gum_tiny_v2/gum_TINY_D_sssp_p8/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/check_gum_dispatch_cpu.py",
+          "sha256": "4307c7b49f85d34eefddf7edf9d5719949d2d6a754fccfd5cb0e790a382d70d0"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/cugraph_csr_adapter.py",
+          "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_clock.py",
+          "sha256": "1ac3b7d75d453a352c32f3e4a1ee65cf533f0d0814385ed033b6998b1073d3e5"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_rank_exec.py",
+          "sha256": "750a85e8b27522179b7de858f3832fc87c89de89820ecf55209b7e9f1e10a1e5"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_reused.py",
+          "sha256": "466e408ae6c10627aa647ad6424c0b0ecf80910f872efa8299c999269f9d3537"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_worker.py",
+          "sha256": "a293f8375c3781d98c9ed34bf01ea283504854c678ec64e412bfadd9bd76f522"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/mg_process_observer.py",
+          "sha256": "368c4d858da8dc5a2833dd2cd2dd30d0ab9df75940968c181a1537c2e30426a7"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/native_input.py",
+          "sha256": "927a9194b15b6dfaf91ff829f2476a676c7828ba4071607497ef308789d10152"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/native_worker.py",
+          "sha256": "12f183d6ff969e4c1921e388546a70a102d8ff22e1c9cb39df9a1b56b6b390f6"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/run_gum.py",
+          "sha256": "ede6dabc7db3c8caa5710cc2c0b3c345e71273748057de6998e724ec29e3eb30"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/sg_worker.py",
+          "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/test_gum_campaign.py",
+          "sha256": "a5763a20ca57b179ddf427467ce0c227487f4127bcda8d0c44aab056c6e9cf67"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/test_gum_clock.py",
+          "sha256": "7ce468cf1879b2174fe778a52c027465b1f57f0abe450384c730d8d654305f16"
+        }
+      ]
+    },
+    {
+      "id": "gum_TINY_D_wcc_p2",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/gum_v2/gum_worker.py",
+        "--execute-gpu",
+        "--phase",
+        "tiny",
+        "--dataset",
+        "TINY_D",
+        "--function",
+        "wcc",
+        "--count",
+        "2",
+        "--gpu-uuids",
+        "<device-0>,<device-1>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/native_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/gum_tiny_v2/gum_TINY_D_wcc_p2",
+        "--build-receipt",
+        "<artifact-work>/experimental/performance_revision_20261102/gum_law_build_v1/receipt.json",
+        "--mpiexec",
+        "/usr/bin/mpiexec",
+        "--core-python",
+        "<artifact-work>/envs/core/bin/python",
+        "--ld-preload",
+        "/usr/lib/x86_64-linux-gnu/libstdc++.so.6:<python-install>/lib/python3.12/site-packages/nvidia/nccl/lib/libnccl.so.2",
+        "--ld-library-path",
+        "/usr/lib/x86_64-linux-gnu:/usr/local/cuda-13.0/lib64"
+      ],
+      "receipt": "<campaign>/gum_tiny_v2/gum_TINY_D_wcc_p2/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/check_gum_dispatch_cpu.py",
+          "sha256": "4307c7b49f85d34eefddf7edf9d5719949d2d6a754fccfd5cb0e790a382d70d0"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/cugraph_csr_adapter.py",
+          "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_clock.py",
+          "sha256": "1ac3b7d75d453a352c32f3e4a1ee65cf533f0d0814385ed033b6998b1073d3e5"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_rank_exec.py",
+          "sha256": "750a85e8b27522179b7de858f3832fc87c89de89820ecf55209b7e9f1e10a1e5"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_reused.py",
+          "sha256": "466e408ae6c10627aa647ad6424c0b0ecf80910f872efa8299c999269f9d3537"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_worker.py",
+          "sha256": "a293f8375c3781d98c9ed34bf01ea283504854c678ec64e412bfadd9bd76f522"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/mg_process_observer.py",
+          "sha256": "368c4d858da8dc5a2833dd2cd2dd30d0ab9df75940968c181a1537c2e30426a7"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/native_input.py",
+          "sha256": "927a9194b15b6dfaf91ff829f2476a676c7828ba4071607497ef308789d10152"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/native_worker.py",
+          "sha256": "12f183d6ff969e4c1921e388546a70a102d8ff22e1c9cb39df9a1b56b6b390f6"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/run_gum.py",
+          "sha256": "ede6dabc7db3c8caa5710cc2c0b3c345e71273748057de6998e724ec29e3eb30"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/sg_worker.py",
+          "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/test_gum_campaign.py",
+          "sha256": "a5763a20ca57b179ddf427467ce0c227487f4127bcda8d0c44aab056c6e9cf67"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/test_gum_clock.py",
+          "sha256": "7ce468cf1879b2174fe778a52c027465b1f57f0abe450384c730d8d654305f16"
+        }
+      ]
+    },
+    {
+      "id": "gum_TINY_D_wcc_p8",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/gum_v2/gum_worker.py",
+        "--execute-gpu",
+        "--phase",
+        "tiny",
+        "--dataset",
+        "TINY_D",
+        "--function",
+        "wcc",
+        "--count",
+        "8",
+        "--gpu-uuids",
+        "<device-0>,<device-1>,<device-2>,<device-3>,<device-4>,<device-5>,<device-6>,<device-7>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/native_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/gum_tiny_v2/gum_TINY_D_wcc_p8",
+        "--build-receipt",
+        "<artifact-work>/experimental/performance_revision_20261102/gum_law_build_v1/receipt.json",
+        "--mpiexec",
+        "/usr/bin/mpiexec",
+        "--core-python",
+        "<artifact-work>/envs/core/bin/python",
+        "--ld-preload",
+        "/usr/lib/x86_64-linux-gnu/libstdc++.so.6:<python-install>/lib/python3.12/site-packages/nvidia/nccl/lib/libnccl.so.2",
+        "--ld-library-path",
+        "/usr/lib/x86_64-linux-gnu:/usr/local/cuda-13.0/lib64"
+      ],
+      "receipt": "<campaign>/gum_tiny_v2/gum_TINY_D_wcc_p8/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/check_gum_dispatch_cpu.py",
+          "sha256": "4307c7b49f85d34eefddf7edf9d5719949d2d6a754fccfd5cb0e790a382d70d0"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/cugraph_csr_adapter.py",
+          "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_clock.py",
+          "sha256": "1ac3b7d75d453a352c32f3e4a1ee65cf533f0d0814385ed033b6998b1073d3e5"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_rank_exec.py",
+          "sha256": "750a85e8b27522179b7de858f3832fc87c89de89820ecf55209b7e9f1e10a1e5"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_reused.py",
+          "sha256": "466e408ae6c10627aa647ad6424c0b0ecf80910f872efa8299c999269f9d3537"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_worker.py",
+          "sha256": "a293f8375c3781d98c9ed34bf01ea283504854c678ec64e412bfadd9bd76f522"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/mg_process_observer.py",
+          "sha256": "368c4d858da8dc5a2833dd2cd2dd30d0ab9df75940968c181a1537c2e30426a7"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/native_input.py",
+          "sha256": "927a9194b15b6dfaf91ff829f2476a676c7828ba4071607497ef308789d10152"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/native_worker.py",
+          "sha256": "12f183d6ff969e4c1921e388546a70a102d8ff22e1c9cb39df9a1b56b6b390f6"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/run_gum.py",
+          "sha256": "ede6dabc7db3c8caa5710cc2c0b3c345e71273748057de6998e724ec29e3eb30"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/sg_worker.py",
+          "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/test_gum_campaign.py",
+          "sha256": "a5763a20ca57b179ddf427467ce0c227487f4127bcda8d0c44aab056c6e9cf67"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/test_gum_clock.py",
+          "sha256": "7ce468cf1879b2174fe778a52c027465b1f57f0abe450384c730d8d654305f16"
+        }
+      ]
+    },
+    {
+      "id": "gum_TINY_D_pr_p2",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/gum_v2/gum_worker.py",
+        "--execute-gpu",
+        "--phase",
+        "tiny",
+        "--dataset",
+        "TINY_D",
+        "--function",
+        "pr",
+        "--count",
+        "2",
+        "--gpu-uuids",
+        "<device-0>,<device-1>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/native_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/gum_tiny_v2/gum_TINY_D_pr_p2",
+        "--build-receipt",
+        "<artifact-work>/experimental/performance_revision_20261102/gum_law_build_v1/receipt.json",
+        "--mpiexec",
+        "/usr/bin/mpiexec",
+        "--core-python",
+        "<artifact-work>/envs/core/bin/python",
+        "--ld-preload",
+        "/usr/lib/x86_64-linux-gnu/libstdc++.so.6:<python-install>/lib/python3.12/site-packages/nvidia/nccl/lib/libnccl.so.2",
+        "--ld-library-path",
+        "/usr/lib/x86_64-linux-gnu:/usr/local/cuda-13.0/lib64"
+      ],
+      "receipt": "<campaign>/gum_tiny_v2/gum_TINY_D_pr_p2/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/check_gum_dispatch_cpu.py",
+          "sha256": "4307c7b49f85d34eefddf7edf9d5719949d2d6a754fccfd5cb0e790a382d70d0"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/cugraph_csr_adapter.py",
+          "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_clock.py",
+          "sha256": "1ac3b7d75d453a352c32f3e4a1ee65cf533f0d0814385ed033b6998b1073d3e5"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_rank_exec.py",
+          "sha256": "750a85e8b27522179b7de858f3832fc87c89de89820ecf55209b7e9f1e10a1e5"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_reused.py",
+          "sha256": "466e408ae6c10627aa647ad6424c0b0ecf80910f872efa8299c999269f9d3537"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_worker.py",
+          "sha256": "a293f8375c3781d98c9ed34bf01ea283504854c678ec64e412bfadd9bd76f522"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/mg_process_observer.py",
+          "sha256": "368c4d858da8dc5a2833dd2cd2dd30d0ab9df75940968c181a1537c2e30426a7"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/native_input.py",
+          "sha256": "927a9194b15b6dfaf91ff829f2476a676c7828ba4071607497ef308789d10152"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/native_worker.py",
+          "sha256": "12f183d6ff969e4c1921e388546a70a102d8ff22e1c9cb39df9a1b56b6b390f6"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/run_gum.py",
+          "sha256": "ede6dabc7db3c8caa5710cc2c0b3c345e71273748057de6998e724ec29e3eb30"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/sg_worker.py",
+          "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/test_gum_campaign.py",
+          "sha256": "a5763a20ca57b179ddf427467ce0c227487f4127bcda8d0c44aab056c6e9cf67"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/test_gum_clock.py",
+          "sha256": "7ce468cf1879b2174fe778a52c027465b1f57f0abe450384c730d8d654305f16"
+        }
+      ]
+    },
+    {
+      "id": "gum_TINY_D_pr_p8",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/gum_v2/gum_worker.py",
+        "--execute-gpu",
+        "--phase",
+        "tiny",
+        "--dataset",
+        "TINY_D",
+        "--function",
+        "pr",
+        "--count",
+        "8",
+        "--gpu-uuids",
+        "<device-0>,<device-1>,<device-2>,<device-3>,<device-4>,<device-5>,<device-6>,<device-7>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/native_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/gum_tiny_v2/gum_TINY_D_pr_p8",
+        "--build-receipt",
+        "<artifact-work>/experimental/performance_revision_20261102/gum_law_build_v1/receipt.json",
+        "--mpiexec",
+        "/usr/bin/mpiexec",
+        "--core-python",
+        "<artifact-work>/envs/core/bin/python",
+        "--ld-preload",
+        "/usr/lib/x86_64-linux-gnu/libstdc++.so.6:<python-install>/lib/python3.12/site-packages/nvidia/nccl/lib/libnccl.so.2",
+        "--ld-library-path",
+        "/usr/lib/x86_64-linux-gnu:/usr/local/cuda-13.0/lib64"
+      ],
+      "receipt": "<campaign>/gum_tiny_v2/gum_TINY_D_pr_p8/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/check_gum_dispatch_cpu.py",
+          "sha256": "4307c7b49f85d34eefddf7edf9d5719949d2d6a754fccfd5cb0e790a382d70d0"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/cugraph_csr_adapter.py",
+          "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_clock.py",
+          "sha256": "1ac3b7d75d453a352c32f3e4a1ee65cf533f0d0814385ed033b6998b1073d3e5"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_rank_exec.py",
+          "sha256": "750a85e8b27522179b7de858f3832fc87c89de89820ecf55209b7e9f1e10a1e5"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_reused.py",
+          "sha256": "466e408ae6c10627aa647ad6424c0b0ecf80910f872efa8299c999269f9d3537"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_worker.py",
+          "sha256": "a293f8375c3781d98c9ed34bf01ea283504854c678ec64e412bfadd9bd76f522"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/mg_process_observer.py",
+          "sha256": "368c4d858da8dc5a2833dd2cd2dd30d0ab9df75940968c181a1537c2e30426a7"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/native_input.py",
+          "sha256": "927a9194b15b6dfaf91ff829f2476a676c7828ba4071607497ef308789d10152"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/native_worker.py",
+          "sha256": "12f183d6ff969e4c1921e388546a70a102d8ff22e1c9cb39df9a1b56b6b390f6"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/run_gum.py",
+          "sha256": "ede6dabc7db3c8caa5710cc2c0b3c345e71273748057de6998e724ec29e3eb30"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/sg_worker.py",
+          "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/test_gum_campaign.py",
+          "sha256": "a5763a20ca57b179ddf427467ce0c227487f4127bcda8d0c44aab056c6e9cf67"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/test_gum_clock.py",
+          "sha256": "7ce468cf1879b2174fe778a52c027465b1f57f0abe450384c730d8d654305f16"
+        }
+      ]
+    },
+    {
+      "id": "gum_TINY_U_bfs_p2",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/gum_v2/gum_worker.py",
+        "--execute-gpu",
+        "--phase",
+        "tiny",
+        "--dataset",
+        "TINY_U",
+        "--function",
+        "bfs",
+        "--count",
+        "2",
+        "--gpu-uuids",
+        "<device-0>,<device-1>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/native_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/gum_tiny_v2/gum_TINY_U_bfs_p2",
+        "--build-receipt",
+        "<artifact-work>/experimental/performance_revision_20261102/gum_law_build_v1/receipt.json",
+        "--mpiexec",
+        "/usr/bin/mpiexec",
+        "--core-python",
+        "<artifact-work>/envs/core/bin/python",
+        "--ld-preload",
+        "/usr/lib/x86_64-linux-gnu/libstdc++.so.6:<python-install>/lib/python3.12/site-packages/nvidia/nccl/lib/libnccl.so.2",
+        "--ld-library-path",
+        "/usr/lib/x86_64-linux-gnu:/usr/local/cuda-13.0/lib64"
+      ],
+      "receipt": "<campaign>/gum_tiny_v2/gum_TINY_U_bfs_p2/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/check_gum_dispatch_cpu.py",
+          "sha256": "4307c7b49f85d34eefddf7edf9d5719949d2d6a754fccfd5cb0e790a382d70d0"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/cugraph_csr_adapter.py",
+          "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_clock.py",
+          "sha256": "1ac3b7d75d453a352c32f3e4a1ee65cf533f0d0814385ed033b6998b1073d3e5"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_rank_exec.py",
+          "sha256": "750a85e8b27522179b7de858f3832fc87c89de89820ecf55209b7e9f1e10a1e5"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_reused.py",
+          "sha256": "466e408ae6c10627aa647ad6424c0b0ecf80910f872efa8299c999269f9d3537"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_worker.py",
+          "sha256": "a293f8375c3781d98c9ed34bf01ea283504854c678ec64e412bfadd9bd76f522"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/mg_process_observer.py",
+          "sha256": "368c4d858da8dc5a2833dd2cd2dd30d0ab9df75940968c181a1537c2e30426a7"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/native_input.py",
+          "sha256": "927a9194b15b6dfaf91ff829f2476a676c7828ba4071607497ef308789d10152"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/native_worker.py",
+          "sha256": "12f183d6ff969e4c1921e388546a70a102d8ff22e1c9cb39df9a1b56b6b390f6"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/run_gum.py",
+          "sha256": "ede6dabc7db3c8caa5710cc2c0b3c345e71273748057de6998e724ec29e3eb30"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/sg_worker.py",
+          "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/test_gum_campaign.py",
+          "sha256": "a5763a20ca57b179ddf427467ce0c227487f4127bcda8d0c44aab056c6e9cf67"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/test_gum_clock.py",
+          "sha256": "7ce468cf1879b2174fe778a52c027465b1f57f0abe450384c730d8d654305f16"
+        }
+      ]
+    },
+    {
+      "id": "gum_TINY_U_bfs_p8",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/gum_v2/gum_worker.py",
+        "--execute-gpu",
+        "--phase",
+        "tiny",
+        "--dataset",
+        "TINY_U",
+        "--function",
+        "bfs",
+        "--count",
+        "8",
+        "--gpu-uuids",
+        "<device-0>,<device-1>,<device-2>,<device-3>,<device-4>,<device-5>,<device-6>,<device-7>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/native_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/gum_tiny_v2/gum_TINY_U_bfs_p8",
+        "--build-receipt",
+        "<artifact-work>/experimental/performance_revision_20261102/gum_law_build_v1/receipt.json",
+        "--mpiexec",
+        "/usr/bin/mpiexec",
+        "--core-python",
+        "<artifact-work>/envs/core/bin/python",
+        "--ld-preload",
+        "/usr/lib/x86_64-linux-gnu/libstdc++.so.6:<python-install>/lib/python3.12/site-packages/nvidia/nccl/lib/libnccl.so.2",
+        "--ld-library-path",
+        "/usr/lib/x86_64-linux-gnu:/usr/local/cuda-13.0/lib64"
+      ],
+      "receipt": "<campaign>/gum_tiny_v2/gum_TINY_U_bfs_p8/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/check_gum_dispatch_cpu.py",
+          "sha256": "4307c7b49f85d34eefddf7edf9d5719949d2d6a754fccfd5cb0e790a382d70d0"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/cugraph_csr_adapter.py",
+          "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_clock.py",
+          "sha256": "1ac3b7d75d453a352c32f3e4a1ee65cf533f0d0814385ed033b6998b1073d3e5"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_rank_exec.py",
+          "sha256": "750a85e8b27522179b7de858f3832fc87c89de89820ecf55209b7e9f1e10a1e5"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_reused.py",
+          "sha256": "466e408ae6c10627aa647ad6424c0b0ecf80910f872efa8299c999269f9d3537"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_worker.py",
+          "sha256": "a293f8375c3781d98c9ed34bf01ea283504854c678ec64e412bfadd9bd76f522"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/mg_process_observer.py",
+          "sha256": "368c4d858da8dc5a2833dd2cd2dd30d0ab9df75940968c181a1537c2e30426a7"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/native_input.py",
+          "sha256": "927a9194b15b6dfaf91ff829f2476a676c7828ba4071607497ef308789d10152"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/native_worker.py",
+          "sha256": "12f183d6ff969e4c1921e388546a70a102d8ff22e1c9cb39df9a1b56b6b390f6"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/run_gum.py",
+          "sha256": "ede6dabc7db3c8caa5710cc2c0b3c345e71273748057de6998e724ec29e3eb30"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/sg_worker.py",
+          "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/test_gum_campaign.py",
+          "sha256": "a5763a20ca57b179ddf427467ce0c227487f4127bcda8d0c44aab056c6e9cf67"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/test_gum_clock.py",
+          "sha256": "7ce468cf1879b2174fe778a52c027465b1f57f0abe450384c730d8d654305f16"
+        }
+      ]
+    },
+    {
+      "id": "gum_TINY_U_sssp_p2",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/gum_v2/gum_worker.py",
+        "--execute-gpu",
+        "--phase",
+        "tiny",
+        "--dataset",
+        "TINY_U",
+        "--function",
+        "sssp",
+        "--count",
+        "2",
+        "--gpu-uuids",
+        "<device-0>,<device-1>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/native_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/gum_tiny_v2/gum_TINY_U_sssp_p2",
+        "--build-receipt",
+        "<artifact-work>/experimental/performance_revision_20261102/gum_law_build_v1/receipt.json",
+        "--mpiexec",
+        "/usr/bin/mpiexec",
+        "--core-python",
+        "<artifact-work>/envs/core/bin/python",
+        "--ld-preload",
+        "/usr/lib/x86_64-linux-gnu/libstdc++.so.6:<python-install>/lib/python3.12/site-packages/nvidia/nccl/lib/libnccl.so.2",
+        "--ld-library-path",
+        "/usr/lib/x86_64-linux-gnu:/usr/local/cuda-13.0/lib64"
+      ],
+      "receipt": "<campaign>/gum_tiny_v2/gum_TINY_U_sssp_p2/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/check_gum_dispatch_cpu.py",
+          "sha256": "4307c7b49f85d34eefddf7edf9d5719949d2d6a754fccfd5cb0e790a382d70d0"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/cugraph_csr_adapter.py",
+          "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_clock.py",
+          "sha256": "1ac3b7d75d453a352c32f3e4a1ee65cf533f0d0814385ed033b6998b1073d3e5"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_rank_exec.py",
+          "sha256": "750a85e8b27522179b7de858f3832fc87c89de89820ecf55209b7e9f1e10a1e5"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_reused.py",
+          "sha256": "466e408ae6c10627aa647ad6424c0b0ecf80910f872efa8299c999269f9d3537"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_worker.py",
+          "sha256": "a293f8375c3781d98c9ed34bf01ea283504854c678ec64e412bfadd9bd76f522"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/mg_process_observer.py",
+          "sha256": "368c4d858da8dc5a2833dd2cd2dd30d0ab9df75940968c181a1537c2e30426a7"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/native_input.py",
+          "sha256": "927a9194b15b6dfaf91ff829f2476a676c7828ba4071607497ef308789d10152"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/native_worker.py",
+          "sha256": "12f183d6ff969e4c1921e388546a70a102d8ff22e1c9cb39df9a1b56b6b390f6"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/run_gum.py",
+          "sha256": "ede6dabc7db3c8caa5710cc2c0b3c345e71273748057de6998e724ec29e3eb30"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/sg_worker.py",
+          "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/test_gum_campaign.py",
+          "sha256": "a5763a20ca57b179ddf427467ce0c227487f4127bcda8d0c44aab056c6e9cf67"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/test_gum_clock.py",
+          "sha256": "7ce468cf1879b2174fe778a52c027465b1f57f0abe450384c730d8d654305f16"
+        }
+      ]
+    },
+    {
+      "id": "gum_TINY_U_sssp_p8",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/gum_v2/gum_worker.py",
+        "--execute-gpu",
+        "--phase",
+        "tiny",
+        "--dataset",
+        "TINY_U",
+        "--function",
+        "sssp",
+        "--count",
+        "8",
+        "--gpu-uuids",
+        "<device-0>,<device-1>,<device-2>,<device-3>,<device-4>,<device-5>,<device-6>,<device-7>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/native_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/gum_tiny_v2/gum_TINY_U_sssp_p8",
+        "--build-receipt",
+        "<artifact-work>/experimental/performance_revision_20261102/gum_law_build_v1/receipt.json",
+        "--mpiexec",
+        "/usr/bin/mpiexec",
+        "--core-python",
+        "<artifact-work>/envs/core/bin/python",
+        "--ld-preload",
+        "/usr/lib/x86_64-linux-gnu/libstdc++.so.6:<python-install>/lib/python3.12/site-packages/nvidia/nccl/lib/libnccl.so.2",
+        "--ld-library-path",
+        "/usr/lib/x86_64-linux-gnu:/usr/local/cuda-13.0/lib64"
+      ],
+      "receipt": "<campaign>/gum_tiny_v2/gum_TINY_U_sssp_p8/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/check_gum_dispatch_cpu.py",
+          "sha256": "4307c7b49f85d34eefddf7edf9d5719949d2d6a754fccfd5cb0e790a382d70d0"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/cugraph_csr_adapter.py",
+          "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_clock.py",
+          "sha256": "1ac3b7d75d453a352c32f3e4a1ee65cf533f0d0814385ed033b6998b1073d3e5"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_rank_exec.py",
+          "sha256": "750a85e8b27522179b7de858f3832fc87c89de89820ecf55209b7e9f1e10a1e5"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_reused.py",
+          "sha256": "466e408ae6c10627aa647ad6424c0b0ecf80910f872efa8299c999269f9d3537"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_worker.py",
+          "sha256": "a293f8375c3781d98c9ed34bf01ea283504854c678ec64e412bfadd9bd76f522"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/mg_process_observer.py",
+          "sha256": "368c4d858da8dc5a2833dd2cd2dd30d0ab9df75940968c181a1537c2e30426a7"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/native_input.py",
+          "sha256": "927a9194b15b6dfaf91ff829f2476a676c7828ba4071607497ef308789d10152"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/native_worker.py",
+          "sha256": "12f183d6ff969e4c1921e388546a70a102d8ff22e1c9cb39df9a1b56b6b390f6"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/run_gum.py",
+          "sha256": "ede6dabc7db3c8caa5710cc2c0b3c345e71273748057de6998e724ec29e3eb30"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/sg_worker.py",
+          "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/test_gum_campaign.py",
+          "sha256": "a5763a20ca57b179ddf427467ce0c227487f4127bcda8d0c44aab056c6e9cf67"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/test_gum_clock.py",
+          "sha256": "7ce468cf1879b2174fe778a52c027465b1f57f0abe450384c730d8d654305f16"
+        }
+      ]
+    },
+    {
+      "id": "gum_TINY_U_wcc_p2",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/gum_v2/gum_worker.py",
+        "--execute-gpu",
+        "--phase",
+        "tiny",
+        "--dataset",
+        "TINY_U",
+        "--function",
+        "wcc",
+        "--count",
+        "2",
+        "--gpu-uuids",
+        "<device-0>,<device-1>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/native_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/gum_tiny_v2/gum_TINY_U_wcc_p2",
+        "--build-receipt",
+        "<artifact-work>/experimental/performance_revision_20261102/gum_law_build_v1/receipt.json",
+        "--mpiexec",
+        "/usr/bin/mpiexec",
+        "--core-python",
+        "<artifact-work>/envs/core/bin/python",
+        "--ld-preload",
+        "/usr/lib/x86_64-linux-gnu/libstdc++.so.6:<python-install>/lib/python3.12/site-packages/nvidia/nccl/lib/libnccl.so.2",
+        "--ld-library-path",
+        "/usr/lib/x86_64-linux-gnu:/usr/local/cuda-13.0/lib64"
+      ],
+      "receipt": "<campaign>/gum_tiny_v2/gum_TINY_U_wcc_p2/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/check_gum_dispatch_cpu.py",
+          "sha256": "4307c7b49f85d34eefddf7edf9d5719949d2d6a754fccfd5cb0e790a382d70d0"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/cugraph_csr_adapter.py",
+          "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_clock.py",
+          "sha256": "1ac3b7d75d453a352c32f3e4a1ee65cf533f0d0814385ed033b6998b1073d3e5"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_rank_exec.py",
+          "sha256": "750a85e8b27522179b7de858f3832fc87c89de89820ecf55209b7e9f1e10a1e5"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_reused.py",
+          "sha256": "466e408ae6c10627aa647ad6424c0b0ecf80910f872efa8299c999269f9d3537"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_worker.py",
+          "sha256": "a293f8375c3781d98c9ed34bf01ea283504854c678ec64e412bfadd9bd76f522"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/mg_process_observer.py",
+          "sha256": "368c4d858da8dc5a2833dd2cd2dd30d0ab9df75940968c181a1537c2e30426a7"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/native_input.py",
+          "sha256": "927a9194b15b6dfaf91ff829f2476a676c7828ba4071607497ef308789d10152"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/native_worker.py",
+          "sha256": "12f183d6ff969e4c1921e388546a70a102d8ff22e1c9cb39df9a1b56b6b390f6"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/run_gum.py",
+          "sha256": "ede6dabc7db3c8caa5710cc2c0b3c345e71273748057de6998e724ec29e3eb30"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/sg_worker.py",
+          "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/test_gum_campaign.py",
+          "sha256": "a5763a20ca57b179ddf427467ce0c227487f4127bcda8d0c44aab056c6e9cf67"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/test_gum_clock.py",
+          "sha256": "7ce468cf1879b2174fe778a52c027465b1f57f0abe450384c730d8d654305f16"
+        }
+      ]
+    },
+    {
+      "id": "gum_TINY_U_wcc_p8",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/gum_v2/gum_worker.py",
+        "--execute-gpu",
+        "--phase",
+        "tiny",
+        "--dataset",
+        "TINY_U",
+        "--function",
+        "wcc",
+        "--count",
+        "8",
+        "--gpu-uuids",
+        "<device-0>,<device-1>,<device-2>,<device-3>,<device-4>,<device-5>,<device-6>,<device-7>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/native_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/gum_tiny_v2/gum_TINY_U_wcc_p8",
+        "--build-receipt",
+        "<artifact-work>/experimental/performance_revision_20261102/gum_law_build_v1/receipt.json",
+        "--mpiexec",
+        "/usr/bin/mpiexec",
+        "--core-python",
+        "<artifact-work>/envs/core/bin/python",
+        "--ld-preload",
+        "/usr/lib/x86_64-linux-gnu/libstdc++.so.6:<python-install>/lib/python3.12/site-packages/nvidia/nccl/lib/libnccl.so.2",
+        "--ld-library-path",
+        "/usr/lib/x86_64-linux-gnu:/usr/local/cuda-13.0/lib64"
+      ],
+      "receipt": "<campaign>/gum_tiny_v2/gum_TINY_U_wcc_p8/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/check_gum_dispatch_cpu.py",
+          "sha256": "4307c7b49f85d34eefddf7edf9d5719949d2d6a754fccfd5cb0e790a382d70d0"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/cugraph_csr_adapter.py",
+          "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_clock.py",
+          "sha256": "1ac3b7d75d453a352c32f3e4a1ee65cf533f0d0814385ed033b6998b1073d3e5"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_rank_exec.py",
+          "sha256": "750a85e8b27522179b7de858f3832fc87c89de89820ecf55209b7e9f1e10a1e5"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_reused.py",
+          "sha256": "466e408ae6c10627aa647ad6424c0b0ecf80910f872efa8299c999269f9d3537"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_worker.py",
+          "sha256": "a293f8375c3781d98c9ed34bf01ea283504854c678ec64e412bfadd9bd76f522"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/mg_process_observer.py",
+          "sha256": "368c4d858da8dc5a2833dd2cd2dd30d0ab9df75940968c181a1537c2e30426a7"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/native_input.py",
+          "sha256": "927a9194b15b6dfaf91ff829f2476a676c7828ba4071607497ef308789d10152"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/native_worker.py",
+          "sha256": "12f183d6ff969e4c1921e388546a70a102d8ff22e1c9cb39df9a1b56b6b390f6"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/run_gum.py",
+          "sha256": "ede6dabc7db3c8caa5710cc2c0b3c345e71273748057de6998e724ec29e3eb30"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/sg_worker.py",
+          "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/test_gum_campaign.py",
+          "sha256": "a5763a20ca57b179ddf427467ce0c227487f4127bcda8d0c44aab056c6e9cf67"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/test_gum_clock.py",
+          "sha256": "7ce468cf1879b2174fe778a52c027465b1f57f0abe450384c730d8d654305f16"
+        }
+      ]
+    },
+    {
+      "id": "gum_TINY_U_pr_p2",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/gum_v2/gum_worker.py",
+        "--execute-gpu",
+        "--phase",
+        "tiny",
+        "--dataset",
+        "TINY_U",
+        "--function",
+        "pr",
+        "--count",
+        "2",
+        "--gpu-uuids",
+        "<device-0>,<device-1>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/native_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/gum_tiny_v2/gum_TINY_U_pr_p2",
+        "--build-receipt",
+        "<artifact-work>/experimental/performance_revision_20261102/gum_law_build_v1/receipt.json",
+        "--mpiexec",
+        "/usr/bin/mpiexec",
+        "--core-python",
+        "<artifact-work>/envs/core/bin/python",
+        "--ld-preload",
+        "/usr/lib/x86_64-linux-gnu/libstdc++.so.6:<python-install>/lib/python3.12/site-packages/nvidia/nccl/lib/libnccl.so.2",
+        "--ld-library-path",
+        "/usr/lib/x86_64-linux-gnu:/usr/local/cuda-13.0/lib64"
+      ],
+      "receipt": "<campaign>/gum_tiny_v2/gum_TINY_U_pr_p2/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/check_gum_dispatch_cpu.py",
+          "sha256": "4307c7b49f85d34eefddf7edf9d5719949d2d6a754fccfd5cb0e790a382d70d0"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/cugraph_csr_adapter.py",
+          "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_clock.py",
+          "sha256": "1ac3b7d75d453a352c32f3e4a1ee65cf533f0d0814385ed033b6998b1073d3e5"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_rank_exec.py",
+          "sha256": "750a85e8b27522179b7de858f3832fc87c89de89820ecf55209b7e9f1e10a1e5"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_reused.py",
+          "sha256": "466e408ae6c10627aa647ad6424c0b0ecf80910f872efa8299c999269f9d3537"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_worker.py",
+          "sha256": "a293f8375c3781d98c9ed34bf01ea283504854c678ec64e412bfadd9bd76f522"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/mg_process_observer.py",
+          "sha256": "368c4d858da8dc5a2833dd2cd2dd30d0ab9df75940968c181a1537c2e30426a7"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/native_input.py",
+          "sha256": "927a9194b15b6dfaf91ff829f2476a676c7828ba4071607497ef308789d10152"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/native_worker.py",
+          "sha256": "12f183d6ff969e4c1921e388546a70a102d8ff22e1c9cb39df9a1b56b6b390f6"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/run_gum.py",
+          "sha256": "ede6dabc7db3c8caa5710cc2c0b3c345e71273748057de6998e724ec29e3eb30"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/sg_worker.py",
+          "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/test_gum_campaign.py",
+          "sha256": "a5763a20ca57b179ddf427467ce0c227487f4127bcda8d0c44aab056c6e9cf67"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/test_gum_clock.py",
+          "sha256": "7ce468cf1879b2174fe778a52c027465b1f57f0abe450384c730d8d654305f16"
+        }
+      ]
+    },
+    {
+      "id": "gum_TINY_U_pr_p8",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/gum_v2/gum_worker.py",
+        "--execute-gpu",
+        "--phase",
+        "tiny",
+        "--dataset",
+        "TINY_U",
+        "--function",
+        "pr",
+        "--count",
+        "8",
+        "--gpu-uuids",
+        "<device-0>,<device-1>,<device-2>,<device-3>,<device-4>,<device-5>,<device-6>,<device-7>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/native_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/gum_tiny_v2/gum_TINY_U_pr_p8",
+        "--build-receipt",
+        "<artifact-work>/experimental/performance_revision_20261102/gum_law_build_v1/receipt.json",
+        "--mpiexec",
+        "/usr/bin/mpiexec",
+        "--core-python",
+        "<artifact-work>/envs/core/bin/python",
+        "--ld-preload",
+        "/usr/lib/x86_64-linux-gnu/libstdc++.so.6:<python-install>/lib/python3.12/site-packages/nvidia/nccl/lib/libnccl.so.2",
+        "--ld-library-path",
+        "/usr/lib/x86_64-linux-gnu:/usr/local/cuda-13.0/lib64"
+      ],
+      "receipt": "<campaign>/gum_tiny_v2/gum_TINY_U_pr_p8/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/check_gum_dispatch_cpu.py",
+          "sha256": "4307c7b49f85d34eefddf7edf9d5719949d2d6a754fccfd5cb0e790a382d70d0"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/cugraph_csr_adapter.py",
+          "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_clock.py",
+          "sha256": "1ac3b7d75d453a352c32f3e4a1ee65cf533f0d0814385ed033b6998b1073d3e5"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_rank_exec.py",
+          "sha256": "750a85e8b27522179b7de858f3832fc87c89de89820ecf55209b7e9f1e10a1e5"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_reused.py",
+          "sha256": "466e408ae6c10627aa647ad6424c0b0ecf80910f872efa8299c999269f9d3537"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/gum_worker.py",
+          "sha256": "a293f8375c3781d98c9ed34bf01ea283504854c678ec64e412bfadd9bd76f522"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/mg_process_observer.py",
+          "sha256": "368c4d858da8dc5a2833dd2cd2dd30d0ab9df75940968c181a1537c2e30426a7"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/native_input.py",
+          "sha256": "927a9194b15b6dfaf91ff829f2476a676c7828ba4071607497ef308789d10152"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/native_worker.py",
+          "sha256": "12f183d6ff969e4c1921e388546a70a102d8ff22e1c9cb39df9a1b56b6b390f6"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/run_gum.py",
+          "sha256": "ede6dabc7db3c8caa5710cc2c0b3c345e71273748057de6998e724ec29e3eb30"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/sg_worker.py",
+          "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/test_gum_campaign.py",
+          "sha256": "a5763a20ca57b179ddf427467ce0c227487f4127bcda8d0c44aab056c6e9cf67"
+        },
+        {
+          "path": "<campaign>/runner_candidates/gum_v2/test_gum_clock.py",
+          "sha256": "7ce468cf1879b2174fe778a52c027465b1f57f0abe450384c730d8d654305f16"
+        }
+      ]
+    }
+  ],
+  "completed": [
+    {
+      "id": "cugraph_mg_context_probe_p2",
+      "outcome": "FAIL",
+      "started_unix": 1793804320.6656954,
+      "pid": 286015,
+      "returncode": 1,
+      "status": "FAIL",
+      "receipt": {
+        "path": "<campaign>/mg_tiny_v3/cugraph_mg_TINY_D_bfs_p2/result.json",
+        "sha256": "48f1d20ee2799724cbfe19ce18da5c738813b57f2e4496af8f06239736f20378",
+        "bytes": 732
+      },
+      "seconds": 14.043183356523514
+    },
+    {
+      "id": "gum_TINY_D_bfs_p2",
+      "outcome": "PASS",
+      "started_unix": 1793804334.7130835,
+      "pid": 286093,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/gum_tiny_v2/gum_TINY_D_bfs_p2/result.json",
+        "sha256": "f4625452b9ae282e18e8a4f00b7fc3d8c45c195a243e7971ffc96b0062c2881a",
+        "bytes": 1756
+      },
+      "seconds": 11.240396615117788
+    },
+    {
+      "id": "gum_TINY_D_bfs_p8",
+      "outcome": "PASS",
+      "started_unix": 1793804345.9622824,
+      "pid": 286825,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/gum_tiny_v2/gum_TINY_D_bfs_p8/result.json",
+        "sha256": "924ab369bf8bcccfe6e1cd6cc238066716d9d3adaa320e11f5add044643f851e",
+        "bytes": 1756
+      },
+      "seconds": 28.828374691307545
+    },
+    {
+      "id": "gum_TINY_D_sssp_p2",
+      "outcome": "PASS",
+      "started_unix": 1793804374.7997715,
+      "pid": 287964,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/gum_tiny_v2/gum_TINY_D_sssp_p2/result.json",
+        "sha256": "3c4dd67f963a4f5de10909d3a84e545a1410fc76673876f7ee7fa6b6f1026bb4",
+        "bytes": 2103
+      },
+      "seconds": 11.400481101125479
+    },
+    {
+      "id": "gum_TINY_D_sssp_p8",
+      "outcome": "PASS",
+      "started_unix": 1793804386.209521,
+      "pid": 288696,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/gum_tiny_v2/gum_TINY_D_sssp_p8/result.json",
+        "sha256": "5de4458ab90ccf93b8472ea63de238009f9fe11f9985506fee5c24f558b55769",
+        "bytes": 2103
+      },
+      "seconds": 31.241720858961344
+    },
+    {
+      "id": "gum_TINY_D_wcc_p2",
+      "outcome": "PASS",
+      "started_unix": 1793804417.4605312,
+      "pid": 289853,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/gum_tiny_v2/gum_TINY_D_wcc_p2/result.json",
+        "sha256": "f2a6a267bde59ea2eedc527b8975dc70069f0e5ee743fa65be91dc5ff5f575f7",
+        "bytes": 1159
+      },
+      "seconds": 4.626695580780506
+    },
+    {
+      "id": "gum_TINY_D_wcc_p8",
+      "outcome": "PASS",
+      "started_unix": 1793804422.096347,
+      "pid": 290295,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/gum_tiny_v2/gum_TINY_D_wcc_p8/result.json",
+        "sha256": "f2d36012ef5c371a4afaafa0d31943efc964571662ca15a1e6228c6d7f4d8d12",
+        "bytes": 1159
+      },
+      "seconds": 10.891175027936697
+    },
+    {
+      "id": "gum_TINY_D_pr_p2",
+      "outcome": "PASS",
+      "started_unix": 1793804432.996975,
+      "pid": 290865,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/gum_tiny_v2/gum_TINY_D_pr_p2/result.json",
+        "sha256": "210822588af13464d06c03e39788af247283baba54f0abcfa9880a2712b1fca2",
+        "bytes": 1156
+      },
+      "seconds": 4.881614968180656
+    },
+    {
+      "id": "gum_TINY_D_pr_p8",
+      "outcome": "PASS",
+      "started_unix": 1793804437.888062,
+      "pid": 291116,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/gum_tiny_v2/gum_TINY_D_pr_p8/result.json",
+        "sha256": "0704d0657f6766e2a61dd5e8b8cecfc4bc3e6901ba56aa8788bd2e1cd3515ee6",
+        "bytes": 1157
+      },
+      "seconds": 11.95011754333973
+    },
+    {
+      "id": "gum_TINY_U_bfs_p2",
+      "outcome": "PASS",
+      "started_unix": 1793804449.847562,
+      "pid": 291494,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/gum_tiny_v2/gum_TINY_U_bfs_p2/result.json",
+        "sha256": "5860509e3bd67e78d9dc8c6bcef0276062a93bea5e0006fe7b91433973b0b9fa",
+        "bytes": 1757
+      },
+      "seconds": 12.258358750492334
+    },
+    {
+      "id": "gum_TINY_U_bfs_p8",
+      "outcome": "PASS",
+      "started_unix": 1793804462.1156073,
+      "pid": 292226,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/gum_tiny_v2/gum_TINY_U_bfs_p8/result.json",
+        "sha256": "da8267a9190bfc4f49b536fbaf31830bd69ac3632143ab7f02cb36d6683011e5",
+        "bytes": 1757
+      },
+      "seconds": 31.350577421486378
+    },
+    {
+      "id": "gum_TINY_U_sssp_p2",
+      "outcome": "PASS",
+      "started_unix": 1793804493.475708,
+      "pid": 293368,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/gum_tiny_v2/gum_TINY_U_sssp_p2/result.json",
+        "sha256": "3c1293febddcc138cbd4cd76802933372d71b9176478ea0911f33d415d3646e0",
+        "bytes": 2104
+      },
+      "seconds": 10.687453754246235
+    },
+    {
+      "id": "gum_TINY_U_sssp_p8",
+      "outcome": "PASS",
+      "started_unix": 1793804504.1728482,
+      "pid": 294098,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/gum_tiny_v2/gum_TINY_U_sssp_p8/result.json",
+        "sha256": "b0e902c7a393b6b342e45a7055df256efa8a25a446ea45aa0bc1787a1f194b30",
+        "bytes": 2104
+      },
+      "seconds": 30.81296167895198
+    },
+    {
+      "id": "gum_TINY_U_wcc_p2",
+      "outcome": "PASS",
+      "started_unix": 1793804534.9955351,
+      "pid": 295255,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/gum_tiny_v2/gum_TINY_U_wcc_p2/result.json",
+        "sha256": "f33e48dc13761e349dae8242b25268360553f8dbff42a23910436d86dac10597",
+        "bytes": 1160
+      },
+      "seconds": 4.9811618104577065
+    },
+    {
+      "id": "gum_TINY_U_wcc_p8",
+      "outcome": "PASS",
+      "started_unix": 1793804539.9861054,
+      "pid": 295697,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/gum_tiny_v2/gum_TINY_U_wcc_p8/result.json",
+        "sha256": "863e4bfcbca5702b27dae8f503e6d83408afc85bf972f49139afb83cda34c32a",
+        "bytes": 1160
+      },
+      "seconds": 10.594775684177876
+    },
+    {
+      "id": "gum_TINY_U_pr_p2",
+      "outcome": "PASS",
+      "started_unix": 1793804550.5852325,
+      "pid": 296301,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/gum_tiny_v2/gum_TINY_U_pr_p2/result.json",
+        "sha256": "b60f3fb7e35a5f63cce2d75e73fab5f7a68567a27095d835d592f30b0f3f74c1",
+        "bytes": 1157
+      },
+      "seconds": 4.326851524412632
+    },
+    {
+      "id": "gum_TINY_U_pr_p8",
+      "outcome": "PASS",
+      "started_unix": 1793804554.922297,
+      "pid": 296551,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/gum_tiny_v2/gum_TINY_U_pr_p8/result.json",
+        "sha256": "d9e3634958321e2fa606e65bafc92c30a0df060d02b03fa37ec1db4d2bc508ef",
+        "bytes": 1158
+      },
+      "seconds": 11.46445968002081
+    }
+  ],
+  "formal_measurements": 0,
+  "active_job": "gum_TINY_U_pr_p8",
+  "finished_unix": 1793804566.3920197,
+  "public_projection_note": "Host paths/UUIDs redacted. This is qualification evidence, not an executable tiny/target proof or a formal performance repetition. Original bytes are retained by the operator."
+}

@@ -1,0 +1,22 @@
+{
+  "schema": "campaign.queue.v4.cpu_receipt",
+  "status": "PASS_CPU_ONLY",
+  "tests": 8,
+  "gpu_executed": false,
+  "files": {
+    "run_campaign_queue_v4.py": {
+      "sha256": "a8225d3eb60c5fa5cecc9f5802603614460ad8523d500d1f015edddfb40b3901",
+      "bytes": 11281
+    },
+    "test_campaign_queue_v4_cpu.py": {
+      "sha256": "444361bebb6d0f21f08f25186125e688c77ffb40eb5d66fd71a5e34ffdd8cf16",
+      "bytes": 5955
+    },
+    "QUEUE_V4_CN.md": {
+      "sha256": "7f1b1f1063e22e8cc7069185b7baf212c267616b1bd576556fd6762eeb422a12",
+      "bytes": 2046
+    }
+  },
+  "legacy_v3_modified": false,
+  "scope": "Real CPU worker and maintenance subprocesses, pass/fail/dependency/phase/counts, lock release while WAITING_STORAGE, one launch after admission, source/argv binding gates"
+}

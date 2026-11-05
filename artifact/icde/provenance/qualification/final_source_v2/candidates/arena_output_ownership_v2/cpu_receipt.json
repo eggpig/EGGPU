@@ -1,0 +1,65 @@
+{
+  "status": "PASS_CPU_ARENA_OUTPUT_OWNERSHIP_REAL_CORE_MRO",
+  "gpu_executed": false,
+  "tests": 153,
+  "source_tree_sha256": "cb14360e2dfb934b8a28f9875fb80639ce4503bc6ed27956201b18e9edec6869",
+  "parent_source_tree_sha256": "9a3d98be5ecd4c955ec4481b25fa90764db50a97636df8cea8b85870b161413a",
+  "files": [
+    {
+      "path": "easygraph/gpu/_arena/gpu_runtime.py",
+      "sha256": "bc3269e2b1d0eae9cd0fe6ce84c15196a6ee6ab80f8dee97c20e3a63a022f351",
+      "bytes": 25807
+    },
+    {
+      "path": "easygraph/gpu/_arena_output.py",
+      "sha256": "585df3ad15c26f791287bda918ea0b8a3de8a9948d0a4ee61e8e68b396ee5631",
+      "bytes": 2792
+    },
+    {
+      "path": "easygraph/gpu/_bridge.py",
+      "sha256": "13c1c337e5d1f4dd100fd886c26d6802fbbfb74f958e56e2990d3a708e70e8a6",
+      "bytes": 25771
+    },
+    {
+      "path": "easygraph/gpu/_core.py",
+      "sha256": "4f815c389ff2e639d7acf332d90d1cf5b01998f9302af06ed2e3af383c8e3a11",
+      "bytes": 19647
+    },
+    {
+      "path": "tests/gpu/qualify_arena_output_ownership.py",
+      "sha256": "d0b80b879b2b72a37c2e8ebb5a3c1b2d008bf59f969f81e8d26c1d4d59382996",
+      "bytes": 3826
+    },
+    {
+      "path": "tests/gpu/test_arena_output_ownership.py",
+      "sha256": "cbb532d6f2a547bc636123c697475b0b47f582a8df138749e8c0163b11780ecc",
+      "bytes": 14915
+    }
+  ],
+  "tests_log": "cpu_tests.log",
+  "negative_regression": {
+    "source": "arena_output_ownership_v1",
+    "test": "real_core_managed_mro_all_five_functions",
+    "failed": 8,
+    "passed": 2,
+    "error": "CoreManagedSession._own_result unexpected keyword argument _arena_scope",
+    "log": "regression_against_v1.log"
+  },
+  "override_audit": {
+    "searched": "all Easy-Graph/easygraph/**/*.py function ASTs",
+    "definitions": [
+      "easygraph/gpu/_bridge.py:_Bridge._own_result",
+      "easygraph/gpu/_core.py:CoreManagedSession._own_result"
+    ],
+    "both_accept_arena_scope": true,
+    "Core_override_forwards_arena_scope": true,
+    "test_fixture_inherits": "CoreManagedSession",
+    "all_five_test_calls": "session.query; no unbound Core calls or mocked _own_result"
+  },
+  "native_dso_unchanged": {
+    "path": "build/integrated_v1/native/cpp_easygraph/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+    "sha256": "bc1b7cf247222beec1f33afe4d184bdc715eea4ac65a07e8e2a567ec196aec46"
+  },
+  "note": "CPU-only. Actual GPU adoption, complete semantic qualifier and performance remain unmeasured. The failed v1 evidence is retained and rejected, never merged.",
+  "public_projection_note": "Private paths/UUIDs redacted; exact original retained. This readable evidence projection is not an executable proof or a formal performance measurement."
+}

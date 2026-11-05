@@ -1,0 +1,2713 @@
+{
+  "schema": "baseline_capability_matrix/v1",
+  "date": "2026-11-04",
+  "gpu_executed": false,
+  "new_campaign_status": "SOURCE_BOUND_TINY_QUALIFICATION_IN_PROGRESS_FORMAL_PENDING",
+  "datasets": [
+    "US",
+    "EP",
+    "LJ",
+    "OR",
+    "IN",
+    "UK",
+    "TW"
+  ],
+  "authority": "docs/DATASET_AND_EXPERIMENT_FREEZE_20261104_CN.md",
+  "sources": [
+    {
+      "path": "experiments/rtx4090d_20261031/baseline_inventory.json",
+      "sha256": "e3255c6c5bcf35bc4eedcd022375072feb026759b90893612a72b02129d83419",
+      "bytes": 74291
+    },
+    {
+      "path": "experiments/rtx4090d_20261031/baseline_reader_notes.json",
+      "sha256": "af2eccee7052403f4cba572414c0890fa4b5c48f2ce4ef7e9351c9dfe528b3b3",
+      "bytes": 209438
+    },
+    {
+      "path": "experiments/rtx4090d_20261031/analysis/full_results_20261102/formal_cells.json",
+      "sha256": "e101cb2f3a9b448b8454372ddc6ffbd731052dcfca51edcc39ec09b3a51c0030",
+      "bytes": 23507177
+    },
+    {
+      "path": "experiments/rtx4090d_20261031/analysis/full_results_20261102/pr_coverage_correction_20261104/correction.json",
+      "sha256": "b85e22335d201d5a39ec426147811fcb53fdac943579b33067e756b551b7024c",
+      "bytes": 10419
+    }
+  ],
+  "systems": [
+    {
+      "id": "cugraph26.02",
+      "upstream": "https://github.com/rapidsai/cugraph",
+      "version": "26.2.0; exact companion versions in bundle/baselines/cugraph/known_good_versions.json",
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "functions_in_portable_runner": [
+        "bfs",
+        "sssp",
+        "wcc",
+        "pr"
+      ],
+      "current_adapters": [
+        "bfs",
+        "sssp",
+        "wcc",
+        "pr",
+        "weighted_pr",
+        "lcc via per-vertex triangle_count",
+        "kcore",
+        "fixed32 BC",
+        "all-source BC",
+        "MST",
+        "SCC"
+      ],
+      "run_entry": "bundle/experiment.py run --machine MACHINE --protocol OUTPUT/protocol.json",
+      "scope_status": "EXISTING_ADAPTER_REQUIRES_FROZEN_7_GRAPH_REQUALIFICATION"
+    },
+    {
+      "id": "gunrock_essentials2.1",
+      "upstream": "https://github.com/gunrock/gunrock",
+      "commit": "748f79e66cc26762cd3f99422b028e742a737bde",
+      "gpu_counts": [
+        1
+      ],
+      "functions_in_portable_runner": [
+        "bfs",
+        "sssp",
+        "pr"
+      ],
+      "current_adapters": [
+        "bfs",
+        "sssp",
+        "pr",
+        "fixed32 BC",
+        "all-source BC",
+        "kcore",
+        "per-vertex TC-derived LCC",
+        "global TC",
+        "complete MST forest"
+      ],
+      "run_entry": "sg_baselines/portable.py run --machine MACHINE --system gunrock --function FUNCTION --input INPUT --output OUTPUT",
+      "build_entry": "sg_baselines/portable.py build --config CONFIG --target gunrock --output BUILD --execute",
+      "scope_status": "EXISTING_ADAPTER_REQUIRES_FROZEN_7_GRAPH_REQUALIFICATION"
+    },
+    {
+      "id": "gunrock_legacy0.5.1_CC",
+      "upstream": "https://github.com/gunrock/gunrock",
+      "commit": "0c9a96dd64ddeecae9208644631983fc889b32b4",
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "functions_in_portable_runner": [
+        "wcc"
+      ],
+      "build_entry": "sg_baselines/portable.py build --config CONFIG --target gunrock_wcc --output BUILD --execute",
+      "scope_status": "EXISTING_ADAPTER_REQUIRES_FROZEN_7_GRAPH_REQUALIFICATION"
+    },
+    {
+      "id": "igraph1.0",
+      "upstream": "https://igraph.org/python/",
+      "version": "1.0.0",
+      "gpu_counts": [
+        0
+      ],
+      "functions_in_portable_runner": [
+        "bfs",
+        "sssp",
+        "wcc",
+        "pr"
+      ],
+      "current_adapters": [
+        "bfs",
+        "sssp",
+        "wcc",
+        "pr",
+        "weighted_pr",
+        "lcc",
+        "kcore",
+        "fixed32 BC",
+        "all-source BC",
+        "all-source WF closeness",
+        "constraint",
+        "SCC",
+        "MST"
+      ],
+      "run_entry": "sg_baselines/portable.py run --machine MACHINE --system igraph --function FUNCTION --input INPUT --output OUTPUT",
+      "scope_status": "EXISTING_ADAPTER_REQUIRES_FROZEN_7_GRAPH_REQUALIFICATION"
+    },
+    {
+      "id": "CGgraph_V1.5",
+      "upstream": "https://github.com/PengBo410/CGgraph-V1.5",
+      "commit": "5945816f4ccf63fce8d13eac84c09bbbb4c7e58a",
+      "gpu_counts": [
+        1
+      ],
+      "functions_in_portable_runner": [
+        "bfs",
+        "sssp"
+      ],
+      "current_adapters": [
+        "modern V1.5 BFS/SSSP",
+        "legacy author WCC",
+        "legacy author PR with explicit FP64 contract adaptation"
+      ],
+      "legacy_author_source": {
+        "commit": "3b23a7d7384fab283952c84ae60e491d58e50ccd",
+        "path": "sources/baseline_coverage_source_v1/cggraph_io",
+        "used_for": [
+          "WCC",
+          "PR"
+        ],
+        "disclosure": "Older complete author CPU/GPU hybrid source, separate from the newer trimmed V1.5 BFS/SSSP source. PR is a documented FP64/dangling/convergence contract adaptation."
+      },
+      "run_entry": "sg_baselines/portable.py run --machine MACHINE --system cggraph --function FUNCTION --input INPUT --output OUTPUT",
+      "build_entry": "sg_baselines/portable.py build --config CONFIG --target cggraph --output BUILD --execute; separately build target omp_probe",
+      "cpu_threads": 16,
+      "scope_status": "EXISTING_ADAPTER_REQUIRES_FROZEN_7_GRAPH_REQUALIFICATION"
+    },
+    {
+      "id": "Grapin",
+      "upstream": "https://github.com/Yongze-zzz/C-GpuStreamGraph",
+      "commit": "7ffcb2949837ad9f05d5d77afe54c698e2887479",
+      "gpu_counts": [
+        1
+      ],
+      "functions_in_portable_runner": [
+        "dynamic_sssp"
+      ],
+      "run_entry": "sg_baselines/portable.py run-grapin --machine MACHINE --input-root TEMPORAL --case college32 --profile fit --policy typed_sublease --mode qualification --output OUTPUT",
+      "build_entry": "sg_baselines/portable.py build --config CONFIG --target grapin --output BUILD --execute",
+      "cpu_threads": 4,
+      "scope_status": "EXISTING_ADAPTER_REQUIRES_FROZEN_7_GRAPH_REQUALIFICATION"
+    },
+    {
+      "id": "GUM",
+      "upstream": "https://github.com/alibaba/libgrape-lite/tree/gum",
+      "commit": "267ffdd345cc65e7b5541fabd9e94c70e2fd8141",
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "functions_in_portable_runner": [
+        "bfs",
+        "sssp",
+        "wcc",
+        "pr"
+      ],
+      "current_adapters": [
+        "BFS",
+        "PR",
+        "WCC",
+        "SSSP"
+      ],
+      "run_entry": "bundle/experiment.py run --machine MACHINE --protocol OUTPUT/protocol.json",
+      "build_entry": "bundle/baselines/gum/build.py --output BUILD --cuda-root CUDA --architectures 89 --cxx /usr/bin/g++ --mpi-cxx /usr/bin/mpicxx --nccl-root NCCL --ortools-root ORTOOLS --nvtx-root CUDA --cpu-affinity CPUS --jobs 2",
+      "cpu_threads": 16,
+      "scope_status": "CANONICAL_CSR_D_U_FOUR_CORE_P2_P8_16_TINY_PASS_REAL_TARGET_PENDING"
+    },
+    {
+      "id": "SYgraph",
+      "upstream": "https://github.com/unisa-hpc/SYgraph",
+      "commit": "71dcb56aed0cd43fefa5752a552e0a10cb69a758",
+      "gpu_counts": [
+        1
+      ],
+      "functions_in_portable_runner": [
+        "bfs",
+        "sssp"
+      ],
+      "current_adapters": [
+        "BFS",
+        "SSSP",
+        "CC",
+        "fixed32 BC",
+        "global TC"
+      ],
+      "run_entry": "baseline_extension/portable_extension.py run --job OUTPUT/job.json",
+      "build_entry": "baseline_extension/portable_extension.py build --backend sygraph --sycl-prefix SYCL_ENV --cuda-root CUDA128 --arch 89 --output BUILD --execute",
+      "scope_status": "EXISTING_ADAPTER_REQUIRES_FROZEN_7_GRAPH_REQUALIFICATION"
+    },
+    {
+      "id": "C2graph_P_corrected",
+      "upstream": "https://github.com/lihuaibei7951/C-2graph",
+      "commit": "97af1ebd935a03f5adc180935644e786a624bdbe",
+      "gpu_counts": [
+        1
+      ],
+      "functions_in_portable_runner": [
+        "sssp"
+      ],
+      "current_adapters": [
+        "P standalone SSSP",
+        "PM two-buffer CPU/GPU distinct-source pipeline",
+        "same-source PM execution control (separate panel)"
+      ],
+      "run_entry": "baseline_extension/portable_extension.py run --job OUTPUT/job.json",
+      "build_entry": "baseline_extension/portable_extension.py build --backend c2graph --nvcc /usr/local/cuda/bin/nvcc --arch 89 --output BUILD --execute",
+      "scope_status": "CONTINUOUS_CLOCK_D_U_SINGLE_SOURCE_SSSP_TWO_TINY_PASS_TARGET_PENDING"
+    },
+    {
+      "id": "HyTGraph",
+      "upstream": "https://github.com/iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "gpu_counts": [
+        1
+      ],
+      "native_functions": [
+        "bfs",
+        "sssp",
+        "cc",
+        "pr"
+      ],
+      "additional_source_only": [
+        "bc"
+      ],
+      "scope_status": "FOUR_CORE_TINY_GPU_PASS_NEW_CONTINUOUS_CLOCK_REQUALIFICATION_IN_PROGRESS",
+      "author_entrypoints": [
+        "hybrid_bfs",
+        "hybrid_sssp",
+        "hybrid_cc",
+        "hybrid_pr"
+      ],
+      "blockers": [
+        "Tiny GPU complete-output qualification pending primary agent device authorization",
+        "Formal canonical seven-graph conversion/resource and numerical qualification pending"
+      ],
+      "current_adapters": [
+        "experiments/campaign_20261104/baselines/hytgraph_adapter.py"
+      ],
+      "run_entry": "experiments/campaign_20261104/baselines/hytgraph_qualify.py",
+      "build_receipt": "experiments/campaign_20261104/baselines/evidence/hytgraph_build.json",
+      "cpu_parser_receipt": "experiments/campaign_20261104/baselines/evidence/hytgraph_parser_cpu/receipt.json"
+    },
+    {
+      "id": "KGraph",
+      "upstream": "https://github.com/Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "gpu_counts": [
+        0
+      ],
+      "native_functions": [
+        "sssp",
+        "sswp",
+        "ssr",
+        "ppr",
+        "deepwalk"
+      ],
+      "scope_status": "E4S_SPARSE_DENSE_CPU_160_COMPLETE_VECTORS_PASS_BATCH_QUALIFICATION_IN_PROGRESS",
+      "author_entrypoints": [
+        "kgraph-sssp-sparse",
+        "kgraph-sssp-dense",
+        "kgraph-sswp-sparse",
+        "kgraph-sswp-dense",
+        "kgraph-ssr-sparse",
+        "kgraph-ssr-dense",
+        "kgraph-ppr",
+        "kgraph-deepwalk"
+      ],
+      "blockers": [
+        "Formal graph partitions and partition construction charge must be frozen",
+        "All-source complete outputs need resource preflight at batch size 128",
+        "Cross-batch persistent memoization is not implemented by current adapter"
+      ],
+      "experimental_role": "Separate same-graph distinct-source SSSP memoization panel; not GPU closure-budget ablation or global PR",
+      "current_adapters": [
+        "experiments/campaign_20261104/baselines/kgraph_adapter.py"
+      ],
+      "build_receipt": "experiments/campaign_20261104/baselines/evidence/kgraph_build.json",
+      "tiny_receipt": "experiments/campaign_20261104/baselines/evidence/kgraph_tiny_cpu.json"
+    },
+    {
+      "id": "GRACE",
+      "upstream": "https://github.com/DataSysResearch/GRACE",
+      "old_upstream": "https://github.com/intellistream/GRACE",
+      "commit": "9f81318ecb12cbb5531034a574f6136f65d6b8e2",
+      "gpu_counts": [
+        0
+      ],
+      "author_integrations": [
+        "PPCSR-GRACE",
+        "Terrace-GRACE",
+        "VCSR-GRACE"
+      ],
+      "paper_functions": [
+        "bfs",
+        "sssp",
+        "pr",
+        "tc"
+      ],
+      "verified_files": [
+        "PPCSR-GRACE/src/utility/bfs.h",
+        "PPCSR-GRACE/src/utility/sssp.h",
+        "PPCSR-GRACE/src/utility/pagerank.h"
+      ],
+      "scope_status": "AUTHOR_SOURCE_AVAILABLE_DIFFERENT_UPDATE_SEMANTICS",
+      "experimental_role": "Topology insert/delete and PMA reconstruction reference; currently no direct identical fixed-topology GPU attribute-patch comparison",
+      "blockers": [
+        "Not deployed in current runners",
+        "Attribute replacement contract would need source-audited mapping; does not supply native GPU layout patch or GPU retention policy"
+      ]
+    },
+    {
+      "id": "GraphBLAST",
+      "upstream": "https://github.com/gunrock/graphblast",
+      "commit": "f56f9677276c574c6fe4f1cc104d51f13717e165",
+      "gpu_counts": [
+        1
+      ],
+      "native_functions": [
+        "bfs",
+        "sssp",
+        "pr"
+      ],
+      "existing_adapters": [
+        "bfs",
+        "sssp"
+      ],
+      "scope_status": "OLDER_MACHINE_ADAPTER_REQUIRES_TARGET_REBUILD_AND_QUALIFICATION",
+      "blockers": [
+        "FP32 conservative exact-distance condition n*max_weight<=2^24 excludes some frozen large graphs; not silently waive",
+        "PR source supports PageRank but its output and dangling quality contract not qualified"
+      ],
+      "experimental_role": "Applicable single-GPU execution reference; outside multi-GPU resource panel"
+    }
+  ],
+  "capability_corrections": [
+    "CGgraph legacy author WCC and PR already implemented; V1.5 two-function limitation is not a system-wide absence",
+    "Grapin static BFS, SSSP, CC and FP32 PR all have historical complete cells",
+    "C2graph public tree also contains PPR and Adsorption, distinct from current SSSP common contract",
+    "SYgraph fixed source has BFS,SSSP,CC,BC,TC but no ready PageRank implementation",
+    "cuGraph SG global TC now has historical complete cells; older coverage generator warning that it is unmeasured is outdated",
+    "Gunrock and igraph strict-PR timing exists but common-table posterior numerical evidence remains incomplete",
+    "GUM official non-stealing HostFragment SSSP is a measured fallback distinct from work-stealing route",
+    "KGraph and GRACE source code is public; do not mark no-code based on undeployed status"
+  ],
+  "historical_function_cells": [
+    {
+      "system": "EGGPU_arena",
+      "function": "bfs",
+      "panel": "arena_switching",
+      "cell_count": 12,
+      "datasets": [
+        "epinions+notredame+newyork"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 12
+      }
+    },
+    {
+      "system": "EGGPU_arena",
+      "function": "bfs",
+      "panel": "arena_updates",
+      "cell_count": 14,
+      "datasets": [
+        "epinions+notredame+newyork"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 14
+      }
+    },
+    {
+      "system": "EGGPU_arena",
+      "function": "bfs",
+      "panel": "nr",
+      "cell_count": 1,
+      "datasets": [
+        "NR-soc-orkut"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 1
+      }
+    },
+    {
+      "system": "EGGPU_arena",
+      "function": "bfs",
+      "panel": "single_graph",
+      "cell_count": 3,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 3
+      }
+    },
+    {
+      "system": "EGGPU_arena",
+      "function": "bfs_then_pr",
+      "panel": "host_start_flow",
+      "cell_count": 2,
+      "datasets": [
+        "NR-soc-orkut"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 2
+      }
+    },
+    {
+      "system": "EGGPU_arena",
+      "function": "input_preparation",
+      "panel": "host_start_preparation",
+      "cell_count": 1,
+      "datasets": [
+        "NR-soc-orkut"
+      ],
+      "gpu_counts": [
+        0
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 1
+      }
+    },
+    {
+      "system": "EGGPU_arena",
+      "function": "pr",
+      "panel": "arena_switching",
+      "cell_count": 12,
+      "datasets": [
+        "epinions+notredame+newyork"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 12
+      }
+    },
+    {
+      "system": "EGGPU_arena",
+      "function": "pr",
+      "panel": "arena_updates",
+      "cell_count": 14,
+      "datasets": [
+        "epinions+notredame+newyork"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 14
+      }
+    },
+    {
+      "system": "EGGPU_arena",
+      "function": "pr",
+      "panel": "nr",
+      "cell_count": 1,
+      "datasets": [
+        "NR-soc-orkut"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 1
+      }
+    },
+    {
+      "system": "EGGPU_arena",
+      "function": "pr",
+      "panel": "single_graph",
+      "cell_count": 3,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 3
+      }
+    },
+    {
+      "system": "EGGPU_arena",
+      "function": "sssp",
+      "panel": "arena_switching",
+      "cell_count": 12,
+      "datasets": [
+        "epinions+notredame+newyork"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 12
+      }
+    },
+    {
+      "system": "EGGPU_arena",
+      "function": "sssp",
+      "panel": "arena_updates",
+      "cell_count": 14,
+      "datasets": [
+        "epinions+notredame+newyork"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 14
+      }
+    },
+    {
+      "system": "EGGPU_arena",
+      "function": "sssp",
+      "panel": "single_graph",
+      "cell_count": 3,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 3
+      }
+    },
+    {
+      "system": "EGGPU_arena",
+      "function": "weighted_pr",
+      "panel": "arena_switching",
+      "cell_count": 12,
+      "datasets": [
+        "epinions+notredame+newyork"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 12
+      }
+    },
+    {
+      "system": "EGGPU_arena",
+      "function": "weighted_pr",
+      "panel": "arena_updates",
+      "cell_count": 14,
+      "datasets": [
+        "epinions+notredame+newyork"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 14
+      }
+    },
+    {
+      "system": "EGGPU_arena",
+      "function": "weighted_pr",
+      "panel": "single_graph",
+      "cell_count": 3,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 3
+      }
+    },
+    {
+      "system": "EGGPU_native",
+      "function": "bfs",
+      "panel": "concurrency",
+      "cell_count": 20,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 20
+      }
+    },
+    {
+      "system": "EGGPU_native",
+      "function": "bfs",
+      "panel": "graph_switch",
+      "cell_count": 70,
+      "datasets": [
+        "epinions+notredame+newyork"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 70
+      }
+    },
+    {
+      "system": "EGGPU_native",
+      "function": "bfs",
+      "panel": "nr",
+      "cell_count": 12,
+      "datasets": [
+        "NR-soc-orkut",
+        "nr_orkut"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 12
+      }
+    },
+    {
+      "system": "EGGPU_native",
+      "function": "bfs",
+      "panel": "retained_transport",
+      "cell_count": 14,
+      "datasets": [
+        "NR-soc-orkut"
+      ],
+      "gpu_counts": [
+        2,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 14
+      }
+    },
+    {
+      "system": "EGGPU_native",
+      "function": "bfs",
+      "panel": "single_graph",
+      "cell_count": 12,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 12
+      }
+    },
+    {
+      "system": "EGGPU_native",
+      "function": "bfs",
+      "panel": "view_transport",
+      "cell_count": 52,
+      "datasets": [
+        "NR-soc-orkut"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 52
+      }
+    },
+    {
+      "system": "EGGPU_native",
+      "function": "bfs_then_pr",
+      "panel": "host_start_flow",
+      "cell_count": 8,
+      "datasets": [
+        "NR-soc-orkut"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 8
+      }
+    },
+    {
+      "system": "EGGPU_native",
+      "function": "bfs_then_pr",
+      "panel": "host_start_model_calibration",
+      "cell_count": 4,
+      "datasets": [
+        "NR-soc-orkut"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 4
+      }
+    },
+    {
+      "system": "EGGPU_native",
+      "function": "input_preparation",
+      "panel": "host_start_preparation",
+      "cell_count": 4,
+      "datasets": [
+        "NR-soc-orkut"
+      ],
+      "gpu_counts": [
+        0
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 4
+      }
+    },
+    {
+      "system": "EGGPU_native",
+      "function": "pr",
+      "panel": "concurrency",
+      "cell_count": 20,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 20
+      }
+    },
+    {
+      "system": "EGGPU_native",
+      "function": "pr",
+      "panel": "graph_switch",
+      "cell_count": 70,
+      "datasets": [
+        "epinions+notredame+newyork"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 70
+      }
+    },
+    {
+      "system": "EGGPU_native",
+      "function": "pr",
+      "panel": "nr",
+      "cell_count": 12,
+      "datasets": [
+        "NR-soc-orkut",
+        "nr_orkut"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 12
+      }
+    },
+    {
+      "system": "EGGPU_native",
+      "function": "pr",
+      "panel": "retained_transport",
+      "cell_count": 14,
+      "datasets": [
+        "NR-soc-orkut"
+      ],
+      "gpu_counts": [
+        2,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 14
+      }
+    },
+    {
+      "system": "EGGPU_native",
+      "function": "pr",
+      "panel": "single_graph",
+      "cell_count": 24,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 24
+      }
+    },
+    {
+      "system": "EGGPU_native",
+      "function": "pr",
+      "panel": "view_transport",
+      "cell_count": 52,
+      "datasets": [
+        "NR-soc-orkut"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 52
+      }
+    },
+    {
+      "system": "EGGPU_native",
+      "function": "sssp",
+      "panel": "concurrency",
+      "cell_count": 20,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 20
+      }
+    },
+    {
+      "system": "EGGPU_native",
+      "function": "sssp",
+      "panel": "graph_switch",
+      "cell_count": 70,
+      "datasets": [
+        "epinions+notredame+newyork"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 70
+      }
+    },
+    {
+      "system": "EGGPU_native",
+      "function": "sssp",
+      "panel": "lowk_occupancy",
+      "cell_count": 16,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        2
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 16
+      }
+    },
+    {
+      "system": "EGGPU_native",
+      "function": "sssp",
+      "panel": "mechanism",
+      "cell_count": 66,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 66
+      }
+    },
+    {
+      "system": "EGGPU_native",
+      "function": "sssp",
+      "panel": "memory_commit",
+      "cell_count": 24,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 24
+      }
+    },
+    {
+      "system": "EGGPU_native",
+      "function": "sssp",
+      "panel": "memory_dense",
+      "cell_count": 8,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        2,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 8
+      }
+    },
+    {
+      "system": "EGGPU_native",
+      "function": "sssp",
+      "panel": "memory_packet",
+      "cell_count": 32,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 32
+      }
+    },
+    {
+      "system": "EGGPU_native",
+      "function": "sssp",
+      "panel": "single_graph",
+      "cell_count": 12,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 12
+      }
+    },
+    {
+      "system": "EGGPU_native",
+      "function": "wcc",
+      "panel": "single_graph",
+      "cell_count": 24,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 24
+      }
+    },
+    {
+      "system": "EGGPU_native",
+      "function": "wcc_selected_wpr",
+      "panel": "dependent_workflow",
+      "cell_count": 8,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 8
+      }
+    },
+    {
+      "system": "EGGPU_native",
+      "function": "weighted_pr",
+      "panel": "lowk_occupancy",
+      "cell_count": 16,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        2
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 16
+      }
+    },
+    {
+      "system": "EGGPU_native",
+      "function": "weighted_pr",
+      "panel": "mechanism",
+      "cell_count": 66,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 66
+      }
+    },
+    {
+      "system": "EGGPU_native",
+      "function": "weighted_pr",
+      "panel": "memory_commit",
+      "cell_count": 24,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 24
+      }
+    },
+    {
+      "system": "EGGPU_native",
+      "function": "weighted_pr",
+      "panel": "memory_dense",
+      "cell_count": 8,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        2,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 8
+      }
+    },
+    {
+      "system": "EGGPU_native",
+      "function": "weighted_pr",
+      "panel": "memory_packet",
+      "cell_count": 32,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 32
+      }
+    },
+    {
+      "system": "EGGPU_native",
+      "function": "weighted_pr",
+      "panel": "single_graph",
+      "cell_count": 24,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 24
+      }
+    },
+    {
+      "system": "EGGPU_native_memory",
+      "function": "sssp",
+      "panel": "fixed_topology_weight_update",
+      "cell_count": 16,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 16
+      }
+    },
+    {
+      "system": "c2_pm",
+      "function": "sssp_distinct_batch24",
+      "panel": "prepared_request_batch",
+      "cell_count": 6,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 6
+      }
+    },
+    {
+      "system": "c2graph",
+      "function": "sssp",
+      "panel": "single_graph",
+      "cell_count": 3,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 3
+      }
+    },
+    {
+      "system": "cggraph",
+      "function": "bfs",
+      "panel": "single_graph",
+      "cell_count": 3,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 3
+      }
+    },
+    {
+      "system": "cggraph",
+      "function": "sssp",
+      "panel": "single_graph",
+      "cell_count": 3,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 3
+      }
+    },
+    {
+      "system": "cggraph_nr_bfs",
+      "function": "bfs",
+      "panel": "supplementary_functions",
+      "cell_count": 1,
+      "datasets": [
+        "nr"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 1
+      }
+    },
+    {
+      "system": "cggraph_nr_pr",
+      "function": "pr",
+      "panel": "supplementary_functions",
+      "cell_count": 1,
+      "datasets": [
+        "nr"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 1
+      }
+    },
+    {
+      "system": "cggraph_pr",
+      "function": "pr",
+      "panel": "supplementary_functions",
+      "cell_count": 3,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 3
+      }
+    },
+    {
+      "system": "cggraph_pr_gpu100",
+      "function": "pr",
+      "panel": "nr",
+      "cell_count": 1,
+      "datasets": [
+        "nr"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 1
+      }
+    },
+    {
+      "system": "cggraph_wcc",
+      "function": "wcc",
+      "panel": "supplementary_functions",
+      "cell_count": 3,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 3
+      }
+    },
+    {
+      "system": "cugraph",
+      "function": "bc",
+      "panel": "supplementary_functions",
+      "cell_count": 2,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 2
+      }
+    },
+    {
+      "system": "cugraph",
+      "function": "bfs",
+      "panel": "nr",
+      "cell_count": 4,
+      "datasets": [
+        "nr"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 4
+      }
+    },
+    {
+      "system": "cugraph",
+      "function": "bfs",
+      "panel": "single_graph",
+      "cell_count": 12,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 12
+      }
+    },
+    {
+      "system": "cugraph",
+      "function": "kcore",
+      "panel": "supplementary_functions",
+      "cell_count": 2,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 2
+      }
+    },
+    {
+      "system": "cugraph",
+      "function": "lcc",
+      "panel": "supplementary_functions",
+      "cell_count": 2,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 2
+      }
+    },
+    {
+      "system": "cugraph",
+      "function": "mst",
+      "panel": "supplementary_functions",
+      "cell_count": 2,
+      "datasets": [
+        "epinions",
+        "grqc"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 2
+      }
+    },
+    {
+      "system": "cugraph",
+      "function": "pr",
+      "panel": "nr",
+      "cell_count": 4,
+      "datasets": [
+        "nr"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 4
+      }
+    },
+    {
+      "system": "cugraph",
+      "function": "pr",
+      "panel": "single_graph",
+      "cell_count": 12,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 12
+      }
+    },
+    {
+      "system": "cugraph",
+      "function": "scc",
+      "panel": "supplementary_functions",
+      "cell_count": 2,
+      "datasets": [
+        "epinions",
+        "grqc"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 2
+      }
+    },
+    {
+      "system": "cugraph",
+      "function": "sssp",
+      "panel": "fixed_topology_weight_update",
+      "cell_count": 4,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 4
+      }
+    },
+    {
+      "system": "cugraph",
+      "function": "sssp",
+      "panel": "single_graph",
+      "cell_count": 12,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 12
+      }
+    },
+    {
+      "system": "cugraph",
+      "function": "wcc",
+      "panel": "single_graph",
+      "cell_count": 12,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 12
+      }
+    },
+    {
+      "system": "cugraph",
+      "function": "wcc_selected_wpr",
+      "panel": "dependent_workflow",
+      "cell_count": 8,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 8
+      }
+    },
+    {
+      "system": "cugraph",
+      "function": "weighted_pr",
+      "panel": "single_wpr",
+      "cell_count": 12,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 12
+      }
+    },
+    {
+      "system": "cugraph_allsource",
+      "function": "bc",
+      "panel": "all_source_centrality",
+      "cell_count": 1,
+      "datasets": [
+        "grqc"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 1
+      }
+    },
+    {
+      "system": "cugraph_fp32",
+      "function": "pr",
+      "panel": "precision_sensitivity",
+      "cell_count": 3,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 3
+      }
+    },
+    {
+      "system": "cugraph_mg",
+      "function": "bc",
+      "panel": "all_source_centrality",
+      "cell_count": 3,
+      "datasets": [
+        "full_grqc"
+      ],
+      "gpu_counts": [
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 3
+      }
+    },
+    {
+      "system": "cugraph_mg",
+      "function": "bc",
+      "panel": "supplementary_functions",
+      "cell_count": 6,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 6
+      }
+    },
+    {
+      "system": "cugraph_mg",
+      "function": "kcore",
+      "panel": "supplementary_functions",
+      "cell_count": 8,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 8
+      }
+    },
+    {
+      "system": "cugraph_mg",
+      "function": "lcc",
+      "panel": "supplementary_functions",
+      "cell_count": 6,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 6
+      }
+    },
+    {
+      "system": "cugraph_mg",
+      "function": "tc",
+      "panel": "supplementary_functions",
+      "cell_count": 6,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 6
+      }
+    },
+    {
+      "system": "cugraph_sg_replicas",
+      "function": "bc",
+      "panel": "all_source_centrality",
+      "cell_count": 2,
+      "datasets": [
+        "full_grqc"
+      ],
+      "gpu_counts": [
+        2,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 2
+      }
+    },
+    {
+      "system": "cugraph_sg_replicas",
+      "function": "bc",
+      "panel": "supplementary_functions",
+      "cell_count": 4,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        2,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 4
+      }
+    },
+    {
+      "system": "cugraph_sg_tc",
+      "function": "tc",
+      "panel": "supplementary_functions",
+      "cell_count": 3,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 3
+      }
+    },
+    {
+      "system": "easygraph_cpu",
+      "function": "constraint",
+      "panel": "supplementary_functions",
+      "cell_count": 1,
+      "datasets": [
+        "grqc"
+      ],
+      "gpu_counts": [
+        0
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 1
+      }
+    },
+    {
+      "system": "easygraph_cpu",
+      "function": "effective_size",
+      "panel": "supplementary_functions",
+      "cell_count": 1,
+      "datasets": [
+        "grqc"
+      ],
+      "gpu_counts": [
+        0
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 1
+      }
+    },
+    {
+      "system": "easygraph_cpu",
+      "function": "efficiency",
+      "panel": "supplementary_functions",
+      "cell_count": 1,
+      "datasets": [
+        "grqc"
+      ],
+      "gpu_counts": [
+        0
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 1
+      }
+    },
+    {
+      "system": "easygraph_cpu",
+      "function": "hierarchy",
+      "panel": "supplementary_functions",
+      "cell_count": 1,
+      "datasets": [
+        "grqc"
+      ],
+      "gpu_counts": [
+        0
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 1
+      }
+    },
+    {
+      "system": "grapin",
+      "function": "dynamic_sssp",
+      "panel": "grapin_dynamic_profile",
+      "cell_count": 20,
+      "datasets": [
+        "college32",
+        "superuser8"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 20
+      }
+    },
+    {
+      "system": "grapin",
+      "function": "sssp",
+      "panel": "fixed_topology_weight_update",
+      "cell_count": 4,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 4
+      }
+    },
+    {
+      "system": "grapin_bfs",
+      "function": "bfs",
+      "panel": "grapin_static_shared_functions",
+      "cell_count": 3,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 3
+      }
+    },
+    {
+      "system": "grapin_cc",
+      "function": "wcc",
+      "panel": "grapin_static_shared_functions",
+      "cell_count": 3,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 3
+      }
+    },
+    {
+      "system": "grapin_pr",
+      "function": "pr",
+      "panel": "precision_sensitivity",
+      "cell_count": 3,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 3
+      }
+    },
+    {
+      "system": "grapin_sssp",
+      "function": "sssp",
+      "panel": "grapin_static_shared_functions",
+      "cell_count": 3,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 3
+      }
+    },
+    {
+      "system": "gum",
+      "function": "bfs",
+      "panel": "nr",
+      "cell_count": 4,
+      "datasets": [
+        "nr"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 4
+      }
+    },
+    {
+      "system": "gum",
+      "function": "bfs",
+      "panel": "single_graph",
+      "cell_count": 12,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 12
+      }
+    },
+    {
+      "system": "gum",
+      "function": "pr",
+      "panel": "nr",
+      "cell_count": 4,
+      "datasets": [
+        "nr"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 4
+      }
+    },
+    {
+      "system": "gum",
+      "function": "pr",
+      "panel": "single_graph",
+      "cell_count": 12,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 12
+      }
+    },
+    {
+      "system": "gum",
+      "function": "sssp",
+      "panel": "single_graph",
+      "cell_count": 3,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 3
+      }
+    },
+    {
+      "system": "gum",
+      "function": "wcc",
+      "panel": "single_graph",
+      "cell_count": 12,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 12
+      }
+    },
+    {
+      "system": "gum_standard",
+      "function": "sssp",
+      "panel": "single_graph",
+      "cell_count": 12,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 12
+      }
+    },
+    {
+      "system": "gunrock",
+      "function": "bfs",
+      "panel": "nr",
+      "cell_count": 1,
+      "datasets": [
+        "nr"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 1
+      }
+    },
+    {
+      "system": "gunrock",
+      "function": "bfs",
+      "panel": "single_graph",
+      "cell_count": 3,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 3
+      }
+    },
+    {
+      "system": "gunrock",
+      "function": "mst",
+      "panel": "supplementary_functions",
+      "cell_count": 2,
+      "datasets": [
+        "epinions",
+        "grqc"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 2
+      }
+    },
+    {
+      "system": "gunrock",
+      "function": "pr",
+      "panel": "nr",
+      "cell_count": 1,
+      "datasets": [
+        "nr"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 1
+      }
+    },
+    {
+      "system": "gunrock",
+      "function": "pr",
+      "panel": "single_graph",
+      "cell_count": 3,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 3
+      }
+    },
+    {
+      "system": "gunrock",
+      "function": "sssp",
+      "panel": "fixed_topology_weight_update",
+      "cell_count": 4,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 4
+      }
+    },
+    {
+      "system": "gunrock",
+      "function": "sssp",
+      "panel": "single_graph",
+      "cell_count": 3,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 3
+      }
+    },
+    {
+      "system": "gunrock_allsource",
+      "function": "bc",
+      "panel": "all_source_centrality",
+      "cell_count": 1,
+      "datasets": [
+        "grqc"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 1
+      }
+    },
+    {
+      "system": "gunrock_fp32",
+      "function": "pr",
+      "panel": "precision_sensitivity",
+      "cell_count": 3,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 3
+      }
+    },
+    {
+      "system": "gunrock_supp",
+      "function": "bc",
+      "panel": "supplementary_functions",
+      "cell_count": 2,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 2
+      }
+    },
+    {
+      "system": "gunrock_supp",
+      "function": "kcore",
+      "panel": "supplementary_functions",
+      "cell_count": 2,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 2
+      }
+    },
+    {
+      "system": "gunrock_supp",
+      "function": "lcc",
+      "panel": "supplementary_functions",
+      "cell_count": 2,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 2
+      }
+    },
+    {
+      "system": "gunrock_supp",
+      "function": "tc",
+      "panel": "supplementary_functions",
+      "cell_count": 2,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 2
+      }
+    },
+    {
+      "system": "gunrock_wcc",
+      "function": "wcc",
+      "panel": "single_graph",
+      "cell_count": 12,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 12
+      }
+    },
+    {
+      "system": "igraph",
+      "function": "bc",
+      "panel": "supplementary_functions",
+      "cell_count": 2,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        0
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 2
+      }
+    },
+    {
+      "system": "igraph",
+      "function": "bfs",
+      "panel": "single_graph",
+      "cell_count": 3,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        0
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 3
+      }
+    },
+    {
+      "system": "igraph",
+      "function": "constraint",
+      "panel": "supplementary_functions",
+      "cell_count": 2,
+      "datasets": [
+        "epinions",
+        "grqc"
+      ],
+      "gpu_counts": [
+        0
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 2
+      }
+    },
+    {
+      "system": "igraph",
+      "function": "kcore",
+      "panel": "supplementary_functions",
+      "cell_count": 2,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        0
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 2
+      }
+    },
+    {
+      "system": "igraph",
+      "function": "lcc",
+      "panel": "supplementary_functions",
+      "cell_count": 2,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        0
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 2
+      }
+    },
+    {
+      "system": "igraph",
+      "function": "mst",
+      "panel": "supplementary_functions",
+      "cell_count": 2,
+      "datasets": [
+        "epinions",
+        "grqc"
+      ],
+      "gpu_counts": [
+        0
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 2
+      }
+    },
+    {
+      "system": "igraph",
+      "function": "pr",
+      "panel": "single_graph",
+      "cell_count": 3,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        0
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 3
+      }
+    },
+    {
+      "system": "igraph",
+      "function": "scc",
+      "panel": "supplementary_functions",
+      "cell_count": 2,
+      "datasets": [
+        "epinions",
+        "grqc"
+      ],
+      "gpu_counts": [
+        0
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 2
+      }
+    },
+    {
+      "system": "igraph",
+      "function": "sssp",
+      "panel": "fixed_topology_weight_update",
+      "cell_count": 4,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        0
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 4
+      }
+    },
+    {
+      "system": "igraph",
+      "function": "sssp",
+      "panel": "single_graph",
+      "cell_count": 3,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        0
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 3
+      }
+    },
+    {
+      "system": "igraph",
+      "function": "wcc",
+      "panel": "single_graph",
+      "cell_count": 3,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        0
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 3
+      }
+    },
+    {
+      "system": "igraph",
+      "function": "wcc_selected_wpr",
+      "panel": "dependent_workflow",
+      "cell_count": 3,
+      "datasets": [
+        "epinions",
+        "notredame",
+        "tiny"
+      ],
+      "gpu_counts": [
+        0
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 3
+      }
+    },
+    {
+      "system": "igraph",
+      "function": "weighted_pr",
+      "panel": "single_wpr",
+      "cell_count": 3,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        0
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 3
+      }
+    },
+    {
+      "system": "igraph_allsource",
+      "function": "bc",
+      "panel": "all_source_centrality",
+      "cell_count": 1,
+      "datasets": [
+        "grqc"
+      ],
+      "gpu_counts": [
+        0
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 1
+      }
+    },
+    {
+      "system": "igraph_allsource",
+      "function": "closeness",
+      "panel": "all_source_centrality",
+      "cell_count": 1,
+      "datasets": [
+        "grqc"
+      ],
+      "gpu_counts": [
+        0
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 1
+      }
+    },
+    {
+      "system": "sygraph",
+      "function": "bc",
+      "panel": "supplementary_functions",
+      "cell_count": 2,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 2
+      }
+    },
+    {
+      "system": "sygraph",
+      "function": "bfs",
+      "panel": "single_graph",
+      "cell_count": 3,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 3
+      }
+    },
+    {
+      "system": "sygraph",
+      "function": "sssp",
+      "panel": "single_graph",
+      "cell_count": 3,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 3
+      }
+    },
+    {
+      "system": "sygraph",
+      "function": "tc",
+      "panel": "supplementary_functions",
+      "cell_count": 2,
+      "datasets": [
+        "epinions",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 2
+      }
+    },
+    {
+      "system": "sygraph",
+      "function": "wcc",
+      "panel": "supplementary_functions",
+      "cell_count": 3,
+      "datasets": [
+        "epinions",
+        "newyork",
+        "notredame"
+      ],
+      "gpu_counts": [
+        1
+      ],
+      "reported_status_counts": {
+        "COMPLETE": 3
+      }
+    }
+  ],
+  "prohibited_inferences": [
+    "Historical COMPLETE is not new seven-graph qualification",
+    "No callable adapter is not lack of author implementation",
+    "GPU-count capability is not observed scalability",
+    "Different PR/PPR semantics or source scopes cannot share a speedup denominator"
+  ],
+  "baseline_change_policy": {
+    "allowed": [
+      "input/output adapters",
+      "current compiler compatibility",
+      "minimum correctness repairs",
+      "same numerical contract calibration",
+      "official documented parameters and native persistent state"
+    ],
+    "disallowed": [
+      "new optimized baseline kernels",
+      "disabling author memoization/cache/stealing without an explicit applicability reason",
+      "per-dataset fastest historical version selection",
+      "mistaking timeout/OOM/quality missing for unsupported API"
+    ]
+  },
+  "new_adapter_evidence": {
+    "directory": "experiments/campaign_20261104/baselines",
+    "gpu_executed_by_audit_agent": false,
+    "formal_seven_graph_performance_eligible": false,
+    "current_runner_root": "experiments/campaign_20261104",
+    "frozen_candidates": {
+      "author_sg": "runner_candidates/sg_author_clock_v3",
+      "c2graph_p": "runner_candidates/c2p_e1_v1",
+      "gum": "runner_candidates/gum_v2",
+      "e4s": "e4s"
+    },
+    "plans": {
+      "author_sg": [
+        "author_tiny_v3_plan.json",
+        "author_target_clock_v3_plan.json"
+      ],
+      "c2graph_p": [
+        "c2p_tiny_v1_plan.json",
+        "c2p_target_v1_plan.json"
+      ],
+      "gum": [
+        "gum_tiny_v2_plan.json",
+        "gum_target_v2_plan.json"
+      ],
+      "e4s": [
+        "e4s_tiny_v1_plan.json",
+        "e4s_target_v1_plan.json"
+      ]
+    },
+    "real_e4s_source_receipt": "e4s/real_sources_v1/receipt.json",
+    "qualification_authority": "Each frozen plan names exact source/configuration-bound result.json. No inheritance across changed runner/source epochs.",
+    "continuous_t_first": "Parent CLOCK_MONOTONIC before system-specific preparation through complete owning host result, including actual serialization/partition/compression/exec. Never phase-duration sums.",
+    "pr_quality": {
+      "external_residual_l1_max": 1e-06,
+      "external_mass_error_max": 1e-06,
+      "external_reference_l1_max": 1e-05,
+      "source_audit": "baselines/evidence/pr_stopping_source_audit.json",
+      "eligibility": "Actual complete-vector external gates, with native dtype/normalization/stop norm disclosed; no blind epsilon scaling."
+    },
+    "eggpu_e4s_source": "Cold-source algorithm tiny only; unified final source must pass matching qualification before formal performance.",
+    "gpu_submission_owner": "root agent; this audit agent has not submitted GPU work"
+  },
+  "public_projection_note": "Private operator paths redacted. Capability/source metadata and source-bound scope only; not an executable proof or a complete baseline installation."
+}

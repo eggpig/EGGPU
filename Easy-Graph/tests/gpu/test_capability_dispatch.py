@@ -91,17 +91,16 @@ def test_wcc_certificate_preserves_general_canonicalization(raw, expected):
     assert not np.shares_memory(certified, values)
 
 
-def test_canonical_roots_avoid_sorting_but_uncertified_labels_fall_back(monkeypatch):
-    original = np.unique
-    calls = []
-    def unique(*args, **kwargs):
-        calls.append(1)
-        return original(*args, **kwargs)
-    monkeypatch.setattr(np, 'unique', unique)
-    canonical_wcc(np.array([0., 0., 2., 2.]), 4, certify_minimum=True)
-    assert calls == []
-    canonical_wcc(np.array([1., 1., 3., 3.]), 4, certify_minimum=True)
-    assert calls == [1]
+def test_canonical_roots_and_fallback_preserve_minima_without_global_sorting(monkeypatch):
+    def unexpected_unique(*args, **kwargs):
+        raise AssertionError('Dense-index labels do not need global re-encoding')
+    monkeypatch.setattr(np, 'unique', unexpected_unique)
+    np.testing.assert_array_equal(
+        canonical_wcc(np.array([0., 0., 2., 2.]), 4, certify_minimum=True),
+        [0., 0., 2., 2.])
+    np.testing.assert_array_equal(
+        canonical_wcc(np.array([1., 1., 3., 3.]), 4, certify_minimum=True),
+        [0., 0., 2., 2.])
 
 
 @pytest.mark.parametrize('labels', [[0., np.nan], [0., -1.], [0., 2.], [0., .5]])

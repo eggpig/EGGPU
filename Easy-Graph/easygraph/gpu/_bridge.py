@@ -21,6 +21,7 @@ import numpy as np
 
 from .contracts import (NodeDomain, GraphVersion, GraphDescriptor, CapabilityDescriptor,
                           HostOutputState, StateSnapshot, QueryContract, query_contract, managed_inventory)
+from ._arena_output import _download_request, _consume_download
 
 _native_runtime_lock = threading.RLock()
 _native_runtime_owner = None
@@ -58,10 +59,12 @@ class QueryResult:
     contract: QueryContract | None = None
 
 
-def owning_result(graph_id, algorithm, values, begin, metrics, *, graph=None, node_ids=None, owner_id=None, contract=None, _private_owned=None):
+def owning_result(graph_id, algorithm, values, begin, metrics, *, graph=None, node_ids=None, owner_id=None, contract=None, _private_owned=None, _arena_scope=None):
     # A common, independent immutable host value. The copy is explicitly charged.
-    ownership_key = "sssp" if algorithm == "sssp" else "pr" if algorithm in ("pr", "weighted_pr") else None
+    ownership_key = algorithm if algorithm in ('bfs', 'sssp') else 'pr' if algorithm in ('pr', 'weighted_pr') else None
     ownership_begin = perf_counter() if ownership_key is not None else None
+    adopted = False
+    arena_adopted = False
     if _private_owned is not None:
         if not (((_private_owned is _NATIVE_WCC_OWNED_OUTPUT or _private_owned is _ARENA_WCC_OWNED_OUTPUT) and algorithm == 'wcc')
                 or (_private_owned is _NATIVE_BFS_OWNED_OUTPUT and algorithm == 'bfs')
@@ -76,16 +79,20 @@ def owning_result(graph_id, algorithm, values, begin, metrics, *, graph=None, no
                 or not values.flags.c_contiguous or values.base is not None):
             raise RuntimeError('Private producer did not return an owning float64 array')
         result = values
+        adopted = True
+    elif _arena_scope is not None and _consume_download(_arena_scope, graph_id, algorithm, values):
+        result = values
+        adopted = arena_adopted = True
     else:
         result = np.array(values, dtype=np.float64, copy=True)
     if ownership_begin is not None:
         ownership_seconds = perf_counter() - ownership_begin
         metrics[ownership_key+"_public_output_ownership"] = dict(
-            route="adopt_private_numpy" if _private_owned is not None else "copy_to_public_numpy",
-            bridge_copy_bytes=0 if _private_owned is not None else int(result.nbytes),
-            bridge_copy_bytes_avoided=int(result.nbytes) if _private_owned is not None else 0,
+            route='adopt_arena_download' if arena_adopted else 'adopt_private_numpy' if adopted else 'copy_to_public_numpy',
+            bridge_copy_bytes=0 if adopted else int(result.nbytes),
+            bridge_copy_bytes_avoided=int(result.nbytes) if adopted else 0,
             ownership_seconds=ownership_seconds,
-            bridge_copy_seconds=0.0 if _private_owned is not None else ownership_seconds,
+            bridge_copy_seconds=0.0 if adopted else ownership_seconds,
             accounting_scope="Actual host copy/adoption boundary; bytes are payload, not peak memory")
         publication_begin = perf_counter()
     if graph is not None and result.shape != (graph.node_domain.count,):
@@ -108,17 +115,17 @@ class _Bridge:
         self._outputs = {}
         self._output_sequence = 0
 
-    def _own_result(self, graph_id, algorithm, values, begin, metrics, parameters, *, contract=None, _private_owned=None):
+    def _own_result(self, graph_id, algorithm, values, begin, metrics, parameters, *, contract=None, _private_owned=None, _arena_scope=None):
         self._output_sequence += 1
         owner_id = f'{self.session_id}/output/{self._output_sequence}'
         result = owning_result(graph_id, algorithm, values, begin, metrics,
                                graph=self.describe(graph_id), node_ids=self.nodes[graph_id], owner_id=owner_id,
                                contract=contract or query_contract(algorithm, parameters, len(self.nodes[graph_id])),
-                               _private_owned=_private_owned)
+                               _private_owned=_private_owned, _arena_scope=_arena_scope)
         # A result can be dropped without another snapshot/query. Do not keep dead
         # owner descriptors indefinitely in a long-lived service. The callback
         # references the session weakly and serializes with snapshots/queries.
-        ownership_key = "sssp" if algorithm == "sssp" else "pr" if algorithm in ("pr", "weighted_pr") else None
+        ownership_key = algorithm if algorithm in ('bfs', 'sssp') else 'pr' if algorithm in ('pr', 'weighted_pr') else None
         registry_begin = perf_counter() if ownership_key is not None else None
         owner_ref = weakref.ref(self)
         def released(_reference):
@@ -148,7 +155,7 @@ class ManagedSession(_Bridge):
     capabilities = frozenset({'bfs', 'sssp', 'pr', 'weighted_pr', 'updates', 'managed_budget'})
 
     def __init__(self, graphs, *, budget_bytes, pr_tolerance_l1=1e-6,
-                 pr_max_iter=10000):
+                  pr_max_iter=10000, input_format='coo'):
         if isinstance(pr_tolerance_l1, (bool, np.bool_)):
             raise ValueError('PageRank L1 tolerance must be finite and positive')
         tolerance = float(pr_tolerance_l1)
@@ -163,14 +170,28 @@ class ManagedSession(_Bridge):
         if iterations <= 0:
             raise ValueError('PageRank iteration limit must be a positive integer')
         self.pr_tolerance_l1, self.pr_max_iter = tolerance, iterations
-        from easygraph.gpu._arena.input_hotpath.fused_producer_v8 import prepare_owned
+        if input_format not in ('coo', 'csr'):
+            raise ValueError('Arena input_format must be coo or csr')
+        if input_format == 'csr':
+            from ._csr_input import prepare_csr as prepare_owned
+        else:
+            from easygraph.gpu._arena.input_hotpath.fused_producer_v8 import prepare_owned
         from easygraph.gpu._arena.input_hotpath.confirm_candidate_v1 import ConfirmCandidateAdapter
         begin = perf_counter()
         prepared, self.producer_profiles = prepare_owned(graphs)
         self.backend = ConfirmCandidateAdapter(prepared, budget_bytes=budget_bytes)
         self.backend.pr_tolerance_l1 = tolerance
         self.backend.pr_max_iter = iterations
-        self.nodes = {name: np.array(data['nodes'], dtype=np.int64, copy=True) for name, data in prepared.items()}
+        if input_format == 'csr':
+            # Copy the already validated owned node snapshot, not a caller array
+            # retained by the small CSRInput envelope. Queries must remain bound
+            # to registration even after the caller mutates its original labels.
+            self.nodes = {name: np.array(self.backend.session.journal.snapshot(
+                self.backend.session.refs[name]).host_state.nodes, dtype=np.int64, copy=True)
+                for name in prepared}
+            self.backend.nodes = self.nodes
+        else:
+            self.nodes = {name: np.array(data['nodes'], dtype=np.int64, copy=True) for name, data in prepared.items()}
         self._lock = self.backend.session.lock
         self._initialize_bridge('managed')
         self.initialization_seconds = perf_counter() - begin
@@ -200,14 +221,15 @@ class ManagedSession(_Bridge):
         # Numerical options belong to the session; reject silent per-call overrides.
         if algorithm in {'pr', 'weighted_pr'} and parameters:
             raise ValueError('Set PageRank tolerance and iteration limit when creating the arena session')
-        values = self.backend.query(graph_id, algorithm, parameters)
-        contract = query_contract(algorithm, parameters, len(self.nodes[graph_id]))
-        if algorithm in {'pr', 'weighted_pr'}:
-            count = len(self.nodes[graph_id])
-            contract = replace(contract, max_iterations=self.pr_max_iter,
-                               tolerance_per_vertex=self.pr_tolerance_l1 / count if count else None)
-        return self._own_result(graph_id, algorithm, values, begin, copy.deepcopy(self.backend.last), parameters,
-                                contract=contract)
+        with _download_request(graph_id, algorithm) as scope:
+            values = self.backend.query(graph_id, algorithm, parameters)
+            contract = query_contract(algorithm, parameters, len(self.nodes[graph_id]))
+            if algorithm in {'pr', 'weighted_pr'}:
+                count = len(self.nodes[graph_id])
+                contract = replace(contract, max_iterations=self.pr_max_iter,
+                                   tolerance_per_vertex=self.pr_tolerance_l1 / count if count else None)
+            return self._own_result(graph_id, algorithm, values, begin, copy.deepcopy(self.backend.last), parameters,
+                                    contract=contract, _arena_scope=scope)
 
     def update(self, graph_id, batch):
         with self._lock:

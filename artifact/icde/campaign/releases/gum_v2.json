@@ -1,0 +1,61 @@
+{
+  "schema": "eggpu.runner.release.v1",
+  "version": "gum_v2",
+  "status": "AUTHOR_TINY_SCOPE_SEPARATE_CURRENT_PUBLIC_PROOFS_REQUIRED",
+  "files": {
+    "gum_worker.py": {
+      "sha256": "a293f8375c3781d98c9ed34bf01ea283504854c678ec64e412bfadd9bd76f522",
+      "bytes": 14590
+    },
+    "gum_clock.py": {
+      "sha256": "1ac3b7d75d453a352c32f3e4a1ee65cf533f0d0814385ed033b6998b1073d3e5",
+      "bytes": 5323
+    },
+    "gum_rank_exec.py": {
+      "sha256": "750a85e8b27522179b7de858f3832fc87c89de89820ecf55209b7e9f1e10a1e5",
+      "bytes": 1636
+    },
+    "gum_reused.py": {
+      "sha256": "466e408ae6c10627aa647ad6424c0b0ecf80910f872efa8299c999269f9d3537",
+      "bytes": 7511
+    },
+    "run_gum.py": {
+      "sha256": "ede6dabc7db3c8caa5710cc2c0b3c345e71273748057de6998e724ec29e3eb30",
+      "bytes": 3751
+    },
+    "test_gum_campaign.py": {
+      "sha256": "e997788ab29bc32802657efa4282263a43666561f265304f3a73e8175014ad20",
+      "bytes": 4607
+    },
+    "test_gum_clock.py": {
+      "sha256": "7ce468cf1879b2174fe778a52c027465b1f57f0abe450384c730d8d654305f16",
+      "bytes": 3418
+    },
+    "gum_reuse_provenance.json": {
+      "sha256": "2ceb55604fcffd6f7a4f98d35553824563a953487c48faa18cfc7f043adb2e5f",
+      "bytes": 1794
+    },
+    "sg_worker.py": {
+      "sha256": "7ab87843b24df60ad1372bee6383ec2c9d75227031a8343c439a6cca0ddbde43",
+      "bytes": 41183
+    },
+    "cugraph_csr_adapter.py": {
+      "sha256": "36e57e6dd8764e5b27db5a21a8b7b0c712f9c42d434636744c4e29997b2447cf",
+      "bytes": 7465
+    },
+    "native_worker.py": {
+      "sha256": "12f183d6ff969e4c1921e388546a70a102d8ff22e1c9cb39df9a1b56b6b390f6",
+      "bytes": 23833
+    },
+    "native_input.py": {
+      "sha256": "927a9194b15b6dfaf91ff829f2476a676c7828ba4071607497ef308789d10152",
+      "bytes": 11994
+    },
+    "mg_process_observer.py": {
+      "sha256": "368c4d858da8dc5a2833dd2cd2dd30d0ab9df75940968c181a1537c2e30426a7",
+      "bytes": 2499
+    }
+  },
+  "formal_results": 0,
+  "qualification_note": "Public source/path changes require exact local tiny/target proofs. Earlier operator scope evidence is not a proof shortcut."
+}

@@ -1,0 +1,53 @@
+{
+  "schema": "eggpu.runner.release.v1",
+  "version": "e6_v2",
+  "status": "EARLIER_SOURCE_11_TINY_PASS_FORMAL_PENDING",
+  "files": {
+    "e6_worker.py": {
+      "sha256": "526ff0cb9b0caa1cc5ea63e8f3d7972e3fdccfd498eb7f32c38270392677afb0",
+      "bytes": 39250
+    },
+    "e6_reused.py": {
+      "sha256": "44704d165a4b87de73152592c18efaebfa280286722b98bcd5d665487bee8af9",
+      "bytes": 14948
+    },
+    "run_e6.py": {
+      "sha256": "348b343da25ebff877a08173f19b6ed5333bd3e4beec6b436e4e767da08364bc",
+      "bytes": 7934
+    },
+    "test_e6_campaign.py": {
+      "sha256": "b024fb766aac6c23f20e8cfcc6701aae0594c40179d4a38eedcb421988ca8307",
+      "bytes": 16635
+    },
+    "e6_reuse_provenance.json": {
+      "sha256": "49bab07cfcfe263ed3b1e12b2316557640c99e8e032b3ec9e7b30d0199df42f6",
+      "bytes": 1480
+    },
+    "E6_PROTOCOL_CN.md": {
+      "sha256": "392a09e9c04c70da17f42c4e6b0657dd84ae683469a9fead3487f968837c5e7b",
+      "bytes": 8244
+    },
+    "sg_worker.py": {
+      "sha256": "7ab87843b24df60ad1372bee6383ec2c9d75227031a8343c439a6cca0ddbde43",
+      "bytes": 41183
+    },
+    "cugraph_csr_adapter.py": {
+      "sha256": "36e57e6dd8764e5b27db5a21a8b7b0c712f9c42d434636744c4e29997b2447cf",
+      "bytes": 7465
+    },
+    "native_worker.py": {
+      "sha256": "12f183d6ff969e4c1921e388546a70a102d8ff22e1c9cb39df9a1b56b6b390f6",
+      "bytes": 23833
+    },
+    "native_input.py": {
+      "sha256": "927a9194b15b6dfaf91ff829f2476a676c7828ba4071607497ef308789d10152",
+      "bytes": 11994
+    },
+    "mg_process_observer.py": {
+      "sha256": "368c4d858da8dc5a2833dd2cd2dd30d0ab9df75940968c181a1537c2e30426a7",
+      "bytes": 2499
+    }
+  },
+  "formal_results": 0,
+  "qualification_note": "Public source/path changes require exact local tiny/target proofs. Earlier operator scope evidence is not a proof shortcut."
+}

@@ -1,0 +1,1981 @@
+{
+  "status": "COMPLETE_WITH_FAILURES",
+  "plan": {
+    "path": "<campaign>/mg_e6_sequence_qualification_v3_plan.json",
+    "sha256": "c431625e40d33dc96863317ff266b03f6cc2a7341e2e168719752d19a2f661ce",
+    "bytes": 66444
+  },
+  "controller": {
+    "path": "<campaign>/run_campaign_queue_v2.py",
+    "sha256": "ecc32cc148e9b686826f6b8886def92cc23f136e0ecebfc1ea19cf17d0d8acfc",
+    "bytes": 4722
+  },
+  "jobs": [
+    {
+      "id": "cugraph_mg_TINY_D_bfs_p2",
+      "command": [
+        "<artifact-work>/envs/rapids/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/cugraph_mg_v2/cugraph_mg_worker.py",
+        "--execute-gpu",
+        "--phase",
+        "tiny",
+        "--dataset",
+        "TINY_D",
+        "--algorithm",
+        "bfs",
+        "--count",
+        "2",
+        "--gpu-uuids",
+        "<device-0>,<device-1>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/native_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/mg_tiny_v2/cugraph_mg_TINY_D_bfs_p2"
+      ],
+      "receipt": "<campaign>/mg_tiny_v2/cugraph_mg_TINY_D_bfs_p2/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/cugraph_mg_v2/cugraph_mg_worker.py",
+          "sha256": "d5502e18c149d99bc7400a662c5b7df6570980cdbd33e3964680fc04659127e4"
+        }
+      ]
+    },
+    {
+      "id": "cugraph_mg_TINY_D_bfs_p8",
+      "command": [
+        "<artifact-work>/envs/rapids/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/cugraph_mg_v2/cugraph_mg_worker.py",
+        "--execute-gpu",
+        "--phase",
+        "tiny",
+        "--dataset",
+        "TINY_D",
+        "--algorithm",
+        "bfs",
+        "--count",
+        "8",
+        "--gpu-uuids",
+        "<device-0>,<device-1>,<device-2>,<device-3>,<device-4>,<device-5>,<device-6>,<device-7>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/native_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/mg_tiny_v2/cugraph_mg_TINY_D_bfs_p8"
+      ],
+      "receipt": "<campaign>/mg_tiny_v2/cugraph_mg_TINY_D_bfs_p8/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/cugraph_mg_v2/cugraph_mg_worker.py",
+          "sha256": "d5502e18c149d99bc7400a662c5b7df6570980cdbd33e3964680fc04659127e4"
+        }
+      ]
+    },
+    {
+      "id": "cugraph_mg_TINY_D_sssp_p2",
+      "command": [
+        "<artifact-work>/envs/rapids/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/cugraph_mg_v2/cugraph_mg_worker.py",
+        "--execute-gpu",
+        "--phase",
+        "tiny",
+        "--dataset",
+        "TINY_D",
+        "--algorithm",
+        "sssp",
+        "--count",
+        "2",
+        "--gpu-uuids",
+        "<device-0>,<device-1>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/native_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/mg_tiny_v2/cugraph_mg_TINY_D_sssp_p2"
+      ],
+      "receipt": "<campaign>/mg_tiny_v2/cugraph_mg_TINY_D_sssp_p2/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/cugraph_mg_v2/cugraph_mg_worker.py",
+          "sha256": "d5502e18c149d99bc7400a662c5b7df6570980cdbd33e3964680fc04659127e4"
+        }
+      ]
+    },
+    {
+      "id": "cugraph_mg_TINY_D_sssp_p8",
+      "command": [
+        "<artifact-work>/envs/rapids/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/cugraph_mg_v2/cugraph_mg_worker.py",
+        "--execute-gpu",
+        "--phase",
+        "tiny",
+        "--dataset",
+        "TINY_D",
+        "--algorithm",
+        "sssp",
+        "--count",
+        "8",
+        "--gpu-uuids",
+        "<device-0>,<device-1>,<device-2>,<device-3>,<device-4>,<device-5>,<device-6>,<device-7>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/native_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/mg_tiny_v2/cugraph_mg_TINY_D_sssp_p8"
+      ],
+      "receipt": "<campaign>/mg_tiny_v2/cugraph_mg_TINY_D_sssp_p8/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/cugraph_mg_v2/cugraph_mg_worker.py",
+          "sha256": "d5502e18c149d99bc7400a662c5b7df6570980cdbd33e3964680fc04659127e4"
+        }
+      ]
+    },
+    {
+      "id": "cugraph_mg_TINY_D_wcc_p2",
+      "command": [
+        "<artifact-work>/envs/rapids/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/cugraph_mg_v2/cugraph_mg_worker.py",
+        "--execute-gpu",
+        "--phase",
+        "tiny",
+        "--dataset",
+        "TINY_D",
+        "--algorithm",
+        "wcc",
+        "--count",
+        "2",
+        "--gpu-uuids",
+        "<device-0>,<device-1>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/native_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/mg_tiny_v2/cugraph_mg_TINY_D_wcc_p2"
+      ],
+      "receipt": "<campaign>/mg_tiny_v2/cugraph_mg_TINY_D_wcc_p2/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/cugraph_mg_v2/cugraph_mg_worker.py",
+          "sha256": "d5502e18c149d99bc7400a662c5b7df6570980cdbd33e3964680fc04659127e4"
+        }
+      ]
+    },
+    {
+      "id": "cugraph_mg_TINY_D_wcc_p8",
+      "command": [
+        "<artifact-work>/envs/rapids/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/cugraph_mg_v2/cugraph_mg_worker.py",
+        "--execute-gpu",
+        "--phase",
+        "tiny",
+        "--dataset",
+        "TINY_D",
+        "--algorithm",
+        "wcc",
+        "--count",
+        "8",
+        "--gpu-uuids",
+        "<device-0>,<device-1>,<device-2>,<device-3>,<device-4>,<device-5>,<device-6>,<device-7>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/native_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/mg_tiny_v2/cugraph_mg_TINY_D_wcc_p8"
+      ],
+      "receipt": "<campaign>/mg_tiny_v2/cugraph_mg_TINY_D_wcc_p8/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/cugraph_mg_v2/cugraph_mg_worker.py",
+          "sha256": "d5502e18c149d99bc7400a662c5b7df6570980cdbd33e3964680fc04659127e4"
+        }
+      ]
+    },
+    {
+      "id": "cugraph_mg_TINY_D_pr_p2",
+      "command": [
+        "<artifact-work>/envs/rapids/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/cugraph_mg_v2/cugraph_mg_worker.py",
+        "--execute-gpu",
+        "--phase",
+        "tiny",
+        "--dataset",
+        "TINY_D",
+        "--algorithm",
+        "pr",
+        "--count",
+        "2",
+        "--gpu-uuids",
+        "<device-0>,<device-1>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/native_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/mg_tiny_v2/cugraph_mg_TINY_D_pr_p2"
+      ],
+      "receipt": "<campaign>/mg_tiny_v2/cugraph_mg_TINY_D_pr_p2/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/cugraph_mg_v2/cugraph_mg_worker.py",
+          "sha256": "d5502e18c149d99bc7400a662c5b7df6570980cdbd33e3964680fc04659127e4"
+        }
+      ]
+    },
+    {
+      "id": "cugraph_mg_TINY_D_pr_p8",
+      "command": [
+        "<artifact-work>/envs/rapids/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/cugraph_mg_v2/cugraph_mg_worker.py",
+        "--execute-gpu",
+        "--phase",
+        "tiny",
+        "--dataset",
+        "TINY_D",
+        "--algorithm",
+        "pr",
+        "--count",
+        "8",
+        "--gpu-uuids",
+        "<device-0>,<device-1>,<device-2>,<device-3>,<device-4>,<device-5>,<device-6>,<device-7>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/native_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/mg_tiny_v2/cugraph_mg_TINY_D_pr_p8"
+      ],
+      "receipt": "<campaign>/mg_tiny_v2/cugraph_mg_TINY_D_pr_p8/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/cugraph_mg_v2/cugraph_mg_worker.py",
+          "sha256": "d5502e18c149d99bc7400a662c5b7df6570980cdbd33e3964680fc04659127e4"
+        }
+      ]
+    },
+    {
+      "id": "cugraph_mg_TINY_U_bfs_p2",
+      "command": [
+        "<artifact-work>/envs/rapids/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/cugraph_mg_v2/cugraph_mg_worker.py",
+        "--execute-gpu",
+        "--phase",
+        "tiny",
+        "--dataset",
+        "TINY_U",
+        "--algorithm",
+        "bfs",
+        "--count",
+        "2",
+        "--gpu-uuids",
+        "<device-0>,<device-1>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/native_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/mg_tiny_v2/cugraph_mg_TINY_U_bfs_p2"
+      ],
+      "receipt": "<campaign>/mg_tiny_v2/cugraph_mg_TINY_U_bfs_p2/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/cugraph_mg_v2/cugraph_mg_worker.py",
+          "sha256": "d5502e18c149d99bc7400a662c5b7df6570980cdbd33e3964680fc04659127e4"
+        }
+      ]
+    },
+    {
+      "id": "cugraph_mg_TINY_U_bfs_p8",
+      "command": [
+        "<artifact-work>/envs/rapids/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/cugraph_mg_v2/cugraph_mg_worker.py",
+        "--execute-gpu",
+        "--phase",
+        "tiny",
+        "--dataset",
+        "TINY_U",
+        "--algorithm",
+        "bfs",
+        "--count",
+        "8",
+        "--gpu-uuids",
+        "<device-0>,<device-1>,<device-2>,<device-3>,<device-4>,<device-5>,<device-6>,<device-7>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/native_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/mg_tiny_v2/cugraph_mg_TINY_U_bfs_p8"
+      ],
+      "receipt": "<campaign>/mg_tiny_v2/cugraph_mg_TINY_U_bfs_p8/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/cugraph_mg_v2/cugraph_mg_worker.py",
+          "sha256": "d5502e18c149d99bc7400a662c5b7df6570980cdbd33e3964680fc04659127e4"
+        }
+      ]
+    },
+    {
+      "id": "cugraph_mg_TINY_U_sssp_p2",
+      "command": [
+        "<artifact-work>/envs/rapids/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/cugraph_mg_v2/cugraph_mg_worker.py",
+        "--execute-gpu",
+        "--phase",
+        "tiny",
+        "--dataset",
+        "TINY_U",
+        "--algorithm",
+        "sssp",
+        "--count",
+        "2",
+        "--gpu-uuids",
+        "<device-0>,<device-1>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/native_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/mg_tiny_v2/cugraph_mg_TINY_U_sssp_p2"
+      ],
+      "receipt": "<campaign>/mg_tiny_v2/cugraph_mg_TINY_U_sssp_p2/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/cugraph_mg_v2/cugraph_mg_worker.py",
+          "sha256": "d5502e18c149d99bc7400a662c5b7df6570980cdbd33e3964680fc04659127e4"
+        }
+      ]
+    },
+    {
+      "id": "cugraph_mg_TINY_U_sssp_p8",
+      "command": [
+        "<artifact-work>/envs/rapids/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/cugraph_mg_v2/cugraph_mg_worker.py",
+        "--execute-gpu",
+        "--phase",
+        "tiny",
+        "--dataset",
+        "TINY_U",
+        "--algorithm",
+        "sssp",
+        "--count",
+        "8",
+        "--gpu-uuids",
+        "<device-0>,<device-1>,<device-2>,<device-3>,<device-4>,<device-5>,<device-6>,<device-7>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/native_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/mg_tiny_v2/cugraph_mg_TINY_U_sssp_p8"
+      ],
+      "receipt": "<campaign>/mg_tiny_v2/cugraph_mg_TINY_U_sssp_p8/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/cugraph_mg_v2/cugraph_mg_worker.py",
+          "sha256": "d5502e18c149d99bc7400a662c5b7df6570980cdbd33e3964680fc04659127e4"
+        }
+      ]
+    },
+    {
+      "id": "cugraph_mg_TINY_U_wcc_p2",
+      "command": [
+        "<artifact-work>/envs/rapids/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/cugraph_mg_v2/cugraph_mg_worker.py",
+        "--execute-gpu",
+        "--phase",
+        "tiny",
+        "--dataset",
+        "TINY_U",
+        "--algorithm",
+        "wcc",
+        "--count",
+        "2",
+        "--gpu-uuids",
+        "<device-0>,<device-1>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/native_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/mg_tiny_v2/cugraph_mg_TINY_U_wcc_p2"
+      ],
+      "receipt": "<campaign>/mg_tiny_v2/cugraph_mg_TINY_U_wcc_p2/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/cugraph_mg_v2/cugraph_mg_worker.py",
+          "sha256": "d5502e18c149d99bc7400a662c5b7df6570980cdbd33e3964680fc04659127e4"
+        }
+      ]
+    },
+    {
+      "id": "cugraph_mg_TINY_U_wcc_p8",
+      "command": [
+        "<artifact-work>/envs/rapids/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/cugraph_mg_v2/cugraph_mg_worker.py",
+        "--execute-gpu",
+        "--phase",
+        "tiny",
+        "--dataset",
+        "TINY_U",
+        "--algorithm",
+        "wcc",
+        "--count",
+        "8",
+        "--gpu-uuids",
+        "<device-0>,<device-1>,<device-2>,<device-3>,<device-4>,<device-5>,<device-6>,<device-7>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/native_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/mg_tiny_v2/cugraph_mg_TINY_U_wcc_p8"
+      ],
+      "receipt": "<campaign>/mg_tiny_v2/cugraph_mg_TINY_U_wcc_p8/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/cugraph_mg_v2/cugraph_mg_worker.py",
+          "sha256": "d5502e18c149d99bc7400a662c5b7df6570980cdbd33e3964680fc04659127e4"
+        }
+      ]
+    },
+    {
+      "id": "cugraph_mg_TINY_U_pr_p2",
+      "command": [
+        "<artifact-work>/envs/rapids/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/cugraph_mg_v2/cugraph_mg_worker.py",
+        "--execute-gpu",
+        "--phase",
+        "tiny",
+        "--dataset",
+        "TINY_U",
+        "--algorithm",
+        "pr",
+        "--count",
+        "2",
+        "--gpu-uuids",
+        "<device-0>,<device-1>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/native_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/mg_tiny_v2/cugraph_mg_TINY_U_pr_p2"
+      ],
+      "receipt": "<campaign>/mg_tiny_v2/cugraph_mg_TINY_U_pr_p2/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/cugraph_mg_v2/cugraph_mg_worker.py",
+          "sha256": "d5502e18c149d99bc7400a662c5b7df6570980cdbd33e3964680fc04659127e4"
+        }
+      ]
+    },
+    {
+      "id": "cugraph_mg_TINY_U_pr_p8",
+      "command": [
+        "<artifact-work>/envs/rapids/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/cugraph_mg_v2/cugraph_mg_worker.py",
+        "--execute-gpu",
+        "--phase",
+        "tiny",
+        "--dataset",
+        "TINY_U",
+        "--algorithm",
+        "pr",
+        "--count",
+        "8",
+        "--gpu-uuids",
+        "<device-0>,<device-1>,<device-2>,<device-3>,<device-4>,<device-5>,<device-6>,<device-7>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/native_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/mg_tiny_v2/cugraph_mg_TINY_U_pr_p8"
+      ],
+      "receipt": "<campaign>/mg_tiny_v2/cugraph_mg_TINY_U_pr_p8/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/cugraph_mg_v2/cugraph_mg_worker.py",
+          "sha256": "d5502e18c149d99bc7400a662c5b7df6570980cdbd33e3964680fc04659127e4"
+        }
+      ]
+    },
+    {
+      "id": "e6_tiny_E6_TINY_U_eggpu_none_p1_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/mg_e6_complete_v1/e6_worker.py",
+        "--execute-gpu",
+        "--system",
+        "eggpu",
+        "--ablate",
+        "none",
+        "--dataset",
+        "E6_TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--gpu-count",
+        "1",
+        "--gpu-uuids",
+        "<device-0>",
+        "--output",
+        "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_eggpu_none_p1_r00",
+        "--input-root",
+        "<campaign>/e6_tiny_inputs",
+        "--release",
+        "<campaign>/candidates/integrated_v1/Easy-Graph",
+        "--native-dso",
+        "<campaign>/build/integrated_v1/native/cpp_easygraph/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--arena-library-dir",
+        "<campaign>/build/integrated_v1/arena",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/e6_references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0",
+        "--fallback-site",
+        "<artifact-work>/envs/core/lib/python3.12/site-packages",
+        "--build-receipt",
+        "<campaign>/build/integrated_v1/logs-1793802437306853577/receipt.json"
+      ],
+      "receipt": "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_eggpu_none_p1_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/mg_e6_complete_v1/e6_worker.py",
+          "sha256": "526ff0cb9b0caa1cc5ea63e8f3d7972e3fdccfd498eb7f32c38270392677afb0"
+        }
+      ]
+    },
+    {
+      "id": "e6_tiny_E6_TINY_U_eggpu_none_p2_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/mg_e6_complete_v1/e6_worker.py",
+        "--execute-gpu",
+        "--system",
+        "eggpu",
+        "--ablate",
+        "none",
+        "--dataset",
+        "E6_TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--gpu-count",
+        "2",
+        "--gpu-uuids",
+        "<device-0>,<device-1>",
+        "--output",
+        "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_eggpu_none_p2_r00",
+        "--input-root",
+        "<campaign>/e6_tiny_inputs",
+        "--release",
+        "<campaign>/candidates/integrated_v1/Easy-Graph",
+        "--native-dso",
+        "<campaign>/build/integrated_v1/native/cpp_easygraph/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--arena-library-dir",
+        "<campaign>/build/integrated_v1/arena",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/e6_references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0",
+        "--fallback-site",
+        "<artifact-work>/envs/core/lib/python3.12/site-packages",
+        "--build-receipt",
+        "<campaign>/build/integrated_v1/logs-1793802437306853577/receipt.json"
+      ],
+      "receipt": "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_eggpu_none_p2_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/mg_e6_complete_v1/e6_worker.py",
+          "sha256": "526ff0cb9b0caa1cc5ea63e8f3d7972e3fdccfd498eb7f32c38270392677afb0"
+        }
+      ]
+    },
+    {
+      "id": "e6_tiny_E6_TINY_U_eggpu_none_p4_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/mg_e6_complete_v1/e6_worker.py",
+        "--execute-gpu",
+        "--system",
+        "eggpu",
+        "--ablate",
+        "none",
+        "--dataset",
+        "E6_TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--gpu-count",
+        "4",
+        "--gpu-uuids",
+        "<device-0>,<device-1>,<device-2>,<device-3>",
+        "--output",
+        "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_eggpu_none_p4_r00",
+        "--input-root",
+        "<campaign>/e6_tiny_inputs",
+        "--release",
+        "<campaign>/candidates/integrated_v1/Easy-Graph",
+        "--native-dso",
+        "<campaign>/build/integrated_v1/native/cpp_easygraph/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--arena-library-dir",
+        "<campaign>/build/integrated_v1/arena",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/e6_references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0",
+        "--fallback-site",
+        "<artifact-work>/envs/core/lib/python3.12/site-packages",
+        "--build-receipt",
+        "<campaign>/build/integrated_v1/logs-1793802437306853577/receipt.json"
+      ],
+      "receipt": "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_eggpu_none_p4_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/mg_e6_complete_v1/e6_worker.py",
+          "sha256": "526ff0cb9b0caa1cc5ea63e8f3d7972e3fdccfd498eb7f32c38270392677afb0"
+        }
+      ]
+    },
+    {
+      "id": "e6_tiny_E6_TINY_U_eggpu_none_p8_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/mg_e6_complete_v1/e6_worker.py",
+        "--execute-gpu",
+        "--system",
+        "eggpu",
+        "--ablate",
+        "none",
+        "--dataset",
+        "E6_TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--gpu-count",
+        "8",
+        "--gpu-uuids",
+        "<device-0>,<device-1>,<device-2>,<device-3>,<device-4>,<device-5>,<device-6>,<device-7>",
+        "--output",
+        "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_eggpu_none_p8_r00",
+        "--input-root",
+        "<campaign>/e6_tiny_inputs",
+        "--release",
+        "<campaign>/candidates/integrated_v1/Easy-Graph",
+        "--native-dso",
+        "<campaign>/build/integrated_v1/native/cpp_easygraph/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--arena-library-dir",
+        "<campaign>/build/integrated_v1/arena",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/e6_references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0",
+        "--fallback-site",
+        "<artifact-work>/envs/core/lib/python3.12/site-packages",
+        "--build-receipt",
+        "<campaign>/build/integrated_v1/logs-1793802437306853577/receipt.json"
+      ],
+      "receipt": "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_eggpu_none_p8_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/mg_e6_complete_v1/e6_worker.py",
+          "sha256": "526ff0cb9b0caa1cc5ea63e8f3d7972e3fdccfd498eb7f32c38270392677afb0"
+        }
+      ]
+    },
+    {
+      "id": "e6_tiny_E6_TINY_U_eggpu_structural_p1_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/mg_e6_complete_v1/e6_worker.py",
+        "--execute-gpu",
+        "--system",
+        "eggpu",
+        "--ablate",
+        "structural",
+        "--dataset",
+        "E6_TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--gpu-count",
+        "1",
+        "--gpu-uuids",
+        "<device-0>",
+        "--output",
+        "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_eggpu_structural_p1_r00",
+        "--input-root",
+        "<campaign>/e6_tiny_inputs",
+        "--release",
+        "<campaign>/candidates/integrated_v1/Easy-Graph",
+        "--native-dso",
+        "<campaign>/build/integrated_v1/native/cpp_easygraph/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--arena-library-dir",
+        "<campaign>/build/integrated_v1/arena",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/e6_references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0",
+        "--fallback-site",
+        "<artifact-work>/envs/core/lib/python3.12/site-packages",
+        "--build-receipt",
+        "<campaign>/build/integrated_v1/logs-1793802437306853577/receipt.json"
+      ],
+      "receipt": "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_eggpu_structural_p1_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/mg_e6_complete_v1/e6_worker.py",
+          "sha256": "526ff0cb9b0caa1cc5ea63e8f3d7972e3fdccfd498eb7f32c38270392677afb0"
+        }
+      ]
+    },
+    {
+      "id": "e6_tiny_E6_TINY_U_eggpu_closeness_p1_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/mg_e6_complete_v1/e6_worker.py",
+        "--execute-gpu",
+        "--system",
+        "eggpu",
+        "--ablate",
+        "closeness",
+        "--dataset",
+        "E6_TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--gpu-count",
+        "1",
+        "--gpu-uuids",
+        "<device-0>",
+        "--output",
+        "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_eggpu_closeness_p1_r00",
+        "--input-root",
+        "<campaign>/e6_tiny_inputs",
+        "--release",
+        "<campaign>/candidates/integrated_v1/Easy-Graph",
+        "--native-dso",
+        "<campaign>/build/integrated_v1/native/cpp_easygraph/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--arena-library-dir",
+        "<campaign>/build/integrated_v1/arena",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/e6_references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0",
+        "--fallback-site",
+        "<artifact-work>/envs/core/lib/python3.12/site-packages",
+        "--build-receipt",
+        "<campaign>/build/integrated_v1/logs-1793802437306853577/receipt.json"
+      ],
+      "receipt": "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_eggpu_closeness_p1_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/mg_e6_complete_v1/e6_worker.py",
+          "sha256": "526ff0cb9b0caa1cc5ea63e8f3d7972e3fdccfd498eb7f32c38270392677afb0"
+        }
+      ]
+    },
+    {
+      "id": "e6_tiny_E6_TINY_U_eggpu_bfs_p1_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/mg_e6_complete_v1/e6_worker.py",
+        "--execute-gpu",
+        "--system",
+        "eggpu",
+        "--ablate",
+        "bfs",
+        "--dataset",
+        "E6_TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--gpu-count",
+        "1",
+        "--gpu-uuids",
+        "<device-0>",
+        "--output",
+        "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_eggpu_bfs_p1_r00",
+        "--input-root",
+        "<campaign>/e6_tiny_inputs",
+        "--release",
+        "<campaign>/candidates/integrated_v1/Easy-Graph",
+        "--native-dso",
+        "<campaign>/build/integrated_v1/native/cpp_easygraph/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--arena-library-dir",
+        "<campaign>/build/integrated_v1/arena",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/e6_references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0",
+        "--fallback-site",
+        "<artifact-work>/envs/core/lib/python3.12/site-packages",
+        "--build-receipt",
+        "<campaign>/build/integrated_v1/logs-1793802437306853577/receipt.json"
+      ],
+      "receipt": "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_eggpu_bfs_p1_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/mg_e6_complete_v1/e6_worker.py",
+          "sha256": "526ff0cb9b0caa1cc5ea63e8f3d7972e3fdccfd498eb7f32c38270392677afb0"
+        }
+      ]
+    },
+    {
+      "id": "e6_tiny_E6_TINY_U_eggpu_wcc_p1_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/mg_e6_complete_v1/e6_worker.py",
+        "--execute-gpu",
+        "--system",
+        "eggpu",
+        "--ablate",
+        "wcc",
+        "--dataset",
+        "E6_TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--gpu-count",
+        "1",
+        "--gpu-uuids",
+        "<device-0>",
+        "--output",
+        "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_eggpu_wcc_p1_r00",
+        "--input-root",
+        "<campaign>/e6_tiny_inputs",
+        "--release",
+        "<campaign>/candidates/integrated_v1/Easy-Graph",
+        "--native-dso",
+        "<campaign>/build/integrated_v1/native/cpp_easygraph/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--arena-library-dir",
+        "<campaign>/build/integrated_v1/arena",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/e6_references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0",
+        "--fallback-site",
+        "<artifact-work>/envs/core/lib/python3.12/site-packages",
+        "--build-receipt",
+        "<campaign>/build/integrated_v1/logs-1793802437306853577/receipt.json"
+      ],
+      "receipt": "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_eggpu_wcc_p1_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/mg_e6_complete_v1/e6_worker.py",
+          "sha256": "526ff0cb9b0caa1cc5ea63e8f3d7972e3fdccfd498eb7f32c38270392677afb0"
+        }
+      ]
+    },
+    {
+      "id": "e6_tiny_E6_TINY_U_igraph_none_p0_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/mg_e6_complete_v1/e6_worker.py",
+        "--execute-gpu",
+        "--system",
+        "igraph",
+        "--ablate",
+        "none",
+        "--dataset",
+        "E6_TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--gpu-count",
+        "0",
+        "--gpu-uuids",
+        "",
+        "--output",
+        "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_igraph_none_p0_r00",
+        "--input-root",
+        "<campaign>/e6_tiny_inputs",
+        "--release",
+        "<campaign>/candidates/integrated_v1/Easy-Graph",
+        "--native-dso",
+        "<campaign>/build/integrated_v1/native/cpp_easygraph/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--arena-library-dir",
+        "<campaign>/build/integrated_v1/arena",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/e6_references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0",
+        "--fallback-site",
+        "<artifact-work>/envs/core/lib/python3.12/site-packages",
+        "--build-receipt",
+        "<campaign>/build/integrated_v1/logs-1793802437306853577/receipt.json"
+      ],
+      "receipt": "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_igraph_none_p0_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/mg_e6_complete_v1/e6_worker.py",
+          "sha256": "526ff0cb9b0caa1cc5ea63e8f3d7972e3fdccfd498eb7f32c38270392677afb0"
+        }
+      ]
+    },
+    {
+      "id": "e6_tiny_E6_TINY_U_cugraph_igraph_none_p1_r00",
+      "command": [
+        "<artifact-work>/envs/rapids/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/mg_e6_complete_v1/e6_worker.py",
+        "--execute-gpu",
+        "--system",
+        "cugraph_igraph",
+        "--ablate",
+        "none",
+        "--dataset",
+        "E6_TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--gpu-count",
+        "1",
+        "--gpu-uuids",
+        "<device-0>",
+        "--output",
+        "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_cugraph_igraph_none_p1_r00",
+        "--input-root",
+        "<campaign>/e6_tiny_inputs",
+        "--release",
+        "<campaign>/candidates/integrated_v1/Easy-Graph",
+        "--native-dso",
+        "<campaign>/build/integrated_v1/native/cpp_easygraph/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--arena-library-dir",
+        "<campaign>/build/integrated_v1/arena",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/e6_references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0",
+        "--fallback-site",
+        "<artifact-work>/envs/core/lib/python3.12/site-packages",
+        "--build-receipt",
+        "<campaign>/build/integrated_v1/logs-1793802437306853577/receipt.json"
+      ],
+      "receipt": "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_cugraph_igraph_none_p1_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/mg_e6_complete_v1/e6_worker.py",
+          "sha256": "526ff0cb9b0caa1cc5ea63e8f3d7972e3fdccfd498eb7f32c38270392677afb0"
+        }
+      ]
+    },
+    {
+      "id": "e6_tiny_E6_TINY_U_cugraph_composite_none_p1_r00",
+      "command": [
+        "<artifact-work>/envs/rapids/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/mg_e6_complete_v1/e6_worker.py",
+        "--execute-gpu",
+        "--system",
+        "cugraph_composite",
+        "--ablate",
+        "none",
+        "--dataset",
+        "E6_TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--gpu-count",
+        "1",
+        "--gpu-uuids",
+        "<device-0>",
+        "--output",
+        "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_cugraph_composite_none_p1_r00",
+        "--input-root",
+        "<campaign>/e6_tiny_inputs",
+        "--release",
+        "<campaign>/candidates/integrated_v1/Easy-Graph",
+        "--native-dso",
+        "<campaign>/build/integrated_v1/native/cpp_easygraph/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--arena-library-dir",
+        "<campaign>/build/integrated_v1/arena",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/e6_references",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8.0",
+        "--fallback-site",
+        "<artifact-work>/envs/core/lib/python3.12/site-packages",
+        "--build-receipt",
+        "<campaign>/build/integrated_v1/logs-1793802437306853577/receipt.json"
+      ],
+      "receipt": "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_cugraph_composite_none_p1_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/mg_e6_complete_v1/e6_worker.py",
+          "sha256": "526ff0cb9b0caa1cc5ea63e8f3d7972e3fdccfd498eb7f32c38270392677afb0"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_D_eggpu_sequence16_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/sequence16_v1/sequence16_worker.py",
+        "--execute-gpu",
+        "--system",
+        "eggpu",
+        "--dataset",
+        "TINY_D",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--source",
+        "<campaign>/candidates/integrated_v1/Easy-Graph",
+        "--native-dso",
+        "<campaign>/build/integrated_v1/native/cpp_easygraph/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--arena-library-dir",
+        "<campaign>/build/integrated_v1/arena",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/sequence16_tiny_v1/tiny_TINY_D_eggpu_sequence16_r00",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8",
+        "--timeout",
+        "1800"
+      ],
+      "receipt": "<campaign>/sequence16_tiny_v1/tiny_TINY_D_eggpu_sequence16_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/sequence16_v1/sequence16_worker.py",
+          "sha256": "f042e299a89177ba75cadf46964ee820d883a59806302597f0966201877d731f"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_D_cugraph_sequence16_r00",
+      "command": [
+        "<artifact-work>/envs/rapids/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/sequence16_v1/sequence16_worker.py",
+        "--execute-gpu",
+        "--system",
+        "cugraph",
+        "--dataset",
+        "TINY_D",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--source",
+        "<campaign>/candidates/integrated_v1/Easy-Graph",
+        "--native-dso",
+        "<campaign>/build/integrated_v1/native/cpp_easygraph/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--arena-library-dir",
+        "<campaign>/build/integrated_v1/arena",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/sequence16_tiny_v1/tiny_TINY_D_cugraph_sequence16_r00",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8",
+        "--timeout",
+        "1800"
+      ],
+      "receipt": "<campaign>/sequence16_tiny_v1/tiny_TINY_D_cugraph_sequence16_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/sequence16_v1/sequence16_worker.py",
+          "sha256": "f042e299a89177ba75cadf46964ee820d883a59806302597f0966201877d731f"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_U_eggpu_sequence16_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/sequence16_v1/sequence16_worker.py",
+        "--execute-gpu",
+        "--system",
+        "eggpu",
+        "--dataset",
+        "TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--source",
+        "<campaign>/candidates/integrated_v1/Easy-Graph",
+        "--native-dso",
+        "<campaign>/build/integrated_v1/native/cpp_easygraph/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--arena-library-dir",
+        "<campaign>/build/integrated_v1/arena",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/sequence16_tiny_v1/tiny_TINY_U_eggpu_sequence16_r00",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8",
+        "--timeout",
+        "1800"
+      ],
+      "receipt": "<campaign>/sequence16_tiny_v1/tiny_TINY_U_eggpu_sequence16_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/sequence16_v1/sequence16_worker.py",
+          "sha256": "f042e299a89177ba75cadf46964ee820d883a59806302597f0966201877d731f"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_U_cugraph_sequence16_r00",
+      "command": [
+        "<artifact-work>/envs/rapids/bin/python",
+        "-B",
+        "<campaign>/runner_candidates/sequence16_v1/sequence16_worker.py",
+        "--execute-gpu",
+        "--system",
+        "cugraph",
+        "--dataset",
+        "TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpu-set",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--source",
+        "<campaign>/candidates/integrated_v1/Easy-Graph",
+        "--native-dso",
+        "<campaign>/build/integrated_v1/native/cpp_easygraph/cpp_easygraph.cpython-312-x86_64-linux-gnu.so",
+        "--arena-library-dir",
+        "<campaign>/build/integrated_v1/arena",
+        "--setup",
+        "<campaign>/setup.json",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--reference-cache",
+        "<campaign>/references",
+        "--output",
+        "<campaign>/sequence16_tiny_v1/tiny_TINY_U_cugraph_sequence16_r00",
+        "--budget-mib",
+        "22000",
+        "--min-host-free-gib",
+        "8",
+        "--timeout",
+        "1800"
+      ],
+      "receipt": "<campaign>/sequence16_tiny_v1/tiny_TINY_U_cugraph_sequence16_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 900,
+      "bindings": [
+        {
+          "path": "<campaign>/runner_candidates/sequence16_v1/sequence16_worker.py",
+          "sha256": "f042e299a89177ba75cadf46964ee820d883a59806302597f0966201877d731f"
+        }
+      ]
+    }
+  ],
+  "completed": [
+    {
+      "id": "cugraph_mg_TINY_D_bfs_p2",
+      "outcome": "FAIL",
+      "started_unix": 1793803418.4348948,
+      "pid": 279296,
+      "returncode": 1,
+      "status": "FAIL",
+      "receipt": {
+        "path": "<campaign>/mg_tiny_v2/cugraph_mg_TINY_D_bfs_p2/result.json",
+        "sha256": "58367334e0483b5e9a4b0177c0729f9e0556a9a44236aecaf931e14e66b24a7a",
+        "bytes": 732
+      },
+      "seconds": 18.27681715413928
+    },
+    {
+      "id": "cugraph_mg_TINY_D_bfs_p8",
+      "outcome": "FAIL",
+      "started_unix": 1793803436.718343,
+      "pid": 279403,
+      "returncode": 1,
+      "status": "FAIL",
+      "receipt": {
+        "path": "<campaign>/mg_tiny_v2/cugraph_mg_TINY_D_bfs_p8/result.json",
+        "sha256": "3a54fa1030c4fd172e3d754b31aec8eff95fdbc16aa9977dc2c90dde72319384",
+        "bytes": 732
+      },
+      "seconds": 25.342797175049782
+    },
+    {
+      "id": "cugraph_mg_TINY_D_sssp_p2",
+      "outcome": "FAIL",
+      "started_unix": 1793803462.0678458,
+      "pid": 279675,
+      "returncode": 1,
+      "status": "FAIL",
+      "receipt": {
+        "path": "<campaign>/mg_tiny_v2/cugraph_mg_TINY_D_sssp_p2/result.json",
+        "sha256": "818f65e99dfceee6e89ea454360cc72a5e68b654c9cd2a5b75ac2adac99c7f7e",
+        "bytes": 734
+      },
+      "seconds": 18.175679493695498
+    },
+    {
+      "id": "cugraph_mg_TINY_D_sssp_p8",
+      "outcome": "FAIL",
+      "started_unix": 1793803480.2502763,
+      "pid": 279757,
+      "returncode": 1,
+      "status": "FAIL",
+      "receipt": {
+        "path": "<campaign>/mg_tiny_v2/cugraph_mg_TINY_D_sssp_p8/result.json",
+        "sha256": "6756154b8ad21b84c4e6a43284b516178f784fe419ee56e0d47c85575e2904a6",
+        "bytes": 734
+      },
+      "seconds": 27.96000773087144
+    },
+    {
+      "id": "cugraph_mg_TINY_D_wcc_p2",
+      "outcome": "FAIL",
+      "started_unix": 1793803508.2172077,
+      "pid": 280043,
+      "returncode": 1,
+      "status": "FAIL",
+      "receipt": {
+        "path": "<campaign>/mg_tiny_v2/cugraph_mg_TINY_D_wcc_p2/result.json",
+        "sha256": "9ed5d54aa91751a9b4fd4be6f636f5db1128105355c6e0ed97f3a205082c5cee",
+        "bytes": 732
+      },
+      "seconds": 18.375155717134476
+    },
+    {
+      "id": "cugraph_mg_TINY_D_wcc_p8",
+      "outcome": "FAIL",
+      "started_unix": 1793803526.599285,
+      "pid": 280154,
+      "returncode": 1,
+      "status": "FAIL",
+      "receipt": {
+        "path": "<campaign>/mg_tiny_v2/cugraph_mg_TINY_D_wcc_p8/result.json",
+        "sha256": "57d18fd5ce3af6295258887befdaf5035a2c34bf5c941509bed1062dfd30f4f8",
+        "bytes": 732
+      },
+      "seconds": 26.44707628712058
+    },
+    {
+      "id": "cugraph_mg_TINY_D_pr_p2",
+      "outcome": "FAIL",
+      "started_unix": 1793803553.0536518,
+      "pid": 280427,
+      "returncode": 1,
+      "status": "FAIL",
+      "receipt": {
+        "path": "<campaign>/mg_tiny_v2/cugraph_mg_TINY_D_pr_p2/result.json",
+        "sha256": "deadfd1f1e1b81ab028b4275b6003c50f9e05da2a3bb67ba15f8599e60cb09f1",
+        "bytes": 730
+      },
+      "seconds": 18.1269186809659
+    },
+    {
+      "id": "cugraph_mg_TINY_D_pr_p8",
+      "outcome": "FAIL",
+      "started_unix": 1793803571.187627,
+      "pid": 280509,
+      "returncode": 1,
+      "status": "FAIL",
+      "receipt": {
+        "path": "<campaign>/mg_tiny_v2/cugraph_mg_TINY_D_pr_p8/result.json",
+        "sha256": "a6c7151f5fd41d6cc7fcfedc02ecdb6545322d7ef10ff278ba438e640c90d797",
+        "bytes": 730
+      },
+      "seconds": 27.201735589653254
+    },
+    {
+      "id": "cugraph_mg_TINY_U_bfs_p2",
+      "outcome": "FAIL",
+      "started_unix": 1793803598.3968656,
+      "pid": 280818,
+      "returncode": 1,
+      "status": "FAIL",
+      "receipt": {
+        "path": "<campaign>/mg_tiny_v2/cugraph_mg_TINY_U_bfs_p2/result.json",
+        "sha256": "248ef3b4bbded92075444511dd7476dbd17f34129d84492aaefd6e663bd8dfaa",
+        "bytes": 733
+      },
+      "seconds": 18.024887409061193
+    },
+    {
+      "id": "cugraph_mg_TINY_U_bfs_p8",
+      "outcome": "FAIL",
+      "started_unix": 1793803616.429009,
+      "pid": 281046,
+      "returncode": 1,
+      "status": "FAIL",
+      "receipt": {
+        "path": "<campaign>/mg_tiny_v2/cugraph_mg_TINY_U_bfs_p8/result.json",
+        "sha256": "8a6d0b22c5d925a9d5f3ea2110f227c0c79fd6d8d2f9bcf17a6e600a08f63e95",
+        "bytes": 733
+      },
+      "seconds": 27.10033230856061
+    },
+    {
+      "id": "cugraph_mg_TINY_U_sssp_p2",
+      "outcome": "FAIL",
+      "started_unix": 1793803643.5366912,
+      "pid": 281340,
+      "returncode": 1,
+      "status": "FAIL",
+      "receipt": {
+        "path": "<campaign>/mg_tiny_v2/cugraph_mg_TINY_U_sssp_p2/result.json",
+        "sha256": "69258ac8855847462c5213fc95c496d2d088b5a36656134e011dbf7b9e8ceece",
+        "bytes": 735
+      },
+      "seconds": 18.12554022297263
+    },
+    {
+      "id": "cugraph_mg_TINY_U_sssp_p8",
+      "outcome": "FAIL",
+      "started_unix": 1793803661.6697257,
+      "pid": 281422,
+      "returncode": 1,
+      "status": "FAIL",
+      "receipt": {
+        "path": "<campaign>/mg_tiny_v2/cugraph_mg_TINY_U_sssp_p8/result.json",
+        "sha256": "6dcb01e60a5335d46567df6ddc0636c39d4148650fe1727ab9c8fc30b15d7c5a",
+        "bytes": 735
+      },
+      "seconds": 28.80724961310625
+    },
+    {
+      "id": "cugraph_mg_TINY_U_wcc_p2",
+      "outcome": "FAIL",
+      "started_unix": 1793803690.4845889,
+      "pid": 281708,
+      "returncode": 1,
+      "status": "FAIL",
+      "receipt": {
+        "path": "<campaign>/mg_tiny_v2/cugraph_mg_TINY_U_wcc_p2/result.json",
+        "sha256": "1ed8a3ca38e3f7f29d38a48826ea04d3d4eee105b0e6c462969e2134c2537ff9",
+        "bytes": 733
+      },
+      "seconds": 17.37114516273141
+    },
+    {
+      "id": "cugraph_mg_TINY_U_wcc_p8",
+      "outcome": "FAIL",
+      "started_unix": 1793803707.864094,
+      "pid": 281801,
+      "returncode": 1,
+      "status": "FAIL",
+      "receipt": {
+        "path": "<campaign>/mg_tiny_v2/cugraph_mg_TINY_U_wcc_p8/result.json",
+        "sha256": "7ad893006f499e877926d04e27fbd4fe1ed7e5d8efb5313d0ac4ea2aeb0f36fd",
+        "bytes": 733
+      },
+      "seconds": 26.651453342288733
+    },
+    {
+      "id": "cugraph_mg_TINY_U_pr_p2",
+      "outcome": "FAIL",
+      "started_unix": 1793803734.5191638,
+      "pid": 282086,
+      "returncode": 1,
+      "status": "FAIL",
+      "receipt": {
+        "path": "<campaign>/mg_tiny_v2/cugraph_mg_TINY_U_pr_p2/result.json",
+        "sha256": "53977352ee9e9d7dc99f391afd024e1cf76fc22564ca8fe08aa6c90638552108",
+        "bytes": 731
+      },
+      "seconds": 17.718725040555
+    },
+    {
+      "id": "cugraph_mg_TINY_U_pr_p8",
+      "outcome": "FAIL",
+      "started_unix": 1793803752.245739,
+      "pid": 282178,
+      "returncode": 1,
+      "status": "FAIL",
+      "receipt": {
+        "path": "<campaign>/mg_tiny_v2/cugraph_mg_TINY_U_pr_p8/result.json",
+        "sha256": "e764dd41cc2ea8beacbf14d9ac98f6481c8e4d2c408b2d3ea975b65ca6fa0a2e",
+        "bytes": 731
+      },
+      "seconds": 27.366765648126602
+    },
+    {
+      "id": "e6_tiny_E6_TINY_U_eggpu_none_p1_r00",
+      "outcome": "PASS",
+      "started_unix": 1793803779.6204846,
+      "pid": 282488,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_eggpu_none_p1_r00/result.json",
+        "sha256": "d685228a05ee900dcb0047e74f320ff2f6c6050b7e056748867723975efe9042",
+        "bytes": 6982
+      },
+      "seconds": 14.2586013302207
+    },
+    {
+      "id": "e6_tiny_E6_TINY_U_eggpu_none_p2_r00",
+      "outcome": "PASS",
+      "started_unix": 1793803793.8834605,
+      "pid": 282633,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_eggpu_none_p2_r00/result.json",
+        "sha256": "cca3fc1650395ed826638590b482f343d61b6ae9333b671b6bca83523cd019d3",
+        "bytes": 9950
+      },
+      "seconds": 16.31783552467823
+    },
+    {
+      "id": "e6_tiny_E6_TINY_U_eggpu_none_p4_r00",
+      "outcome": "PASS",
+      "started_unix": 1793803810.2051377,
+      "pid": 282695,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_eggpu_none_p4_r00/result.json",
+        "sha256": "8a62eae1eebf949d3fc71cb3829c7382f2f096cae55f99f0bc984fd784bd6993",
+        "bytes": 15885
+      },
+      "seconds": 16.620646335184574
+    },
+    {
+      "id": "e6_tiny_E6_TINY_U_eggpu_none_p8_r00",
+      "outcome": "PASS",
+      "started_unix": 1793803826.8302343,
+      "pid": 282825,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_eggpu_none_p8_r00/result.json",
+        "sha256": "51ce7f500ffea856bb2e33dd90bdc5568947b3561914c19bd41ce55a18d3fc5b",
+        "bytes": 27746
+      },
+      "seconds": 16.61327124387026
+    },
+    {
+      "id": "e6_tiny_E6_TINY_U_eggpu_structural_p1_r00",
+      "outcome": "PASS",
+      "started_unix": 1793803843.4481685,
+      "pid": 282895,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_eggpu_structural_p1_r00/result.json",
+        "sha256": "6dbbb2fd52801aba004192e2bd6d18b2bd19955945550c678748124ff51aed53",
+        "bytes": 7003
+      },
+      "seconds": 13.504499334841967
+    },
+    {
+      "id": "e6_tiny_E6_TINY_U_eggpu_closeness_p1_r00",
+      "outcome": "PASS",
+      "started_unix": 1793803856.9606872,
+      "pid": 282916,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_eggpu_closeness_p1_r00/result.json",
+        "sha256": "26bcd968f6277a22568df94b662479925c7fafcbb56c1dfe838bf085fe92cba8",
+        "bytes": 7000
+      },
+      "seconds": 12.143752738833427
+    },
+    {
+      "id": "e6_tiny_E6_TINY_U_eggpu_bfs_p1_r00",
+      "outcome": "PASS",
+      "started_unix": 1793803869.1124954,
+      "pid": 282935,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_eggpu_bfs_p1_r00/result.json",
+        "sha256": "9b3374aa8324a6f9a85975bf8227dc6ce28bd2dc23c10d2e726699db1b5e79b2",
+        "bytes": 6982
+      },
+      "seconds": 11.287383314222097
+    },
+    {
+      "id": "e6_tiny_E6_TINY_U_eggpu_wcc_p1_r00",
+      "outcome": "PASS",
+      "started_unix": 1793803880.4073057,
+      "pid": 282997,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_eggpu_wcc_p1_r00/result.json",
+        "sha256": "ddecad058ffc403dc55bcaec34a18cd19d5928069cabd8f948ffd37587b59b76",
+        "bytes": 6983
+      },
+      "seconds": 11.284124355763197
+    },
+    {
+      "id": "e6_tiny_E6_TINY_U_igraph_none_p0_r00",
+      "outcome": "PASS",
+      "started_unix": 1793803891.6945546,
+      "pid": 283040,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_igraph_none_p0_r00/result.json",
+        "sha256": "465278fc0f6646d787c36585b5dd170414ce468718db6f753606f7d68718ab55",
+        "bytes": 4383
+      },
+      "seconds": 5.972638849169016
+    },
+    {
+      "id": "e6_tiny_E6_TINY_U_cugraph_igraph_none_p1_r00",
+      "outcome": "PASS",
+      "started_unix": 1793803897.6701875,
+      "pid": 283050,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_cugraph_igraph_none_p1_r00/result.json",
+        "sha256": "4a0668719aef9f0e0a35dfc597ea3ffd3e81fee1b8083809a680dd060eba1a96",
+        "bytes": 7010
+      },
+      "seconds": 11.984176266938448
+    },
+    {
+      "id": "e6_tiny_E6_TINY_U_cugraph_composite_none_p1_r00",
+      "outcome": "PASS",
+      "started_unix": 1793803909.6633575,
+      "pid": 283080,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_cugraph_composite_none_p1_r00/result.json",
+        "sha256": "c9aa854f8d2a71b49d0421fc3236f760ff47fddbd8dd8dbc6f1bb38ab5c10ac8",
+        "bytes": 7018
+      },
+      "seconds": 14.545929729938507
+    },
+    {
+      "id": "tiny_TINY_D_eggpu_sequence16_r00",
+      "outcome": "PASS",
+      "started_unix": 1793803924.217858,
+      "pid": 283125,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/sequence16_tiny_v1/tiny_TINY_D_eggpu_sequence16_r00/result.json",
+        "sha256": "7a05ea1c2d0c8d04d70255d3d69260a09e26ebeb2dcb2c14669f0dbd8bab7631",
+        "bytes": 5732
+      },
+      "seconds": 13.044658225029707
+    },
+    {
+      "id": "tiny_TINY_D_cugraph_sequence16_r00",
+      "outcome": "PASS",
+      "started_unix": 1793803937.2711008,
+      "pid": 283171,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/sequence16_tiny_v1/tiny_TINY_D_cugraph_sequence16_r00/result.json",
+        "sha256": "0b703941abcff94387e8362ba1b023097b740f5c4ca27a68f88df9a4c64cd051",
+        "bytes": 5740
+      },
+      "seconds": 13.243846327066422
+    },
+    {
+      "id": "tiny_TINY_U_eggpu_sequence16_r00",
+      "outcome": "PASS",
+      "started_unix": 1793803950.524184,
+      "pid": 283192,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/sequence16_tiny_v1/tiny_TINY_U_eggpu_sequence16_r00/result.json",
+        "sha256": "0c4f47498132bfeb04a77d5aa7acf1df66ab83b1c39f4bebd44b8d6aef6ed597",
+        "bytes": 5733
+      },
+      "seconds": 13.848622549325228
+    },
+    {
+      "id": "tiny_TINY_U_cugraph_sequence16_r00",
+      "outcome": "PASS",
+      "started_unix": 1793803964.3815873,
+      "pid": 283225,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/sequence16_tiny_v1/tiny_TINY_U_cugraph_sequence16_r00/result.json",
+        "sha256": "e0edf92a00f5161976b6858eb832673c5dbc756b660a879000d025b1303712a3",
+        "bytes": 5741
+      },
+      "seconds": 9.889904249459505
+    }
+  ],
+  "formal_measurements": 0,
+  "active_job": "tiny_TINY_U_cugraph_sequence16_r00",
+  "finished_unix": 1793803974.2762127,
+  "public_projection_note": "Host paths/UUIDs redacted. This is qualification evidence, not an executable tiny/target proof or a formal performance repetition. Original bytes are retained by the operator."
+}

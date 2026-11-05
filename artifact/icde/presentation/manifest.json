@@ -1,0 +1,38 @@
+{
+  "schema": "eggpu.presentation.tools.v1",
+  "status": "E1_CPU_TESTED_NO_REAL_FORMAL_EXPORT",
+  "files": {
+    "e1_summary.py": {
+      "bytes": 30844,
+      "sha256": "2dd454972294108615a0ef8968eb325f09b09ab18b57ac5d61f000698d9c1f48"
+    },
+    "test_e1_summary.py": {
+      "bytes": 18587,
+      "sha256": "823765edf716147a15475d6c8fbf5f6ba911f3afc8c67dd272adbde38a214324"
+    },
+    "bind_selection.py": {
+      "bytes": 2502,
+      "sha256": "422332a8ec87fcd65e16ef0f5859e0d474b03978351364a06919b6125713a777"
+    },
+    "README_CN.md": {
+      "sha256": "4922c60a4634e846756c55a7a4fe3e13224f4347db78fc00abdadd071ea6d19a",
+      "bytes": 8079
+    },
+    "selection.example.json": {
+      "bytes": 5423,
+      "sha256": "cfffb08c43e1a7bcd9467fc499a86806f6256d1c5ee8b97fc0e9b63e91f8c75f"
+    },
+    "cpu_receipt.json": {
+      "bytes": 976,
+      "sha256": "cb409b55e4f84c0a4b4528142f256f1a8af26e7ae29806e33fe573bd07bf4eee"
+    }
+  },
+  "tree_sha256": "3a3d3d1af7b5a0ce8693115ab13750d7d0770ea2fab4061b4ca9e738efcf305b",
+  "public_projection": {
+    "changes": [
+      "README relative link relocated; executable bytes unchanged"
+    ],
+    "original_manifest": "original_manifest.json",
+    "original_manifest_sha256": "be375e0e68796cb39f0b0f7b0201b074342e5ef94c80fe0e21e5d987e9d24a35"
+  }
+}

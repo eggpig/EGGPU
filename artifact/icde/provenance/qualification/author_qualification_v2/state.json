@@ -1,0 +1,3297 @@
+{
+  "status": "COMPLETE_WITH_FAILURES",
+  "plan": {
+    "path": "<campaign>/author_tiny_v2_plan.json",
+    "sha256": "d19f443baad22e9c634bc544d3d2da2a4d74d816925c8600788aaa95eb77b7ea",
+    "bytes": 104907
+  },
+  "controller": {
+    "path": "<campaign>/run_campaign_queue_v2.py",
+    "sha256": "ecc32cc148e9b686826f6b8886def92cc23f136e0ecebfc1ea19cf17d0d8acfc",
+    "bytes": 4722
+  },
+  "jobs": [
+    {
+      "id": "tiny_TINY_D_bfs_cggraph_legacy_full_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "cggraph",
+        "--variant",
+        "cggraph_legacy_full",
+        "--algorithm",
+        "bfs",
+        "--dataset",
+        "TINY_D",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_D_bfs_cggraph_legacy_full_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_D_bfs_cggraph_legacy_full_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<campaign>/baselines/cggraph_legacy_traversal_build_v2/receipt.json",
+          "sha256": "2090ae2fb2ff67e39a59868fb591095b1069499adf80baaeb17c30db281db95a"
+        },
+        {
+          "path": "<campaign>/baselines/cggraph_legacy_traversal_build_v2/native",
+          "sha256": "f2406e7aa0317c97ea1fbf0b3206b2450ad446c87f9751115db827c097913610"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_D_sssp_cggraph_legacy_full_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "cggraph",
+        "--variant",
+        "cggraph_legacy_full",
+        "--algorithm",
+        "sssp",
+        "--dataset",
+        "TINY_D",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_D_sssp_cggraph_legacy_full_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_D_sssp_cggraph_legacy_full_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<campaign>/baselines/cggraph_legacy_traversal_build_v2/receipt.json",
+          "sha256": "2090ae2fb2ff67e39a59868fb591095b1069499adf80baaeb17c30db281db95a"
+        },
+        {
+          "path": "<campaign>/baselines/cggraph_legacy_traversal_build_v2/native",
+          "sha256": "f2406e7aa0317c97ea1fbf0b3206b2450ad446c87f9751115db827c097913610"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_D_wcc_cggraph_legacy_full_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "cggraph",
+        "--variant",
+        "cggraph_legacy_full",
+        "--algorithm",
+        "wcc",
+        "--dataset",
+        "TINY_D",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_D_wcc_cggraph_legacy_full_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_D_wcc_cggraph_legacy_full_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<campaign>/baselines/cggraph_legacy_traversal_build_v2/receipt.json",
+          "sha256": "2090ae2fb2ff67e39a59868fb591095b1069499adf80baaeb17c30db281db95a"
+        },
+        {
+          "path": "<campaign>/baselines/cggraph_legacy_traversal_build_v2/native",
+          "sha256": "f2406e7aa0317c97ea1fbf0b3206b2450ad446c87f9751115db827c097913610"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_D_pr_cggraph_legacy_full_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "cggraph",
+        "--variant",
+        "cggraph_legacy_full",
+        "--algorithm",
+        "pr",
+        "--dataset",
+        "TINY_D",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_D_pr_cggraph_legacy_full_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_D_pr_cggraph_legacy_full_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<campaign>/baselines/cggraph_legacy_full_build_v1/receipt.json",
+          "sha256": "a562648168d84f98bdc43f8ec8b6b7dd9b5c41dec4a4f26858759b3b7afaec42"
+        },
+        {
+          "path": "<campaign>/baselines/cggraph_legacy_full_build_v1/native",
+          "sha256": "03809a80de18ef1bdbff9e4b8adc315d70e90ab33b21f1b1dcf717f11b2fae3f"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_D_bfs_cggraph_v15_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "cggraph",
+        "--variant",
+        "cggraph_v15",
+        "--algorithm",
+        "bfs",
+        "--dataset",
+        "TINY_D",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_D_bfs_cggraph_v15_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_D_bfs_cggraph_v15_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<artifact-work>/build/cggraph/receipt.json",
+          "sha256": "af760cee7bc80169d6ba9c18384d2e45975948711e230df7c602a7b75aee8b31"
+        },
+        {
+          "path": "<artifact-work>/build/cggraph/cggraph",
+          "sha256": "b019b0403b396e0d975a8c155d707ad2e7257321a03716e6ddbbf8a84f12544c"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_D_sssp_cggraph_v15_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "cggraph",
+        "--variant",
+        "cggraph_v15",
+        "--algorithm",
+        "sssp",
+        "--dataset",
+        "TINY_D",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_D_sssp_cggraph_v15_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_D_sssp_cggraph_v15_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<artifact-work>/build/cggraph/receipt.json",
+          "sha256": "af760cee7bc80169d6ba9c18384d2e45975948711e230df7c602a7b75aee8b31"
+        },
+        {
+          "path": "<artifact-work>/build/cggraph/cggraph",
+          "sha256": "b019b0403b396e0d975a8c155d707ad2e7257321a03716e6ddbbf8a84f12544c"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_D_bfs_gunrock_essentials_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "gunrock",
+        "--variant",
+        "gunrock_essentials",
+        "--algorithm",
+        "bfs",
+        "--dataset",
+        "TINY_D",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_D_bfs_gunrock_essentials_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_D_bfs_gunrock_essentials_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<artifact-work>/build/gunrock/receipt.json",
+          "sha256": "80231f32986fb44e413d89b078a95e0ac0326a66f0fa71e3e61111691d3e7d35"
+        },
+        {
+          "path": "<artifact-work>/build/gunrock/gunrock",
+          "sha256": "e205391ad309fb3aab4d007f76095b575bd68570e7bef9a68c4b4371f57d5873"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_D_sssp_gunrock_essentials_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "gunrock",
+        "--variant",
+        "gunrock_essentials",
+        "--algorithm",
+        "sssp",
+        "--dataset",
+        "TINY_D",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_D_sssp_gunrock_essentials_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_D_sssp_gunrock_essentials_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<artifact-work>/build/gunrock/receipt.json",
+          "sha256": "80231f32986fb44e413d89b078a95e0ac0326a66f0fa71e3e61111691d3e7d35"
+        },
+        {
+          "path": "<artifact-work>/build/gunrock/gunrock",
+          "sha256": "e205391ad309fb3aab4d007f76095b575bd68570e7bef9a68c4b4371f57d5873"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_D_pr_gunrock_essentials_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "gunrock",
+        "--variant",
+        "gunrock_essentials",
+        "--algorithm",
+        "pr",
+        "--dataset",
+        "TINY_D",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_D_pr_gunrock_essentials_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_D_pr_gunrock_essentials_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<artifact-work>/build/gunrock/receipt.json",
+          "sha256": "80231f32986fb44e413d89b078a95e0ac0326a66f0fa71e3e61111691d3e7d35"
+        },
+        {
+          "path": "<artifact-work>/build/gunrock/gunrock",
+          "sha256": "e205391ad309fb3aab4d007f76095b575bd68570e7bef9a68c4b4371f57d5873"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_D_wcc_gunrock_legacy_cc_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "gunrock",
+        "--variant",
+        "gunrock_legacy_cc",
+        "--algorithm",
+        "wcc",
+        "--dataset",
+        "TINY_D",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_D_wcc_gunrock_legacy_cc_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_D_wcc_gunrock_legacy_cc_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<campaign>/baselines/gunrock_cc_timer_build_v1/receipt.json",
+          "sha256": "d8ff454ad69929a09663ea967235e7626dae77ec95971d4de88b0ba9def8b010"
+        },
+        {
+          "path": "<campaign>/baselines/gunrock_cc_timer_build_v1/gunrock_wcc",
+          "sha256": "01c9422d83028d5990e5d1fbca0b24e8d675b088a24348a2b60a65ef81b31576"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_D_bfs_sygraph_author_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "sygraph",
+        "--variant",
+        "sygraph_author",
+        "--algorithm",
+        "bfs",
+        "--dataset",
+        "TINY_D",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_D_bfs_sygraph_author_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_D_bfs_sygraph_author_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<artifact-work>/build/sygraph_v6/receipt.json",
+          "sha256": "4651e7e00963be0512e067175cfa2fdd6466cfa2ab6440f5203ca2655a6b5e55"
+        },
+        {
+          "path": "<artifact-work>/build/sygraph_v6/native",
+          "sha256": "040f45e27860640dda48500c5c5b7948117c75dade6572b4c292d45e8e03d357"
+        },
+        {
+          "path": "<artifact-work>/envs/sycl/lib/libstdc++.so.6.0.36",
+          "sha256": "10f0d3c46c070acd4abea2ccf2500ff0ec77e9b90154b82ea2720dba05510cb9"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_D_sssp_sygraph_author_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "sygraph",
+        "--variant",
+        "sygraph_author",
+        "--algorithm",
+        "sssp",
+        "--dataset",
+        "TINY_D",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_D_sssp_sygraph_author_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_D_sssp_sygraph_author_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<artifact-work>/build/sygraph_v6/receipt.json",
+          "sha256": "4651e7e00963be0512e067175cfa2fdd6466cfa2ab6440f5203ca2655a6b5e55"
+        },
+        {
+          "path": "<artifact-work>/build/sygraph_v6/native",
+          "sha256": "040f45e27860640dda48500c5c5b7948117c75dade6572b4c292d45e8e03d357"
+        },
+        {
+          "path": "<artifact-work>/envs/sycl/lib/libstdc++.so.6.0.36",
+          "sha256": "10f0d3c46c070acd4abea2ccf2500ff0ec77e9b90154b82ea2720dba05510cb9"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_D_wcc_sygraph_author_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "sygraph",
+        "--variant",
+        "sygraph_author",
+        "--algorithm",
+        "wcc",
+        "--dataset",
+        "TINY_D",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_D_wcc_sygraph_author_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_D_wcc_sygraph_author_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<artifact-work>/build/sygraph_coverage_v2/receipt.json",
+          "sha256": "3dacdab0ca7690cefb8f2346fca174b678b52cbb7da5efc1aac0170cd666f65f"
+        },
+        {
+          "path": "<artifact-work>/build/sygraph_coverage_v2/sygraph_coverage",
+          "sha256": "aa64887cd90cc003bd9ccffa8d60b5f9358588cd4af340d5517216ac27cafdf9"
+        },
+        {
+          "path": "<artifact-work>/envs/sycl/lib/libstdc++.so.6.0.36",
+          "sha256": "10f0d3c46c070acd4abea2ccf2500ff0ec77e9b90154b82ea2720dba05510cb9"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_D_bfs_grapin_author_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "grapin",
+        "--variant",
+        "grapin_author",
+        "--algorithm",
+        "bfs",
+        "--dataset",
+        "TINY_D",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_D_bfs_grapin_author_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_D_bfs_grapin_author_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<artifact-work>/build/grapin_pma_boundary_v1/static/receipt.json",
+          "sha256": "38986194582e6a7e8801cca084586ec0abe9378c79ac9410040794c06bb18325"
+        },
+        {
+          "path": "<artifact-work>/build/grapin_pma_boundary_v1/static/build/grapin_bfs",
+          "sha256": "3f7c0ce39932d077681118f12d20db7d2bd8807980d3bb2a53673c17aa1a9ae8"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_D_sssp_grapin_author_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "grapin",
+        "--variant",
+        "grapin_author",
+        "--algorithm",
+        "sssp",
+        "--dataset",
+        "TINY_D",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_D_sssp_grapin_author_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_D_sssp_grapin_author_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<artifact-work>/build/grapin_static_sssp_v1/receipt.json",
+          "sha256": "bf48c8d4f652f3af06279ab71653a44b67dec4f21df87841e73badbd7a913ad9"
+        },
+        {
+          "path": "<artifact-work>/build/grapin_static_sssp_v1/build/grapin_sssp",
+          "sha256": "22f269979268ee56a42c32a53c7e025a89ada63fa5fb9c3344ace70bb31b8f00"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_D_wcc_grapin_author_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "grapin",
+        "--variant",
+        "grapin_author",
+        "--algorithm",
+        "wcc",
+        "--dataset",
+        "TINY_D",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_D_wcc_grapin_author_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_D_wcc_grapin_author_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<artifact-work>/build/grapin_pma_boundary_v1/cc/receipt.json",
+          "sha256": "d2171b6ddb086f98d63d0a56194647181e84f4666d0053fc1c5c9ce99c4a7ee3"
+        },
+        {
+          "path": "<artifact-work>/build/grapin_pma_boundary_v1/cc/build/grapin_cc",
+          "sha256": "21de81ef6e369a68832900c4ce1793e879bc9cb1c2662aaeaaf706514dfeb617"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_D_pr_grapin_author_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "grapin",
+        "--variant",
+        "grapin_author",
+        "--algorithm",
+        "pr",
+        "--dataset",
+        "TINY_D",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_D_pr_grapin_author_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_D_pr_grapin_author_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<artifact-work>/build/grapin_pma_boundary_v1/static/receipt.json",
+          "sha256": "38986194582e6a7e8801cca084586ec0abe9378c79ac9410040794c06bb18325"
+        },
+        {
+          "path": "<artifact-work>/build/grapin_pma_boundary_v1/static/build/grapin_pr",
+          "sha256": "5c2261979bbed0968c54966a548b154b2c59657213f6bb1104dd440246b18628"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_D_bfs_hytgraph_author_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "hytgraph",
+        "--variant",
+        "hytgraph_author",
+        "--algorithm",
+        "bfs",
+        "--dataset",
+        "TINY_D",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_D_bfs_hytgraph_author_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_D_bfs_hytgraph_author_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<campaign>/baselines/hytgraph_build_v4/receipt.json",
+          "sha256": "760cab43252c39c6db40c6feef84e387fb09509739f805f702f9fab5185ad873"
+        },
+        {
+          "path": "<campaign>/baselines/hytgraph_build_v4/build/hytgraph_bfs",
+          "sha256": "6ee176fdeb9b60ddf3b85d6d8b54e7021f4d7b39b26a25c7025a5a2dbac8287c"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_D_sssp_hytgraph_author_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "hytgraph",
+        "--variant",
+        "hytgraph_author",
+        "--algorithm",
+        "sssp",
+        "--dataset",
+        "TINY_D",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_D_sssp_hytgraph_author_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_D_sssp_hytgraph_author_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<campaign>/baselines/hytgraph_build_v4/receipt.json",
+          "sha256": "760cab43252c39c6db40c6feef84e387fb09509739f805f702f9fab5185ad873"
+        },
+        {
+          "path": "<campaign>/baselines/hytgraph_build_v4/build/hytgraph_sssp",
+          "sha256": "90980636180d59fe2d1498aa9d1629c7b928844784b65048cd506219db1281b8"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_D_wcc_hytgraph_author_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "hytgraph",
+        "--variant",
+        "hytgraph_author",
+        "--algorithm",
+        "wcc",
+        "--dataset",
+        "TINY_D",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_D_wcc_hytgraph_author_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_D_wcc_hytgraph_author_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<campaign>/baselines/hytgraph_build_v4/receipt.json",
+          "sha256": "760cab43252c39c6db40c6feef84e387fb09509739f805f702f9fab5185ad873"
+        },
+        {
+          "path": "<campaign>/baselines/hytgraph_build_v4/build/hytgraph_cc",
+          "sha256": "eaa2d85d3544f053fc4c4799f1b333997ae36811e8cf325d8f0b3f68ef8b588f"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_D_pr_hytgraph_author_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "hytgraph",
+        "--variant",
+        "hytgraph_author",
+        "--algorithm",
+        "pr",
+        "--dataset",
+        "TINY_D",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_D_pr_hytgraph_author_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_D_pr_hytgraph_author_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<campaign>/baselines/hytgraph_build_v4/receipt.json",
+          "sha256": "760cab43252c39c6db40c6feef84e387fb09509739f805f702f9fab5185ad873"
+        },
+        {
+          "path": "<campaign>/baselines/hytgraph_build_v4/build/hytgraph_pr",
+          "sha256": "8cde1b02eb8e417d6379bab74f0ef65759632d6c55352028a6f0d5123c21d910"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_U_bfs_cggraph_legacy_full_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "cggraph",
+        "--variant",
+        "cggraph_legacy_full",
+        "--algorithm",
+        "bfs",
+        "--dataset",
+        "TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_U_bfs_cggraph_legacy_full_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_U_bfs_cggraph_legacy_full_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<campaign>/baselines/cggraph_legacy_traversal_build_v2/receipt.json",
+          "sha256": "2090ae2fb2ff67e39a59868fb591095b1069499adf80baaeb17c30db281db95a"
+        },
+        {
+          "path": "<campaign>/baselines/cggraph_legacy_traversal_build_v2/native",
+          "sha256": "f2406e7aa0317c97ea1fbf0b3206b2450ad446c87f9751115db827c097913610"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_U_sssp_cggraph_legacy_full_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "cggraph",
+        "--variant",
+        "cggraph_legacy_full",
+        "--algorithm",
+        "sssp",
+        "--dataset",
+        "TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_U_sssp_cggraph_legacy_full_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_U_sssp_cggraph_legacy_full_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<campaign>/baselines/cggraph_legacy_traversal_build_v2/receipt.json",
+          "sha256": "2090ae2fb2ff67e39a59868fb591095b1069499adf80baaeb17c30db281db95a"
+        },
+        {
+          "path": "<campaign>/baselines/cggraph_legacy_traversal_build_v2/native",
+          "sha256": "f2406e7aa0317c97ea1fbf0b3206b2450ad446c87f9751115db827c097913610"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_U_wcc_cggraph_legacy_full_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "cggraph",
+        "--variant",
+        "cggraph_legacy_full",
+        "--algorithm",
+        "wcc",
+        "--dataset",
+        "TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_U_wcc_cggraph_legacy_full_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_U_wcc_cggraph_legacy_full_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<campaign>/baselines/cggraph_legacy_traversal_build_v2/receipt.json",
+          "sha256": "2090ae2fb2ff67e39a59868fb591095b1069499adf80baaeb17c30db281db95a"
+        },
+        {
+          "path": "<campaign>/baselines/cggraph_legacy_traversal_build_v2/native",
+          "sha256": "f2406e7aa0317c97ea1fbf0b3206b2450ad446c87f9751115db827c097913610"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_U_pr_cggraph_legacy_full_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "cggraph",
+        "--variant",
+        "cggraph_legacy_full",
+        "--algorithm",
+        "pr",
+        "--dataset",
+        "TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_U_pr_cggraph_legacy_full_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_U_pr_cggraph_legacy_full_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<campaign>/baselines/cggraph_legacy_full_build_v1/receipt.json",
+          "sha256": "a562648168d84f98bdc43f8ec8b6b7dd9b5c41dec4a4f26858759b3b7afaec42"
+        },
+        {
+          "path": "<campaign>/baselines/cggraph_legacy_full_build_v1/native",
+          "sha256": "03809a80de18ef1bdbff9e4b8adc315d70e90ab33b21f1b1dcf717f11b2fae3f"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_U_bfs_cggraph_v15_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "cggraph",
+        "--variant",
+        "cggraph_v15",
+        "--algorithm",
+        "bfs",
+        "--dataset",
+        "TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_U_bfs_cggraph_v15_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_U_bfs_cggraph_v15_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<artifact-work>/build/cggraph/receipt.json",
+          "sha256": "af760cee7bc80169d6ba9c18384d2e45975948711e230df7c602a7b75aee8b31"
+        },
+        {
+          "path": "<artifact-work>/build/cggraph/cggraph",
+          "sha256": "b019b0403b396e0d975a8c155d707ad2e7257321a03716e6ddbbf8a84f12544c"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_U_sssp_cggraph_v15_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "cggraph",
+        "--variant",
+        "cggraph_v15",
+        "--algorithm",
+        "sssp",
+        "--dataset",
+        "TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_U_sssp_cggraph_v15_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_U_sssp_cggraph_v15_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<artifact-work>/build/cggraph/receipt.json",
+          "sha256": "af760cee7bc80169d6ba9c18384d2e45975948711e230df7c602a7b75aee8b31"
+        },
+        {
+          "path": "<artifact-work>/build/cggraph/cggraph",
+          "sha256": "b019b0403b396e0d975a8c155d707ad2e7257321a03716e6ddbbf8a84f12544c"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_U_bfs_gunrock_essentials_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "gunrock",
+        "--variant",
+        "gunrock_essentials",
+        "--algorithm",
+        "bfs",
+        "--dataset",
+        "TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_U_bfs_gunrock_essentials_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_U_bfs_gunrock_essentials_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<artifact-work>/build/gunrock/receipt.json",
+          "sha256": "80231f32986fb44e413d89b078a95e0ac0326a66f0fa71e3e61111691d3e7d35"
+        },
+        {
+          "path": "<artifact-work>/build/gunrock/gunrock",
+          "sha256": "e205391ad309fb3aab4d007f76095b575bd68570e7bef9a68c4b4371f57d5873"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_U_sssp_gunrock_essentials_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "gunrock",
+        "--variant",
+        "gunrock_essentials",
+        "--algorithm",
+        "sssp",
+        "--dataset",
+        "TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_U_sssp_gunrock_essentials_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_U_sssp_gunrock_essentials_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<artifact-work>/build/gunrock/receipt.json",
+          "sha256": "80231f32986fb44e413d89b078a95e0ac0326a66f0fa71e3e61111691d3e7d35"
+        },
+        {
+          "path": "<artifact-work>/build/gunrock/gunrock",
+          "sha256": "e205391ad309fb3aab4d007f76095b575bd68570e7bef9a68c4b4371f57d5873"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_U_pr_gunrock_essentials_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "gunrock",
+        "--variant",
+        "gunrock_essentials",
+        "--algorithm",
+        "pr",
+        "--dataset",
+        "TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_U_pr_gunrock_essentials_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_U_pr_gunrock_essentials_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<artifact-work>/build/gunrock/receipt.json",
+          "sha256": "80231f32986fb44e413d89b078a95e0ac0326a66f0fa71e3e61111691d3e7d35"
+        },
+        {
+          "path": "<artifact-work>/build/gunrock/gunrock",
+          "sha256": "e205391ad309fb3aab4d007f76095b575bd68570e7bef9a68c4b4371f57d5873"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_U_wcc_gunrock_legacy_cc_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "gunrock",
+        "--variant",
+        "gunrock_legacy_cc",
+        "--algorithm",
+        "wcc",
+        "--dataset",
+        "TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_U_wcc_gunrock_legacy_cc_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_U_wcc_gunrock_legacy_cc_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<campaign>/baselines/gunrock_cc_timer_build_v1/receipt.json",
+          "sha256": "d8ff454ad69929a09663ea967235e7626dae77ec95971d4de88b0ba9def8b010"
+        },
+        {
+          "path": "<campaign>/baselines/gunrock_cc_timer_build_v1/gunrock_wcc",
+          "sha256": "01c9422d83028d5990e5d1fbca0b24e8d675b088a24348a2b60a65ef81b31576"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_U_bfs_sygraph_author_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "sygraph",
+        "--variant",
+        "sygraph_author",
+        "--algorithm",
+        "bfs",
+        "--dataset",
+        "TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_U_bfs_sygraph_author_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_U_bfs_sygraph_author_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<artifact-work>/build/sygraph_v6/receipt.json",
+          "sha256": "4651e7e00963be0512e067175cfa2fdd6466cfa2ab6440f5203ca2655a6b5e55"
+        },
+        {
+          "path": "<artifact-work>/build/sygraph_v6/native",
+          "sha256": "040f45e27860640dda48500c5c5b7948117c75dade6572b4c292d45e8e03d357"
+        },
+        {
+          "path": "<artifact-work>/envs/sycl/lib/libstdc++.so.6.0.36",
+          "sha256": "10f0d3c46c070acd4abea2ccf2500ff0ec77e9b90154b82ea2720dba05510cb9"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_U_sssp_sygraph_author_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "sygraph",
+        "--variant",
+        "sygraph_author",
+        "--algorithm",
+        "sssp",
+        "--dataset",
+        "TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_U_sssp_sygraph_author_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_U_sssp_sygraph_author_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<artifact-work>/build/sygraph_v6/receipt.json",
+          "sha256": "4651e7e00963be0512e067175cfa2fdd6466cfa2ab6440f5203ca2655a6b5e55"
+        },
+        {
+          "path": "<artifact-work>/build/sygraph_v6/native",
+          "sha256": "040f45e27860640dda48500c5c5b7948117c75dade6572b4c292d45e8e03d357"
+        },
+        {
+          "path": "<artifact-work>/envs/sycl/lib/libstdc++.so.6.0.36",
+          "sha256": "10f0d3c46c070acd4abea2ccf2500ff0ec77e9b90154b82ea2720dba05510cb9"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_U_wcc_sygraph_author_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "sygraph",
+        "--variant",
+        "sygraph_author",
+        "--algorithm",
+        "wcc",
+        "--dataset",
+        "TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_U_wcc_sygraph_author_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_U_wcc_sygraph_author_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<artifact-work>/build/sygraph_coverage_v2/receipt.json",
+          "sha256": "3dacdab0ca7690cefb8f2346fca174b678b52cbb7da5efc1aac0170cd666f65f"
+        },
+        {
+          "path": "<artifact-work>/build/sygraph_coverage_v2/sygraph_coverage",
+          "sha256": "aa64887cd90cc003bd9ccffa8d60b5f9358588cd4af340d5517216ac27cafdf9"
+        },
+        {
+          "path": "<artifact-work>/envs/sycl/lib/libstdc++.so.6.0.36",
+          "sha256": "10f0d3c46c070acd4abea2ccf2500ff0ec77e9b90154b82ea2720dba05510cb9"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_U_bfs_grapin_author_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "grapin",
+        "--variant",
+        "grapin_author",
+        "--algorithm",
+        "bfs",
+        "--dataset",
+        "TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_U_bfs_grapin_author_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_U_bfs_grapin_author_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<artifact-work>/build/grapin_pma_boundary_v1/static/receipt.json",
+          "sha256": "38986194582e6a7e8801cca084586ec0abe9378c79ac9410040794c06bb18325"
+        },
+        {
+          "path": "<artifact-work>/build/grapin_pma_boundary_v1/static/build/grapin_bfs",
+          "sha256": "3f7c0ce39932d077681118f12d20db7d2bd8807980d3bb2a53673c17aa1a9ae8"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_U_sssp_grapin_author_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "grapin",
+        "--variant",
+        "grapin_author",
+        "--algorithm",
+        "sssp",
+        "--dataset",
+        "TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_U_sssp_grapin_author_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_U_sssp_grapin_author_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<artifact-work>/build/grapin_static_sssp_v1/receipt.json",
+          "sha256": "bf48c8d4f652f3af06279ab71653a44b67dec4f21df87841e73badbd7a913ad9"
+        },
+        {
+          "path": "<artifact-work>/build/grapin_static_sssp_v1/build/grapin_sssp",
+          "sha256": "22f269979268ee56a42c32a53c7e025a89ada63fa5fb9c3344ace70bb31b8f00"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_U_wcc_grapin_author_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "grapin",
+        "--variant",
+        "grapin_author",
+        "--algorithm",
+        "wcc",
+        "--dataset",
+        "TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_U_wcc_grapin_author_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_U_wcc_grapin_author_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<artifact-work>/build/grapin_pma_boundary_v1/cc/receipt.json",
+          "sha256": "d2171b6ddb086f98d63d0a56194647181e84f4666d0053fc1c5c9ce99c4a7ee3"
+        },
+        {
+          "path": "<artifact-work>/build/grapin_pma_boundary_v1/cc/build/grapin_cc",
+          "sha256": "21de81ef6e369a68832900c4ce1793e879bc9cb1c2662aaeaaf706514dfeb617"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_U_pr_grapin_author_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "grapin",
+        "--variant",
+        "grapin_author",
+        "--algorithm",
+        "pr",
+        "--dataset",
+        "TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_U_pr_grapin_author_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_U_pr_grapin_author_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<artifact-work>/build/grapin_pma_boundary_v1/static/receipt.json",
+          "sha256": "38986194582e6a7e8801cca084586ec0abe9378c79ac9410040794c06bb18325"
+        },
+        {
+          "path": "<artifact-work>/build/grapin_pma_boundary_v1/static/build/grapin_pr",
+          "sha256": "5c2261979bbed0968c54966a548b154b2c59657213f6bb1104dd440246b18628"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_U_bfs_hytgraph_author_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "hytgraph",
+        "--variant",
+        "hytgraph_author",
+        "--algorithm",
+        "bfs",
+        "--dataset",
+        "TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_U_bfs_hytgraph_author_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_U_bfs_hytgraph_author_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<campaign>/baselines/hytgraph_build_v4/receipt.json",
+          "sha256": "760cab43252c39c6db40c6feef84e387fb09509739f805f702f9fab5185ad873"
+        },
+        {
+          "path": "<campaign>/baselines/hytgraph_build_v4/build/hytgraph_bfs",
+          "sha256": "6ee176fdeb9b60ddf3b85d6d8b54e7021f4d7b39b26a25c7025a5a2dbac8287c"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_U_sssp_hytgraph_author_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "hytgraph",
+        "--variant",
+        "hytgraph_author",
+        "--algorithm",
+        "sssp",
+        "--dataset",
+        "TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_U_sssp_hytgraph_author_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_U_sssp_hytgraph_author_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<campaign>/baselines/hytgraph_build_v4/receipt.json",
+          "sha256": "760cab43252c39c6db40c6feef84e387fb09509739f805f702f9fab5185ad873"
+        },
+        {
+          "path": "<campaign>/baselines/hytgraph_build_v4/build/hytgraph_sssp",
+          "sha256": "90980636180d59fe2d1498aa9d1629c7b928844784b65048cd506219db1281b8"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_U_wcc_hytgraph_author_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "hytgraph",
+        "--variant",
+        "hytgraph_author",
+        "--algorithm",
+        "wcc",
+        "--dataset",
+        "TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_U_wcc_hytgraph_author_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_U_wcc_hytgraph_author_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<campaign>/baselines/hytgraph_build_v4/receipt.json",
+          "sha256": "760cab43252c39c6db40c6feef84e387fb09509739f805f702f9fab5185ad873"
+        },
+        {
+          "path": "<campaign>/baselines/hytgraph_build_v4/build/hytgraph_cc",
+          "sha256": "eaa2d85d3544f053fc4c4799f1b333997ae36811e8cf325d8f0b3f68ef8b588f"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    },
+    {
+      "id": "tiny_TINY_U_pr_hytgraph_author_r00",
+      "command": [
+        "<artifact-work>/envs/core/bin/python",
+        "-B",
+        "<campaign>/baselines/sg_author_worker.py",
+        "--execute-gpu",
+        "--system",
+        "hytgraph",
+        "--variant",
+        "hytgraph_author",
+        "--algorithm",
+        "pr",
+        "--dataset",
+        "TINY_U",
+        "--phase",
+        "tiny",
+        "--repeat",
+        "0",
+        "--output",
+        "<campaign>/author_tiny_v2/tiny_TINY_U_pr_hytgraph_author_r00",
+        "--root",
+        "<artifact-work>",
+        "--input-root",
+        "<campaign>/sg_tiny_inputs",
+        "--setup",
+        "<campaign>/setup.json",
+        "--reference-cache",
+        "<campaign>/references",
+        "--lock-file",
+        "<artifact-work>/gpu_experiment.lock",
+        "--gpu-uuid",
+        "<device-0>",
+        "--cpus",
+        "0,1,2,3,4,5,6,7,48,49,50,51,52,53,54,55",
+        "--timeout",
+        "1800",
+        "--min-host-free-gib",
+        "8.0"
+      ],
+      "receipt": "<campaign>/author_tiny_v2/tiny_TINY_U_pr_hytgraph_author_r00/result.json",
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "timeout": 600,
+      "bindings": [
+        {
+          "path": "<campaign>/baselines/sg_author_worker.py",
+          "sha256": "3fffd069a18acb797460c50f56b7b062626f8b7f6811f78f109e898218df592a"
+        },
+        {
+          "path": "<campaign>/baselines/hytgraph_build_v4/receipt.json",
+          "sha256": "760cab43252c39c6db40c6feef84e387fb09509739f805f702f9fab5185ad873"
+        },
+        {
+          "path": "<campaign>/baselines/hytgraph_build_v4/build/hytgraph_pr",
+          "sha256": "8cde1b02eb8e417d6379bab74f0ef65759632d6c55352028a6f0d5123c21d910"
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30",
+          "sha256": "ff0825e113603c3866680d5d52216bc6d8eedf3a59f52a0aef67ff01994db128"
+        }
+      ]
+    }
+  ],
+  "completed": [
+    {
+      "id": "tiny_TINY_D_bfs_cggraph_legacy_full_r00",
+      "outcome": "FAIL",
+      "started_unix": 1793804217.0307345,
+      "pid": 284244,
+      "returncode": 1,
+      "status": "FAILED",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_D_bfs_cggraph_legacy_full_r00/result.json",
+        "sha256": "d2129dac90927a68db8760fad8b471ba6814d03161ffbda708829f7ee9bb1507",
+        "bytes": 7300
+      },
+      "seconds": 1.5762137398123741
+    },
+    {
+      "id": "tiny_TINY_D_sssp_cggraph_legacy_full_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804218.617906,
+      "pid": 284278,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_D_sssp_cggraph_legacy_full_r00/result.json",
+        "sha256": "c15dca2b7401be3ff7de23ecd51720ec860bbee1f3e141bfe67c2fb492fd8c11",
+        "bytes": 14366
+      },
+      "seconds": 4.689947161823511
+    },
+    {
+      "id": "tiny_TINY_D_wcc_cggraph_legacy_full_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804223.3187582,
+      "pid": 284370,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_D_wcc_cggraph_legacy_full_r00/result.json",
+        "sha256": "a73ac3eed6c5a6d0fd3cea200565ace87766a91c0bb819411c3e6ac5e91916dd",
+        "bytes": 6972
+      },
+      "seconds": 1.380995500832796
+    },
+    {
+      "id": "tiny_TINY_D_pr_cggraph_legacy_full_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804224.710775,
+      "pid": 284404,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_D_pr_cggraph_legacy_full_r00/result.json",
+        "sha256": "1904289df30e5388e666eecefcf748250e2120c0b6c46b5b9ee0f93f7bc7790e",
+        "bytes": 7236
+      },
+      "seconds": 5.915071472525597
+    },
+    {
+      "id": "tiny_TINY_D_bfs_cggraph_v15_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804230.6369946,
+      "pid": 284454,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_D_bfs_cggraph_v15_r00/result.json",
+        "sha256": "84678145f502e6f1d5c75372858bbd5f23a1debdd6bf2cd9bca8a7e507a5e8d4",
+        "bytes": 19692
+      },
+      "seconds": 2.288575414568186
+    },
+    {
+      "id": "tiny_TINY_D_sssp_cggraph_v15_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804232.9366953,
+      "pid": 284572,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_D_sssp_cggraph_v15_r00/result.json",
+        "sha256": "64239604b0c88a72a4a73528de2f016319a24b3f6f0a4a0d6417a0d119d0a954",
+        "bytes": 19717
+      },
+      "seconds": 2.386694625020027
+    },
+    {
+      "id": "tiny_TINY_D_bfs_gunrock_essentials_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804235.334673,
+      "pid": 284704,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_D_bfs_gunrock_essentials_r00/result.json",
+        "sha256": "5ca9e05e22e48158793431172b5ab7fc2b3489622b3fca6086b80d6de8672f1c",
+        "bytes": 20176
+      },
+      "seconds": 2.341568775475025
+    },
+    {
+      "id": "tiny_TINY_D_sssp_gunrock_essentials_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804237.687577,
+      "pid": 284736,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_D_sssp_gunrock_essentials_r00/result.json",
+        "sha256": "8daf462176ae4e4dfa4aadb061912bd5afc3d27117854bf16c93cddc3d6be5bf",
+        "bytes": 20189
+      },
+      "seconds": 3.541307270526886
+    },
+    {
+      "id": "tiny_TINY_D_pr_gunrock_essentials_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804241.2402697,
+      "pid": 284774,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_D_pr_gunrock_essentials_r00/result.json",
+        "sha256": "87ebb48d0115877a22b533b4e6a71563c25580ec711e5a6e30b9490ebc6c61e4",
+        "bytes": 9197
+      },
+      "seconds": 1.1351915076375008
+    },
+    {
+      "id": "tiny_TINY_D_wcc_gunrock_legacy_cc_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804242.3870096,
+      "pid": 284790,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_D_wcc_gunrock_legacy_cc_r00/result.json",
+        "sha256": "e20acfd8dcc4a484c9ebbe2858914c00e667138da711957a82f349693aa11603",
+        "bytes": 6899
+      },
+      "seconds": 1.2335722632706165
+    },
+    {
+      "id": "tiny_TINY_D_bfs_sygraph_author_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804243.6321032,
+      "pid": 284807,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_D_bfs_sygraph_author_r00/result.json",
+        "sha256": "2dee3bf0e62cea5b26e9a345a2263e98c064e69847030bd3833d341e704cc54a",
+        "bytes": 17314
+      },
+      "seconds": 2.752795722335577
+    },
+    {
+      "id": "tiny_TINY_D_sssp_sygraph_author_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804246.3964715,
+      "pid": 284844,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_D_sssp_sygraph_author_r00/result.json",
+        "sha256": "91afd6559510dd4a3807289f22d4accc148a9f9005c7126516b9643e56be69eb",
+        "bytes": 17378
+      },
+      "seconds": 4.203290022909641
+    },
+    {
+      "id": "tiny_TINY_D_wcc_sygraph_author_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804250.6114938,
+      "pid": 284885,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_D_wcc_sygraph_author_r00/result.json",
+        "sha256": "caeb5b90723446b40ec8ec286f528c76eaf7cbdf7446294a8b4e2cbfbbc13544",
+        "bytes": 8018
+      },
+      "seconds": 1.4351973459124565
+    },
+    {
+      "id": "tiny_TINY_D_bfs_grapin_author_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804252.0585027,
+      "pid": 284902,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_D_bfs_grapin_author_r00/result.json",
+        "sha256": "0251e88642620330d3e40aa42919b8ceaaa7acee1f2ab19c7cf78c380b4f5c9b",
+        "bytes": 15229
+      },
+      "seconds": 2.7356700152158737
+    },
+    {
+      "id": "tiny_TINY_D_sssp_grapin_author_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804254.8067908,
+      "pid": 284934,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_D_sssp_grapin_author_r00/result.json",
+        "sha256": "5ec0fb9eb20380e0d768d7152d4ccf69ada86467802833e0d52114b5b01dfc36",
+        "bytes": 15567
+      },
+      "seconds": 4.188767958432436
+    },
+    {
+      "id": "tiny_TINY_D_wcc_grapin_author_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804259.0075617,
+      "pid": 284972,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_D_wcc_grapin_author_r00/result.json",
+        "sha256": "016a4eb7cec867ddf596490a87f9bcb5dc3d7380818a96c95c581ad6ae774c23",
+        "bytes": 7259
+      },
+      "seconds": 1.3819422870874405
+    },
+    {
+      "id": "tiny_TINY_D_pr_grapin_author_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804260.401581,
+      "pid": 284992,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_D_pr_grapin_author_r00/result.json",
+        "sha256": "d33f59b24c4bea2216b5764597179588d5ba99c9824b9c42f8fc6fc40a00fc5b",
+        "bytes": 7618
+      },
+      "seconds": 1.3318852707743645
+    },
+    {
+      "id": "tiny_TINY_D_bfs_hytgraph_author_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804261.7459214,
+      "pid": 285019,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_D_bfs_hytgraph_author_r00/result.json",
+        "sha256": "06b06eb265676a99876c763453d0c48ff9fbb437bfcb8850b40d8623301ee017",
+        "bytes": 15792
+      },
+      "seconds": 2.4307641685009003
+    },
+    {
+      "id": "tiny_TINY_D_sssp_hytgraph_author_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804264.188887,
+      "pid": 285051,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_D_sssp_hytgraph_author_r00/result.json",
+        "sha256": "cea01a9d91e37d9716fabc0d3c7959b32ef401c3bacd236f6d71575b8fbf6d1c",
+        "bytes": 15841
+      },
+      "seconds": 3.6345792040228844
+    },
+    {
+      "id": "tiny_TINY_D_wcc_hytgraph_author_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804267.8357155,
+      "pid": 285089,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_D_wcc_hytgraph_author_r00/result.json",
+        "sha256": "366a82b98266aea3dbe9b22728303eb107f1d8e44653d0c9cd723d27fb836e39",
+        "bytes": 7448
+      },
+      "seconds": 1.1780172251164913
+    },
+    {
+      "id": "tiny_TINY_D_pr_hytgraph_author_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804269.0260634,
+      "pid": 285105,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_D_pr_hytgraph_author_r00/result.json",
+        "sha256": "b643d68dc93b48f3ac31acf77de6647d3ae1331cb43ac13241c44ef8e79b341f",
+        "bytes": 7815
+      },
+      "seconds": 1.177742250263691
+    },
+    {
+      "id": "tiny_TINY_U_bfs_cggraph_legacy_full_r00",
+      "outcome": "FAIL",
+      "started_unix": 1793804270.216293,
+      "pid": 285123,
+      "returncode": 1,
+      "status": "FAILED",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_U_bfs_cggraph_legacy_full_r00/result.json",
+        "sha256": "5aa1773790457dfae23c57afdb8134813b3acee37fc35b1feee9ce9e529e73d5",
+        "bytes": 7301
+      },
+      "seconds": 1.3877467401325703
+    },
+    {
+      "id": "tiny_TINY_U_sssp_cggraph_legacy_full_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804271.6165082,
+      "pid": 285168,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_U_sssp_cggraph_legacy_full_r00/result.json",
+        "sha256": "60b729e79a28230190ed95dea25d2f6909688b39fe6b880c72b7d44adc22e5fc",
+        "bytes": 14362
+      },
+      "seconds": 4.493907790631056
+    },
+    {
+      "id": "tiny_TINY_U_wcc_cggraph_legacy_full_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804276.1230152,
+      "pid": 285264,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_U_wcc_cggraph_legacy_full_r00/result.json",
+        "sha256": "bde54ed8ec988d308b50fac443662ab0323f4b1e11c1333f11daf97006e417e6",
+        "bytes": 6971
+      },
+      "seconds": 1.4280583076179028
+    },
+    {
+      "id": "tiny_TINY_U_pr_cggraph_legacy_full_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804277.5637171,
+      "pid": 285298,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_U_pr_cggraph_legacy_full_r00/result.json",
+        "sha256": "9fbe40e8e47c520513f5d4205b14e3c23d7a460578f0710eef23d4dd8364a5c8",
+        "bytes": 7294
+      },
+      "seconds": 3.4837326630949974
+    },
+    {
+      "id": "tiny_TINY_U_bfs_cggraph_v15_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804281.0602484,
+      "pid": 285334,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_U_bfs_cggraph_v15_r00/result.json",
+        "sha256": "fc6f30c26d14d4c8eace10a957cc1e85221e9a0a012b019a1e7b3da30902fbb2",
+        "bytes": 19698
+      },
+      "seconds": 3.787813063710928
+    },
+    {
+      "id": "tiny_TINY_U_sssp_cggraph_v15_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804284.8614552,
+      "pid": 285469,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_U_sssp_cggraph_v15_r00/result.json",
+        "sha256": "a49bdff5202a1a33bfca22505bf41f287959282168a51d378a4bc4cf36c94f73",
+        "bytes": 19719
+      },
+      "seconds": 2.4355816580355167
+    },
+    {
+      "id": "tiny_TINY_U_bfs_gunrock_essentials_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804287.3100164,
+      "pid": 285601,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_U_bfs_gunrock_essentials_r00/result.json",
+        "sha256": "a47dc1762a9ee1badaa1667c2f5e814e93f5777daada49b7adbd85a8fbec791a",
+        "bytes": 20196
+      },
+      "seconds": 2.437068834900856
+    },
+    {
+      "id": "tiny_TINY_U_sssp_gunrock_essentials_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804289.7604823,
+      "pid": 285633,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_U_sssp_gunrock_essentials_r00/result.json",
+        "sha256": "d53187ac518d33aaa1bbb56e2f09057b82fa9228b51d914507c9e177d35cfca6",
+        "bytes": 20204
+      },
+      "seconds": 2.3864976465702057
+    },
+    {
+      "id": "tiny_TINY_U_pr_gunrock_essentials_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804292.1600819,
+      "pid": 285669,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_U_pr_gunrock_essentials_r00/result.json",
+        "sha256": "3849edbd4d11d708849dd527d4c568f9644e31de6a633896eea58af8d35b61eb",
+        "bytes": 9240
+      },
+      "seconds": 1.1841580420732498
+    },
+    {
+      "id": "tiny_TINY_U_wcc_gunrock_legacy_cc_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804293.3574681,
+      "pid": 285695,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_U_wcc_gunrock_legacy_cc_r00/result.json",
+        "sha256": "1284fb7bc9806c5855cc18a985497d5fc165f68101a7c6104b3346f189f6174c",
+        "bytes": 6900
+      },
+      "seconds": 1.0337924398481846
+    },
+    {
+      "id": "tiny_TINY_U_bfs_sygraph_author_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804294.4065802,
+      "pid": 285712,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_U_bfs_sygraph_author_r00/result.json",
+        "sha256": "702e244b54921896eefb758507031fce0cf9f6af8f1b1e2437ec414194ae0524",
+        "bytes": 17337
+      },
+      "seconds": 4.039825186133385
+    },
+    {
+      "id": "tiny_TINY_U_sssp_sygraph_author_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804298.4598086,
+      "pid": 285753,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_U_sssp_sygraph_author_r00/result.json",
+        "sha256": "7afcd5bff929a3c34f5d1b1fe1592e4df456975b2a488b3b6f4f383a6a91daaf",
+        "bytes": 17370
+      },
+      "seconds": 2.8875932320952415
+    },
+    {
+      "id": "tiny_TINY_U_wcc_sygraph_author_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804301.3626378,
+      "pid": 285790,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_U_wcc_sygraph_author_r00/result.json",
+        "sha256": "0c878018087ce98f27a00f1742e1f21609abc0cffad1b4a64891a5fd880d1cb9",
+        "bytes": 8037
+      },
+      "seconds": 1.2831264548003674
+    },
+    {
+      "id": "tiny_TINY_U_bfs_grapin_author_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804302.6592891,
+      "pid": 285807,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_U_bfs_grapin_author_r00/result.json",
+        "sha256": "cc9782de7275524471ab0c9e03f43e8405ab251aa6c86cb4347f60561cb0cb9e",
+        "bytes": 15232
+      },
+      "seconds": 2.9862013533711433
+    },
+    {
+      "id": "tiny_TINY_U_sssp_grapin_author_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804305.6590595,
+      "pid": 285841,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_U_sssp_grapin_author_r00/result.json",
+        "sha256": "ac46846fbfe5aa03ce317207e60556bb1676db4ccd17ada94fb56d85aaf5b452",
+        "bytes": 15564
+      },
+      "seconds": 4.13513520732522
+    },
+    {
+      "id": "tiny_TINY_U_wcc_grapin_author_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804309.8078961,
+      "pid": 285877,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_U_wcc_grapin_author_r00/result.json",
+        "sha256": "38638af24f6e02b7a13febdae06a022d23e4b554a9506d114900360b7bb9920a",
+        "bytes": 7257
+      },
+      "seconds": 1.1804608404636383
+    },
+    {
+      "id": "tiny_TINY_U_pr_grapin_author_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804311.0021439,
+      "pid": 285895,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_U_pr_grapin_author_r00/result.json",
+        "sha256": "786ce827a1490d3ffe242d2aa85566674af6c3c53ef6fd31af74534757462a72",
+        "bytes": 7635
+      },
+      "seconds": 1.280464544892311
+    },
+    {
+      "id": "tiny_TINY_U_bfs_hytgraph_author_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804312.2964103,
+      "pid": 285911,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_U_bfs_hytgraph_author_r00/result.json",
+        "sha256": "6dbd1b9083cde6d227d9254bac3a3628967b498a51a8ea2a082a612ad686369e",
+        "bytes": 15825
+      },
+      "seconds": 2.378468282520771
+    },
+    {
+      "id": "tiny_TINY_U_sssp_hytgraph_author_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804314.6892517,
+      "pid": 285943,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_U_sssp_hytgraph_author_r00/result.json",
+        "sha256": "1466f42d160ea3e8cc7a4a096c53f5bb84d8870fd252567f449976b7d762af9b",
+        "bytes": 15835
+      },
+      "seconds": 3.6307777985930443
+    },
+    {
+      "id": "tiny_TINY_U_wcc_hytgraph_author_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804318.335537,
+      "pid": 285981,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_U_wcc_hytgraph_author_r00/result.json",
+        "sha256": "b19bd5b9eb363d69324f0d73dd2f1a94cc1c40543a19153c083ff7288c337b51",
+        "bytes": 7453
+      },
+      "seconds": 0.9774099364876747
+    },
+    {
+      "id": "tiny_TINY_U_pr_hytgraph_author_r00",
+      "outcome": "PASS",
+      "started_unix": 1793804319.326896,
+      "pid": 285997,
+      "returncode": 0,
+      "status": "PASS_QUALIFICATION",
+      "receipt": {
+        "path": "<campaign>/author_tiny_v2/tiny_TINY_U_pr_hytgraph_author_r00/result.json",
+        "sha256": "dc38de144c916eb592d41baa8a1ab95be490b68499cb25a11f63f86da4a73f61",
+        "bytes": 7825
+      },
+      "seconds": 1.3275501914322376
+    }
+  ],
+  "formal_measurements": 0,
+  "active_job": "tiny_TINY_U_pr_hytgraph_author_r00",
+  "finished_unix": 1793804320.6616933,
+  "public_projection_note": "Host paths/UUIDs redacted. This is qualification evidence, not an executable tiny/target proof or a formal performance repetition. Original bytes are retained by the operator."
+}

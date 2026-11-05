@@ -1,61 +1,38 @@
 # ICDE artifact guide
 
-This checkpoint separates the historical source3 base, the current source candidate, and measurements. `provenance/origin.json` preserves the full 1150-file source3 manifest; `omitted.json` records six nontext upstream illustrations/sample assets excluded from publication. `candidate_delta.json` records seven modified and three added Python/test files. `current_source.json` binds all current source bytes; `manifest.json` binds the complete publication.
+This is the current source and reproduction entry. The first public commit and source3 evidence remain historical; current source is `arena_output_ownership_v2`, digest `cb14360e2dfb934b8a28f9875fb80639ce4503bc6ed27956201b18e9edec6869`. [manifest.json](manifest.json), [current source](provenance/current_source.json), and [candidate delta](provenance/candidate_delta.json) explicitly separate the current path-to-SHA256-and-byte-size digest from the historical source3 digest. Verify every declared file before use.
 
-The source3 original binary has historical qualification. The capability-dispatch patch passed 46 CPU checks; the closure-LRU control passed a separate 10-test CPU suite. Neither CPU suite loaded CUDA or a DSO. A new build, its GPU qualification, and the new performance campaign need separate source-bound receipts. Do not transfer the base binary's qualification to the patched source or claim new results from packaging.
+## Current evidence
 
-## Implemented execution scope
+Current-source checks include 178 public CPU contracts (the earlier candidate receipt records its original 153-test scope), 33 real GPU semantic/owned-output checks, and 16 corrected CSR/global-L1 tiny configurations. Real-graph targets and other workflows are qualifying separately. Earlier native FP64 lease qualification covered one and eight GPUs on the integrated parent. The broader E6/16-request/state/baseline checks have their own source/runner identities. [Current GPU scope](provenance/current_gpu_qualification.json) and [campaign status](campaign_status.json) distinguish these; qualification does not establish formal performance. The full new E1–E6 formal matrix and 90% single-GPU target remain unmeasured.
 
-| Entry | Functions and execution scope |
-|---|---|
-| Public SINGLE / REQUEST_PARALLEL | pagerank, mst, lcc, wcc, scc, bfs, dijkstra, bellman_ford, sssp, kcore, bc, closeness, effective_size, efficiency, constraint, hierarchy |
-| REPLICATED | bc/closeness partition source vertices; four structural-hole functions partition target vertices; every GPU holds a full graph |
-| PARTITIONED | BFS, SSSP, WCC, PR; one graph is divided among GPUs |
-| Session.native | BFS, SSSP, WCC, PR, weighted PR; immutable snapshots and declared D-Maintain/C-Retain policies |
-| Session.arena | Single-GPU BFS, SSSP, WCC, PR, weighted PR; explicit arena budget and journal updates |
-| Session.create | capability_v1: one-device static/journal → arena; immutable snapshots or multi-device static → native; multi-device journal rejected |
+## Build and test
 
-This is an implementation map, not a claim that every function/resource/input combination has completed current-release qualification. Replication, request parallelism and graph partitioning have different memory and communication costs. The arena takes owned COO inputs and a backing-allocation budget; native execution takes partition manifests and optional per-device retained-state budgets. Session.create does not hide the required input conversion or make these budget definitions equivalent.
-
-D-Maintain reuses valid representations and maintains supported fixed-topology weight versions. Native sparse device patch/COW/lease is FP64-specific. It is not a general topology-update algorithm or incremental maintenance of graph-algorithm answers. C-Retain uses shared ownership and actual releasable allocations; its score is a historical-demand heuristic rather than a measured recovery-time optimizer.
-
-## Explicit reproduction commands
-
-Start with `python -B artifact/icde/tools/reproduce.py status` and `verify`. Commands forwarded by reproduce.py retain their own --help and explicit paths; there is no fabricated run-all command.
-
-| Command | Actual behavior |
-|---|---|
-| build | Print an external clean-build plan; --execute compiles and records current source/DSO hashes |
-| build-input-tools | Print or execute C++17/OpenMP/OpenSSL builds of CSR and deterministic-weight tools |
-| test-input-tools | CPU fixtures for normalization, isolated vertices, invalid endpoints, and SHA-defined weights |
-| fetch-inputs | Fetch the three missing official sources LJ/US/TW; never run GPU code |
-| prepare-inputs | Prepare declared datasets using explicit roots/tools/registry; see inherited input/exporter prerequisites below |
-| qualify-sg | Tiny capability-route semantic check; GPU execution requires its explicit --execute-gpu flag and a built runtime |
-| run-native-example | Fixed-native complete-output example with explicit build/DSO/input receipts; not the E1 optimal single-GPU comparison |
-
-For example, build CPU input tools outside the checkout:
+Run from the repository root:
 
 ```sh
-python -B artifact/icde/tools/reproduce.py build-input-tools --build-dir /outside/input-tools --cxx c++ --execute
-python -B artifact/icde/tools/reproduce.py test-input-tools --tools /outside/input-tools --work /outside/new-input-test
-python -B artifact/icde/tools/reproduce.py fetch-inputs --root /outside/data/source
+python -B artifact/icde/tools/reproduce.py verify
+python -B artifact/icde/tools/reproduce.py test-cpu --work /outside/new-source-cpu-checks
+python -B artifact/icde/tools/reproduce.py test-campaign-cpu --work /outside/new-campaign-cpu-checks
+python -B artifact/icde/tools/reproduce.py build --arena --build-dir /outside/new-build --cuda-root /your/cuda --architecture 89 --jobs 2
 ```
 
-prepare-inputs additionally needs --root, --legacy, --tools, --registry artifact/icde/datasets.json and optionally --datasets. EP/OR/IN/UK currently consume the previously prepared canonical layout under the explicit legacy root. TW needs the existing WebGraph Java exporter and jars under that layout. These inherited prerequisites are not bundled in this source checkpoint. The published downloader and preprocessing code are useful components, not yet a clean-machine seven-dataset downloader/converter. The full fresh-input path remains a reproduction task.
+The build wrapper is plan-only unless `--execute` is supplied. Provide compatible Python development libraries, C++ compiler, CMake, CUDA, and NCCL include/library paths. The measured machine used RTX 4090 D devices and host staging; [setup_public.json](setup_public.json) records the nonprivate environment. Actual host UUIDs, free memory, CPU affinity, loaded binary hashes, and lock paths must be captured locally. Build output and GPU qualification are different statuses. The public SG route needs the arena libraries built with `--arena`; fixed-backend native scaling uses the native extension.
 
-## E1–E6 status and comparison boundaries
+Normal public imports and owned CSR admission are tested without replacing the EasyGraph root namespace. CPU tests need NumPy/SciPy/pytest; some baseline helpers additionally need their explicit dependencies. `capture-local-setup` only records the current host and never authorizes a GPU run by itself.
 
-All six new experiment groups have frozen designs; formal current-release runs, baseline qualification and portable campaign assembly remain pending unless an explicit source-bound result receipt is published in a later release. campaign_status.json contains the machine-readable state.
+## Inputs and experiments
 
-| Group | Question and comparison | Current publication |
-|---|---|---|
-| E1 | Same-resource complete tasks; SG and 8-GPU tables separately, strongest applicable qualified external systems | Protocol/capability map; no new timing table |
-| E2 | Fixed-backend 1/2/4/8-GPU strong scaling; graph/work/parameters fixed | Protocol; portable formal runner pending |
-| E3 | D-Maintain versus Cold/Reuse+Full and compatible persistent/update baselines | Controlled design; new trace runner/results pending |
-| E4 | C-Retain under repeated graph visits and budgets; allow native external reuse | Controlled design; KGraph SSSP memoization has a separate matched-task role, not a GPU budget-policy label |
-| E5 | Paired D×C four-arm intervention with strong internal alternatives | New-campaign runner/results pending; historical byte interaction is not a new timing result |
-| E6 | Complete dependent application and extended-function coverage ablation | Workflow/control design; new application runner/results pending |
+Use [inputs/README_CN.md](inputs/README_CN.md) for the seven frozen original sources, exact normalized variants, weight/source rules, dependency locks and preflight budgets. Six graphs have matched complete regenerated payload hashes; TW has since completed its original-format preparation and full qualification. [Current input completion](inputs/completion.json) supersedes the earlier frozen TW-pending status. The portable tool sequence is `preflight.py`, `setup_tools.py`, `fetch.py`, then `prepare_inputs.py`. Legacy compressed caches may be imported only after full original-file verification; old prepared CSR is not a substitute for original-source regeneration.
 
-Each formal configuration retains ten independent process repetitions. Unsupported/OOM/timeout/quality failure are separate statuses; no fastest-cell source splicing or performance-dependent dataset removal is allowed. The 90% single-GPU target guides optimization and is not a measured conclusion in this checkpoint.
+[Campaign documentation](campaign/README.md) gives each worker/controller and [latest.json](campaign/latest.json) identifies the precise versions. Match semantics, resources, weights, sources, complete host outputs, and continuous time boundaries before comparing systems. Rebuilt or relocated sources require their own tiny and target proofs. SG single-call and the continuous 16-request sequence are separate workloads. State-v4 records real FP64 old-reader lifetimes, exact proof chains, and lossless content-addressed full outputs; it requires its new GPU gates. GUM/cuGraph-MG/author SG clock corrections remain explicitly scoped candidates until measured qualification passes.
 
-Public [setup summary](setup_public.json) records the observed GPU/CPU/memory/software fields without UUIDs, connection information, private paths or process lists. Every actual run still needs its own resource and numerical checks. Mechanism and framework artwork has [reserved slots](paper/figures/README.md); no figure placeholder carries a performance claim.
+No controller silently runs all paper experiments. Inputs, author baseline builds, machine admission, explicit GPU execution, qualification and formal repetitions remain separate. The owner must supervise process groups and enforce the global GPU lock. Ten formal repetitions are planned per configuration; do not discard failures or retain only winning cases.
+
+## Paper and results
+
+[Related Work](paper/RELATED_WORK_NARRATIVE_20261104_CN.md), [experiment/presentation design](paper/PAPER_EXPERIMENT_DESIGN_20261104_CN.md), [baseline matrix](baselines/README_CN.md), and [figure placeholders](paper/figures/README.md) are included. The [E1 aggregation tools](presentation/README_CN.md) include complete proof and output-hash checks and have CPU qualification; a real formal export and the full formal measurements remain pending. Qualification raw vectors remain in the operator's evidence store and are not shipped as graph/binary payloads in this source checkpoint.
+
+**PR protocol correction:** the packaged SG cuGraph adapter uses global L1 epsilon `1e-9` directly, matching the installed cuGraph implementation. Earlier SG cuGraph PR and cuGraph 16-request timing records remain historical and are not comparable under this corrected protocol. The current source and corrected CSR runner have passed all 16 SG tiny configurations; other exact runner/real-graph gates remain separate. See [the correction record](provenance/pr_protocol_correction.json).
+
+The state planner v3 and unweighted-PR control v2 preserve the selected Python environment and bind its runtime identity. They supersede the earlier planners that resolved the interpreter symlink incorrectly. Their CPU admission checks passed; this does not replace GPU or formal qualification.

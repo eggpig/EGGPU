@@ -1,0 +1,127 @@
+{
+  "schema": "eggpu.frozen_input_sources.v1",
+  "sha256_scope": "Observed compressed original-publisher bytes cached by this campaign; SHA256 is a local identity binding, not an upstream signature. LAW official MD5 is checked separately.",
+  "sources": {
+    "EP": {
+      "format": "snap_relabel_sorted",
+      "files": [
+        {
+          "name": "soc-Epinions1.txt.gz",
+          "url": "https://snap.stanford.edu/data/soc-Epinions1.txt.gz",
+          "bytes": 1630437,
+          "sha256": "69a2dab71fa5e3a0715487599fc16ca17ddc847379325a6c765bbad6e3e36938"
+        }
+      ]
+    },
+    "LJ": {
+      "format": "snap_zero_based",
+      "files": [
+        {
+          "name": "soc-LiveJournal1.txt.gz",
+          "url": "https://snap.stanford.edu/data/soc-LiveJournal1.txt.gz",
+          "bytes": 259619239,
+          "sha256": "d7bcd5a87b88c896c35fdb9611e804c3f4033c39b58c4c9ea3ba53c680d516d8"
+        }
+      ]
+    },
+    "US": {
+      "format": "dimacs10_metis",
+      "origin_page": "https://sites.cc.gatech.edu/dimacs10/archive/clustering.shtml",
+      "identity_basis": "SuiteSparse DIMACS10/road_usa matrix 2459 names the original clustering/road_usa graph; original publisher n and 2m match; no SuiteSparse byte-hash equivalence claim",
+      "files": [
+        {
+          "name": "road_usa.graph.bz2",
+          "url": "https://sites.cc.gatech.edu/dimacs10/archive/data/clustering/road_usa.graph.bz2",
+          "bytes": 152394085,
+          "sha256": "d6290946c450784d9c3c0d9ea90e700bd4152b0aa7d2cbc017995d84bd9e9672"
+        }
+      ]
+    },
+    "OR": {
+      "format": "nr_zip_symmetric_mm_single_percent",
+      "archive_member": "soc-orkut.mtx",
+      "files": [
+        {
+          "name": "soc-orkut.zip",
+          "url": "https://nrvis.com/download/data/soc/soc-orkut.zip",
+          "bytes": 407333189,
+          "sha256": "7b1096bd1d3092462fdda07b1ae51828900d6d1a531fa8028d42f051116da08f"
+        }
+      ]
+    },
+    "IN": {
+      "format": "law_webgraph",
+      "basename": "indochina-2004",
+      "files": [
+        {
+          "name": "indochina-2004.md5sums",
+          "bytes": 1435,
+          "sha256": "b89efb11a72a40d55b559acefa507e4119c9728f1580ad4d05d487b01a849429",
+          "url": "https://data.law.di.unimi.it/webdata/indochina-2004/indochina-2004.md5sums"
+        },
+        {
+          "name": "indochina-2004.properties",
+          "bytes": 1117,
+          "sha256": "f3626da745e7becfb2fbc23d6707eda3dda32b129581f28faca0231f46ec943d",
+          "url": "https://data.law.di.unimi.it/webdata/indochina-2004/indochina-2004.properties"
+        },
+        {
+          "name": "indochina-2004.graph",
+          "bytes": 35357177,
+          "sha256": "719d91ae2ef42c7c1c06b0e3f2cfc0bf81287cea0c92f7f42c46dc182c8f6fd8",
+          "url": "https://data.law.di.unimi.it/webdata/indochina-2004/indochina-2004.graph"
+        }
+      ]
+    },
+    "UK": {
+      "format": "law_webgraph",
+      "basename": "uk-2002",
+      "files": [
+        {
+          "name": "uk-2002.md5sums",
+          "bytes": 1260,
+          "sha256": "62462a26916584b6637f4580fe150f733e677113dbdcaedcb191aca57f3877a3",
+          "url": "https://data.law.di.unimi.it/webdata/uk-2002/uk-2002.md5sums"
+        },
+        {
+          "name": "uk-2002.properties",
+          "bytes": 1161,
+          "sha256": "dcd65e4579ea67b3d8692083cdd1ed513a4fa543406d49bf5849c9250777b6fb",
+          "url": "https://data.law.di.unimi.it/webdata/uk-2002/uk-2002.properties"
+        },
+        {
+          "name": "uk-2002.graph",
+          "bytes": 84626322,
+          "sha256": "516928e3ca136a6e0d5d71ba3e1441a21ef76285ac66257ce8dc237f905bc34f",
+          "url": "https://data.law.di.unimi.it/webdata/uk-2002/uk-2002.graph"
+        }
+      ]
+    },
+    "TW": {
+      "format": "law_webgraph",
+      "basename": "twitter-2010",
+      "files": [
+        {
+          "name": "twitter-2010.md5sums",
+          "url": "https://data.law.di.unimi.it/webdata/twitter-2010/twitter-2010.md5sums",
+          "bytes": 1383,
+          "sha256": "a30b9172fdb8f88eeed662bc3bc8ceba4a4302b11916e1fcaed4c2bbe9aa90c8"
+        },
+        {
+          "name": "twitter-2010.properties",
+          "url": "https://data.law.di.unimi.it/webdata/twitter-2010/twitter-2010.properties",
+          "bytes": 1272,
+          "sha256": "79fa8752cc95cc1e9ae7aec455c0076d490d5e9f9b883262fa7d357e0076543c",
+          "official_md5": "bfb883800b1c6e06f26d176235ab058f"
+        },
+        {
+          "name": "twitter-2010.graph",
+          "url": "https://data.law.di.unimi.it/webdata/twitter-2010/twitter-2010.graph",
+          "bytes": 2591013817,
+          "sha256": null,
+          "official_md5": "44386aaeaed6c19004e24157b3636d63"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "status": "PASS_GPU_SEMANTICS",
+  "performance_eligible": false,
+  "plan": {
+    "policy": "capability_v1",
+    "backend": "arena",
+    "devices": [
+      0
+    ],
+    "state_model": "journal",
+    "algorithms": [
+      "bfs",
+      "sssp",
+      "wcc",
+      "pr",
+      "weighted_pr"
+    ],
+    "input_kind": "owned_coo",
+    "budget_scope": "single-device backing arena including workspace"
+  },
+  "checks": [
+    {
+      "algorithm": "bfs",
+      "repetition": 0,
+      "complete": true,
+      "immutable": true,
+      "independent": true
+    },
+    {
+      "algorithm": "sssp",
+      "repetition": 0,
+      "complete": true,
+      "immutable": true,
+      "independent": true
+    },
+    {
+      "algorithm": "wcc",
+      "repetition": 0,
+      "complete": true,
+      "immutable": true,
+      "independent": true
+    },
+    {
+      "algorithm": "pr",
+      "repetition": 0,
+      "complete": true,
+      "immutable": true,
+      "independent": true
+    },
+    {
+      "algorithm": "weighted_pr",
+      "repetition": 0,
+      "complete": true,
+      "immutable": true,
+      "independent": true
+    },
+    {
+      "algorithm": "bfs",
+      "repetition": 1,
+      "complete": true,
+      "immutable": true,
+      "independent": true
+    },
+    {
+      "algorithm": "sssp",
+      "repetition": 1,
+      "complete": true,
+      "immutable": true,
+      "independent": true
+    },
+    {
+      "algorithm": "wcc",
+      "repetition": 1,
+      "complete": true,
+      "immutable": true,
+      "independent": true
+    },
+    {
+      "algorithm": "pr",
+      "repetition": 1,
+      "complete": true,
+      "immutable": true,
+      "independent": true
+    },
+    {
+      "algorithm": "weighted_pr",
+      "repetition": 1,
+      "complete": true,
+      "immutable": true,
+      "independent": true
+    }
+  ],
+  "update_and_stale_request": true,
+  "all_outputs_survive_close": true,
+  "full_outputs": 11,
+  "qualification_seconds": 1.1609045676887035
+}

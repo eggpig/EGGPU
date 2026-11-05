@@ -1,0 +1,84 @@
+{
+  "backend": {
+    "backend": "cuGraph",
+    "complete_output": true,
+    "gpu_count": 1,
+    "input_array_format": "CSR",
+    "status": "GPU_QUALIFICATION_REQUIRED",
+    "store_transposed": false,
+    "topology_dtype": "int32",
+    "vertices": 7,
+    "vertices_domain": "CSR offset length n+1; every output ID checked",
+    "weight_semantics": "unweighted"
+  },
+  "backend_input_semantics": "original canonical CSR; directed WCC builds explicit weak CSR inside T_first",
+  "calls": {
+    "first": {
+      "output": {
+        "bytes": 156,
+        "path": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_wcc_cugraph_r00/source_0/8bac6882d84bedb503acf6485d2036a4004847d2cadb01451e9f359ac81243a8.npy",
+        "sha256": "f6c673918cd4aa20037d6099c01bfa7a4baf31cc2da73ae1860554b4fde60f88"
+      },
+      "quality": {
+        "complete": true,
+        "dtype": "int32",
+        "immutable": true,
+        "owning": true,
+        "partition_equivalent": true,
+        "pass": true
+      },
+      "seconds": 1.5497641526162624
+    },
+    "ready": {
+      "output": {
+        "bytes": 156,
+        "path": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_wcc_cugraph_r00/source_0/8bac6882d84bedb503acf6485d2036a4004847d2cadb01451e9f359ac81243a8.npy",
+        "sha256": "f6c673918cd4aa20037d6099c01bfa7a4baf31cc2da73ae1860554b4fde60f88"
+      },
+      "quality": {
+        "complete": true,
+        "dtype": "int32",
+        "immutable": true,
+        "owning": true,
+        "partition_equivalent": true,
+        "pass": true
+      },
+      "seconds": 0.001081671565771103
+    },
+    "warmup": {
+      "count": 1,
+      "output": {
+        "bytes": 156,
+        "path": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_wcc_cugraph_r00/source_0/8bac6882d84bedb503acf6485d2036a4004847d2cadb01451e9f359ac81243a8.npy",
+        "sha256": "f6c673918cd4aa20037d6099c01bfa7a4baf31cc2da73ae1860554b4fde60f88"
+      },
+      "quality": {
+        "complete": true,
+        "dtype": "int32",
+        "immutable": true,
+        "owning": true,
+        "partition_equivalent": true,
+        "pass": true
+      },
+      "timed": false
+    }
+  },
+  "host_ready_checksum": [
+    50,
+    20,
+    82.0
+  ],
+  "input_sha256": "4a5224f2ab5adc419d14e3e79c235440fb7fefb503e186aad8d10cef3fa2921f",
+  "outputs_survive_close": true,
+  "quality_pass": true,
+  "reference_receipt": {
+    "bytes": 551,
+    "path": "<campaign>/references/e297a85beaf6ff3c21e4cefe4a7070a77571ec3da3db3ed90399ad9dd4c03474.json",
+    "sha256": "5d45211d605309fdd47a4febdd70005bfdd86a400e5058fd7610b1f61708a3eb"
+  },
+  "source": null,
+  "source_index": 0,
+  "status": "PASS",
+  "timing_start": "common immutable host CSR ready; fresh Python backend process",
+  "public_projection_note": "Private paths/UUIDs redacted; exact original retained. This readable evidence projection is not an executable proof or a formal performance measurement."
+}

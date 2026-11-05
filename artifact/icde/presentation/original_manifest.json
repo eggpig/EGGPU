@@ -1,0 +1,31 @@
+{
+  "schema": "eggpu.presentation.tools.v1",
+  "status": "E1_CPU_TESTED_NO_REAL_FORMAL_EXPORT",
+  "files": {
+    "e1_summary.py": {
+      "bytes": 30844,
+      "sha256": "2dd454972294108615a0ef8968eb325f09b09ab18b57ac5d61f000698d9c1f48"
+    },
+    "test_e1_summary.py": {
+      "bytes": 18587,
+      "sha256": "823765edf716147a15475d6c8fbf5f6ba911f3afc8c67dd272adbde38a214324"
+    },
+    "bind_selection.py": {
+      "bytes": 2502,
+      "sha256": "422332a8ec87fcd65e16ef0f5859e0d474b03978351364a06919b6125713a777"
+    },
+    "README_CN.md": {
+      "bytes": 8084,
+      "sha256": "c58b5d6ad8736aaecc52d1443a1594dab35bf904496d9f41479749d50fd968ad"
+    },
+    "selection.example.json": {
+      "bytes": 5423,
+      "sha256": "cfffb08c43e1a7bcd9467fc499a86806f6256d1c5ee8b97fc0e9b63e91f8c75f"
+    },
+    "cpu_receipt.json": {
+      "bytes": 976,
+      "sha256": "cb409b55e4f84c0a4b4528142f256f1a8af26e7ae29806e33fe573bd07bf4eee"
+    }
+  },
+  "tree_sha256": "6656ce454606cb11fdad81641179db3236f99b73c2a79da3502577d3e39f65ff"
+}

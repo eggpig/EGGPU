@@ -25,6 +25,9 @@
 #include <cuda_runtime_api.h>
 
 #include <algorithm>
+#include <atomic>
+#include <map>
+#include <exception>
 #include <chrono>
 #include <cmath>
 #include <cstddef>
@@ -2130,6 +2133,182 @@ py::dict run_partitioned_pagerank(
 }
 
 
+// Read-only snapshot leases are explicit experimental lifetime capabilities.
+// They hold existing registry views; no algorithm or allocation is constructed.
+struct SnapshotLeaseEpoch { std::uint64_t id; };
+std::atomic<std::uint64_t> snapshot_lease_sequence(1);
+std::uint64_t next_snapshot_lease_id() {
+    auto id=snapshot_lease_sequence.load();
+    for(;;) {
+        if(id==0 || id==std::numeric_limits<std::uint64_t>::max())
+            throw std::overflow_error("snapshot lease identity exhausted");
+        if(snapshot_lease_sequence.compare_exchange_weak(id,id+1))return id;
+    }
+}
+std::shared_ptr<SnapshotLeaseEpoch> snapshot_lease_epoch() {
+    return std::static_pointer_cast<SnapshotLeaseEpoch>(
+        gpu_easygraph::runtime::runtime_manager().acquire_resident_resource(
+            "readonly_snapshot_lease_epoch_v1", []() {
+                return std::static_pointer_cast<void>(std::make_shared<SnapshotLeaseEpoch>(
+                    SnapshotLeaseEpoch{next_snapshot_lease_id()}));
+            }));
+}
+struct WorkerSnapshotLease {
+    std::uint64_t epoch;
+    std::vector<std::shared_ptr<ResidentPartitionView> > pr;
+    std::vector<std::shared_ptr<gpu_easygraph::runtime::ResidentSsspPartitionView> > sssp;
+};
+// Destroyed on its owning CUDA worker when the runtime ends, not on a Python
+// finalizer thread. Token IDs are process-unique and never reused by a runtime.
+thread_local std::map<std::uint64_t,WorkerSnapshotLease> worker_snapshot_leases;
+struct SnapshotWeightRead {
+    std::string owner,algorithm;
+    std::vector<double> values;
+};
+
+class ReadOnlySnapshotLease {
+public:
+    ReadOnlySnapshotLease(std::uint64_t token,const std::string& session,
+                          const std::string& graph,std::uint64_t generation,
+                          const std::vector<int>& devices,
+                          const std::shared_ptr<SnapshotLeaseEpoch>& epoch)
+        : token_(token),session_(session),graph_(graph),generation_(generation),
+          devices_(devices),epoch_(epoch),epoch_id_(epoch->id),closed_(false) {}
+    ~ReadOnlySnapshotLease() noexcept {try {close_native(false);} catch(...) {}}
+    ReadOnlySnapshotLease(const ReadOnlySnapshotLease&)=delete;
+    ReadOnlySnapshotLease& operator=(const ReadOnlySnapshotLease&)=delete;
+
+    py::dict read_weights(const std::string& session) {
+        require_session(session);
+        auto result=std::make_shared<std::vector<std::vector<SnapshotWeightRead>>>(devices_.size());
+        const auto token=token_;const auto epoch=epoch_id_;
+        {
+        // Never wait for the handle mutex while holding the Python GIL.
+        py::gil_scoped_release release;
+        std::lock_guard<std::mutex> guard(mutex_);
+        require_live_epoch();
+        std::vector<gpu_easygraph::runtime::NativeRuntime::Task> tasks;
+        for(std::size_t rank=0;rank<devices_.size();++rank)tasks.push_back(
+            [result,rank,token,epoch](int) {
+                const auto found=worker_snapshot_leases.find(token);
+                if(found==worker_snapshot_leases.end() || found->second.epoch!=epoch)
+                    throw std::runtime_error("snapshot lease is absent from this worker/runtime");
+                auto& rows=(*result)[rank];const auto& held=found->second;
+                for(const auto& view:held.sssp) {
+                    const auto& d=view->view();SnapshotWeightRead row;
+                    row.owner=view->managed_owner_id();row.algorithm="sssp";row.values.resize(d.adjacency_count);
+                    if(!row.values.empty())check_cuda(cudaMemcpy(row.values.data(),d.weights,row.values.size()*sizeof(double),cudaMemcpyDeviceToHost),"read leased SSSP weights");
+                    rows.push_back(std::move(row));
+                }
+                for(const auto& view:held.pr) {
+                    const auto& d=view->view();SnapshotWeightRead row;
+                    row.owner=view->managed_owner_id();row.algorithm="weighted_pr";row.values.resize(d.adjacency_count);
+                    if(!row.values.empty())check_cuda(cudaMemcpy(row.values.data(),d.weights,row.values.size()*sizeof(double),cudaMemcpyDeviceToHost),"read leased PageRank weights");
+                    rows.push_back(std::move(row));
+                }
+                check_cuda(cudaDeviceSynchronize(),"finish snapshot lease readback");
+            });
+        gpu_easygraph::runtime::runtime_manager().execute_gang(devices_,std::move(tasks));
+        } // Release the mutex before reacquiring the GIL for output packaging.
+        py::list rows;
+        for(std::size_t rank=0;rank<devices_.size();++rank)for(const auto& row:(*result)[rank]) {
+            py::array_t<double> values(row.values.size());
+            if(!row.values.empty())std::memcpy(values.mutable_data(),row.values.data(),row.values.size()*sizeof(double));
+            values.attr("setflags")(py::arg("write")=false);
+            py::dict item;item["device_id"]=devices_[rank];item["owner_id"]=row.owner;
+            item["algorithm"]=row.algorithm;item["values"]=std::move(values);rows.append(item);
+        }
+        py::dict out;out["schema"]="eggpu.readonly_snapshot_lease.v1";out["token"]=token_;
+        out["runtime_epoch"]=epoch_id_;out["graph_id"]=graph_;out["generation"]=generation_;
+        out["per_view"]=rows;return out;
+    }
+    void close(const std::string& session) {
+        require_session(session);py::gil_scoped_release release;close_native(true);
+    }
+private:
+    void require_session(const std::string& session) const {
+        if(session.empty() || session!=session_)throw std::invalid_argument("snapshot lease belongs to a different Session");
+    }
+    void require_live_epoch() const {
+        if(closed_)throw std::runtime_error("snapshot lease is closed");
+        const auto old=epoch_.lock();
+        if(!old || !gpu_easygraph::runtime::runtime_manager().status().running)
+            throw std::runtime_error("snapshot lease runtime has ended");
+        if(snapshot_lease_epoch().get()!=old.get())throw std::runtime_error("snapshot lease runtime generation differs");
+    }
+    void close_native(bool explicit_close) {
+        std::lock_guard<std::mutex> guard(mutex_);
+        if(closed_)return;
+        try {require_live_epoch();}
+        catch(...) {
+            // The old worker TLS has already relinquished its view references.
+            // A new runtime must never receive a stale-handle release request.
+            closed_=true;if(explicit_close)throw;return;
+        }
+        const auto token=token_;const auto epoch=epoch_id_;
+        std::vector<gpu_easygraph::runtime::NativeRuntime::Task> tasks;
+        for(std::size_t rank=0;rank<devices_.size();++rank)tasks.push_back(
+            [token,epoch](int) {
+                const auto found=worker_snapshot_leases.find(token);
+                if(found!=worker_snapshot_leases.end()) {
+                    if(found->second.epoch!=epoch)throw std::runtime_error("snapshot lease epoch collision");
+                    worker_snapshot_leases.erase(found);
+                }
+            });
+        gpu_easygraph::runtime::runtime_manager().execute_gang(devices_,std::move(tasks));closed_=true;
+    }
+    std::uint64_t token_;std::string session_,graph_;std::uint64_t generation_;
+    std::vector<int> devices_;std::weak_ptr<SnapshotLeaseEpoch> epoch_;
+    std::uint64_t epoch_id_;bool closed_;std::mutex mutex_;
+};
+
+std::shared_ptr<ReadOnlySnapshotLease> acquire_readonly_snapshot_lease(
+    const std::shared_ptr<MultiPartitionGraph>& graph,const std::string& session,py::object device_request) {
+    if(!graph || session.empty() || !graph->weighted())throw std::invalid_argument("FP64 weighted graph and Session identity required");
+    for(const auto& part:graph->partitions())if(part.weight_type!=PartitionWeightType::kFloat64)
+        throw std::invalid_argument("snapshot lease requires native FP64 input");
+    const auto devices=requested_devices(*graph,device_request);const auto epoch=snapshot_lease_epoch();
+    const auto token=next_snapshot_lease_id();const auto identity=graph->graph_id();const auto generation=graph->generation();const auto epoch_id=epoch->id;
+    std::vector<gpu_easygraph::runtime::NativeRuntime::Task> tasks;
+    for(std::size_t rank=0;rank<devices.size();++rank)tasks.push_back(
+        [token,epoch_id,identity,generation](int) {
+            WorkerSnapshotLease held;held.epoch=epoch_id;
+            held.pr=gpu_easygraph::runtime::partitioned_device_state_registry().hold_graph_views(identity,generation);
+            held.sssp=gpu_easygraph::runtime::partitioned_sssp_state_registry().hold_graph_views(identity,generation);
+            if(held.pr.empty() || held.sssp.empty())throw std::runtime_error("Warm both SSSP and weighted PR before acquiring a snapshot lease");
+            for(const auto& view:held.sssp) {
+                const auto& d=view->view();
+                if(d.weight_encoding!=gpu_easygraph::runtime::SsspWeightEncoding::F64 || d.weight_bytes!=d.adjacency_count*sizeof(double))
+                    throw std::invalid_argument("Cannot lease compact or non-FP64 SSSP weights");
+                if(d.adjacency_count && !d.weights)throw std::runtime_error("Missing resident SSSP weights");
+            }
+            for(const auto& view:held.pr)if(view->view().adjacency_count && !view->view().weights)
+                throw std::invalid_argument("Cannot lease an implicit unweighted PageRank view");
+            if(!worker_snapshot_leases.emplace(token,std::move(held)).second)
+                throw std::runtime_error("snapshot lease token collision");
+        });
+    try {
+        {py::gil_scoped_release release;gpu_easygraph::runtime::runtime_manager().execute_gang(devices,std::move(tasks));}
+        if(snapshot_lease_epoch().get()!=epoch.get())throw std::runtime_error("Runtime changed while acquiring snapshot lease");
+        return std::make_shared<ReadOnlySnapshotLease>(token,session,identity,generation,devices,epoch);
+    } catch(...) {
+        const auto failure=std::current_exception();
+        // execute_gang drains all submitted completions before reporting errors;
+        // this rollback therefore covers every rank that published its token.
+        try {
+            std::vector<gpu_easygraph::runtime::NativeRuntime::Task> undo;
+            for(std::size_t rank=0;rank<devices.size();++rank)undo.push_back([token](int){worker_snapshot_leases.erase(token);});
+            py::gil_scoped_release release;gpu_easygraph::runtime::runtime_manager().execute_gang(devices,std::move(undo));
+        } catch(...) {
+            if(gpu_easygraph::runtime::runtime_manager().status().running)
+                throw std::runtime_error("snapshot acquisition and rollback both failed while runtime remains live");
+            // Completed shutdown destroys the old worker TLS and its owners.
+        }
+        std::rethrow_exception(failure);
+    }
+}
+
+
 // Qualification-only: retain two concurrent workspace leases on each fixed
 // worker, verify distinct mutable storage, and attempt eviction while held.
 // This diagnostic never runs inside a numerical or performance measurement.
@@ -2702,6 +2881,12 @@ void bind_egmgpu_partitioned_pagerank(py::module_& module) {
         &clear_partitioned_state,
         py::arg("devices") = py::none(),
         "Release all partitioned worker state and retained host plans.");
+    py::class_<ReadOnlySnapshotLease,std::shared_ptr<ReadOnlySnapshotLease>>(module,"ReadOnlySnapshotLease")
+        .def("read_weights",&ReadOnlySnapshotLease::read_weights,py::arg("session_id"))
+        .def("close",&ReadOnlySnapshotLease::close,py::arg("session_id"));
+    module.def("cpp_egmgpu_acquire_readonly_snapshot_lease",&acquire_readonly_snapshot_lease,
+        py::arg("partitioned_graph"),py::arg("session_id"),py::arg("devices")=py::none(),
+        "Hold existing native FP64 SSSP/weighted-PR views through a new version; no busy-kernel claim.");
     module.def("cpp_egmgpu_probe_sparse_retained_leases", &probe_sparse_retained_leases,
         py::arg("partitioned_graph"),py::arg("devices")=py::none(),
         "Qualification-only active lease/mismatched-plan probe after a retained sparse query.");

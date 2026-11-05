@@ -19,6 +19,7 @@ import numpy as np
 
 from ._bridge import (ManagedSession, NativePartitionSession, source_parameter,
                       _ARENA_WCC_OWNED_OUTPUT)
+from ._arena_output import _download_request, _consume_download
 from .contracts import QueryContract, query_contract
 
 POLICY_SOURCE = Path(__file__).resolve().parent.parent / 'egmgpu' / 'sssp_policy.py'
@@ -32,34 +33,66 @@ QUALIFIED_WEIGHTED_SHA256 = '9d01a545fcfb58be2502805c28f3b26ff427a215084fcf68b3c
 _WCC_CANONICAL_CERTIFICATE_AUDIT = {'calls': 0, 'off': 0, 'certified': 0, 'fallback': 0}
 
 
-def canonical_wcc(labels, count, *, certify_minimum=None):
-    """Return minimum dense index for each component; original labels stay int64."""
+# A fixed working-set bound, independent of graph identity or measured timings.
+_WCC_CANONICAL_CHUNK = 1 << 15
+
+
+def canonical_wcc(labels, count, *, certify_minimum=None, _arena_scope=None, _arena_graph=None):
+    """Return an owned float64 minimum dense index for every component.
+
+    Validate every label even after a certificate fails. Only the final public
+    output (and the dense root table on fallback) scales with the whole graph;
+    validation, indexing and certificate scratch are bounded by a fixed chunk.
+    """
     array = np.asarray(labels)
     if array.shape != (count,) or array.dtype.kind not in 'iuf':
         raise ValueError('WCC requires one numeric dense-index component label per node')
-    if (not np.all(np.isfinite(array)) or np.any(array < 0) or np.any(array >= count)
-            or np.any(array != np.floor(array))):
-        raise ValueError('WCC component labels must be exact dense indices')
     mode = (os.environ.get('EGGPU_WCC_CANONICAL_CERTIFICATE', '0')
             if certify_minimum is None else '1' if certify_minimum else '0')
+    certified = mode == '1'
+    floating = array.dtype.kind == 'f'
+    for first in range(0, count, _WCC_CANONICAL_CHUNK):
+        last = min(count, first + _WCC_CANONICAL_CHUNK)
+        block = array[first:last]
+        # Integers are already finite and integral; floats require both checks.
+        if ((floating and not np.all(np.isfinite(block)))
+                or np.any(block < 0) or np.any(block >= count)
+                or (floating and np.any(block != np.floor(block)))):
+            raise ValueError('WCC component labels must be exact dense indices')
+        if certified:
+            indices = block.astype(np.intp, copy=False)
+            # The representative belongs to this same group and precedes every
+            # member. Together these prove that it is exactly the group's min.
+            certified = (np.all(array[indices] == block)
+                         and np.all(block <= np.arange(first, last, dtype=np.int64)))
     if mode not in ('0', '1'):
         raise ValueError('EGGPU_WCC_CANONICAL_CERTIFICATE must be 0 or 1')
     _WCC_CANONICAL_CERTIFICATE_AUDIT['calls'] += 1
     if mode == '1':
-        indices = array.astype(np.intp, copy=False)
-        # The label occurs in its own group and is <= every member index.
-        # Together these certify that it is exactly that group's minimum.
-        if (np.all(array[indices] == array)
-                and np.all(array <= np.arange(count, dtype=np.int64))):
+        if certified:
             _WCC_CANONICAL_CERTIFICATE_AUDIT['certified'] += 1
+            # The complete label-domain and minimum-root certificate above is
+            # necessary but not sufficient for adoption. Only this request's
+            # actual fresh download can transfer its allocation once. General
+            # callers, aliases and transformed/backend-held arrays still copy.
+            if _arena_scope is not None and _consume_download(_arena_scope, _arena_graph, 'wcc', array):
+                return array
             return array.astype(np.float64, copy=True)
         _WCC_CANONICAL_CERTIFICATE_AUDIT['fallback'] += 1
     else:
         _WCC_CANONICAL_CERTIFICATE_AUDIT['off'] += 1
-    _, groups = np.unique(array, return_inverse=True)
+    # All labels were proven to be dense indices. Index the root table by the
+    # original label directly; grouping/sorting the entire vector is unnecessary.
     roots = np.full(count, count, dtype=np.int64)
-    np.minimum.at(roots, groups, np.arange(count, dtype=np.int64))
-    return roots[groups].astype(np.float64)
+    for first in range(0, count, _WCC_CANONICAL_CHUNK):
+        last = min(count, first + _WCC_CANONICAL_CHUNK)
+        indices = array[first:last].astype(np.intp, copy=False)
+        np.minimum.at(roots, indices, np.arange(first, last, dtype=np.int64))
+    output = np.empty(count, dtype=np.float64)
+    for first in range(0, count, _WCC_CANONICAL_CHUNK):
+        last = min(count, first + _WCC_CANONICAL_CHUNK)
+        output[first:last] = roots[array[first:last].astype(np.intp, copy=False)]
+    return output
 
 
 def wcc_contract():
@@ -200,24 +233,30 @@ class CoreManagedSession(ManagedSession):
             raise RuntimeError('Session closed')
         if parameters:
             raise ValueError('WCC takes no parameters')
-        values = self.backend.query(graph_id,'wcc',{})
-        # The arena kernel emits minimum roots. Certify that property in linear
-        # time, retaining general canonicalization if a producer violates it.
-        # Both routes allocate a new private array, so publication need not copy
-        # it again. No backend-held download or caller array is adopted here.
-        values = canonical_wcc(values,len(self.nodes[graph_id]),certify_minimum=True)
-        metrics = copy.deepcopy(self.backend.last)
-        metrics['wcc_public_output'] = dict(canonicalization='minimum_root_certificate_with_fallback',
-            bridge_copy_bytes=0, bridge_copy_bytes_avoided=int(values.nbytes),
-            ownership='adopt_private_canonical_array')
-        return self._own_result(graph_id,'wcc',values,begin,metrics,{},contract=wcc_contract(),
-                                _private_owned=_ARENA_WCC_OWNED_OUTPUT)
+        with _download_request(graph_id, 'wcc') as scope:
+            downloaded = self.backend.query(graph_id,'wcc',{})
+            canonical_begin = perf_counter()
+            values = canonical_wcc(downloaded,len(self.nodes[graph_id]),certify_minimum=True,
+                                   _arena_scope=scope,_arena_graph=graph_id)
+            canonical_seconds = perf_counter() - canonical_begin
+            adopted = values is downloaded
+            metrics = copy.deepcopy(self.backend.last)
+            metrics['wcc_public_output'] = dict(canonicalization='minimum_root_certificate_with_fallback',
+                bridge_copy_bytes=0, bridge_copy_bytes_avoided=int(values.nbytes),
+                canonicalization_seconds=canonical_seconds,
+                canonical_output_write_bytes=0 if adopted else int(values.nbytes),
+                canonical_copy_bytes_avoided=int(values.nbytes) if adopted else 0,
+                ownership='adopt_certified_arena_download' if adopted else 'adopt_private_canonical_array')
+            # Either the strict producer capability was consumed after the full
+            # certificate, or canonical_wcc allocated this independent result.
+            return self._own_result(graph_id,'wcc',values,begin,metrics,{},contract=wcc_contract(),
+                                    _private_owned=_ARENA_WCC_OWNED_OUTPUT)
 
-    def _own_result(self, graph_id, algorithm, values, begin, metrics, parameters, *, contract=None, _private_owned=None):
+    def _own_result(self, graph_id, algorithm, values, begin, metrics, parameters, *, contract=None, _private_owned=None, _arena_scope=None):
         if algorithm == 'sssp':
             contract = replace(query_contract(algorithm,parameters,len(self.nodes[graph_id])),weight_projection='input edge weights')
         return super()._own_result(graph_id,algorithm,values,begin,metrics,parameters,contract=contract,
-                                   _private_owned=_private_owned)
+                                   _private_owned=_private_owned, _arena_scope=_arena_scope)
 
     def capability_descriptor(self):
         descriptor = super().capability_descriptor()

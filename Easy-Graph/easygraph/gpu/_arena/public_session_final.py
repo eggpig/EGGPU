@@ -11,11 +11,7 @@ from threading import RLock
 import math
 from time import perf_counter
 import numpy as np
-from easygraph.classes._state_tracking import subscribe
-from easygraph.utils import gpu_eggpu_backend as backend
 from easygraph.gpu._arena.replacement import ReplacementSession as TypedSession
-from easygraph.classes.graph import Graph
-from easygraph.classes.directed_graph import DiGraph
 from easygraph.gpu._arena.round6_recovery.fixed_executor import FixedIterationExecutor
 from easygraph.gpu._arena.gpu_runtime import cp
 from easygraph.gpu._arena.round4_switch.journal import Mutation
@@ -100,6 +96,9 @@ _endpoint_records = {}
 
 def _subscribe_endpoints(session, name, graph):
     """One wrapper per graph, shared by nested sessions and removed by the last."""
+    # Graph observers are needed only for the legacy mutable-graph context.
+    from easygraph.classes.graph import Graph
+    from easygraph.classes.directed_graph import DiGraph
     with _endpoint_lock:
         key = id(graph)
         record = _endpoint_records.get(key)
@@ -179,6 +178,7 @@ def _subscribe_endpoints(session, name, graph):
 class EasyGraphSession:
     def __init__(self, graphs, *, budget_bytes=128 << 20,
                  journal_budget_bytes=4 << 20, weight='weight', strategy='ordinary'):
+        from easygraph.classes._state_tracking import subscribe
         self.graphs = dict(graphs)
         if len({id(g) for g in self.graphs.values()}) != len(self.graphs):
             raise ValueError('Register each graph object once')
@@ -473,6 +473,7 @@ class EasyGraphSession:
                     memory_scope='Owned arena covers session-dispatched calls; original backend operations are separate')
 
     def __enter__(self):
+        from easygraph.utils import gpu_eggpu_backend as backend
         global _users
         if self.closed or self._context_token is not None:
             raise RuntimeError('Session is closed or already entered')
@@ -491,6 +492,7 @@ class EasyGraphSession:
         if self.closed:
             return
         if self._context_token is not None:
+            from easygraph.utils import gpu_eggpu_backend as backend
             _active.reset(self._context_token)
             self._context_token = None
             with _dispatch_lock:

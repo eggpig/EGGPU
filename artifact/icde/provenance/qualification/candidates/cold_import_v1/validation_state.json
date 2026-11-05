@@ -1,0 +1,16 @@
+{
+  "status": "PASS_COLD_CANDIDATE_SEMANTICS_AND_EP_QUALIFICATION",
+  "formal_measurements": 0,
+  "gpu_executed": true,
+  "source_sha256": "fb1a378c021e3153cfc4b2e32e5aa03d57788f42682c57dd653498e3b43a23b2",
+  "native_dso_sha256": "bc1b7cf247222beec1f33afe4d184bdc715eea4ac65a07e8e2a567ec196aec46",
+  "resource_gate": {
+    "gpu": [
+      "<device-0>",
+      " 24081",
+      " 0"
+    ],
+    "host_available_bytes": 595425595392
+  },
+  "public_projection_note": "Host paths/UUIDs redacted. This is qualification evidence, not an executable tiny/target proof or a formal performance repetition. Original bytes are retained by the operator."
+}

@@ -1,0 +1,7 @@
+{
+  "note": "Additional previously retained raw lease receipts; these are not members of the 64-record cold/e6 transfer archive.",
+  "source": "new_qualification_v2",
+  "candidate": "integrated_v1",
+  "source_sha256": "b1d09a11c99841087b3d6acdb69f87593cc092d2150e0e6388447e0a6b5ce8a7",
+  "public_projection_note": "Host paths/UUIDs redacted. This is qualification evidence, not an executable tiny/target proof or a formal performance repetition. Original bytes are retained by the operator."
+}

@@ -1,0 +1,367 @@
+{
+  "schema": "eggpu.dataset_protocol_freeze.v1",
+  "date": "2026-11-04",
+  "timezone": "Asia/Shanghai",
+  "status": "dataset_selection_and_protocol_frozen_not_all_payloads_qualified",
+  "protocol_document": "DATASET_AND_EXPERIMENT_FREEZE_20261104_CN.md",
+  "main_dataset_count": 7,
+  "categories": {
+    "RN": "道路网络",
+    "SN": "社交网络",
+    "WG": "网页链接"
+  },
+  "degree_definition": "stored_adjacency_arcs / preserved_vertex_count; undirected inputs have two arcs per unique relation",
+  "normalization": {
+    "preserve_source_vertex_universe": true,
+    "canonical_ids": "ascending integer source identifiers; preserve source order for already contiguous LAW identifiers",
+    "remove_self_loops": true,
+    "deduplicate_ordered_arcs": true,
+    "symmetrize_only_undirected_sources": true,
+    "sort_csr_rows": true,
+    "retain_id_map": true
+  },
+  "new_campaign_weights": {
+    "name": "w16-v1",
+    "seed": 20261104,
+    "range": [
+      1,
+      16
+    ],
+    "hash": "SHA256",
+    "byte_key_utf8": "eggpu-w16-v1|20261104|{dataset_id}|{u}|{v}",
+    "endpoint_rule": "directed=(u,v); undirected=(min(u,v),max(u,v))",
+    "derive": "1 + (int.from_bytes(digest[:8], byteorder=\"big\") % 16)",
+    "natural_domain_meaning": false
+  },
+  "source_selection": {
+    "primary_count": 3,
+    "largest_component": "largest SCC for directed, largest CC for undirected; ties by minimum canonical vertex ID",
+    "ordering": "lexicographic digest of UTF-8 eggpu-source-v1|20261104|{dataset_id}|{vertex_id}",
+    "fallback": "if fewer than 3 vertices in largest SCC, supplement from nonzero-outdegree vertices of largest WCC; record explicitly",
+    "diagnostic": "one full-graph source by same hash ordering, separate from primary mean",
+    "freeze_before_timing": true
+  },
+  "datasets": [
+    {
+      "abbreviation": "US",
+      "category": "RN",
+      "dataset_id": "suitesparse-dimacs10-road_usa",
+      "source_name": "DIMACS10/road_usa",
+      "source_url": "https://sparse.tamu.edu/DIMACS10/road_usa",
+      "directed": false,
+      "source_vertices": 23947347,
+      "source_stored_arcs": 57708624,
+      "source_logical_edges": 28854312,
+      "source_average_stored_outdegree": 2.4098128281182882,
+      "canonical_vertices": 23947347,
+      "canonical_stored_arcs": 57708624,
+      "canonical_average_stored_outdegree": null,
+      "qualification_status": "reference_payload_qualified_fresh_regeneration_requires_local_receipt",
+      "new_campaign_weight_sha256": null,
+      "core_view": "undirected_simple_reciprocal"
+    },
+    {
+      "abbreviation": "EP",
+      "category": "SN",
+      "dataset_id": "snap-soc-epinions1",
+      "source_name": "soc-Epinions1",
+      "source_url": "https://snap.stanford.edu/data/soc-Epinions1.html",
+      "directed": true,
+      "source_vertices": 75879,
+      "source_stored_arcs": 508837,
+      "source_logical_edges": 508837,
+      "source_average_stored_outdegree": 6.7059001831863885,
+      "canonical_vertices": 75879,
+      "canonical_stored_arcs": 508837,
+      "canonical_average_stored_outdegree": 6.7059001831863885,
+      "qualification_status": "reference_payload_qualified_fresh_regeneration_requires_local_receipt",
+      "new_campaign_weight_sha256": null,
+      "core_view": "directed_simple",
+      "application_projection": {
+        "id": "EP-U",
+        "preserve_vertices": true,
+        "undirected_relations": 405740,
+        "stored_arcs": 811480,
+        "source": "extended_workflow_20261101/addon/topology_product_bounds.json"
+      }
+    },
+    {
+      "abbreviation": "LJ",
+      "category": "SN",
+      "dataset_id": "snap-soc-livejournal1",
+      "source_name": "soc-LiveJournal1",
+      "source_url": "https://snap.stanford.edu/data/soc-LiveJournal1.html",
+      "directed": true,
+      "source_vertices": 4847571,
+      "source_stored_arcs": 68993773,
+      "source_logical_edges": 68993773,
+      "source_average_stored_outdegree": 14.232648268586473,
+      "canonical_vertices": 4847571,
+      "canonical_stored_arcs": 68475391,
+      "canonical_average_stored_outdegree": null,
+      "qualification_status": "reference_payload_qualified_fresh_regeneration_requires_local_receipt",
+      "new_campaign_weight_sha256": null,
+      "core_view": "directed_simple"
+    },
+    {
+      "abbreviation": "UK",
+      "category": "WG",
+      "dataset_id": "law-uk-2002",
+      "source_name": "uk-2002",
+      "source_url": "https://law.di.unimi.it/webdata/uk-2002/",
+      "directed": true,
+      "source_vertices": 18520486,
+      "source_stored_arcs": 298113762,
+      "source_logical_edges": 298113762,
+      "source_average_stored_outdegree": 16.0964329985725,
+      "canonical_vertices": 18520486,
+      "canonical_stored_arcs": 292243663,
+      "canonical_average_stored_outdegree": 15.779481326785916,
+      "qualification_status": "reference_payload_qualified_fresh_regeneration_requires_local_receipt",
+      "new_campaign_weight_sha256": null,
+      "core_view": "directed_simple",
+      "archived_preparation_receipt": "experiments/rtx4090d_20261031/performance_revision_20261102/evidence/large_graphs/canonical/uk-2002/receipt.json",
+      "normalization_evidence": {
+        "vertices": 18520486,
+        "raw_arcs": 298113762,
+        "arcs": 292243663,
+        "self_loops_removed": 5870099,
+        "duplicate_arcs_removed": 0
+      },
+      "archived_source_sha256": {
+        "graph": "516928e3ca136a6e0d5d71ba3e1441a21ef76285ac66257ce8dc237f905bc34f",
+        "properties": "dcd65e4579ea67b3d8692083cdd1ed513a4fa543406d49bf5849c9250777b6fb",
+        "md5sums": "62462a26916584b6637f4580fe150f733e677113dbdcaedcb191aca57f3877a3"
+      },
+      "archived_topology_sha256": {
+        "offsets": "9f67d77a34a550856fc4d3693828257ccedf09874c1ebd67331edf9bd10957c8",
+        "indices": "3f18b486895b144d85d2c260567b9ff90b5b449917cfc3a666f1328d61c4f460"
+      },
+      "historical_weight_sha256_not_new_campaign_weight": "bf9065fd8b8b675232cf76b7c1053c665c0d2b300642932d205e863601c58423"
+    },
+    {
+      "abbreviation": "IN",
+      "category": "WG",
+      "dataset_id": "law-indochina-2004",
+      "source_name": "indochina-2004",
+      "source_url": "https://law.di.unimi.it/webdata/indochina-2004/",
+      "directed": true,
+      "source_vertices": 7414866,
+      "source_stored_arcs": 194109311,
+      "source_logical_edges": 194109311,
+      "source_average_stored_outdegree": 26.178397694577352,
+      "canonical_vertices": 7414866,
+      "canonical_stored_arcs": 191606827,
+      "canonical_average_stored_outdegree": 25.840902182183736,
+      "qualification_status": "reference_payload_qualified_fresh_regeneration_requires_local_receipt",
+      "new_campaign_weight_sha256": null,
+      "core_view": "directed_simple",
+      "archived_preparation_receipt": "experiments/rtx4090d_20261031/performance_revision_20261102/evidence/large_graphs/canonical/indochina-2004/receipt.json",
+      "normalization_evidence": {
+        "vertices": 7414866,
+        "raw_arcs": 194109311,
+        "arcs": 191606827,
+        "self_loops_removed": 2502484,
+        "duplicate_arcs_removed": 0
+      },
+      "archived_source_sha256": {
+        "graph": "719d91ae2ef42c7c1c06b0e3f2cfc0bf81287cea0c92f7f42c46dc182c8f6fd8",
+        "properties": "f3626da745e7becfb2fbc23d6707eda3dda32b129581f28faca0231f46ec943d",
+        "md5sums": "b89efb11a72a40d55b559acefa507e4119c9728f1580ad4d05d487b01a849429"
+      },
+      "archived_topology_sha256": {
+        "offsets": "1e5d839e17dbf4fec57285fcc654d6f66f995b6c32ac10547da2ecab63a76217",
+        "indices": "5ec8800637c05c7bfaa6ceda0bad7f89ac7e3ecbce8b4ac8580000ca5faa379d"
+      },
+      "historical_weight_sha256_not_new_campaign_weight": "bc41bb01e595565c737e1f5dc631b4f269f587f20c9d387bba6d4588390c2ced"
+    },
+    {
+      "abbreviation": "TW",
+      "category": "SN",
+      "dataset_id": "law-twitter-2010",
+      "source_name": "twitter-2010",
+      "source_url": "https://law.di.unimi.it/webdata/twitter-2010/",
+      "directed": true,
+      "source_vertices": 41652230,
+      "source_stored_arcs": 1468365182,
+      "source_logical_edges": 1468365182,
+      "source_average_stored_outdegree": 35.25297882010159,
+      "canonical_vertices": 41652230,
+      "canonical_stored_arcs": null,
+      "canonical_average_stored_outdegree": null,
+      "qualification_status": "source_verified_payload_preparation_pending",
+      "new_campaign_weight_sha256": null,
+      "core_view": "directed_simple"
+    },
+    {
+      "abbreviation": "OR",
+      "category": "SN",
+      "dataset_id": "nr-soc-orkut",
+      "source_name": "soc-orkut",
+      "source_url": "https://networkrepository.com/soc-orkut.php",
+      "directed": false,
+      "source_vertices": 2997166,
+      "source_stored_arcs": 212698418,
+      "source_logical_edges": 106349209,
+      "source_average_stored_outdegree": 70.9665123653478,
+      "canonical_vertices": 2997166,
+      "canonical_stored_arcs": 212698418,
+      "canonical_average_stored_outdegree": 70.9665123653478,
+      "qualification_status": "reference_payload_qualified_fresh_regeneration_requires_local_receipt",
+      "new_campaign_weight_sha256": null,
+      "core_view": "undirected_simple_reciprocal",
+      "metadata_evidence": "historical metadata: NR-soc-orkut.json; private workspace path omitted in public projection"
+    }
+  ],
+  "experiment_subsets": {
+    "E1": [
+      "US",
+      "EP",
+      "LJ",
+      "UK",
+      "IN",
+      "TW",
+      "OR"
+    ],
+    "E2": [
+      "US",
+      "OR",
+      "IN",
+      "UK",
+      "TW"
+    ],
+    "E3": [
+      "US",
+      "IN",
+      "OR"
+    ],
+    "E4": [
+      "US",
+      "OR",
+      "IN",
+      "UK"
+    ],
+    "E5": [
+      "IN",
+      "UK",
+      "OR"
+    ],
+    "E6_primary": [
+      "EP-U",
+      "LJ-U"
+    ],
+    "E6_pressure": [
+      "OR"
+    ]
+  },
+  "experiment_resource_modes": {
+    "E1": [
+      1,
+      8
+    ],
+    "E2": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "E3_primary": [
+      1
+    ],
+    "E3_partition_replication_check": {
+      "graphs": [
+        "IN",
+        "OR"
+      ],
+      "gpus": 8
+    },
+    "E4": [
+      1,
+      8
+    ],
+    "E5": [
+      1,
+      8
+    ],
+    "E6_coverage_ablation": [
+      1
+    ],
+    "E6_full_task_only_scaling": [
+      1,
+      2,
+      4,
+      8
+    ]
+  },
+  "repetitions": {
+    "independent_processes": 10,
+    "fixed_count": true,
+    "retain_all": true,
+    "historical_n3_not_rewritten": true,
+    "cv_unstable_flag_threshold": 0.2,
+    "confidence_interval": "Student-t over independent process blocks; paired contrasts use paired block differences"
+  },
+  "timeout_seconds": {
+    "E1_E2_complete_task": 1800,
+    "E3_E6_complete_trace_or_application": 3600
+  },
+  "papers": [
+    {
+      "name": "HyTGraph",
+      "url": "https://arxiv.org/pdf/2208.14935",
+      "dataset_table": "IV",
+      "physical_page": 9
+    },
+    {
+      "name": "GRACE",
+      "url": "https://me.sage.org.ai/contents/research_papers/2026/2026_grace_icde_2026.pdf",
+      "dataset_table": "II",
+      "physical_page": 8
+    },
+    {
+      "name": "C2graph",
+      "url": "https://wzgcs.github.io/papers/32_ICDE_2026.pdf",
+      "doi": "10.1109/ICDE65706.2026.00225",
+      "ieee_article_number": 11629388,
+      "dataset_table": "I",
+      "physical_page": 9
+    },
+    {
+      "name": "GUM",
+      "url": "https://graphscope.io/publication/gum.pdf",
+      "dataset_table": "II",
+      "physical_page": 8
+    }
+  ],
+  "prohibited_substitutions": {
+    "OR": [
+      "SNAP com-Orkut"
+    ],
+    "TW": [
+      "GAP-twitter",
+      "GUM soc-twitter-2010",
+      "HyTGraph KONECT twitter"
+    ],
+    "US": [
+      "DIMACS9 USA-road-d.USA"
+    ],
+    "UK": [
+      "uk-2007"
+    ],
+    "LJ": [
+      "com-LiveJournal",
+      "unidentified 85.7M-arc projection"
+    ]
+  },
+  "boundary": "No new GPU timing or large graph download performed by this freeze; null measurements and hashes must be populated from actual preparation, never inferred from paper tables.",
+  "E6_multi_gpu_modes": {
+    "effective_size_constraint": "whole-graph replicated, ego-sharded",
+    "candidate_closeness": "whole-graph replicated, source-sharded",
+    "BFS_WCC_tail": "logical GPU0 only"
+  },
+  "qualification_additional_checks": [
+    "TW: actual weak projection arc count and per-route offset domain; distinguish index unsupported from OOM",
+    "System-specific initialization/preparation included in first-task time and timeout",
+    "Source/graph versions attached to every request key"
+  ]
+}

@@ -1,43 +1,59 @@
-import easygraph.classes
-import easygraph.convert
-import easygraph.datapipe
-import easygraph.datasets
-import easygraph.exception
-import easygraph.experiments
-import easygraph.functions
-import easygraph.ml_metrics
-import easygraph.model
-import easygraph.nn
-import easygraph.readwrite
-import easygraph.utils
+"""EasyGraph public API with on-demand optional application exports.
 
-from easygraph._optional import HAS_TORCH as _HAS_TORCH
-from easygraph._optional import require_torch as _require_torch
-from easygraph._optional import warn_missing_torch as _warn_missing_torch
-from easygraph.classes import *
-from easygraph.convert import *
-from easygraph.datapipe import *
-from easygraph.datasets import *
-from easygraph.exception import *
-from easygraph.experiments import *
-from easygraph.functions import *
-from easygraph.ml_metrics import *
-from easygraph.model import *
-from easygraph.nn import *
-from easygraph.readwrite import *
-from easygraph.utils import *
+Importing a subpackage such as ``easygraph.gpu`` does not initialize unrelated
+machine-learning, drawing and dataset modules. Root-level graph/functions and
+wildcard imports retain the original export/bootstrap behavior on first use.
+"""
+from importlib import import_module as _import_module
+from threading import RLock as _RLock
 
-import easygraph.egmgpu as egmgpu
-from easygraph.egmgpu.direct_dispatch import install_direct_public_api as _install_egmgpu_direct_api
-
-_install_egmgpu_direct_api(globals())
-del _install_egmgpu_direct_api
+_legacy_lock = _RLock()
+_legacy_loaded = False
+_legacy_loading = False
+_legacy_module = None
+_SUBMODULES = frozenset(('classes', 'convert', 'datapipe', 'datasets', 'exception',
+                        'experiments', 'functions', 'ml_metrics', 'model', 'nn',
+                        'readwrite', 'utils', 'egmgpu', 'gpu'))
 
 
-_warn_missing_torch()
+
+def _load_legacy_exports():
+    global _legacy_loaded, _legacy_loading, _legacy_module
+    with _legacy_lock:
+        if _legacy_loaded:
+            return _legacy_module
+        if _legacy_loading:
+            # A partially imported legacy module may probe the root while
+            # Python resolves a submodule. Let normal import handling proceed.
+            raise AttributeError('EasyGraph legacy exports are still initializing')
+        _legacy_loading = True
+        try:
+            module = _import_module('._legacy_exports', __name__)
+            module.load_into(globals())
+            _legacy_module = module
+            _legacy_loaded = True
+        finally:
+            _legacy_loading = False
+        return _legacy_module
 
 
 def __getattr__(name):
-    if not _HAS_TORCH and name in {"Hypergraph", "BaseHypergraph", "load_structure"}:
-        _require_torch(name)
+    if name in _SUBMODULES:
+        return _import_module('.' + name, __name__)
+    if name.startswith('__') and name != '__all__':
+        raise AttributeError("module 'easygraph' has no attribute {!r}".format(name))
+    module = _load_legacy_exports()
+    if name == '__all__':
+        # Recompute so a subsequently imported public submodule keeps the same
+        # wildcard visibility as the original root without a static __all__.
+        return [key for key in globals() if not key.startswith('_')]
+    if name in globals():
+        return globals()[name]
+    if not globals()['_HAS_TORCH'] and name in {'Hypergraph', 'BaseHypergraph', 'load_structure'}:
+        globals()['_require_torch'](name)
     raise AttributeError("module 'easygraph' has no attribute {!r}".format(name))
+
+
+def __dir__():
+    _load_legacy_exports()
+    return sorted(globals())

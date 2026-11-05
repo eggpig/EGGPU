@@ -1,70 +1,161 @@
 {
+  "schema": "eggpu.source_delta/v2",
+  "date": "2026-11-05",
   "base_source_sha256": "aeeade2ea64edf46fc226c0e33f2ccf8e596f77b5ff1e8cc47489db3ff30ef80",
-  "cuda_cpp_changed": false,
-  "current_source_sha256": "832781697b0ceb785b15740aa3dd0231c67787467924dc5ed9d0b29ee868d5f9",
-  "date": "2026-11-04",
+  "current_source_sha256": "cb14360e2dfb934b8a28f9875fb80639ce4503bc6ed27956201b18e9edec6869",
+  "current_digest_scheme": "path-to-sha256-and-bytes",
+  "cuda_cpp_changed": true,
   "files": [
     {
-      "base_sha256": null,
-      "change": "added",
-      "current_sha256": "4eadad69f40f73c68f02f853ee24e6d34930fbde8464396ff0256d9730495c4b",
-      "path": "easygraph/gpu/_dispatch.py"
+      "path": "cpp_easygraph/runtime/egmgpu_partitioned_pagerank.cpp",
+      "base_sha256": "8d0b699780ba92ada27bff7fe7cd0b098bcf6be0ef8e6705af1fe507df5cfcf4",
+      "current_sha256": "bde5456e780353cca3031a54b83059917159fb203361a414baf90effaa36da9b"
     },
     {
+      "path": "easygraph/__init__.py",
+      "base_sha256": "bc4b1fbbf90d3fdb1283e0aeb6aa572b132205e5743186674014e5eeb73845a2",
+      "current_sha256": "4f7455c08ebb18bae1084ae43e18919b3e56afb334e4e5a2d4df72e2742ede62"
+    },
+    {
+      "path": "easygraph/_legacy_exports.py",
+      "base_sha256": null,
+      "current_sha256": "299110c70513803766241b868489941466f259e36446ad5fa4064ba28bfb970a"
+    },
+    {
+      "path": "easygraph/egmgpu/__init__.py",
+      "base_sha256": "00a863c814513d789649a9daf23f0c2b5bf7dac05b5cf8c5352dfa047c802b6e",
+      "current_sha256": "3a001c14f05db5d1572158ddd4a8b314d04589f10c18b21b0229580a85341a4a"
+    },
+    {
+      "path": "easygraph/gpu/__init__.py",
       "base_sha256": "19a6c04e9be1fd05cd78ca568129320e659fc99f66357b4ef94d106fe354e01b",
-      "change": "modified",
-      "current_sha256": "64a441a3162df1dd250770a6a7ef9367d13788c818c2dfc6e1ba6fbed25d31ec",
-      "path": "easygraph/gpu/__init__.py"
+      "current_sha256": "64a441a3162df1dd250770a6a7ef9367d13788c818c2dfc6e1ba6fbed25d31ec"
     },
     {
-      "base_sha256": "4e441517622f125d7f9ba33cd81bfea2fad2e0ecfdc2302539b4ee756bfdf3e6",
-      "change": "modified",
-      "current_sha256": "3014634d051d556fe534d6e1c79bb17bfbf61a9b15bd493de37d4bf0550c9c62",
-      "path": "easygraph/gpu/session.py"
+      "path": "easygraph/gpu/_arena/gpu_runtime.py",
+      "base_sha256": "f98c2d0a0361180fa1d543763a4b971f01299dd3edd753ae69fb929310cfe1a4",
+      "current_sha256": "bc3269e2b1d0eae9cd0fe6ce84c15196a6ee6ab80f8dee97c20e3a63a022f351"
     },
     {
-      "base_sha256": "bfb1d17c98aaad1e00d9492e532d57da3c3eb96a175f7bb038f5722eb4652eb3",
-      "change": "modified",
-      "current_sha256": "da48b1ef165810a0a70faddd9cc38ddd8f8f96c1f126c6ffab92217fa46c735a",
-      "path": "easygraph/gpu/_bridge.py"
+      "path": "easygraph/gpu/_arena/public_session_final.py",
+      "base_sha256": "61b7aa3f3daf0d18ee02b7ac312af4faa832b103ed15393ed6e4f86a96997c26",
+      "current_sha256": "f87f0456eb869f947f9b63648341347ffe81dd894019e0dbcaff5c5214e4b84f"
     },
     {
-      "base_sha256": "df7b4a257812d1e45e70a85e1fdc5943153bff63a6ef72c720b52177c14ca9ef",
-      "change": "modified",
-      "current_sha256": "6b2bc3ecba2050dafefce332d0020e9e88dd910be3c84d49eb6b67c34595a5b8",
-      "path": "easygraph/gpu/_core.py"
-    },
-    {
+      "path": "easygraph/gpu/_arena/trace_backends.py",
       "base_sha256": "47b839fc84c0c3c422c6d23f2834981744e8b1d5447f1c178b80a97dbc2f4427",
-      "change": "modified",
-      "current_sha256": "4bab35920788e5c97585db9ff6a965184f96c17427ceb4e9c54888efcbc7128d",
-      "path": "easygraph/gpu/_arena/trace_backends.py"
+      "current_sha256": "4bab35920788e5c97585db9ff6a965184f96c17427ceb4e9c54888efcbc7128d"
     },
     {
+      "path": "easygraph/gpu/_arena_output.py",
       "base_sha256": null,
-      "change": "added",
-      "current_sha256": "4b46a7e0fee04d00a506fa1fab788ec772d371264437a9bede3db8a409c362b1",
-      "path": "tests/gpu/test_capability_dispatch.py"
+      "current_sha256": "585df3ad15c26f791287bda918ea0b8a3de8a9948d0a4ee61e8e68b396ee5631"
     },
     {
-      "base_sha256": "b28809f719ff05f6464a0b7e6050755f5c182dc02bd61ce6d86a6f326a133b9a",
-      "change": "modified",
-      "current_sha256": "7cbaf80b739628e172a05ee651406b53814f5abe5d59a0a96bd765db603dce7a",
-      "path": "tests/gpu/test_arena_numerical_contract.py"
+      "path": "easygraph/gpu/_bridge.py",
+      "base_sha256": "bfb1d17c98aaad1e00d9492e532d57da3c3eb96a175f7bb038f5722eb4652eb3",
+      "current_sha256": "13c1c337e5d1f4dd100fd886c26d6802fbbfb74f958e56e2990d3a708e70e8a6"
     },
     {
-      "base_sha256": null,
-      "change": "added",
-      "current_sha256": "b9049bb0de083060b2318df244d321fa179ca1f2a505271e5ed235208d08501f",
-      "path": "tests/gpu/qualify_capability_route.py"
-    },
-    {
+      "path": "easygraph/gpu/_controller.py",
       "base_sha256": "d8f1f1920937d7791d2c7553b6720d9bdd946dfcbdc91a090f873f1c686cd782",
-      "change": "modified",
-      "current_sha256": "7da317b45fc2fea858f50eae1cc1afa38bbe7c2e1c56105601304f2927870fd4",
-      "path": "easygraph/gpu/_controller.py"
+      "current_sha256": "7da317b45fc2fea858f50eae1cc1afa38bbe7c2e1c56105601304f2927870fd4"
+    },
+    {
+      "path": "easygraph/gpu/_core.py",
+      "base_sha256": "df7b4a257812d1e45e70a85e1fdc5943153bff63a6ef72c720b52177c14ca9ef",
+      "current_sha256": "4f815c389ff2e639d7acf332d90d1cf5b01998f9302af06ed2e3af383c8e3a11"
+    },
+    {
+      "path": "easygraph/gpu/_csr_input.py",
+      "base_sha256": null,
+      "current_sha256": "456d075379274dd95b63111a900a2dcfc81e4d45bdbebbbc41a9cadfb70db8bd"
+    },
+    {
+      "path": "easygraph/gpu/_dispatch.py",
+      "base_sha256": null,
+      "current_sha256": "1b0202556b183c75da5790a6c002b64108464502daabb927531c850852a8cfc1"
+    },
+    {
+      "path": "easygraph/gpu/_snapshot_lease.py",
+      "base_sha256": null,
+      "current_sha256": "6c1d6dc8a18fad51c773de8b1066afbe11f0c2419e0d514e0986c1d7bdf70305"
+    },
+    {
+      "path": "easygraph/gpu/session.py",
+      "base_sha256": "4e441517622f125d7f9ba33cd81bfea2fad2e0ecfdc2302539b4ee756bfdf3e6",
+      "current_sha256": "ebe6cb97b52cedfd9c4803863ed9065ad521e533bced27fa11e58c1ed446a281"
+    },
+    {
+      "path": "gpu_easygraph/runtime/partitioned_device_state.cpp",
+      "base_sha256": "1317c308a4783a73633312f13a09a14531650b5d7a9aca3413dc0a90b6ec16aa",
+      "current_sha256": "9dfd7084b92d2fbf06882b9b806cf080f57f7d053f65aa37a86f06de1b46152a"
+    },
+    {
+      "path": "gpu_easygraph/runtime/partitioned_device_state.h",
+      "base_sha256": "8bc08bbbff63482d70fb034b64f32845fc8d928fc560ab01c31af4c914b27649",
+      "current_sha256": "26cf3a110d51636d39dfedc4844a6840ac23678afa42aa04716b85231f0a64b2"
+    },
+    {
+      "path": "gpu_easygraph/runtime/partitioned_sssp_state.cpp",
+      "base_sha256": "e9c944a38893305e3f17f5c29e096df937bda8c25618a9cd8427b49c849b6a2f",
+      "current_sha256": "10a3b5bd5f66b76985bf0716f52271b1d3680c54006e40d1822ca5a28796bd2c"
+    },
+    {
+      "path": "gpu_easygraph/runtime/partitioned_sssp_state.h",
+      "base_sha256": "b810e049cd4c9384a4b02b16e76daa2efad41c2001fba263fb25840983c1e967",
+      "current_sha256": "b5fed993bc4b3d87e0bf487d3b4258f63604ebc887e22501f73290227bdaaf3b"
+    },
+    {
+      "path": "tests/gpu/qualify_arena_output_ownership.py",
+      "base_sha256": null,
+      "current_sha256": "d0b80b879b2b72a37c2e8ebb5a3c1b2d008bf59f969f81e8d26c1d4d59382996"
+    },
+    {
+      "path": "tests/gpu/qualify_capability_route.py",
+      "base_sha256": null,
+      "current_sha256": "b9049bb0de083060b2318df244d321fa179ca1f2a505271e5ed235208d08501f"
+    },
+    {
+      "path": "tests/gpu/qualify_public_csr.py",
+      "base_sha256": null,
+      "current_sha256": "0bcef88759e3341e00e826ecb3af7c03d72f5c1a63f6a40b33588aff5391475b"
+    },
+    {
+      "path": "tests/gpu/test_arena_cold_import.py",
+      "base_sha256": null,
+      "current_sha256": "d7fb49b85e8d5eb76f65ce411f202d385594741f347edf554161bec2aef578b0"
+    },
+    {
+      "path": "tests/gpu/test_arena_numerical_contract.py",
+      "base_sha256": "b28809f719ff05f6464a0b7e6050755f5c182dc02bd61ce6d86a6f326a133b9a",
+      "current_sha256": "7cbaf80b739628e172a05ee651406b53814f5abe5d59a0a96bd765db603dce7a"
+    },
+    {
+      "path": "tests/gpu/test_arena_output_ownership.py",
+      "base_sha256": null,
+      "current_sha256": "cbb532d6f2a547bc636123c697475b0b47f582a8df138749e8c0163b11780ecc"
+    },
+    {
+      "path": "tests/gpu/test_capability_dispatch.py",
+      "base_sha256": null,
+      "current_sha256": "8199b63d055bda448267a214ceb98a6bbc8addc700a3df0587ec24086c40b5b5"
+    },
+    {
+      "path": "tests/gpu/test_public_csr_input.py",
+      "base_sha256": null,
+      "current_sha256": "e982d90e6dec75a70d0e1ead64bf08f0b6b14aadde00723466d6bb2124902cf6"
+    },
+    {
+      "path": "tests/gpu/test_public_lazy_import.py",
+      "base_sha256": null,
+      "current_sha256": "f4bfc8f40af5507c01f9b0d5d43e382f506f317d533a1dae75bfb520527ccb73"
+    },
+    {
+      "path": "tests/gpu/test_wcc_chunked_host.py",
+      "base_sha256": null,
+      "current_sha256": "a79440305c37bc467e78a53f1223c1c26f688f0b50215da7bdd633ce42308402"
     }
   ],
-  "schema": "eggpu.source_delta/v1",
-  "source_scope": "Python capability dispatch, public result semantics, closure-LRU control, and associated tests; all other published source bytes equal the source3 base."
+  "source_scope": "Public owned CSR and capability dispatch; deferred unrelated imports; native FP64 snapshot leases and closure-LRU control; dtype-preserving CSR search probes; uniform 32K WCC host validation; exact request-scoped owned host output publication. No per-graph implementation selection. The frozen source includes its contract and GPU qualification code."
 }

@@ -30,8 +30,12 @@ def verify(root=ROOT):
         if expected.get(row["path"]) != row["base_sha256"]:
             raise ValueError("Patch base differs from source3 origin")
         expected[row["path"]] = row["current_sha256"]
+    records = {name: {"sha256": value, "bytes": (source / name).stat().st_size} for name, value in actual.items()}
+    current_digest = digest(records) if current.get("digest_scheme") == "path-to-sha256-and-bytes" else digest(actual)
+    if current.get("file_records", records) != records:
+        raise ValueError("Current source file-record manifest differs")
     if (actual != expected or actual != current["files"]
-            or digest(actual) != manifest["current_source_sha256"]
+            or current_digest != manifest["current_source_sha256"]
             or current["source_sha256"] != manifest["current_source_sha256"]
             or delta["current_source_sha256"] != manifest["current_source_sha256"]
             or digest(origin["files"]) != manifest["base_source_sha256"]

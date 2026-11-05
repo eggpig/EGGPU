@@ -29,7 +29,7 @@ class SessionPlan:
         return asdict(self)
 
 
-def plan_session(*, devices=(0,), state_model="static", algorithms=CORE_ALGORITHMS):
+def plan_session(*, devices=(0,), state_model="static", algorithms=CORE_ALGORITHMS, input_format=None):
     """Select a route before loading data or importing a GPU runtime.
 
     ``static`` uses the optimized arena on one device and native partitions on
@@ -64,10 +64,14 @@ def plan_session(*, devices=(0,), state_model="static", algorithms=CORE_ALGORITH
     if state_model == "journal" and len(devices) != 1:
         raise NotImplementedError("Journal mutation requires one GPU")
     arena = len(devices) == 1 and state_model != "snapshots"
+    if input_format is None:
+        input_format = 'coo' if arena else 'partition_manifest'
+    if (arena and input_format not in ('coo', 'csr')) or (not arena and input_format != 'partition_manifest'):
+        raise ValueError('Arena accepts coo/csr; native requires partition_manifest')
     return SessionPlan(
-        policy="capability_v1", backend="arena" if arena else "native",
+        policy="capability_v2", backend="arena" if arena else "native",
         devices=devices, state_model=state_model, algorithms=algorithms,
-        input_kind="owned_coo" if arena else "partition_manifest",
+        input_kind=("owned_" + input_format) if arena else "partition_manifest",
         budget_scope=("single-device backing arena including workspace" if arena
                       else "per-device retained state at completed-query boundaries"),
     )

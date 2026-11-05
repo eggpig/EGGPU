@@ -1,0 +1,23 @@
+{
+  "status": "PASS_CURRENT_CPU_TESTS",
+  "tests": 19,
+  "gpu_executed": false,
+  "python": "3.14.8",
+  "numpy": "2.5.4",
+  "scipy": "1.18.1",
+  "source_files": {
+    "prepare_inputs.py": "fad464165d313922c261a7fb29e593a5609de9c98865ef8e86aa18fb22a889b6",
+    "weights.cpp": "8da52a84ed4e8a2ea3efa73ac9bee78cc9b01c9c2751e879a32dc474bb1069da",
+    "edge_list_to_csr.cpp": "814eb58c2a2b09c21dd17748d75c57a33a25e78e120dc9e5f8eb08eff9262bbd",
+    "metis_to_csr.cpp": "f08050fe2d2558760db7414442726d16faef31e015e120a7f5c88cbf270f55b8",
+    "range_download.py": "618f226ab8bfbde58233c02434f29aaa02be6c044cb8cbdca8c66701ea0fb6d8",
+    "LawToCsr.java": "c3ed3fb6bddbabe7aaa89f92894dc0075164e77c985db4cc47efb303e12a73e0",
+    "download_common.py": "7e04a0179c3643a6240129bd705ff36d8c08d66a29d08db66e46ca7e0cd8229c",
+    "fetch.py": "5ff285bcf6b612251809255d42c17b14061ac9ef71bb97cc9a8613f905473a48",
+    "setup_tools.py": "228fe07324c4e38060045ea533f7c1f126f1883f7984bb040f71433a0a1d7864",
+    "preflight.py": "53e32756b23d0c7c768d22978305a107e8d247c9d97c71c4b1c1b552d0a94597",
+    "test_portable_inputs.py": "509257a69be32a1c2cc88ced947d9e7a70cd6da086a7f8fc40b7e0ab2b56d682",
+    "python-cp312-linux-x86_64.lock": "b401d36c99d90ae6caab83e15fab6fd1a008a7d4ce9337c817c71c7c12612e39",
+    "test_download_resume.py": "cfe6ba4a34e8c4d2f412e357b9068171b0e3745f313a6f5c91d6ebcd7749d71f"
+  }
+}

@@ -159,6 +159,9 @@ private:
 
 class PartitionedSsspStateRegistry {
 public:
+    // Fixed-worker, read-only lease of existing immutable views; never uploads.
+    std::vector<std::shared_ptr<ResidentSsspPartitionView> > hold_graph_views(
+        const std::string& graph_id, std::uint64_t generation) const;
     std::shared_ptr<ResidentSsspPartitionView> acquire(
         const SsspPartitionUpload& upload,
         bool* cache_hit = nullptr,

@@ -1,0 +1,45 @@
+{
+  "schema": "eggpu.runner.release.v1",
+  "version": "sg_public_csr_pr_global_l1_v3",
+  "status": "CURRENT_SOURCE_16_CORRECTED_CSR_SG_TINY_PASS_TARGETS_PENDING",
+  "files": {
+    "sg_worker.py": {
+      "sha256": "7ab87843b24df60ad1372bee6383ec2c9d75227031a8343c439a6cca0ddbde43",
+      "bytes": 41183
+    },
+    "cugraph_csr_adapter.py": {
+      "sha256": "36e57e6dd8764e5b27db5a21a8b7b0c712f9c42d434636744c4e29997b2447cf",
+      "bytes": 7465
+    },
+    "run_sg.py": {
+      "sha256": "addae8997b5aad71a5037b10b870c3bc30424b483bc5ba637ae4513fc2811613",
+      "bytes": 7154
+    },
+    "test_sg_campaign.py": {
+      "sha256": "59860f9373faed2aa53055ccde028877c978aed33dac6f4d6f43d8a499954e20",
+      "bytes": 13147
+    },
+    "native_worker.py": {
+      "sha256": "12f183d6ff969e4c1921e388546a70a102d8ff22e1c9cb39df9a1b56b6b390f6",
+      "bytes": 23833
+    },
+    "native_input.py": {
+      "sha256": "927a9194b15b6dfaf91ff829f2476a676c7828ba4071607497ef308789d10152",
+      "bytes": 11994
+    },
+    "mg_process_observer.py": {
+      "sha256": "368c4d858da8dc5a2833dd2cd2dd30d0ab9df75940968c181a1537c2e30426a7",
+      "bytes": 2499
+    },
+    "test_pr_global_l1.py": {
+      "sha256": "520fe807d75e88ba9dc0e782e6290963587d17bf81ca7ab42f0b8d69b4f7c285",
+      "bytes": 3605
+    },
+    "test_csr_runner_contract.py": {
+      "sha256": "73f9eec69cd218faf8b9677ba3d25e4efbb75e36cc42d1ef6dca99ad8a0f3b23",
+      "bytes": 1989
+    }
+  },
+  "formal_results": 0,
+  "qualification_note": "Public source/path changes require exact local tiny/target proofs. Earlier operator scope evidence is not a proof shortcut. Global-L1 cuGraph PR correction invalidates historical cuGraph PR/complete-sequence comparison and requires exact new proofs."
+}

@@ -1,0 +1,19 @@
+{
+  "status": "PASS_CPU",
+  "returncode": 0,
+  "source_tree_sha256": "a6ad286df344858561a172076831387f14d0c7df29b9eafb640422f0f8991ee8",
+  "gpu_executed": false,
+  "command": [
+    "<artifact-work>/envs/core/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "<campaign>/candidates/csr_search_dtype_v1/Easy-Graph/tests/gpu/test_capability_dispatch.py",
+    "<campaign>/candidates/csr_search_dtype_v1/Easy-Graph/tests/gpu/test_arena_numerical_contract.py",
+    "<campaign>/candidates/csr_search_dtype_v1/Easy-Graph/tests/gpu/test_public_csr_input.py",
+    "<campaign>/candidates/csr_search_dtype_v1/Easy-Graph/tests/gpu/test_public_lazy_import.py",
+    "<campaign>/candidates/csr_search_dtype_v1/Easy-Graph/tests/gpu/test_arena_cold_import.py"
+  ],
+  "public_projection_note": "Private paths/UUIDs redacted; exact original retained. Not an executable qualification proof or a formal performance result."
+}

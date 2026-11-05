@@ -1,0 +1,96 @@
+{
+  "backend": {
+    "backend": "cuGraph",
+    "complete_output": true,
+    "gpu_count": 1,
+    "input_array_format": "CSR",
+    "sssp_predecessors": {
+      "compute_predecessors": true,
+      "reason": "Installed release requires True; confirmed by actual v3 tiny call rejection",
+      "returned_to_caller": false,
+      "timing": "Required native predecessor computation remains inside complete-call timing; only distances are transferred to host"
+    },
+    "status": "GPU_QUALIFICATION_REQUIRED",
+    "store_transposed": false,
+    "topology_dtype": "int32",
+    "vertices": 7,
+    "vertices_domain": "CSR offset length n+1; every output ID checked",
+    "weight_semantics": "canonical f64"
+  },
+  "backend_input_semantics": "original canonical CSR; directed WCC builds explicit weak CSR inside T_first",
+  "calls": {
+    "first": {
+      "output": {
+        "bytes": 184,
+        "path": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_sssp_cugraph_r00/source_2/4c01c0f61719e9f4783b02ae414a90cf0d96fec65cdd6d7058cc5cf457142667.npy",
+        "sha256": "fbca7fbc5d502d371b49456159cfcf820fb9e2bc05cd022a8ea7220d5d6e3923"
+      },
+      "quality": {
+        "complete": true,
+        "dtype": "float64",
+        "exact_reference_match": true,
+        "immutable": true,
+        "owning": true,
+        "pass": true,
+        "rmse_finite": 0.0,
+        "unreachable_match": true
+      },
+      "seconds": 2.3987288884818554
+    },
+    "ready": {
+      "output": {
+        "bytes": 184,
+        "path": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_sssp_cugraph_r00/source_2/4c01c0f61719e9f4783b02ae414a90cf0d96fec65cdd6d7058cc5cf457142667.npy",
+        "sha256": "fbca7fbc5d502d371b49456159cfcf820fb9e2bc05cd022a8ea7220d5d6e3923"
+      },
+      "quality": {
+        "complete": true,
+        "dtype": "float64",
+        "exact_reference_match": true,
+        "immutable": true,
+        "owning": true,
+        "pass": true,
+        "rmse_finite": 0.0,
+        "unreachable_match": true
+      },
+      "seconds": 0.0015620552003383636
+    },
+    "warmup": {
+      "count": 1,
+      "output": {
+        "bytes": 184,
+        "path": "<campaign>/final_source_qualification_v2/sg_tiny/tiny_TINY_U_sssp_cugraph_r00/source_2/4c01c0f61719e9f4783b02ae414a90cf0d96fec65cdd6d7058cc5cf457142667.npy",
+        "sha256": "fbca7fbc5d502d371b49456159cfcf820fb9e2bc05cd022a8ea7220d5d6e3923"
+      },
+      "quality": {
+        "complete": true,
+        "dtype": "float64",
+        "exact_reference_match": true,
+        "immutable": true,
+        "owning": true,
+        "pass": true,
+        "rmse_finite": 0.0,
+        "unreachable_match": true
+      },
+      "timed": false
+    }
+  },
+  "host_ready_checksum": [
+    50,
+    20,
+    82.0
+  ],
+  "input_sha256": "4a5224f2ab5adc419d14e3e79c235440fb7fefb503e186aad8d10cef3fa2921f",
+  "outputs_survive_close": true,
+  "quality_pass": true,
+  "reference_receipt": {
+    "bytes": 549,
+    "path": "<campaign>/references/6b164f169d92952b8719765597619a04694e0a3d37be0e605855bbef5cdfa0a5.json",
+    "sha256": "dc025ca1c5671294d13a53b7dc9540039affab83de72937866e661f2b93d6431"
+  },
+  "source": 2,
+  "source_index": 2,
+  "status": "PASS",
+  "timing_start": "common immutable host CSR ready; fresh Python backend process",
+  "public_projection_note": "Private paths/UUIDs redacted; exact original retained. This readable evidence projection is not an executable proof or a formal performance measurement."
+}

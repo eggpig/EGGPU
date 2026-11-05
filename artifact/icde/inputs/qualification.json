@@ -1,0 +1,578 @@
+{
+  "status": "PASS_SIX_CANONICAL_REGENERATIONS_TW_PENDING",
+  "gpu_executed": false,
+  "cpu_unit_tests": 19,
+  "core_current_source_matches_measured_source": {
+    "prepare_inputs.py": "fad464165d313922c261a7fb29e593a5609de9c98865ef8e86aa18fb22a889b6",
+    "weights.cpp": "8da52a84ed4e8a2ea3efa73ac9bee78cc9b01c9c2751e879a32dc474bb1069da",
+    "edge_list_to_csr.cpp": "814eb58c2a2b09c21dd17748d75c57a33a25e78e120dc9e5f8eb08eff9262bbd",
+    "metis_to_csr.cpp": "f08050fe2d2558760db7414442726d16faef31e015e120a7f5c88cbf270f55b8",
+    "LawToCsr.java": "c3ed3fb6bddbabe7aaa89f92894dc0075164e77c985db4cc47efb303e12a73e0",
+    "expected_canonical.json": "6e0e2b03b9a362eed8c3efbc865ded22ed0eb8de09988cd960fa5efa89052fc7",
+    "java_dependencies.json": "b16430c2593d0b6a93e7ff2405f4834838ee8d13bf38fed4ee31b7eb0406b235",
+    "setup_tools.py": "228fe07324c4e38060045ea533f7c1f126f1883f7984bb040f71433a0a1d7864",
+    "preflight.py": "53e32756b23d0c7c768d22978305a107e8d247c9d97c71c4b1c1b552d0a94597"
+  },
+  "six_regeneration_controller_sha256": "bf11bda457a85471815352785c274b27b92b3383f5a430fc7c65b1aceb552fec",
+  "datasets": {
+    "EP": {
+      "status": "PASS_CANONICAL_INPUT",
+      "vertices": 75879,
+      "stored_arcs": 508837,
+      "fresh_receipt_sha256": "2fb24f7ca97c7fffeaf5c91b19198402e6c170099c041ed804b34ef57ce69c81",
+      "exact_reference_payload_match": [
+        "offsets",
+        "indices",
+        "weights",
+        "sources",
+        "source_labels"
+      ],
+      "files": {
+        "offsets": {
+          "bytes": 303520,
+          "sha256": "375c0caa7d48d6d83ccc1f0999a6fdbea2188c17ee278c83698035c53f75be32"
+        },
+        "indices": {
+          "bytes": 2035348,
+          "sha256": "22ee28285e20dba428e9352e6e85e6b35f73cdf83fa1760ba7edca8db49f6eb9"
+        },
+        "weights": {
+          "bytes": 4070696,
+          "sha256": "c89da8e0a9b66ffffb74c9ff151c0b10369ee4360201dba48833bf7b77c4fba6"
+        },
+        "canonical": {
+          "bytes": 670,
+          "sha256": "5e473715f996776df736595ebdbe884725853640d4a9aa625648ca3de13978a1"
+        },
+        "sources": {
+          "bytes": 279,
+          "sha256": "d5b71af0ba301736b0f725e8128b585de091c689cc73b1c80e64e72d92e5bd00"
+        },
+        "id_mapping": {
+          "bytes": 121,
+          "sha256": "f1d932229e67f5e12ba51a74fe8438e3b7ab17529ecb65d7acb9a21694e44ae2"
+        },
+        "source_labels": {
+          "bytes": 607160,
+          "sha256": "4c62265926e258eee782e4cf1bbcd9a57af6d2e5ebd1c4b5faa16a4d7569ab97"
+        }
+      },
+      "preparation_script_sha256": "fad464165d313922c261a7fb29e593a5609de9c98865ef8e86aa18fb22a889b6"
+    },
+    "OR": {
+      "status": "PASS_CANONICAL_INPUT",
+      "vertices": 2997166,
+      "stored_arcs": 212698418,
+      "fresh_receipt_sha256": "f86be6746f9c595c30dd104192a8b85021f9f2fe810b74e5a8d178a444e45e1b",
+      "exact_reference_payload_match": [
+        "offsets",
+        "indices",
+        "weights",
+        "sources"
+      ],
+      "files": {
+        "offsets": {
+          "bytes": 11988668,
+          "sha256": "d757999c9f2c56a674939df13146e4dd49bac26a602f48f947e7e0133b6ddb74"
+        },
+        "indices": {
+          "bytes": 850793672,
+          "sha256": "77037087cd93214a9deccfba0d2f4415d44f9c9e7c2036a1e33e39e7c32b4805"
+        },
+        "weights": {
+          "bytes": 1701587344,
+          "sha256": "8a889efd189aac1771adbef559979c7fa1c15904dda7aa8e70dd4088d447cb8b"
+        },
+        "canonical": {
+          "bytes": 667,
+          "sha256": "52ab5684be0b1cc9a7ed2395aeab3bcda0e55d89aa71b7404b1d82138a7c21de"
+        },
+        "sources": {
+          "bytes": 286,
+          "sha256": "153494485ee1075c1dde1967ec1d0a21e2efb8ec850ce5d47ea96f743dd7ce3c"
+        },
+        "id_mapping": {
+          "bytes": 160,
+          "sha256": "9ebcf32e55317ac1cd5abeb81a2f893a7c2b9e733cd4a4d7d2860af01c3b6277"
+        }
+      },
+      "preparation_script_sha256": "fad464165d313922c261a7fb29e593a5609de9c98865ef8e86aa18fb22a889b6"
+    },
+    "IN": {
+      "status": "PASS_CANONICAL_INPUT",
+      "vertices": 7414866,
+      "stored_arcs": 191606827,
+      "fresh_receipt_sha256": "e436a9d4a3a632d2329b36087dc3ec2b8eca5a59acbad54e790784f12c33ad3d",
+      "exact_reference_payload_match": [
+        "offsets",
+        "indices",
+        "weights",
+        "sources"
+      ],
+      "files": {
+        "offsets": {
+          "bytes": 29659468,
+          "sha256": "1e5d839e17dbf4fec57285fcc654d6f66f995b6c32ac10547da2ecab63a76217"
+        },
+        "indices": {
+          "bytes": 766427308,
+          "sha256": "5ec8800637c05c7bfaa6ceda0bad7f89ac7e3ecbce8b4ac8580000ca5faa379d"
+        },
+        "weights": {
+          "bytes": 1532854616,
+          "sha256": "7be6d005329034c14a0c6088123affefb9f42a0075f74b0e5e4bdc1ade9010a4"
+        },
+        "canonical": {
+          "bytes": 676,
+          "sha256": "f8ac8e46d7d6042e6b3a0dcfd9fd525b8c65efc2962aeecea02dd36ea85f2be6"
+        },
+        "sources": {
+          "bytes": 293,
+          "sha256": "e2aa2c3bbe64b3b732de412d17267fba72692c846b763011c22e6fc3659f5ee9"
+        },
+        "id_mapping": {
+          "bytes": 150,
+          "sha256": "4baa9b3c7ee82f539f7590a8123273caabb27ce8190ff4ebdfcda87d04301ec4"
+        }
+      },
+      "preparation_script_sha256": "fad464165d313922c261a7fb29e593a5609de9c98865ef8e86aa18fb22a889b6"
+    },
+    "UK": {
+      "status": "PASS_CANONICAL_INPUT",
+      "vertices": 18520486,
+      "stored_arcs": 292243663,
+      "fresh_receipt_sha256": "5356f0cf660b3fd401b99c8745e868aa7e615edfe24ebf6dd4917391a9214c45",
+      "exact_reference_payload_match": [
+        "offsets",
+        "indices",
+        "weights",
+        "sources"
+      ],
+      "files": {
+        "offsets": {
+          "bytes": 74081948,
+          "sha256": "9f67d77a34a550856fc4d3693828257ccedf09874c1ebd67331edf9bd10957c8"
+        },
+        "indices": {
+          "bytes": 1168974652,
+          "sha256": "3f18b486895b144d85d2c260567b9ff90b5b449917cfc3a666f1328d61c4f460"
+        },
+        "weights": {
+          "bytes": 2337949304,
+          "sha256": "303e4a8e0875cf5d15fab6f58bf2a0da24d249f7552eb833a5069e7f2782e071"
+        },
+        "canonical": {
+          "bytes": 663,
+          "sha256": "a1b37091290611b5c04dce0c8fd75a4218bd4043662136df1c145c0fa3ea654c"
+        },
+        "sources": {
+          "bytes": 294,
+          "sha256": "f50c0d81adb26ca2c2e9aea695006e72a743a6118d9cda26a70ac4bdbd5a65b5"
+        },
+        "id_mapping": {
+          "bytes": 151,
+          "sha256": "6aed420306c74608233726f39e597313bbdcb8aba1e4de4901803050e10b2fcf"
+        }
+      },
+      "preparation_script_sha256": "fad464165d313922c261a7fb29e593a5609de9c98865ef8e86aa18fb22a889b6"
+    },
+    "LJ": {
+      "status": "PASS_CANONICAL_INPUT",
+      "vertices": 4847571,
+      "stored_arcs": 68475391,
+      "fresh_receipt_sha256": "ec343d563bebfdb5d0d08d95f809e18966866be98f6cf77ff77dea915c0c6881",
+      "exact_reference_payload_match": [
+        "offsets",
+        "indices",
+        "weights",
+        "sources"
+      ],
+      "files": {
+        "offsets": {
+          "bytes": 19390288,
+          "sha256": "c87112805ff0cbd6522c6e1846d55ab6a3239a791ec726e1bddfbc0b599cda5f"
+        },
+        "indices": {
+          "bytes": 273901564,
+          "sha256": "bc2f8f12740b2d592f4966a8ff4ede57bd57e39e88f9f0b5b76e3c40b1356bd6"
+        },
+        "weights": {
+          "bytes": 547803128,
+          "sha256": "cb5bcc830f8a3a04cba38f45e21efc2355acf7f2c7cdcd813e5b15f2aa80aa68"
+        },
+        "canonical": {
+          "bytes": 682,
+          "sha256": "8bf8af5e219a8bbb8eaf64d563979582f3971477bdcf6d77a2b9ab188ce9b8da"
+        },
+        "sources": {
+          "bytes": 290,
+          "sha256": "26d725016bbaf17043ce1a270f663b3d4afb592772146c398d21d2904df3448a"
+        },
+        "id_mapping": {
+          "bytes": 150,
+          "sha256": "8897111e8cfb9151685237d67f130137ccdd5f0c7c2c5d2e3cf07e03b7571f8d"
+        }
+      },
+      "preparation_script_sha256": "fad464165d313922c261a7fb29e593a5609de9c98865ef8e86aa18fb22a889b6"
+    },
+    "US": {
+      "status": "PASS_CANONICAL_INPUT",
+      "vertices": 23947347,
+      "stored_arcs": 57708624,
+      "fresh_receipt_sha256": "2a6db272400eef52542fa1c217bc3e81ab19e6b146f936d463f11706d2a53177",
+      "exact_reference_payload_match": [
+        "offsets",
+        "indices",
+        "weights",
+        "sources"
+      ],
+      "files": {
+        "offsets": {
+          "bytes": 95789392,
+          "sha256": "709111d5faff7d7e0c1f91fd8b1a3c8e731cffce8eb9091bc04e42f1db591aec"
+        },
+        "indices": {
+          "bytes": 230834496,
+          "sha256": "d2f2702567d4b274174f42a09678a170173bf229b2dcf14b13dfbc5b76d9526e"
+        },
+        "weights": {
+          "bytes": 461668992,
+          "sha256": "b487a1fc45fa894d0ee3f37d9bc162023c7a01c011ea27fe0ec708bd9d582c45"
+        },
+        "canonical": {
+          "bytes": 681,
+          "sha256": "642e880928f3bfa2888717986bfb90ef94b378302729ffda919053ceda257b3e"
+        },
+        "sources": {
+          "bytes": 291,
+          "sha256": "04c390da074e4ef8c544f386a5eb676d8b74959f7de1ab246856361c4f8568fe"
+        },
+        "id_mapping": {
+          "bytes": 147,
+          "sha256": "f07a9fda241cef9ca41754aca1a427d8bc0a97ac1bfd5d7884f3738b0d5120e8"
+        }
+      },
+      "preparation_script_sha256": "fad464165d313922c261a7fb29e593a5609de9c98865ef8e86aa18fb22a889b6"
+    }
+  },
+  "new_original_network_fetch": {
+    "dataset": "EP",
+    "status": "PASS_SOURCE_FILES",
+    "files": [
+      {
+        "bytes": 1630437,
+        "sha256": "69a2dab71fa5e3a0715487599fc16ca17ddc847379325a6c765bbad6e3e36938",
+        "url": "https://snap.stanford.edu/data/soc-Epinions1.txt.gz"
+      }
+    ]
+  },
+  "fresh_official_maven_bytes": {
+    "status": "PASS_FRESH_OFFICIAL_MAVEN_BYTES",
+    "gpu_executed": false,
+    "files": [
+      {
+        "file": "activation-1.1.jar",
+        "url": "https://repo.maven.apache.org/maven2/javax/activation/activation/1.1/activation-1.1.jar",
+        "sha256": "2881c79c9d6ef01c58e62beea13e9d1ac8b8baa16f2fc198ad6e6776defdcdd3",
+        "bytes": 62983
+      },
+      {
+        "file": "checker-qual-3.43.0.jar",
+        "url": "https://repo.maven.apache.org/maven2/org/checkerframework/checker-qual/3.43.0/checker-qual-3.43.0.jar",
+        "sha256": "3fbc2e98f05854c3df16df9abaa955b91b15b3ecac33623208ed6424640ef0f6",
+        "bytes": 231525
+      },
+      {
+        "file": "commons-lang3-3.12.0.jar",
+        "url": "https://repo.maven.apache.org/maven2/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar",
+        "sha256": "d919d904486c037f8d193412da0c92e22a9fa24230b9d67a57855c5c31c7e94e",
+        "bytes": 587402
+      },
+      {
+        "file": "commons-math3-3.6.1.jar",
+        "url": "https://repo.maven.apache.org/maven2/org/apache/commons/commons-math3/3.6.1/commons-math3-3.6.1.jar",
+        "sha256": "1e56d7b058d28b65abd256b8458e3885b674c1d588fa43cd7d1cbb9c7ef2b308",
+        "bytes": 2213560
+      },
+      {
+        "file": "dsiutils-2.7.4.jar",
+        "url": "https://repo.maven.apache.org/maven2/it/unimi/dsi/dsiutils/2.7.4/dsiutils-2.7.4.jar",
+        "sha256": "65fd7c9957563b83c0b20485f466cf6f2cc49a3fe295718ef03ec365ca896b5f",
+        "bytes": 534380
+      },
+      {
+        "file": "error_prone_annotations-2.36.0.jar",
+        "url": "https://repo.maven.apache.org/maven2/com/google/errorprone/error_prone_annotations/2.36.0/error_prone_annotations-2.36.0.jar",
+        "sha256": "77440e270b0bc9a249903c5a076c36a722c4886ca4f42675f2903a1c53ed61a5",
+        "bytes": 19401
+      },
+      {
+        "file": "failureaccess-1.0.2.jar",
+        "url": "https://repo.maven.apache.org/maven2/com/google/guava/failureaccess/1.0.2/failureaccess-1.0.2.jar",
+        "sha256": "8a8f81cf9b359e3f6dfa691a1e776985c061ef2f223c9b2c80753e1b458e8064",
+        "bytes": 4740
+      },
+      {
+        "file": "fastutil-8.5.16.jar",
+        "url": "https://repo.maven.apache.org/maven2/it/unimi/dsi/fastutil/8.5.16/fastutil-8.5.16.jar",
+        "sha256": "317a1c26252da2c6f5cb32454e2995f6b93940f09c6642969a330c6b9ff67342",
+        "bytes": 23841388
+      },
+      {
+        "file": "guava-33.4.0-jre.jar",
+        "url": "https://repo.maven.apache.org/maven2/com/google/guava/guava/33.4.0-jre/guava-33.4.0-jre.jar",
+        "sha256": "b918c98a7e44dbe94ebd9fe3e40cddaadb5a93e6a78eb6008b42df237241e538",
+        "bytes": 3080298
+      },
+      {
+        "file": "j2objc-annotations-3.0.0.jar",
+        "url": "https://repo.maven.apache.org/maven2/com/google/j2objc/j2objc-annotations/3.0.0/j2objc-annotations-3.0.0.jar",
+        "sha256": "88241573467ddca44ffd4d74aa04c2bbfd11bf7c17e0c342c94c9de7a70a7c64",
+        "bytes": 12467
+      },
+      {
+        "file": "javax.mail-1.6.2.jar",
+        "url": "https://repo.maven.apache.org/maven2/com/sun/mail/javax.mail/1.6.2/javax.mail-1.6.2.jar",
+        "sha256": "45b515e7104944c09e45b9c7bb1ce5dff640486374852dd2b2e80cc3752dfa11",
+        "bytes": 659031
+      },
+      {
+        "file": "jsap-20210129.jar",
+        "url": "https://repo.maven.apache.org/maven2/it/unimi/di/jsap/20210129/jsap-20210129.jar",
+        "sha256": "211c7b820f702b851bbe702381d4d98eb839e7f253460e26bde02d98d7653535",
+        "bytes": 90009
+      },
+      {
+        "file": "jsr305-3.0.2.jar",
+        "url": "https://repo.maven.apache.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar",
+        "sha256": "766ad2a0783f2687962c8ad74ceecc38a28b9f72a2d085ee438b7813e928d0c7",
+        "bytes": 19936
+      },
+      {
+        "file": "jung-algorithms-2.1.1.jar",
+        "url": "https://repo.maven.apache.org/maven2/net/sf/jung/jung-algorithms/2.1.1/jung-algorithms-2.1.1.jar",
+        "sha256": "ed138e2f6b2b2f13af61a13f1788bce6f1de8858c42ee70a7d41e6283937a30a",
+        "bytes": 230204
+      },
+      {
+        "file": "jung-api-2.1.1.jar",
+        "url": "https://repo.maven.apache.org/maven2/net/sf/jung/jung-api/2.1.1/jung-api-2.1.1.jar",
+        "sha256": "6cb735963c36d5155d0de5f19a03485b9a26e67550e160b3dd89009a6f51694e",
+        "bytes": 42221
+      },
+      {
+        "file": "jung-io-2.1.1.jar",
+        "url": "https://repo.maven.apache.org/maven2/net/sf/jung/jung-io/2.1.1/jung-io-2.1.1.jar",
+        "sha256": "05033ca56dd6fe2fb2fdc7ca7844d554484a3adf833f7a17cfc371263c31fa4d",
+        "bytes": 79779
+      },
+      {
+        "file": "listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar",
+        "url": "https://repo.maven.apache.org/maven2/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar",
+        "sha256": "b372a037d4230aa57fbeffdef30fd6123f9c0c2db85d0aced00c91b974f33f99",
+        "bytes": 2199
+      },
+      {
+        "file": "logback-classic-1.3.4.jar",
+        "url": "https://repo.maven.apache.org/maven2/ch/qos/logback/logback-classic/1.3.4/logback-classic-1.3.4.jar",
+        "sha256": "b866a5da6c8b78e155c67fccd7562860d0b5fc776b89cd968c2f3f2e37fc3a02",
+        "bytes": 260451
+      },
+      {
+        "file": "logback-core-1.3.4.jar",
+        "url": "https://repo.maven.apache.org/maven2/ch/qos/logback/logback-core/1.3.4/logback-core-1.3.4.jar",
+        "sha256": "4740a098bb443a744554dd3ddf062c682287b294066754e292e1346c8bf5cedd",
+        "bytes": 563976
+      },
+      {
+        "file": "slf4j-api-2.0.3.jar",
+        "url": "https://repo.maven.apache.org/maven2/org/slf4j/slf4j-api/2.0.3/slf4j-api-2.0.3.jar",
+        "sha256": "68ddcda65300ff8097ad1a096d7cd2fb06cef25193887cec3f2690e01bdbf421",
+        "bytes": 61409
+      },
+      {
+        "file": "sux4j-5.4.1.jar",
+        "url": "https://repo.maven.apache.org/maven2/it/unimi/dsi/sux4j/5.4.1/sux4j-5.4.1.jar",
+        "sha256": "f723ed570899e3fce17b1423ff2b56b72cb56f4202573f596ae7109c036f9a00",
+        "bytes": 480589
+      },
+      {
+        "file": "webgraph-3.6.12.jar",
+        "url": "https://repo.maven.apache.org/maven2/it/unimi/dsi/webgraph/3.6.12/webgraph-3.6.12.jar",
+        "sha256": "8daddd3881aecc7095643936c9e16d825cbe0e431df507519e36df68d06444ef",
+        "bytes": 399246
+      }
+    ],
+    "verified_unix": 1793804576.946026
+  },
+  "remaining": [
+    "TW complete compressed object MD5/SHA256",
+    "TW Java/CSR normalization and source selection",
+    "TW canonical exact payload receipt",
+    "Complete all-seven cold-network reproduction has not been run"
+  ],
+  "scope_note": "Six complete graph preparations used original publisher compressed caches, newly built CPU converters and newly compiled Java source. No legacy CSR was reused. Transport helpers additionally have current CPU resume/idempotence tests; their default behavior was not substituted into old benchmark results.",
+  "cpu_toolchain": {
+    "receipt_sha256": "95526c8052802376b68482f626db0260f49e374a871de38f01eb17b5878cb319",
+    "status": "PASS_CPU_TOOLCHAIN",
+    "versions": {
+      "cxx": "g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0\nCopyright (C) 2021 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.",
+      "java": "openjdk version \"17.0.20.1\" 2026-08-18\nOpenJDK Runtime Environment (build 17.0.20.1+1-1-22.04-Ubuntu)\nOpenJDK 64-Bit Server VM (build 17.0.20.1+1-1-22.04-Ubuntu, mixed mode, sharing)",
+      "javac": "javac 17.0.20.1"
+    },
+    "source_files": {
+      "LawToCsr.java": {
+        "bytes": 3920,
+        "sha256": "c3ed3fb6bddbabe7aaa89f92894dc0075164e77c985db4cc47efb303e12a73e0"
+      },
+      "edge_list_to_csr.cpp": {
+        "bytes": 4162,
+        "sha256": "814eb58c2a2b09c21dd17748d75c57a33a25e78e120dc9e5f8eb08eff9262bbd"
+      },
+      "metis_to_csr.cpp": {
+        "bytes": 5471,
+        "sha256": "f08050fe2d2558760db7414442726d16faef31e015e120a7f5c88cbf270f55b8"
+      },
+      "weights.cpp": {
+        "bytes": 3304,
+        "sha256": "8da52a84ed4e8a2ea3efa73ac9bee78cc9b01c9c2751e879a32dc474bb1069da"
+      }
+    },
+    "built_files": {
+      "edge_list_to_csr": {
+        "bytes": 32912,
+        "sha256": "89d96eae9e25e15ff47d0a68d0a28d27238f687030c2f118678e57c0250f6e3a"
+      },
+      "metis_to_csr": {
+        "bytes": 41808,
+        "sha256": "59042b83271379ef57d11ddf8ee19eaec0a66646b3c41778f2f0f28d2929e52e"
+      },
+      "weights": {
+        "bytes": 28232,
+        "sha256": "843e9f3361e4e05a5f2d8394a176e278e849a3ef1b40ff55f8cdec2e23739b88"
+      },
+      "jars/activation-1.1.jar": {
+        "bytes": 62983,
+        "sha256": "2881c79c9d6ef01c58e62beea13e9d1ac8b8baa16f2fc198ad6e6776defdcdd3"
+      },
+      "jars/checker-qual-3.43.0.jar": {
+        "bytes": 231525,
+        "sha256": "3fbc2e98f05854c3df16df9abaa955b91b15b3ecac33623208ed6424640ef0f6"
+      },
+      "jars/commons-lang3-3.12.0.jar": {
+        "bytes": 587402,
+        "sha256": "d919d904486c037f8d193412da0c92e22a9fa24230b9d67a57855c5c31c7e94e"
+      },
+      "jars/commons-math3-3.6.1.jar": {
+        "bytes": 2213560,
+        "sha256": "1e56d7b058d28b65abd256b8458e3885b674c1d588fa43cd7d1cbb9c7ef2b308"
+      },
+      "jars/dsiutils-2.7.4.jar": {
+        "bytes": 534380,
+        "sha256": "65fd7c9957563b83c0b20485f466cf6f2cc49a3fe295718ef03ec365ca896b5f"
+      },
+      "jars/error_prone_annotations-2.36.0.jar": {
+        "bytes": 19401,
+        "sha256": "77440e270b0bc9a249903c5a076c36a722c4886ca4f42675f2903a1c53ed61a5"
+      },
+      "jars/failureaccess-1.0.2.jar": {
+        "bytes": 4740,
+        "sha256": "8a8f81cf9b359e3f6dfa691a1e776985c061ef2f223c9b2c80753e1b458e8064"
+      },
+      "jars/fastutil-8.5.16.jar": {
+        "bytes": 23841388,
+        "sha256": "317a1c26252da2c6f5cb32454e2995f6b93940f09c6642969a330c6b9ff67342"
+      },
+      "jars/guava-33.4.0-jre.jar": {
+        "bytes": 3080298,
+        "sha256": "b918c98a7e44dbe94ebd9fe3e40cddaadb5a93e6a78eb6008b42df237241e538"
+      },
+      "jars/j2objc-annotations-3.0.0.jar": {
+        "bytes": 12467,
+        "sha256": "88241573467ddca44ffd4d74aa04c2bbfd11bf7c17e0c342c94c9de7a70a7c64"
+      },
+      "jars/javax.mail-1.6.2.jar": {
+        "bytes": 659031,
+        "sha256": "45b515e7104944c09e45b9c7bb1ce5dff640486374852dd2b2e80cc3752dfa11"
+      },
+      "jars/jsap-20210129.jar": {
+        "bytes": 90009,
+        "sha256": "211c7b820f702b851bbe702381d4d98eb839e7f253460e26bde02d98d7653535"
+      },
+      "jars/jsr305-3.0.2.jar": {
+        "bytes": 19936,
+        "sha256": "766ad2a0783f2687962c8ad74ceecc38a28b9f72a2d085ee438b7813e928d0c7"
+      },
+      "jars/jung-algorithms-2.1.1.jar": {
+        "bytes": 230204,
+        "sha256": "ed138e2f6b2b2f13af61a13f1788bce6f1de8858c42ee70a7d41e6283937a30a"
+      },
+      "jars/jung-api-2.1.1.jar": {
+        "bytes": 42221,
+        "sha256": "6cb735963c36d5155d0de5f19a03485b9a26e67550e160b3dd89009a6f51694e"
+      },
+      "jars/jung-io-2.1.1.jar": {
+        "bytes": 79779,
+        "sha256": "05033ca56dd6fe2fb2fdc7ca7844d554484a3adf833f7a17cfc371263c31fa4d"
+      },
+      "jars/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar": {
+        "bytes": 2199,
+        "sha256": "b372a037d4230aa57fbeffdef30fd6123f9c0c2db85d0aced00c91b974f33f99"
+      },
+      "jars/logback-classic-1.3.4.jar": {
+        "bytes": 260451,
+        "sha256": "b866a5da6c8b78e155c67fccd7562860d0b5fc776b89cd968c2f3f2e37fc3a02"
+      },
+      "jars/logback-core-1.3.4.jar": {
+        "bytes": 563976,
+        "sha256": "4740a098bb443a744554dd3ddf062c682287b294066754e292e1346c8bf5cedd"
+      },
+      "jars/slf4j-api-2.0.3.jar": {
+        "bytes": 61409,
+        "sha256": "68ddcda65300ff8097ad1a096d7cd2fb06cef25193887cec3f2690e01bdbf421"
+      },
+      "jars/sux4j-5.4.1.jar": {
+        "bytes": 480589,
+        "sha256": "f723ed570899e3fce17b1423ff2b56b72cb56f4202573f596ae7109c036f9a00"
+      },
+      "jars/webgraph-3.6.12.jar": {
+        "bytes": 399246,
+        "sha256": "8daddd3881aecc7095643936c9e16d825cbe0e431df507519e36df68d06444ef"
+      },
+      "classes/LawToCsr$Rows.class": {
+        "bytes": 328,
+        "sha256": "1b277d658f4a5c765c881a2ea2a5b1bfc585ad49e6e9ec314937f678de851649"
+      },
+      "classes/LawToCsr$WebRows.class": {
+        "bytes": 1569,
+        "sha256": "ff6ca5755095f970376f37a7e9a24c36ae73dc94b3b8996f7c1ea4d761a91bf7"
+      },
+      "classes/LawToCsr$1.class": {
+        "bytes": 726,
+        "sha256": "7be55b51ec6a3d1d2650951aaabdf7503c5778b5b19499311977fd10be0a2409"
+      },
+      "classes/LawToCsr.class": {
+        "bytes": 3379,
+        "sha256": "ade9012ab827f998fa9d4f819b0fb66a38f3d2583a10a4b8efa230c42b8cf023"
+      },
+      "java_self_test/offsets.bin": {
+        "bytes": 24,
+        "sha256": "af2b2acf8c180c0efde6c304b41b79684f2bc15d3980c44e03703c6f562d7220"
+      },
+      "java_self_test/indices.bin": {
+        "bytes": 16,
+        "sha256": "5893f0248465a83f3afbaf8c4b475f0e57f95e4eaa027c20cbdb7ff245b213b6"
+      },
+      "java_self_test/conversion.json": {
+        "bytes": 87,
+        "sha256": "72b8a28a5cadeda44278ce2134171ed53fa18c47ef0bfcd4284abcaa4daebdff"
+      }
+    }
+  },
+  "registry_public_projection": {
+    "original_measured_sha256": "c5a87dad126d32e7b533a045972995535dc65790f5ad7a8f4ca47c10d1bb1bfd",
+    "public_sha256": "f7f2d784835222cd8c91abc82125edac58c8375e80c72a153c68181dc34fdd0f",
+    "only_changed_field": "datasets[OR].metadata_evidence",
+    "change": "Private historical workspace path replaced with a descriptive filename. All dataset, normalization, weighting and source-selection fields are identical."
+  }
+}

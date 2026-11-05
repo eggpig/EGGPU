@@ -1,0 +1,959 @@
+{
+  "schema": "baseline.upstream.lock/v1",
+  "acquired": "2026-11-04",
+  "method": "GitHub connector fixed-commit text files",
+  "files": [
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "LICENSE",
+      "git_blob_sha1": "3b396cc66c3d2277e6ff36b5aac7b1be07f12543",
+      "bytes": 1073,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "apps/kgraph-deepwalk.C",
+      "git_blob_sha1": "8f15bbd23785eed4ec1f522e5c53b4361989d698",
+      "bytes": 6249,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "apps/kgraph-ssr-dense.C",
+      "git_blob_sha1": "a683525a4ff00379119778ba3468e13b675933db",
+      "bytes": 6204,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "apps/kgraph-ppr.C",
+      "git_blob_sha1": "0ec91069748c94c581a96c355bc014b207e5265e",
+      "bytes": 6951,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "README.md",
+      "git_blob_sha1": "8503fb11117f97471142d43a640b2b4516ba2d4b",
+      "bytes": 3145,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "CMakeLists.txt",
+      "git_blob_sha1": "a8e66647e70bd4f07e20dfd2ca5bd4647eab97ff",
+      "bytes": 896,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "apps/kgraph-ssr-sparse.C",
+      "git_blob_sha1": "638c685608a80711f01c69e60feee501e20a0a5b",
+      "bytes": 7005,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "ligra/IO.h",
+      "git_blob_sha1": "8187597a07e5594357e1c9c97e8be09f9154d215",
+      "bytes": 15793,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "apps/kgraph-sssp-sparse.C",
+      "git_blob_sha1": "045b152e6b5d1e79588e61e1cbe437ba33e91ce5",
+      "bytes": 8178,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "apps/kgraph-sssp-dense.C",
+      "git_blob_sha1": "e8a60e6642547fbfe4720956f34f39f34950da9b",
+      "bytes": 7366,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "apps/kgraph-sswp-sparse.C",
+      "git_blob_sha1": "28ff3fd78899275f692ab588727d04d6aa4d681e",
+      "bytes": 7935,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "apps/kgraph-sswp-dense.C",
+      "git_blob_sha1": "ad4c85efd8b73605a62368c41b8d6fbe061882ff",
+      "bytes": 7321,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "ligra/blockRadixSort.h",
+      "git_blob_sha1": "ced1d54ce514a2fccb99cfa14e2a7984e8c08536",
+      "bytes": 10654,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "ligra/bitmap.hpp",
+      "git_blob_sha1": "ef8bd36da18c30fee340403341cae9ccb54dc71d",
+      "bytes": 3758,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "ligra/byte-pd.h",
+      "git_blob_sha1": "919a71eac2571df8508e35b4fe5a253ee045fbe4",
+      "bytes": 14057,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "ligra/binary_search.h",
+      "git_blob_sha1": "27dae57964ac4b1ad984a6ab0a36ff7888bb87ad",
+      "bytes": 807,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "ligra/byte.h",
+      "git_blob_sha1": "7f17ab7067478276cf0311ddc2066762ff8b6f8f",
+      "bytes": 12853,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "ligra/compressedVertex.h",
+      "git_blob_sha1": "9b0495bfb19a3ad2a747e390899771b3d1ba25d0",
+      "bytes": 12072,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "ligra/byteRLE.h",
+      "git_blob_sha1": "aa072edecfd28ed54df560d00b6c4c51da224ad7",
+      "bytes": 21859,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "ligra/byteRLE-pd.h",
+      "git_blob_sha1": "9a7d74b82f838ea608103c65fba93c75df32c3f0",
+      "bytes": 28972,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "ligra/edgeMap_utils.h",
+      "git_blob_sha1": "d9848118c05bd09a0d70fff456ad5695b122170a",
+      "bytes": 4309,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "ligra/heapLLU.h",
+      "git_blob_sha1": "8060069c51faf72a0d727a83f9fb4e854ac6b7db",
+      "bytes": 3344,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "ligra/decoder.C",
+      "git_blob_sha1": "87674f1023fb3a09040106ea6f65702445a920c6",
+      "bytes": 4267,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "ligra/encoder.C",
+      "git_blob_sha1": "512d572bb0941a9a082eda131ec6c83b97e3a838",
+      "bytes": 16985,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "ligra/logger.h",
+      "git_blob_sha1": "7d9213fe7fe9830d1898968c3e3fbb3ab2a9c1c4",
+      "bytes": 3378,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "ligra/index_map.h",
+      "git_blob_sha1": "2e22484f2a970c956a9efa7f44778855bb3f2d7c",
+      "bytes": 4658,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "ligra/graph.h",
+      "git_blob_sha1": "1c1103c7215129e3b1e70db3931996c3ad5475dc",
+      "bytes": 1930,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "ligra/gettime.h",
+      "git_blob_sha1": "dc619bbee4ca1ca63c6afc794d270eb36572f6c8",
+      "bytes": 3321,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "ligra/nibble-pd.h",
+      "git_blob_sha1": "960b182617a1ccb8bc4bb84774f24fc1b5a518aa",
+      "bytes": 14151,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "ligra/nibble.h",
+      "git_blob_sha1": "5ac63cbaff3e7a6b729d1827f1688a72b94f8068",
+      "bytes": 11694,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "ligra/ligra.h",
+      "git_blob_sha1": "011189f0eb15305a4831de81c919f74964ff8af6",
+      "bytes": 25018,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "ligra/parallel.h",
+      "git_blob_sha1": "5a9435c185c51895e6488040db03ca346bab5a95",
+      "bytes": 3914,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "ligra/parseCommandLine.h",
+      "git_blob_sha1": "bcb3c98ba474c66ea3cf4883f8ebb9b780ef4538",
+      "bytes": 3555,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "ligra/maybe.h",
+      "git_blob_sha1": "1a59d2f0f8023020d536db3997abcb9862909efa",
+      "bytes": 1232,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "ligra/sampleSort.h",
+      "git_blob_sha1": "d85ed06bd23a7a08dbfdaf2138a2894ac5560999",
+      "bytes": 4462,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "ligra/quickSort.h",
+      "git_blob_sha1": "c4b66145a8241782c9fe8e0aacb9cfe6df80cf00",
+      "bytes": 2601,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "ligra/sparseSet.h",
+      "git_blob_sha1": "2f9e0972c6f0574fab5d888be08803191dd674f9",
+      "bytes": 5141,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "ligra/sequence.h",
+      "git_blob_sha1": "39e154d5dcd891e2e6c041d144bfd110d92129d5",
+      "bytes": 10360,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "ligra/sweep.h",
+      "git_blob_sha1": "28e2ae3721a398e4ac18796b1be2bb0f005f9660",
+      "bytes": 7800,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "ligra/prio_queue.hpp",
+      "git_blob_sha1": "6d9d8f907d158e058234d5c680de5f13d121d53c",
+      "bytes": 19889,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "ligra/transpose.h",
+      "git_blob_sha1": "b18cbe8fb5811401ed9c45146a392efb818b8dbe",
+      "bytes": 3705,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "ligra/vertex.h",
+      "git_blob_sha1": "7883d81ee858378d249b609875970f2e63d65487",
+      "bytes": 12168,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "ligra/time.hpp",
+      "git_blob_sha1": "bcc9b9f76736d36c52eca5c887b15f4780656480",
+      "bytes": 2453,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "ligra/vertexSubset.h",
+      "git_blob_sha1": "9da77459f3023dfbb4cf1882da44276d9ae9269e",
+      "bytes": 6948,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "Gawssin/KGraph",
+      "commit": "e09ca53695cb5a82d1bbb2418caac90b2932af7a",
+      "path": "ligra/utils.h",
+      "git_blob_sha1": "aa1106ae3a96eb580887fe144e35142fd053d381",
+      "bytes": 15733,
+      "local_group": "kgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "CMakeLists.txt",
+      "git_blob_sha1": "e10e929fea72d112da0cc806c8b9517ca9d4cd97",
+      "bytes": 3138,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "LICENSE",
+      "git_blob_sha1": "2924933325ea5574f6df7f50d0997a136411360c",
+      "bytes": 11366,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "README.md",
+      "git_blob_sha1": "a1903ba806061c4118ae724adc847c4ab4dced6d",
+      "bytes": 1911,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "compile.txt",
+      "git_blob_sha1": "33edf65aab6e7a4778f160dde6585216181c4cfb",
+      "bytes": 61,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "example.el",
+      "git_blob_sha1": "65af88ee80fb1464e5b31a906d9c3146b1869f08",
+      "bytes": 215,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "example_weight.el",
+      "git_blob_sha1": "a2ab51c335c81c6775fc0b6f392f390b70507796",
+      "bytes": 293,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/framework/algo_variants.cuh",
+      "git_blob_sha1": "f73ecc9ec58f0215d73089684b5215fbd416de28",
+      "bytes": 87905,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "deps/json/nlohmann/json.hpp",
+      "git_blob_sha1": "6dfc1831fa8cdb54724f6dd7ff280da4e8a8daea",
+      "bytes": 447926,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/framework/clion_cuda.cuh",
+      "git_blob_sha1": "588e34237b6c9ccc4350220630d74a6d0021ae5f",
+      "bytes": 1244,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/framework/common.h",
+      "git_blob_sha1": "598e9ee0fbdee62d19f8670af81be61eff4a74fc",
+      "bytes": 9786,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/framework/graph_datum.cuh",
+      "git_blob_sha1": "ec37184e00cb3096e73d5e9d051af5dfefa82d36",
+      "bytes": 8750,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/framework/hybrid_policy.h",
+      "git_blob_sha1": "14bf014d76c3f049a607b7733bd807dcff1a6166",
+      "bytes": 12904,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/framework/variants/api.cuh",
+      "git_blob_sha1": "0dafdfe24b26f0ff1be40a76211693c0602ef3fd",
+      "bytes": 4758,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/framework/framework.cuh",
+      "git_blob_sha1": "4377ab37afd57b95a9ee175ee6bb08474699ab0b",
+      "bytes": 54417,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/framework/variants/async_pull_dd.cuh",
+      "git_blob_sha1": "9d973393a84f45468f26316e38e49766bd4e7438",
+      "bytes": 5984,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/framework/variants/async_pull_td.cuh",
+      "git_blob_sha1": "bf30bf7ba5d502f6255a2bfceb6a48aab08b9965",
+      "bytes": 2312,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/framework/variants/common.cuh",
+      "git_blob_sha1": "8eb0dcee7e61252fc441a2792678f2731046446c",
+      "bytes": 5409,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/framework/variants/async_push_td.cuh",
+      "git_blob_sha1": "f99123ee1a1d88e6fea0f43b41e32ac2aad8db4d",
+      "bytes": 7035,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/framework/variants/async_push_dd.cuh",
+      "git_blob_sha1": "e43c4ac20a89a5eef0dac4960f5eb41c27a3f8fe",
+      "bytes": 6900,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/framework/variants/pull_functor.h",
+      "git_blob_sha1": "81b4f7d1a81fb677f739f87ac37e3667ff7ff657",
+      "bytes": 14676,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/framework/variants/driver.cuh",
+      "git_blob_sha1": "f9044eb9710e250df2a84f9ec820c1bb1734b157",
+      "bytes": 53717,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/framework/variants/push_functor.h",
+      "git_blob_sha1": "504dfac8082bf275cb84887d6906857091f5485f",
+      "bytes": 13865,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/framework/variants/sync_pull_dd.cuh",
+      "git_blob_sha1": "ca1f1edeba1ed5f22cf899b77fc4538ade4eca53",
+      "bytes": 15656,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/framework/variants/sync_pull_td.cuh",
+      "git_blob_sha1": "dbc15e0c2760ffb2b3912986b8b5361926a0c096",
+      "bytes": 17576,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/framework/variants/sync_push_td.cuh",
+      "git_blob_sha1": "515e9c7061bdfc97e4b79c1f0dd87e17aef7102c",
+      "bytes": 15466,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/framework/variants/sync_push_dd.cuh",
+      "git_blob_sha1": "1013d87bc18deb3f6d047a93fc7443356ff9c172",
+      "bytes": 37605,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/groute/common.h",
+      "git_blob_sha1": "d463388dad8103756bdfd5492833f0b2dd4e8844",
+      "bytes": 9299,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/groute/device/cta_scheduler.cuh",
+      "git_blob_sha1": "d972c0741a584722a921b5f6b41d9d9b65f31fca",
+      "bytes": 9398,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/groute/device/bitmap_impls.h",
+      "git_blob_sha1": "ad073767f1ec858b4890a22c01a938a1353f5bcb",
+      "bytes": 859,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/groute/context.h",
+      "git_blob_sha1": "82535fe37c78ce63afdd3c8601e6cba1402c4f85",
+      "bytes": 7726,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/groute/device/cta_scheduler_hybrid.cuh",
+      "git_blob_sha1": "debc440f309e9514d602b1a76f755a9643347419",
+      "bytes": 9684,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/groute/device/compressed_bitmap.cuh",
+      "git_blob_sha1": "95255f618e6a6a8fce688f32ec92295146100241",
+      "bytes": 9435,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/groute/device/array_bitmap.h",
+      "git_blob_sha1": "8e0090343951eb4c23433846b3864e71a54bdc28",
+      "bytes": 10470,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/groute/graphs/common.h",
+      "git_blob_sha1": "9888a229c480e727431513b30c482bb0bb16aa5b",
+      "bytes": 1835,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/groute/event_pool.h",
+      "git_blob_sha1": "f864519ebe33b4d49de0949084d59eda339d5f94",
+      "bytes": 11152,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/groute/device/queue.cuh",
+      "git_blob_sha1": "c7b29ceac1fad5b4f86b4dea0a51d33829722f26",
+      "bytes": 12340,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/groute/device/work_source.cuh",
+      "git_blob_sha1": "f682bdeb94cf95738dc369da19ec6bdea4eede3f",
+      "bytes": 4656,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/groute/device/worklist_stack.cuh",
+      "git_blob_sha1": "99c1c30f79d106fc40067e30f57c980ffdebf930",
+      "bytes": 8316,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/groute/graphs/csr_graph.h",
+      "git_blob_sha1": "569fd9063677979347784ccf61820c85eb1c5a46",
+      "bytes": 83521,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/utils/app_skeleton.h",
+      "git_blob_sha1": "97a5951e0d5b48b9cca2940906cd2a2b67b28493",
+      "bytes": 6619,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/utils/cuda_utils.h",
+      "git_blob_sha1": "da068606bb72b32be6635011e0ba8aab686df7af",
+      "bytes": 7961,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/utils/graphs/traversal.h",
+      "git_blob_sha1": "bdd961505d40586510763caf2d64f1cca3201d31",
+      "bytes": 8398,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/groute/internal/cuda_utils.h",
+      "git_blob_sha1": "a241890c0b44f7df2f720c53cb15f6c70560a956",
+      "bytes": 3304,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/utils/markers.h",
+      "git_blob_sha1": "d9a12d74e256be12efcad0f4290176746f225c12",
+      "bytes": 5602,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/utils/interactor.h",
+      "git_blob_sha1": "ae4f7f1be66307af39c6d25106d5e6e6ea0f881c",
+      "bytes": 3131,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/utils/utils.h",
+      "git_blob_sha1": "d7ce912d00902c025aee515e6c4eb3a350e1cd63",
+      "bytes": 2181,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/utils/stopwatch.h",
+      "git_blob_sha1": "10b4509f30f1a6534bb75a9c1e3c3b7b71daa355",
+      "bytes": 2195,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "samples/hybrid_bc/hybrid_bc_common.h",
+      "git_blob_sha1": "3c09ed86a47aee552de556ab1756a8600e79e191",
+      "bytes": 1048,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/utils/parser.h",
+      "git_blob_sha1": "a7ff45e46304b3ceb7201476895b188e670fab03",
+      "bytes": 5493,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "samples/hybrid_bc/hybrid_bc.cu",
+      "git_blob_sha1": "c9b4ea6c11d3a997b317766b7733df64bbe20b1d",
+      "bytes": 15787,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "include/utils/to_json.h",
+      "git_blob_sha1": "0c7832925e6d756d4572e5ddc2ac92da114a37a7",
+      "bytes": 1240,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "samples/hybrid_bfs/1",
+      "git_blob_sha1": "fccc00105255696ee5643fb0c0a03d9683861b90",
+      "bytes": 24,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "samples/hybrid_bfs/hybrid_bfs_common.h",
+      "git_blob_sha1": "374c25bfd54a81008c570eda9acc8a4f568a8a71",
+      "bytes": 2161,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "samples/hybrid_bfs/hybrid_bfs.cu",
+      "git_blob_sha1": "faec12eaa1ddd68c7b98dc8c2b6318a88f7f0954",
+      "bytes": 4791,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "samples/hybrid_bc/main.cpp",
+      "git_blob_sha1": "0fe274a31edd20f940c474efc20504db000a8889",
+      "bytes": 1507,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "samples/hybrid_bc/hybrid_bc_host.cpp",
+      "git_blob_sha1": "821a67ba9a64bfb899e94e1502d04779553cc47b",
+      "bytes": 4496,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "samples/hybrid_bfs/hybrid_bfs_host.cpp",
+      "git_blob_sha1": "9d79ad0e209d358c7377d7d314e6f6d062a7db59",
+      "bytes": 4088,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "samples/hybrid_cc/hybrid_cc_common.h",
+      "git_blob_sha1": "073dc49f8ba975bd7640dd3596c2d75015729ffa",
+      "bytes": 652,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "samples/hybrid_cc/hybrid_cc.cu",
+      "git_blob_sha1": "366b6b9c6a11ca53ce8bf6c833aeeab32b0e14a7",
+      "bytes": 3647,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "samples/hybrid_pr/hybrid_pr.cu",
+      "git_blob_sha1": "16f7f167aa468d0a855a813b89c05c13599a4136",
+      "bytes": 5072,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "samples/hybrid_cc/main.cpp",
+      "git_blob_sha1": "26cabf5b845b061976fe0c6970e341c39568f3cc",
+      "bytes": 1392,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "samples/hybrid_pr/hybrid_pr_common.h",
+      "git_blob_sha1": "1ae9f2c8b2757da5bd48265138d942586f0dee92",
+      "bytes": 2171,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "samples/hybrid_bfs/main.cpp",
+      "git_blob_sha1": "a959cdf58a2ada6551fc4d60b3668e4964cbee38",
+      "bytes": 2686,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "samples/hybrid_sssp/hybrid_sssp_host.cpp",
+      "git_blob_sha1": "ca657b2973915c1370c5a4a192f5bafb2b7f1340",
+      "bytes": 4345,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "samples/hybrid_sssp/hybrid_sssp_common.h",
+      "git_blob_sha1": "8b3c7aaf8b288f17a761ca39414a00816e140fec",
+      "bytes": 2231,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "samples/hybrid_pr/hybrid_pr_host.cpp",
+      "git_blob_sha1": "5ebb929310bd02eb553085785059e7858bb39ffa",
+      "bytes": 7135,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "samples/hybrid_pr/main.cpp",
+      "git_blob_sha1": "9a113c35ed23f16ddf2a453ac1d20eb85571225a",
+      "bytes": 2738,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "samples/hybrid_sssp/main.cpp",
+      "git_blob_sha1": "89f962cd74c6504db704b0a64023d7b1cdcb4941",
+      "bytes": 2616,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "samples/hybrid_sssp/hybrid_sssp.cu",
+      "git_blob_sha1": "fffbcb56e42789c096a63b777f471988c7514e01",
+      "bytes": 6416,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "src/utils/to_json.cpp",
+      "git_blob_sha1": "a8b23ec2a970cdf8017b6614640b8ee4473e4c58",
+      "bytes": 1432,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "samples/tools/gtools.h",
+      "git_blob_sha1": "f420d101b05d17749db951a8d8fe8f421bc58f7e",
+      "bytes": 152,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "samples/tools/gtools.cpp",
+      "git_blob_sha1": "f8273be795e4dd084e7d0fe6605122b0a0640632",
+      "bytes": 1212,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "src/utils/utils.cpp",
+      "git_blob_sha1": "eb2e8dbaf4131de325e50a442bff13d9eb77d42d",
+      "bytes": 10326,
+      "local_group": "hytgraph"
+    },
+    {
+      "repo": "iDC-NEU/HyTGraph",
+      "commit": "3e5b0e47035972cd8ba1e0a9c89d99c108041de9",
+      "path": "src/utils/parser.cpp",
+      "git_blob_sha1": "83b7215ffdf5ad3edb2ee35928d893f7981a3922",
+      "bytes": 9634,
+      "local_group": "hytgraph"
+    }
+  ]
+}

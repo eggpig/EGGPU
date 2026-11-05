@@ -1,0 +1,90 @@
+{
+  "status": "PASS_ALL_SEVEN_ORIGINAL_FORMAT_INPUT_PATHS",
+  "gpu_executed": false,
+  "portable_tool_manifest_sha256": "ff4db1b4bc344ea63c2bc404770f054c9f724bb909c96bf4ee42e6d5a4baf6ec",
+  "prior_six_qualification_sha256": "549d376ead7a3eebf8ebdeb00db38696882d7a77c4a89ad9cf7d9d912dd8310d",
+  "prior_six_status": "independent original-format regeneration with exact previous canonical offsets/indices/weights/sources matches",
+  "TW": {
+    "status": "PASS_CANONICAL_INPUT",
+    "receipt_sha256": "9aa26a51d58d749eeb76aa013db9ee95989eb8c3abd824930e41870878ca76fa",
+    "vertices": 41652230,
+    "stored_arcs": 1468364884,
+    "normalization": {
+      "vertices": 41652230,
+      "raw_arcs": 1468365182,
+      "arcs": 1468364884,
+      "self_loops_removed": 298,
+      "duplicate_arcs_removed": 0
+    },
+    "source_selection": {
+      "primary_sources": [
+        14267355,
+        19363928,
+        32748484
+      ],
+      "diagnostic_source": 14267355,
+      "largest_component_vertices": 33479734,
+      "component_count": 8044728,
+      "fallback_used": false,
+      "selection_uses_timing": false,
+      "rule": "DATASET_REGISTRY_20261104.json/source_selection"
+    },
+    "files": {
+      "offsets": {
+        "filename": "offsets.bin",
+        "bytes": 166608924,
+        "sha256": "bc0057cc4788ddc45d9ec2d416da249e172a72135d479b82a34ab3b7cec463a8"
+      },
+      "indices": {
+        "filename": "indices.bin",
+        "bytes": 5873459536,
+        "sha256": "605d18bbd6df17dabb7d17256bc9924995e6f56fc087b525174c0859b46ae77b"
+      },
+      "weights": {
+        "filename": "weights.bin",
+        "bytes": 11746919072,
+        "sha256": "b926d5c7234eb9489e349546d8af19e5c6425845fec6a702ba1e3627ce261f95"
+      },
+      "canonical": {
+        "filename": "canonical.json",
+        "bytes": 675,
+        "sha256": "916b5fda20dbd173733f2ca0734b62954c8f90e94a94a1f62881862c0c1d22b8"
+      },
+      "sources": {
+        "filename": "sources.json",
+        "bytes": 298,
+        "sha256": "3380ab264d4c12e660e3ba19041784e7df656051d358640dce3c230664cc3399"
+      },
+      "id_mapping": {
+        "filename": "id_mapping.json",
+        "bytes": 151,
+        "sha256": "9485403da9d632572e1169f570d642603805e0dab53043730d3977b4568c9cad"
+      }
+    },
+    "source_files": [
+      {
+        "bytes": 1383,
+        "sha256": "a30b9172fdb8f88eeed662bc3bc8ceba4a4302b11916e1fcaed4c2bbe9aa90c8",
+        "filename": "twitter-2010.md5sums"
+      },
+      {
+        "bytes": 1272,
+        "sha256": "79fa8752cc95cc1e9ae7aec455c0076d490d5e9f9b883262fa7d357e0076543c",
+        "filename": "twitter-2010.properties"
+      },
+      {
+        "bytes": 2591013817,
+        "sha256": "e29ef53ba00f9dd441e142454745f4bb1c4274d19815b2983b5d7e640f9e58bb",
+        "filename": "twitter-2010.graph"
+      }
+    ],
+    "preparation_script_sha256": "fad464165d313922c261a7fb29e593a5609de9c98865ef8e86aa18fb22a889b6",
+    "weight_generator_sha256": "8da52a84ed4e8a2ea3efa73ac9bee78cc9b01c9c2751e879a32dc474bb1069da",
+    "weights_checked": "full finite integer domain + 4096 deterministic cross-language SHA checks",
+    "seconds": 875.2020523734391
+  },
+  "remaining_input_preparation": [],
+  "reproduction_scope": "All seven original-format preparation paths executed with qualified payloads. EP and all Maven JARs were freshly downloaded from official sources; other existing sources were checked against frozen hashes/publisher checksums. This is not a claim that every source was redownloaded on a brand-new virtual machine. JDK17, compiler, OpenSSL and pinned Python wheels remain explicit installation prerequisites.",
+  "resource_limits": "Disk/host-memory budgets in the frozen tools are conservative admission bounds, not measured peak usage.",
+  "original_tool_freeze_preserved": true
+}

@@ -1,0 +1,49 @@
+{
+  "schema": "eggpu.runner.release.v1",
+  "version": "sequence16_v2",
+  "status": "CPU_PASS_EXACT_CURRENT_PUBLIC_PROOFS_REQUIRED",
+  "files": {
+    "sequence16_worker.py": {
+      "sha256": "10b9fa54f99d2055263146512fbcea8e2d2733f39a08baedb88778fa1d1f7a99",
+      "bytes": 14387
+    },
+    "sequence16_adapter.py": {
+      "sha256": "c8570223af589b4e10d36e6e2a3c143fd42cd89b18ed021a7dd75eb27a5d9087",
+      "bytes": 4251
+    },
+    "run_sequence16.py": {
+      "sha256": "adf10f7c8f30b647ab440a190b239c400ebed7483a6171433e6472953413ca37",
+      "bytes": 4818
+    },
+    "test_sequence16_campaign.py": {
+      "sha256": "d7e625e5ee08c92662446ce0a3a301a6fb20870361ebfe7da5ca760802c12bb1",
+      "bytes": 7418
+    },
+    "SEQUENCE16_PROTOCOL_CN.md": {
+      "sha256": "bc21f74b6922501644e24e634d1d20e7e9b06b082eb400a4ee1ebe1ea2304f21",
+      "bytes": 5682
+    },
+    "sg_worker.py": {
+      "sha256": "7ab87843b24df60ad1372bee6383ec2c9d75227031a8343c439a6cca0ddbde43",
+      "bytes": 41183
+    },
+    "cugraph_csr_adapter.py": {
+      "sha256": "36e57e6dd8764e5b27db5a21a8b7b0c712f9c42d434636744c4e29997b2447cf",
+      "bytes": 7465
+    },
+    "native_worker.py": {
+      "sha256": "12f183d6ff969e4c1921e388546a70a102d8ff22e1c9cb39df9a1b56b6b390f6",
+      "bytes": 23833
+    },
+    "native_input.py": {
+      "sha256": "927a9194b15b6dfaf91ff829f2476a676c7828ba4071607497ef308789d10152",
+      "bytes": 11994
+    },
+    "mg_process_observer.py": {
+      "sha256": "368c4d858da8dc5a2833dd2cd2dd30d0ab9df75940968c181a1537c2e30426a7",
+      "bytes": 2499
+    }
+  },
+  "formal_results": 0,
+  "qualification_note": "Public source/path changes require exact local tiny/target proofs. Earlier operator scope evidence is not a proof shortcut. Global-L1 cuGraph PR correction invalidates historical cuGraph PR/complete-sequence comparison and requires exact new proofs."
+}

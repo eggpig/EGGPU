@@ -1,0 +1,229 @@
+{
+  "T_workflow_seconds": 1.625282461,
+  "admission": {
+    "checked_unix": 1793803937.7673361,
+    "gpus": [
+      {
+        "driver": "580.105.08",
+        "index": "0",
+        "name": "NVIDIA GeForce RTX 4090 D",
+        "total_mib": "24564",
+        "used_mib": "0",
+        "utilization": "0",
+        "uuid": "<device-0>"
+      },
+      {
+        "driver": "580.105.08",
+        "index": "1",
+        "name": "NVIDIA GeForce RTX 4090 D",
+        "total_mib": "24564",
+        "used_mib": "0",
+        "utilization": "0",
+        "uuid": "<device-1>"
+      },
+      {
+        "driver": "580.105.08",
+        "index": "2",
+        "name": "NVIDIA GeForce RTX 4090 D",
+        "total_mib": "24564",
+        "used_mib": "0",
+        "utilization": "0",
+        "uuid": "<device-2>"
+      },
+      {
+        "driver": "580.105.08",
+        "index": "3",
+        "name": "NVIDIA GeForce RTX 4090 D",
+        "total_mib": "24564",
+        "used_mib": "0",
+        "utilization": "0",
+        "uuid": "<device-3>"
+      },
+      {
+        "driver": "580.105.08",
+        "index": "4",
+        "name": "NVIDIA GeForce RTX 4090 D",
+        "total_mib": "24564",
+        "used_mib": "0",
+        "utilization": "0",
+        "uuid": "<device-4>"
+      },
+      {
+        "driver": "580.105.08",
+        "index": "5",
+        "name": "NVIDIA GeForce RTX 4090 D",
+        "total_mib": "24564",
+        "used_mib": "0",
+        "utilization": "0",
+        "uuid": "<device-5>"
+      },
+      {
+        "driver": "580.105.08",
+        "index": "6",
+        "name": "NVIDIA GeForce RTX 4090 D",
+        "total_mib": "24564",
+        "used_mib": "0",
+        "utilization": "0",
+        "uuid": "<device-6>"
+      },
+      {
+        "driver": "580.105.08",
+        "index": "7",
+        "name": "NVIDIA GeForce RTX 4090 D",
+        "total_mib": "24564",
+        "used_mib": "0",
+        "utilization": "0",
+        "uuid": "<device-7>"
+      }
+    ],
+    "host": "<redacted-host>",
+    "processes": "",
+    "required_host_bytes": 8589934592,
+    "selected": {
+      "driver": "580.105.08",
+      "index": "0",
+      "name": "NVIDIA GeForce RTX 4090 D",
+      "total_mib": "24564",
+      "used_mib": "0",
+      "utilization": "0",
+      "uuid": "<device-0>"
+    }
+  },
+  "dataset": "TINY_D",
+  "directed": true,
+  "epoch": {
+    "bytes": 541266,
+    "path": "<campaign>/sequence16_tiny_v1/tiny_TINY_D_cugraph_sequence16_r00/epoch.json",
+    "sha256": "977c2ddd982b9b2d0ff019a3a19429531ff409e3e8dec38e7055abd22cd8eed8"
+  },
+  "epoch_sha256": "f5ab2bc7e958e74a99667eedc01a4f843bb3f4923ae181e08e6d9e12beab2ec3",
+  "input_sha256": "9316925e606ebfd50de39d1f046846786e73c65ba6677f7b2b730a71b60373b3",
+  "phase": "tiny",
+  "protocol": "e1-continuous-16-public-csr-v1",
+  "qualification": {},
+  "quality_pass": true,
+  "repeat": 0,
+  "request_count": 16,
+  "status": "PASS_QUALIFICATION",
+  "system": "cugraph",
+  "trace": [
+    {
+      "algorithm": "bfs",
+      "index": 0,
+      "round": 0,
+      "source": 0,
+      "source_index": 0
+    },
+    {
+      "algorithm": "sssp",
+      "index": 1,
+      "round": 0,
+      "source": 0,
+      "source_index": 0
+    },
+    {
+      "algorithm": "wcc",
+      "index": 2,
+      "round": 0,
+      "source": null,
+      "source_index": null
+    },
+    {
+      "algorithm": "pr",
+      "index": 3,
+      "round": 0,
+      "source": null,
+      "source_index": null
+    },
+    {
+      "algorithm": "bfs",
+      "index": 4,
+      "round": 1,
+      "source": 1,
+      "source_index": 1
+    },
+    {
+      "algorithm": "sssp",
+      "index": 5,
+      "round": 1,
+      "source": 1,
+      "source_index": 1
+    },
+    {
+      "algorithm": "wcc",
+      "index": 6,
+      "round": 1,
+      "source": null,
+      "source_index": null
+    },
+    {
+      "algorithm": "pr",
+      "index": 7,
+      "round": 1,
+      "source": null,
+      "source_index": null
+    },
+    {
+      "algorithm": "bfs",
+      "index": 8,
+      "round": 2,
+      "source": 2,
+      "source_index": 2
+    },
+    {
+      "algorithm": "sssp",
+      "index": 9,
+      "round": 2,
+      "source": 2,
+      "source_index": 2
+    },
+    {
+      "algorithm": "wcc",
+      "index": 10,
+      "round": 2,
+      "source": null,
+      "source_index": null
+    },
+    {
+      "algorithm": "pr",
+      "index": 11,
+      "round": 2,
+      "source": null,
+      "source_index": null
+    },
+    {
+      "algorithm": "bfs",
+      "index": 12,
+      "round": 3,
+      "source": 0,
+      "source_index": 0
+    },
+    {
+      "algorithm": "sssp",
+      "index": 13,
+      "round": 3,
+      "source": 0,
+      "source_index": 0
+    },
+    {
+      "algorithm": "wcc",
+      "index": 14,
+      "round": 3,
+      "source": null,
+      "source_index": null
+    },
+    {
+      "algorithm": "pr",
+      "index": 15,
+      "round": 3,
+      "source": null,
+      "source_index": null
+    }
+  ],
+  "workflow": {
+    "bytes": 108043,
+    "path": "<campaign>/sequence16_tiny_v1/tiny_TINY_D_cugraph_sequence16_r00/workflow/result.json",
+    "sha256": "150bdfa23819b70aade42a21e3393f5e9ccd86ed3109cb0c8f33d3bf88cc548a"
+  },
+  "public_projection_note": "Host paths/UUIDs redacted. This is qualification evidence, not an executable tiny/target proof or a formal performance repetition. Original bytes are retained by the operator."
+}

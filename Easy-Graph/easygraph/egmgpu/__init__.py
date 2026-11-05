@@ -262,5 +262,11 @@ __all__ += ["TriangleCountGraph", "prepare_triangle_count", "register_triangle_c
 # remains explicit and workers start on the first qualified submission.
 import easygraph as _easygraph
 from .direct_dispatch import install_direct_public_api as _install_public_api
+from .direct_dispatch import DIRECT_PUBLIC_FUNCTIONS as _direct_public_functions
+# Explicit ``import easygraph.egmgpu`` may precede access to any root-level
+# graph function. Finish the normal lazy root exports before installing its
+# wrappers; importing ``easygraph.gpu`` alone never enters this namespace.
+if not all(attribute in vars(_easygraph) for _, attribute in _direct_public_functions):
+    _easygraph._load_legacy_exports()
 _install_public_api(vars(_easygraph))
-del _install_public_api, _easygraph
+del _install_public_api, _easygraph, _direct_public_functions

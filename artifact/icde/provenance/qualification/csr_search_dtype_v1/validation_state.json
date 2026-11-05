@@ -1,0 +1,16 @@
+{
+  "status": "PASS_CSR_DTYPE_SEMANTICS",
+  "formal_measurements": 0,
+  "gpu_executed": true,
+  "source_sha256": "a6ad286df344858561a172076831387f14d0c7df29b9eafb640422f0f8991ee8",
+  "native_dso_sha256": "bc1b7cf247222beec1f33afe4d184bdc715eea4ac65a07e8e2a567ec196aec46",
+  "resource_gate": {
+    "gpu": [
+      "<device>",
+      " 24081",
+      " 0"
+    ],
+    "host_available_bytes": 573806309376
+  },
+  "public_projection_note": "Private paths/UUIDs redacted; exact original retained. Not an executable qualification proof or a formal performance result."
+}

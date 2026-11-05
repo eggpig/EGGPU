@@ -1,0 +1,4662 @@
+{
+  "schema": "eggpu.candidate.freeze.v1",
+  "status": "CPU_QUALIFIED_GPU_PENDING",
+  "candidate": "arena_output_ownership_v2",
+  "parents": {
+    "wcc_chunked_host_v2": "9a3d98be5ecd4c955ec4481b25fa90764db50a97636df8cea8b85870b161413a"
+  },
+  "rejected_predecessor": {
+    "candidate": "arena_output_ownership_v1",
+    "source_tree_sha256": "076e8bb7e6f8653c0ef781becdeb57b6b886aceed8fb6c7de598531224dfd9c8",
+    "reason": "Missing CoreManagedSession._own_result _arena_scope forwarding; reproduced8fail2pass against actual Core MRO; never GPU executed"
+  },
+  "source_files": {
+    ".bumpversion.cfg": {
+      "sha256": "91ad94fbe2bb2669d4d871882402d6e3bb0c4f051cbf33b268960b3465f3a34c",
+      "bytes": 254
+    },
+    ".flake8": {
+      "sha256": "a93a0acdea3dea9238bf5af4d44f05642411607536622817001957db1f245b80",
+      "bytes": 1141
+    },
+    ".github/ISSUE_TEMPLATE/---bug-report.md": {
+      "sha256": "db5ee4f98fd6e2f5442734a817a4ded462e494421460efa4593f36aaf250a4e2",
+      "bytes": 1157
+    },
+    ".github/ISSUE_TEMPLATE/---documentation.md": {
+      "sha256": "fb97386ffdd888f3e24acc6d90d21fcf42625c4206f5c0ce7a349a75af5fc0b7",
+      "bytes": 778
+    },
+    ".github/ISSUE_TEMPLATE/---everything-else.md": {
+      "sha256": "51048c3d749ecfa8d39e5121251a9eb334a07228e907df8f560e622420eeebf2",
+      "bytes": 1111
+    },
+    ".github/ISSUE_TEMPLATE/---feature-request.md": {
+      "sha256": "29941786d04085f8634f28c28aad735d25a0305c1a1cfbe041182f5bfb63af27",
+      "bytes": 814
+    },
+    ".github/ISSUE_TEMPLATE/config.yml": {
+      "sha256": "b56038a6ed8bf299e9b99a0c681b94a523ae0082ff61d36bf57b51107a211325",
+      "bytes": 343
+    },
+    ".github/PULL_REQUEST_TEMPLATE.md": {
+      "sha256": "a8d6d979c040e565c5a42a86e395c5eb40989a785af21e4970fa364351a4c23e",
+      "bytes": 608
+    },
+    ".github/dependabot.yml": {
+      "sha256": "ec3294fdf6f2646afb2735fea7ce59a9551360a513c9bd157e29fd2a8fb15b26",
+      "bytes": 498
+    },
+    ".github/workflows/archive/release-all-mlwb.yaml": {
+      "sha256": "2848e0031bc260e29e7a72e5ecfa87dbb93897eb4c9b50dd6933d0412efb3b0e",
+      "bytes": 1260
+    },
+    ".github/workflows/archive/release-macos.yaml": {
+      "sha256": "c07365bfea6d16680ddaad11cda7b27e327a205a469288e727bc7315392db977",
+      "bytes": 1207
+    },
+    ".github/workflows/archive/release-manylinux.yaml": {
+      "sha256": "e09805ae21ec5fc31c39864c42531e7d97e5d0542669f004b92af112c88feb55",
+      "bytes": 1696
+    },
+    ".github/workflows/benchmarking.yaml": {
+      "sha256": "d2de857f7692d47b58c42e109d0a3ec77fad518f1cf948f61d6a7bcdc49f38e6",
+      "bytes": 370
+    },
+    ".github/workflows/diagram.yml": {
+      "sha256": "77b6050654a0074b09589e2cb5835a42e0fc77362fcb9d04cb891168e37aca85",
+      "bytes": 345
+    },
+    ".github/workflows/pr_code_check.yaml": {
+      "sha256": "6b94dc827ad29041eda9e2e7d36330132667ca1d9d9be5d38c177d716f245f0a",
+      "bytes": 1093
+    },
+    ".github/workflows/pre-commit.yaml": {
+      "sha256": "9ffe933fd5896586763853c47503fe6cd84985bd20508d49262b9cc4174fe738",
+      "bytes": 947
+    },
+    ".github/workflows/stale.yaml": {
+      "sha256": "83c689f32ec60399176b14ca7a33be9cea81a97de356a0402c26eb8d209f4de8",
+      "bytes": 869
+    },
+    ".github/workflows/test.yaml": {
+      "sha256": "db2a7829188c12d735f4a0edd835a473dc1ef6908c621eb84788af9b922ef7bd",
+      "bytes": 1035
+    },
+    ".github/workflows/translator.yaml": {
+      "sha256": "3ca4c9d656b27559fb68db5b5c37fe216fdd8545a7ec5db69638634bd639f913",
+      "bytes": 1110
+    },
+    ".github/workflows/wheel_publish.yml": {
+      "sha256": "7ca0239c41a5145fec141467ff611d98bd35e5e0e72397792166786245805f2c",
+      "bytes": 3706
+    },
+    ".gitignore": {
+      "sha256": "c2f9617e8aa81520dbd56201f333862ce0fa3d98ccf7cb5c52251e944b38c32d",
+      "bytes": 3762
+    },
+    ".gitmodules": {
+      "sha256": "d0f17b4e0f17a1a1cdf1cf215d8091d3fb20f0d6450ebcabaf673eb919b413a5",
+      "bytes": 114
+    },
+    ".pre-commit-config.yaml": {
+      "sha256": "7dccedf6894c7119b79560e162865c387cbd88f6ada47c2338b412f202748487",
+      "bytes": 2658
+    },
+    "CMakeLists.txt": {
+      "sha256": "dd4120ce69ca48d21f0ba90df5bdcd65fce05285052a20e1ba5a5657f9785d13",
+      "bytes": 1218
+    },
+    "CONTRIBUTING.md": {
+      "sha256": "cc617ab605527c87f29694612e14ddb6d9bad5c78ae79645f59688cf05a2a5b4",
+      "bytes": 14585
+    },
+    "LICENSE": {
+      "sha256": "bd6770f9f94a29da222130e85519b5eef500bd758c9ec80d71feca7518d65bad",
+      "bytes": 1561
+    },
+    "MANIFEST.in": {
+      "sha256": "a3de20b7bc93530f3323b93b23244195ce04ada20a012ead5cc8aef9b5f455d1",
+      "bytes": 506
+    },
+    "Makefile": {
+      "sha256": "b6cbd27277f39ba1935f37d3264087e91a3336c05079c6f0b56b49f121896be0",
+      "bytes": 142
+    },
+    "README.md": {
+      "sha256": "0b2c65ede197f18725a93285d94c107f8dd1f5a82c1f4b810bc5a88741656101",
+      "bytes": 12131
+    },
+    "README.rst": {
+      "sha256": "1e25131922e96bbd3ccd00fcc1996c3b40abc2fe56bb7c297bcb11541227f72d",
+      "bytes": 6688
+    },
+    "_typos.toml": {
+      "sha256": "d7ba8503fd1afdd5c12d3f5da13108683c3f8980714cc534f2264d2ecc66452c",
+      "bytes": 518
+    },
+    "cpp_easygraph/CMakeLists.txt": {
+      "sha256": "72a2812de5ca33121ab271c403ef5f61ad7e6f4d74dea3a41d38357b0ec4e7b5",
+      "bytes": 2705
+    },
+    "cpp_easygraph/classes/__init__.h": {
+      "sha256": "a1b0d7f7ac16a6b337e0a74135f05d06f0fee2dcbe3429ca208dc7d8c7b8dad7",
+      "bytes": 602
+    },
+    "cpp_easygraph/classes/coo_graph.h": {
+      "sha256": "6101b52e7947354a824fb519d420b72a61945d4fc12f94c448e0d756e52d117c",
+      "bytes": 314
+    },
+    "cpp_easygraph/classes/csr_graph.h": {
+      "sha256": "ea53a8df018f6f0a1b50e09bfb910e7c2ae6c67cb9a8e76d5e56c6964f20f59a",
+      "bytes": 3208
+    },
+    "cpp_easygraph/classes/directed_graph.cpp": {
+      "sha256": "eb0727e66879722d3e52cd928aea5340d9afdf2f7827602bf3817d5764286dea",
+      "bytes": 22385
+    },
+    "cpp_easygraph/classes/directed_graph.h": {
+      "sha256": "78ec90842463599a20ddb1ac683eaf5fbf57add6b255df6e0a0f647061a72700",
+      "bytes": 1951
+    },
+    "cpp_easygraph/classes/graph.cpp": {
+      "sha256": "19a7cae8fa71c6046819605a71f84e3143f43f8269db5065a57e311af570af9e",
+      "bytes": 37023
+    },
+    "cpp_easygraph/classes/graph.h": {
+      "sha256": "eedf03328a66b5f00b01ead2717c6dfd2b0a78ec2de17ef6cd0ead419cf96d88",
+      "bytes": 3421
+    },
+    "cpp_easygraph/classes/graph_convert.cpp": {
+      "sha256": "4fa8044cd8d9ab7397ebe9b83c7842227bed083c182f8478d9a29adc23955e5b",
+      "bytes": 27485
+    },
+    "cpp_easygraph/classes/linkgraph.h": {
+      "sha256": "df64f63686b3496cbda2448e643b11d4b5df1ffdb5e9cfd12d458c47cf3157b5",
+      "bytes": 2349
+    },
+    "cpp_easygraph/classes/operation.cpp": {
+      "sha256": "c094c36d1f1e8790e7c07e05b1b196df9b244cbd8eadcf32b12233d17311f6fd",
+      "bytes": 399
+    },
+    "cpp_easygraph/classes/operation.h": {
+      "sha256": "ddcd6410967bc8b7429fb0f94a103ca7ca3c1ee372cca324263238576c82f487",
+      "bytes": 78
+    },
+    "cpp_easygraph/classes/segment_tree.cpp": {
+      "sha256": "0f71356c52577ab748e368220ba7c3bfbe4a864155b7eaa9666f9d0f17c1fa03",
+      "bytes": 1173
+    },
+    "cpp_easygraph/common/common.cpp": {
+      "sha256": "3d9359215f08c866bda85397847d5f866871782b7e56a451dd6ce3dbbde50f89",
+      "bytes": 126
+    },
+    "cpp_easygraph/common/common.h": {
+      "sha256": "79f25ee4a1219d1d0ff0d352e842d302665d30c2b55129289953e02e297f3d8e",
+      "bytes": 1315
+    },
+    "cpp_easygraph/common/utils.cpp": {
+      "sha256": "f3a73a748872d775139b06ecb6dcfded75245d4f5689c40bb9c2679a15456e95",
+      "bytes": 1483
+    },
+    "cpp_easygraph/common/utils.h": {
+      "sha256": "f9e39ec068894ba301df0b43fbdc19d4b36373750d9d0ae64dd43c4910efa1f8",
+      "bytes": 383
+    },
+    "cpp_easygraph/cpp_easygraph.cpp": {
+      "sha256": "363af811b932046acbbf21115d2360b46bad0d30924d15eb83e06bc3c0a17fea",
+      "bytes": 15419
+    },
+    "cpp_easygraph/functions/__init__.h": {
+      "sha256": "5070459037c4883672e6920892c62a3cd57cb60bfb62507b733567cde9ca1b35",
+      "bytes": 265
+    },
+    "cpp_easygraph/functions/basic/__init__.h": {
+      "sha256": "e961682c8a76ede09956cbdf540da84128e81a6fa2c37f3bc4d0ae22f565a27d",
+      "bytes": 58
+    },
+    "cpp_easygraph/functions/basic/avg_degree.cpp": {
+      "sha256": "92442edbe76c12c9c651074ce93587ada6ccacf519ac1d33294550480eb3b982",
+      "bytes": 250
+    },
+    "cpp_easygraph/functions/basic/avg_degree.h": {
+      "sha256": "3c8b170a9dda3d87f8bea1b314c43c2c53fca38b14c857f87b992a55edcd0f74",
+      "bytes": 88
+    },
+    "cpp_easygraph/functions/basic/cluster.cpp": {
+      "sha256": "06b5a9d9478ff5944893706b6966b09d11a50869a9448e13f86a571c13d17db7",
+      "bytes": 12995
+    },
+    "cpp_easygraph/functions/basic/cluster.h": {
+      "sha256": "52c00d9f2a39e5c77e3827da2e98431dc17a811e6dd0e478e327bd723498dfba",
+      "bytes": 226
+    },
+    "cpp_easygraph/functions/centrality/__init__.h": {
+      "sha256": "6403038253822d0c706232951cd3a7e517ec1d7bed5840f22bba9d4cc98b1fdd",
+      "bytes": 23
+    },
+    "cpp_easygraph/functions/centrality/betweenness.cpp": {
+      "sha256": "ba55f9461af35b699809d14bb2a5b105ef8e27db7f1fe69c77200c5e02cf2bd8",
+      "bytes": 15992
+    },
+    "cpp_easygraph/functions/centrality/centrality.h": {
+      "sha256": "c63ad57bc88473da0634531a14af8fd6874b2959c23ac2c6e113770cd3e3444f",
+      "bytes": 826
+    },
+    "cpp_easygraph/functions/centrality/closeness.cpp": {
+      "sha256": "2be72c539c89d3d0473149383a1464e15ab060a6d3b655ad1b1729d91143df02",
+      "bytes": 12322
+    },
+    "cpp_easygraph/functions/centrality/degree.cpp": {
+      "sha256": "a4b86af1d48da22a5a550ff0cb7ba386766e442567d4b4d90ab112a960c39dfe",
+      "bytes": 2463
+    },
+    "cpp_easygraph/functions/centrality/eigenvector.cpp": {
+      "sha256": "64c6da8163b9584c546fbfa8a7f63a07278ef1e04c86d9e2db52522b1ba78c82",
+      "bytes": 6158
+    },
+    "cpp_easygraph/functions/centrality/katz_centrality.cpp": {
+      "sha256": "f8e3b25278af94b16854a185f9fb34caff6e912e2ec3d609b609d8df72a2551a",
+      "bytes": 6076
+    },
+    "cpp_easygraph/functions/community/LPA.cpp": {
+      "sha256": "30d227036491864727d36581e3c08b8859433df7aecda2f7a20c6899a0f096bb",
+      "bytes": 4186
+    },
+    "cpp_easygraph/functions/community/LPA.h": {
+      "sha256": "7242e5ca6d1749671c1fafe13b218106eeebb9f396c97f6be69234216ea188f3",
+      "bytes": 106
+    },
+    "cpp_easygraph/functions/community/__init__.h": {
+      "sha256": "4bd9275a330358b13bdc3dcaa0d65fe7fd70c05f26726ca6c629b978dfe9af3d",
+      "bytes": 202
+    },
+    "cpp_easygraph/functions/community/ego_graph.cpp": {
+      "sha256": "1f4ccd689bec6a2f3711e7874fd93797a796f273fdc19080274009187daad03d",
+      "bytes": 4493
+    },
+    "cpp_easygraph/functions/community/ego_graph.h": {
+      "sha256": "5243c35b7c9d52c0ddb3ca974cb1e8ff2f619afa8db8aa5141ee64301d5bd4aa",
+      "bytes": 529
+    },
+    "cpp_easygraph/functions/community/graph_coloring.cpp": {
+      "sha256": "8f02682ced81f55113f647b7c5806eb1cd8da388c8a6f859af0ab05ed0481c5b",
+      "bytes": 3349
+    },
+    "cpp_easygraph/functions/community/graph_coloring.h": {
+      "sha256": "cc52dbe047351f2238f41a48915fe78a4c3082068da38fc8c3f4c7441762678c",
+      "bytes": 307
+    },
+    "cpp_easygraph/functions/community/greedy_modularity.cpp": {
+      "sha256": "272d97e8ef17fb340ab6e1bb47be16886c43e3f552b07558ac7a3b146abc5ffa",
+      "bytes": 8450
+    },
+    "cpp_easygraph/functions/community/greedy_modularity.h": {
+      "sha256": "4aaf843ff912ae66126acc511761c659a277e0f1aaeadba7444edb4d3c404298",
+      "bytes": 183
+    },
+    "cpp_easygraph/functions/community/indexed_heap.h": {
+      "sha256": "00486744cef484818712adbf3171abac62ea6703ac82d9e3d6a1e15af7f54722",
+      "bytes": 5454
+    },
+    "cpp_easygraph/functions/community/localsearch.cpp": {
+      "sha256": "e278cebbb427c1a396d2d193972a73c254e94da5e7dd91dc032f16c9df149514",
+      "bytes": 17962
+    },
+    "cpp_easygraph/functions/community/localsearch.h": {
+      "sha256": "e6c31ad9f58f927a4b45f5ba7805a1bfb3a926c2fe0f542fefca39d11515599e",
+      "bytes": 340
+    },
+    "cpp_easygraph/functions/community/louvain.cpp": {
+      "sha256": "b08a28f48f1c329803878c7e8b8b2a35247e7a7b1881a1cf414837dd5cfe6ec0",
+      "bytes": 16812
+    },
+    "cpp_easygraph/functions/community/louvain.h": {
+      "sha256": "3d4395de4be0233cb46a4ef40082c17e33b9c046c57fc518e6dc7a8cf0b699df",
+      "bytes": 456
+    },
+    "cpp_easygraph/functions/community/modularity.cpp": {
+      "sha256": "5f8b467e795a3d93009e0d9fb3e59e2e207f403c3336853daa3e24912cc7956a",
+      "bytes": 6581
+    },
+    "cpp_easygraph/functions/community/modularity.h": {
+      "sha256": "e8cb387903c3bbada8900afba99d302286245e9bcf49a368f51fab4f815b539d",
+      "bytes": 236
+    },
+    "cpp_easygraph/functions/community/motif.cpp": {
+      "sha256": "06ffaaec55626355764c476e7ab6413f61600e5179c7e2d97711b4b5ff19a957",
+      "bytes": 18322
+    },
+    "cpp_easygraph/functions/community/motif.h": {
+      "sha256": "9098ff58d4378313120fe16eb6a080173af1476fb6be78d8182d7ca178a85219",
+      "bytes": 297
+    },
+    "cpp_easygraph/functions/community/subgraph.cpp": {
+      "sha256": "a21d8c7c9ec124e84eb846cf0652c408808dc2b8033598744c7fc916305bd912",
+      "bytes": 7111
+    },
+    "cpp_easygraph/functions/community/subgraph.h": {
+      "sha256": "33f720fd2bd6f1683eafa035b5faaeb978b4790bcf63774aade86d0a6f906725",
+      "bytes": 274
+    },
+    "cpp_easygraph/functions/community/tests/__init__.py": {
+      "sha256": "8b1fe0995302affe70f93244215ec4ef8baaab876707dcd86fe419a0e269900d",
+      "bytes": 19
+    },
+    "cpp_easygraph/functions/community/tests/cpp_LPA_test.py": {
+      "sha256": "1f6e0c9d063d25d60b6f918d2c08eac1429efbf2a894f8be02b7184ed254bbe5",
+      "bytes": 4070
+    },
+    "cpp_easygraph/functions/community/tests/cpp_ego_graph_test.py": {
+      "sha256": "75374908976ad2a6fa05b34fb47a5da06aae843d2178c2e1e957486568ce22ba",
+      "bytes": 8065
+    },
+    "cpp_easygraph/functions/community/tests/cpp_enumerate_subgraph_test.py": {
+      "sha256": "810efcefd3e24953cf949af115e687669f32457ada5b68f2b20298409e30098a",
+      "bytes": 4413
+    },
+    "cpp_easygraph/functions/community/tests/cpp_greedy_modularity_test.py": {
+      "sha256": "3b659c126fc39ff8d3de721069c19e755034fe8c1e92bd8dceb3a9f529f931d9",
+      "bytes": 3927
+    },
+    "cpp_easygraph/functions/community/tests/cpp_localsearch_test.py": {
+      "sha256": "92cf1967317964d41f3ca8d49d02dbe729e143bd77bf4af2aa1925b884f9a18e",
+      "bytes": 6030
+    },
+    "cpp_easygraph/functions/community/tests/cpp_louvain_test.py": {
+      "sha256": "eb1bdc6adad1fe4d36b5ec1921628409b73b8af2e102dd9078dd84c8c9dab8a8",
+      "bytes": 6275
+    },
+    "cpp_easygraph/functions/community/tests/cpp_modularity_test.py": {
+      "sha256": "64913225ef731b0e378ac9d0f7709aa42f1651ade463ed1a1be2f0bb026f5c67",
+      "bytes": 4995
+    },
+    "cpp_easygraph/functions/community/tests/run_all_tests.py": {
+      "sha256": "a196daa67bb134756fd4543ac4a916cf2dcee1f75ee8b4cba7f50be44cebab7f",
+      "bytes": 2126
+    },
+    "cpp_easygraph/functions/components/__init__.h": {
+      "sha256": "85a738de93dd5491bb99c9b68fdbc1a279495b8296ab1f8b6d3b6231f4ece4cd",
+      "bytes": 93
+    },
+    "cpp_easygraph/functions/components/biconnected.cpp": {
+      "sha256": "7dec0ff815ab12c2e9d85fe191345a78ef38f3f13af4a2cbb76f343828f4bfe9",
+      "bytes": 5138
+    },
+    "cpp_easygraph/functions/components/biconnected.h": {
+      "sha256": "a36ca38354d2afebfb0194c16c611b55fb6ff4de26a86ecbbe5ae1a80a97a2b5",
+      "bytes": 854
+    },
+    "cpp_easygraph/functions/components/connected.cpp": {
+      "sha256": "663ae7fce596e1afb62a289643f58b329d8c64db2440e34c3e25f0d5c57ff085",
+      "bytes": 11545
+    },
+    "cpp_easygraph/functions/components/connected.h": {
+      "sha256": "2750cd22168f1cd48b6dbf00c1577684d3b5053bb4124c44803c649da5c12551",
+      "bytes": 1161
+    },
+    "cpp_easygraph/functions/components/strongly_connected.cpp": {
+      "sha256": "4b7595d2067eee349e4d4daecb531633a3e020b23de5a7a95262a6ffc6a16ebd",
+      "bytes": 3700
+    },
+    "cpp_easygraph/functions/components/strongly_connected.h": {
+      "sha256": "d4c6fb1941ce2666f5656fc6486465c51a70fd2932b25a27580e85d14a77494b",
+      "bytes": 174
+    },
+    "cpp_easygraph/functions/cores/__init__.h": {
+      "sha256": "ee00775063d556d6a1e947f2f1c09477cd5382730216cb3baf4a0804cfa5f03b",
+      "bytes": 34
+    },
+    "cpp_easygraph/functions/cores/k_cores.cpp": {
+      "sha256": "998ed3d44382e9bb80b53389e6017e9ce4ceb9e14b9f78af3f93d33992161f7e",
+      "bytes": 5364
+    },
+    "cpp_easygraph/functions/cores/k_cores.h": {
+      "sha256": "443878b646c60557205c3e5d1fc11576ae1b4cdbec8e3cb1bddb52fda37a5f7e",
+      "bytes": 191
+    },
+    "cpp_easygraph/functions/pagerank/__init__.h": {
+      "sha256": "4751904faa2a4f5bf3775815d3a5bc2cc5480636ae4e5ebbb9e43661f75ede34",
+      "bytes": 36
+    },
+    "cpp_easygraph/functions/pagerank/pagerank.cpp": {
+      "sha256": "73805f03c9d5ad0b639abbb93ada52fa49fd8023981d44c68d2d15c07445fec6",
+      "bytes": 7190
+    },
+    "cpp_easygraph/functions/pagerank/pagerank.h": {
+      "sha256": "0c271066d1241e40137de5571d60202cea56a7c3f5c9bc175f3a4c2b297cd9ea",
+      "bytes": 391
+    },
+    "cpp_easygraph/functions/path/__init__.h": {
+      "sha256": "08e46a66822b96e1132535b30f273d6c946dbc6997b6aef51953644e125cf938",
+      "bytes": 48
+    },
+    "cpp_easygraph/functions/path/average_shortest_path_length.cpp": {
+      "sha256": "23a3fc8cd187f50bb6417cf3a0e067b6432985af0268ff74d4a0b1fed788aae5",
+      "bytes": 3840
+    },
+    "cpp_easygraph/functions/path/diameter.cpp": {
+      "sha256": "7c286eedc78c296030801f083a0ccf33640d74480631dd76b7bef413d5b34cb8",
+      "bytes": 6219
+    },
+    "cpp_easygraph/functions/path/mst.cpp": {
+      "sha256": "24350e09a95f166aa1bdbed53d846d75348458e2d0097877815d2dc013ed635f",
+      "bytes": 17895
+    },
+    "cpp_easygraph/functions/path/mst.h": {
+      "sha256": "6c615dd302e957c7e813d3d40bbfef673783cf9f125d02d309831b307723782f",
+      "bytes": 911
+    },
+    "cpp_easygraph/functions/path/path.cpp": {
+      "sha256": "31b48014d9e603900d345eb38823fc3358c6d0edd7cc8b67270e37bef4e67341",
+      "bytes": 19758
+    },
+    "cpp_easygraph/functions/path/path.h": {
+      "sha256": "82e8e65d85fef5f7759f2875cc7e936d6caa9c03772b8291af16df0a6d6c3e29",
+      "bytes": 869
+    },
+    "cpp_easygraph/functions/structural_holes/__init__.h": {
+      "sha256": "b6d439beadb06813cc5917035f320169f379d72291c55530402c1386574c76a4",
+      "bytes": 37
+    },
+    "cpp_easygraph/functions/structural_holes/evaluation.cpp": {
+      "sha256": "5b57a91f2b52384cbfb2c9a3f3cde6264c2d9718272f2bf8366dfc4c24d98624",
+      "bytes": 45975
+    },
+    "cpp_easygraph/functions/structural_holes/evaluation.h": {
+      "sha256": "c5e72676d818757aad91632db586bc7665fca18137d5382a410b0f516e1bbb79",
+      "bytes": 726
+    },
+    "cpp_easygraph/pybind11/.appveyor.yml": {
+      "sha256": "a6366a991f857bf2886c5418b0119dfc82e93fbfef23167283d822a9f1829b61",
+      "bytes": 1271
+    },
+    "cpp_easygraph/pybind11/.clang-format": {
+      "sha256": "0286e86e7a56fd7799872715bfcea2e711d3716ca593d2b824a9944d01717e2d",
+      "bytes": 996
+    },
+    "cpp_easygraph/pybind11/.clang-tidy": {
+      "sha256": "800422290bd91174b07e09e7a7f26bc952519c9c8f94d02801be6009006941af",
+      "bytes": 2712
+    },
+    "cpp_easygraph/pybind11/.cmake-format.yaml": {
+      "sha256": "f033e56752d8b4427e4b4b38ba3c85b455afdd8868f092ff1fb1fdeb25c9398d",
+      "bytes": 2196
+    },
+    "cpp_easygraph/pybind11/.codespell-ignore-lines": {
+      "sha256": "5736eea37f4d7c005a7cf3b93cf8e35e430481ca5ace25954c787e440ec65763",
+      "bytes": 1893
+    },
+    "cpp_easygraph/pybind11/.gitattributes": {
+      "sha256": "d38ae490e2ccdf82e14e3dd109fdb5778a8402b248d84f853d10cf67275c2508",
+      "bytes": 18
+    },
+    "cpp_easygraph/pybind11/.github/CODEOWNERS": {
+      "sha256": "9ebdaab465f1c0f6beee7cb4b4212e4b6c8f8e9d3441302fd4ac2a08ec811ffd",
+      "bytes": 182
+    },
+    "cpp_easygraph/pybind11/.github/CONTRIBUTING.md": {
+      "sha256": "c7a763f4dea15ed52cbcb3359ac766182b71a8cc85271f771710499fbd7bdf25",
+      "bytes": 12727
+    },
+    "cpp_easygraph/pybind11/.github/ISSUE_TEMPLATE/bug-report.yml": {
+      "sha256": "ff158c5cc2d856dbfc2daf3f04e6a0105717eebdedb08d41ac932543ac55814c",
+      "bytes": 2561
+    },
+    "cpp_easygraph/pybind11/.github/ISSUE_TEMPLATE/config.yml": {
+      "sha256": "f1e889e6c0b92b524573b8c7e69c9e43c2ff5a1d7a0bdce29fb4478d89b8694b",
+      "bytes": 328
+    },
+    "cpp_easygraph/pybind11/.github/dependabot.yml": {
+      "sha256": "b4d8c31e10917a7266c84e7f1f942a82a68a1be3c8195582af7616d7cce3db94",
+      "bytes": 313
+    },
+    "cpp_easygraph/pybind11/.github/labeler.yml": {
+      "sha256": "c88ad5cc8f25f274b29558cc71c0a164611d5ce39160043467622e43e29f1b51",
+      "bytes": 294
+    },
+    "cpp_easygraph/pybind11/.github/labeler_merged.yml": {
+      "sha256": "d113fc7d496233de4ae54ad07689985c73818114c54a2b55afd8e5ed35e0f711",
+      "bytes": 331
+    },
+    "cpp_easygraph/pybind11/.github/matchers/pylint.json": {
+      "sha256": "3d2fac15cc40237cfc4014902a5062787f35213994faf1cdacedcb282c96da6e",
+      "bytes": 668
+    },
+    "cpp_easygraph/pybind11/.github/pull_request_template.md": {
+      "sha256": "a22e9449bc8a2eb21a9266e5740acd340f79879ca1230f2827a619a0ddaa9fab",
+      "bytes": 556
+    },
+    "cpp_easygraph/pybind11/.github/workflows/ci.yml": {
+      "sha256": "5293c41f14a78dee4723927d893e1e23cd315f21e1b00685ef2307fbe3f6220d",
+      "bytes": 39811
+    },
+    "cpp_easygraph/pybind11/.github/workflows/configure.yml": {
+      "sha256": "e92464576fc134d7372b27e13bc138e6d7ab3faef12ab9eb537a630db76c0459",
+      "bytes": 2065
+    },
+    "cpp_easygraph/pybind11/.github/workflows/docs-link.yml": {
+      "sha256": "bc4d28f13382769a25641fcabfe202495329f8d34791e8aafd43089fd3f4ac84",
+      "bytes": 1085
+    },
+    "cpp_easygraph/pybind11/.github/workflows/format.yml": {
+      "sha256": "2d9a631553d56fbff8dcf287beeff7e99986914fcd227400b3f0616b35423b09",
+      "bytes": 1224
+    },
+    "cpp_easygraph/pybind11/.github/workflows/labeler.yml": {
+      "sha256": "cfefa297f542f69d2c88ede898e6e809ebf695f0f5865459903a4e61cae99a21",
+      "bytes": 639
+    },
+    "cpp_easygraph/pybind11/.github/workflows/nightlies.yml": {
+      "sha256": "517b7f433c86478fd8ee72d4bab41df6c21fd36831f7f6e5e90e38e27a2c3e5a",
+      "bytes": 1498
+    },
+    "cpp_easygraph/pybind11/.github/workflows/pip.yml": {
+      "sha256": "fafa709133806d96cbdd08d94c659acd95b6785274b649fb4468f0b93560bedf",
+      "bytes": 2658
+    },
+    "cpp_easygraph/pybind11/.github/workflows/reusable-standard.yml": {
+      "sha256": "06357a148945a20a73308ee4de32fb94ed97256e0892dbd9f3dbfb1faa7545ce",
+      "bytes": 2498
+    },
+    "cpp_easygraph/pybind11/.github/workflows/tests-cibw.yml": {
+      "sha256": "70e5c9dd3ba6295703fa33cf4ed464ed06319b33b93c0a16f48a7c5ec635a223",
+      "bytes": 2166
+    },
+    "cpp_easygraph/pybind11/.github/workflows/upstream.yml": {
+      "sha256": "29533db2a9215137f9fa2a02c9b4de088569d80c57ce9fe9a5c9a0919c129768",
+      "bytes": 2876
+    },
+    "cpp_easygraph/pybind11/.gitignore": {
+      "sha256": "11250e064bc10b23c21cdc23c48dcd82fa4c591ed8916774e6d2bcd54023a357",
+      "bytes": 571
+    },
+    "cpp_easygraph/pybind11/.pre-commit-config.yaml": {
+      "sha256": "749df416f1fde00e398db6bf94e2626f757433118e8a3cdb8c7172ae82d9c1c6",
+      "bytes": 3470
+    },
+    "cpp_easygraph/pybind11/.readthedocs.yml": {
+      "sha256": "2ef628b42d412952fa6c38799aa3973b66c34d8782acb9ecd9d81d4ed4514d0f",
+      "bytes": 276
+    },
+    "cpp_easygraph/pybind11/CMakeLists.txt": {
+      "sha256": "79b13592c239fe3ec86c431c347478976574b8512ac951435fd0e659365ed2f1",
+      "bytes": 16271
+    },
+    "cpp_easygraph/pybind11/CMakePresets.json": {
+      "sha256": "ebf171ce338eaf2549bb46e347b3df46bb78103b243d9a6ad7bce99a056ae557",
+      "bytes": 2342
+    },
+    "cpp_easygraph/pybind11/LICENSE": {
+      "sha256": "83965b843b98f670d3a85bd041ed4b372c8ec50d7b4a5995a83ac697ba675dcb",
+      "bytes": 1684
+    },
+    "cpp_easygraph/pybind11/README.rst": {
+      "sha256": "1d4e7fa773a6e43845fdbbc2876a3a90058d67d6029d30162e167e3137c2974f",
+      "bytes": 8287
+    },
+    "cpp_easygraph/pybind11/SECURITY.md": {
+      "sha256": "c215a0badf3e980239d2cdbfc152f9455b7bb224b1e5e8bf18d6059c04756ea2",
+      "bytes": 688
+    },
+    "cpp_easygraph/pybind11/docs/Doxyfile": {
+      "sha256": "f30a44a02ba041cf5918377d148363d062808891105d8f6a298f8ab624f2e027",
+      "bytes": 607
+    },
+    "cpp_easygraph/pybind11/docs/Makefile": {
+      "sha256": "36e33deeebeda7d752af352ea2e87e427cf5c72eba1a3d54e11d2f8f8ccc2737",
+      "bytes": 7417
+    },
+    "cpp_easygraph/pybind11/docs/_static/css/custom.css": {
+      "sha256": "3f8aaac2aed63a1463de3c77ed326e496249bf282a2db2a78998c1ec2fe1a237",
+      "bytes": 37
+    },
+    "cpp_easygraph/pybind11/docs/advanced/cast/chrono.rst": {
+      "sha256": "0f0839136dcc71ff4104a41c5cadef367ce2fd16ac8d11bfbf2598608f0cd675",
+      "bytes": 3937
+    },
+    "cpp_easygraph/pybind11/docs/advanced/cast/custom.rst": {
+      "sha256": "0c5b4c9e4f2f80554102186c421cee8d1d2344466d35f3bc264afa1cf341b1e2",
+      "bytes": 5869
+    },
+    "cpp_easygraph/pybind11/docs/advanced/cast/eigen.rst": {
+      "sha256": "eea380be519a632d5ccd7352dc647c62ec30c7e26a91737561463dee0b784124",
+      "bytes": 14279
+    },
+    "cpp_easygraph/pybind11/docs/advanced/cast/functional.rst": {
+      "sha256": "c8e55f5c9f687e76c803cb28088e960f61c5b656ebf881473ecae7212d7318a0",
+      "bytes": 3913
+    },
+    "cpp_easygraph/pybind11/docs/advanced/cast/index.rst": {
+      "sha256": "840c7d6659832ca63a2799b58094c198fab866221a21b9425a15f9fc6604f121",
+      "bytes": 1556
+    },
+    "cpp_easygraph/pybind11/docs/advanced/cast/overview.rst": {
+      "sha256": "29263af6b42de7657aec246ca26dd6f4b8c64bf89a971d4ba1a673b9f7fb90b4",
+      "bytes": 12372
+    },
+    "cpp_easygraph/pybind11/docs/advanced/cast/stl.rst": {
+      "sha256": "7eb24796be11bf1223f066d1bc4124ee057971c185704d0bcddeb921d003efe1",
+      "bytes": 9587
+    },
+    "cpp_easygraph/pybind11/docs/advanced/cast/strings.rst": {
+      "sha256": "a59e3ddc68e0483d2ebe6e38e573c4a20bfeb2cc7e126713804874f7e79d871c",
+      "bytes": 9119
+    },
+    "cpp_easygraph/pybind11/docs/advanced/classes.rst": {
+      "sha256": "82935d7132ad4496da589e36022dc7db0df34334ce3b0e9910b63b2eaf2de8df",
+      "bytes": 51903
+    },
+    "cpp_easygraph/pybind11/docs/advanced/deadlock.md": {
+      "sha256": "c0a26a4a3a3498bd82da36608182096d698f8d6236a9d07d85049b271a8c3372",
+      "bytes": 17520
+    },
+    "cpp_easygraph/pybind11/docs/advanced/deprecated.rst": {
+      "sha256": "ae27fc88fda1d305cd907af5fc2d611f71423c7e83f3228e8e18a36aa8de6a1b",
+      "bytes": 4506
+    },
+    "cpp_easygraph/pybind11/docs/advanced/embedding.rst": {
+      "sha256": "b5c5bb08243178a472338acaea0b4009b231f215aa105cac775c5b60410ceeb1",
+      "bytes": 17979
+    },
+    "cpp_easygraph/pybind11/docs/advanced/exceptions.rst": {
+      "sha256": "90c1edb0b1e8c0ca448d631a8daa6daa1aa99d575c8430a66c505fac6895efbb",
+      "bytes": 18502
+    },
+    "cpp_easygraph/pybind11/docs/advanced/functions.rst": {
+      "sha256": "f05d490594acdc2d41cc825ea4bc50686c62d8665b7b7b06da1687a3b59fdd97",
+      "bytes": 26987
+    },
+    "cpp_easygraph/pybind11/docs/advanced/misc.rst": {
+      "sha256": "fd2796e0557654153f41ef0eb46f6e4e99d931bd91cc0f758856b11a97c64ea3",
+      "bytes": 24181
+    },
+    "cpp_easygraph/pybind11/docs/advanced/pycpp/index.rst": {
+      "sha256": "67846224822a7aa9f925ec8af0c2d432b105e38f4413f7f8718d228ea8aea3ca",
+      "bytes": 278
+    },
+    "cpp_easygraph/pybind11/docs/advanced/pycpp/numpy.rst": {
+      "sha256": "b13f464ac874b5f3067716345f1e6aca55797a30a6149c69f68e4ae36386c232",
+      "bytes": 18834
+    },
+    "cpp_easygraph/pybind11/docs/advanced/pycpp/object.rst": {
+      "sha256": "52408728404d7964b6b62c83a130de9686efbec28c30a659c7639789246e157d",
+      "bytes": 9030
+    },
+    "cpp_easygraph/pybind11/docs/advanced/pycpp/utilities.rst": {
+      "sha256": "9a7874c62addc423c035ce45444506ccffad6af3a676b4ae3dc06a1512c7730b",
+      "bytes": 5710
+    },
+    "cpp_easygraph/pybind11/docs/advanced/smart_ptrs.rst": {
+      "sha256": "50d5e5c2ed3c25fef3a8c4771fc77eb28615e7ddb59906af242f3f0a6202c3a9",
+      "bytes": 6631
+    },
+    "cpp_easygraph/pybind11/docs/basics.rst": {
+      "sha256": "2484decd046abf9c311098501a47e1c5aca99306340babcc65844fe8f9eb7c7c",
+      "bytes": 9574
+    },
+    "cpp_easygraph/pybind11/docs/benchmark.py": {
+      "sha256": "edb781cd8620334caa3370d72576b68182c057408ccd4cbd6c79748c3418ab65",
+      "bytes": 2911
+    },
+    "cpp_easygraph/pybind11/docs/benchmark.rst": {
+      "sha256": "9df0941b2b4e262f751fe3a6dbcaa6c43255b31c6f2b2db66e1126be77a6c4e4",
+      "bytes": 3192
+    },
+    "cpp_easygraph/pybind11/docs/changelog.md": {
+      "sha256": "b6e5c4e1cd2806bda10ead8f882907aa50a8d024d44863530fbd640b0ee058b6",
+      "bytes": 148694
+    },
+    "cpp_easygraph/pybind11/docs/classes.rst": {
+      "sha256": "abb7f9c81db514e7d711865adf31a0561da190bf6bf77ecc00e83f431056c19a",
+      "bytes": 21402
+    },
+    "cpp_easygraph/pybind11/docs/cmake/index.rst": {
+      "sha256": "cac48e25b4e00a25c768c5adf8af5415725d610605bc0119ca160d352ab815f3",
+      "bytes": 273
+    },
+    "cpp_easygraph/pybind11/docs/compiling.rst": {
+      "sha256": "4d80286b7ecd7e63b7c2f85fb42284a8a4b68534c43bdd80ea36450c8e071678",
+      "bytes": 28666
+    },
+    "cpp_easygraph/pybind11/docs/conf.py": {
+      "sha256": "435fb004d25183bfabdd92e5bc5f7b0102d6d051a059eb20fae480d74bcab860",
+      "bytes": 11619
+    },
+    "cpp_easygraph/pybind11/docs/faq.rst": {
+      "sha256": "9432646032fa035f11bcae2feed0f1050543d56f8eb11e754f77e4abfc4e9462",
+      "bytes": 14950
+    },
+    "cpp_easygraph/pybind11/docs/index.rst": {
+      "sha256": "2ba454064bbfafaa0aab97b1cfc65e753de4ca17266f7440722c1d98ceec624f",
+      "bytes": 636
+    },
+    "cpp_easygraph/pybind11/docs/installing.rst": {
+      "sha256": "51dd0032e2051cc0cd636f13db6d713217c087b25448a77b4534529c2e36f4c6",
+      "bytes": 3279
+    },
+    "cpp_easygraph/pybind11/docs/limitations.rst": {
+      "sha256": "e5d487e5ad87a67ac17ddf2dd67412f8c1f9488489c3307af9de3eb8c524ab5b",
+      "bytes": 2860
+    },
+    "cpp_easygraph/pybind11/docs/pybind11_vs_boost_python1.svg": {
+      "sha256": "103daed215a55dcd7f96e4f5566131f5c823e1a9ebc9df83c97d09ff8cd9de37",
+      "bytes": 87708
+    },
+    "cpp_easygraph/pybind11/docs/pybind11_vs_boost_python2.svg": {
+      "sha256": "246ebe37d637704005174d87fc28caad4e6eb2b136d860e04f4ed7fbe23f32d3",
+      "bytes": 85853
+    },
+    "cpp_easygraph/pybind11/docs/reference.rst": {
+      "sha256": "fc73efe137b4b42b58796bf9982d014219637a9e7860d6368787ebaa946390b5",
+      "bytes": 2655
+    },
+    "cpp_easygraph/pybind11/docs/release.rst": {
+      "sha256": "5370e2c06f66ad8031aab83c61e01cbb0759c616587c5c549a82bcd9d66f1f75",
+      "bytes": 4738
+    },
+    "cpp_easygraph/pybind11/docs/requirements.in": {
+      "sha256": "322d9fc6e56dd77e310a2400d309787e0a44683c8a431da10d5afc86085ba118",
+      "bytes": 113
+    },
+    "cpp_easygraph/pybind11/docs/requirements.txt": {
+      "sha256": "b6588c40ab4b93d1bd0deb941f5ec96249a9ff73ca55e8bbd0b324a0d086d9ac",
+      "bytes": 1949
+    },
+    "cpp_easygraph/pybind11/docs/upgrade.rst": {
+      "sha256": "afac48ec2b3741b40b6912be72ab33c0293206235ccb4c969d239615bed2f068",
+      "bytes": 31840
+    },
+    "cpp_easygraph/pybind11/include/pybind11/attr.h": {
+      "sha256": "bde6db9da5a5f5e9942217f69318c1755ae943b75cad287b4df12ccb23d277d4",
+      "bytes": 26223
+    },
+    "cpp_easygraph/pybind11/include/pybind11/buffer_info.h": {
+      "sha256": "fc57108aca9da6985f59729e08636fdc6ab98afcb5cfea85dddd4da1eb5e6a89",
+      "bytes": 7778
+    },
+    "cpp_easygraph/pybind11/include/pybind11/cast.h": {
+      "sha256": "7d33db068e6cf32fb1384a05f18f7546f683312284c33ffee5546f3f8376c6c9",
+      "bytes": 93239
+    },
+    "cpp_easygraph/pybind11/include/pybind11/chrono.h": {
+      "sha256": "b00be9f25145323936d54477cfac6ac07963c0b84b866c9e44a01580280e9ae2",
+      "bytes": 8613
+    },
+    "cpp_easygraph/pybind11/include/pybind11/common.h": {
+      "sha256": "01383d06dd69c05f2a9cdb88d3ce9fa6b3380944ddad9764fe0d875c4d527fa0",
+      "bytes": 120
+    },
+    "cpp_easygraph/pybind11/include/pybind11/complex.h": {
+      "sha256": "01a0d9fab1262b8b456ae7be2bd3f9cb74f1c6769017a27067fe8b03391d2d02",
+      "bytes": 2096
+    },
+    "cpp_easygraph/pybind11/include/pybind11/conduit/README.txt": {
+      "sha256": "884453e65533fe00af2d455a4ddaa9be9c5615205069e3fa30df20edfa9faa42",
+      "bytes": 298
+    },
+    "cpp_easygraph/pybind11/include/pybind11/conduit/pybind11_conduit_v1.h": {
+      "sha256": "19af7d983107690a0250e53de0257ab2f394c99d2b2046cbf0cdb84643ffdcfc",
+      "bytes": 4153
+    },
+    "cpp_easygraph/pybind11/include/pybind11/conduit/pybind11_platform_abi_id.h": {
+      "sha256": "554656e07ee2cbdbd553380b749d7df76c25e0d9cdeac30259db599f563177f6",
+      "bytes": 3991
+    },
+    "cpp_easygraph/pybind11/include/pybind11/conduit/wrap_include_python_h.h": {
+      "sha256": "b86c91eda51e381e8411919f6f5f5367cb3270fede6d9db0e7131a2013226d33",
+      "bytes": 2069
+    },
+    "cpp_easygraph/pybind11/include/pybind11/critical_section.h": {
+      "sha256": "625cb959703218fe72f72f97d038f21801f676d12a5ee5a723e4eb9d63077589",
+      "bytes": 1610
+    },
+    "cpp_easygraph/pybind11/include/pybind11/detail/class.h": {
+      "sha256": "5585547173094e0ca71a7d8a475352f3b6ed37366cf48d93c501103fd7365473",
+      "bytes": 31236
+    },
+    "cpp_easygraph/pybind11/include/pybind11/detail/common.h": {
+      "sha256": "38c8407857a3864a1a2e6141c837dd1f9d64ecc4dc4d387a2b1133ad8df5a60c",
+      "bytes": 59916
+    },
+    "cpp_easygraph/pybind11/include/pybind11/detail/cpp_conduit.h": {
+      "sha256": "27384c5c580b6142a56165fe85cc9f55057a46b45020e690e539cd8120cf04c4",
+      "bytes": 2553
+    },
+    "cpp_easygraph/pybind11/include/pybind11/detail/descr.h": {
+      "sha256": "777d3c459f772f414b13b30a4867d7dc9993ac263cc3f3af521106844be21a74",
+      "bytes": 8061
+    },
+    "cpp_easygraph/pybind11/include/pybind11/detail/dynamic_raw_ptr_cast_if_possible.h": {
+      "sha256": "d6a59a3651fafa3f67e55a0417bd3308eacdcfa26914b16eea0a9d62d3452f7e",
+      "bytes": 1176
+    },
+    "cpp_easygraph/pybind11/include/pybind11/detail/exception_translation.h": {
+      "sha256": "32c88bbf1a9017a0acf3a11692603d754d0549ced257b54e18f71398d747ab07",
+      "bytes": 2593
+    },
+    "cpp_easygraph/pybind11/include/pybind11/detail/function_record_pyobject.h": {
+      "sha256": "3fa08a5a0da48f820773467208162937eca18fa21389b6a425c4b81af6082692",
+      "bytes": 7738
+    },
+    "cpp_easygraph/pybind11/include/pybind11/detail/init.h": {
+      "sha256": "d746ecf81d682fdab2e3d1d3c1d11aa2dbfd9cefe948b30785e4141d9c19f81f",
+      "bytes": 23073
+    },
+    "cpp_easygraph/pybind11/include/pybind11/detail/internals.h": {
+      "sha256": "60ae9151664175bd028484229e8ee69125e903f0f026cca502aea8f3a047329a",
+      "bytes": 32201
+    },
+    "cpp_easygraph/pybind11/include/pybind11/detail/native_enum_data.h": {
+      "sha256": "3b3e2b411fc92d4c389a6837a0c4630a85fd8864f4042f91706e20a7d0f792c4",
+      "bytes": 7633
+    },
+    "cpp_easygraph/pybind11/include/pybind11/detail/pybind11_namespace_macros.h": {
+      "sha256": "1d402e09a8517ad43671a769914b8be2b36902ecf10161c1802082546f05ede4",
+      "bytes": 3501
+    },
+    "cpp_easygraph/pybind11/include/pybind11/detail/struct_smart_holder.h": {
+      "sha256": "e4a8e9df2c5c298b2b4c9eefcaf9ffe042b9f419121f7f28ce9151bf53c5f301",
+      "bytes": 15072
+    },
+    "cpp_easygraph/pybind11/include/pybind11/detail/type_caster_base.h": {
+      "sha256": "23d13917c155ef3bdca2f24cd7d4f6f2b207768a8c9615363ed4a1231103c207",
+      "bytes": 66193
+    },
+    "cpp_easygraph/pybind11/include/pybind11/detail/typeid.h": {
+      "sha256": "8f0e69afd9bbdaf903b25a13f2fc65f708f5ed52467047570f2ce2065b7cf49b",
+      "bytes": 1625
+    },
+    "cpp_easygraph/pybind11/include/pybind11/detail/using_smart_holder.h": {
+      "sha256": "b03da16159791f8bbc5089aa9a2e524fda1fb434143e427ac91dea47795e4244",
+      "bytes": 540
+    },
+    "cpp_easygraph/pybind11/include/pybind11/detail/value_and_holder.h": {
+      "sha256": "3451fad2d34993a2ea4b55a045a82223c8ab928879013aa857410357641978a1",
+      "bytes": 3677
+    },
+    "cpp_easygraph/pybind11/include/pybind11/eigen/common.h": {
+      "sha256": "7487aa98aec8cd6e4ae24da56ab3e703503ceb7ac3a77f14f586cd230888c989",
+      "bytes": 378
+    },
+    "cpp_easygraph/pybind11/include/pybind11/eigen/matrix.h": {
+      "sha256": "4773e9f41c04a4f28241c97a01e39740181e46a289566437e340fb8201b50dc6",
+      "bytes": 32590
+    },
+    "cpp_easygraph/pybind11/include/pybind11/eigen/tensor.h": {
+      "sha256": "b1194876c925375f97a7c05de2468017c7bd5b3c35dd6f8905ebef7e9ea98f86",
+      "bytes": 18660
+    },
+    "cpp_easygraph/pybind11/include/pybind11/eigen.h": {
+      "sha256": "f87992035920c0243e18752decf1ed4c473ebf1ab0f71011a45f0f1d6262a76f",
+      "bytes": 316
+    },
+    "cpp_easygraph/pybind11/include/pybind11/embed.h": {
+      "sha256": "279f149552e8c84aed9412e1321d521b775d4191878f0af5714944ae282b2100",
+      "bytes": 12636
+    },
+    "cpp_easygraph/pybind11/include/pybind11/eval.h": {
+      "sha256": "5c1f3573116d060793b8255b4fde3b2202134357e7c2b4105704078e78226ab1",
+      "bytes": 4862
+    },
+    "cpp_easygraph/pybind11/include/pybind11/functional.h": {
+      "sha256": "e919c1a3220d2a9a93ead3dffd6cb4460da28eaced80c9e68cfbe58eed44254a",
+      "bytes": 5344
+    },
+    "cpp_easygraph/pybind11/include/pybind11/gil.h": {
+      "sha256": "6d06e94ae40d69f8a2ffd58ff4a53aef9c1a485a7fb9554f1f9e20317cc6a1bd",
+      "bytes": 6743
+    },
+    "cpp_easygraph/pybind11/include/pybind11/gil_safe_call_once.h": {
+      "sha256": "937b4923c159e87022870e78e6798ccb9450d67e0d39ee9d30ad6fa62a2d935a",
+      "bytes": 4054
+    },
+    "cpp_easygraph/pybind11/include/pybind11/gil_simple.h": {
+      "sha256": "02e3bd982d5d7af7634e75ce7b46891ac9c9b920b79dead69c6d7b1d54105fd9",
+      "bytes": 1185
+    },
+    "cpp_easygraph/pybind11/include/pybind11/iostream.h": {
+      "sha256": "2b9acf5e8098377db9af53e9b5c2422213e182d46d4c942332bedbbd420ec319",
+      "bytes": 8862
+    },
+    "cpp_easygraph/pybind11/include/pybind11/native_enum.h": {
+      "sha256": "d65ca0cc735a420f4620f4aeec7ef6f9f73576e59c4d158562e4cac1e13fae25",
+      "bytes": 2477
+    },
+    "cpp_easygraph/pybind11/include/pybind11/numpy.h": {
+      "sha256": "f890749a209828190b31c7e6d809c73181916ad38c24edc9fd426be6c7c9d811",
+      "bytes": 91577
+    },
+    "cpp_easygraph/pybind11/include/pybind11/operators.h": {
+      "sha256": "db6e11a005dcbf595ae0d358f6b437683fc0782f12f592b1dc754ad4ef01e0c5",
+      "bytes": 9103
+    },
+    "cpp_easygraph/pybind11/include/pybind11/options.h": {
+      "sha256": "a97be69e3fbef5f652a79e8d61e7e70775b9575ee9a47958d52ae0a370cd069c",
+      "bytes": 2734
+    },
+    "cpp_easygraph/pybind11/include/pybind11/pybind11.h": {
+      "sha256": "5eb3f2ee224bfd2287e38f63ea219f3691525f69e4d7dbb6710de7c2c426c0fa",
+      "bytes": 160679
+    },
+    "cpp_easygraph/pybind11/include/pybind11/pytypes.h": {
+      "sha256": "c991e587c606292f0c43c1bab73601a59d13c50a2210e73d8b2eb7f49d4aeda1",
+      "bytes": 102198
+    },
+    "cpp_easygraph/pybind11/include/pybind11/stl/filesystem.h": {
+      "sha256": "b6d329056290fe3ebecbf4d0ed0d177675fff4f79bfa35cbe01d2d6d5264d7cc",
+      "bytes": 4073
+    },
+    "cpp_easygraph/pybind11/include/pybind11/stl.h": {
+      "sha256": "ea83b4a2027b1063393f9546e1d32c6630ca9ebd7022e0911dc0210e4259c9ce",
+      "bytes": 24742
+    },
+    "cpp_easygraph/pybind11/include/pybind11/stl_bind.h": {
+      "sha256": "65436324b98c4cd1ff1dd82fc8b58da43f659a8e91cbe9c93ca0f6861f5ad0ab",
+      "bytes": 29646
+    },
+    "cpp_easygraph/pybind11/include/pybind11/subinterpreter.h": {
+      "sha256": "3ac9cee81333d45682f72dc2e1643d9448f168d50c2675f6d40a682455a470eb",
+      "bytes": 11467
+    },
+    "cpp_easygraph/pybind11/include/pybind11/trampoline_self_life_support.h": {
+      "sha256": "f935fdc394f12355d7dc01b6e7994c2dd882c91f9d664337db5c05b1e7729f1f",
+      "bytes": 2673
+    },
+    "cpp_easygraph/pybind11/include/pybind11/type_caster_pyobject_ptr.h": {
+      "sha256": "1fba4a0584ef52589b88940470a99e024ca0490c280a4b88cae90d483995abe5",
+      "bytes": 1929
+    },
+    "cpp_easygraph/pybind11/include/pybind11/typing.h": {
+      "sha256": "f20313c2636f5dafbcfc1350d0f691d4ade666b589969157895b255510bf628e",
+      "bytes": 8891
+    },
+    "cpp_easygraph/pybind11/include/pybind11/warnings.h": {
+      "sha256": "89d70134ae5e117c5805f3de56ec9c2f172032b2aebd1cd0237dc16a927c1b88",
+      "bytes": 2368
+    },
+    "cpp_easygraph/pybind11/noxfile.py": {
+      "sha256": "d4a10ce87ef2c2fe387385c17d66db9aaff5246eeac45307610bdd2bc5e74f94",
+      "bytes": 4028
+    },
+    "cpp_easygraph/pybind11/pybind11/__init__.py": {
+      "sha256": "240825cdf6bcc0004d33de20a73412a2cf38c28945fe693532bbe690b6d9c6bd",
+      "bytes": 459
+    },
+    "cpp_easygraph/pybind11/pybind11/__main__.py": {
+      "sha256": "3a6d532d2a151c365c0c1d01d0cf7537e2de91481a053d3df046f8f02496f7c0",
+      "bytes": 2966
+    },
+    "cpp_easygraph/pybind11/pybind11/_version.py": {
+      "sha256": "2c04d0f1e21ff2182f6783ca28a30bcb995052afcff0bdda21bbc3ae69af7cf6",
+      "bytes": 977
+    },
+    "cpp_easygraph/pybind11/pybind11/commands.py": {
+      "sha256": "578de129bed513f69b619bda3be4e924b394eb99fa5b766b7581c61771b7a94b",
+      "bytes": 1243
+    },
+    "cpp_easygraph/pybind11/pybind11/py.typed": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "cpp_easygraph/pybind11/pybind11/setup_helpers.py": {
+      "sha256": "ec8826f5d9704fdde640749807536ad3b9c424d5f67e685d60040cd1630ec6f5",
+      "bytes": 17488
+    },
+    "cpp_easygraph/pybind11/pyproject.toml": {
+      "sha256": "cbdb4aa8a188488ddfad85f5b6b26fccbf01861dc296c5b62112e49de453f261",
+      "bytes": 5007
+    },
+    "cpp_easygraph/pybind11/tests/CMakeLists.txt": {
+      "sha256": "f60d350f763d23166199a15069d6f9363a973c440d2c52fb688433160a3f3724",
+      "bytes": 24734
+    },
+    "cpp_easygraph/pybind11/tests/conftest.py": {
+      "sha256": "89c4ce08c91e1beea4f14c611d80b458adc90fd6105bc3aadcbdab70af09f027",
+      "bytes": 7345
+    },
+    "cpp_easygraph/pybind11/tests/constructor_stats.h": {
+      "sha256": "b5c35dab3c54b7e40089f9d9198daabdcf7d081936f1ddb4316df67257fbdf59",
+      "bytes": 11997
+    },
+    "cpp_easygraph/pybind11/tests/cross_module_gil_utils.cpp": {
+      "sha256": "1a26edda648778ee11437fc4a3e57afd2d0d552694520d5fa0e3dbfdcb91c282",
+      "bytes": 3666
+    },
+    "cpp_easygraph/pybind11/tests/cross_module_interleaved_error_already_set.cpp": {
+      "sha256": "7d54e817898ad1fca3fde4d66d879364a13e04429a141aaa47a0f6e348ffbcba",
+      "bytes": 1860
+    },
+    "cpp_easygraph/pybind11/tests/custom_exceptions.py": {
+      "sha256": "2b7e8f16bb430b08d3a49617e9f87922530659d977f7d9dc0b191f9d34861552",
+      "bytes": 253
+    },
+    "cpp_easygraph/pybind11/tests/eigen_tensor_avoid_stl_array.cpp": {
+      "sha256": "1130485fb11050529c4e4fb166c7a118167bcc6b1ee1a800c849ef6800fbf7fa",
+      "bytes": 430
+    },
+    "cpp_easygraph/pybind11/tests/env.py": {
+      "sha256": "94c10cf9fe9b60a00537c16044985e46541208aac660ea55683b54f4a6193997",
+      "bytes": 1330
+    },
+    "cpp_easygraph/pybind11/tests/exo_planet_c_api.cpp": {
+      "sha256": "b78c0a5e66546062e642330df05a212356d91317affa834748c701ae917446d4",
+      "bytes": 2772
+    },
+    "cpp_easygraph/pybind11/tests/exo_planet_pybind11.cpp": {
+      "sha256": "17b4db53aafed8ff7fe5d338bc1e74adc37a94a646c4c84a4f091e8d4ae79f83",
+      "bytes": 492
+    },
+    "cpp_easygraph/pybind11/tests/extra_python_package/pytest.ini": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "cpp_easygraph/pybind11/tests/extra_python_package/test_files.py": {
+      "sha256": "cde72a647fb0981f67157ab801ccdf6f3c27d35110855f19063ae09041b49b91",
+      "bytes": 12086
+    },
+    "cpp_easygraph/pybind11/tests/extra_setuptools/pytest.ini": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "cpp_easygraph/pybind11/tests/extra_setuptools/test_setuphelper.py": {
+      "sha256": "7ff91b7c452093d2d313ce37cae65ce2325e0d93d7be4bfe699372825e3629d2",
+      "bytes": 4189
+    },
+    "cpp_easygraph/pybind11/tests/home_planet_very_lonely_traveler.cpp": {
+      "sha256": "fae73f980579154916a3a553edef466b3231dbf67cf669c40277a5d8b27c83a4",
+      "bytes": 352
+    },
+    "cpp_easygraph/pybind11/tests/local_bindings.h": {
+      "sha256": "168a9d10d571424326815f5f9344f6178dc4471b62b62d035c3552b41a3419e1",
+      "bytes": 2839
+    },
+    "cpp_easygraph/pybind11/tests/mod_per_interpreter_gil.cpp": {
+      "sha256": "c534d1df70b891db271841c2311a0dcd675938f6f59c4075372b045c0e6e82c7",
+      "bytes": 681
+    },
+    "cpp_easygraph/pybind11/tests/mod_shared_interpreter_gil.cpp": {
+      "sha256": "e563d9024dc9f5167f987422844ad4caf0671071827e3196d48d27f00ca4b90a",
+      "bytes": 603
+    },
+    "cpp_easygraph/pybind11/tests/object.h": {
+      "sha256": "29872aad3041fee0b468f8709f890a9bc0b5b77af9cec18cc0ffacc225353d1d",
+      "bytes": 5743
+    },
+    "cpp_easygraph/pybind11/tests/pure_cpp/CMakeLists.txt": {
+      "sha256": "2fae5441ccf35c4c90e8a0db0394c5699d3c85a7b5ebbe10b56f16ce9fda800e",
+      "bytes": 735
+    },
+    "cpp_easygraph/pybind11/tests/pure_cpp/smart_holder_poc.h": {
+      "sha256": "6976d2baa8ca15670717e9b60fce3aea90ebe93b32fc17f0c436dac8de62038f",
+      "bytes": 2048
+    },
+    "cpp_easygraph/pybind11/tests/pure_cpp/smart_holder_poc_test.cpp": {
+      "sha256": "3021ce3d66ce34eff6de5c9f3c44613cb59aa3f79921b3453c8d78092ea1aabe",
+      "bytes": 17380
+    },
+    "cpp_easygraph/pybind11/tests/pybind11_cross_module_tests.cpp": {
+      "sha256": "eba1c270fd1a355977697cc385b1f36f100fd069e86407f2bb5470766d2a8930",
+      "bytes": 6280
+    },
+    "cpp_easygraph/pybind11/tests/pybind11_tests.cpp": {
+      "sha256": "daeb3e9ccb5a030bf39148d369c6881ce777cf325930816a3be95010e7060f26",
+      "bytes": 4808
+    },
+    "cpp_easygraph/pybind11/tests/pybind11_tests.h": {
+      "sha256": "d4727068832e424870949201df4bff6ae89a724ae0321afb2271ad145e174b48",
+      "bytes": 3742
+    },
+    "cpp_easygraph/pybind11/tests/pyproject.toml": {
+      "sha256": "aa7925000fe4691224be6a9eee44b62976c4c25717a5e70b0862521f37d17940",
+      "bytes": 1037
+    },
+    "cpp_easygraph/pybind11/tests/pytest.ini": {
+      "sha256": "d716e0623ff1892c1504a0d7e49dc288963afb629e38cbb4b6a4e0b0de8fe381",
+      "bytes": 765
+    },
+    "cpp_easygraph/pybind11/tests/requirements.txt": {
+      "sha256": "bac53c766f2ed18e27c6b701b270b28df0a9693ceec33791a0789506e7744533",
+      "bytes": 1264
+    },
+    "cpp_easygraph/pybind11/tests/test_async.cpp": {
+      "sha256": "10a392a7ea512da34049d98c7d3a584848abec8b6a28bfbdb37126dc1f24b50d",
+      "bytes": 855
+    },
+    "cpp_easygraph/pybind11/tests/test_async.py": {
+      "sha256": "8c083d45e61710cf33fa23427b655860e4002b5d5b33bad4d908d6913cd4ed9c",
+      "bytes": 707
+    },
+    "cpp_easygraph/pybind11/tests/test_buffers.cpp": {
+      "sha256": "fceb7aa97cf560ab16683d90ed7302769a1906bb36c7631c3974504b038cb1a9",
+      "bytes": 18410
+    },
+    "cpp_easygraph/pybind11/tests/test_buffers.py": {
+      "sha256": "014e29d7d8c41a6d0c6e4285a66cb612b419c49b0917994a507b7942619a99b2",
+      "bytes": 14204
+    },
+    "cpp_easygraph/pybind11/tests/test_builtin_casters.cpp": {
+      "sha256": "20ca5723ba9947575aaeb1b334bcc32161d444f2461aa32acd85c3e0cfbd97b2",
+      "bytes": 16134
+    },
+    "cpp_easygraph/pybind11/tests/test_builtin_casters.py": {
+      "sha256": "0566579e5b27b6b17ab86ce0eb2c98213707ede59f78d15b90861c84bbcf2332",
+      "bytes": 18018
+    },
+    "cpp_easygraph/pybind11/tests/test_call_policies.cpp": {
+      "sha256": "c1bc5911ec0adc1cf40919278bec901275704def0c53bbfc3bcb2fb7dc4f02fa",
+      "bytes": 4112
+    },
+    "cpp_easygraph/pybind11/tests/test_call_policies.py": {
+      "sha256": "c2beb32c6337dcc51ef47bd8268e0ff8a4404973285e2c245b6ed9a8e7277a8b",
+      "bytes": 7089
+    },
+    "cpp_easygraph/pybind11/tests/test_callbacks.cpp": {
+      "sha256": "63fa86d3a48b3bc94bfe52f83fde2c43fe138915a49f4295de3c1904c3502826",
+      "bytes": 11553
+    },
+    "cpp_easygraph/pybind11/tests/test_callbacks.py": {
+      "sha256": "4daa8e4a4cd8c26ea2c74a9a6536f7e24aff0a6dd25f80cb414b0b155248cf92",
+      "bytes": 7755
+    },
+    "cpp_easygraph/pybind11/tests/test_chrono.cpp": {
+      "sha256": "67dc2ca42a136021cc64248f73179b3c4082ab2a7c71679dc412837569ef16e5",
+      "bytes": 3370
+    },
+    "cpp_easygraph/pybind11/tests/test_chrono.py": {
+      "sha256": "44cc71790ca52c6500503a080926717594d9e8cda3627912bce14e75cdbfcdb3",
+      "bytes": 5727
+    },
+    "cpp_easygraph/pybind11/tests/test_class.cpp": {
+      "sha256": "e86c890e5f6534d3eeec7897fc0dc4ceda3c78a05359150aa485d613e8f98b8b",
+      "bytes": 25856
+    },
+    "cpp_easygraph/pybind11/tests/test_class.py": {
+      "sha256": "e67917624e7087162d6d87bcf21d8d5dbfc79d5b4e131b5e64868da056c0bdf8",
+      "bytes": 16860
+    },
+    "cpp_easygraph/pybind11/tests/test_class_release_gil_before_calling_cpp_dtor.cpp": {
+      "sha256": "6bc913a183ee6a91a23fe798e1921869d4ccd8777be5f12252285edfd54bfe12",
+      "bytes": 1594
+    },
+    "cpp_easygraph/pybind11/tests/test_class_release_gil_before_calling_cpp_dtor.py": {
+      "sha256": "3cd2895eed82085cec2a631067b063c444a3e56e5f9b0e4d7509736203f13f46",
+      "bytes": 567
+    },
+    "cpp_easygraph/pybind11/tests/test_class_sh_basic.cpp": {
+      "sha256": "d2314f7d6bd2e72382060bb79ff89b3833d96058b30ab2d0614e2fb8407d5588",
+      "bytes": 10604
+    },
+    "cpp_easygraph/pybind11/tests/test_class_sh_basic.py": {
+      "sha256": "e3f46485964a1084381bc8bcf53ad26d850af28852ac62abb2bbe0b55f90b6de",
+      "bytes": 8010
+    },
+    "cpp_easygraph/pybind11/tests/test_class_sh_disowning.cpp": {
+      "sha256": "ccbf7e8af45462c4ea454fe834d04ab5a8279fcae76fe435a5907484e0e3255d",
+      "bytes": 1312
+    },
+    "cpp_easygraph/pybind11/tests/test_class_sh_disowning.py": {
+      "sha256": "c0563d4e67bedc50783cbbc538d1f62a99387d5d93be6cc2339088d086675afc",
+      "bytes": 2775
+    },
+    "cpp_easygraph/pybind11/tests/test_class_sh_disowning_mi.cpp": {
+      "sha256": "f7ca387359c987708e0c505d789b7c6e8831068d34aab820df8d9f2c9d827a1a",
+      "bytes": 2349
+    },
+    "cpp_easygraph/pybind11/tests/test_class_sh_disowning_mi.py": {
+      "sha256": "7343a966f2092db6b7c4d45bcedefae1039336cdefe5f3ca5b984fa9a75724ca",
+      "bytes": 5415
+    },
+    "cpp_easygraph/pybind11/tests/test_class_sh_factory_constructors.cpp": {
+      "sha256": "fa0f5441890353abc765f99ff6fed3268df74f30ee1ab61afc74bd783ba05447",
+      "bytes": 5938
+    },
+    "cpp_easygraph/pybind11/tests/test_class_sh_factory_constructors.py": {
+      "sha256": "3245a8dc62acc8ba7836276443a08e21ae8472b7c44feb7cb9c652411261da63",
+      "bytes": 1465
+    },
+    "cpp_easygraph/pybind11/tests/test_class_sh_inheritance.cpp": {
+      "sha256": "338e5a7328b460da1c3e35622e1dc6a5f3d8e6ffb78a82a609bc1fd83c17ef1e",
+      "bytes": 3279
+    },
+    "cpp_easygraph/pybind11/tests/test_class_sh_inheritance.py": {
+      "sha256": "fb22e2eb50d883ede3b3b43bbe241bb2f2842cc002029a250b59d8846431616c",
+      "bytes": 1761
+    },
+    "cpp_easygraph/pybind11/tests/test_class_sh_mi_thunks.cpp": {
+      "sha256": "6023cc94ccaaf0ed2cd877f73deb02832641796efbb4e318aaa3c8bacb69654d",
+      "bytes": 2787
+    },
+    "cpp_easygraph/pybind11/tests/test_class_sh_mi_thunks.py": {
+      "sha256": "0e3aa3510e7a671d3d8f04145f40b40593f6833c19a3a863199422b0d3041fc1",
+      "bytes": 1510
+    },
+    "cpp_easygraph/pybind11/tests/test_class_sh_property.cpp": {
+      "sha256": "7d75a55dc0cd2e97cb675ef6785a0820dfdff79afcaf0ddcd8282d80343cfaef",
+      "bytes": 3167
+    },
+    "cpp_easygraph/pybind11/tests/test_class_sh_property.py": {
+      "sha256": "ae998dd165f87477cfa35d6d89813f81f03b39cee41ab4fbf647fa9d10decc45",
+      "bytes": 6046
+    },
+    "cpp_easygraph/pybind11/tests/test_class_sh_property_non_owning.cpp": {
+      "sha256": "c2926d50d85f0e904653b60cb4928c4437de4f80106ee1a5b7be638540311853",
+      "bytes": 2148
+    },
+    "cpp_easygraph/pybind11/tests/test_class_sh_property_non_owning.py": {
+      "sha256": "f4031aa81a06a908c6f4bbfb9192ac183ddcdb32803ec3a7c91b4d1b367c985b",
+      "bytes": 963
+    },
+    "cpp_easygraph/pybind11/tests/test_class_sh_shared_ptr_copy_move.cpp": {
+      "sha256": "504757e7e4d138d15c1128f2363b3242cbf1097c001a4541b3e6427effa4eee5",
+      "bytes": 3955
+    },
+    "cpp_easygraph/pybind11/tests/test_class_sh_shared_ptr_copy_move.py": {
+      "sha256": "783688d0dc8f0df9035dff58c30075ceb9a8fb53624bc440572b4cc6d9eb77c2",
+      "bytes": 1102
+    },
+    "cpp_easygraph/pybind11/tests/test_class_sh_trampoline_basic.cpp": {
+      "sha256": "6f1a0f5e917a5a38efb148fe852e3cc03f67ddffc727cb759c8846dfeb3624a8",
+      "bytes": 1924
+    },
+    "cpp_easygraph/pybind11/tests/test_class_sh_trampoline_basic.py": {
+      "sha256": "692e5e6202ee4a3564ca5b4e30eebabcf4c1244028e2ff604c725b14d594627d",
+      "bytes": 977
+    },
+    "cpp_easygraph/pybind11/tests/test_class_sh_trampoline_self_life_support.cpp": {
+      "sha256": "6233366d196a670c9b29ff7e0b551656afd7e7be30f4d1907f56958eab44475a",
+      "bytes": 2967
+    },
+    "cpp_easygraph/pybind11/tests/test_class_sh_trampoline_self_life_support.py": {
+      "sha256": "09e26e9978795b3f51bccab2ac4035af12acf8a3c1a6dbeb3d8c3d3cf57024af",
+      "bytes": 872
+    },
+    "cpp_easygraph/pybind11/tests/test_class_sh_trampoline_shared_from_this.cpp": {
+      "sha256": "3bd1e0777477e6842ba17125e77361c62329f18af44a8025a8274491337ae1c2",
+      "bytes": 4705
+    },
+    "cpp_easygraph/pybind11/tests/test_class_sh_trampoline_shared_from_this.py": {
+      "sha256": "c4022603a58dab321b4728edc004a5a27029cadac29689970a0d7b36149e3774",
+      "bytes": 8320
+    },
+    "cpp_easygraph/pybind11/tests/test_class_sh_trampoline_shared_ptr_cpp_arg.cpp": {
+      "sha256": "a18910a6893974cea5f019145d6008269b6753440f2a4acef7e7a706c18bf078",
+      "bytes": 3396
+    },
+    "cpp_easygraph/pybind11/tests/test_class_sh_trampoline_shared_ptr_cpp_arg.py": {
+      "sha256": "3ff2f2619b6f21a10ccf2310f8dc14bffeab609a0aabeb7b41ab2949e5e82849",
+      "bytes": 4214
+    },
+    "cpp_easygraph/pybind11/tests/test_class_sh_trampoline_unique_ptr.cpp": {
+      "sha256": "695e131cbcf6238a00adfb9ccab3a0309fbb408532e892ab8cd4aef89ca84855",
+      "bytes": 1801
+    },
+    "cpp_easygraph/pybind11/tests/test_class_sh_trampoline_unique_ptr.py": {
+      "sha256": "64e4f6677d3445e4e9b0d02abeaf480fd75ba246c6d25802ae042bb7a9862808",
+      "bytes": 760
+    },
+    "cpp_easygraph/pybind11/tests/test_class_sh_unique_ptr_custom_deleter.cpp": {
+      "sha256": "4859bfb765483a1aae438c3db7cb3e1c10fca7b50d66465a2f5139d3d37d79b6",
+      "bytes": 721
+    },
+    "cpp_easygraph/pybind11/tests/test_class_sh_unique_ptr_custom_deleter.py": {
+      "sha256": "f0fe23cfcd0399d1252d198bdda9a8523f2d8954d96e3f7753c0f5e6153f37a2",
+      "bytes": 179
+    },
+    "cpp_easygraph/pybind11/tests/test_class_sh_unique_ptr_member.cpp": {
+      "sha256": "dd678eae774d13dc84daa54dc8224ccd0c543bd6df45d78fbc2b52ed31b43ca8",
+      "bytes": 1511
+    },
+    "cpp_easygraph/pybind11/tests/test_class_sh_unique_ptr_member.py": {
+      "sha256": "e4108011cf2a310a29c406ad26ea22b963ec95efbd6e8ece6831d9fb1979d175",
+      "bytes": 735
+    },
+    "cpp_easygraph/pybind11/tests/test_class_sh_virtual_py_cpp_mix.cpp": {
+      "sha256": "379289d4792ceae189797bdaa7002de6011b77fb75fbc0ecaaaeb66fb97da6c8",
+      "bytes": 1681
+    },
+    "cpp_easygraph/pybind11/tests/test_class_sh_virtual_py_cpp_mix.py": {
+      "sha256": "0ebfaa9504346bdb2dcf7ee0aae7e92d638ab987ff74f835bed571bdbf30c7ad",
+      "bytes": 1377
+    },
+    "cpp_easygraph/pybind11/tests/test_cmake_build/CMakeLists.txt": {
+      "sha256": "a54b59933db134b81dc4c0c6e15a5f5949d91d663c85b8ca35d6ebbfa17ad5fa",
+      "bytes": 2933
+    },
+    "cpp_easygraph/pybind11/tests/test_cmake_build/embed.cpp": {
+      "sha256": "de11a2b64b4a4bd6aa611e773e0f521940bd873536df54b2e97048ccf226d877",
+      "bytes": 673
+    },
+    "cpp_easygraph/pybind11/tests/test_cmake_build/installed_embed/CMakeLists.txt": {
+      "sha256": "b5ae43d06cda7d6aae6fa0da83fcdccb789729646384d6c25bdda64a3554177e",
+      "bytes": 820
+    },
+    "cpp_easygraph/pybind11/tests/test_cmake_build/installed_function/CMakeLists.txt": {
+      "sha256": "459dd39a5e4ff34a76c07341b7708c2392579db4225f39456d43e7e9c2faa22a",
+      "bytes": 907
+    },
+    "cpp_easygraph/pybind11/tests/test_cmake_build/installed_target/CMakeLists.txt": {
+      "sha256": "8349558f488309c76aff60fe3714aa24559e83750cdbe435d708fcafb5bb3e6a",
+      "bytes": 1334
+    },
+    "cpp_easygraph/pybind11/tests/test_cmake_build/main.cpp": {
+      "sha256": "1b5af44672d1c436831f4e52ff197449f99db2857a2efcffc9c79c72b4ed13ee",
+      "bytes": 176
+    },
+    "cpp_easygraph/pybind11/tests/test_cmake_build/subdirectory_embed/CMakeLists.txt": {
+      "sha256": "19317bf63f6d01dcd61d837ffa56270b405e44d493d482549ce3aeb7b1dcefce",
+      "bytes": 1258
+    },
+    "cpp_easygraph/pybind11/tests/test_cmake_build/subdirectory_function/CMakeLists.txt": {
+      "sha256": "bba501c95cbcddcf1a39f14a4d30d253635b1a9f2406289cf3295ae8068c0eb6",
+      "bytes": 1068
+    },
+    "cpp_easygraph/pybind11/tests/test_cmake_build/subdirectory_target/CMakeLists.txt": {
+      "sha256": "4e5c0e40ce2075e0650132a18da3e8ecb35b3e535f9f1dd687191f0214266aba",
+      "bytes": 1273
+    },
+    "cpp_easygraph/pybind11/tests/test_cmake_build/test.py": {
+      "sha256": "1d028cb31c2c7ebbc8cbf433c42bda19a63af1bf36923c8755774ba718fe4be8",
+      "bytes": 234
+    },
+    "cpp_easygraph/pybind11/tests/test_const_name.cpp": {
+      "sha256": "cd20f248cf6c9acd6cce640f9c3c318eed9249539ec11dd4d67602b9546c1f7f",
+      "bytes": 3831
+    },
+    "cpp_easygraph/pybind11/tests/test_const_name.py": {
+      "sha256": "506c7d90549246581bccd1c837aa12e358f29ddce984c72a9db3d9c42acc4cfa",
+      "bytes": 629
+    },
+    "cpp_easygraph/pybind11/tests/test_constants_and_functions.cpp": {
+      "sha256": "752774f77413d79f90405c4fa788e5769d873c171d62bbcf761d626a400a0ffe",
+      "bytes": 5846
+    },
+    "cpp_easygraph/pybind11/tests/test_constants_and_functions.py": {
+      "sha256": "7debfcbf0dc47effd87e786a3b0f5014cebb56111b336fcc3967dd1f910b88e7",
+      "bytes": 1587
+    },
+    "cpp_easygraph/pybind11/tests/test_copy_move.cpp": {
+      "sha256": "1d85319f755e031e8eacbd301829cbc65ddadf95f713760bf9e11c59e609bad7",
+      "bytes": 26495
+    },
+    "cpp_easygraph/pybind11/tests/test_copy_move.py": {
+      "sha256": "ad662e21af2c69e2a8d7ec50b317ebeb5c14dc9784a16c2c4ee9f67a767631cc",
+      "bytes": 5331
+    },
+    "cpp_easygraph/pybind11/tests/test_cpp_conduit.cpp": {
+      "sha256": "b9025af2668fd85e6f8f2e18da2e4bac6a0fa0a53a72d7fca6090a98bba79b41",
+      "bytes": 646
+    },
+    "cpp_easygraph/pybind11/tests/test_cpp_conduit.py": {
+      "sha256": "193749efaeab3a3e830bca6b3492e613d9284385f50aafd3cde717c4f8fdd186",
+      "bytes": 6154
+    },
+    "cpp_easygraph/pybind11/tests/test_cpp_conduit_traveler_bindings.h": {
+      "sha256": "bc5105fc7b1a982c2f583c26b07eaea95c8dfe2e35558c162c276298095fae8d",
+      "bytes": 1498
+    },
+    "cpp_easygraph/pybind11/tests/test_cpp_conduit_traveler_types.h": {
+      "sha256": "a8bef47698b4a2201dea1046d70e0ffde02de3881c5e6aa7f185d603a611565c",
+      "bytes": 562
+    },
+    "cpp_easygraph/pybind11/tests/test_cross_module_rtti/CMakeLists.txt": {
+      "sha256": "18874460c4267fdb2a099b5042f56154d58e3e8a6daf6a710a40215d78baa31e",
+      "bytes": 2905
+    },
+    "cpp_easygraph/pybind11/tests/test_cross_module_rtti/bindings.cpp": {
+      "sha256": "780d938453e686e2088f34b0c5b9bfc68b2d2483df5b115bb7b657452b6fb256",
+      "bytes": 622
+    },
+    "cpp_easygraph/pybind11/tests/test_cross_module_rtti/catch.cpp": {
+      "sha256": "9e0167a135f2322954b138ae56295dbef18fa90e14654c2c428e8fcdc5b61829",
+      "bytes": 689
+    },
+    "cpp_easygraph/pybind11/tests/test_cross_module_rtti/lib.cpp": {
+      "sha256": "3d71a8b411f1dbb4f41c1f3bd4626bc87813e3677a77d7af80ab3eec9327f918",
+      "bytes": 221
+    },
+    "cpp_easygraph/pybind11/tests/test_cross_module_rtti/lib.h": {
+      "sha256": "9c375febf146dee864f3ea209ca16f6280514e1dfacec7756271812e99f92ce6",
+      "bytes": 573
+    },
+    "cpp_easygraph/pybind11/tests/test_cross_module_rtti/test_cross_module_rtti.cpp": {
+      "sha256": "fb88fa5f4f8e6405455845cc9dac033974c64c73ad298aab53ce4daf6beb79dd",
+      "bytes": 1910
+    },
+    "cpp_easygraph/pybind11/tests/test_custom_type_casters.cpp": {
+      "sha256": "fbbf00f988a753758abec53ffe30f6b35c0f1ded0485ae0f2f56cb99e208371a",
+      "bytes": 7536
+    },
+    "cpp_easygraph/pybind11/tests/test_custom_type_casters.py": {
+      "sha256": "31c0c09a9886a83d93e4a0b58d123a35a81fc874dc3e0131d60b7e654cb3336d",
+      "bytes": 4140
+    },
+    "cpp_easygraph/pybind11/tests/test_custom_type_setup.cpp": {
+      "sha256": "a0a7354b98d03ac5b0a4d6af5367acdbc3c7a90773ecaa96ccbab4a0802b2768",
+      "bytes": 1608
+    },
+    "cpp_easygraph/pybind11/tests/test_custom_type_setup.py": {
+      "sha256": "d4f810fea38d0c72fefdbebe41a96308eaeb8093011c39a43efa206c4b184f04",
+      "bytes": 1155
+    },
+    "cpp_easygraph/pybind11/tests/test_docs_advanced_cast_custom.cpp": {
+      "sha256": "a4e8d0fab3b45fa41e28e8c8c8fe05c7b576afee1995e4877449e353607801bc",
+      "bytes": 2676
+    },
+    "cpp_easygraph/pybind11/tests/test_docs_advanced_cast_custom.py": {
+      "sha256": "14fe9d3c62016838b03782e6274cc90020695f9e8489dedef0d01386b3bb48ff",
+      "bytes": 1251
+    },
+    "cpp_easygraph/pybind11/tests/test_docstring_options.cpp": {
+      "sha256": "2a6025af281bc18bab3d98e00a603a2dcb979ee0a48fe0161891d4b320a9ffdf",
+      "bytes": 4405
+    },
+    "cpp_easygraph/pybind11/tests/test_docstring_options.py": {
+      "sha256": "bb0fc4c4116842a8267c44dac0f424df6250e4bb4fdae13b10f8c115284cabce",
+      "bytes": 2591
+    },
+    "cpp_easygraph/pybind11/tests/test_eigen_matrix.cpp": {
+      "sha256": "b80da15eb95134a0582bbd7515e8faf5c145dd6b20d171034fffefe0107f1540",
+      "bytes": 20239
+    },
+    "cpp_easygraph/pybind11/tests/test_eigen_matrix.py": {
+      "sha256": "d224d94163cbaeae32598c6a95650efda2e1cb631cb68bbfa1af510354a608b6",
+      "bytes": 30820
+    },
+    "cpp_easygraph/pybind11/tests/test_eigen_tensor.cpp": {
+      "sha256": "8600113fe0de4d9c13c3e8db583d942a6b9e8bca13a313a2d07bc5ad01c7658a",
+      "bytes": 473
+    },
+    "cpp_easygraph/pybind11/tests/test_eigen_tensor.inl": {
+      "sha256": "d0ec9fbe3e8ea42b87fb0e6a5c7ff9095a3a6490a7a77e4f732ad61d57159c31",
+      "bytes": 10876
+    },
+    "cpp_easygraph/pybind11/tests/test_eigen_tensor.py": {
+      "sha256": "3638d56684dfc72e81ba0eb28d39216254fbc7a182fe74c9146935f2b0f6245a",
+      "bytes": 11020
+    },
+    "cpp_easygraph/pybind11/tests/test_embed/CMakeLists.txt": {
+      "sha256": "01829e5017f8c90b4819fe2928d07aa23ecb113e1f9706690d5b8a95769cf514",
+      "bytes": 2341
+    },
+    "cpp_easygraph/pybind11/tests/test_embed/catch.cpp": {
+      "sha256": "03cafe446b4c6c3481a202b9a590fcca9811f130a38c1810e0f591e9c7f6fbe8",
+      "bytes": 1315
+    },
+    "cpp_easygraph/pybind11/tests/test_embed/external_module.cpp": {
+      "sha256": "86d0aa975d0b0005d2e95445f419c1b71c08c89931849998045d8490cceea834",
+      "bytes": 666
+    },
+    "cpp_easygraph/pybind11/tests/test_embed/test_interpreter.cpp": {
+      "sha256": "665fd97b2710bb25119a259386e66b4f692c8d1412dd71cec37b5a9557ddc5a7",
+      "bytes": 17234
+    },
+    "cpp_easygraph/pybind11/tests/test_embed/test_interpreter.py": {
+      "sha256": "c9b291f7b5dc85254c3b2199496f9d04d444555bf54fe92cf72c42e6dd0eebdb",
+      "bytes": 273
+    },
+    "cpp_easygraph/pybind11/tests/test_embed/test_subinterpreter.cpp": {
+      "sha256": "8ba1e617c873036b861a12530de3d70b3d6aaf1688dc7b9529a5c840387bc715",
+      "bytes": 15983
+    },
+    "cpp_easygraph/pybind11/tests/test_embed/test_trampoline.py": {
+      "sha256": "819d811c56fef40d55683536290cca46894cee96a6f1cbc3ca39b1361414f696",
+      "bytes": 311
+    },
+    "cpp_easygraph/pybind11/tests/test_enum.cpp": {
+      "sha256": "d9a5ca1da93e8e688012abf32ad002ac5270fb3058cc01474b5573bd8ac7134d",
+      "bytes": 6341
+    },
+    "cpp_easygraph/pybind11/tests/test_enum.py": {
+      "sha256": "1e843efefe5aa6a96dac3925edb1179b62cad082e97705a300ff239498b2a46c",
+      "bytes": 11470
+    },
+    "cpp_easygraph/pybind11/tests/test_eval.cpp": {
+      "sha256": "1ffcef687ec679f95fb93cd513780df3924bc4a2d15bdab563ccd67e7caeaeb4",
+      "bytes": 3168
+    },
+    "cpp_easygraph/pybind11/tests/test_eval.py": {
+      "sha256": "a6d3eb233bfb33fa832a9fecd54849d7def461cfe9059569e17732d12a58767b",
+      "bytes": 1194
+    },
+    "cpp_easygraph/pybind11/tests/test_eval_call.py": {
+      "sha256": "0cdfbf7af1e139df4ca3b002142e2e6e3a2291288df4c654cf0511e79eb083e2",
+      "bytes": 154
+    },
+    "cpp_easygraph/pybind11/tests/test_exceptions.cpp": {
+      "sha256": "66ab9d5c5d7089ec29c9010fc515163a4f018b9f31934975f3be74158f5a7e05",
+      "bytes": 15075
+    },
+    "cpp_easygraph/pybind11/tests/test_exceptions.h": {
+      "sha256": "b91aa61603d5a72955d59e018b557821aac0f97944a2d10423b5e411149490c3",
+      "bytes": 397
+    },
+    "cpp_easygraph/pybind11/tests/test_exceptions.py": {
+      "sha256": "5cd4d483c5dbc879347eab8e2300693aefae065f1948c0829b840084f320d927",
+      "bytes": 14835
+    },
+    "cpp_easygraph/pybind11/tests/test_factory_constructors.cpp": {
+      "sha256": "e10a2b3cb4968599e57aa492f22c8df30292fc27ffe238681862ba2f75af937d",
+      "bytes": 18155
+    },
+    "cpp_easygraph/pybind11/tests/test_factory_constructors.py": {
+      "sha256": "c1af0274cfaf7cb3a5a323c03842f9c95e641b45cafb0835286c38424c7c8421",
+      "bytes": 17476
+    },
+    "cpp_easygraph/pybind11/tests/test_gil_scoped.cpp": {
+      "sha256": "1111256cce4221dfb8c10a399c477f94833b9350cac0bafa0b05410f75d2f47b",
+      "bytes": 5311
+    },
+    "cpp_easygraph/pybind11/tests/test_gil_scoped.py": {
+      "sha256": "5e1b2babc112ce183bd0d4bf8d9ce4ae2d4fb0dbb3f75a3140b3e85d69210120",
+      "bytes": 10168
+    },
+    "cpp_easygraph/pybind11/tests/test_iostream.cpp": {
+      "sha256": "a3920d2ba61240ec066cffed49930d967887c944e82cc37c8f3e3f5bd53a22ec",
+      "bytes": 3960
+    },
+    "cpp_easygraph/pybind11/tests/test_iostream.py": {
+      "sha256": "cc95c6eb518bc9cd922e2bc4359c89827fea62dd85e5060500e390070c8c8d82",
+      "bytes": 7292
+    },
+    "cpp_easygraph/pybind11/tests/test_kwargs_and_defaults.cpp": {
+      "sha256": "7b4fab54ec7b9ae65bf1cd1193fae6ca1ae19499f1826d1d418d9eef0708e328",
+      "bytes": 11385
+    },
+    "cpp_easygraph/pybind11/tests/test_kwargs_and_defaults.py": {
+      "sha256": "c99c626052de55b6e7d6b60192955538b504288cf3d70bc22aeefb18a846320e",
+      "bytes": 16448
+    },
+    "cpp_easygraph/pybind11/tests/test_local_bindings.cpp": {
+      "sha256": "b4c1da514e64d9c57af7540c01a57ef849110d5dc77b72533f8e261c2fa658d5",
+      "bytes": 4401
+    },
+    "cpp_easygraph/pybind11/tests/test_local_bindings.py": {
+      "sha256": "fcd4333d95a56034d78f80f34c52b1a9825dfa26208358d516d0603579c381dd",
+      "bytes": 7996
+    },
+    "cpp_easygraph/pybind11/tests/test_methods_and_attributes.cpp": {
+      "sha256": "f34a78392694c7b1e365baa0ce008b0aef6a60dca1f521145326239bc6802b5d",
+      "bytes": 22218
+    },
+    "cpp_easygraph/pybind11/tests/test_methods_and_attributes.py": {
+      "sha256": "ec33bde733f425159032f90eaf2e6b8a57f1bd30ac5a37ef0eca29bac7dbc18a",
+      "bytes": 19509
+    },
+    "cpp_easygraph/pybind11/tests/test_modules.cpp": {
+      "sha256": "42a8b8dfc66b339472c01a2fe40de19aa601f1dd5fabe29d763bac8264538078",
+      "bytes": 4289
+    },
+    "cpp_easygraph/pybind11/tests/test_modules.py": {
+      "sha256": "2b1541a088dfbc55c29b00f400d7e19bb177728b748c385b4d9693265a6bb4d8",
+      "bytes": 4665
+    },
+    "cpp_easygraph/pybind11/tests/test_multiple_inheritance.cpp": {
+      "sha256": "3ae206a6779aff43b24ab209a741b2787a0fdecedecb40475f5cefb8353307f5",
+      "bytes": 12305
+    },
+    "cpp_easygraph/pybind11/tests/test_multiple_inheritance.py": {
+      "sha256": "52beced7a59c99248e73da8ca69c13ffd83bfeae267771ec27192387302494c0",
+      "bytes": 12072
+    },
+    "cpp_easygraph/pybind11/tests/test_multiple_interpreters.py": {
+      "sha256": "ecbbc07b1e1c18e869f05023497e5e23e621b0b51d07940fbc83ab8678a69c1e",
+      "bytes": 6318
+    },
+    "cpp_easygraph/pybind11/tests/test_native_enum.cpp": {
+      "sha256": "b80f24585d22339eaca69ccbb2ce494cf6526590af3e1da1f3992459f66c2c5c",
+      "bytes": 9212
+    },
+    "cpp_easygraph/pybind11/tests/test_native_enum.py": {
+      "sha256": "4f71dae2cdb85e0d79db7058b2ce1920223a28b4ef140d0466ba44dc6ee43976",
+      "bytes": 9529
+    },
+    "cpp_easygraph/pybind11/tests/test_numpy_array.cpp": {
+      "sha256": "2dbc89b1e7a8bc9c616419a8865c8a89e6c642828250dee3221ebeb81dcbba53",
+      "bytes": 22647
+    },
+    "cpp_easygraph/pybind11/tests/test_numpy_array.py": {
+      "sha256": "8818f1a64cad64db08854e08517fe4e3e059d54c52689fc8bc8c6a3ef9b0ef0b",
+      "bytes": 24596
+    },
+    "cpp_easygraph/pybind11/tests/test_numpy_dtypes.cpp": {
+      "sha256": "d61a58c308ec38f33332c3595e1dd391bc9bdabadb4f8f2291968da3992695e5",
+      "bytes": 25785
+    },
+    "cpp_easygraph/pybind11/tests/test_numpy_dtypes.py": {
+      "sha256": "34af5d49eb8274eac85e2f9917bc1196c72e963a0658ebaa030a505637ee438f",
+      "bytes": 15630
+    },
+    "cpp_easygraph/pybind11/tests/test_numpy_scalars.cpp": {
+      "sha256": "36decb70fd2e4c2a182c7d2dbadafd0eab65329610d3eb58c636a41516081948",
+      "bytes": 2081
+    },
+    "cpp_easygraph/pybind11/tests/test_numpy_scalars.py": {
+      "sha256": "a4e5330d4bd2f3dfda81b32240c93e950e4566f191280588584d2b3c5e71014a",
+      "bytes": 1481
+    },
+    "cpp_easygraph/pybind11/tests/test_numpy_vectorize.cpp": {
+      "sha256": "37270d69227341ee99588ab7e9b5521aebdd1a589ef99b12a6881fb3a0828e39",
+      "bytes": 4487
+    },
+    "cpp_easygraph/pybind11/tests/test_numpy_vectorize.py": {
+      "sha256": "2ae64d51b0b8106eee31f9a00a70ea7c8cec0f5ea49eb875fb9255ba554e2cd0",
+      "bytes": 9913
+    },
+    "cpp_easygraph/pybind11/tests/test_opaque_types.cpp": {
+      "sha256": "93313d71910c21e92ca8a74f88d00d0390c4c9d9d75b26546c8035c87d98817b",
+      "bytes": 2779
+    },
+    "cpp_easygraph/pybind11/tests/test_opaque_types.py": {
+      "sha256": "12dfeaa9fc3f75b98b6a1f37ee30d03c7703c9f0d0afc3e09edaa0bd40ea2332",
+      "bytes": 1990
+    },
+    "cpp_easygraph/pybind11/tests/test_operator_overloading.cpp": {
+      "sha256": "0fc5af6b84976fc23a535e1df43d9a61f1576f7a5cd8f6f577900939a6bb76d4",
+      "bytes": 9132
+    },
+    "cpp_easygraph/pybind11/tests/test_operator_overloading.py": {
+      "sha256": "d6eaa187655eb10b716ee020726d953d96727eac2e4cb57f26bde01c449a9bf6",
+      "bytes": 4646
+    },
+    "cpp_easygraph/pybind11/tests/test_pickling.cpp": {
+      "sha256": "a73da23581ab3f1a58c40548540f34d1eead118051b6e7f9c23c38cc8e0eaa04",
+      "bytes": 6645
+    },
+    "cpp_easygraph/pybind11/tests/test_pickling.py": {
+      "sha256": "f508bbac0db1648def8f4ffe217c7a2f2d209f18b41f59ef449ddba593577658",
+      "bytes": 4836
+    },
+    "cpp_easygraph/pybind11/tests/test_potentially_slicing_weak_ptr.cpp": {
+      "sha256": "7a34106798a74681f7a574cda828ad264ebe71948b2cad6b2559679086900a3f",
+      "bytes": 5371
+    },
+    "cpp_easygraph/pybind11/tests/test_potentially_slicing_weak_ptr.py": {
+      "sha256": "40c944a742c090783ee19a2da42b073da604fe9488e1c82f5735dd78dd66b130",
+      "bytes": 5590
+    },
+    "cpp_easygraph/pybind11/tests/test_python_multiple_inheritance.cpp": {
+      "sha256": "15e78bb524683484dc431f967727513123e87e945ba7fb12315e73d2473e0807",
+      "bytes": 1555
+    },
+    "cpp_easygraph/pybind11/tests/test_python_multiple_inheritance.py": {
+      "sha256": "1cebb9b13320bd886ae0d055973df181c3afded48d813cf134724ba9d279c065",
+      "bytes": 894
+    },
+    "cpp_easygraph/pybind11/tests/test_pytypes.cpp": {
+      "sha256": "b67728e443c31dea0e231d2fca2677e6e1ec0217bcf7227771a906601d71f1ec",
+      "bytes": 46541
+    },
+    "cpp_easygraph/pybind11/tests/test_pytypes.py": {
+      "sha256": "722ee42a5386663bf96588c96c7487be88be8f2c7752987dd1e4235b9bb74faf",
+      "bytes": 38612
+    },
+    "cpp_easygraph/pybind11/tests/test_scoped_critical_section.cpp": {
+      "sha256": "424bd158fad54458c8c7737f1aa2b16c899fdf69a5e8208e1849067ac686344f",
+      "bytes": 11482
+    },
+    "cpp_easygraph/pybind11/tests/test_scoped_critical_section.py": {
+      "sha256": "d7f649a5fef00c22fd60feea160e98bd7df5fdd837ab067437a137e0b7aa1d06",
+      "bytes": 819
+    },
+    "cpp_easygraph/pybind11/tests/test_sequences_and_iterators.cpp": {
+      "sha256": "ab6c65d81b7c1fe3400c936d55b07e7b89738b21e42ee6ff9ed4daf41ed81687",
+      "bytes": 21925
+    },
+    "cpp_easygraph/pybind11/tests/test_sequences_and_iterators.py": {
+      "sha256": "975afa9d98ae04a0a8ca2d000e727c3b11c4fa890f6de206ebdfd441d2d67335",
+      "bytes": 9688
+    },
+    "cpp_easygraph/pybind11/tests/test_smart_ptr.cpp": {
+      "sha256": "11e868a6f56554442f3776635f1b161169ab20810c75e9c038f9f96d6baf160b",
+      "bytes": 23148
+    },
+    "cpp_easygraph/pybind11/tests/test_smart_ptr.py": {
+      "sha256": "6ab19ec9c1e8c9c18aef27d6ffb4f72bd608c7ecd19402cd44442a242f07552d",
+      "bytes": 11245
+    },
+    "cpp_easygraph/pybind11/tests/test_stl.cpp": {
+      "sha256": "7f2f78ae53843f86b981e3b8d392c7c8381fdb4fed7ed0f659ac061698313235",
+      "bytes": 26286
+    },
+    "cpp_easygraph/pybind11/tests/test_stl.py": {
+      "sha256": "394c8d238f821ae2e35be85378fab61a2446b9fc7fe4e6aac149f7e243eae6d6",
+      "bytes": 24123
+    },
+    "cpp_easygraph/pybind11/tests/test_stl_binders.cpp": {
+      "sha256": "18183b707a585687d8e92111c2226ce0ec7b588bddf0349c621aaffa1dcece38",
+      "bytes": 8697
+    },
+    "cpp_easygraph/pybind11/tests/test_stl_binders.py": {
+      "sha256": "bb22a11e65d79d08f57f6d78ab1bc5aea5cd1978714662a470c8e23883c5d8d3",
+      "bytes": 11709
+    },
+    "cpp_easygraph/pybind11/tests/test_tagbased_polymorphic.cpp": {
+      "sha256": "7d88e59358e15de3b25f327045f1afbbfa79c2a3deeda7ed20c884163a2f923c",
+      "bytes": 4684
+    },
+    "cpp_easygraph/pybind11/tests/test_tagbased_polymorphic.py": {
+      "sha256": "08150b235084c7138a2aa514ad9349efe84fcce97f524d16dc8b9a0dce020b9f",
+      "bytes": 777
+    },
+    "cpp_easygraph/pybind11/tests/test_thread.cpp": {
+      "sha256": "9ae95870f0659436bbc724d04070fda0e7b790bc6e9eeaed290724ff3c92ad2b",
+      "bytes": 2020
+    },
+    "cpp_easygraph/pybind11/tests/test_thread.py": {
+      "sha256": "329bde7bec6196752c4496eadd9f4d8ee8b07052dddf8a8ae789fe4f2e9cfdcc",
+      "bytes": 1580
+    },
+    "cpp_easygraph/pybind11/tests/test_type_caster_pyobject_ptr.cpp": {
+      "sha256": "6d4253e56e014edb8dc8ef2b1d7f8bfe67627e6591c15e82f46e3c86dfeba45f",
+      "bytes": 5989
+    },
+    "cpp_easygraph/pybind11/tests/test_type_caster_pyobject_ptr.py": {
+      "sha256": "5118ccd476202f2d431944f98df39be617c73207524c4d012fe3d711bb873dbf",
+      "bytes": 3895
+    },
+    "cpp_easygraph/pybind11/tests/test_type_caster_std_function_specializations.cpp": {
+      "sha256": "774789a2d9576e5117043cec3be9e70d63c1b8aa3ec44ba7b00befd73e288c56",
+      "bytes": 1217
+    },
+    "cpp_easygraph/pybind11/tests/test_type_caster_std_function_specializations.py": {
+      "sha256": "411746879828f45946b90754e7a6c2aeed333e36329dc2d17303e0c6620019e0",
+      "bytes": 485
+    },
+    "cpp_easygraph/pybind11/tests/test_union.cpp": {
+      "sha256": "38e90294f06a6e17677bb352ba097029d97311d9c3df644c1a0006e44d40aced",
+      "bytes": 603
+    },
+    "cpp_easygraph/pybind11/tests/test_union.py": {
+      "sha256": "22d1efd4368f7b7f66e4c382fd560846e4175d159fcb32f0a0ed0ad8f6934bb1",
+      "bytes": 184
+    },
+    "cpp_easygraph/pybind11/tests/test_unnamed_namespace_a.cpp": {
+      "sha256": "d93f789b97992264e7ac7548207f544e31f1250109e341e6c8a813dfc551069f",
+      "bytes": 774
+    },
+    "cpp_easygraph/pybind11/tests/test_unnamed_namespace_a.py": {
+      "sha256": "21955789950827169ef128543232cf684c71e6a7eb383d7333a47d1c4b22da00",
+      "bytes": 1007
+    },
+    "cpp_easygraph/pybind11/tests/test_unnamed_namespace_b.cpp": {
+      "sha256": "a1f557ed74ca008a40ad4ef2d9325e436b0c2eb6d6b5f33471b1d8e48bd7e92e",
+      "bytes": 341
+    },
+    "cpp_easygraph/pybind11/tests/test_unnamed_namespace_b.py": {
+      "sha256": "390db051abac5b0a67c5d72fe4fc73cb86c50f8af1f9fc150a4eb7c7965092e3",
+      "bytes": 179
+    },
+    "cpp_easygraph/pybind11/tests/test_vector_unique_ptr_member.cpp": {
+      "sha256": "37ef7a4d7e2aafa66b28a1881af3f03315f752b51849a7f8ea3833e3aef65d8f",
+      "bytes": 1471
+    },
+    "cpp_easygraph/pybind11/tests/test_vector_unique_ptr_member.py": {
+      "sha256": "e0b9e3de1d46559bd2761b64c05d7cb879535ef43ad1ddb0bb5c2ca5b70c7251",
+      "bytes": 365
+    },
+    "cpp_easygraph/pybind11/tests/test_virtual_functions.cpp": {
+      "sha256": "6b4c8e7b6bf062360dcb1a5d9f748699f2a5fbde6123ae7d69d1fed37aa9fe4c",
+      "bytes": 22990
+    },
+    "cpp_easygraph/pybind11/tests/test_virtual_functions.py": {
+      "sha256": "87f8ce8c75a31629359365568b8d498a4f98863909be9dbe085e3ff036db0b99",
+      "bytes": 13283
+    },
+    "cpp_easygraph/pybind11/tests/test_warnings.cpp": {
+      "sha256": "1517ede98a981a9deb2c2f04ef1878119363e8b231848d39c7cbd1f2e51513a6",
+      "bytes": 1519
+    },
+    "cpp_easygraph/pybind11/tests/test_warnings.py": {
+      "sha256": "fbf15e4d36655774b219f68783d6fb144ae2301561ca08c0317472dd3e725955",
+      "bytes": 2148
+    },
+    "cpp_easygraph/pybind11/tests/valgrind-numpy-scipy.supp": {
+      "sha256": "7433be9dee01d00d9c342ff64b9c40b22bc3a1ca77c64ef07d7aba1a8bbd8e54",
+      "bytes": 3226
+    },
+    "cpp_easygraph/pybind11/tests/valgrind-python.supp": {
+      "sha256": "5e5993deb2fc23dfac7332ce4cd1135b32edaac3c9aa0fb7e6758efedf51019b",
+      "bytes": 2657
+    },
+    "cpp_easygraph/pybind11/tools/FindCatch.cmake": {
+      "sha256": "2f50e0183a1b28a6e9965c6dcc0abc87626d69ef2dd1034ff2dd69c140ec0a50",
+      "bytes": 2394
+    },
+    "cpp_easygraph/pybind11/tools/FindEigen3.cmake": {
+      "sha256": "9624a761c330d6003123e0191954b408926c390d9b19c0dc1b72db091e6cb5af",
+      "bytes": 3105
+    },
+    "cpp_easygraph/pybind11/tools/FindPythonLibsNew.cmake": {
+      "sha256": "c56aad44d539a6941236319298363b2a023229b7a0cfbebc22435f19a5b1e433",
+      "bytes": 12772
+    },
+    "cpp_easygraph/pybind11/tools/JoinPaths.cmake": {
+      "sha256": "794b0d8fa62a3b798c7df12d50114580d1a47a234bfb6b4d83092eb646a6ecc4",
+      "bytes": 817
+    },
+    "cpp_easygraph/pybind11/tools/check-style.sh": {
+      "sha256": "4e282e95a44295a59c47e7e364bb743ed1fda2771476fb039cec45ca9f428d7f",
+      "bytes": 1423
+    },
+    "cpp_easygraph/pybind11/tools/cmake_uninstall.cmake.in": {
+      "sha256": "dfdc294572479be844cc61a48a5d476c114f213bbd24ecd5e7156de3a24b7011",
+      "bytes": 952
+    },
+    "cpp_easygraph/pybind11/tools/codespell_ignore_lines_from_errors.py": {
+      "sha256": "ce604dd9938424bcf0cc05eb40f5cd2ffb80d0941cd25fcbafafa3084a0ca00a",
+      "bytes": 1129
+    },
+    "cpp_easygraph/pybind11/tools/libsize.py": {
+      "sha256": "0b4ca6eb9ad3d8d0b2d498deeb73d5b26624406ba7ada49374f302866166bc7f",
+      "bytes": 1067
+    },
+    "cpp_easygraph/pybind11/tools/make_changelog.py": {
+      "sha256": "843ae2d7cd97ff09cef6c91b0a74560362cb627161c696f8b3b9db60a6a66e36",
+      "bytes": 3151
+    },
+    "cpp_easygraph/pybind11/tools/make_global.py": {
+      "sha256": "8fd1f00db98d57697d1437d21329057256e1d0e7717cb84c239aedc1b815cf6a",
+      "bytes": 928
+    },
+    "cpp_easygraph/pybind11/tools/pybind11.pc.in": {
+      "sha256": "3bfaab59e8306730b859a489e690a7a1e4c246debecf5291adbd201255a8058a",
+      "bytes": 196
+    },
+    "cpp_easygraph/pybind11/tools/pybind11Common.cmake": {
+      "sha256": "9d871b7799958250c591ff9135b9040292fe5cf13d45ba7f7a023b972ac263f1",
+      "bytes": 15993
+    },
+    "cpp_easygraph/pybind11/tools/pybind11Config.cmake.in": {
+      "sha256": "cbd1b7f600d334aff78534dcd2f5ac3bab9ab07749c31a7a1cf401eb334df92c",
+      "bytes": 7525
+    },
+    "cpp_easygraph/pybind11/tools/pybind11GuessPythonExtSuffix.cmake": {
+      "sha256": "fa40a7d8cd0f2b37e4aa764b6b0bb5036fc0ce44c9c708ee04f6f410b4850502",
+      "bytes": 3328
+    },
+    "cpp_easygraph/pybind11/tools/pybind11NewTools.cmake": {
+      "sha256": "c63dac8304a4aadfa0fb67f3b0abfdb1da6eaa3bd909c0f1b670c333b3ed16f5",
+      "bytes": 12952
+    },
+    "cpp_easygraph/pybind11/tools/pybind11Tools.cmake": {
+      "sha256": "64581cf5bfb7d9c383546e4cd3308fcc96b19c4dfa9e0b4087ecdd87b17b1630",
+      "bytes": 7906
+    },
+    "cpp_easygraph/pybind11/tools/test-pybind11GuessPythonExtSuffix.cmake": {
+      "sha256": "45db75ff692f0acac7eb5769201ab28bd9ef0e83240c87f244e7e68cd4b99048",
+      "bytes": 5945
+    },
+    "cpp_easygraph/runtime/egmgpu_bfs_host_assembly.h": {
+      "sha256": "e1bcf1a8e2004816077a811e380cf8d93a2cfe0d15e587e4e195e8f8645c0451",
+      "bytes": 1668
+    },
+    "cpp_easygraph/runtime/egmgpu_bfs_host_finalize.h": {
+      "sha256": "3e9bbe23fab246825602612fc11550018f6719e7ff5e9c241088be71f646d966",
+      "bytes": 2466
+    },
+    "cpp_easygraph/runtime/egmgpu_bfs_public_output.h": {
+      "sha256": "81cc4c537c15ae7de0c89c42a9b41c3b7cfbbf2e996311af3df62442a9d0e9b7",
+      "bytes": 4135
+    },
+    "cpp_easygraph/runtime/egmgpu_bfs_serial.inc": {
+      "sha256": "ddc9c7ba9cccf3dda2d663d0475d9a413e3c71708b9600f8609c4e97e9e514a5",
+      "bytes": 25080
+    },
+    "cpp_easygraph/runtime/egmgpu_bfs_thread_usage.h": {
+      "sha256": "30c31c95b4b832490d49ae15dfba544907b4456d4fbebc1180bea11ad2c51d86",
+      "bytes": 2105
+    },
+    "cpp_easygraph/runtime/egmgpu_host_halo_team.h": {
+      "sha256": "72ba4fd012319e936dc2a8d32cc2a1c2d8591946acde32b6627cdf9a75fd1cf8",
+      "bytes": 2797
+    },
+    "cpp_easygraph/runtime/egmgpu_owner_output_team.h": {
+      "sha256": "ae940b7d08b82e26913faf46bcb170c13db30cf3d45fa683333614015d43ac7c",
+      "bytes": 11180
+    },
+    "cpp_easygraph/runtime/egmgpu_owner_output_team_py.h": {
+      "sha256": "f58cbb58cb156113de3f348020ab03cb4e309d3ce63277c3752f300f8a54f64f",
+      "bytes": 2045
+    },
+    "cpp_easygraph/runtime/egmgpu_pagerank_serial.inc": {
+      "sha256": "c63082ff71bfc2286ab6435f7fd088d0dd629d2a39fcf7b294744f201b06ecda",
+      "bytes": 16376
+    },
+    "cpp_easygraph/runtime/egmgpu_partition_array_scope.h": {
+      "sha256": "d3b5819fadcb0946f9886c994027808f4cb95fef517030a79dcf8a173b00a62e",
+      "bytes": 2670
+    },
+    "cpp_easygraph/runtime/egmgpu_partition_loader.cpp": {
+      "sha256": "0cae1127048b8207ae0372dec322470ff0b3768ff0626f47d979454c8e5be690",
+      "bytes": 32740
+    },
+    "cpp_easygraph/runtime/egmgpu_partition_loader.h": {
+      "sha256": "1056925fa7e16abb5da030b714fe4e0575087304f5434a101214ce16cdf1c859",
+      "bytes": 8670
+    },
+    "cpp_easygraph/runtime/egmgpu_partition_loader_bindings.cpp": {
+      "sha256": "70ae0db24ed0d7dc54073d5fae06c9fd1fcaec7d7b05aca4ed29b08b845c81a0",
+      "bytes": 28097
+    },
+    "cpp_easygraph/runtime/egmgpu_partition_loader_bindings.h": {
+      "sha256": "f061b0e0ead6483354fd3f42c1dccf3d5f188c08fd27a4eceba77cebf83fd2d9",
+      "bytes": 101
+    },
+    "cpp_easygraph/runtime/egmgpu_partitioned_bfs.cpp": {
+      "sha256": "1f5968fab594e0b399c7c975ebe973dbab9e9f04b6ea0e29bcb61ad9eeea40b7",
+      "bytes": 125068
+    },
+    "cpp_easygraph/runtime/egmgpu_partitioned_bfs.h": {
+      "sha256": "84223ebdad8a8f465d698f9fe0aa0d7c1b6d039746ea03c92b317a42f59b3040",
+      "bytes": 100
+    },
+    "cpp_easygraph/runtime/egmgpu_partitioned_pagerank.cpp": {
+      "sha256": "bde5456e780353cca3031a54b83059917159fb203361a414baf90effaa36da9b",
+      "bytes": 168679
+    },
+    "cpp_easygraph/runtime/egmgpu_partitioned_pagerank.h": {
+      "sha256": "430ce61fa54b3e589faad0221500bdd0f1a7d3dff8d24e5bb86d3d2dd50d1eaa",
+      "bytes": 105
+    },
+    "cpp_easygraph/runtime/egmgpu_partitioned_sssp.cpp": {
+      "sha256": "1465925a2dd5e15d3fa1f44afbf6fdc9d482ce6b0e13a9737c36a27ca2517825",
+      "bytes": 135511
+    },
+    "cpp_easygraph/runtime/egmgpu_partitioned_sssp.h": {
+      "sha256": "907c0684a502bd055d7d1ad219a5f6af0b5c4e38a7988112b701d2e8a0011f9b",
+      "bytes": 128
+    },
+    "cpp_easygraph/runtime/egmgpu_partitioned_sssp_serial.inc": {
+      "sha256": "f9b94c4e2934e0677214f17a0f946288100d3f14e45cb1aa14f49c5f38f67ba5",
+      "bytes": 11541
+    },
+    "cpp_easygraph/runtime/egmgpu_partitioned_structural_holes.cpp": {
+      "sha256": "7a77ccc7e781cf48d39af25d68adcc4deed334ca694dfd229c4e9a22eb209d00",
+      "bytes": 31889
+    },
+    "cpp_easygraph/runtime/egmgpu_partitioned_structural_holes.h": {
+      "sha256": "cf24214e029f5d52dfbf8e829c15eba83f5a01008215e9e6ed8dbc8105609959",
+      "bytes": 383
+    },
+    "cpp_easygraph/runtime/egmgpu_partitioned_wcc.cpp": {
+      "sha256": "f5e17f1a0183cf37d948e4b865231c5fa2af00a6aed2fdee640a2406e29051e2",
+      "bytes": 87589
+    },
+    "cpp_easygraph/runtime/egmgpu_partitioned_wcc.h": {
+      "sha256": "3a0026a220ca2fb33340472c648aa790cb90c5f1ef4ea571003f967aeadabeff",
+      "bytes": 127
+    },
+    "cpp_easygraph/runtime/egmgpu_pr_host_output.h": {
+      "sha256": "1de68d866298d6576be0d74b2d2d8633b7d4ae569a8bef96999563bf52fa09c9",
+      "bytes": 2868
+    },
+    "cpp_easygraph/runtime/egmgpu_replicated_centrality.cpp": {
+      "sha256": "9c53b2b97fe7d6d6b8e5407d41de35c5087aa5473ea44ab9a848cfe6a50588b3",
+      "bytes": 10742
+    },
+    "cpp_easygraph/runtime/egmgpu_replicated_centrality.h": {
+      "sha256": "f60738dc18a03772839531aef60bf90645e87ffb2e85d3e053edb2933e05222e",
+      "bytes": 106
+    },
+    "cpp_easygraph/runtime/egmgpu_replicated_structural_holes.cpp": {
+      "sha256": "1a12b14bcab0b703e74f0cddbaf69ed2525477bc5b2fdc5e94844099280f8bd5",
+      "bytes": 15386
+    },
+    "cpp_easygraph/runtime/egmgpu_replicated_structural_holes.h": {
+      "sha256": "cd8992d031e20073c1e57cccffc66162670f3b305ed966e93aceb95f6622e67d",
+      "bytes": 112
+    },
+    "cpp_easygraph/runtime/egmgpu_runtime_bindings.cpp": {
+      "sha256": "39d6632dbdfd9992045487082dd71b81111d882d34f86cf5c0cd7edf1a881551",
+      "bytes": 8099
+    },
+    "cpp_easygraph/runtime/egmgpu_runtime_bindings.h": {
+      "sha256": "49e17432f527f487c3e47a27cf01b72508f8588f3e60336429c5d96b101bb6c4",
+      "bytes": 92
+    },
+    "cpp_easygraph/runtime/egmgpu_sha256.cpp": {
+      "sha256": "c1c7ce10e7906e0c221cf87eb446c1a06705f3430f581f7fa61258c3f0b23744",
+      "bytes": 6425
+    },
+    "cpp_easygraph/runtime/egmgpu_sha256.h": {
+      "sha256": "d22f3987aadb0eec290c30242a3250fcc5516c92b27b146748452974f965a7d9",
+      "bytes": 549
+    },
+    "cpp_easygraph/runtime/egmgpu_single_dispatch.cpp": {
+      "sha256": "2de9b597ed2fbae1903db115717f1183ce8f83573bdecc0292c180f20776ee99",
+      "bytes": 31729
+    },
+    "cpp_easygraph/runtime/egmgpu_single_dispatch.h": {
+      "sha256": "44d9570db2b0628b79894827d439a2d66744d0d3441c886adc707876e3bd6b78",
+      "bytes": 392
+    },
+    "cpp_easygraph/runtime/egmgpu_sssp_host_output.h": {
+      "sha256": "248f10bfa52a13cb92eb5e5019c420c046dd2f15645b8df1a4c25621848e673d",
+      "bytes": 2862
+    },
+    "cpp_easygraph/runtime/egmgpu_sssp_pinned.inc": {
+      "sha256": "805f2090ab1f2193525c430f7954ee116b4848fed18d8eda37ce06e122867095",
+      "bytes": 3506
+    },
+    "cpp_easygraph/runtime/egmgpu_triangle_count.cpp": {
+      "sha256": "e0e47c3b8d4b433b147c6c0b2ceed424e2807bbda929239a69f5aa3076ffcbd4",
+      "bytes": 12428
+    },
+    "cpp_easygraph/runtime/egmgpu_triangle_count.h": {
+      "sha256": "3d67f33f71db51ab8882425f5ca570f68337bdf286969e9e6087e4e47e9b8869",
+      "bytes": 97
+    },
+    "cpp_easygraph/runtime/egmgpu_wcc_host_assembly.h": {
+      "sha256": "1da8e37d14daacf17c2aafb8219b7fe37500ff0b23e695ee46179c8cf329aabc",
+      "bytes": 2280
+    },
+    "cpp_easygraph/runtime/egmgpu_wcc_host_finalize.h": {
+      "sha256": "99ea6890cc9fcf244262c1f4aefe470642d611c8f2c588c03d7f579aecf35526",
+      "bytes": 2133
+    },
+    "cpp_easygraph/runtime/egmgpu_wcc_public_output.h": {
+      "sha256": "476f9601206d1ff6b279535daf7a9b29b74782a7fdb1430018d9c253afe442a2",
+      "bytes": 5519
+    },
+    "cpp_easygraph/runtime/egmgpu_wcc_serial.inc": {
+      "sha256": "08dccfd432482954cca965cd2f5c0dbff3623f1c537347be72c1bfd20f7bcb6a",
+      "bytes": 15765
+    },
+    "cpp_easygraph/runtime/immutable_host_array.h": {
+      "sha256": "855b02203d0660b6aca3a5405784456ccf38369cafbc8250971e6f02efb3ab51",
+      "bytes": 3062
+    },
+    "diagram.svg": {
+      "sha256": "935e0f8b72af66f3abf03fb10d47a43db804ded77f559820b4fa4855c65c8fa8",
+      "bytes": 84248
+    },
+    "docs/gpu/README_CN.md": {
+      "sha256": "b925d7d38fb066207e4214d53478d81b674e1a009148faa1b98886a40e01331c",
+      "bytes": 6918
+    },
+    "docs/gpu/UPSTREAM_DELTA_CN.md": {
+      "sha256": "3115910f390b64eea30a915e6df5ef37ce31fdfda37bc22600a163069701f73f",
+      "bytes": 4344
+    },
+    "docs/gpu/WIDE_FUNCTION_QUALIFICATION_CN.md": {
+      "sha256": "b92a0b2295b0e715879b7f86575dc1f505008b136a8352fa39b814ea0afde16f",
+      "bytes": 4610
+    },
+    "easygraph/__init__.py": {
+      "sha256": "4f7455c08ebb18bae1084ae43e18919b3e56afb334e4e5a2d4df72e2742ede62",
+      "bytes": 2348
+    },
+    "easygraph/_global.py": {
+      "sha256": "4bf43351fe24cb9102e281b39a74545207ecbd1075ae8a308d3d38b991ffa159",
+      "bytes": 389
+    },
+    "easygraph/_legacy_exports.py": {
+      "sha256": "299110c70513803766241b868489941466f259e36446ad5fa4064ba28bfb970a",
+      "bytes": 1428
+    },
+    "easygraph/_optional.py": {
+      "sha256": "9a2bf7dd9d5e5bcd1069339e48ff3792f741d63ab11721954bdb89c55f61565e",
+      "bytes": 1559
+    },
+    "easygraph/_torch_compatibility.json": {
+      "sha256": "a275cc0fdcb298bd1d1b418bebf841e62a8cfff8f14d5c50aec2a10aa0fdd488",
+      "bytes": 11270
+    },
+    "easygraph/classes/__init__.py": {
+      "sha256": "71e6caf4ea3520f6b032773aeae8313bc1cfe729a12a8995fb42a2369ccb85a6",
+      "bytes": 645
+    },
+    "easygraph/classes/_edge_attr_factory.py": {
+      "sha256": "336ee1b757d45e030649336eae478b92196a54049b87a8fc1aea8be76192237d",
+      "bytes": 9344
+    },
+    "easygraph/classes/_state_tracking.py": {
+      "sha256": "33c341baf76bf2eefbb273dbd513fa824daba9e340707d7834cdd4b5c0255f9e",
+      "bytes": 1294
+    },
+    "easygraph/classes/base.py": {
+      "sha256": "58d5a974cbce4560886eb596bc7a1b94c14639f00e20a90ac2797e053cca7b40",
+      "bytes": 44962
+    },
+    "easygraph/classes/directed_graph.py": {
+      "sha256": "674c2ff160be7bac49cd2300f730651351f3533fb0f53c72b2e217721d39c51d",
+      "bytes": 37862
+    },
+    "easygraph/classes/directed_multigraph.py": {
+      "sha256": "33ae4eaecc05c4604861267f3b21167e2ae451a0b149acffdae85d331f6e3520",
+      "bytes": 14819
+    },
+    "easygraph/classes/eggpu_bulk_graph.py": {
+      "sha256": "55cd4de7302851eb6b542a642da8bda5bfab53a7386c83f9a47e9951739621e5",
+      "bytes": 20153
+    },
+    "easygraph/classes/graph.py": {
+      "sha256": "05fe9d8845e63785e32d588f0209b919f48186cf24573f82ea20cfdd3761c1a5",
+      "bytes": 58175
+    },
+    "easygraph/classes/graphviews.py": {
+      "sha256": "58ac5ae6600c1ba0148a489059e6ecf01e04027657371a7662bb8fa1e7619704",
+      "bytes": 337
+    },
+    "easygraph/classes/hypergraph.py": {
+      "sha256": "909bf1acbe199b5ed47896b516401033407b5c15e33a6efe843f00d7bdc73efa",
+      "bytes": 113990
+    },
+    "easygraph/classes/multigraph.py": {
+      "sha256": "a8f12294657cd7f959616b2dc170064432f43d2069290fc73386e4f112703cbf",
+      "bytes": 24633
+    },
+    "easygraph/classes/operation.py": {
+      "sha256": "b3782376ddf27900443ca366b8b9f3a85125b7c0e1bc3e0f50c1e0dbde833cfe",
+      "bytes": 13944
+    },
+    "easygraph/classes/test_base_graph_class.py": {
+      "sha256": "38349d6df2cb41c8a3ff9aecac5cbaa58b6f2e39744d6a33fc99eb9170473fd3",
+      "bytes": 527
+    },
+    "easygraph/classes/tests/__init__.py": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "easygraph/classes/tests/test_base.py": {
+      "sha256": "74b3c342c99a6705afd519252dd2f7756d2331d44b1f73f5ae7fd43cc29404c9",
+      "bytes": 4415
+    },
+    "easygraph/classes/tests/test_directed_graph.py": {
+      "sha256": "b3141798a5fa123b929c3d34840afef1d98584fce4cf36dca34fae913ad686ac",
+      "bytes": 3558
+    },
+    "easygraph/classes/tests/test_graph.py": {
+      "sha256": "70f89aadaea6f3f871ad33a814348714f81ab8c44dc8861a57b26132f42ef4c2",
+      "bytes": 2835
+    },
+    "easygraph/classes/tests/test_graphV2.py": {
+      "sha256": "2a506df6b21e3d998f045abb2e74ce5886a7cc8d6d32521819d60b9bbaa72e21",
+      "bytes": 3993
+    },
+    "easygraph/classes/tests/test_hypergraph.py": {
+      "sha256": "e34eb8032a142f8d7f29327f039df19c5dfb7756ae5aa1fab79a6a60005cfa31",
+      "bytes": 30053
+    },
+    "easygraph/classes/tests/test_multidigraph.py": {
+      "sha256": "88611f46be7edf545e07b7cd92decb7771a57921de534cb206b4060816c9eec9",
+      "bytes": 3737
+    },
+    "easygraph/classes/tests/test_multigraph.py": {
+      "sha256": "cb1e765ac32ff415a0a12690d9a1a6f99d301c23bbf785d95d6f8ae0c542b06d",
+      "bytes": 5094
+    },
+    "easygraph/classes/tests/test_operation.py": {
+      "sha256": "db6658d61be310956ee2c876504e3d5961f986769798aaa888dbf82eabd7e0ed",
+      "bytes": 3861
+    },
+    "easygraph/convert.py": {
+      "sha256": "ca90be8bdc4f5b2e90f913e420d4bab176752df10f10694395658401d0606af6",
+      "bytes": 19169
+    },
+    "easygraph/datapipe/__init__.py": {
+      "sha256": "425bf2a0ac4905dce2c8140f92f483a109625446b181c1388aabcc8516e8faf0",
+      "bytes": 755
+    },
+    "easygraph/datapipe/common.py": {
+      "sha256": "0c8d82961126811a3e84bccb97f6bfe6dc0646dd941cd73dae80f58c35485eac",
+      "bytes": 2909
+    },
+    "easygraph/datapipe/loader.py": {
+      "sha256": "53bcd6bd1c24bc34b30ffb076f489e0246c56a830eef3f46ba1ab8df02baaea3",
+      "bytes": 2897
+    },
+    "easygraph/datapipe/normalize.py": {
+      "sha256": "a3a958b484b1e33ec6d4016a088b802e1472d49cd9567e7bf1e664029441289d",
+      "bytes": 2734
+    },
+    "easygraph/datasets/__init__.py": {
+      "sha256": "1f1d706e84b332d019fec9e6602b4ea01c4a522bab6daf1002e3db938d47c4a3",
+      "bytes": 1543
+    },
+    "easygraph/datasets/amazon_photo.py": {
+      "sha256": "d0d62436d3f2641163fc21a927ab48f00ce053c3f195db070dba9447f2586821",
+      "bytes": 3492
+    },
+    "easygraph/datasets/arxiv.py": {
+      "sha256": "914a20b7b1003e39ccf3dedbd8c1cfaa1869bc0b4384d3d014d6a8a56b2ed1dc",
+      "bytes": 3493
+    },
+    "easygraph/datasets/citation_graph.py": {
+      "sha256": "8bda7b6b474f076e577fe9d6e96e5223e742d27adf3266685eb75f873689e793",
+      "bytes": 28329
+    },
+    "easygraph/datasets/coauthor.py": {
+      "sha256": "e2bd8f5fdfb7fc58f77483e588568456285f24374811cc38e465830d010384cd",
+      "bytes": 3839
+    },
+    "easygraph/datasets/dynamic/__init__.py": {
+      "sha256": "7181dc89d8d6bd7d70e312672ee1ee7ae795a8562ae0bb60cae7ab21495481c9",
+      "bytes": 108
+    },
+    "easygraph/datasets/dynamic/email_enron.py": {
+      "sha256": "d90d0c044604fae67a592065dcf0db890be364e4a64df9c088f16ac7a1339f54",
+      "bytes": 2490
+    },
+    "easygraph/datasets/dynamic/email_eu.py": {
+      "sha256": "b225b3c7d08b9e10c5e6ba272f2c3b15e2c416ed66b00cb9f77d847339e506f4",
+      "bytes": 2361
+    },
+    "easygraph/datasets/dynamic/hospital_lyon.py": {
+      "sha256": "ec75161fc8e2cd5d5fe9432825b05c7ba825788a021fb6f85995d76bf836ee55",
+      "bytes": 4217
+    },
+    "easygraph/datasets/dynamic/load_dataset.py": {
+      "sha256": "9a171641409d95a29d02e8ea7c0a5078f8d75c8c8b7c6c56318243884822f69c",
+      "bytes": 2471
+    },
+    "easygraph/datasets/facebook_ego.py": {
+      "sha256": "8f0975f9e13bd69e36fb94d7a81162cd3319e119d705b1f247a058b0f9e82c12",
+      "bytes": 3738
+    },
+    "easygraph/datasets/flickr.py": {
+      "sha256": "b024b5516fdd323879985b86f76179d71e14d169df24df4915a8be509aea25ca",
+      "bytes": 4088
+    },
+    "easygraph/datasets/get_sample_graph.py": {
+      "sha256": "b72c997ccef560ad58535d06880d50d5174392838c34a26a2d1ccf64f122c8f5",
+      "bytes": 6876
+    },
+    "easygraph/datasets/github.py": {
+      "sha256": "18a331d3de4dab45c27c482f7622aab87a8ad1334dc21f94af5595b61533f3c3",
+      "bytes": 3992
+    },
+    "easygraph/datasets/gnn_benchmark.py": {
+      "sha256": "8068c5c3ed6a510aed39fdffe8cb44056dfd0f7a7a435148f795532ee5271757",
+      "bytes": 6948
+    },
+    "easygraph/datasets/graph_dataset_base.py": {
+      "sha256": "2c7fd6cbdcbebd1ac7087ed9ed4cc80a844d398abea65323efdf5a482af3559c",
+      "bytes": 9513
+    },
+    "easygraph/datasets/hypergraph/House_Committees.py": {
+      "sha256": "8eaeabac38f094ac7445dfbbdd688678d99620aa52ce71e51da84c86cbf21ccd",
+      "bytes": 8289
+    },
+    "easygraph/datasets/hypergraph/Yelp.py": {
+      "sha256": "87721973cf172f9440e13781728abd8ed8eb7889b99932ccdbf96e55380097d2",
+      "bytes": 3361
+    },
+    "easygraph/datasets/hypergraph/__init__.py": {
+      "sha256": "9d92a4222968927517518acba8041a0fe22fc5f94cedfd0365418d2a71520d0b",
+      "bytes": 304
+    },
+    "easygraph/datasets/hypergraph/_global.py": {
+      "sha256": "31b77beead9dd4cb951bb1de2a4ae7ca4be208f78393cf5562af846ce9345f57",
+      "bytes": 336
+    },
+    "easygraph/datasets/hypergraph/cat_edge_Cooking.py": {
+      "sha256": "c4b5e6c4f3097f9cc303ddff6ef0f8a1db9e228ef9eb71d1bcce7e1e03a3ac2b",
+      "bytes": 3768
+    },
+    "easygraph/datasets/hypergraph/coauthorship.py": {
+      "sha256": "916ce400362a175fc56cfc72cc166c42f3d9046b229bb1f9df40d31367047b5d",
+      "bytes": 7743
+    },
+    "easygraph/datasets/hypergraph/cocitation.py": {
+      "sha256": "3a4b586c1795eae160108c46f5e139e372792eda622b4c364e2efbd1b44b5b70",
+      "bytes": 11351
+    },
+    "easygraph/datasets/hypergraph/contact_primary_school.py": {
+      "sha256": "9454551635ea8b777e43dfe5cf77334c69237bdb2c2c9cf9c8a55823574f3eb4",
+      "bytes": 6589
+    },
+    "easygraph/datasets/hypergraph/cooking_200.py": {
+      "sha256": "3ed52362f35a1de7314a49454cd87e1e8b49b6bddb04b51db83342b40aa38c3c",
+      "bytes": 3460
+    },
+    "easygraph/datasets/hypergraph/hypergraph_dataset_base.py": {
+      "sha256": "3b535908b77cb432355bab92ccd9e6adc2a31f706272c035b63e3dd2fbf5ef99",
+      "bytes": 4265
+    },
+    "easygraph/datasets/hypergraph/loadDeepSetDatasets.py": {
+      "sha256": "fc846cc657dacfd10cc0cf4b2968bdf8163b35448385bb293aa1b270ec33470b",
+      "bytes": 2556
+    },
+    "easygraph/datasets/hypergraph/mathoverflow_answers.py": {
+      "sha256": "2b16ae82b52a35973f22d98cb20b7ffd3d97721e1b507a9efda8aad781964818",
+      "bytes": 4258
+    },
+    "easygraph/datasets/hypergraph/senate_committees.py": {
+      "sha256": "193dbc7392d9bc60531e73ee77de118ac717453fbcb1b248ab9a4c063ae46cb4",
+      "bytes": 3998
+    },
+    "easygraph/datasets/hypergraph/trivago_clicks.py": {
+      "sha256": "562aa24d78517fc36c96cf620e04dfce042b6c2e7b4608415fd3548055c9cd6b",
+      "bytes": 3734
+    },
+    "easygraph/datasets/hypergraph/walmart_trips.py": {
+      "sha256": "5e4d58cc48c576ef6ba061f379912d4a436ead6241ae52db52992d86ea604af6",
+      "bytes": 7832
+    },
+    "easygraph/datasets/karate.py": {
+      "sha256": "63b9b5867fbf1a4ea19a530003c5595521da2db7d236e9e4b9f4882d36ea5bf1",
+      "bytes": 2554
+    },
+    "easygraph/datasets/ppi.py": {
+      "sha256": "8cf20f4f020c4b789720c608c257fac8f35703845d7158e28630ed57317dd829",
+      "bytes": 6661
+    },
+    "easygraph/datasets/reddit.py": {
+      "sha256": "d74bacd3255253a8a52ccba8e7621a2a11f0f937479df2550bd2184684d614f6",
+      "bytes": 3079
+    },
+    "easygraph/datasets/roadnet.py": {
+      "sha256": "0442cfad39c47a8262d2e41fc371f8f461d2b8a551db9d90a6cf021cb9d54f5d",
+      "bytes": 3360
+    },
+    "easygraph/datasets/twitter_ego.py": {
+      "sha256": "c6eb06351ae3392edc0a683ae8c7f4388db783c7f1c796651b33355e06c4acc7",
+      "bytes": 1993
+    },
+    "easygraph/datasets/utils.py": {
+      "sha256": "ff1542ed0acd0755c23d4c7876df9e8576050d95a9595236529414dfaab4041f",
+      "bytes": 10518
+    },
+    "easygraph/datasets/web_google.py": {
+      "sha256": "16ba96b5f44202d77dcd983b59268b5ee049afd909103b58b779a3b7f5b3246a",
+      "bytes": 3819
+    },
+    "easygraph/datasets/wiki_topcats.py": {
+      "sha256": "040067ee4d17c1f7e5c74308eaafbef49c6f5537a6ea4db1beb6a069e951447b",
+      "bytes": 3564
+    },
+    "easygraph/egmgpu/__init__.py": {
+      "sha256": "3a001c14f05db5d1572158ddd4a8b314d04589f10c18b21b0229580a85341a4a",
+      "bytes": 11077
+    },
+    "easygraph/egmgpu/api.py": {
+      "sha256": "2b80ce67533eba854e88834e9b979a8fe47587f921ca9ca0a8697846b4dada00",
+      "bytes": 25530
+    },
+    "easygraph/egmgpu/compatibility.py": {
+      "sha256": "2ce47646a33133534edcfb988af4402149965220eb59fbd620472c63f837c651",
+      "bytes": 16283
+    },
+    "easygraph/egmgpu/cooperative.py": {
+      "sha256": "3721e87c58703766c9ba68dd3c03e0396367a32c137e1ff63cec3198041c6afb",
+      "bytes": 18658
+    },
+    "easygraph/egmgpu/dense_results.py": {
+      "sha256": "23295b4b646bf39218b0c7b7996fe1045edc143c84507b41889063a1cae6abe5",
+      "bytes": 1790
+    },
+    "easygraph/egmgpu/deployment_planner.py": {
+      "sha256": "27fbbf49263ae0a6c966f3f0302d850892053119f15312cd925b50764a691369",
+      "bytes": 50720
+    },
+    "easygraph/egmgpu/direct_dispatch.py": {
+      "sha256": "ac0ac412f5382519be775b5ec354012323d21dc43900c905c6509190d417abe1",
+      "bytes": 7846
+    },
+    "easygraph/egmgpu/joint_window.py": {
+      "sha256": "c1685721f99dd6d39fd153b53d0c6cb4b01c1de7bd7cbdfb022da00324ac1dbf",
+      "bytes": 15712
+    },
+    "easygraph/egmgpu/native_adapter.py": {
+      "sha256": "358f39ea5b84e635c3d9b221994c19bcc91150bbf25315421d489620dc4de175",
+      "bytes": 11394
+    },
+    "easygraph/egmgpu/native_bindings.py": {
+      "sha256": "13367fd1c6d04e3e3ff9c4312f0093e042d0aef4072f8f3b23a2294cf68a1ea3",
+      "bytes": 40731
+    },
+    "easygraph/egmgpu/partitioned_bindings.py": {
+      "sha256": "80e78b7eec26e9de5151bc1f5988761b64ffb3fa4d56205650f052646d148f65",
+      "bytes": 126166
+    },
+    "easygraph/egmgpu/production_bootstrap.py": {
+      "sha256": "5d7bbc1cd55daf35e95fb2fac54ed1d074f74e7c163e67c6f79b8612e941c44f",
+      "bytes": 17182
+    },
+    "easygraph/egmgpu/production_runtime.py": {
+      "sha256": "32615e427ad6e967236c7a86bec2616d43e5a97cd6af5f3904a39525c6577f06",
+      "bytes": 70270
+    },
+    "easygraph/egmgpu/runtime.py": {
+      "sha256": "44c7c36d2b4d87b01928323bf8e07ede5bdedb0a60cc459c9bee243346442573",
+      "bytes": 36916
+    },
+    "easygraph/egmgpu/single_bindings.py": {
+      "sha256": "843179fd546355e82fe04230b26df33d60f979d2cbb72e66338873e2da7e4d0a",
+      "bytes": 52160
+    },
+    "easygraph/egmgpu/snapshot.py": {
+      "sha256": "523769010efbc086f17d6bbaf324d61ee3a774b0563d6bf3e79c111b8adb67a6",
+      "bytes": 32536
+    },
+    "easygraph/egmgpu/sssp_policy.py": {
+      "sha256": "cb7c7c3361d7f28f38dedc15a75e58496bd6cf1144d7f32ba88025bae4340be4",
+      "bytes": 13311
+    },
+    "easygraph/egmgpu/triangle_count_service.py": {
+      "sha256": "46ae2a43206f8d36aae2458f729463efba1734e7664f76dcb2a9dd433d79b7e1",
+      "bytes": 4553
+    },
+    "easygraph/egmgpu/types.py": {
+      "sha256": "7b912fc3a19d5e29292261657deba8e53a4a76fa8e5c2a1c4ad247b5c30d4e20",
+      "bytes": 7416
+    },
+    "easygraph/egmgpu_control/__init__.py": {
+      "sha256": "1cca8878373055ca53ff47c33d9c8a54c3b567e80db200edc113db5c6ed92d04",
+      "bytes": 4392
+    },
+    "easygraph/egmgpu_control/calibration.py": {
+      "sha256": "6b97e1061f0998590b291ecbc3b8f28b5216ef7dd63c5d4a23b2ac7721de52da",
+      "bytes": 25045
+    },
+    "easygraph/egmgpu_control/descriptors.py": {
+      "sha256": "c1f22805bd0ef873545ff4fa96170f19a70321f1b704a4438c1374891f94e7f7",
+      "bytes": 11253
+    },
+    "easygraph/egmgpu_control/partition_manifest.py": {
+      "sha256": "f7f891f03a7069100d1678304149cae3d645ac4afbc6b0f77e5bcb1d7aa92861",
+      "bytes": 54041
+    },
+    "easygraph/egmgpu_control/planner.py": {
+      "sha256": "5e6d49b305435bbdc6c3d20a3a0f5742a7701ef52f99bb4aaccff62480a44b62",
+      "bytes": 29010
+    },
+    "easygraph/egmgpu_control/state.py": {
+      "sha256": "da9edba167a1a9f176b2e2211e5b02c0b54c15e5183c3a8c5496ecc79ca13be8",
+      "bytes": 20121
+    },
+    "easygraph/egmgpu_control/streaming_partition_builder.py": {
+      "sha256": "b4e165a2f1c1f026972f0b8c88d1b6e917c3cbac74afa2b0cbaf1acceede486e",
+      "bytes": 75079
+    },
+    "easygraph/exception.py": {
+      "sha256": "969ae768e8618e84bcaf131e7ce89784e5b1e186ff788d51dcf826368cf6c3f9",
+      "bytes": 2246
+    },
+    "easygraph/experiments/__init__.py": {
+      "sha256": "14681a7db8be618bd1b547ca9e8afa7a6079d7a81d64b753358ea1f9915e84d4",
+      "bytes": 276
+    },
+    "easygraph/experiments/base.py": {
+      "sha256": "8331cb8765a42081a7484fd33077253ec1be049287c071b4ea597b751f98e614",
+      "bytes": 8648
+    },
+    "easygraph/experiments/hypergraphs/__init__.py": {
+      "sha256": "24a73382edf26c28baf8fbef4c59c9a0f32f8898c46038fa7c29bba4f112c28e",
+      "bytes": 59
+    },
+    "easygraph/experiments/hypergraphs/hypergraph.py": {
+      "sha256": "1adf1bb62f6c44b354bcb7be8a5ba12ef0573514b57ed178fa1b55e2308a7d31",
+      "bytes": 4924
+    },
+    "easygraph/experiments/vertex_classification.py": {
+      "sha256": "0ca13bc1777f9eb621d8a1b1178385d46ab49e1998071ae4d3c9d91491e03c19",
+      "bytes": 6408
+    },
+    "easygraph/functions/__init__.py": {
+      "sha256": "83d7a508f08f591ab16baa302a4e4f0799621b0612f770b013d867d8123dddab",
+      "bytes": 713
+    },
+    "easygraph/functions/basic/__init__.py": {
+      "sha256": "6c1c2a1dc7db08830f1443151b61a7709c8964e40ed1c13d2551410756ea341e",
+      "bytes": 114
+    },
+    "easygraph/functions/basic/avg_degree.py": {
+      "sha256": "7af0d2c3d354de9476c87192b9c4eba1f21121f56b49f8258d6840bf67b2b12f",
+      "bytes": 629
+    },
+    "easygraph/functions/basic/cluster.py": {
+      "sha256": "016fbd89c50d045d8e04c01dfa8f716684421616a9a6b3ea2180bc50c6f9e1ae",
+      "bytes": 20993
+    },
+    "easygraph/functions/basic/localassort.py": {
+      "sha256": "3b66c53d31ff7a7f6952711983c0951595488ae5cc30c85eceb71c3b99aa8ceb",
+      "bytes": 7064
+    },
+    "easygraph/functions/basic/predecessor_path_based.py": {
+      "sha256": "7e702a14e33cbab3b865fa1107b3fd573ff9684b7f99764b3cd889801a28350e",
+      "bytes": 2934
+    },
+    "easygraph/functions/basic/tests/__init__.py": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "easygraph/functions/basic/tests/test_avg_degree.py": {
+      "sha256": "e337cc42c4d8e4379dba42af67bdcd2b1f236143f8a513871d36c466c42ca92d",
+      "bytes": 1029
+    },
+    "easygraph/functions/basic/tests/test_cluster.py": {
+      "sha256": "d2ecedc535648d3ef18a24a389c8acbe7d1a5c06798fa95a6adcc77d7920176d",
+      "bytes": 12197
+    },
+    "easygraph/functions/basic/tests/test_localassort.py": {
+      "sha256": "273019b75218eed9c077cfff12992c2668bab182d7fc71ece27400ec98a1bcf8",
+      "bytes": 3467
+    },
+    "easygraph/functions/basic/tests/test_predecessor.py": {
+      "sha256": "fa07d852e65391cd88edde4bd189862f745a93733635682363b9dd498aa9f699",
+      "bytes": 2501
+    },
+    "easygraph/functions/centrality/__init__.py": {
+      "sha256": "05225ac9c9b2ec4b5c18492e9776b7ef28b80abc9c849844ba309e970cf97d83",
+      "bytes": 242
+    },
+    "easygraph/functions/centrality/betweenness.py": {
+      "sha256": "77d0d2516bbeaf8ab367529f3f4ee55eafe8a019f201e95d2ba0a35ee2208d97",
+      "bytes": 7890
+    },
+    "easygraph/functions/centrality/closeness.py": {
+      "sha256": "b65cc19f2a6d9c7bc5a2e1df39052ad21fdcf182e1b80196a27e185700c7c82d",
+      "bytes": 4468
+    },
+    "easygraph/functions/centrality/degree.py": {
+      "sha256": "224f6a1790ca77d4904f7b8065f733bf2386b21852bcfb1bab6b267d4a62f4d6",
+      "bytes": 3148
+    },
+    "easygraph/functions/centrality/ego_betweenness.py": {
+      "sha256": "42c4cce32c67c37bd48b533061a0c0c940b66943d8ca27b3e964fc81f722758a",
+      "bytes": 1571
+    },
+    "easygraph/functions/centrality/eigenvector.py": {
+      "sha256": "d2ab56723396e1dfd8c3d1675ed8265dc51c402f0c09e54441cc8daba3941230",
+      "bytes": 5459
+    },
+    "easygraph/functions/centrality/flowbetweenness.py": {
+      "sha256": "aea8456d8c03ded9bcd12b57a086ee238c13ca4b8ec33cf07886d5557fc3b71d",
+      "bytes": 4111
+    },
+    "easygraph/functions/centrality/katz_centrality.py": {
+      "sha256": "609eb7db30d95ccf8256c3f5aabcd0eb6f1bb189d7711c22cbd42a6f11cea65e",
+      "bytes": 3386
+    },
+    "easygraph/functions/centrality/laplacian.py": {
+      "sha256": "229ee209d8b26cdfd95fcf3db77c4bcb500da36a9dc07dde85359db790dfe4e6",
+      "bytes": 3772
+    },
+    "easygraph/functions/centrality/pagerank.py": {
+      "sha256": "e0e024019b62533eb942d5083da37fa451e634854b26b0914b955a755a69b3a2",
+      "bytes": 5656
+    },
+    "easygraph/functions/centrality/tests/__init__.py": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "easygraph/functions/centrality/tests/test_betweenness.py": {
+      "sha256": "d7dfeba03710fdaffa701b1339f7494202aa650de8fe96da42742ed6b46991cf",
+      "bytes": 3531
+    },
+    "easygraph/functions/centrality/tests/test_closeness.py": {
+      "sha256": "63efb726fb5047719c83fe50800805f48d566d1e4991ff77f30deede9865326c",
+      "bytes": 2966
+    },
+    "easygraph/functions/centrality/tests/test_degree.py": {
+      "sha256": "354ecdcd0850bedd934376945c3c83977bd6da4b22301ad1c9733ef8262cc699",
+      "bytes": 2687
+    },
+    "easygraph/functions/centrality/tests/test_egobetweenness.py": {
+      "sha256": "108d865df76bdb0ce445958a477011a1cac3804498597c95adb4035e7617e59f",
+      "bytes": 2477
+    },
+    "easygraph/functions/centrality/tests/test_flowbetweenness.py": {
+      "sha256": "99e6324715fe698d616a89f60816fbd31ac20362b0ae85a9f1cd804be8481fc8",
+      "bytes": 3119
+    },
+    "easygraph/functions/centrality/tests/test_laplacian.py": {
+      "sha256": "0a26b36a14d1cf63785a154ce544b837e4d31df09a53af9769794a165870522d",
+      "bytes": 3158
+    },
+    "easygraph/functions/centrality/tests/test_pagerank.py": {
+      "sha256": "ea1eb22a00daecb6caa21f4d2406728c2e66d9cc5f0d7304aa4127977a6391e9",
+      "bytes": 2988
+    },
+    "easygraph/functions/community/LPA.py": {
+      "sha256": "16cf8f7a28cafadf71bb9196fdd5328320aa319d4d544739245a4a12d07f6750",
+      "bytes": 23852
+    },
+    "easygraph/functions/community/__init__.py": {
+      "sha256": "98e40f0bd90d13f3dcd23b9035a417fa1e1ff01b4161f2829ce7c988d0e3827d",
+      "bytes": 180
+    },
+    "easygraph/functions/community/ego_graph.py": {
+      "sha256": "ba431c24a95764618446fb78b13f75e1cd2ad2c61639c7211202a8a318c0a4b9",
+      "bytes": 1940
+    },
+    "easygraph/functions/community/localsearch.py": {
+      "sha256": "9251428d5abc0f4627d981d43402979451b0970c22d441ecbc2786317cb67c62",
+      "bytes": 29523
+    },
+    "easygraph/functions/community/louvain.py": {
+      "sha256": "cdd7fd16b90b4b8224a7753f8089fb660ca4da0e26692851183b9e0b939a5c71",
+      "bytes": 12534
+    },
+    "easygraph/functions/community/modularity.py": {
+      "sha256": "e1535d0da0bce9b7807b2be2d521830ae488a8cb86b5b5c92969583c3b0c41de",
+      "bytes": 1964
+    },
+    "easygraph/functions/community/modularity_max_detection.py": {
+      "sha256": "5ba5f62b31f619d0181a0de7e5580bedf98a062a251838e367b274f9cde0d395",
+      "bytes": 7414
+    },
+    "easygraph/functions/community/motif.py": {
+      "sha256": "e570745d08715b5d0c6a592d24f1276f2fb9579d6fe5716c0316b260e255a2e0",
+      "bytes": 3360
+    },
+    "easygraph/functions/community/tests/__init__.py": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "easygraph/functions/community/tests/test_LPA.py": {
+      "sha256": "afdaa960395033255e2955a49aef71e2604dda4a19132123823c6d11946c8940",
+      "bytes": 2187
+    },
+    "easygraph/functions/community/tests/test_LS.py": {
+      "sha256": "d804c1ace5221af5d1e61b3b38224f51b20d2600eb07c6304df3c5666d3d703e",
+      "bytes": 2097
+    },
+    "easygraph/functions/community/tests/test_ego_graph.py": {
+      "sha256": "e6851a74f06a306cc7a22403c54b22577cdb03708be01809f1b79b3e4af49447",
+      "bytes": 2257
+    },
+    "easygraph/functions/community/tests/test_louvian.py": {
+      "sha256": "d7822408cb587b552724d2993fb33cfdfb0648387da72088a26943639f0613a5",
+      "bytes": 2530
+    },
+    "easygraph/functions/community/tests/test_modularity.py": {
+      "sha256": "6184d743f2ac67f11ae0c0c1f49021544e7a141dc2b37eede6c9e2bb1923e2f9",
+      "bytes": 2295
+    },
+    "easygraph/functions/community/tests/test_modularity_max_detection.py": {
+      "sha256": "be168ab2e60072798c191d12e61a2203dc0abb53c853f8cb998d809e8c2bf55c",
+      "bytes": 3025
+    },
+    "easygraph/functions/community/tests/test_motif.py": {
+      "sha256": "675e65a3b53f4f1c1f4721c91c1f56f7fddb312cce746a89a58709d8704ce9a4",
+      "bytes": 3030
+    },
+    "easygraph/functions/components/__init__.py": {
+      "sha256": "b245741c47bd60660d0a3865078e9c4067c2a7239465f649a1c86410619d8138",
+      "bytes": 118
+    },
+    "easygraph/functions/components/biconnected.py": {
+      "sha256": "d4c9d17a375629d7e324ec7db2564e65bd313384b52d7a8e5b02c7d5f6000b10",
+      "bytes": 7790
+    },
+    "easygraph/functions/components/connected.py": {
+      "sha256": "e9d9129a940409617dd7b46049a5d13b877517dff3ef11bd71f181d33bbd1555",
+      "bytes": 4344
+    },
+    "easygraph/functions/components/strongly_connected.py": {
+      "sha256": "1379e2f847dac0efe6986bb8e1076c88b836b612efd79bba1bab18822736075b",
+      "bytes": 7760
+    },
+    "easygraph/functions/components/tests/__init__.py": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "easygraph/functions/components/tests/test_biconnected.py": {
+      "sha256": "a1216ce97ae30d6d152b5d3a20eb12dbef9adf6d81a7d600a1351ad1df75d977",
+      "bytes": 3412
+    },
+    "easygraph/functions/components/tests/test_connected.py": {
+      "sha256": "2338f9811d2092565533c56e1f3bbd2c19ecfa6b32445b6d81f7c034ec926b22",
+      "bytes": 4095
+    },
+    "easygraph/functions/components/tests/test_strongly_connected.py": {
+      "sha256": "78aebdfeceb0217d9ec21291d7d5e5c7c227f2c733c8d9f6bca922bcefb3d20a",
+      "bytes": 4382
+    },
+    "easygraph/functions/components/tests/test_weakly_connected.py": {
+      "sha256": "aa5ee9f70a2c27f97fb01afd2f7040693c34c83e380d9f85573fc7d61b8c7ff6",
+      "bytes": 2999
+    },
+    "easygraph/functions/components/weakly_connected.py": {
+      "sha256": "abddb6c55dcfbb2272f0f2ddbc9ff8f609201d3e51c0adf7cf42fdbfb1f4ec68",
+      "bytes": 5062
+    },
+    "easygraph/functions/core/__init__.py": {
+      "sha256": "6363d1695d54f5b286e000571ecf0d1aa5f802f48cc386fe837bb7f18e32e754",
+      "bytes": 22
+    },
+    "easygraph/functions/core/k_core.py": {
+      "sha256": "f303dd4a8531def46691e57c6160d15e143fddaa52ddc0c342f7bc9ccbd12fbf",
+      "bytes": 2823
+    },
+    "easygraph/functions/core/tests/__init__.py": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "easygraph/functions/core/tests/test_k_core.py": {
+      "sha256": "dc9f5d533089209ab6224df8464a3de97792e733d51e17f0bbce74eacfa2e90e",
+      "bytes": 2568
+    },
+    "easygraph/functions/drawing/__init__.py": {
+      "sha256": "d02f338b3574adc02663f239bb486434ac29d610bb9985fd33373dcf90a17e7f",
+      "bytes": 70
+    },
+    "easygraph/functions/drawing/defaults.py": {
+      "sha256": "7904d26df404f117e837c07462c72fc6925c12da17f0f60548994e45d34650b1",
+      "bytes": 7926
+    },
+    "easygraph/functions/drawing/drawing.py": {
+      "sha256": "9be265ee513d0fd7ec8447bb50f57411a8506deb1ea251726830474fe284e081",
+      "bytes": 54252
+    },
+    "easygraph/functions/drawing/geometry.py": {
+      "sha256": "aa4d15c84a7eb251c4b1d19ed6ad2cf681fab76cc6da4345ca30691a25c1fcf4",
+      "bytes": 1104
+    },
+    "easygraph/functions/drawing/layout.py": {
+      "sha256": "dbc0d74b0f076a55f3f76888c5b9251c3f54ad65e2f10d7ecee8bfbafa3717a9",
+      "bytes": 975
+    },
+    "easygraph/functions/drawing/plot.py": {
+      "sha256": "386070025a8652f4119e221f6bc147e07a3aa71c56b24c891f849d8fb2e9f28a",
+      "bytes": 6374
+    },
+    "easygraph/functions/drawing/positioning.py": {
+      "sha256": "2f4a428f8988e4bc8add26aa2fc0eb0c7aca5ff7b946962de810b066d12242a5",
+      "bytes": 20537
+    },
+    "easygraph/functions/drawing/simulator.py": {
+      "sha256": "9e19f9e16e6362e227df1c9eef01d81f9f4054c89b356116bd94b359c50ec379",
+      "bytes": 6962
+    },
+    "easygraph/functions/drawing/tests/__init__.py": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "easygraph/functions/drawing/tests/test_drawing.py": {
+      "sha256": "213f78b41a985acf42f9ce5b510530beca583149942918782354f14b2d72daa3",
+      "bytes": 1044
+    },
+    "easygraph/functions/drawing/tests/test_geometry.py": {
+      "sha256": "3a88f380c5dce3844bac7adeffb91006647d443de7cf2e7c526c00d62673370c",
+      "bytes": 2965
+    },
+    "easygraph/functions/drawing/tests/test_plot.py": {
+      "sha256": "5254ea92bfc2d217b987456d7450c34fe1b5db5c1a123aa7634909c36176a451",
+      "bytes": 1109
+    },
+    "easygraph/functions/drawing/tests/test_positioning.py": {
+      "sha256": "08e74474a466db91a0546e22bb6aa98fdccc629d6da6b2d8462d96b051bfddc6",
+      "bytes": 1482
+    },
+    "easygraph/functions/drawing/utils.py": {
+      "sha256": "d0840f2790e0c5dce9a1b79e4e6b1bdc3361c15256be9209212595721df4cea3",
+      "bytes": 19623
+    },
+    "easygraph/functions/graph_embedding/NOBE.py": {
+      "sha256": "cf2070a0a6e2e18f94917ff0d998f5f93b884b151cffc194c161fb7c85d9f6ff",
+      "bytes": 3972
+    },
+    "easygraph/functions/graph_embedding/__init__.py": {
+      "sha256": "d95db8e1ec025d66d94f7fb77ec9820e260e6fd501a7c9efc58acaa02e5a7ba2",
+      "bytes": 298
+    },
+    "easygraph/functions/graph_embedding/deepwalk.py": {
+      "sha256": "6642ea99e71eab2aed2c8e1af7b83e025b774ac20435fd3ff8fcecf4a5ea8e88",
+      "bytes": 2909
+    },
+    "easygraph/functions/graph_embedding/line.py": {
+      "sha256": "3b525e9bf11164cb4aaafe4bb8c5be4405deb94d946817a3b095799a8c105099",
+      "bytes": 9787
+    },
+    "easygraph/functions/graph_embedding/net_emb_example_citeseer.py": {
+      "sha256": "88c4b5482595a2bd91847ae90f159c123fa6c28dbe4beb0d36c3fb56b6930db2",
+      "bytes": 5095
+    },
+    "easygraph/functions/graph_embedding/node2vec.py": {
+      "sha256": "3743ef0f238e96beb22ee9b7a2288a3319c51f37c3ee97ae2759b4e73df87d4c",
+      "bytes": 8992
+    },
+    "easygraph/functions/graph_embedding/sdne.py": {
+      "sha256": "5281fb0f6c2ecc5908cb0006196d3a032232eae477302f9f4007eb5a2340beef",
+      "bytes": 9265
+    },
+    "easygraph/functions/graph_embedding/tests/__init__.py": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "easygraph/functions/graph_embedding/tests/test.emb": {
+      "sha256": "d2bf4975cbb4be5b592b8c6a91124f288108350233ffe3b598381e0d574a02a1",
+      "bytes": 826
+    },
+    "easygraph/functions/graph_embedding/tests/test_deepwalk.py": {
+      "sha256": "a75c68aceb8b8e4b6af9040cdd9d656f2fe24dec297db279f14c5cea82a60951",
+      "bytes": 2821
+    },
+    "easygraph/functions/graph_embedding/tests/test_line.py": {
+      "sha256": "3bd94d05a914337077854393f835ecd631c0adf854f51cc7ada1ca61708a6fca",
+      "bytes": 2588
+    },
+    "easygraph/functions/graph_embedding/tests/test_nobe.py": {
+      "sha256": "becf7f9dce32aec3b8f085109e7c385adf1a18ae036cec34e9ddd0aaf35bbd32",
+      "bytes": 1996
+    },
+    "easygraph/functions/graph_embedding/tests/test_node2vec.py": {
+      "sha256": "15cf3848ed772fec4321c05535d80a74eb873202307a34237dd6866f13d153dd",
+      "bytes": 2005
+    },
+    "easygraph/functions/graph_embedding/tests/test_sdne.py": {
+      "sha256": "e54e7de7ad645d6b7b8bfb8b27a02c4dbab37957896e4b798221cf0ac4503d60",
+      "bytes": 3065
+    },
+    "easygraph/functions/graph_generator/RandomNetwork.py": {
+      "sha256": "588264bafd9ef75d6005b62e5c27c7136446561927120fd8190109a473f2cc23",
+      "bytes": 12333
+    },
+    "easygraph/functions/graph_generator/__init__.py": {
+      "sha256": "4d85792710adede06f59bef9611f17b0faed3af0a03d5bcd3d3974352864f3c4",
+      "bytes": 52
+    },
+    "easygraph/functions/graph_generator/classic.py": {
+      "sha256": "8dd23003e5f8fab99b83b6d4cae6660b74adc3ace6e524f65d022909ed8ab428",
+      "bytes": 1900
+    },
+    "easygraph/functions/graph_generator/tests/__init__.py": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "easygraph/functions/graph_generator/tests/test_Random_Network.py": {
+      "sha256": "4f60971a00e2a0ec5b81320223d06cc8d2dfb55c1d40056562578eb615da8bfa",
+      "bytes": 1843
+    },
+    "easygraph/functions/graph_generator/tests/test_classic.py": {
+      "sha256": "b02328a5aebd02505acab3708ac7507e97ff36175f507bdf00e69bf74e6dad03",
+      "bytes": 2965
+    },
+    "easygraph/functions/hypergraph/__init__.py": {
+      "sha256": "6b06bb52be7c1de37d4daad7a15c9d824862faa0cfc1f564838e9366cb561ac4",
+      "bytes": 154
+    },
+    "easygraph/functions/hypergraph/assortativity.py": {
+      "sha256": "e8efc3dd2597713eeb149525f2936f918a3a531ed1e274819ab1c7f95783e0a8",
+      "bytes": 4645
+    },
+    "easygraph/functions/hypergraph/centrality/__init__.py": {
+      "sha256": "c1064c74f12e04a00c1a53c76c7b11509dd5bf17d8d4ca2f48ee7240f4f37ccb",
+      "bytes": 139
+    },
+    "easygraph/functions/hypergraph/centrality/cycle_ratio.py": {
+      "sha256": "5639ca3f2bc159361491e24310f2eeb5660cdde2847101afd756f3b015a48527",
+      "bytes": 6248
+    },
+    "easygraph/functions/hypergraph/centrality/degree.py": {
+      "sha256": "4c5e3a3c4a414f57fcc193ae57e39c4a96c8cff8821aeffb313a9a8dfc4de725",
+      "bytes": 474
+    },
+    "easygraph/functions/hypergraph/centrality/hypercoreness.py": {
+      "sha256": "a39d5f9a145a0358997f3833a8d4540830436ec99aa2d09b0389a2c1e9998a3f",
+      "bytes": 11571
+    },
+    "easygraph/functions/hypergraph/centrality/s_centrality.py": {
+      "sha256": "ca223f3189c90cd4a55636f23e775256bd0f91139da7abc3ccf032a40182108f",
+      "bytes": 2318
+    },
+    "easygraph/functions/hypergraph/centrality/tests/test_cycle_ratio.py": {
+      "sha256": "bd6ea5ce50dc5c34b68f527222b92c8f6c3d3fd9d768f703559fd65d3b7c2303",
+      "bytes": 2433
+    },
+    "easygraph/functions/hypergraph/centrality/tests/test_degree.py": {
+      "sha256": "a971e71d48c696ba8bb1d2f59067b7f82ff7eeed210b482f69084d19681f49fe",
+      "bytes": 1314
+    },
+    "easygraph/functions/hypergraph/centrality/tests/test_hypercoreness.py": {
+      "sha256": "f0e5199809b8116ea21d2cc435af0d0990b42cde9b30a3f057e39e318955ef27",
+      "bytes": 1692
+    },
+    "easygraph/functions/hypergraph/centrality/tests/test_s_centrality.py": {
+      "sha256": "0a2f47e2041ab29fca1b2f3cdea10017809aa4c065c7f46762f13d4e094e3643",
+      "bytes": 1385
+    },
+    "easygraph/functions/hypergraph/centrality/tests/test_vector_centrality.py": {
+      "sha256": "5ee087eab7dc04a6d9fdec177abcf158304128f31a845b724b21bdf2f9881956",
+      "bytes": 1500
+    },
+    "easygraph/functions/hypergraph/centrality/vector_centrality.py": {
+      "sha256": "cc7ee3393f3d67b269a9884c45f38c2ecfd01ce761d6a398373219e235d55ab3",
+      "bytes": 2431
+    },
+    "easygraph/functions/hypergraph/hypergraph_clustering.py": {
+      "sha256": "54edcbd080580ba993745ec147a06e8d9aad353dcbf56f598dbd480bca3d7a1a",
+      "bytes": 8112
+    },
+    "easygraph/functions/hypergraph/hypergraph_operation.py": {
+      "sha256": "3c18014a9aeb14b436ffd7d4b6a919f7a7be06e70c3c47e51269be5cd0e0372a",
+      "bytes": 2268
+    },
+    "easygraph/functions/hypergraph/null_model/__init__.py": {
+      "sha256": "df58a8febebe5b8f486fbd995bc3005204422207ea76f00939005ae77a791ad4",
+      "bytes": 124
+    },
+    "easygraph/functions/hypergraph/null_model/hypergraph_classic.py": {
+      "sha256": "dc2c391b6968e0b74fbdbc565336db762882f864e8f1991c1e55cecd25213b11",
+      "bytes": 940
+    },
+    "easygraph/functions/hypergraph/null_model/lattice.py": {
+      "sha256": "24e89609e16893625d66d901edd63379e480f90d885ed4f5191e044b94e22754",
+      "bytes": 1462
+    },
+    "easygraph/functions/hypergraph/null_model/random.py": {
+      "sha256": "e0cd032ff22405de26128b4855f30fc1b66543f4ca8bbb87047f559f2e5badf1",
+      "bytes": 13860
+    },
+    "easygraph/functions/hypergraph/null_model/simple.py": {
+      "sha256": "c80a70042d802ef649eb74caa3593ca61436d06037c718cd0804616ff9878e73",
+      "bytes": 1874
+    },
+    "easygraph/functions/hypergraph/null_model/tests/__init__.py": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "easygraph/functions/hypergraph/null_model/tests/test_classic.py": {
+      "sha256": "c813cd20300db413ebdb43df8692cbfc25834c481e2fc4eb2661fab55b258c6b",
+      "bytes": 2796
+    },
+    "easygraph/functions/hypergraph/null_model/tests/test_lattice.py": {
+      "sha256": "f463a0e594f58987d28fc3ed3d238aac827339ea7782b41f3554c53c2ad252c4",
+      "bytes": 1663
+    },
+    "easygraph/functions/hypergraph/null_model/tests/test_simple.py": {
+      "sha256": "cf640b8c84253e4df4b15fc2f8940c216e82ac3b7d6b3739032448c10a9bece9",
+      "bytes": 2210
+    },
+    "easygraph/functions/hypergraph/null_model/uniform.py": {
+      "sha256": "6e757030f5b8cda8722e25e8def77238570d9ee4d325309c631cc8b310e32c33",
+      "bytes": 12592
+    },
+    "easygraph/functions/hypergraph/tests/__init__.py": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "easygraph/functions/hypergraph/tests/test_assortativity.py": {
+      "sha256": "96d3b754f8fd2893d8e435b1054de1e947976cf0f6ba973537a5195202762672",
+      "bytes": 3088
+    },
+    "easygraph/functions/hypergraph/tests/test_centrality.py": {
+      "sha256": "a3c50840695fed243d8fb9838533b2946f53cbc78fc0077cbd03b2f303c8d868",
+      "bytes": 684
+    },
+    "easygraph/functions/hypergraph/tests/test_hypergraph_clustering.py": {
+      "sha256": "56c49f85786afc178d8e8282e659865646570485375d43279a4b40477a3b4d9c",
+      "bytes": 3223
+    },
+    "easygraph/functions/hypergraph/tests/test_hypergraph_operation.py": {
+      "sha256": "df2069a8fa1fc67c70bfaa5eea56a1ac76f608fa5b3953ee7ab252f331a05cbc",
+      "bytes": 2484
+    },
+    "easygraph/functions/isolate.py": {
+      "sha256": "104281304e06f2b195a4c035b07b61ced0f8e2eb35c9d13035e894b4df9543d6",
+      "bytes": 2274
+    },
+    "easygraph/functions/path/__init__.py": {
+      "sha256": "51a97cdab74496c11cd2b04b9b8ff0f2cfec360cc019b4d561892d63c13c82c2",
+      "bytes": 130
+    },
+    "easygraph/functions/path/average_shortest_path_length.py": {
+      "sha256": "19c728936eb9680a17282117be58908bfad8f115794ab223d5d63061b3d2ad33",
+      "bytes": 4144
+    },
+    "easygraph/functions/path/bridges.py": {
+      "sha256": "15e2ff967840aec6755150f4ae7feb83cedef9e6b1622d03c0e04001c2411696",
+      "bytes": 6101
+    },
+    "easygraph/functions/path/diameter.py": {
+      "sha256": "d6f7f33a3858414734ba84d12edd103592c8cd584b9d7fac3404c72e86246981",
+      "bytes": 2693
+    },
+    "easygraph/functions/path/mst.py": {
+      "sha256": "ce63b772167e8bcaee67be10d815c9be59a4bc4c6407b7e73e7ebbc69e176ec0",
+      "bytes": 25567
+    },
+    "easygraph/functions/path/path.py": {
+      "sha256": "3fdeed71419763ea13ff493e61aff1d29eb7f4fa5d1197dc3e2daffde335ead9",
+      "bytes": 11773
+    },
+    "easygraph/functions/path/tests/__init__.py": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "easygraph/functions/path/tests/test_average_shortest_path_length.py": {
+      "sha256": "a5b06d8f6b619792942bd318acdcfaf9d7ba7f418342f6f49dbd56d730bb2c5b",
+      "bytes": 1813
+    },
+    "easygraph/functions/path/tests/test_bridges.py": {
+      "sha256": "6a59f6dd9b2f8c5e613e0a2d624955573b6ff4e6dd65b81d96840ef53f37416a",
+      "bytes": 4650
+    },
+    "easygraph/functions/path/tests/test_diameter.py": {
+      "sha256": "98e23169e8b358cc35425fcbaed2e2a31c13b0e90bf107017153ecbe905ad9a2",
+      "bytes": 4312
+    },
+    "easygraph/functions/path/tests/test_mst.py": {
+      "sha256": "24e5a2bd73d422ea38e25c87baf8f96782b8ba009cd910b1a757463eccf3a340",
+      "bytes": 5882
+    },
+    "easygraph/functions/path/tests/test_path.py": {
+      "sha256": "6bd6991632a0b6381e9e928e47a6e375c8307165e773910bce6f0fdcbe2825eb",
+      "bytes": 6224
+    },
+    "easygraph/functions/structural_holes/AP_Greedy.py": {
+      "sha256": "3303db6d4d166158f8d2cb97f33470f27d38d025d98290bb9790f9ddb37438bd",
+      "bytes": 11359
+    },
+    "easygraph/functions/structural_holes/HAM.py": {
+      "sha256": "33e08e20cf849e85c9e90ce71f2d9471d2244f7007507691607722465a9c9672",
+      "bytes": 8565
+    },
+    "easygraph/functions/structural_holes/HIS.py": {
+      "sha256": "dab8abeb7fe8562b2050ec67cc507dfcf16fd38e05ac7f7dc60bbf4a9022bc09",
+      "bytes": 4459
+    },
+    "easygraph/functions/structural_holes/ICC.py": {
+      "sha256": "db0f251b34055963a46080ec720ede7edbf44be0d73d3f1f89596c49a1ade2d6",
+      "bytes": 7178
+    },
+    "easygraph/functions/structural_holes/MaxD.py": {
+      "sha256": "5b2249dcefa60b59304e60781a2fec677cef617ad0e4389ee3d347aa4042dab4",
+      "bytes": 9822
+    },
+    "easygraph/functions/structural_holes/NOBE.py": {
+      "sha256": "b9da4f427ee07b0402727ecdd1e89f85fdcdf8a6f69ef54dcab4a120522eb854",
+      "bytes": 4432
+    },
+    "easygraph/functions/structural_holes/SHII_metric.py": {
+      "sha256": "c2114168cdf57f8c40212541903bb5b07ee590ad90fcd071c240b7fae39e8cf1",
+      "bytes": 10650
+    },
+    "easygraph/functions/structural_holes/__init__.py": {
+      "sha256": "d1ebb82a5e73451cc2663aae2a533e01af6ea6316fbeadd7bc1b03bb4e8df12b",
+      "bytes": 195
+    },
+    "easygraph/functions/structural_holes/evaluation.py": {
+      "sha256": "aca7f43a8b897325855c6d2ee5ba47dfd1ea376199d98968c5d09a48968ebe21",
+      "bytes": 14854
+    },
+    "easygraph/functions/structural_holes/maxBlock.py": {
+      "sha256": "7fc9ff7e6190982830dcd0e8e023d95b4caf8c8e72d3e1903456327d76aa5fea",
+      "bytes": 18955
+    },
+    "easygraph/functions/structural_holes/metrics.py": {
+      "sha256": "35840586ccbedf0ba911577ba16e697794664540a298d3ee54dbba043b9d886d",
+      "bytes": 13179
+    },
+    "easygraph/functions/structural_holes/tests/test_AP_Greedy.py": {
+      "sha256": "b92edd62641ebd5ed58967cb12bc17119b6f79cfc1c29f161e6ba27dc5e026c5",
+      "bytes": 3123
+    },
+    "easygraph/functions/structural_holes/tests/test_HAM.py": {
+      "sha256": "db9c5298605a92472bf8274baeb79ac6d9156a0aeaf90a7c7c92569cd56f2627",
+      "bytes": 2238
+    },
+    "easygraph/functions/structural_holes/tests/test_HIS.py": {
+      "sha256": "e2c1e455ba58496e58a3787a13c9e79f609d367c58fd635df98967be8481fcfb",
+      "bytes": 3149
+    },
+    "easygraph/functions/structural_holes/tests/test_ICC.py": {
+      "sha256": "2b2b75c530490d810f24a3088a909e5f3c0c616f64a00138fb389f3bf9a437f5",
+      "bytes": 2266
+    },
+    "easygraph/functions/structural_holes/tests/test_MaxD.py": {
+      "sha256": "1b9393ff6bbac9ff2f70760b6c861a27372c3cd1e24a8489995e1462e29b354e",
+      "bytes": 2185
+    },
+    "easygraph/functions/structural_holes/tests/test_NOBE.py": {
+      "sha256": "c5bc5543a4a0587c86a09642ed70d14d4ebb47008689b7d05707bdda4ea6f42f",
+      "bytes": 2403
+    },
+    "easygraph/functions/structural_holes/tests/test_SHII_metric.py": {
+      "sha256": "8d2371a6929714d40c70fc452e63c7997ba3ff7504aae6d0e2f5fa18fe65f649",
+      "bytes": 2056
+    },
+    "easygraph/functions/structural_holes/tests/test_evaluation.py": {
+      "sha256": "0efd9fda807a3bb9dc6b73d972a0b3089232da884a9af3d0915f65202e7c5d28",
+      "bytes": 2313
+    },
+    "easygraph/functions/structural_holes/tests/test_maxBlock.py": {
+      "sha256": "e5ddd3085941e1598a6963f342159f398ff6834319a9e53edcce49686134e9d8",
+      "bytes": 1843
+    },
+    "easygraph/functions/structural_holes/tests/test_metrics.py": {
+      "sha256": "7f13e6593abfded58b177608aa3cf9d6abd0dabebb98492336226069fe686dee",
+      "bytes": 3506
+    },
+    "easygraph/functions/structural_holes/tests/test_weakTie.py": {
+      "sha256": "bd4d954c56b9f9b5bee47907b3d0c859da6c4414553015baa526f7a916837b92",
+      "bytes": 1624
+    },
+    "easygraph/functions/structural_holes/weakTie.py": {
+      "sha256": "816f93f354ccae90354cf09eb642b26067da1e61f2ecb4d1b03d5f81e987b4bc",
+      "bytes": 9978
+    },
+    "easygraph/functions/tests/__init__.py": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "easygraph/functions/tests/test_isolate.py": {
+      "sha256": "f6ccda24dbec62f7a0f2b78e63432cd2a04bf3272b8cfbb58dafde77b6a23847",
+      "bytes": 2336
+    },
+    "easygraph/gpu/__init__.py": {
+      "sha256": "64a441a3162df1dd250770a6a7ef9367d13788c818c2dfc6e1ba6fbed25d31ec",
+      "bytes": 747
+    },
+    "easygraph/gpu/_arena/__init__.py": {
+      "sha256": "1dac0ac8e1387b03f352d0edc001294a393615e435095ed90334e695eefcc2fb",
+      "bytes": 62
+    },
+    "easygraph/gpu/_arena/bulk_assign.py": {
+      "sha256": "d862400f2f2032e6abb891b702ab19a59b33e295ee9ae3d1094aca6f969c9f0e",
+      "bytes": 8555
+    },
+    "easygraph/gpu/_arena/candidate_v4.py": {
+      "sha256": "74832957fe54948490bbb7aed3c7f4e0915c1cc77252e5eeeb5948740ec906c5",
+      "bytes": 1670
+    },
+    "easygraph/gpu/_arena/canonical_csr_v4.py": {
+      "sha256": "e2f4595bc7c0995617618da656b7693429cfd4c25e5e3c2ba0750421d1137559",
+      "bytes": 3452
+    },
+    "easygraph/gpu/_arena/conditional_cost.py": {
+      "sha256": "aa18632334928436b7ca16f81c19851f029370d089baea75690d8cca9eeb91a4",
+      "bytes": 29880
+    },
+    "easygraph/gpu/_arena/conditional_session.py": {
+      "sha256": "91039b867a8fc5bf9175adf515e58fbe471f86292deb62c5151b6e9e917fa3fa",
+      "bytes": 30631
+    },
+    "easygraph/gpu/_arena/connectivity.py": {
+      "sha256": "0aefd9845a84cb822750ceb0bdffd5f0434301a920a91a18965973c1fe6fd759",
+      "bytes": 5647
+    },
+    "easygraph/gpu/_arena/device_delta_ieee_v3.py": {
+      "sha256": "ce8c2d68e04650913af913d3f6f7faa73bd884f343f658f634d6cfc2be5522f3",
+      "bytes": 4345
+    },
+    "easygraph/gpu/_arena/executor.py": {
+      "sha256": "173f274fb09eb1fae8b27d68120722ce78f0bab45c46ff48be0856110cdc3112",
+      "bytes": 12534
+    },
+    "easygraph/gpu/_arena/factorized_graph.py": {
+      "sha256": "a917dcab79de2480dbe9920d27cf95b37d3c44d713f69658816cc3b7703ea4f2",
+      "bytes": 6168
+    },
+    "easygraph/gpu/_arena/factorized_runtime.py": {
+      "sha256": "b3fc712368ec9c0082de7a981a007e2faecaf706bf9534a6351b3f40d8eb582f",
+      "bytes": 4785
+    },
+    "easygraph/gpu/_arena/factorized_session.py": {
+      "sha256": "d48c862108a8bb562887d7525f831a4acded89b638ff749bee7fa62c47624a5e",
+      "bytes": 13282
+    },
+    "easygraph/gpu/_arena/fast_host_graph.py": {
+      "sha256": "94c5a8e5ec037e6a208e91b94b85b373df4c83f3254737a867d4a0fb873a3430",
+      "bytes": 9591
+    },
+    "easygraph/gpu/_arena/gpu_runtime.py": {
+      "sha256": "bc3269e2b1d0eae9cd0fe6ce84c15196a6ee6ab80f8dee97c20e3a63a022f351",
+      "bytes": 25807
+    },
+    "easygraph/gpu/_arena/input_hotpath/__init__.py": {
+      "sha256": "1dac0ac8e1387b03f352d0edc001294a393615e435095ed90334e695eefcc2fb",
+      "bytes": 62
+    },
+    "easygraph/gpu/_arena/input_hotpath/confirm_candidate_v1.py": {
+      "sha256": "6b907b27a79625e3bc712ec3f6943e02db7020f000ef5c4c01965cba86c000e6",
+      "bytes": 874
+    },
+    "easygraph/gpu/_arena/input_hotpath/csr_session.py": {
+      "sha256": "bc02afdc264e330b390b95c9b6e74cc6be7f030ede78b983dcb6ccf657ee14a3",
+      "bytes": 7110
+    },
+    "easygraph/gpu/_arena/input_hotpath/csr_session_v3.py": {
+      "sha256": "1dc9c89a61810d2830fd7aaa35cfeaff24bf7398edd7863c755f1b39759ec4ad",
+      "bytes": 7298
+    },
+    "easygraph/gpu/_arena/input_hotpath/csr_session_v4.py": {
+      "sha256": "26872e94dbce03db8fa5e19a009efd03c984f5f1c914eabc4750f1dbcf098625",
+      "bytes": 19881
+    },
+    "easygraph/gpu/_arena/input_hotpath/fused_producer_v7.py": {
+      "sha256": "181c2db82d632cfbb3f979a899098abde4ddcc9680d2e011b9477af397ccec09",
+      "bytes": 5721
+    },
+    "easygraph/gpu/_arena/input_hotpath/fused_producer_v8.py": {
+      "sha256": "b143c1d182b1adabdf3a8ea196d695336ef733cdaa542660fbf89b0b76f855d5",
+      "bytes": 1372
+    },
+    "easygraph/gpu/_arena/input_hotpath/owned_csr_v6.py": {
+      "sha256": "7eff73e9d5a9ff04a7ed9f9e9abd4cffe5550024c283d7a9566395e325015560",
+      "bytes": 10647
+    },
+    "easygraph/gpu/_arena/kernel_pr_v4.py": {
+      "sha256": "44555f8af0103e8203c7b888a6adb4b868556ab0eb46fa5e16e62e8792cef5fe",
+      "bytes": 2698
+    },
+    "easygraph/gpu/_arena/kernel_sssp_v4.py": {
+      "sha256": "179bfd4e5929171c8463b4d0b68329ce42e462d6fe2e8a325cfd828c40930a3a",
+      "bytes": 1641
+    },
+    "easygraph/gpu/_arena/lean.py": {
+      "sha256": "71d98cf3232bddba4c8185474b704213bdb723094bbb27bd72ee208969eb4167",
+      "bytes": 4224
+    },
+    "easygraph/gpu/_arena/lifecycle_adapters.py": {
+      "sha256": "1fdf5b8bb5d66eb77d77ab05d18a3d3f23f67874936453e217fccebc3429a6f5",
+      "bytes": 4007
+    },
+    "easygraph/gpu/_arena/low_degree.py": {
+      "sha256": "d042ee729f199bd218ec570db90555661c731c2bcf35f8ea34817a3e0b87fd62",
+      "bytes": 5951
+    },
+    "easygraph/gpu/_arena/native/common/adaptive_transfer_policy.h": {
+      "sha256": "f824ff879265ec070e13a9edb7981b3819ee6bb623999307ea5a5ddfece14602",
+      "bytes": 499
+    },
+    "easygraph/gpu/_arena/native/common/buffer_cache.h": {
+      "sha256": "4ddc3d6980cad1048cca89b24555a33fd8e4715b694149dd3a53372855f89ce6",
+      "bytes": 5237
+    },
+    "easygraph/gpu/_arena/native/common/common.h": {
+      "sha256": "c24900437531bb9db9ab8e31bef0099d948c6e478ec2f5421b42d896083583ad",
+      "bytes": 609
+    },
+    "easygraph/gpu/_arena/native/common/device_graph_cache.h": {
+      "sha256": "fda3a80a3ce10388d4739163c3731fb72c9c4af750335251edb463e2448e7470",
+      "bytes": 1620
+    },
+    "easygraph/gpu/_arena/native/common/err.h": {
+      "sha256": "abd10b5f15f92441932a1788aa98fd01e044e16752bf7fa4a4063e7f1b4d8c84",
+      "bytes": 378
+    },
+    "easygraph/gpu/_arena/native/device_delta_ieee_v3.cu": {
+      "sha256": "ec41ef03634f393c60035d65ace90ca28cecede2d8e8eeec6e9addf2a7f0d874",
+      "bytes": 7096
+    },
+    "easygraph/gpu/_arena/native/native_bridge.cu": {
+      "sha256": "df360a39689571c0ea1879b08c01b312d7e2a6edbe8e3f42b88056fb34a642fe",
+      "bytes": 10064
+    },
+    "easygraph/gpu/_arena/native/sssp_dijkstra.cu": {
+      "sha256": "a73b6637e62ae176268952e491d12d2f3d22519c198e794b5ce82b044755c95d",
+      "bytes": 39136
+    },
+    "easygraph/gpu/_arena/native_bridge.py": {
+      "sha256": "a77215b7919ede272010133d07886916e9136595f64a35b751865640b94178ee",
+      "bytes": 10488
+    },
+    "easygraph/gpu/_arena/public_session_final.py": {
+      "sha256": "f87f0456eb869f947f9b63648341347ffe81dd894019e0dbcaff5c5214e4b84f",
+      "bytes": 26028
+    },
+    "easygraph/gpu/_arena/public_session_release.py": {
+      "sha256": "8cb7b25b4f5c3480882a6c5cbc3bc6133e64c452eccf7763db4a4969ece26c3e",
+      "bytes": 3952
+    },
+    "easygraph/gpu/_arena/replacement.py": {
+      "sha256": "204150014ec409f7c104f3b0a45046985449d69beb71080984cd38ece00d6d8a",
+      "bytes": 5852
+    },
+    "easygraph/gpu/_arena/retained_node_map.py": {
+      "sha256": "93d857e0325411ed1646dd53964defda1e1b2f34a64e70986899b0dc77b552c7",
+      "bytes": 1918
+    },
+    "easygraph/gpu/_arena/round2_topology/__init__.py": {
+      "sha256": "1dac0ac8e1387b03f352d0edc001294a393615e435095ed90334e695eefcc2fb",
+      "bytes": 62
+    },
+    "easygraph/gpu/_arena/round2_topology/gpu_adapter.py": {
+      "sha256": "4df64d1f058ee82604397ee53e75c07ade6a6ee15ead10f2080c3d8edf85cc8c",
+      "bytes": 7181
+    },
+    "easygraph/gpu/_arena/round2_topology/state.py": {
+      "sha256": "16eda3f72d84c67805a770f4e6e1290d1a519cd9f8d4fb4f920f656b9d145d99",
+      "bytes": 13961
+    },
+    "easygraph/gpu/_arena/round3_transfer/__init__.py": {
+      "sha256": "1dac0ac8e1387b03f352d0edc001294a393615e435095ed90334e695eefcc2fb",
+      "bytes": 62
+    },
+    "easygraph/gpu/_arena/round3_transfer/arena_growth.py": {
+      "sha256": "68621e1a017018d2653d53377fe07d3812e094d614e393478f117f4d03e4483e",
+      "bytes": 2663
+    },
+    "easygraph/gpu/_arena/round3_transfer/kernels.py": {
+      "sha256": "0e26a12bc40c8c530de0bf1bfe6669de692bfa1f1e58529444a1408cf1b4fbb3",
+      "bytes": 2775
+    },
+    "easygraph/gpu/_arena/round3_transfer/packet.py": {
+      "sha256": "9ecfcdbcce8cb13b1cd3df7a1d6500b0d88345fa2601c925558bea40f73ce725",
+      "bytes": 2819
+    },
+    "easygraph/gpu/_arena/round4_switch/__init__.py": {
+      "sha256": "1dac0ac8e1387b03f352d0edc001294a393615e435095ed90334e695eefcc2fb",
+      "bytes": 62
+    },
+    "easygraph/gpu/_arena/round4_switch/admitted_session.py": {
+      "sha256": "8e51b0473e803b08ff9571c629632d63eef20848aec5629aac9c79c79da735af",
+      "bytes": 7673
+    },
+    "easygraph/gpu/_arena/round4_switch/admitted_v2.py": {
+      "sha256": "d16286ae544981517bc00a9a0e64a8909f3fa1f12c5ba08025a1362cde100293",
+      "bytes": 6753
+    },
+    "easygraph/gpu/_arena/round4_switch/journal.py": {
+      "sha256": "cf28837b47f874ff9c2546aa9742152e60e1e389d5174aa860274d202ee321ac",
+      "bytes": 16294
+    },
+    "easygraph/gpu/_arena/round4_switch/session.py": {
+      "sha256": "c6b6d37e9c39baee885f589867ed13bc660698ebf590dcb569d75041a4342743",
+      "bytes": 20269
+    },
+    "easygraph/gpu/_arena/round5_input/__init__.py": {
+      "sha256": "1dac0ac8e1387b03f352d0edc001294a393615e435095ed90334e695eefcc2fb",
+      "bytes": 62
+    },
+    "easygraph/gpu/_arena/round5_input/array_journal_v2.py": {
+      "sha256": "21019d4621f42643ad6d76e1d1a1f9ca32624aa797b45fb2f0ae46da2be16259",
+      "bytes": 10553
+    },
+    "easygraph/gpu/_arena/round5_input/array_session_v2.py": {
+      "sha256": "71c1806f5e1c323deed1f33ec54bd348dcc876f9ade1139821f514628d6fc659",
+      "bytes": 1533
+    },
+    "easygraph/gpu/_arena/round6_recovery/__init__.py": {
+      "sha256": "1dac0ac8e1387b03f352d0edc001294a393615e435095ed90334e695eefcc2fb",
+      "bytes": 62
+    },
+    "easygraph/gpu/_arena/round6_recovery/epoch_model.py": {
+      "sha256": "19e7d13a4b290ab9731f1932b0faf3ba3c32397d9613b65ff2b3b39b998b27dd",
+      "bytes": 1215
+    },
+    "easygraph/gpu/_arena/round6_recovery/fixed_executor.py": {
+      "sha256": "e7d607e9fed987e8157a649d1645a9c14686ee740e8ae3c2e74145b325d16dc0",
+      "bytes": 5396
+    },
+    "easygraph/gpu/_arena/round6_recovery/planner_v2.py": {
+      "sha256": "c59fc401fcd5b03819c4e94022e1c726de96c1384fefd526708deca90904de16",
+      "bytes": 23480
+    },
+    "easygraph/gpu/_arena/round6_recovery/profile.py": {
+      "sha256": "5e96a0fc5520cb385bbf3f4e46d399ace22be4a744a4c9afadb66ba74ae1b09a",
+      "bytes": 2658
+    },
+    "easygraph/gpu/_arena/round6_recovery/session_v2.py": {
+      "sha256": "0e875742a422b04385d2eeb5905f10dbd58aa4b8bd84aa3e40fdc28b39d5522e",
+      "bytes": 13340
+    },
+    "easygraph/gpu/_arena/round7_recovery/__init__.py": {
+      "sha256": "1dac0ac8e1387b03f352d0edc001294a393615e435095ed90334e695eefcc2fb",
+      "bytes": 62
+    },
+    "easygraph/gpu/_arena/round7_recovery/host_authority.py": {
+      "sha256": "898029960300e1b1567a2fbfdc2d016a7ae9c7362237226ce7b0a5093c944d89",
+      "bytes": 11530
+    },
+    "easygraph/gpu/_arena/round7_recovery/host_authority_v2.py": {
+      "sha256": "482ed5968538713b4fdd5ac988cb2c58978d28a83c5d92a436346f219fd37a01",
+      "bytes": 13009
+    },
+    "easygraph/gpu/_arena/round7_recovery/initialization.py": {
+      "sha256": "318cf4fc9606369cd7b36785ef7e99037575b3637091892c401c655d386c459b",
+      "bytes": 1551
+    },
+    "easygraph/gpu/_arena/round7_recovery/packet.py": {
+      "sha256": "018bc8fe15ab4e7c1875655fe019a7dd7f1ac6bebd74269ae329b3e211064f20",
+      "bytes": 3428
+    },
+    "easygraph/gpu/_arena/round7_recovery/packet_cost.py": {
+      "sha256": "2416dec442698e9e87ac512c0ab912672304ba3336cb157d94076ca7d974ce5f",
+      "bytes": 1936
+    },
+    "easygraph/gpu/_arena/round7_recovery/planner.py": {
+      "sha256": "c957de9f928195f755c4e8e946f98188d372c6b95964ed72320fa601fee3b3fc",
+      "bytes": 18605
+    },
+    "easygraph/gpu/_arena/round7_recovery/problem_io.py": {
+      "sha256": "3168eec88871c01b8aa0da05135d8a9c3258e2ba20c3a2a3ae1d137a299ca807",
+      "bytes": 3676
+    },
+    "easygraph/gpu/_arena/round7_recovery/session.py": {
+      "sha256": "c5dd11d15cb0f0949397820c3623ff47ed90ca64fcd0cdd5e98a120fef571f37",
+      "bytes": 6685
+    },
+    "easygraph/gpu/_arena/round7_recovery/transfer.py": {
+      "sha256": "946f3e7da2cf5ebb6f0096369111f63619625b7a770adf6a9e2ee94bd3dd51ed",
+      "bytes": 5610
+    },
+    "easygraph/gpu/_arena/round8_bounded_input/__init__.py": {
+      "sha256": "1dac0ac8e1387b03f352d0edc001294a393615e435095ed90334e695eefcc2fb",
+      "bytes": 62
+    },
+    "easygraph/gpu/_arena/round8_bounded_input/authority.py": {
+      "sha256": "196b4999913726cc6305b496566100c10d60ac2cdce9208f26226f72cabf247a",
+      "bytes": 11256
+    },
+    "easygraph/gpu/_arena/round8_bounded_input/authority_v2.py": {
+      "sha256": "8fc3272c5031a50d3996bd1b4eece3a791103db99edfa01edb5252f7265dd10c",
+      "bytes": 9642
+    },
+    "easygraph/gpu/_arena/round8_bounded_input/session_v2.py": {
+      "sha256": "62e009785b0abe76a51058c005e55ae61bfe4fcc27e84ce631ee0d4f6f9e2f8b",
+      "bytes": 2718
+    },
+    "easygraph/gpu/_arena/round8_changes/__init__.py": {
+      "sha256": "1dac0ac8e1387b03f352d0edc001294a393615e435095ed90334e695eefcc2fb",
+      "bytes": 62
+    },
+    "easygraph/gpu/_arena/round8_changes/authority.py": {
+      "sha256": "ebdff83d4f3749cbe017fda153ef8f6898e05509fd0e0c4bedd6bd33ec0a8a66",
+      "bytes": 9983
+    },
+    "easygraph/gpu/_arena/round8_cold/__init__.py": {
+      "sha256": "1dac0ac8e1387b03f352d0edc001294a393615e435095ed90334e695eefcc2fb",
+      "bytes": 62
+    },
+    "easygraph/gpu/_arena/round8_cold/authority.py": {
+      "sha256": "505bed9f0336e4f599d3460b337bc20034d79d93f1881f93fd4694953ff03f66",
+      "bytes": 10424
+    },
+    "easygraph/gpu/_arena/round8_cold/session.py": {
+      "sha256": "46139ac50e07ec7ef1a8a51604a7c172341a92f25a96c48ff5e44c1a2a33bf60",
+      "bytes": 622
+    },
+    "easygraph/gpu/_arena/round8_cold_fast/__init__.py": {
+      "sha256": "1dac0ac8e1387b03f352d0edc001294a393615e435095ed90334e695eefcc2fb",
+      "bytes": 62
+    },
+    "easygraph/gpu/_arena/round8_cold_fast/authority.py": {
+      "sha256": "b01ee9287fbcc8c2f695dfe55ac6f1a1b33b530e50440015ae31cbd31d43d93b",
+      "bytes": 6424
+    },
+    "easygraph/gpu/_arena/round8_columns/__init__.py": {
+      "sha256": "1dac0ac8e1387b03f352d0edc001294a393615e435095ed90334e695eefcc2fb",
+      "bytes": 62
+    },
+    "easygraph/gpu/_arena/round8_columns/authority.py": {
+      "sha256": "ab09c7c19c975d83549b6f4233791154e40f140658c65f6fc07ae9b2f10e55b5",
+      "bytes": 23375
+    },
+    "easygraph/gpu/_arena/round8_columns/bulk.py": {
+      "sha256": "cc39e0a08b68c65db30b6b30145aee6a1456f466b60a9c84132e241df3a96bb4",
+      "bytes": 7299
+    },
+    "easygraph/gpu/_arena/round8_columns/columns.py": {
+      "sha256": "45d0258aa36533789b97e1135b7c80b16698a505c870afbfd20afd5307afcf51",
+      "bytes": 6225
+    },
+    "easygraph/gpu/_arena/round8_columns/delta.py": {
+      "sha256": "a00d1b3282bcb38c3429ae77f67534564a53a4aea2c9755d5d97d9e9c85f6ff5",
+      "bytes": 4018
+    },
+    "easygraph/gpu/_arena/round8_columns/session.py": {
+      "sha256": "5958e1500f931fc9db4e7eb8ff75d55fbe12958ae4f0d997e0e0e42931492efa",
+      "bytes": 19306
+    },
+    "easygraph/gpu/_arena/round8_columns/transfer.py": {
+      "sha256": "cbe1d67859bf57443c1d3c21466389076a77989b9c27a07392708fab515dc38f",
+      "bytes": 5921
+    },
+    "easygraph/gpu/_arena/round8_host/__init__.py": {
+      "sha256": "1dac0ac8e1387b03f352d0edc001294a393615e435095ed90334e695eefcc2fb",
+      "bytes": 62
+    },
+    "easygraph/gpu/_arena/round8_host/bulk.py": {
+      "sha256": "c4aef70f597e9c09b30261b094c703520490f6eb94558a54a48c22e984db64c0",
+      "bytes": 8096
+    },
+    "easygraph/gpu/_arena/round8_host/host_authority.py": {
+      "sha256": "0109d348ec7eef73c8e61d0d2e3d76a33540b21939582ec564b26759ccfabc22",
+      "bytes": 16756
+    },
+    "easygraph/gpu/_arena/round8_host/packet.py": {
+      "sha256": "c3696e2787b966b1a381a3a1d4a45d7062fde474023af03e4239fff7a6036413",
+      "bytes": 3871
+    },
+    "easygraph/gpu/_arena/round8_host/session.py": {
+      "sha256": "999b00ae6e75928165e964e56e852054a5405e244d4f08a44e5359bca0eadef3",
+      "bytes": 2856
+    },
+    "easygraph/gpu/_arena/round8_host/transfer.py": {
+      "sha256": "1ab50304c641cde1da8d39f8d72b7ab80500e55567cb7341164f227f25e73378",
+      "bytes": 5731
+    },
+    "easygraph/gpu/_arena/round8_lazy/__init__.py": {
+      "sha256": "1dac0ac8e1387b03f352d0edc001294a393615e435095ed90334e695eefcc2fb",
+      "bytes": 62
+    },
+    "easygraph/gpu/_arena/round8_lazy/session.py": {
+      "sha256": "cf9a9f919f93096e883a70eddd0ccc473f1abf878b93e2454bd62c66730e096b",
+      "bytes": 9082
+    },
+    "easygraph/gpu/_arena/round8_startup/__init__.py": {
+      "sha256": "1dac0ac8e1387b03f352d0edc001294a393615e435095ed90334e695eefcc2fb",
+      "bytes": 62
+    },
+    "easygraph/gpu/_arena/round8_startup/session.py": {
+      "sha256": "9c75469d700ec905b4782ef33ee7f16e8f6316c196b102f236a5ba9f39afe638",
+      "bytes": 3522
+    },
+    "easygraph/gpu/_arena/session_manager.py": {
+      "sha256": "44078104472bf739c98c56f491df4cf4869a5c1dc469c08e259fa0102bf1a2d3",
+      "bytes": 23812
+    },
+    "easygraph/gpu/_arena/sssp_final.py": {
+      "sha256": "5f09d0240ec26810c003de4bd0f0d1570ccf60463067c3c1a5f00b16e56b5993",
+      "bytes": 511
+    },
+    "easygraph/gpu/_arena/sssp_frontier.py": {
+      "sha256": "c2eaf124865f0fe5a441155f969658ad04ad20036f3ae09bc76bccc286758a60",
+      "bytes": 6958
+    },
+    "easygraph/gpu/_arena/sssp_frontier_warp.py": {
+      "sha256": "f4290ab60547f33a311d46588a6fc6a1b9eaab5c50aae5b210dd18b9686765e2",
+      "bytes": 1780
+    },
+    "easygraph/gpu/_arena/sssp_frontier_warp_v2.py": {
+      "sha256": "c4970b54fcf35e4ecba9899d21002f8c78f7384c6d814047610af6ad2ea186cc",
+      "bytes": 1088
+    },
+    "easygraph/gpu/_arena/sssp_ieee_session_v3.py": {
+      "sha256": "1ecf8200570673ba23e915baf35fca74c636c20f0e5e3b872c3c79fca1348a54",
+      "bytes": 7364
+    },
+    "easygraph/gpu/_arena/sssp_policy.py": {
+      "sha256": "00fe6fce90f884e5de14cbc21141bde0760562a0c0e2b03d0bef1c3dbe12ff7d",
+      "bytes": 3353
+    },
+    "easygraph/gpu/_arena/state_model.py": {
+      "sha256": "f2886823a36577e5b8b7a0810f1fc45970b71cf502c8c0166c962dd0c44f3360",
+      "bytes": 24764
+    },
+    "easygraph/gpu/_arena/trace_backends.py": {
+      "sha256": "4bab35920788e5c97585db9ff6a965184f96c17427ceb4e9c54888efcbc7128d",
+      "bytes": 2627
+    },
+    "easygraph/gpu/_arena/weighted_host_v1.py": {
+      "sha256": "febff5b167f10782b69831e07cbd86626c8a09434eb87acbf83b268fb123ef5e",
+      "bytes": 2035
+    },
+    "easygraph/gpu/_arena_output.py": {
+      "sha256": "585df3ad15c26f791287bda918ea0b8a3de8a9948d0a4ee61e8e68b396ee5631",
+      "bytes": 2792
+    },
+    "easygraph/gpu/_bridge.py": {
+      "sha256": "13c1c337e5d1f4dd100fd886c26d6802fbbfb74f958e56e2990d3a708e70e8a6",
+      "bytes": 25771
+    },
+    "easygraph/gpu/_controller.py": {
+      "sha256": "7da317b45fc2fea858f50eae1cc1afa38bbe7c2e1c56105601304f2927870fd4",
+      "bytes": 29549
+    },
+    "easygraph/gpu/_core.py": {
+      "sha256": "4f815c389ff2e639d7acf332d90d1cf5b01998f9302af06ed2e3af383c8e3a11",
+      "bytes": 19647
+    },
+    "easygraph/gpu/_csr_input.py": {
+      "sha256": "456d075379274dd95b63111a900a2dcfc81e4d45bdbebbbc41a9cadfb70db8bd",
+      "bytes": 4137
+    },
+    "easygraph/gpu/_dispatch.py": {
+      "sha256": "1b0202556b183c75da5790a6c002b64108464502daabb927531c850852a8cfc1",
+      "bytes": 3531
+    },
+    "easygraph/gpu/_dynamic.py": {
+      "sha256": "69d12ea05bce00ef1161796e3f36d75c4870a6181925708b5b76d11726de6c9b",
+      "bytes": 18070
+    },
+    "easygraph/gpu/_manifest_signatures.py": {
+      "sha256": "98fcb74a7a3b97bfa6aa9e325894f634e09084a8aff58a2b62ab773cc94526ee",
+      "bytes": 1991
+    },
+    "easygraph/gpu/_native.py": {
+      "sha256": "83a8478aef86a621b736f0e85fb88f1b6bc1b5ba78ed97ae2c78ffa6fd662054",
+      "bytes": 28891
+    },
+    "easygraph/gpu/_receipts.py": {
+      "sha256": "7dfb1174b649fb384ed3cce297d5e12d758b268d137315f57cab51807b4758cb",
+      "bytes": 11967
+    },
+    "easygraph/gpu/_retention.py": {
+      "sha256": "b47e54f5f288662f2c96815d9ab3845500cda6c1966d1c1deb4dfcc06e2cd64d",
+      "bytes": 11730
+    },
+    "easygraph/gpu/_snapshot_lease.py": {
+      "sha256": "6c1d6dc8a18fad51c773de8b1066afbe11f0c2419e0d514e0986c1d7bdf70305",
+      "bytes": 2561
+    },
+    "easygraph/gpu/_sssp.py": {
+      "sha256": "e83205b4f6b2558760ade05edca067208768334443eef6b983d7063a9ebffbb6",
+      "bytes": 8156
+    },
+    "easygraph/gpu/contracts.py": {
+      "sha256": "31a90b30480754c09501be473e7226b820cb2b0dc33efeaddaa39df1e14e1b85",
+      "bytes": 6801
+    },
+    "easygraph/gpu/profile.py": {
+      "sha256": "2283489073b538f44d9c978b967c7db2f394f9c7bbc7e76b117c5af3682d7597",
+      "bytes": 3654
+    },
+    "easygraph/gpu/session.py": {
+      "sha256": "ebe6cb97b52cedfd9c4803863ed9065ad521e533bced27fa11e58c1ed446a281",
+      "bytes": 12965
+    },
+    "easygraph/ml_metrics/__init__.py": {
+      "sha256": "de85953ddc23c790f527c1a6c9e623476cb0780cb55f69e42833c88a0c3becf5",
+      "bytes": 1699
+    },
+    "easygraph/ml_metrics/base.py": {
+      "sha256": "6e46078fd747cc6e60021fbb03391f5c3479054a43e076574d5d647eafeb4c9d",
+      "bytes": 8298
+    },
+    "easygraph/ml_metrics/classification.py": {
+      "sha256": "5980523b7848aebf46fd54b6ac663a88e6d7b71af72266a4280d8e96ae5a9918",
+      "bytes": 6393
+    },
+    "easygraph/ml_metrics/hypergraphs/__init__.py": {
+      "sha256": "5e881afb5f5eb63c3e5ab63bb5902d4c0fda009835949f7743df260a54381eb6",
+      "bytes": 64
+    },
+    "easygraph/ml_metrics/hypergraphs/hypergraph.py": {
+      "sha256": "8869bf13fb3b01f79ac48bcf3d1c613a99aba30775d8644d39b9e5ed1c1d20dd",
+      "bytes": 1730
+    },
+    "easygraph/model/__init__.py": {
+      "sha256": "bb561a97f34907855229765c6591b413058fa05a255213137d1654c8bd55b544",
+      "bytes": 607
+    },
+    "easygraph/model/hypergraphs/__init__.py": {
+      "sha256": "9b9091c3c866a88eb722b726b85f45034597e55619866bd6e71e3477eb536ea3",
+      "bytes": 284
+    },
+    "easygraph/model/hypergraphs/dhcf.py": {
+      "sha256": "571db4cb371d87d682b456f7560d4f99d696f265849237711f8e8decd0cd6bd3",
+      "bytes": 3736
+    },
+    "easygraph/model/hypergraphs/dhne.py": {
+      "sha256": "22ed609d2f4e4b2a6450b45a7c16c2b592d70244ad1fa41970b53acf230ea98a",
+      "bytes": 2556
+    },
+    "easygraph/model/hypergraphs/hgnn.py": {
+      "sha256": "f6a897ed4e83b5ba2ca87e4f220d38247ca038a7071d09b2081b2f062a193915",
+      "bytes": 1573
+    },
+    "easygraph/model/hypergraphs/hgnnp.py": {
+      "sha256": "7924f126d482484cf0efc0c73675100af10c566ae1a7319f28028f257bd5bc5c",
+      "bytes": 1626
+    },
+    "easygraph/model/hypergraphs/hnhn.py": {
+      "sha256": "6bf32e524ce51a52a36d028a0b5c3192c664a50c720d1ff5e9ff8459b3873a4a",
+      "bytes": 1605
+    },
+    "easygraph/model/hypergraphs/hwnn.py": {
+      "sha256": "29a76fd7d199cd0fb02f23936da6cbc54017477d95c2dba6fba455d053d5effd",
+      "bytes": 2536
+    },
+    "easygraph/model/hypergraphs/hypergcn.py": {
+      "sha256": "a88fff9f8cfd890a3aee703a690ec34196b55cdd7d91178916685d2c5559ef59",
+      "bytes": 2587
+    },
+    "easygraph/model/hypergraphs/setgnn.py": {
+      "sha256": "3d8844754ebd7f3ef8a45b7aca00379236d8068d1108020278a0a394a5f2283c",
+      "bytes": 11801
+    },
+    "easygraph/model/hypergraphs/unignn.py": {
+      "sha256": "9f3df1d179046f924cb9b77ad0728593270990931948cb8ef16837a3e6d1490b",
+      "bytes": 7888
+    },
+    "easygraph/nn/__init__.py": {
+      "sha256": "3ce0b2bcab191fcc4197bbb889d69e2c8147adc757aace9f8902675ebe29d692",
+      "bytes": 947
+    },
+    "easygraph/nn/convs/__init__.py": {
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "bytes": 1
+    },
+    "easygraph/nn/convs/common.py": {
+      "sha256": "4b2559d72fcac6e1532f76a135c153e13445dd889df8bc6c2282e816da168fd3",
+      "bytes": 5520
+    },
+    "easygraph/nn/convs/hypergraphs/__init__.py": {
+      "sha256": "ca88a6fd773ee8d8fbc47b48879be3bbd3e1a4ad059fcf2f2c8c4596a4900a5a",
+      "bytes": 345
+    },
+    "easygraph/nn/convs/hypergraphs/dhcf_conv.py": {
+      "sha256": "83f1b97f80e470cfcbbf5e6187a5872a8bfa24db0d230b713b9705e7cbff1fae",
+      "bytes": 2234
+    },
+    "easygraph/nn/convs/hypergraphs/halfnlh_conv.py": {
+      "sha256": "b5b774d5eec9a82214541bf64ba71bf979d0ee5bd303a17ee9f5cd7073b91453",
+      "bytes": 3639
+    },
+    "easygraph/nn/convs/hypergraphs/hgnn_conv.py": {
+      "sha256": "44d3cb4990bb0442876f151c836b6eeb8f1b701e3f6faf55ba946c43b8b8ba1f",
+      "bytes": 2532
+    },
+    "easygraph/nn/convs/hypergraphs/hgnnp_conv.py": {
+      "sha256": "59f6c80f9e87f2168ad862ab91af9dbaedcdf6b679065029671c180e66f129c5",
+      "bytes": 2747
+    },
+    "easygraph/nn/convs/hypergraphs/hnhn_conv.py": {
+      "sha256": "12c9b0d6354ac87642fea1339f624a9c37215bbb9b32dd5f9596e26ae469ed84",
+      "bytes": 2175
+    },
+    "easygraph/nn/convs/hypergraphs/hwnn_conv.py": {
+      "sha256": "8e20238a9809c481ed68b204f299e38585d007b1ea16fb316d4f50b153edc396",
+      "bytes": 2109
+    },
+    "easygraph/nn/convs/hypergraphs/hypergcn_conv.py": {
+      "sha256": "7c976ead1c0aa3eecb2890ff60245c2de267cace2ff55caab3c566c874c69709",
+      "bytes": 2789
+    },
+    "easygraph/nn/convs/hypergraphs/unignn_conv.py": {
+      "sha256": "778433046e54d317a356019291c8c6684759b90cba4ea4cbaf27bdf61efc0e54",
+      "bytes": 12175
+    },
+    "easygraph/nn/convs/pma.py": {
+      "sha256": "70564ed91febe56d56c92bebfefbd6fc35cd1320696bc3b117f09d4298d98984",
+      "bytes": 6561
+    },
+    "easygraph/nn/loss.py": {
+      "sha256": "e54ab91d7a97c8f011335f99d3128be98bb5a448f9d79ea051f85d74e5bd2371",
+      "bytes": 1722
+    },
+    "easygraph/nn/regularization.py": {
+      "sha256": "418e4b20906d9c414e967a6f23bca77372f9f1da063a9d1b817ab7a58ad7b0f2",
+      "bytes": 883
+    },
+    "easygraph/nn/tests/__init__.py": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "easygraph/nn/tests/test_gatconv.py": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "easygraph/nn/tests/test_gcnconv.py": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "easygraph/nn/tests/test_graphsageconv.py": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "easygraph/nn/tests/test_regularization.py": {
+      "sha256": "cf8d5fd0d0ab079f693903157fbc2c0b4bc1e5a7bd5635f8a3d8bce8dc8849da",
+      "bytes": 493
+    },
+    "easygraph/readwrite/__init__.py": {
+      "sha256": "2c0f04c420c7c57eb5585fa0887e8c0d2b779caf3704f0ef9d3c530bdbb29e40",
+      "bytes": 372
+    },
+    "easygraph/readwrite/edgelist.py": {
+      "sha256": "7759c64b30829dcdc7dc80b91b4abdc9b0e8bed91ae69ac23c404bd9a21c5beb",
+      "bytes": 13552
+    },
+    "easygraph/readwrite/gexf.py": {
+      "sha256": "b42f33218f63b5c43fbef880b17ca99d8d80f0839286ce0e0e3bcf9e47b00c46",
+      "bytes": 38106
+    },
+    "easygraph/readwrite/gml.py": {
+      "sha256": "79d8ff806cb262d7a392881acae0e215b0ca443e9ae7fa2689f4f08bfe005a47",
+      "bytes": 28326
+    },
+    "easygraph/readwrite/graphml.py": {
+      "sha256": "180d3668456f7670e3450c3059726e0929a2d24f8e488b1572c2ced0ad8863b6",
+      "bytes": 39234
+    },
+    "easygraph/readwrite/graphviz.py": {
+      "sha256": "8456c8da3edbefef039ee19a3be09ee3d1a7469f886fa819824fdf387f24f7ff",
+      "bytes": 5038
+    },
+    "easygraph/readwrite/json_graph/__init__.py": {
+      "sha256": "f2dffcd1f35ee4da4f01d9bcda1bf6a89cf87c8286c7442826586476205b0eaf",
+      "bytes": 521
+    },
+    "easygraph/readwrite/json_graph/node_link.py": {
+      "sha256": "3244a316211f3cda3a0bf3736888881613235963cfcc858e562edcab2cacc708",
+      "bytes": 3331
+    },
+    "easygraph/readwrite/pajek.py": {
+      "sha256": "6c18c1f6eb7eab60e45c4b440febd85a73929e5b8183a54acf779b26536f1e51",
+      "bytes": 10793
+    },
+    "easygraph/readwrite/pickle.py": {
+      "sha256": "8ef7687ce0b3e8edc4fe64e7382469cb98dd7f11e66e1b55f4588c0e0a8f9057",
+      "bytes": 259
+    },
+    "easygraph/readwrite/tests/__init__.py": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "easygraph/readwrite/tests/test_edgelist.py": {
+      "sha256": "c363ce5abf78021980846baa0c4daa3c458c37cfe29bdff1555eebc83a3a4399",
+      "bytes": 10062
+    },
+    "easygraph/readwrite/tests/test_gexf.py": {
+      "sha256": "e7863f8d7ce1e1ba6811949e18591b428cff286825536a643d42f32213f697ef",
+      "bytes": 15231
+    },
+    "easygraph/readwrite/tests/test_gml.py": {
+      "sha256": "f904578a1d679375e4803c304e71af089b8743db9e9987b21491bd9c1bd90861",
+      "bytes": 17416
+    },
+    "easygraph/readwrite/tests/test_graphml.py": {
+      "sha256": "81c44c79f73e771a6694bfcbd9fc820bfedc72eae5a0ceffb1e833c789d9c1a2",
+      "bytes": 65232
+    },
+    "easygraph/readwrite/tests/test_graphviz.py": {
+      "sha256": "31557712cbe701cffd83b2a6a115890e9e22d03a205ef0d0764e6093385ba71b",
+      "bytes": 1446
+    },
+    "easygraph/readwrite/tests/test_pajek.py": {
+      "sha256": "0d4d624b9a1bb5304a328e2dc80628d96fe16a09f1d78351b342d95fdc47e8b1",
+      "bytes": 9253
+    },
+    "easygraph/readwrite/tests/test_pickle.py": {
+      "sha256": "dd7a69fe016fe0d17c307bffa89b11ce959ac3a2f30efa118cad74da161eee63",
+      "bytes": 2177
+    },
+    "easygraph/readwrite/tests/test_ucinet.py": {
+      "sha256": "a67d75def940abe12da869b3657e5c77f6e0efb591e70c0f107823f4db3b7849",
+      "bytes": 8044
+    },
+    "easygraph/readwrite/ucinet.py": {
+      "sha256": "bf4b2fee2f80202dad568e5d511e8b28b2c20e5a1ec621892682dfd651a7bcfc",
+      "bytes": 10202
+    },
+    "easygraph/test.emb": {
+      "sha256": "a491767dd1ba0f3c8cecf6e5918cc052edcc8d0606a2621f01c3840f1695dd61",
+      "bytes": 818
+    },
+    "easygraph/tests/__init__.py": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "easygraph/tests/script_test_cpp_easygraph.py": {
+      "sha256": "af4a3d4f680eb348c1fb7e34ca0bf337b311984d516cd28a962b97bdfd0c8f16",
+      "bytes": 7159
+    },
+    "easygraph/tests/teddy_test_cpp_easygraph_sanity_check.py": {
+      "sha256": "8da4f431f7bad651685f72e3d008d8b41f0e25c486d5ff5bcec2a756ac0d3a27",
+      "bytes": 5691
+    },
+    "easygraph/tests/test_convert.py": {
+      "sha256": "59a32f84aa1adcd9fdf5bd329111e2665b1c53949e1d93145a3c992ad58a5626",
+      "bytes": 4651
+    },
+    "easygraph/tests/test_cpp_easygraph.py": {
+      "sha256": "bd5da73601a7063d140e9b9d8da4b4e8ad0f7651e467d3aaa83640ccf9c9612e",
+      "bytes": 302
+    },
+    "easygraph/tests/test_hif.py": {
+      "sha256": "8e5c866ffd4923accaa9779bb3f318adc3e4a497beef000bdfb5c93e7fdd797e",
+      "bytes": 4057
+    },
+    "easygraph/utils/HIF.py": {
+      "sha256": "2392b59677b1cd201fc081fdec7098c957bdd5c25d47143048b1d96e9291f2a5",
+      "bytes": 9243
+    },
+    "easygraph/utils/__init__.py": {
+      "sha256": "c8d28cd7faeb5e75e25dd8eda99167d2cd2dc5cdc11776ae28ec276ce163e586",
+      "bytes": 558
+    },
+    "easygraph/utils/alias.py": {
+      "sha256": "fa065f07b17fa19039ca0d0446e7ea968b3a0f983ae504e8318a2e6696c20645",
+      "bytes": 2595
+    },
+    "easygraph/utils/convert_class.py": {
+      "sha256": "e792e5fff5d6483aa579b87afbdb860becbb5612a976d508504b0d4e95c0071c",
+      "bytes": 516
+    },
+    "easygraph/utils/convert_to_matrix.py": {
+      "sha256": "c5c47d62b4b0369f86d48477e63660930cc89ac9b0968015d2042beebd802e58",
+      "bytes": 34870
+    },
+    "easygraph/utils/decorators.py": {
+      "sha256": "c6c6326a026faf929c8daebac12c9af5ae21d4a65a854a495fbec2c9605b2c2e",
+      "bytes": 42004
+    },
+    "easygraph/utils/download.py": {
+      "sha256": "b47e92285df4e23b4541ccf7f806e40d4d2b81b6f8dc8032d268dfa635bd8e2b",
+      "bytes": 2552
+    },
+    "easygraph/utils/exception.py": {
+      "sha256": "d25359d2a3275b27990a0d783166bc72c17b2be0348831d8fbe5985f91a797c1",
+      "bytes": 1018
+    },
+    "easygraph/utils/gpu_adaptive_policy.py": {
+      "sha256": "0b8459b672aa677335f180c8ea2a02b478990a81d3e91adf4c0dcaaa0c599163",
+      "bytes": 5457
+    },
+    "easygraph/utils/gpu_eggpu_backend.py": {
+      "sha256": "a54802e006115603d72fa4606aa3b7cf1c8c42aeee405d94f8f01209c70bd576",
+      "bytes": 78440
+    },
+    "easygraph/utils/gpu_runtime.py": {
+      "sha256": "3abb45c9b00ad79364244f8e9ff7ee38b76888c19283fe818248cc2a9cbaf59b",
+      "bytes": 1444
+    },
+    "easygraph/utils/index_of_node.py": {
+      "sha256": "7504ca03d9504c1e09f3e5cd6cb2904c78857c51fd98d4a58bc57698cd2e7d75",
+      "bytes": 291
+    },
+    "easygraph/utils/logging.py": {
+      "sha256": "b614005fee64c05a28b2e65fee335c5aa92a886d19dc7965fa9d09718cd84de9",
+      "bytes": 1343
+    },
+    "easygraph/utils/mapped_queue.py": {
+      "sha256": "d83946db9d56ab5be31be8826f4a67145a8c276f0d4e6b8ac8f9c4071e977dc4",
+      "bytes": 6017
+    },
+    "easygraph/utils/misc.py": {
+      "sha256": "253975fc0599d013344d37ebac12864a51b949a7bb2b75820882672387f4aed9",
+      "bytes": 5846
+    },
+    "easygraph/utils/relabel.py": {
+      "sha256": "8fdf74d6c7e35a2c1cee4a4aeb97229a60973dd2c9a7be5fae45e134c8695e85",
+      "bytes": 3662
+    },
+    "easygraph/utils/sparse.py": {
+      "sha256": "90cb06b6b5950fc916a57616e9793c880701c74345e64c21839be22547e8c3bc",
+      "bytes": 1297
+    },
+    "easygraph/utils/type_change.py": {
+      "sha256": "262407c63c11ee6068b534d8d5b9c0b5efb3c9bc2d7d080692b5b3a9e6464a98",
+      "bytes": 4385
+    },
+    "examples/README.md": {
+      "sha256": "bad7aef138c29807d7de4c2797572cec6f8442b009dc6d45e72f3baca5514dcd",
+      "bytes": 224
+    },
+    "f8": {
+      "sha256": "1bc14a84601c9aa4e80f65d4f640be9c44dbc1ccbf56abef6043d326db3b7842",
+      "bytes": 172
+    },
+    "gpu_easygraph/CMakeLists.txt": {
+      "sha256": "0c77c806fb576845df3f17c3694f87ff797ea62d1d1166a7bf2d38902e7fd2d3",
+      "bytes": 1299
+    },
+    "gpu_easygraph/common/adaptive_transfer_policy.cpp": {
+      "sha256": "9aeb2c8df8b7712a0a5577d10f87b9b84c599b784778ad0c5dd56660118458a7",
+      "bytes": 3584
+    },
+    "gpu_easygraph/common/adaptive_transfer_policy.h": {
+      "sha256": "f824ff879265ec070e13a9edb7981b3819ee6bb623999307ea5a5ddfece14602",
+      "bytes": 499
+    },
+    "gpu_easygraph/common/buffer_cache.h": {
+      "sha256": "4ddc3d6980cad1048cca89b24555a33fd8e4715b694149dd3a53372855f89ce6",
+      "bytes": 5237
+    },
+    "gpu_easygraph/common/common.h": {
+      "sha256": "c24900437531bb9db9ab8e31bef0099d948c6e478ec2f5421b42d896083583ad",
+      "bytes": 609
+    },
+    "gpu_easygraph/common/device_graph_cache.cu": {
+      "sha256": "a43a48b8420837d9ff5207d5b3c6aacd634f9e8446ac7075da20efa57eec7699",
+      "bytes": 17763
+    },
+    "gpu_easygraph/common/device_graph_cache.h": {
+      "sha256": "fda3a80a3ce10388d4739163c3731fb72c9c4af750335251edb463e2448e7470",
+      "bytes": 1620
+    },
+    "gpu_easygraph/common/err.cpp": {
+      "sha256": "b2082fa0b14ae36b6c0d0310e410ff2b1b7666af3fbff511f5df562b451f48bf",
+      "bytes": 953
+    },
+    "gpu_easygraph/common/err.h": {
+      "sha256": "abd10b5f15f92441932a1788aa98fd01e044e16752bf7fa4a4063e7f1b4d8c84",
+      "bytes": 378
+    },
+    "gpu_easygraph/functions/basic/basic.cpp": {
+      "sha256": "e5ebdd1827a7362c78387ac7ae7d786c02b53a1f25e21cbaedcb5e86e1f442de",
+      "bytes": 1653
+    },
+    "gpu_easygraph/functions/basic/cluster.cu": {
+      "sha256": "699f499cd2b2c6708a667fd98ece6bf0f4aefd2813d63f40963b28d9d50791be",
+      "bytes": 22703
+    },
+    "gpu_easygraph/functions/basic/cluster.cuh": {
+      "sha256": "1504ad4831267f2f1d70715b8462cbf55b87db4f64d7078de0f64879c67af506",
+      "bytes": 430
+    },
+    "gpu_easygraph/functions/basic/triangle_count.cu": {
+      "sha256": "c418e055cadc6cfbe3c5aa6edd39f08d300a653b3a7f38d05c65c8a33b99d804",
+      "bytes": 2246
+    },
+    "gpu_easygraph/functions/basic/triangle_count.cuh": {
+      "sha256": "a5a48a8552a921d4642926a86fc4bb2e278259ef982845e80e20a57ad04de4db",
+      "bytes": 253
+    },
+    "gpu_easygraph/functions/centrality/baseline": {
+      "sha256": "293164aaabbfd1c5e0241642bc8dedd16bf2db600a7e72e204c255c4af3efa41",
+      "bytes": 13460
+    },
+    "gpu_easygraph/functions/centrality/bc_mem_prev": {
+      "sha256": "78acb649bc38281cff960781c76497d56c44f7d9f5f93f78b90046fddf6fa572",
+      "bytes": 12167
+    },
+    "gpu_easygraph/functions/centrality/betweenness_centrality.cu": {
+      "sha256": "3a3372c2c8c88095db2d7903a5054a1a52c190ca489d7e8eef6edb87d445753b",
+      "bytes": 27009
+    },
+    "gpu_easygraph/functions/centrality/betweenness_centrality.cuh": {
+      "sha256": "ed2f2dc14df258d2058bc24facac31758a8170302bb3d0d86de18a3e0bba3a66",
+      "bytes": 1363
+    },
+    "gpu_easygraph/functions/centrality/centrality.cpp": {
+      "sha256": "ebaacc0b47bd0934ee2c4ee10cc7278380c528e460817b6afbde7a63a3eb8564",
+      "bytes": 5182
+    },
+    "gpu_easygraph/functions/centrality/closeness_centrality.cu": {
+      "sha256": "e819780e71944df5815d1c819be2cdfa58daa58bff6e74e6c755dfb972f027f5",
+      "bytes": 14623
+    },
+    "gpu_easygraph/functions/centrality/closeness_centrality.cuh": {
+      "sha256": "ca58b5913d768aa81dbabfe156a5970dfed1f9fab3353da06038f3c6db364bae",
+      "bytes": 1110
+    },
+    "gpu_easygraph/functions/centrality/pagerank.cu": {
+      "sha256": "788cb901494059e1ab9d6ce37dd7642e8cdcd11e1b4057896b0232247a702360",
+      "bytes": 24054
+    },
+    "gpu_easygraph/functions/centrality/pagerank.cuh": {
+      "sha256": "9908cc59fc45d21aa8ed8328135b4bf923051bc646075d425acb716051c4921a",
+      "bytes": 317
+    },
+    "gpu_easygraph/functions/components/components.cpp": {
+      "sha256": "b736d050e2873a294ac3200000f71aad46cc583acaca8bc1bd470507ad87b732",
+      "bytes": 1142
+    },
+    "gpu_easygraph/functions/components/connected.cu": {
+      "sha256": "7e0aeefabead75516a16e6d52dce4ec074129e5152ce7aa51451fa27de7f18e5",
+      "bytes": 35541
+    },
+    "gpu_easygraph/functions/components/connected.cuh": {
+      "sha256": "7121404cd4ccd92c223c2878e17cf85ff380984d371c7d9d7e292409fc2ef874",
+      "bytes": 414
+    },
+    "gpu_easygraph/functions/core/core.cpp": {
+      "sha256": "d5042c8e23cdf0d1885442ebf6e6e409a380ab78a518d7d82f2d1bb5eac355dd",
+      "bytes": 1931
+    },
+    "gpu_easygraph/functions/core/k_core.cu": {
+      "sha256": "a6d98e1277f371efaf86663aa5725ce6ab1f5238a4a571fa8e2d9efee46b4829",
+      "bytes": 24472
+    },
+    "gpu_easygraph/functions/core/k_core.cuh": {
+      "sha256": "31e43296047ff64c2452a78139d67eee39b926ef7c40da5839c79ce85b3c74b1",
+      "bytes": 974
+    },
+    "gpu_easygraph/functions/partitioned/bfs_partitioned.cu": {
+      "sha256": "dac6a208565ca285a156fa98488814536c993d4681813e0bc8e69a508ec5152a",
+      "bytes": 30105
+    },
+    "gpu_easygraph/functions/partitioned/bfs_partitioned.cuh": {
+      "sha256": "46f9ef52bda22ce354b239d6bc5e5a20114a310b07eca1b5cd6dc5ea986a48e1",
+      "bytes": 5275
+    },
+    "gpu_easygraph/functions/partitioned/pagerank_partitioned.cu": {
+      "sha256": "8e633e00e9a30430a6659f76dc9a59ddb71d64d0e748b0caae096105a4a5ff56",
+      "bytes": 13040
+    },
+    "gpu_easygraph/functions/partitioned/pagerank_partitioned.cuh": {
+      "sha256": "35aafcd762678f01acb0460a412693594b1e9ae95ae71d5a700da867f480a6f6",
+      "bytes": 1859
+    },
+    "gpu_easygraph/functions/partitioned/single_owner_sssp.cu": {
+      "sha256": "2e340b0cbc30a9d680a2f522b74aeb0e1f2b303a4ddea6689a265439726dc7f1",
+      "bytes": 14754
+    },
+    "gpu_easygraph/functions/partitioned/single_owner_sssp.cuh": {
+      "sha256": "ac253df19de2e4fab5cdeb7131c20e5b94395dab3bd5023d4c772fc10512c423",
+      "bytes": 735
+    },
+    "gpu_easygraph/functions/partitioned/sssp_frontier_epoch.h": {
+      "sha256": "2c04903c1ec8597f3843b40eebf0673bb1ac1693b0cc35e60001cb6c9267b2ca",
+      "bytes": 1907
+    },
+    "gpu_easygraph/functions/partitioned/sssp_partitioned.cu": {
+      "sha256": "dec1250a7a542f7bd9fc915bef716c8ce3fcc172a240bebd147374e4163e4a81",
+      "bytes": 22882
+    },
+    "gpu_easygraph/functions/partitioned/sssp_partitioned.cuh": {
+      "sha256": "415170bfaeddcfb38b0b9a08f83f4e441117ff3072e1b198d48a8600136e5c37",
+      "bytes": 3709
+    },
+    "gpu_easygraph/functions/partitioned/sssp_warp_kernels.inc": {
+      "sha256": "c5d129561b4ab1cb22107bdb8611448be575e6e2f92b2f791c605512f0409912",
+      "bytes": 6008
+    },
+    "gpu_easygraph/functions/partitioned/structural_holes_partitioned.cu": {
+      "sha256": "7b7b0fd0d53d899290d42a0dc8b3bd441f4667c0588119079c4fbfce2bba932b",
+      "bytes": 9327
+    },
+    "gpu_easygraph/functions/partitioned/structural_holes_partitioned.cuh": {
+      "sha256": "26a31eb13cf212188fd7dfb0522930195da81ae5bc8f6a7028243bada9fe1004",
+      "bytes": 1577
+    },
+    "gpu_easygraph/functions/partitioned/wcc_partitioned.cu": {
+      "sha256": "aa2b61f261cb4fe065c419dbd9c77b8d87c5d5799aad638e8084c339059a9908",
+      "bytes": 15625
+    },
+    "gpu_easygraph/functions/partitioned/wcc_partitioned.cuh": {
+      "sha256": "953b828255ae3d99e90b9dc59a47ab100c2f050f6f567c515737fbdcc0f0fa59",
+      "bytes": 2623
+    },
+    "gpu_easygraph/functions/path/mst.cu": {
+      "sha256": "ddc72bcea403d4238010fd6ed095b7333f0d30785c9fb24e6b99610362a40700",
+      "bytes": 42607
+    },
+    "gpu_easygraph/functions/path/mst.cuh": {
+      "sha256": "7ffc34692f6525dd55b5343a29c0c41fb701e2c8229e2e27d11a9d08d717cc6d",
+      "bytes": 568
+    },
+    "gpu_easygraph/functions/path/path.cpp": {
+      "sha256": "41a1e59ac1f87b4c2b3a3ec193a8c607bc1f8c6e0089288415b601b45ed255ac",
+      "bytes": 4677
+    },
+    "gpu_easygraph/functions/path/sssp_dijkstra.cu": {
+      "sha256": "34c40d006db0ef234a18aef9c9c9242d19fe666cb34aca0996ab87d59253888a",
+      "bytes": 39139
+    },
+    "gpu_easygraph/functions/path/sssp_dijkstra.cuh": {
+      "sha256": "c45f421431976159275915efceecb213b8e06436d95637b5fcbcacd9b48d397f",
+      "bytes": 945
+    },
+    "gpu_easygraph/functions/structural_holes/constraint.cpp": {
+      "sha256": "9c22206c8807b36b287847d43f9b217d6fed0d7382b4d1a4b2647b9d2a2457e1",
+      "bytes": 1187
+    },
+    "gpu_easygraph/functions/structural_holes/constraint.cu": {
+      "sha256": "28f05f337b279baf278ecf55d8c2b4590e52d99b99ff773f343c3311ab43b690",
+      "bytes": 24101
+    },
+    "gpu_easygraph/functions/structural_holes/constraint.cuh": {
+      "sha256": "752ea8e48d10bdb683ef4d250664e875b4c48d0494bfc4c89be5cf0797c85df2",
+      "bytes": 500
+    },
+    "gpu_easygraph/functions/structural_holes/effective_size.cpp": {
+      "sha256": "9b11d315e3ecd66dcae9454392b83bce649c0e2c8b74040ccd83f9d236544e34",
+      "bytes": 1215
+    },
+    "gpu_easygraph/functions/structural_holes/effective_size.cu": {
+      "sha256": "0156e3e8adf75a73f27d762e931632ba24ac847282bdca836c009719ba8593c4",
+      "bytes": 25305
+    },
+    "gpu_easygraph/functions/structural_holes/effective_size.cuh": {
+      "sha256": "633b782bfdd14629975d106b47d99ad0abd7c788df47aa1a72d4b0ff2a83e14e",
+      "bytes": 508
+    },
+    "gpu_easygraph/functions/structural_holes/ego_edge_statistics.cu": {
+      "sha256": "59680e348ed8a7a70b7756a6318194febb378396862c39345d7552acc0be175b",
+      "bytes": 44633
+    },
+    "gpu_easygraph/functions/structural_holes/hierarchy.cpp": {
+      "sha256": "8c193fbe79dbcbeb694f041e2adbb36f749ab37e3a05f13b24df864786bfdf92",
+      "bytes": 1181
+    },
+    "gpu_easygraph/functions/structural_holes/hierarchy.cu": {
+      "sha256": "0eeae0354da0f4b04fef80dc5b533bf0bc75a879dd0d38bb8f4241199d9a9ff4",
+      "bytes": 25181
+    },
+    "gpu_easygraph/functions/structural_holes/hierarchy.cuh": {
+      "sha256": "5cfb1ac9791778785acdc28758d7a68d6cbbff4ec12741770033271672622015",
+      "bytes": 497
+    },
+    "gpu_easygraph/gpu_easygraph.h": {
+      "sha256": "b4ce76be73774e1b23b3f1d6222d698ac6b9ab294b61ae51e6f292e8d1a8f2b2",
+      "bytes": 7274
+    },
+    "gpu_easygraph/runtime/algorithm_control_policy.h": {
+      "sha256": "57499b65730442a5e1422b7efb8426af0f7776416c8efcb541dbfd947756d7e0",
+      "bytes": 1227
+    },
+    "gpu_easygraph/runtime/collective_transport.cpp": {
+      "sha256": "541a032a1b79aca146bab44e2039cf6d474b5754126cb70365f151d52c496e70",
+      "bytes": 16063
+    },
+    "gpu_easygraph/runtime/collective_transport.h": {
+      "sha256": "b94d490ef2f0f9fa2fbfd1882b0e069fa539ab7a9c6dc3e349fc9d55e97d37ea",
+      "bytes": 3930
+    },
+    "gpu_easygraph/runtime/communication_policy.cpp": {
+      "sha256": "044c28ef098e32b6b8bd96d620f837e5944e4a58e737707f58e711449b33dd57",
+      "bytes": 4749
+    },
+    "gpu_easygraph/runtime/communication_policy.h": {
+      "sha256": "b67963e025775e6e84a8ba63cb7512cce77c1f26ea555ac0996852e499f2ebbc",
+      "bytes": 1844
+    },
+    "gpu_easygraph/runtime/cooperative_barrier.cpp": {
+      "sha256": "9385a900bfb5884a53476e5da2325c683a021e07a38fe58bdfd7d1e2af51225f",
+      "bytes": 2244
+    },
+    "gpu_easygraph/runtime/cooperative_barrier.h": {
+      "sha256": "ed939f00a197052c327feb5fb5f5b97826e330851eb55b9c3da3078a7add3f27",
+      "bytes": 1891
+    },
+    "gpu_easygraph/runtime/device_allocation_observer.h": {
+      "sha256": "2954dcd7401ec350bc59ab630a02fc0dc86019f125c03ebcf650205d110e860f",
+      "bytes": 4171
+    },
+    "gpu_easygraph/runtime/device_phase_timer.h": {
+      "sha256": "9ae7025594da2211ac14147dcf5c04e68419653c55503455c2bcf5254c430900",
+      "bytes": 1584
+    },
+    "gpu_easygraph/runtime/device_topology.cpp": {
+      "sha256": "31f5d43dafd0d32f503d822d68e23999e27f5083d484a39ceaa240ba72e29542",
+      "bytes": 6182
+    },
+    "gpu_easygraph/runtime/device_topology.h": {
+      "sha256": "e6018aa0714b26d429182e9d8997ff0d1e2be7b1ffd9182f232706244e128edc",
+      "bytes": 1396
+    },
+    "gpu_easygraph/runtime/device_worker.cpp": {
+      "sha256": "c4f7a37274b2f054ab78fb7781720311db8ddf17e40fbe32396e451935c35460",
+      "bytes": 4573
+    },
+    "gpu_easygraph/runtime/device_worker.h": {
+      "sha256": "6eb9bed03ec496f3a0c4b006b4bcd6931a65b70acd1cf5de1da2d3fe085d4271",
+      "bytes": 1733
+    },
+    "gpu_easygraph/runtime/dynamic_weight_scatter.cu": {
+      "sha256": "81455388b4b4dda4653df64f61a2ced6cede45ceef74d9d8c717a60d3cb4ac6e",
+      "bytes": 516
+    },
+    "gpu_easygraph/runtime/gang_completion.cpp": {
+      "sha256": "6d20cde2fc28a97d7b9f203652ddc57468f3b3dc6803fb7bc304b9c7f61a3f3b",
+      "bytes": 736
+    },
+    "gpu_easygraph/runtime/gang_completion.h": {
+      "sha256": "5864b4868b6a8c28604e6e895d57899ed810e634574b28c4b2e08abf9374b680",
+      "bytes": 504
+    },
+    "gpu_easygraph/runtime/gpu_numa_cpu_affinity.h": {
+      "sha256": "06d15a78c616137fba80ff986f07f515ed894aa8df41330cc9180675b4dde4fa",
+      "bytes": 6739
+    },
+    "gpu_easygraph/runtime/managed_state_inventory.h": {
+      "sha256": "05ebe8df1790da1cd1909cd4f37f0476e50de3ce4eedaa899a04f03822b9df8c",
+      "bytes": 4457
+    },
+    "gpu_easygraph/runtime/native_runtime.cpp": {
+      "sha256": "9c67b35a54011cedcd8bb863792e1ae7b85f508111b8ce130257a16f2d7765d4",
+      "bytes": 15157
+    },
+    "gpu_easygraph/runtime/native_runtime.h": {
+      "sha256": "379532bb8e602a9278c6b286bfe563927b8998155aa8cab4c7c8c1d72bbf778b",
+      "bytes": 3806
+    },
+    "gpu_easygraph/runtime/numa_pinned_host.h": {
+      "sha256": "93d735d91143bf316f54b82bc0ea5156831617ab478f970551e53cc700e01dae",
+      "bytes": 2763
+    },
+    "gpu_easygraph/runtime/pagerank_cusparse_transpose.cpp": {
+      "sha256": "ca9270594f4cee3662bf0db0e08f47fd0845b2cd9a265b2bd6ed86c965d208fc",
+      "bytes": 7070
+    },
+    "gpu_easygraph/runtime/pagerank_cusparse_transpose.h": {
+      "sha256": "b7c886bb18e17839d613f3105fb1530b1c6a0a0c1df451af483b4b530fcd0c62",
+      "bytes": 1371
+    },
+    "gpu_easygraph/runtime/partitioned_bfs_plan.cpp": {
+      "sha256": "b3f15442825f33536faa3364d613ff213ab050890668678f88e97ab410d56138",
+      "bytes": 19601
+    },
+    "gpu_easygraph/runtime/partitioned_bfs_plan.h": {
+      "sha256": "4d052639b94bed12ca2e099ff2860e0ff7e09fca6a9496cdd0a9a6ffaf189b1e",
+      "bytes": 4723
+    },
+    "gpu_easygraph/runtime/partitioned_bfs_state.cpp": {
+      "sha256": "d7cecc15ca86948c47f42483ca467f54e6248d2e14e9a97c91fec164b5c311de",
+      "bytes": 32048
+    },
+    "gpu_easygraph/runtime/partitioned_bfs_state.h": {
+      "sha256": "f1a1bec1a179d75b0dab11cfe9eb0c358683ecdf9a5b2905522f44f95eb0c3fc",
+      "bytes": 7879
+    },
+    "gpu_easygraph/runtime/partitioned_device_state.cpp": {
+      "sha256": "9dfd7084b92d2fbf06882b9b806cf080f57f7d053f65aa37a86f06de1b46152a",
+      "bytes": 46197
+    },
+    "gpu_easygraph/runtime/partitioned_device_state.h": {
+      "sha256": "26cf3a110d51636d39dfedc4844a6840ac23678afa42aa04716b85231f0a64b2",
+      "bytes": 10590
+    },
+    "gpu_easygraph/runtime/partitioned_ego_plan.cpp": {
+      "sha256": "5ea703cd05d6c9c042745bbd78d4741153800386f3a29a968e4e7ad235cba79e",
+      "bytes": 25699
+    },
+    "gpu_easygraph/runtime/partitioned_ego_plan.h": {
+      "sha256": "b58e24177eaf877e6ce0ca3dcb9f40cc6434797f38143f172b0c4bffd09ba8da",
+      "bytes": 3476
+    },
+    "gpu_easygraph/runtime/partitioned_ego_state.cpp": {
+      "sha256": "bffc6a3753298d13be3df718af385cffdb9331df36bf20dc49ce357594067f3f",
+      "bytes": 10784
+    },
+    "gpu_easygraph/runtime/partitioned_ego_state.h": {
+      "sha256": "bfd1ebc29f93e41871e358edf41646123131d709de339662ed20b2ae176ae391",
+      "bytes": 3905
+    },
+    "gpu_easygraph/runtime/partitioned_host_plan_cache.cpp": {
+      "sha256": "38d7713ada5de4ea7accffad00136879ee66a54bda8e5fce0d7d2fe5205aabf0",
+      "bytes": 5561
+    },
+    "gpu_easygraph/runtime/partitioned_host_plan_cache.h": {
+      "sha256": "617cfdccacf4dae6c7891837ea346683e2cd8b01450df9d4e947e217369c2ac6",
+      "bytes": 12190
+    },
+    "gpu_easygraph/runtime/partitioned_host_plan_registry.cpp": {
+      "sha256": "58ee982f3073accbdb0879d1c281bfcfeb98d78a444797aac07b824a503551f4",
+      "bytes": 1929
+    },
+    "gpu_easygraph/runtime/partitioned_host_plan_registry.h": {
+      "sha256": "402f02b6fa4e64be1bb8fd8ae09063e13cfe8b508775cad7e9a2a9b31604d833",
+      "bytes": 1254
+    },
+    "gpu_easygraph/runtime/partitioned_pagerank_reference.cpp": {
+      "sha256": "c1b89627ed0ece81795cf52af8f6748b1fa8395db700c73caec780434075076f",
+      "bytes": 52722
+    },
+    "gpu_easygraph/runtime/partitioned_pagerank_reference.h": {
+      "sha256": "093e29073fd55363389fa738dca57da93d66ef76ee4cd5fc23e7afd18d187737",
+      "bytes": 4351
+    },
+    "gpu_easygraph/runtime/partitioned_sssp_plan.cpp": {
+      "sha256": "c81339ad282c1122f893a31b2d34733b7a698921b3ad8446728e3cb03a402087",
+      "bytes": 29220
+    },
+    "gpu_easygraph/runtime/partitioned_sssp_plan.h": {
+      "sha256": "311eb8b23fd93f47e2dfc00a49b34cc0919c2637047d8615e57a622d67706058",
+      "bytes": 6692
+    },
+    "gpu_easygraph/runtime/partitioned_sssp_state.cpp": {
+      "sha256": "10a3b5bd5f66b76985bf0716f52271b1d3680c54006e40d1822ca5a28796bd2c",
+      "bytes": 30610
+    },
+    "gpu_easygraph/runtime/partitioned_sssp_state.h": {
+      "sha256": "b5fed993bc4b3d87e0bf487d3b4258f63604ebc887e22501f73290227bdaaf3b",
+      "bytes": 7534
+    },
+    "gpu_easygraph/runtime/partitioned_sssp_types.h": {
+      "sha256": "101e08e4c22162ee9d2b7368bf52738427e122069916e35956bc57d8b822472d",
+      "bytes": 1245
+    },
+    "gpu_easygraph/runtime/partitioned_wcc_plan.cpp": {
+      "sha256": "d4aaf5ac16d5ce5a691f181ff234e19c66deb2a54e26a1d0c579648716f3389f",
+      "bytes": 10982
+    },
+    "gpu_easygraph/runtime/partitioned_wcc_plan.h": {
+      "sha256": "28a2c3a83f2564764643b02cf13f0f99c6efeb3197630eba7edbce82370c8fcc",
+      "bytes": 2386
+    },
+    "gpu_easygraph/runtime/partitioned_wcc_state.cpp": {
+      "sha256": "3beb502ba09cc50089d24e94e5e9bb3da45cca3b50f6444067291c0a20b4dd66",
+      "bytes": 26582
+    },
+    "gpu_easygraph/runtime/partitioned_wcc_state.h": {
+      "sha256": "b293f0dd557f6173ef007436c0c8b01bc3785d297f2b6adbcea0e297bcb3da5d",
+      "bytes": 6425
+    },
+    "gpu_easygraph/runtime/result_merge.cpp": {
+      "sha256": "b4208ea7d1db2673804e1543bb855aa871da84ead79f276f5fde90566daa512c",
+      "bytes": 1299
+    },
+    "gpu_easygraph/runtime/result_merge.h": {
+      "sha256": "3fc2fdc913766058943cfcffc1f79a193d4e628a2253e7d5ed6d066166a0395c",
+      "bytes": 417
+    },
+    "gpu_easygraph/runtime/runtime_types.cpp": {
+      "sha256": "112829dc8f426d011b5e84f4dcd7ab586de2ea054a0cb156d2cc59fe30d21b41",
+      "bytes": 7200
+    },
+    "gpu_easygraph/runtime/runtime_types.h": {
+      "sha256": "52e22f96b1ceb8f84ca32dc4c872fbd608360270b2db543b976f72798529978b",
+      "bytes": 2804
+    },
+    "gpu_easygraph/runtime/shared_device_array_catalog.cpp": {
+      "sha256": "79facbcb6d71309ec2d15badf52b2f25e6d558b48266f91f020f0647f0b7bb9b",
+      "bytes": 11336
+    },
+    "gpu_easygraph/runtime/shared_device_array_catalog.h": {
+      "sha256": "d0ed87b2e265d756e91c6f2f71ff25ba95124c3813efc94f97f58072752ed47e",
+      "bytes": 3808
+    },
+    "gpu_easygraph/runtime/single_owner_sssp_contract.h": {
+      "sha256": "16ac2fd5b558028322bf716c6d3cbc85b07a8a8187fe5345f434fe1e4f349345",
+      "bytes": 2717
+    },
+    "gpu_easygraph/runtime/source_shard.cpp": {
+      "sha256": "54212b4428339078f4b1f112ad15160c5cc7c494ff0290693170ffc3bcf3bbce",
+      "bytes": 1104
+    },
+    "gpu_easygraph/runtime/source_shard.h": {
+      "sha256": "cb5fa94b28bcbdc2b47564e720340ea26e610fa114c02c46036ff640fa250323",
+      "bytes": 606
+    },
+    "gpu_easygraph/runtime/sparse_halo_layout.h": {
+      "sha256": "054a4fa852494d48d24bb2f7fe91aae3f7098cd200885c03da363fd8458bde4d",
+      "bytes": 5892
+    },
+    "gpu_easygraph/runtime/sssp_execution_policy.h": {
+      "sha256": "8d163a972b288ecbf001612fb6e11ca024604480b09c404a69062673d10fd1fa",
+      "bytes": 2263
+    },
+    "gpu_easygraph/runtime/sssp_numeric_domain.h": {
+      "sha256": "1d5f605584b60912dc5f9d2cbdc65a30c4786184a99d854827381b3997a793fd",
+      "bytes": 2597
+    },
+    "gpu_easygraph/runtime/transport_benchmark.cpp": {
+      "sha256": "64c048220cf77a627cdc1b964cb05cc1190ea65fb81d083d3e1f41a8c0a1c432",
+      "bytes": 11433
+    },
+    "gpu_easygraph/runtime/transport_benchmark.h": {
+      "sha256": "10ce962f5f80a56d7dbe18741be1c5d611ad6c2ece1383f96a3e26bb73dd4559",
+      "bytes": 1356
+    },
+    "gpu_easygraph/runtime/triangle_count_plan.cpp": {
+      "sha256": "ed12ebc41883c00092f1b80e5717e57013ab511bdd46fb89f4a00185d02bf98d",
+      "bytes": 5736
+    },
+    "gpu_easygraph/runtime/triangle_count_plan.h": {
+      "sha256": "62cb8d093e078ba145486d3b460d995096c884e9dab6c059573cca896d0749a1",
+      "bytes": 1280
+    },
+    "gpu_easygraph/runtime/variable_gather_layout.h": {
+      "sha256": "fcd61786234a5167a0a7dfe0a229d86c8c57fc6f380c9cfcedd720113b7603e0",
+      "bytes": 1368
+    },
+    "gpu_easygraph/runtime/vertex_shard_result.cpp": {
+      "sha256": "9acf1c0a1b50117e1d6ba95e404c94794827d7e1b81ede7eced92e825cdd62bb",
+      "bytes": 2454
+    },
+    "gpu_easygraph/runtime/vertex_shard_result.h": {
+      "sha256": "e192cf7c9861b26dd13c74fe8f0d266a71df9ba3c537308b38b3a39bf44479f9",
+      "bytes": 899
+    },
+    "gpu_easygraph/runtime/wcc_pinned_route_pool.h": {
+      "sha256": "546323299619c530b8d56495d05f71794844b01a7e9fb0b1e44a4feacc7f9d1b",
+      "bytes": 4108
+    },
+    "pyproject.toml": {
+      "sha256": "9554195559f9bb1cc47d194348e4930da461f9469a71054fe531bc9177be2140",
+      "bytes": 5134
+    },
+    "pytest.ini": {
+      "sha256": "f0fff76780ac507d4fe55a97424e5bcf25f5c5ba96cc22043ceb4ab1208510a8",
+      "bytes": 96
+    },
+    "requirements.txt": {
+      "sha256": "0d1e3a89293889b5f3af3771be274ca56112c6af4ee15b87da1ce4d3be5065d5",
+      "bytes": 202
+    },
+    "scripts/PYTHON_RELEASE.md": {
+      "sha256": "b8d9b05e145448b7f4d3b94df1176bcfb52b081e7ca36804e11f54e4dae4b8a6",
+      "bytes": 4295
+    },
+    "scripts/README.md": {
+      "sha256": "5cc8cadcf0f1121b9e460b0184119ec41a43b0630e917519d3743c1587b45d1f",
+      "bytes": 2104
+    },
+    "scripts/Solution.md": {
+      "sha256": "60629426f3857565b0994c5d3f6f877e9caae37e6ca2245966e3a1ae2bb9cc2f",
+      "bytes": 736
+    },
+    "scripts/build_easygraph_linux.sh": {
+      "sha256": "3e3d761be9494b674a628817654737a8afd4b8373823bebce28e22c12a0428ca",
+      "bytes": 657
+    },
+    "scripts/build_easygraph_macos.sh": {
+      "sha256": "3649bd01308e2735dfe9ab00171cf8c78ed965f6d07820e4c1faeda9f02a6239",
+      "bytes": 850
+    },
+    "scripts/build_easygraph_windows.bat": {
+      "sha256": "18dc8c80652e1739f2d128d999ef3ce0e4d5e6ebe92db996f050112459b62d33",
+      "bytes": 586
+    },
+    "scripts/build_packages_linux.sh": {
+      "sha256": "e375800ef8afee645e8b08ad4c09313a5a787fec1f644ab9ae903c6a4735a6a9",
+      "bytes": 754
+    },
+    "scripts/check_installation.py": {
+      "sha256": "802028b170a91ad3efeea244ad3c8f411818725ed893130bd54d62ec3d83a0b0",
+      "bytes": 320
+    },
+    "scripts/check_pytorch_support.py": {
+      "sha256": "534cc38e5b229bb46f51781e07595a935368b1eb1e8e28f7e2777caa64471789",
+      "bytes": 11421
+    },
+    "scripts/gpu/build.py": {
+      "sha256": "a090a27036dcf40ab45a6a4f5a6e321968dff6a86a16f13908cce96959cb4e05",
+      "bytes": 5635
+    },
+    "scripts/gpu/qualification_inputs.py": {
+      "sha256": "7d7e57788263886199435d7121e3d6274672bcc5c0f766e9d683d3444fbbbd1e",
+      "bytes": 8054
+    },
+    "scripts/gpu/qualify.py": {
+      "sha256": "d86ed07f0b55e12a29500a3d2d1fda01afd2745763424d6dce63bb9ed77a2cbc",
+      "bytes": 14318
+    },
+    "scripts/tests/test_optional_dependency_logic.py": {
+      "sha256": "4cf73c3fc2e8d40bb4ffb5b62208514cbe6b934037a9105e5ab312d7960750df",
+      "bytes": 6615
+    },
+    "scripts/tests/test_pytorch_support.py": {
+      "sha256": "f248ab4f4164b6f30bdac498363673f317cff1bb4124a7eff515c30aee876860",
+      "bytes": 9664
+    },
+    "scripts/upload_easygraph.sh": {
+      "sha256": "ed052f94153b29a55d56ec2e7eba147c6c42b1da9d8e28c2ea0bcb8e5e81231e",
+      "bytes": 432
+    },
+    "scripts/wheel_smoke.py": {
+      "sha256": "b483f0df93af411c243c3cc68c3479353ed0b0260822def2e7c495cc7004efae",
+      "bytes": 3277
+    },
+    "setup.py": {
+      "sha256": "3afbd5459e74cffd6e2b8cae31fa75dd2efbc0b3aa27f7c171db7899644ef119",
+      "bytes": 8789
+    },
+    "tests/gpu/qualify_arena_output_ownership.py": {
+      "sha256": "d0b80b879b2b72a37c2e8ebb5a3c1b2d008bf59f969f81e8d26c1d4d59382996",
+      "bytes": 3826
+    },
+    "tests/gpu/qualify_capability_route.py": {
+      "sha256": "b9049bb0de083060b2318df244d321fa179ca1f2a505271e5ed235208d08501f",
+      "bytes": 5701
+    },
+    "tests/gpu/qualify_public_csr.py": {
+      "sha256": "0bcef88759e3341e00e826ecb3af7c03d72f5c1a63f6a40b33588aff5391475b",
+      "bytes": 6364
+    },
+    "tests/gpu/test_arena_cold_import.py": {
+      "sha256": "d7fb49b85e8d5eb76f65ce411f202d385594741f347edf554161bec2aef578b0",
+      "bytes": 4857
+    },
+    "tests/gpu/test_arena_numerical_contract.py": {
+      "sha256": "7cbaf80b739628e172a05ee651406b53814f5abe5d59a0a96bd765db603dce7a",
+      "bytes": 3035
+    },
+    "tests/gpu/test_arena_output_ownership.py": {
+      "sha256": "cbb532d6f2a547bc636123c697475b0b47f582a8df138749e8c0163b11780ecc",
+      "bytes": 14915
+    },
+    "tests/gpu/test_capability_dispatch.py": {
+      "sha256": "8199b63d055bda448267a214ceb98a6bbc8addc700a3df0587ec24086c40b5b5",
+      "bytes": 7407
+    },
+    "tests/gpu/test_eggpu_cache_contracts.py": {
+      "sha256": "fe6404cab8c3b7c2585bb82b3fc75abb2b42553986bece4f92e2d7cb0b1a099f",
+      "bytes": 11253
+    },
+    "tests/gpu/test_eggpu_centrality_contracts.py": {
+      "sha256": "7fd5e556a333c6ff8e74f0bb99cd7033f43fba85f12500afee1f8808fe48dbaf",
+      "bytes": 4230
+    },
+    "tests/gpu/test_mst_result_state.py": {
+      "sha256": "3e201595443b96d17ded7d6ef9b6e4a474af3a6de3523376768adbc9b39eb318",
+      "bytes": 7986
+    },
+    "tests/gpu/test_partitioned_transport_scope.py": {
+      "sha256": "a296e3b39de9e90de2f35a003e41a389960f5d28c8893af45abd6ea30d326d67",
+      "bytes": 4005
+    },
+    "tests/gpu/test_public_csr_input.py": {
+      "sha256": "e982d90e6dec75a70d0e1ead64bf08f0b6b14aadde00723466d6bb2124902cf6",
+      "bytes": 9264
+    },
+    "tests/gpu/test_public_lazy_import.py": {
+      "sha256": "f4bfc8f40af5507c01f9b0d5d43e382f506f317d533a1dae75bfb520527ccb73",
+      "bytes": 1120
+    },
+    "tests/gpu/test_snapshot_lineage.py": {
+      "sha256": "681694f0a8b57aaab58301f8b6dea021d8e484fee0dc39468be461b2005742bf",
+      "bytes": 6292
+    },
+    "tests/gpu/test_unified_contract.py": {
+      "sha256": "46686ab24959c37c863d76dbf932d43c99b9262664907e15512324b295b8e495",
+      "bytes": 5281
+    },
+    "tests/gpu/test_wcc_chunked_host.py": {
+      "sha256": "a79440305c37bc467e78a53f1223c1c26f688f0b50215da7bdd633ce42308402",
+      "bytes": 3723
+    },
+    "tox-conda-test.ini": {
+      "sha256": "1cb59b304a6b03148096728333dd65ee3ee1b8ab3b53f969e539145ae9a874ee",
+      "bytes": 121
+    },
+    "tox-conda.ini": {
+      "sha256": "36e38a0e2aee05360ce63ab65857ba28524e90bb5c8e1c8e6cc7de92ea9466ef",
+      "bytes": 305
+    },
+    "tox-test.ini": {
+      "sha256": "681cc72ab4971e29a6ad27d574200eaa43824e5a4b6e7ead7d2cb4f3dc961f4b",
+      "bytes": 100
+    },
+    "tox.ini": {
+      "sha256": "0e7f981432fa3671d4889bc98dfeee817c70bb262a79da09096b21784ea46c23",
+      "bytes": 490
+    }
+  },
+  "source_tree_sha256": "cb14360e2dfb934b8a28f9875fb80639ce4503bc6ed27956201b18e9edec6869",
+  "changed_source_files": [
+    "easygraph/gpu/_arena/gpu_runtime.py",
+    "easygraph/gpu/_arena_output.py",
+    "easygraph/gpu/_bridge.py",
+    "easygraph/gpu/_core.py",
+    "tests/gpu/qualify_arena_output_ownership.py",
+    "tests/gpu/test_arena_output_ownership.py"
+  ],
+  "formal_measurements": false,
+  "gpu_executed": false,
+  "native_dso_rebuild_required": false,
+  "arena_native_library_rebuild_required": false,
+  "gpu_kernel_source_changed": false,
+  "public_projection_note": "Private paths/UUIDs redacted; exact original retained. This readable evidence projection is not an executable proof or a formal performance measurement."
+}

@@ -1,0 +1,32 @@
+{
+  "status": "CPU_RUNTIME_ADMISSION_FIX",
+  "changes": [
+    {
+      "source": "state_final_plan_v3",
+      "public": "state_final_plan",
+      "files": [
+        "state_plan.py",
+        "test_state_plan.py",
+        "README_CN.md",
+        "cpu_receipt.json",
+        "manifest.json"
+      ]
+    },
+    {
+      "source": "e3_unweighted_control_v2",
+      "public": "e3_unweighted_control",
+      "files": [
+        "pr_control.py",
+        "pr_plan.py",
+        "test_pr_control.py",
+        "README_CN.md",
+        "cpu_receipt.json",
+        "manifest.json"
+      ]
+    }
+  ],
+  "reason": "Preserve lexical Python invocation; resolving a venv symlink changed sys.prefix and lost NumPy/SciPy. New plans bind runtime identity and require launcher proof. Older planner snapshots are superseded.",
+  "source_sha256": "cb14360e2dfb934b8a28f9875fb80639ce4503bc6ed27956201b18e9edec6869",
+  "gpu_execution_in_publication": false,
+  "formal_measurements": 0
+}

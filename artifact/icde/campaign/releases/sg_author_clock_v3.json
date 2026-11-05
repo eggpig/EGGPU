@@ -1,0 +1,73 @@
+{
+  "schema": "eggpu.runner.release.v1",
+  "version": "sg_author_clock_v3",
+  "status": "CPU_PASS_CONTINUOUS_TIMING_GPU_PENDING",
+  "files": {
+    "CONTINUOUS_TIMING_CN.md": {
+      "sha256": "2a6d3bb2d61c0af8fe54b2d605513d7b4c890dbce2cfe40eb0cb1114f8937e23",
+      "bytes": 2463
+    },
+    "baselines/check_sg_author_runtime_cpu.py": {
+      "sha256": "74ab60036629c0306334c370df8addedb2a516bb5b75c3683c71e9d5ecd9b887",
+      "bytes": 1532
+    },
+    "baselines/run_sg_authors.py": {
+      "sha256": "e3bf17ff7b3addc6b3f8ec65dec3dcd453ecf3fdd5bc6ed5dd626684d3274e99",
+      "bytes": 5275
+    },
+    "baselines/sg_author_worker.py": {
+      "sha256": "6bf142f74d5e621b03ebe143914f197957f156c2887805e052573e626e26b137",
+      "bytes": 24723
+    },
+    "baselines/sg_clock.py": {
+      "sha256": "5dad61de081647fa64cfe3257a6cecfd9abc846937d0624429203bdffc9c1113",
+      "bytes": 3088
+    },
+    "baselines/sg_clock_exec.py": {
+      "sha256": "c7c02c776a084fee4bfac9146a22f366bd92eda66fbe980f15fc5b8f0f612dad",
+      "bytes": 864
+    },
+    "baselines/sg_complete_clock.h": {
+      "sha256": "28d72b064b317a731c4ef585dea3c6c5bff67a48d4843092dd80b90dabfa544b",
+      "bytes": 919
+    },
+    "baselines/test_sg_author_cpu.py": {
+      "sha256": "49a20b25f576ef17a983f9570c490483ec53910407f16d257695c146ef44d45b",
+      "bytes": 7704
+    },
+    "baselines/test_sg_clock_cpu.py": {
+      "sha256": "c08cd230c8e60d314c696142958fe2e913b90b5da214d574efa54e38d6c07aed",
+      "bytes": 3766
+    },
+    "cugraph_csr_adapter.py": {
+      "sha256": "36e57e6dd8764e5b27db5a21a8b7b0c712f9c42d434636744c4e29997b2447cf",
+      "bytes": 7465
+    },
+    "sg_worker.py": {
+      "sha256": "7ab87843b24df60ad1372bee6383ec2c9d75227031a8343c439a6cca0ddbde43",
+      "bytes": 41183
+    },
+    "baselines/sg_clock_build.py": {
+      "sha256": "5c2f382916fbb79382af3bf733d6754a083bd0489d3672d220fecd62e0d98d51",
+      "bytes": 9435
+    },
+    "baselines/sg_clock_build_bfs_reset.py": {
+      "sha256": "f123f49f1ecfc3d326beecab2878a32eb286502aa8369b55f297e2245807fb41",
+      "bytes": 10381
+    },
+    "native_worker.py": {
+      "sha256": "12f183d6ff969e4c1921e388546a70a102d8ff22e1c9cb39df9a1b56b6b390f6",
+      "bytes": 23833
+    },
+    "native_input.py": {
+      "sha256": "927a9194b15b6dfaf91ff829f2476a676c7828ba4071607497ef308789d10152",
+      "bytes": 11994
+    },
+    "mg_process_observer.py": {
+      "sha256": "368c4d858da8dc5a2833dd2cd2dd30d0ab9df75940968c181a1537c2e30426a7",
+      "bytes": 2499
+    }
+  },
+  "formal_results": 0,
+  "qualification_note": "Public source/path changes require exact local tiny/target proofs. Earlier operator scope evidence is not a proof shortcut."
+}

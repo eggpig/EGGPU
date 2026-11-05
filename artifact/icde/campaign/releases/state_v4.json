@@ -1,0 +1,49 @@
+{
+  "schema": "eggpu.runner.release.v1",
+  "version": "state_v4",
+  "status": "87_CPU_PASS_NEW_GPU_PROOFS_PENDING",
+  "files": {
+    "state_worker.py": {
+      "sha256": "5b1987137cdf11ad1b9156f348837b91d69d170b22585a50e664e692154ebbfc",
+      "bytes": 21550
+    },
+    "state_contract.py": {
+      "sha256": "06f9613f73ce5e4216ed9cbd9516c06230e85a0ba0d0a3f435b80ed9130840b0",
+      "bytes": 13110
+    },
+    "state_protocol.py": {
+      "sha256": "85fb5df29ca2ec60b38f29be8c5e57333d5fe55cfa5354b1c449d0426d314047",
+      "bytes": 4274
+    },
+    "state_reference.py": {
+      "sha256": "59c16ece7d79498264566a25040e5808f039bd1b6ddee22c546aacbce26e6fc0",
+      "bytes": 8995
+    },
+    "state_inputs.py": {
+      "sha256": "2c36cc9c2fc20d1d556467cd35077b889895daad4d395a213073478712f98e63",
+      "bytes": 10881
+    },
+    "test_state_v4_cpu.py": {
+      "sha256": "172c9b299a0e02a6b30142ce2600a7789eb15691167a03d480fab709340a84dd",
+      "bytes": 13976
+    },
+    "test_state_reference_cpu.py": {
+      "sha256": "6c84892ec74d208aba85f2cfbc15bb2bea83e432df16ac7d57e7709ed6f5ecc5",
+      "bytes": 3590
+    },
+    "state_projection_cpu_tests.py": {
+      "sha256": "ba291f54c6ffc86ea174b688391700f12c6d4179b04785b5060282036bff53f3",
+      "bytes": 8588
+    },
+    "STATE_V4_PROTOCOL_CN.md": {
+      "sha256": "847cb085f050e5ccbb12e75113d76fedfdd54f9d6018b3a3d207ee1f49762f49",
+      "bytes": 6409
+    },
+    "baselines/hytgraph_qualify.py": {
+      "sha256": "6aa0832cd8c27eb91dde7e728dabdbf24d499f4a837c82053bbf8d4e8ab66da8",
+      "bytes": 10820
+    }
+  },
+  "formal_results": 0,
+  "qualification_note": "Public source/path changes require exact local tiny/target proofs. Earlier operator scope evidence is not a proof shortcut."
+}

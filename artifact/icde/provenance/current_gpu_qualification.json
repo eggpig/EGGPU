@@ -1,0 +1,25 @@
+{
+  "schema": "eggpu.public_gpu_qualification/v5",
+  "status": "PASS_CURRENT_SOURCE_33_SEMANTICS_AND_16_CORRECTED_CSR_SG_TINY",
+  "source_candidate": "arena_output_ownership_v2",
+  "source_sha256": "cb14360e2dfb934b8a28f9875fb80639ce4503bc6ed27956201b18e9edec6869",
+  "native_dso_sha256": "bc1b7cf247222beec1f33afe4d184bdc715eea4ac65a07e8e2a567ec196aec46",
+  "sg_semantic_checks": 33,
+  "counts": {
+    "current_source_sg_tiny": 16,
+    "current_source_formal": 0
+  },
+  "formal_configurations": 0,
+  "performance_eligible": false,
+  "record_projection": "qualification/final_source_v2/",
+  "evidence_index": "qualification/index.json",
+  "scope": "33 actual GPU semantic and owned-output lifetime checks plus 16 current-source EGGPU/cuGraph directed/undirected tiny configurations under the corrected global-L1 CSR runner. Real-graph targets and other workflows are separately qualifying; no formal E1-E6 results are included.",
+  "pending": [
+    "Complete current-source real-graph target qualification",
+    "All new formal E1-E6 repetitions",
+    "Complete source-bound baseline/workflow qualification and author build bundle"
+  ],
+  "historical_cold_source": "history/cold_import_v1_gpu_qualification.json",
+  "historical_source_832": "history/source_832_gpu_qualification.json",
+  "pr_protocol_correction": "pr_protocol_correction.json"
+}

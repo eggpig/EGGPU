@@ -1,0 +1,369 @@
+{
+  "status": "OBSERVED_CPU_DEPENDENCIES",
+  "gpu_executed": false,
+  "java_version": "openjdk version \"17.0.20.1\" 2026-08-18\nOpenJDK Runtime Environment (build 17.0.20.1+1-1-22.04-Ubuntu)\nOpenJDK 64-Bit Server VM (build 17.0.20.1+1-1-22.04-Ubuntu, mixed mode, sharing)\n",
+  "java_executable_sha256": "ac1d3bbe5301caaa1b86966802a4f8ec9f9f4f065c04dec45cc4a9f7dc24d075",
+  "class_sha256": {
+    "LawToCsr$1.class": "7be55b51ec6a3d1d2650951aaabdf7503c5778b5b19499311977fd10be0a2409",
+    "LawToCsr$Rows.class": "1b277d658f4a5c765c881a2ea2a5b1bfc585ad49e6e9ec314937f678de851649",
+    "LawToCsr$WebRows.class": "ff6ca5755095f970376f37a7e9a24c36ae73dc94b3b8996f7c1ea4d761a91bf7",
+    "LawToCsr.class": "ade9012ab827f998fa9d4f819b0fb66a38f3d2583a10a4b8efa230c42b8cf023"
+  },
+  "jars": [
+    {
+      "file": "activation-1.1.jar",
+      "bytes": 62983,
+      "sha256": "2881c79c9d6ef01c58e62beea13e9d1ac8b8baa16f2fc198ad6e6776defdcdd3",
+      "embedded_coordinates": [],
+      "coordinate": "javax.activation:activation:1.1",
+      "url": "https://repo.maven.apache.org/maven2/javax/activation/activation/1.1/activation-1.1.jar",
+      "url_probe": {
+        "status": 200,
+        "content_length": 62983
+      }
+    },
+    {
+      "file": "checker-qual-3.43.0.jar",
+      "bytes": 231525,
+      "sha256": "3fbc2e98f05854c3df16df9abaa955b91b15b3ecac33623208ed6424640ef0f6",
+      "embedded_coordinates": [],
+      "coordinate": "org.checkerframework:checker-qual:3.43.0",
+      "url": "https://repo.maven.apache.org/maven2/org/checkerframework/checker-qual/3.43.0/checker-qual-3.43.0.jar",
+      "url_probe": {
+        "status": 200,
+        "content_length": 231525
+      }
+    },
+    {
+      "file": "commons-lang3-3.12.0.jar",
+      "bytes": 587402,
+      "sha256": "d919d904486c037f8d193412da0c92e22a9fa24230b9d67a57855c5c31c7e94e",
+      "embedded_coordinates": [
+        {
+          "artifactId": "commons-lang3",
+          "groupId": "org.apache.commons",
+          "version": "3.12.0"
+        }
+      ],
+      "coordinate": "org.apache.commons:commons-lang3:3.12.0",
+      "url": "https://repo.maven.apache.org/maven2/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar",
+      "url_probe": {
+        "status": 200,
+        "content_length": 587402
+      }
+    },
+    {
+      "file": "commons-math3-3.6.1.jar",
+      "bytes": 2213560,
+      "sha256": "1e56d7b058d28b65abd256b8458e3885b674c1d588fa43cd7d1cbb9c7ef2b308",
+      "embedded_coordinates": [
+        {
+          "version": "3.6.1",
+          "groupId": "org.apache.commons",
+          "artifactId": "commons-math3"
+        }
+      ],
+      "coordinate": "org.apache.commons:commons-math3:3.6.1",
+      "url": "https://repo.maven.apache.org/maven2/org/apache/commons/commons-math3/3.6.1/commons-math3-3.6.1.jar",
+      "url_probe": {
+        "status": 200,
+        "content_length": 2213560
+      }
+    },
+    {
+      "file": "dsiutils-2.7.4.jar",
+      "bytes": 534380,
+      "sha256": "65fd7c9957563b83c0b20485f466cf6f2cc49a3fe295718ef03ec365ca896b5f",
+      "embedded_coordinates": [],
+      "coordinate": "it.unimi.dsi:dsiutils:2.7.4",
+      "url": "https://repo.maven.apache.org/maven2/it/unimi/dsi/dsiutils/2.7.4/dsiutils-2.7.4.jar",
+      "url_probe": {
+        "status": 200,
+        "content_length": 534380
+      }
+    },
+    {
+      "file": "error_prone_annotations-2.36.0.jar",
+      "bytes": 19401,
+      "sha256": "77440e270b0bc9a249903c5a076c36a722c4886ca4f42675f2903a1c53ed61a5",
+      "embedded_coordinates": [
+        {
+          "artifactId": "error_prone_annotations",
+          "groupId": "com.google.errorprone",
+          "version": "2.36.0"
+        }
+      ],
+      "coordinate": "com.google.errorprone:error_prone_annotations:2.36.0",
+      "url": "https://repo.maven.apache.org/maven2/com/google/errorprone/error_prone_annotations/2.36.0/error_prone_annotations-2.36.0.jar",
+      "url_probe": {
+        "status": 200,
+        "content_length": 19401
+      }
+    },
+    {
+      "file": "failureaccess-1.0.2.jar",
+      "bytes": 4740,
+      "sha256": "8a8f81cf9b359e3f6dfa691a1e776985c061ef2f223c9b2c80753e1b458e8064",
+      "embedded_coordinates": [
+        {
+          "groupId": "com.google.guava",
+          "artifactId": "failureaccess",
+          "version": "1.0.2"
+        }
+      ],
+      "coordinate": "com.google.guava:failureaccess:1.0.2",
+      "url": "https://repo.maven.apache.org/maven2/com/google/guava/failureaccess/1.0.2/failureaccess-1.0.2.jar",
+      "url_probe": {
+        "status": 200,
+        "content_length": 4740
+      }
+    },
+    {
+      "file": "fastutil-8.5.16.jar",
+      "bytes": 23841388,
+      "sha256": "317a1c26252da2c6f5cb32454e2995f6b93940f09c6642969a330c6b9ff67342",
+      "embedded_coordinates": [],
+      "coordinate": "it.unimi.dsi:fastutil:8.5.16",
+      "url": "https://repo.maven.apache.org/maven2/it/unimi/dsi/fastutil/8.5.16/fastutil-8.5.16.jar",
+      "url_probe": {
+        "status": 200,
+        "content_length": 23841388
+      }
+    },
+    {
+      "file": "guava-33.4.0-jre.jar",
+      "bytes": 3080298,
+      "sha256": "b918c98a7e44dbe94ebd9fe3e40cddaadb5a93e6a78eb6008b42df237241e538",
+      "embedded_coordinates": [
+        {
+          "groupId": "com.google.guava",
+          "artifactId": "guava",
+          "version": "33.4.0-jre"
+        }
+      ],
+      "coordinate": "com.google.guava:guava:33.4.0-jre",
+      "url": "https://repo.maven.apache.org/maven2/com/google/guava/guava/33.4.0-jre/guava-33.4.0-jre.jar",
+      "url_probe": {
+        "status": 200,
+        "content_length": 3080298
+      }
+    },
+    {
+      "file": "j2objc-annotations-3.0.0.jar",
+      "bytes": 12467,
+      "sha256": "88241573467ddca44ffd4d74aa04c2bbfd11bf7c17e0c342c94c9de7a70a7c64",
+      "embedded_coordinates": [
+        {
+          "artifactId": "j2objc-annotations",
+          "groupId": "com.google.j2objc",
+          "version": "3.0.0"
+        }
+      ],
+      "coordinate": "com.google.j2objc:j2objc-annotations:3.0.0",
+      "url": "https://repo.maven.apache.org/maven2/com/google/j2objc/j2objc-annotations/3.0.0/j2objc-annotations-3.0.0.jar",
+      "url_probe": {
+        "status": 200,
+        "content_length": 12467
+      }
+    },
+    {
+      "file": "javax.mail-1.6.2.jar",
+      "bytes": 659031,
+      "sha256": "45b515e7104944c09e45b9c7bb1ce5dff640486374852dd2b2e80cc3752dfa11",
+      "embedded_coordinates": [
+        {
+          "version": "1.6.2",
+          "groupId": "com.sun.mail",
+          "artifactId": "javax.mail"
+        }
+      ],
+      "coordinate": "com.sun.mail:javax.mail:1.6.2",
+      "url": "https://repo.maven.apache.org/maven2/com/sun/mail/javax.mail/1.6.2/javax.mail-1.6.2.jar",
+      "url_probe": {
+        "status": 200,
+        "content_length": 659031
+      }
+    },
+    {
+      "file": "jsap-20210129.jar",
+      "bytes": 90009,
+      "sha256": "211c7b820f702b851bbe702381d4d98eb839e7f253460e26bde02d98d7653535",
+      "embedded_coordinates": [],
+      "coordinate": "it.unimi.di:jsap:20210129",
+      "url": "https://repo.maven.apache.org/maven2/it/unimi/di/jsap/20210129/jsap-20210129.jar",
+      "url_probe": {
+        "status": 200,
+        "content_length": 90009
+      }
+    },
+    {
+      "file": "jsr305-3.0.2.jar",
+      "bytes": 19936,
+      "sha256": "766ad2a0783f2687962c8ad74ceecc38a28b9f72a2d085ee438b7813e928d0c7",
+      "embedded_coordinates": [
+        {
+          "version": "3.0.2",
+          "groupId": "com.google.code.findbugs",
+          "artifactId": "jsr305"
+        }
+      ],
+      "coordinate": "com.google.code.findbugs:jsr305:3.0.2",
+      "url": "https://repo.maven.apache.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar",
+      "url_probe": {
+        "status": 200,
+        "content_length": 19936
+      }
+    },
+    {
+      "file": "jung-algorithms-2.1.1.jar",
+      "bytes": 230204,
+      "sha256": "ed138e2f6b2b2f13af61a13f1788bce6f1de8858c42ee70a7d41e6283937a30a",
+      "embedded_coordinates": [
+        {
+          "version": "2.1.1",
+          "groupId": "net.sf.jung",
+          "artifactId": "jung-algorithms"
+        }
+      ],
+      "coordinate": "net.sf.jung:jung-algorithms:2.1.1",
+      "url": "https://repo.maven.apache.org/maven2/net/sf/jung/jung-algorithms/2.1.1/jung-algorithms-2.1.1.jar",
+      "url_probe": {
+        "status": 200,
+        "content_length": 230204
+      }
+    },
+    {
+      "file": "jung-api-2.1.1.jar",
+      "bytes": 42221,
+      "sha256": "6cb735963c36d5155d0de5f19a03485b9a26e67550e160b3dd89009a6f51694e",
+      "embedded_coordinates": [
+        {
+          "version": "2.1.1",
+          "groupId": "net.sf.jung",
+          "artifactId": "jung-api"
+        }
+      ],
+      "coordinate": "net.sf.jung:jung-api:2.1.1",
+      "url": "https://repo.maven.apache.org/maven2/net/sf/jung/jung-api/2.1.1/jung-api-2.1.1.jar",
+      "url_probe": {
+        "status": 200,
+        "content_length": 42221
+      }
+    },
+    {
+      "file": "jung-io-2.1.1.jar",
+      "bytes": 79779,
+      "sha256": "05033ca56dd6fe2fb2fdc7ca7844d554484a3adf833f7a17cfc371263c31fa4d",
+      "embedded_coordinates": [
+        {
+          "version": "2.1.1",
+          "groupId": "net.sf.jung",
+          "artifactId": "jung-io"
+        }
+      ],
+      "coordinate": "net.sf.jung:jung-io:2.1.1",
+      "url": "https://repo.maven.apache.org/maven2/net/sf/jung/jung-io/2.1.1/jung-io-2.1.1.jar",
+      "url_probe": {
+        "status": 200,
+        "content_length": 79779
+      }
+    },
+    {
+      "file": "listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar",
+      "bytes": 2199,
+      "sha256": "b372a037d4230aa57fbeffdef30fd6123f9c0c2db85d0aced00c91b974f33f99",
+      "embedded_coordinates": [
+        {
+          "version": "9999.0-empty-to-avoid-conflict-with-guava",
+          "groupId": "com.google.guava",
+          "artifactId": "listenablefuture"
+        }
+      ],
+      "coordinate": "com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava",
+      "url": "https://repo.maven.apache.org/maven2/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar",
+      "url_probe": {
+        "status": 200,
+        "content_length": 2199
+      }
+    },
+    {
+      "file": "logback-classic-1.3.4.jar",
+      "bytes": 260451,
+      "sha256": "b866a5da6c8b78e155c67fccd7562860d0b5fc776b89cd968c2f3f2e37fc3a02",
+      "embedded_coordinates": [
+        {
+          "artifactId": "logback-classic",
+          "groupId": "ch.qos.logback",
+          "version": "1.3.4"
+        }
+      ],
+      "coordinate": "ch.qos.logback:logback-classic:1.3.4",
+      "url": "https://repo.maven.apache.org/maven2/ch/qos/logback/logback-classic/1.3.4/logback-classic-1.3.4.jar",
+      "url_probe": {
+        "status": 200,
+        "content_length": 260451
+      }
+    },
+    {
+      "file": "logback-core-1.3.4.jar",
+      "bytes": 563976,
+      "sha256": "4740a098bb443a744554dd3ddf062c682287b294066754e292e1346c8bf5cedd",
+      "embedded_coordinates": [
+        {
+          "artifactId": "logback-core",
+          "groupId": "ch.qos.logback",
+          "version": "1.3.4"
+        }
+      ],
+      "coordinate": "ch.qos.logback:logback-core:1.3.4",
+      "url": "https://repo.maven.apache.org/maven2/ch/qos/logback/logback-core/1.3.4/logback-core-1.3.4.jar",
+      "url_probe": {
+        "status": 200,
+        "content_length": 563976
+      }
+    },
+    {
+      "file": "slf4j-api-2.0.3.jar",
+      "bytes": 61409,
+      "sha256": "68ddcda65300ff8097ad1a096d7cd2fb06cef25193887cec3f2690e01bdbf421",
+      "embedded_coordinates": [
+        {
+          "artifactId": "slf4j-api",
+          "groupId": "org.slf4j",
+          "version": "2.0.3"
+        }
+      ],
+      "coordinate": "org.slf4j:slf4j-api:2.0.3",
+      "url": "https://repo.maven.apache.org/maven2/org/slf4j/slf4j-api/2.0.3/slf4j-api-2.0.3.jar",
+      "url_probe": {
+        "status": 200,
+        "content_length": 61409
+      }
+    },
+    {
+      "file": "sux4j-5.4.1.jar",
+      "bytes": 480589,
+      "sha256": "f723ed570899e3fce17b1423ff2b56b72cb56f4202573f596ae7109c036f9a00",
+      "embedded_coordinates": [],
+      "coordinate": "it.unimi.dsi:sux4j:5.4.1",
+      "url": "https://repo.maven.apache.org/maven2/it/unimi/dsi/sux4j/5.4.1/sux4j-5.4.1.jar",
+      "url_probe": {
+        "status": 200,
+        "content_length": 480589
+      }
+    },
+    {
+      "file": "webgraph-3.6.12.jar",
+      "bytes": 399246,
+      "sha256": "8daddd3881aecc7095643936c9e16d825cbe0e431df507519e36df68d06444ef",
+      "embedded_coordinates": [],
+      "coordinate": "it.unimi.dsi:webgraph:3.6.12",
+      "url": "https://repo.maven.apache.org/maven2/it/unimi/dsi/webgraph/3.6.12/webgraph-3.6.12.jar",
+      "url_probe": {
+        "status": 200,
+        "content_length": 399246
+      }
+    }
+  ],
+  "all_download_urls_probed": true
+}

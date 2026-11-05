@@ -1,0 +1,804 @@
+{
+  "T_first_seconds": 4.916013557463884,
+  "T_ready_seconds": 0.0030338577926158905,
+  "ablate": "none",
+  "admission": [
+    {
+      "checked_unix": 1793803830.765757,
+      "gpus": [
+        {
+          "driver": "580.105.08",
+          "index": "0",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-0>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "1",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-1>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "2",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-2>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "3",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-3>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "4",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-4>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "5",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-5>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "6",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-6>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "7",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-7>"
+        }
+      ],
+      "host": "<redacted-host>",
+      "processes": "",
+      "required_host_bytes": 8589934592,
+      "selected": {
+        "driver": "580.105.08",
+        "index": "0",
+        "name": "NVIDIA GeForce RTX 4090 D",
+        "total_mib": "24564",
+        "used_mib": "0",
+        "utilization": "0",
+        "uuid": "<device-0>"
+      }
+    },
+    {
+      "checked_unix": 1793803831.0403614,
+      "gpus": [
+        {
+          "driver": "580.105.08",
+          "index": "0",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-0>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "1",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-1>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "2",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-2>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "3",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-3>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "4",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-4>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "5",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-5>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "6",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-6>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "7",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-7>"
+        }
+      ],
+      "host": "<redacted-host>",
+      "processes": "",
+      "required_host_bytes": 8589934592,
+      "selected": {
+        "driver": "580.105.08",
+        "index": "1",
+        "name": "NVIDIA GeForce RTX 4090 D",
+        "total_mib": "24564",
+        "used_mib": "0",
+        "utilization": "0",
+        "uuid": "<device-1>"
+      }
+    },
+    {
+      "checked_unix": 1793803831.295315,
+      "gpus": [
+        {
+          "driver": "580.105.08",
+          "index": "0",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-0>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "1",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-1>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "2",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-2>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "3",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-3>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "4",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-4>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "5",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-5>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "6",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-6>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "7",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-7>"
+        }
+      ],
+      "host": "<redacted-host>",
+      "processes": "",
+      "required_host_bytes": 8589934592,
+      "selected": {
+        "driver": "580.105.08",
+        "index": "2",
+        "name": "NVIDIA GeForce RTX 4090 D",
+        "total_mib": "24564",
+        "used_mib": "0",
+        "utilization": "0",
+        "uuid": "<device-2>"
+      }
+    },
+    {
+      "checked_unix": 1793803831.54993,
+      "gpus": [
+        {
+          "driver": "580.105.08",
+          "index": "0",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-0>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "1",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-1>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "2",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-2>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "3",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-3>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "4",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-4>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "5",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-5>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "6",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-6>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "7",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-7>"
+        }
+      ],
+      "host": "<redacted-host>",
+      "processes": "",
+      "required_host_bytes": 8589934592,
+      "selected": {
+        "driver": "580.105.08",
+        "index": "3",
+        "name": "NVIDIA GeForce RTX 4090 D",
+        "total_mib": "24564",
+        "used_mib": "0",
+        "utilization": "0",
+        "uuid": "<device-3>"
+      }
+    },
+    {
+      "checked_unix": 1793803831.800897,
+      "gpus": [
+        {
+          "driver": "580.105.08",
+          "index": "0",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-0>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "1",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-1>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "2",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-2>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "3",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-3>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "4",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-4>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "5",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-5>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "6",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-6>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "7",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-7>"
+        }
+      ],
+      "host": "<redacted-host>",
+      "processes": "",
+      "required_host_bytes": 8589934592,
+      "selected": {
+        "driver": "580.105.08",
+        "index": "4",
+        "name": "NVIDIA GeForce RTX 4090 D",
+        "total_mib": "24564",
+        "used_mib": "0",
+        "utilization": "0",
+        "uuid": "<device-4>"
+      }
+    },
+    {
+      "checked_unix": 1793803832.071282,
+      "gpus": [
+        {
+          "driver": "580.105.08",
+          "index": "0",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-0>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "1",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-1>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "2",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-2>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "3",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-3>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "4",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-4>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "5",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-5>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "6",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-6>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "7",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-7>"
+        }
+      ],
+      "host": "<redacted-host>",
+      "processes": "",
+      "required_host_bytes": 8589934592,
+      "selected": {
+        "driver": "580.105.08",
+        "index": "5",
+        "name": "NVIDIA GeForce RTX 4090 D",
+        "total_mib": "24564",
+        "used_mib": "0",
+        "utilization": "0",
+        "uuid": "<device-5>"
+      }
+    },
+    {
+      "checked_unix": 1793803832.3828251,
+      "gpus": [
+        {
+          "driver": "580.105.08",
+          "index": "0",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-0>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "1",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-1>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "2",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-2>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "3",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-3>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "4",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-4>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "5",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-5>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "6",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-6>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "7",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-7>"
+        }
+      ],
+      "host": "<redacted-host>",
+      "processes": "",
+      "required_host_bytes": 8589934592,
+      "selected": {
+        "driver": "580.105.08",
+        "index": "6",
+        "name": "NVIDIA GeForce RTX 4090 D",
+        "total_mib": "24564",
+        "used_mib": "0",
+        "utilization": "0",
+        "uuid": "<device-6>"
+      }
+    },
+    {
+      "checked_unix": 1793803832.679008,
+      "gpus": [
+        {
+          "driver": "580.105.08",
+          "index": "0",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-0>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "1",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-1>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "2",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-2>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "3",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-3>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "4",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-4>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "5",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-5>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "6",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-6>"
+        },
+        {
+          "driver": "580.105.08",
+          "index": "7",
+          "name": "NVIDIA GeForce RTX 4090 D",
+          "total_mib": "24564",
+          "used_mib": "0",
+          "utilization": "0",
+          "uuid": "<device-7>"
+        }
+      ],
+      "host": "<redacted-host>",
+      "processes": "",
+      "required_host_bytes": 8589934592,
+      "selected": {
+        "driver": "580.105.08",
+        "index": "7",
+        "name": "NVIDIA GeForce RTX 4090 D",
+        "total_mib": "24564",
+        "used_mib": "0",
+        "utilization": "0",
+        "uuid": "<device-7>"
+      }
+    }
+  ],
+  "child": {
+    "bytes": 24635,
+    "path": "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_eggpu_none_p8_r00/workflow/result.json",
+    "sha256": "5872f3c841525df98512251d2001b6681226d297bdb2194bc71678e4e0707be3"
+  },
+  "contract": {
+    "ablation": "one of four fixed groups delegates its actual work to igraph C/derived CPU; unchanged groups use the same native ABI; no precomputed outputs or omitted functions",
+    "closeness": "32 exact sources, not a full all-vertex closeness ranking; r^2/((n-1)*sum_distance), zero for r=0",
+    "complete": "all ES and Constraint values, candidate IDs, every candidate closeness value, winner, full BFS distances and full canonical WCC partition on host",
+    "formal_repetitions": 10,
+    "input": "same source-bound canonical host CSR; construct simple unweighted weak projection inside T_first; retain every canonical vertex including isolates",
+    "mg": "whole graph replicated on each GPU; ego-vertex shards for structural metrics and selected-source shards for closeness; BFS/WCC on logical GPU0; not partitioned capacity scaling",
+    "quality": {
+      "atol": 1e-10,
+      "bfs_exact": true,
+      "nan_mask_exact": true,
+      "owning_immutable": true,
+      "rtol": 1e-08,
+      "selection_exact": true,
+      "wcc_partition_exact": true
+    },
+    "selection": "all finite ES/Constraint rows; descending ES, ascending Constraint, canonical ID, after fixed round-to-even 1e-6 quantization; first min(32, finite vertices)",
+    "task_origin": "controlled structural screening workflow, not an observed production trace",
+    "timeout_seconds": 1800,
+    "timing": "T_first starts with common host CSR ready and includes weak projection, imports, graph formats, uploads, all five calls, host materialization, both dependent selections; T_ready retains graph state after one full warmup; close recorded separately",
+    "weights": "original w16-v1 files remain input-bound; all E6 operators are explicitly unweighted",
+    "winner": "maximum exact Wasserman-Faust closeness among actual selected vertices; fixed 1e-6 rounding then minimum canonical ID"
+  },
+  "dataset": "E6_TINY_U",
+  "dataset_role": "qualification",
+  "display_dataset": "E6_TINY_U",
+  "epoch": {
+    "bytes": 517517,
+    "path": "<campaign>/e6_tiny_v1/tiny_E6_TINY_U_eggpu_none_p8_r00/epoch.json",
+    "sha256": "28306df5516cffdda87047d403db7dfd9354697d90a12e1b9f1c3b88d65bbe8b"
+  },
+  "epoch_sha256": "39829f4d7f64123fecf8bdeb8585f9e81322d556b33c31be5c518f12428f4ce7",
+  "gpu_count": 8,
+  "input": {
+    "directed": false,
+    "files": {
+      "canonical": {
+        "bytes": 567,
+        "sha256": "5008397a95f3c3c5b1f0ed5eedc3e1feda69d76970c989d891aac2a2842f155c"
+      },
+      "indices": {
+        "bytes": 368,
+        "sha256": "20f66a1f5c7ff5e5415501f8a3c3011ed2f26e0d629c5ffafbbf2f7d96863c51"
+      },
+      "offsets": {
+        "bytes": 164,
+        "sha256": "0d19684964aa20435235d1e9028438969e80b2a2c798dfaa32826a52bcc5c51e"
+      },
+      "sources": {
+        "bytes": 206,
+        "sha256": "3b9fbcc6f47436b4349617473e167a2a30b56f4f58cfc0ba2994a213dc31d2db"
+      },
+      "weights": {
+        "bytes": 736,
+        "sha256": "e3932ff95d08d3d22e030993f64adc472de0d69cd08b09eee86560e1bb7d937d"
+      }
+    },
+    "m": 92,
+    "n": 40,
+    "receipt": {
+      "bytes": 1412,
+      "sha256": "86c1448b2a4d46bf085f657fecc54c28fc4e73ba9a2f7ec20fe8cf394c42f6a9"
+    },
+    "sources": [
+      0,
+      20,
+      35
+    ]
+  },
+  "input_sha256": "c32f908c7287d6fc586635c0ce559f0349a1b239cbbcb913ac17c641bed041e0",
+  "performance_eligible": false,
+  "phase": "tiny",
+  "protocol": "e6-weak-structural-dependent-complete-v1",
+  "quality_pass": true,
+  "repeat": 0,
+  "returncode": 0,
+  "schema": "eggpu.e6.job/v1",
+  "status": "PASS_QUALIFICATION",
+  "system": "eggpu",
+  "public_projection_note": "Host paths/UUIDs redacted. This is qualification evidence, not an executable tiny/target proof or a formal performance repetition. Original bytes are retained by the operator."
+}
