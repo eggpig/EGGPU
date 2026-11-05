@@ -1,5 +1,5 @@
 # Artifact status
 
-Development checkpoint, 2026-11-05: main source remains d84ff byte for byte. Formal queues have started; the owner reported 2 passing external formal jobs at 10:32 UTC, with the complete 300-job external queue still incomplete. This package contains tools and writing assets, not a completed result matrix or evidence that the 90% single-GPU target has been reached.
+Development checkpoint, 2026-11-05. Main Easy-Graph remains d84 byte for byte. Formal queues launched; complete results and the 90% single-GPU target are not established. `campaign_status.json` contains a timestamped observation, never a permanent counter.
 
-New state and E6 protocol tools and the separate WCC 6cce candidate require exact source/input/build qualification. CPU checks do not establish GPU correctness, capacity or performance. Rebuilt or relocated artifacts require fresh matching proofs. Mechanism/framework artwork remains reserved for the collaborator.
+The new public layout passed 190 CPU-only tests with zero skips. Synthetic figures are not published; CPU evidence does not transfer GPU correctness or performance. WCC 6cce remains an experimental overlay, now with a separately tested v3 runner. Unfrozen E5/E6 admission work is excluded. See `artifact/icde/PROTOCOLS_UPDATE_CN.md`.

@@ -1,0 +1,442 @@
+{
+  "schema": "eggpu.public.protocols-projection/v1",
+  "expected_parent_commit": "4cb83e75a98210e0106ee18cc581a714fc584a8a",
+  "main_source_replaced": false,
+  "files": [
+    {
+      "source": "experiments/campaign_20261104/formal_incremental_admission_v1/README_CN.md",
+      "source_sha256": "98187c10a1f636b1c27ee041bf7dfc0a53163cb205934b70418a8fc10a42c849",
+      "public_path": "artifact/icde/campaign/formal_incremental_admission_v1/README_CN.md",
+      "public_sha256": "66b650ce3d7199a29d15f7b793c00658fc8d9da353eebba96980eb768cfbc40e",
+      "projection": "documentation_projection",
+      "reason": "Source metadata location labels only; never a relocated measurement proof"
+    },
+    {
+      "source": "experiments/campaign_20261104/formal_incremental_admission_v1/admit_incremental.py",
+      "source_sha256": "56e3e89366eb17fc2b13a97f08eae6d7e0c39515850f1b0e39535758e29f8bcf",
+      "public_path": "artifact/icde/campaign/formal_incremental_admission_v1/admit_incremental.py",
+      "public_sha256": "56e3e89366eb17fc2b13a97f08eae6d7e0c39515850f1b0e39535758e29f8bcf",
+      "projection": "byte_identical",
+      "reason": "Frozen implementation bytes unchanged"
+    },
+    {
+      "source": "experiments/campaign_20261104/formal_incremental_admission_v1/cell_gate.py",
+      "source_sha256": "aeaa86994ba8590040f4bf8d529ce88730227aa61d91e65e177f217813ddfffb",
+      "public_path": "artifact/icde/campaign/formal_incremental_admission_v1/cell_gate.py",
+      "public_sha256": "aeaa86994ba8590040f4bf8d529ce88730227aa61d91e65e177f217813ddfffb",
+      "projection": "byte_identical",
+      "reason": "Frozen implementation bytes unchanged"
+    },
+    {
+      "source": "experiments/campaign_20261104/formal_incremental_admission_v1/run_incremental_queue.py",
+      "source_sha256": "cedd639c82c49da9bd447a934346574ab7c2ca87a285555955e8eecdb4b4b1b7",
+      "public_path": "artifact/icde/campaign/formal_incremental_admission_v1/run_incremental_queue.py",
+      "public_sha256": "cedd639c82c49da9bd447a934346574ab7c2ca87a285555955e8eecdb4b4b1b7",
+      "projection": "byte_identical",
+      "reason": "Frozen implementation bytes unchanged"
+    },
+    {
+      "source": "experiments/campaign_20261104/formal_incremental_admission_v1/test_incremental_cpu.py",
+      "source_sha256": "67c41b8ddbd3904a008be54ed616324e86e7b56d2e4e6bbcaa32a45ff8c65b93",
+      "public_path": "artifact/icde/campaign/formal_incremental_admission_v1/test_incremental_cpu.py",
+      "public_sha256": "67c41b8ddbd3904a008be54ed616324e86e7b56d2e4e6bbcaa32a45ff8c65b93",
+      "projection": "byte_identical",
+      "reason": "Frozen implementation bytes unchanged"
+    },
+    {
+      "source": "experiments/campaign_20261104/formal_incremental_e4s_v1/README_CN.md",
+      "source_sha256": "a71a48945a48cac1eab2d38077b6987afe5d2ee15966ea6d4714321c93a19d00",
+      "public_path": "artifact/icde/campaign/formal_incremental_e4s_v1/README_CN.md",
+      "public_sha256": "4186e6e72acf364a454c2c968316c6adae7a08c2b37f9f7634c2769013dd20ad",
+      "projection": "documentation_projection",
+      "reason": "Source metadata location labels only; never a relocated measurement proof"
+    },
+    {
+      "source": "experiments/campaign_20261104/formal_incremental_e4s_v1/admit_e4s_incremental.py",
+      "source_sha256": "6f1bcf4546f7fb17f0d42ec564e747666972a0b4612f0e35c88cb1c72fcda8b0",
+      "public_path": "artifact/icde/campaign/formal_incremental_e4s_v1/admit_e4s_incremental.py",
+      "public_sha256": "6f1bcf4546f7fb17f0d42ec564e747666972a0b4612f0e35c88cb1c72fcda8b0",
+      "projection": "byte_identical",
+      "reason": "Frozen implementation bytes unchanged"
+    },
+    {
+      "source": "experiments/campaign_20261104/formal_incremental_e4s_v1/cell_gate.py",
+      "source_sha256": "d070031fa242448377908808fdc1e2f25deaec61c3f7af01a640fe0379d39030",
+      "public_path": "artifact/icde/campaign/formal_incremental_e4s_v1/cell_gate.py",
+      "public_sha256": "d070031fa242448377908808fdc1e2f25deaec61c3f7af01a640fe0379d39030",
+      "projection": "byte_identical",
+      "reason": "Frozen implementation bytes unchanged"
+    },
+    {
+      "source": "experiments/campaign_20261104/formal_incremental_e4s_v1/owned_process_supervisor_v2.py",
+      "source_sha256": "3cca4c300d88547b610669b4f6f4621b808e3986a104548759546239f6cf6c81",
+      "public_path": "artifact/icde/campaign/formal_incremental_e4s_v1/owned_process_supervisor_v2.py",
+      "public_sha256": "3cca4c300d88547b610669b4f6f4621b808e3986a104548759546239f6cf6c81",
+      "projection": "byte_identical",
+      "reason": "Frozen implementation bytes unchanged"
+    },
+    {
+      "source": "experiments/campaign_20261104/formal_incremental_e4s_v1/run_e4s_formal_queue_v1.py",
+      "source_sha256": "90b13a9a389beadfa64555fd3f9b5533f059013245fde567575610c20f964699",
+      "public_path": "artifact/icde/campaign/formal_incremental_e4s_v1/run_e4s_formal_queue_v1.py",
+      "public_sha256": "90b13a9a389beadfa64555fd3f9b5533f059013245fde567575610c20f964699",
+      "projection": "byte_identical",
+      "reason": "Frozen implementation bytes unchanged"
+    },
+    {
+      "source": "experiments/campaign_20261104/formal_incremental_e4s_v1/run_incremental_queue.py",
+      "source_sha256": "98dca4719ae8555b29b405e14553e67cbca94c706b2cd06038d1ed48c5ab5fac",
+      "public_path": "artifact/icde/campaign/formal_incremental_e4s_v1/run_incremental_queue.py",
+      "public_sha256": "98dca4719ae8555b29b405e14553e67cbca94c706b2cd06038d1ed48c5ab5fac",
+      "projection": "byte_identical",
+      "reason": "Frozen implementation bytes unchanged"
+    },
+    {
+      "source": "experiments/campaign_20261104/formal_incremental_e4s_v1/test_e4s_incremental_cpu.py",
+      "source_sha256": "19380a3baab12115f073a794064ea4f996d5729538e7a67cfdac0bb8f8ce5abc",
+      "public_path": "artifact/icde/campaign/formal_incremental_e4s_v1/test_e4s_incremental_cpu.py",
+      "public_sha256": "19380a3baab12115f073a794064ea4f996d5729538e7a67cfdac0bb8f8ce5abc",
+      "projection": "byte_identical",
+      "reason": "Frozen implementation bytes unchanged"
+    },
+    {
+      "source": "experiments/campaign_20261104/state_completion_queue_guard_v1/derive.py",
+      "source_sha256": "8e3f493be79236f25465e38be55f9bce86551df18ff8faea8888cbbecdc9da8e",
+      "public_path": "artifact/icde/campaign/state_completion_queue_guard_v1/derive.py",
+      "public_sha256": "8e3f493be79236f25465e38be55f9bce86551df18ff8faea8888cbbecdc9da8e",
+      "projection": "byte_identical",
+      "reason": "Frozen implementation bytes unchanged"
+    },
+    {
+      "source": "experiments/campaign_20261104/state_completion_queue_guard_v1/test_guard_cpu.py",
+      "source_sha256": "2a7add7c8f3f9da7210c2b5001d544d4e7e6d27dd4f9ddab06c04f0a21e396ec",
+      "public_path": "artifact/icde/campaign/state_completion_queue_guard_v1/test_guard_cpu.py",
+      "public_sha256": "2a7add7c8f3f9da7210c2b5001d544d4e7e6d27dd4f9ddab06c04f0a21e396ec",
+      "projection": "byte_identical",
+      "reason": "Frozen implementation bytes unchanged"
+    },
+    {
+      "source": "experiments/campaign_20261104/arena_diagnostic_v1/capture.py",
+      "source_sha256": "55fbfcedf7c9a3c66a67d14cd53a7caa95ed714deb58a59b49b0d50af151ee24",
+      "public_path": "artifact/icde/campaign/arena_diagnostic_v1/capture.py",
+      "public_sha256": "55fbfcedf7c9a3c66a67d14cd53a7caa95ed714deb58a59b49b0d50af151ee24",
+      "projection": "byte_identical",
+      "reason": "Frozen implementation bytes unchanged"
+    },
+    {
+      "source": "experiments/campaign_20261104/arena_diagnostic_v1/prepare.py",
+      "source_sha256": "26612c167aa110036cfad5291b91a4bade00e60da0d1bb28797e8f014c74af5e",
+      "public_path": "artifact/icde/campaign/arena_diagnostic_v1/prepare.py",
+      "public_sha256": "92f6a13005793d02d12a93edb00498fac87153ae8489371b4473a0f5c66c9cff",
+      "projection": "portable_projection",
+      "reason": "Exact public sibling alias; expected source hashes retained"
+    },
+    {
+      "source": "experiments/campaign_20261104/arena_diagnostic_v1/test_capture_cpu.py",
+      "source_sha256": "45b6357626db94812be4127ad83a3a317930a51782425ab26d0fab287a322bcf",
+      "public_path": "artifact/icde/campaign/arena_diagnostic_v1/test_capture_cpu.py",
+      "public_sha256": "955676560f47e773cedb0dcd884f6505a917e73159647b398c0ebcd532f76f4e",
+      "projection": "portable_projection",
+      "reason": "Explicit CPU-only generated template; not original deployment evidence"
+    },
+    {
+      "source": "experiments/campaign_20261104/arena_diagnostic_v1/worker.py",
+      "source_sha256": "f1bbe5ad890b653e2c7a7b23757cab0e57f83cd823679ddb5f3c85d74cf1eb29",
+      "public_path": "artifact/icde/campaign/arena_diagnostic_v1/worker.py",
+      "public_sha256": "0c95f65a6c157b66b82f13f8f1b3978717cf938451be7434212b8731bd3e0ca1",
+      "projection": "portable_projection",
+      "reason": "Exact public sibling alias; expected source hashes retained"
+    },
+    {
+      "source": "experiments/campaign_20261104/arena_diagnostic_v1/README_CN.md",
+      "source_sha256": "0a071878937f9a2876aa77ab066f63be39cf0d4cb45acf85355340ba5db48345",
+      "public_path": "artifact/icde/campaign/arena_diagnostic_v1/README_CN.md",
+      "public_sha256": "0a071878937f9a2876aa77ab066f63be39cf0d4cb45acf85355340ba5db48345",
+      "projection": "documentation_projection",
+      "reason": "Source metadata location labels only; never a relocated measurement proof"
+    },
+    {
+      "source": "experiments/campaign_20261104/paper_results_protocol_completion_v1/analysis.py",
+      "source_sha256": "debd2b445e22f28176a6423e57665ef58ce43a07a5ec89e542b0ced0263fe503",
+      "public_path": "artifact/icde/paper_results_current/analysis.py",
+      "public_sha256": "debd2b445e22f28176a6423e57665ef58ce43a07a5ec89e542b0ced0263fe503",
+      "projection": "byte_identical",
+      "reason": "Frozen implementation bytes unchanged"
+    },
+    {
+      "source": "experiments/campaign_20261104/paper_results_protocol_completion_v1/archive_gate.py",
+      "source_sha256": "8b14d5186b33ab6ae4d926c9dc99b3dbadee7b276f17691215a5feb4bcebeff8",
+      "public_path": "artifact/icde/paper_results_current/archive_gate.py",
+      "public_sha256": "8b14d5186b33ab6ae4d926c9dc99b3dbadee7b276f17691215a5feb4bcebeff8",
+      "projection": "byte_identical",
+      "reason": "Frozen implementation bytes unchanged"
+    },
+    {
+      "source": "experiments/campaign_20261104/paper_results_protocol_completion_v1/e6_panels.py",
+      "source_sha256": "06a13e8698691e816f33058a163af8666b8312c96983d6333eea96c4ccd26471",
+      "public_path": "artifact/icde/paper_results_current/e6_panels.py",
+      "public_sha256": "06a13e8698691e816f33058a163af8666b8312c96983d6333eea96c4ccd26471",
+      "projection": "byte_identical",
+      "reason": "Frozen implementation bytes unchanged"
+    },
+    {
+      "source": "experiments/campaign_20261104/paper_results_protocol_completion_v1/normalize.py",
+      "source_sha256": "04e2ebb23ad760079dfc63d6875a10786789a9e0a164e9f85af10d772f64f552",
+      "public_path": "artifact/icde/paper_results_current/normalize.py",
+      "public_sha256": "0525f30e5b7ad714e30213469b0efbbf95550ef77ce4ffaa728c7082a19d576b",
+      "projection": "portable_projection",
+      "reason": "Resolve public sibling protocol directories"
+    },
+    {
+      "source": "experiments/campaign_20261104/paper_results_protocol_completion_v1/prepare_selection.py",
+      "source_sha256": "72281a51081a25b7a3dd19f8d9c363d71391270dd949b4bc867281abcf044e68",
+      "public_path": "artifact/icde/paper_results_current/prepare_selection.py",
+      "public_sha256": "72281a51081a25b7a3dd19f8d9c363d71391270dd949b4bc867281abcf044e68",
+      "projection": "byte_identical",
+      "reason": "Frozen implementation bytes unchanged"
+    },
+    {
+      "source": "experiments/campaign_20261104/paper_results_protocol_completion_v1/protocol.py",
+      "source_sha256": "8e86cec17a6cded338ff94af92cb30390e4620da7cb317160373e3c3dfea63f2",
+      "public_path": "artifact/icde/paper_results_current/protocol.py",
+      "public_sha256": "7ed545bf5e18d0c23d74017e5a1397bd357a5a6a4cfc5220cda461ec36f14378",
+      "projection": "portable_projection",
+      "reason": "Public layout aliases; exact published producer source remains bound"
+    },
+    {
+      "source": "experiments/campaign_20261104/paper_results_protocol_completion_v1/render.py",
+      "source_sha256": "11275ef76336656d50e124d68bd9c24a95a070704cb2259a5724f6c11a2aa61d",
+      "public_path": "artifact/icde/paper_results_current/render.py",
+      "public_sha256": "99884c6d47a2e864494fcd3852e89ecb24ba44fa5083e766465783591392dce4",
+      "projection": "portable_projection",
+      "reason": "Resolve public sibling protocol directories"
+    },
+    {
+      "source": "experiments/campaign_20261104/paper_results_protocol_completion_v1/run_cpu_tests.py",
+      "source_sha256": "c4dd47478539e36354f937d8a20bfdfcac9e5517effe7ab9cb92bab45fd47c59",
+      "public_path": "artifact/icde/paper_results_current/run_cpu_tests.py",
+      "public_sha256": "c4dd47478539e36354f937d8a20bfdfcac9e5517effe7ab9cb92bab45fd47c59",
+      "projection": "byte_identical",
+      "reason": "Frozen implementation bytes unchanged"
+    },
+    {
+      "source": "experiments/campaign_20261104/paper_results_protocol_completion_v1/synthetic_fixtures.py",
+      "source_sha256": "ddbb7b0dfb4cca490a135211f68a6cd33be7554c530ba06b1007d769677331dd",
+      "public_path": "artifact/icde/paper_results_current/synthetic_fixtures.py",
+      "public_sha256": "ddbb7b0dfb4cca490a135211f68a6cd33be7554c530ba06b1007d769677331dd",
+      "projection": "byte_identical",
+      "reason": "Frozen implementation bytes unchanged"
+    },
+    {
+      "source": "experiments/campaign_20261104/paper_results_protocol_completion_v1/test_completion.py",
+      "source_sha256": "602d3f8cc313608ca824b77dc74eb60dc1affc006c1df354b4bb8dbee297b5b8",
+      "public_path": "artifact/icde/paper_results_current/test_completion.py",
+      "public_sha256": "602d3f8cc313608ca824b77dc74eb60dc1affc006c1df354b4bb8dbee297b5b8",
+      "projection": "byte_identical",
+      "reason": "Frozen implementation bytes unchanged"
+    },
+    {
+      "source": "experiments/campaign_20261104/paper_results_protocol_completion_v1/README_CN.md",
+      "source_sha256": "11fedcccf30142a8082b9a736e87267f584e6f59f5cfa93982443b29e7c51587",
+      "public_path": "artifact/icde/paper_results_current/README_CN.md",
+      "public_sha256": "aff91c153e01c97d296db07a2ffa624d85fea98dc4e38c71984df3fa1b1a476c",
+      "projection": "documentation_projection",
+      "reason": "Source metadata location labels only; never a relocated measurement proof"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v3/runner/cugraph_csr_adapter.py",
+      "source_sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v3/runner/cugraph_csr_adapter.py",
+      "public_sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7",
+      "projection": "byte_identical",
+      "reason": "Frozen implementation bytes unchanged"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v3/runner/native_input.py",
+      "source_sha256": "8edeaa51ae5cd9460f6784afc3703a10128073f765ec30e9dbf6a780d1fd1e51",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v3/runner/native_input.py",
+      "public_sha256": "8edeaa51ae5cd9460f6784afc3703a10128073f765ec30e9dbf6a780d1fd1e51",
+      "projection": "byte_identical",
+      "reason": "Frozen implementation bytes unchanged"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v3/runner/native_profile.py",
+      "source_sha256": "230b76d86bf8c2af354c9a432239d348092e47531ae4dbde5c8e66f27681d392",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v3/runner/native_profile.py",
+      "public_sha256": "230b76d86bf8c2af354c9a432239d348092e47531ae4dbde5c8e66f27681d392",
+      "projection": "byte_identical",
+      "reason": "Frozen implementation bytes unchanged"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v3/runner/native_worker.py",
+      "source_sha256": "38ed33a0ffce3c1a66802a4c104aeb867ac2e0b6f344d98960cfe3e4f6fdba42",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v3/runner/native_worker.py",
+      "public_sha256": "38ed33a0ffce3c1a66802a4c104aeb867ac2e0b6f344d98960cfe3e4f6fdba42",
+      "projection": "byte_identical",
+      "reason": "Frozen implementation bytes unchanged"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v3/runner/qualify_static_native_domains.py",
+      "source_sha256": "27af686ede9a6441adc66e1565bba2220fdd92e64a12bee59e4c75702c9b4778",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v3/runner/qualify_static_native_domains.py",
+      "public_sha256": "27af686ede9a6441adc66e1565bba2220fdd92e64a12bee59e4c75702c9b4778",
+      "projection": "byte_identical",
+      "reason": "Frozen implementation bytes unchanged"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v3/runner/sg_worker.py",
+      "source_sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v3/runner/sg_worker.py",
+      "public_sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf",
+      "projection": "byte_identical",
+      "reason": "Frozen implementation bytes unchanged"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v3/runner/test_metric_json_cpu.py",
+      "source_sha256": "ac350dc4e0bbf8bba7edd4e6089bc24d4381ddbe5c7f7f2a36478daefda0cf39",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v3/runner/test_metric_json_cpu.py",
+      "public_sha256": "ac350dc4e0bbf8bba7edd4e6089bc24d4381ddbe5c7f7f2a36478daefda0cf39",
+      "projection": "byte_identical",
+      "reason": "Frozen implementation bytes unchanged"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v3/runner/test_native_profile_cpu.py",
+      "source_sha256": "e3a25b177239181c188d2cce67329d3e6ba154b385fa9d5c22a4cd91ee8b7649",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v3/runner/test_native_profile_cpu.py",
+      "public_sha256": "e3a25b177239181c188d2cce67329d3e6ba154b385fa9d5c22a4cd91ee8b7649",
+      "projection": "byte_identical",
+      "reason": "Frozen implementation bytes unchanged"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v3/runner/test_static_runner_cpu.py",
+      "source_sha256": "a413eaa3861e8651db6f6d4fddc16ea70db9baa23ab8e5f2293c13ac2e3ba824",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v3/runner/test_static_runner_cpu.py",
+      "public_sha256": "a413eaa3861e8651db6f6d4fddc16ea70db9baa23ab8e5f2293c13ac2e3ba824",
+      "projection": "byte_identical",
+      "reason": "Frozen implementation bytes unchanged"
+    },
+    {
+      "source": "artifact/icde_increment_stage_20261105_protocols/artifact/icde/experimental/native_wcc_wide_v2/runner/historical_profile.json",
+      "source_sha256": "067b50883e01426c808f1fa4a5613f22c9bc0050e54db9b8b37eecbc791afa93",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v3/runner/historical_profile.json",
+      "public_sha256": "067b50883e01426c808f1fa4a5613f22c9bc0050e54db9b8b37eecbc791afa93",
+      "projection": "byte_identical",
+      "reason": "Frozen implementation bytes unchanged"
+    },
+    {
+      "source": "experiments/campaign_20261104/candidates/native_wcc_wide_v3/test_profile_compatibility_cpu.py",
+      "source_sha256": "6698874be66affd0c5a1f5e8ced1a8fde0d79e655703df8cd84ac3a8bd117dd9",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v3/test_profile_compatibility_cpu.py",
+      "public_sha256": "728a98ec092f338a803c13069a0d5d8303085b1cd2c269d3e7d41d2221b4f591",
+      "projection": "portable_projection",
+      "reason": "CPU compiler test uses an explicitly materialized unchanged v2 source tree outside checkout"
+    },
+    {
+      "source": "docs/RELATED_WORK_NARRATIVE_20261104_CN.md",
+      "source_sha256": "985c17b3e3d4bbd94083ddce183e618e2bffad3e0827ecc028e44dad55b9a602",
+      "public_path": "artifact/icde/paper/RELATED_WORK_NARRATIVE_20261104_CN.md",
+      "public_sha256": "985c17b3e3d4bbd94083ddce183e618e2bffad3e0827ecc028e44dad55b9a602",
+      "projection": "documentation_projection",
+      "reason": "Source metadata location labels only; never a relocated measurement proof"
+    },
+    {
+      "source": "docs/PAPER_EXPERIMENT_DESIGN_20261104_CN.md",
+      "source_sha256": "467b48d960348f40c3d5f3f3a4d4fac6f3c065409f852174036db64f7dbc0d34",
+      "public_path": "artifact/icde/paper/PAPER_EXPERIMENT_DESIGN_20261104_CN.md",
+      "public_sha256": "c26f2f4af5299ec9666a2746378c45279985d96c176ce555ddb637ceac1e2308",
+      "projection": "documentation_projection",
+      "reason": "Source metadata location labels only; never a relocated measurement proof"
+    },
+    {
+      "source": "docs/EXPERIMENT_SCOPE_RECONCILIATION_20261105_CN.md",
+      "source_sha256": "b25794d9917278455dc6fa9986b0f614f1c7c5fc4aac2c28b3cd8ba3872294eb",
+      "public_path": "artifact/icde/paper/EXPERIMENT_SCOPE_RECONCILIATION_20261105_CN.md",
+      "public_sha256": "62f4b647c3fef2eb68b32af189c9c28e60ac74cd1293d3b9d9f0765d5eede619",
+      "projection": "documentation_projection",
+      "reason": "Source metadata location labels only; never a relocated measurement proof"
+    },
+    {
+      "source": "paper/intro_20261105/current/first_page_example.json",
+      "source_sha256": "a348feb7f516f15c0a2e31c33067b60828530c4eae800ab945e554e459b26064",
+      "public_path": "artifact/icde/paper/intro/first_page_example.json",
+      "public_sha256": "a348feb7f516f15c0a2e31c33067b60828530c4eae800ab945e554e459b26064",
+      "projection": "documentation_projection",
+      "reason": "Source metadata location labels only; never a relocated measurement proof"
+    },
+    {
+      "source": "paper/intro_20261105/current/render_first_page.py",
+      "source_sha256": "6fd21f67b7476e9d783e7a861140011692877da78a04efa91c70702c87afe294",
+      "public_path": "artifact/icde/paper/intro/render_first_page.py",
+      "public_sha256": "6fd21f67b7476e9d783e7a861140011692877da78a04efa91c70702c87afe294",
+      "projection": "documentation_projection",
+      "reason": "Source metadata location labels only; never a relocated measurement proof"
+    },
+    {
+      "source": "paper/intro_20261105/current/INTRO_DRAFT_CN.md",
+      "source_sha256": "fa0d00b775558a09f97bbce7a17640d8e68011acb2881ab7586720fedc0fda59",
+      "public_path": "artifact/icde/paper/intro/INTRO_DRAFT_CN.md",
+      "public_sha256": "d28c50922d8eda46469f57031437a96850543483f98984d196f8864ba304045d",
+      "projection": "documentation_projection",
+      "reason": "Source metadata location labels only; never a relocated measurement proof"
+    },
+    {
+      "source": "paper/intro_20261105/current/SOURCE_AND_FIGURE_NOTES_CN.md",
+      "source_sha256": "f8480afec0352eddd55e58e5666273546ec533670affa567589906ac97320507",
+      "public_path": "artifact/icde/paper/intro/SOURCE_AND_FIGURE_NOTES_CN.md",
+      "public_sha256": "7eb5f947a016a12970b702b3b0f5f4303d15c1684e081f85d8c9b8469af9f7d9",
+      "projection": "documentation_projection",
+      "reason": "Source metadata location labels only; never a relocated measurement proof"
+    },
+    {
+      "source": "paper/intro_20261105/current/first_page_problem_85mm.svg",
+      "source_sha256": "007387ca712be874627897c12beb306fd583f6ca69968e93a230c1fd9bb3f601",
+      "public_path": "artifact/icde/paper/intro/first_page_problem_85mm.svg",
+      "public_sha256": "007387ca712be874627897c12beb306fd583f6ca69968e93a230c1fd9bb3f601",
+      "projection": "documentation_projection",
+      "reason": "Source metadata location labels only; never a relocated measurement proof"
+    },
+    {
+      "source": "paper/intro_20261105/current/first_page_problem_175mm.svg",
+      "source_sha256": "8052609ab99a843d33f7648673bc35bc650a77a4dc3e699a9b4ee69472db1ee0",
+      "public_path": "artifact/icde/paper/intro/first_page_problem_175mm.svg",
+      "public_sha256": "8052609ab99a843d33f7648673bc35bc650a77a4dc3e699a9b4ee69472db1ee0",
+      "projection": "documentation_projection",
+      "reason": "Source metadata location labels only; never a relocated measurement proof"
+    },
+    {
+      "source": "paper/intro_20261105/current/figure_provenance.json",
+      "source_sha256": "9ef2744b83f84723a1ec25f9c223c0bd2821eee12774a3d191cf49a3632c65b1",
+      "public_path": "artifact/icde/paper/intro/figure_provenance.json",
+      "public_sha256": "9ef2744b83f84723a1ec25f9c223c0bd2821eee12774a3d191cf49a3632c65b1",
+      "projection": "documentation_projection",
+      "reason": "Source metadata location labels only; never a relocated measurement proof"
+    },
+    {
+      "source": "paper/intro_20261105/current/example_calculation.json",
+      "source_sha256": "f22dac2852d1922ff75d0fe464a3bb9a96c5a392ec20a835f00e7246d941ef92",
+      "public_path": "artifact/icde/paper/intro/example_calculation.json",
+      "public_sha256": "f22dac2852d1922ff75d0fe464a3bb9a96c5a392ec20a835f00e7246d941ef92",
+      "projection": "documentation_projection",
+      "reason": "Source metadata location labels only; never a relocated measurement proof"
+    },
+    {
+      "source": "experiments/campaign_20261104/prepare_wcc_wide_v3.py",
+      "source_sha256": "7c8fdabb9dcc10b30c8ae5df951f7a36ac08e356f44cdde100dbee5545073c90",
+      "public_path": "artifact/icde/experimental/native_wcc_wide_v3/prepare_qualification.py",
+      "public_sha256": "d4ad5d3efb438d436d6825c9b6119170feb81e9fef55a5015c5ba68fd82442fb",
+      "projection": "portable_projection",
+      "reason": "Explicit campaign/candidate/parent80plan/build/runtime/affinity paths; freshly source-bound rebuilt DSO instead of a private-machine binary hash; no GPU launch"
+    }
+  ],
+  "original_measurement_receipts_modified": false,
+  "gpu_executed": false,
+  "status": "PASS_PUBLIC_CPU_PENDING_PACKAGE_AUDIT",
+  "public_cpu_validation": "provenance/protocols_cpu_validation.json",
+  "cpu_passed": 190,
+  "cpu_skipped": 0,
+  "limitations": [
+    "WCC generator requires a newly source-bound full parent80 plan/build/registry; private original plans are not distributed.",
+    "Fixed historical WCC CPU profile needs corresponding declared host affinity for its exact compiler test.",
+    "No new complete formal performance matrix or transplanted GPU qualification."
+  ]
+}

@@ -1,0 +1,2307 @@
+{
+  "schema": "eggpu.wcc80.portable.recipe.v1",
+  "status": "RECIPE_NOT_EXECUTABLE_PLAN_NOT_RESULTS",
+  "original_plan_sha256": "5ec607545cd83dff98b7d87e83642bd8697a980a140137f4be31447bb31f7167",
+  "jobs": [
+    {
+      "id": "wide3_numeric_domains_p1",
+      "phase": "tiny",
+      "gpu_count": 1,
+      "algorithm": "sssp",
+      "dataset": "TINY_D",
+      "depends_on": [],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_STATIC_NATIVE_NUMERIC_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1"
+      }
+    },
+    {
+      "id": "wide3_numeric_domains_p2",
+      "phase": "tiny",
+      "gpu_count": 2,
+      "algorithm": "sssp",
+      "dataset": "TINY_D",
+      "depends_on": [],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_STATIC_NATIVE_NUMERIC_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1"
+      }
+    },
+    {
+      "id": "wide3_numeric_domains_p4",
+      "phase": "tiny",
+      "gpu_count": 4,
+      "algorithm": "sssp",
+      "dataset": "TINY_D",
+      "depends_on": [],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_STATIC_NATIVE_NUMERIC_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1"
+      }
+    },
+    {
+      "id": "wide3_numeric_domains_p8",
+      "phase": "tiny",
+      "gpu_count": 8,
+      "algorithm": "sssp",
+      "dataset": "TINY_D",
+      "depends_on": [],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_STATIC_NATIVE_NUMERIC_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_D_wcc_auto_forest_coo_p1",
+      "phase": "tiny",
+      "gpu_count": 1,
+      "algorithm": "wcc",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "auto",
+        "--wcc-qualification-variant": "forest_coo"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_D_wcc_auto_forest_csr_p1",
+      "phase": "tiny",
+      "gpu_count": 1,
+      "algorithm": "wcc",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "auto",
+        "--wcc-qualification-variant": "forest_csr"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_D_wcc_auto_label_coo_p1",
+      "phase": "tiny",
+      "gpu_count": 1,
+      "algorithm": "wcc",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "auto",
+        "--wcc-qualification-variant": "label_coo"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_D_wcc_int64_forest_coo_p1",
+      "phase": "tiny",
+      "gpu_count": 1,
+      "algorithm": "wcc",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "int64",
+        "--wcc-qualification-variant": "forest_coo"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_D_wcc_int64_forest_csr_p1",
+      "phase": "tiny",
+      "gpu_count": 1,
+      "algorithm": "wcc",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "int64",
+        "--wcc-qualification-variant": "forest_csr"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_D_wcc_int64_label_coo_p1",
+      "phase": "tiny",
+      "gpu_count": 1,
+      "algorithm": "wcc",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "int64",
+        "--wcc-qualification-variant": "label_coo"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_U_wcc_auto_forest_coo_p1",
+      "phase": "tiny",
+      "gpu_count": 1,
+      "algorithm": "wcc",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "auto",
+        "--wcc-qualification-variant": "forest_coo"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_U_wcc_auto_forest_csr_p1",
+      "phase": "tiny",
+      "gpu_count": 1,
+      "algorithm": "wcc",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "auto",
+        "--wcc-qualification-variant": "forest_csr"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_U_wcc_auto_label_coo_p1",
+      "phase": "tiny",
+      "gpu_count": 1,
+      "algorithm": "wcc",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "auto",
+        "--wcc-qualification-variant": "label_coo"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_U_wcc_int64_forest_coo_p1",
+      "phase": "tiny",
+      "gpu_count": 1,
+      "algorithm": "wcc",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "int64",
+        "--wcc-qualification-variant": "forest_coo"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_U_wcc_int64_forest_csr_p1",
+      "phase": "tiny",
+      "gpu_count": 1,
+      "algorithm": "wcc",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "int64",
+        "--wcc-qualification-variant": "forest_csr"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_U_wcc_int64_label_coo_p1",
+      "phase": "tiny",
+      "gpu_count": 1,
+      "algorithm": "wcc",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "int64",
+        "--wcc-qualification-variant": "label_coo"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_D_wcc_auto_forest_coo_p2",
+      "phase": "tiny",
+      "gpu_count": 2,
+      "algorithm": "wcc",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "auto",
+        "--wcc-qualification-variant": "forest_coo"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_D_wcc_auto_forest_csr_p2",
+      "phase": "tiny",
+      "gpu_count": 2,
+      "algorithm": "wcc",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "auto",
+        "--wcc-qualification-variant": "forest_csr"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_D_wcc_auto_label_coo_p2",
+      "phase": "tiny",
+      "gpu_count": 2,
+      "algorithm": "wcc",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "auto",
+        "--wcc-qualification-variant": "label_coo"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_D_wcc_int64_forest_coo_p2",
+      "phase": "tiny",
+      "gpu_count": 2,
+      "algorithm": "wcc",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "int64",
+        "--wcc-qualification-variant": "forest_coo"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_D_wcc_int64_forest_csr_p2",
+      "phase": "tiny",
+      "gpu_count": 2,
+      "algorithm": "wcc",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "int64",
+        "--wcc-qualification-variant": "forest_csr"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_D_wcc_int64_label_coo_p2",
+      "phase": "tiny",
+      "gpu_count": 2,
+      "algorithm": "wcc",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "int64",
+        "--wcc-qualification-variant": "label_coo"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_U_wcc_auto_forest_coo_p2",
+      "phase": "tiny",
+      "gpu_count": 2,
+      "algorithm": "wcc",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "auto",
+        "--wcc-qualification-variant": "forest_coo"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_U_wcc_auto_forest_csr_p2",
+      "phase": "tiny",
+      "gpu_count": 2,
+      "algorithm": "wcc",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "auto",
+        "--wcc-qualification-variant": "forest_csr"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_U_wcc_auto_label_coo_p2",
+      "phase": "tiny",
+      "gpu_count": 2,
+      "algorithm": "wcc",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "auto",
+        "--wcc-qualification-variant": "label_coo"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_U_wcc_int64_forest_coo_p2",
+      "phase": "tiny",
+      "gpu_count": 2,
+      "algorithm": "wcc",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "int64",
+        "--wcc-qualification-variant": "forest_coo"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_U_wcc_int64_forest_csr_p2",
+      "phase": "tiny",
+      "gpu_count": 2,
+      "algorithm": "wcc",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "int64",
+        "--wcc-qualification-variant": "forest_csr"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_U_wcc_int64_label_coo_p2",
+      "phase": "tiny",
+      "gpu_count": 2,
+      "algorithm": "wcc",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "int64",
+        "--wcc-qualification-variant": "label_coo"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_D_wcc_auto_forest_coo_p4",
+      "phase": "tiny",
+      "gpu_count": 4,
+      "algorithm": "wcc",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "auto",
+        "--wcc-qualification-variant": "forest_coo"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_D_wcc_auto_forest_csr_p4",
+      "phase": "tiny",
+      "gpu_count": 4,
+      "algorithm": "wcc",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "auto",
+        "--wcc-qualification-variant": "forest_csr"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_D_wcc_auto_label_coo_p4",
+      "phase": "tiny",
+      "gpu_count": 4,
+      "algorithm": "wcc",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "auto",
+        "--wcc-qualification-variant": "label_coo"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_D_wcc_int64_forest_coo_p4",
+      "phase": "tiny",
+      "gpu_count": 4,
+      "algorithm": "wcc",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "int64",
+        "--wcc-qualification-variant": "forest_coo"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_D_wcc_int64_forest_csr_p4",
+      "phase": "tiny",
+      "gpu_count": 4,
+      "algorithm": "wcc",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "int64",
+        "--wcc-qualification-variant": "forest_csr"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_D_wcc_int64_label_coo_p4",
+      "phase": "tiny",
+      "gpu_count": 4,
+      "algorithm": "wcc",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "int64",
+        "--wcc-qualification-variant": "label_coo"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_U_wcc_auto_forest_coo_p4",
+      "phase": "tiny",
+      "gpu_count": 4,
+      "algorithm": "wcc",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "auto",
+        "--wcc-qualification-variant": "forest_coo"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_U_wcc_auto_forest_csr_p4",
+      "phase": "tiny",
+      "gpu_count": 4,
+      "algorithm": "wcc",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "auto",
+        "--wcc-qualification-variant": "forest_csr"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_U_wcc_auto_label_coo_p4",
+      "phase": "tiny",
+      "gpu_count": 4,
+      "algorithm": "wcc",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "auto",
+        "--wcc-qualification-variant": "label_coo"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_U_wcc_int64_forest_coo_p4",
+      "phase": "tiny",
+      "gpu_count": 4,
+      "algorithm": "wcc",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "int64",
+        "--wcc-qualification-variant": "forest_coo"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_U_wcc_int64_forest_csr_p4",
+      "phase": "tiny",
+      "gpu_count": 4,
+      "algorithm": "wcc",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "int64",
+        "--wcc-qualification-variant": "forest_csr"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_U_wcc_int64_label_coo_p4",
+      "phase": "tiny",
+      "gpu_count": 4,
+      "algorithm": "wcc",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "int64",
+        "--wcc-qualification-variant": "label_coo"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_D_wcc_auto_forest_coo_p8",
+      "phase": "tiny",
+      "gpu_count": 8,
+      "algorithm": "wcc",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "auto",
+        "--wcc-qualification-variant": "forest_coo"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_D_wcc_auto_forest_csr_p8",
+      "phase": "tiny",
+      "gpu_count": 8,
+      "algorithm": "wcc",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "auto",
+        "--wcc-qualification-variant": "forest_csr"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_D_wcc_auto_label_coo_p8",
+      "phase": "tiny",
+      "gpu_count": 8,
+      "algorithm": "wcc",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "auto",
+        "--wcc-qualification-variant": "label_coo"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_D_wcc_int64_forest_coo_p8",
+      "phase": "tiny",
+      "gpu_count": 8,
+      "algorithm": "wcc",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "int64",
+        "--wcc-qualification-variant": "forest_coo"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_D_wcc_int64_forest_csr_p8",
+      "phase": "tiny",
+      "gpu_count": 8,
+      "algorithm": "wcc",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "int64",
+        "--wcc-qualification-variant": "forest_csr"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_D_wcc_int64_label_coo_p8",
+      "phase": "tiny",
+      "gpu_count": 8,
+      "algorithm": "wcc",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "int64",
+        "--wcc-qualification-variant": "label_coo"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_U_wcc_auto_forest_coo_p8",
+      "phase": "tiny",
+      "gpu_count": 8,
+      "algorithm": "wcc",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "auto",
+        "--wcc-qualification-variant": "forest_coo"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_U_wcc_auto_forest_csr_p8",
+      "phase": "tiny",
+      "gpu_count": 8,
+      "algorithm": "wcc",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "auto",
+        "--wcc-qualification-variant": "forest_csr"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_U_wcc_auto_label_coo_p8",
+      "phase": "tiny",
+      "gpu_count": 8,
+      "algorithm": "wcc",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "auto",
+        "--wcc-qualification-variant": "label_coo"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_U_wcc_int64_forest_coo_p8",
+      "phase": "tiny",
+      "gpu_count": 8,
+      "algorithm": "wcc",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "int64",
+        "--wcc-qualification-variant": "forest_coo"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_U_wcc_int64_forest_csr_p8",
+      "phase": "tiny",
+      "gpu_count": 8,
+      "algorithm": "wcc",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "int64",
+        "--wcc-qualification-variant": "forest_csr"
+      }
+    },
+    {
+      "id": "wide3_tiny_TINY_U_wcc_int64_label_coo_p8",
+      "phase": "tiny",
+      "gpu_count": 8,
+      "algorithm": "wcc",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "int64",
+        "--wcc-qualification-variant": "label_coo"
+      }
+    },
+    {
+      "id": "wide3_public_regression_TINY_D_bfs_p1",
+      "phase": "tiny",
+      "gpu_count": 1,
+      "algorithm": "bfs",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1"
+      }
+    },
+    {
+      "id": "wide3_public_regression_TINY_D_sssp_p1",
+      "phase": "tiny",
+      "gpu_count": 1,
+      "algorithm": "sssp",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_STATIC_NATIVE_NUMERIC_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1"
+      }
+    },
+    {
+      "id": "wide3_public_regression_TINY_D_pr_p1",
+      "phase": "tiny",
+      "gpu_count": 1,
+      "algorithm": "pr",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "nccl",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1"
+      }
+    },
+    {
+      "id": "wide3_public_regression_TINY_U_bfs_p1",
+      "phase": "tiny",
+      "gpu_count": 1,
+      "algorithm": "bfs",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1"
+      }
+    },
+    {
+      "id": "wide3_public_regression_TINY_U_sssp_p1",
+      "phase": "tiny",
+      "gpu_count": 1,
+      "algorithm": "sssp",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1"
+      }
+    },
+    {
+      "id": "wide3_public_regression_TINY_U_pr_p1",
+      "phase": "tiny",
+      "gpu_count": 1,
+      "algorithm": "pr",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "nccl",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1"
+      }
+    },
+    {
+      "id": "wide3_public_regression_TINY_D_bfs_p2",
+      "phase": "tiny",
+      "gpu_count": 2,
+      "algorithm": "bfs",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1"
+      }
+    },
+    {
+      "id": "wide3_public_regression_TINY_D_sssp_p2",
+      "phase": "tiny",
+      "gpu_count": 2,
+      "algorithm": "sssp",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_STATIC_NATIVE_NUMERIC_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1"
+      }
+    },
+    {
+      "id": "wide3_public_regression_TINY_D_pr_p2",
+      "phase": "tiny",
+      "gpu_count": 2,
+      "algorithm": "pr",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "nccl",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1"
+      }
+    },
+    {
+      "id": "wide3_public_regression_TINY_U_bfs_p2",
+      "phase": "tiny",
+      "gpu_count": 2,
+      "algorithm": "bfs",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1"
+      }
+    },
+    {
+      "id": "wide3_public_regression_TINY_U_sssp_p2",
+      "phase": "tiny",
+      "gpu_count": 2,
+      "algorithm": "sssp",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1"
+      }
+    },
+    {
+      "id": "wide3_public_regression_TINY_U_pr_p2",
+      "phase": "tiny",
+      "gpu_count": 2,
+      "algorithm": "pr",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "nccl",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1"
+      }
+    },
+    {
+      "id": "wide3_public_regression_TINY_D_bfs_p4",
+      "phase": "tiny",
+      "gpu_count": 4,
+      "algorithm": "bfs",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1"
+      }
+    },
+    {
+      "id": "wide3_public_regression_TINY_D_sssp_p4",
+      "phase": "tiny",
+      "gpu_count": 4,
+      "algorithm": "sssp",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_STATIC_NATIVE_NUMERIC_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1"
+      }
+    },
+    {
+      "id": "wide3_public_regression_TINY_D_pr_p4",
+      "phase": "tiny",
+      "gpu_count": 4,
+      "algorithm": "pr",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "nccl",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1"
+      }
+    },
+    {
+      "id": "wide3_public_regression_TINY_U_bfs_p4",
+      "phase": "tiny",
+      "gpu_count": 4,
+      "algorithm": "bfs",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1"
+      }
+    },
+    {
+      "id": "wide3_public_regression_TINY_U_sssp_p4",
+      "phase": "tiny",
+      "gpu_count": 4,
+      "algorithm": "sssp",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1"
+      }
+    },
+    {
+      "id": "wide3_public_regression_TINY_U_pr_p4",
+      "phase": "tiny",
+      "gpu_count": 4,
+      "algorithm": "pr",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "nccl",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1"
+      }
+    },
+    {
+      "id": "wide3_public_regression_TINY_D_bfs_p8",
+      "phase": "tiny",
+      "gpu_count": 8,
+      "algorithm": "bfs",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1"
+      }
+    },
+    {
+      "id": "wide3_public_regression_TINY_D_sssp_p8",
+      "phase": "tiny",
+      "gpu_count": 8,
+      "algorithm": "sssp",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_STATIC_NATIVE_NUMERIC_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1"
+      }
+    },
+    {
+      "id": "wide3_public_regression_TINY_D_pr_p8",
+      "phase": "tiny",
+      "gpu_count": 8,
+      "algorithm": "pr",
+      "dataset": "TINY_D",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "nccl",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1"
+      }
+    },
+    {
+      "id": "wide3_public_regression_TINY_U_bfs_p8",
+      "phase": "tiny",
+      "gpu_count": 8,
+      "algorithm": "bfs",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1"
+      }
+    },
+    {
+      "id": "wide3_public_regression_TINY_U_sssp_p8",
+      "phase": "tiny",
+      "gpu_count": 8,
+      "algorithm": "sssp",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1"
+      }
+    },
+    {
+      "id": "wide3_public_regression_TINY_U_pr_p8",
+      "phase": "tiny",
+      "gpu_count": 8,
+      "algorithm": "pr",
+      "dataset": "TINY_U",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8"
+      ],
+      "timeout": 1800,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "nccl",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1"
+      }
+    },
+    {
+      "id": "wide3_target_TW_wcc_auto_forest_coo_p1",
+      "phase": "target",
+      "gpu_count": 1,
+      "algorithm": "wcc",
+      "dataset": "TW",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8",
+        "wide3_tiny_TINY_D_wcc_auto_forest_coo_p1",
+        "wide3_tiny_TINY_D_wcc_auto_forest_csr_p1",
+        "wide3_tiny_TINY_D_wcc_auto_label_coo_p1",
+        "wide3_tiny_TINY_D_wcc_int64_forest_coo_p1",
+        "wide3_tiny_TINY_D_wcc_int64_forest_csr_p1",
+        "wide3_tiny_TINY_D_wcc_int64_label_coo_p1",
+        "wide3_tiny_TINY_U_wcc_auto_forest_coo_p1",
+        "wide3_tiny_TINY_U_wcc_auto_forest_csr_p1",
+        "wide3_tiny_TINY_U_wcc_auto_label_coo_p1",
+        "wide3_tiny_TINY_U_wcc_int64_forest_coo_p1",
+        "wide3_tiny_TINY_U_wcc_int64_forest_csr_p1",
+        "wide3_tiny_TINY_U_wcc_int64_label_coo_p1",
+        "wide3_tiny_TINY_D_wcc_auto_forest_coo_p2",
+        "wide3_tiny_TINY_D_wcc_auto_forest_csr_p2",
+        "wide3_tiny_TINY_D_wcc_auto_label_coo_p2",
+        "wide3_tiny_TINY_D_wcc_int64_forest_coo_p2",
+        "wide3_tiny_TINY_D_wcc_int64_forest_csr_p2",
+        "wide3_tiny_TINY_D_wcc_int64_label_coo_p2",
+        "wide3_tiny_TINY_U_wcc_auto_forest_coo_p2",
+        "wide3_tiny_TINY_U_wcc_auto_forest_csr_p2",
+        "wide3_tiny_TINY_U_wcc_auto_label_coo_p2",
+        "wide3_tiny_TINY_U_wcc_int64_forest_coo_p2",
+        "wide3_tiny_TINY_U_wcc_int64_forest_csr_p2",
+        "wide3_tiny_TINY_U_wcc_int64_label_coo_p2",
+        "wide3_tiny_TINY_D_wcc_auto_forest_coo_p4",
+        "wide3_tiny_TINY_D_wcc_auto_forest_csr_p4",
+        "wide3_tiny_TINY_D_wcc_auto_label_coo_p4",
+        "wide3_tiny_TINY_D_wcc_int64_forest_coo_p4",
+        "wide3_tiny_TINY_D_wcc_int64_forest_csr_p4",
+        "wide3_tiny_TINY_D_wcc_int64_label_coo_p4",
+        "wide3_tiny_TINY_U_wcc_auto_forest_coo_p4",
+        "wide3_tiny_TINY_U_wcc_auto_forest_csr_p4",
+        "wide3_tiny_TINY_U_wcc_auto_label_coo_p4",
+        "wide3_tiny_TINY_U_wcc_int64_forest_coo_p4",
+        "wide3_tiny_TINY_U_wcc_int64_forest_csr_p4",
+        "wide3_tiny_TINY_U_wcc_int64_label_coo_p4",
+        "wide3_tiny_TINY_D_wcc_auto_forest_coo_p8",
+        "wide3_tiny_TINY_D_wcc_auto_forest_csr_p8",
+        "wide3_tiny_TINY_D_wcc_auto_label_coo_p8",
+        "wide3_tiny_TINY_D_wcc_int64_forest_coo_p8",
+        "wide3_tiny_TINY_D_wcc_int64_forest_csr_p8",
+        "wide3_tiny_TINY_D_wcc_int64_label_coo_p8",
+        "wide3_tiny_TINY_U_wcc_auto_forest_coo_p8",
+        "wide3_tiny_TINY_U_wcc_auto_forest_csr_p8",
+        "wide3_tiny_TINY_U_wcc_auto_label_coo_p8",
+        "wide3_tiny_TINY_U_wcc_int64_forest_coo_p8",
+        "wide3_tiny_TINY_U_wcc_int64_forest_csr_p8",
+        "wide3_tiny_TINY_U_wcc_int64_label_coo_p8",
+        "wide3_public_regression_TINY_D_bfs_p1",
+        "wide3_public_regression_TINY_D_sssp_p1",
+        "wide3_public_regression_TINY_D_pr_p1",
+        "wide3_public_regression_TINY_U_bfs_p1",
+        "wide3_public_regression_TINY_U_sssp_p1",
+        "wide3_public_regression_TINY_U_pr_p1",
+        "wide3_public_regression_TINY_D_bfs_p2",
+        "wide3_public_regression_TINY_D_sssp_p2",
+        "wide3_public_regression_TINY_D_pr_p2",
+        "wide3_public_regression_TINY_U_bfs_p2",
+        "wide3_public_regression_TINY_U_sssp_p2",
+        "wide3_public_regression_TINY_U_pr_p2",
+        "wide3_public_regression_TINY_D_bfs_p4",
+        "wide3_public_regression_TINY_D_sssp_p4",
+        "wide3_public_regression_TINY_D_pr_p4",
+        "wide3_public_regression_TINY_U_bfs_p4",
+        "wide3_public_regression_TINY_U_sssp_p4",
+        "wide3_public_regression_TINY_U_pr_p4",
+        "wide3_public_regression_TINY_D_bfs_p8",
+        "wide3_public_regression_TINY_D_sssp_p8",
+        "wide3_public_regression_TINY_D_pr_p8",
+        "wide3_public_regression_TINY_U_bfs_p8",
+        "wide3_public_regression_TINY_U_sssp_p8",
+        "wide3_public_regression_TINY_U_pr_p8"
+      ],
+      "timeout": 18000,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "auto",
+        "--wcc-qualification-variant": "forest_coo"
+      }
+    },
+    {
+      "id": "wide3_target_TW_wcc_auto_forest_coo_p2",
+      "phase": "target",
+      "gpu_count": 2,
+      "algorithm": "wcc",
+      "dataset": "TW",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8",
+        "wide3_tiny_TINY_D_wcc_auto_forest_coo_p1",
+        "wide3_tiny_TINY_D_wcc_auto_forest_csr_p1",
+        "wide3_tiny_TINY_D_wcc_auto_label_coo_p1",
+        "wide3_tiny_TINY_D_wcc_int64_forest_coo_p1",
+        "wide3_tiny_TINY_D_wcc_int64_forest_csr_p1",
+        "wide3_tiny_TINY_D_wcc_int64_label_coo_p1",
+        "wide3_tiny_TINY_U_wcc_auto_forest_coo_p1",
+        "wide3_tiny_TINY_U_wcc_auto_forest_csr_p1",
+        "wide3_tiny_TINY_U_wcc_auto_label_coo_p1",
+        "wide3_tiny_TINY_U_wcc_int64_forest_coo_p1",
+        "wide3_tiny_TINY_U_wcc_int64_forest_csr_p1",
+        "wide3_tiny_TINY_U_wcc_int64_label_coo_p1",
+        "wide3_tiny_TINY_D_wcc_auto_forest_coo_p2",
+        "wide3_tiny_TINY_D_wcc_auto_forest_csr_p2",
+        "wide3_tiny_TINY_D_wcc_auto_label_coo_p2",
+        "wide3_tiny_TINY_D_wcc_int64_forest_coo_p2",
+        "wide3_tiny_TINY_D_wcc_int64_forest_csr_p2",
+        "wide3_tiny_TINY_D_wcc_int64_label_coo_p2",
+        "wide3_tiny_TINY_U_wcc_auto_forest_coo_p2",
+        "wide3_tiny_TINY_U_wcc_auto_forest_csr_p2",
+        "wide3_tiny_TINY_U_wcc_auto_label_coo_p2",
+        "wide3_tiny_TINY_U_wcc_int64_forest_coo_p2",
+        "wide3_tiny_TINY_U_wcc_int64_forest_csr_p2",
+        "wide3_tiny_TINY_U_wcc_int64_label_coo_p2",
+        "wide3_tiny_TINY_D_wcc_auto_forest_coo_p4",
+        "wide3_tiny_TINY_D_wcc_auto_forest_csr_p4",
+        "wide3_tiny_TINY_D_wcc_auto_label_coo_p4",
+        "wide3_tiny_TINY_D_wcc_int64_forest_coo_p4",
+        "wide3_tiny_TINY_D_wcc_int64_forest_csr_p4",
+        "wide3_tiny_TINY_D_wcc_int64_label_coo_p4",
+        "wide3_tiny_TINY_U_wcc_auto_forest_coo_p4",
+        "wide3_tiny_TINY_U_wcc_auto_forest_csr_p4",
+        "wide3_tiny_TINY_U_wcc_auto_label_coo_p4",
+        "wide3_tiny_TINY_U_wcc_int64_forest_coo_p4",
+        "wide3_tiny_TINY_U_wcc_int64_forest_csr_p4",
+        "wide3_tiny_TINY_U_wcc_int64_label_coo_p4",
+        "wide3_tiny_TINY_D_wcc_auto_forest_coo_p8",
+        "wide3_tiny_TINY_D_wcc_auto_forest_csr_p8",
+        "wide3_tiny_TINY_D_wcc_auto_label_coo_p8",
+        "wide3_tiny_TINY_D_wcc_int64_forest_coo_p8",
+        "wide3_tiny_TINY_D_wcc_int64_forest_csr_p8",
+        "wide3_tiny_TINY_D_wcc_int64_label_coo_p8",
+        "wide3_tiny_TINY_U_wcc_auto_forest_coo_p8",
+        "wide3_tiny_TINY_U_wcc_auto_forest_csr_p8",
+        "wide3_tiny_TINY_U_wcc_auto_label_coo_p8",
+        "wide3_tiny_TINY_U_wcc_int64_forest_coo_p8",
+        "wide3_tiny_TINY_U_wcc_int64_forest_csr_p8",
+        "wide3_tiny_TINY_U_wcc_int64_label_coo_p8",
+        "wide3_public_regression_TINY_D_bfs_p1",
+        "wide3_public_regression_TINY_D_sssp_p1",
+        "wide3_public_regression_TINY_D_pr_p1",
+        "wide3_public_regression_TINY_U_bfs_p1",
+        "wide3_public_regression_TINY_U_sssp_p1",
+        "wide3_public_regression_TINY_U_pr_p1",
+        "wide3_public_regression_TINY_D_bfs_p2",
+        "wide3_public_regression_TINY_D_sssp_p2",
+        "wide3_public_regression_TINY_D_pr_p2",
+        "wide3_public_regression_TINY_U_bfs_p2",
+        "wide3_public_regression_TINY_U_sssp_p2",
+        "wide3_public_regression_TINY_U_pr_p2",
+        "wide3_public_regression_TINY_D_bfs_p4",
+        "wide3_public_regression_TINY_D_sssp_p4",
+        "wide3_public_regression_TINY_D_pr_p4",
+        "wide3_public_regression_TINY_U_bfs_p4",
+        "wide3_public_regression_TINY_U_sssp_p4",
+        "wide3_public_regression_TINY_U_pr_p4",
+        "wide3_public_regression_TINY_D_bfs_p8",
+        "wide3_public_regression_TINY_D_sssp_p8",
+        "wide3_public_regression_TINY_D_pr_p8",
+        "wide3_public_regression_TINY_U_bfs_p8",
+        "wide3_public_regression_TINY_U_sssp_p8",
+        "wide3_public_regression_TINY_U_pr_p8"
+      ],
+      "timeout": 18000,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "auto",
+        "--wcc-qualification-variant": "forest_coo"
+      }
+    },
+    {
+      "id": "wide3_target_TW_wcc_auto_forest_coo_p4",
+      "phase": "target",
+      "gpu_count": 4,
+      "algorithm": "wcc",
+      "dataset": "TW",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8",
+        "wide3_tiny_TINY_D_wcc_auto_forest_coo_p1",
+        "wide3_tiny_TINY_D_wcc_auto_forest_csr_p1",
+        "wide3_tiny_TINY_D_wcc_auto_label_coo_p1",
+        "wide3_tiny_TINY_D_wcc_int64_forest_coo_p1",
+        "wide3_tiny_TINY_D_wcc_int64_forest_csr_p1",
+        "wide3_tiny_TINY_D_wcc_int64_label_coo_p1",
+        "wide3_tiny_TINY_U_wcc_auto_forest_coo_p1",
+        "wide3_tiny_TINY_U_wcc_auto_forest_csr_p1",
+        "wide3_tiny_TINY_U_wcc_auto_label_coo_p1",
+        "wide3_tiny_TINY_U_wcc_int64_forest_coo_p1",
+        "wide3_tiny_TINY_U_wcc_int64_forest_csr_p1",
+        "wide3_tiny_TINY_U_wcc_int64_label_coo_p1",
+        "wide3_tiny_TINY_D_wcc_auto_forest_coo_p2",
+        "wide3_tiny_TINY_D_wcc_auto_forest_csr_p2",
+        "wide3_tiny_TINY_D_wcc_auto_label_coo_p2",
+        "wide3_tiny_TINY_D_wcc_int64_forest_coo_p2",
+        "wide3_tiny_TINY_D_wcc_int64_forest_csr_p2",
+        "wide3_tiny_TINY_D_wcc_int64_label_coo_p2",
+        "wide3_tiny_TINY_U_wcc_auto_forest_coo_p2",
+        "wide3_tiny_TINY_U_wcc_auto_forest_csr_p2",
+        "wide3_tiny_TINY_U_wcc_auto_label_coo_p2",
+        "wide3_tiny_TINY_U_wcc_int64_forest_coo_p2",
+        "wide3_tiny_TINY_U_wcc_int64_forest_csr_p2",
+        "wide3_tiny_TINY_U_wcc_int64_label_coo_p2",
+        "wide3_tiny_TINY_D_wcc_auto_forest_coo_p4",
+        "wide3_tiny_TINY_D_wcc_auto_forest_csr_p4",
+        "wide3_tiny_TINY_D_wcc_auto_label_coo_p4",
+        "wide3_tiny_TINY_D_wcc_int64_forest_coo_p4",
+        "wide3_tiny_TINY_D_wcc_int64_forest_csr_p4",
+        "wide3_tiny_TINY_D_wcc_int64_label_coo_p4",
+        "wide3_tiny_TINY_U_wcc_auto_forest_coo_p4",
+        "wide3_tiny_TINY_U_wcc_auto_forest_csr_p4",
+        "wide3_tiny_TINY_U_wcc_auto_label_coo_p4",
+        "wide3_tiny_TINY_U_wcc_int64_forest_coo_p4",
+        "wide3_tiny_TINY_U_wcc_int64_forest_csr_p4",
+        "wide3_tiny_TINY_U_wcc_int64_label_coo_p4",
+        "wide3_tiny_TINY_D_wcc_auto_forest_coo_p8",
+        "wide3_tiny_TINY_D_wcc_auto_forest_csr_p8",
+        "wide3_tiny_TINY_D_wcc_auto_label_coo_p8",
+        "wide3_tiny_TINY_D_wcc_int64_forest_coo_p8",
+        "wide3_tiny_TINY_D_wcc_int64_forest_csr_p8",
+        "wide3_tiny_TINY_D_wcc_int64_label_coo_p8",
+        "wide3_tiny_TINY_U_wcc_auto_forest_coo_p8",
+        "wide3_tiny_TINY_U_wcc_auto_forest_csr_p8",
+        "wide3_tiny_TINY_U_wcc_auto_label_coo_p8",
+        "wide3_tiny_TINY_U_wcc_int64_forest_coo_p8",
+        "wide3_tiny_TINY_U_wcc_int64_forest_csr_p8",
+        "wide3_tiny_TINY_U_wcc_int64_label_coo_p8",
+        "wide3_public_regression_TINY_D_bfs_p1",
+        "wide3_public_regression_TINY_D_sssp_p1",
+        "wide3_public_regression_TINY_D_pr_p1",
+        "wide3_public_regression_TINY_U_bfs_p1",
+        "wide3_public_regression_TINY_U_sssp_p1",
+        "wide3_public_regression_TINY_U_pr_p1",
+        "wide3_public_regression_TINY_D_bfs_p2",
+        "wide3_public_regression_TINY_D_sssp_p2",
+        "wide3_public_regression_TINY_D_pr_p2",
+        "wide3_public_regression_TINY_U_bfs_p2",
+        "wide3_public_regression_TINY_U_sssp_p2",
+        "wide3_public_regression_TINY_U_pr_p2",
+        "wide3_public_regression_TINY_D_bfs_p4",
+        "wide3_public_regression_TINY_D_sssp_p4",
+        "wide3_public_regression_TINY_D_pr_p4",
+        "wide3_public_regression_TINY_U_bfs_p4",
+        "wide3_public_regression_TINY_U_sssp_p4",
+        "wide3_public_regression_TINY_U_pr_p4",
+        "wide3_public_regression_TINY_D_bfs_p8",
+        "wide3_public_regression_TINY_D_sssp_p8",
+        "wide3_public_regression_TINY_D_pr_p8",
+        "wide3_public_regression_TINY_U_bfs_p8",
+        "wide3_public_regression_TINY_U_sssp_p8",
+        "wide3_public_regression_TINY_U_pr_p8"
+      ],
+      "timeout": 18000,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E2",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "auto",
+        "--wcc-qualification-variant": "forest_coo"
+      }
+    },
+    {
+      "id": "wide3_target_TW_wcc_auto_forest_coo_p8",
+      "phase": "target",
+      "gpu_count": 8,
+      "algorithm": "wcc",
+      "dataset": "TW",
+      "depends_on": [
+        "wide3_numeric_domains_p1",
+        "wide3_numeric_domains_p2",
+        "wide3_numeric_domains_p4",
+        "wide3_numeric_domains_p8",
+        "wide3_tiny_TINY_D_wcc_auto_forest_coo_p1",
+        "wide3_tiny_TINY_D_wcc_auto_forest_csr_p1",
+        "wide3_tiny_TINY_D_wcc_auto_label_coo_p1",
+        "wide3_tiny_TINY_D_wcc_int64_forest_coo_p1",
+        "wide3_tiny_TINY_D_wcc_int64_forest_csr_p1",
+        "wide3_tiny_TINY_D_wcc_int64_label_coo_p1",
+        "wide3_tiny_TINY_U_wcc_auto_forest_coo_p1",
+        "wide3_tiny_TINY_U_wcc_auto_forest_csr_p1",
+        "wide3_tiny_TINY_U_wcc_auto_label_coo_p1",
+        "wide3_tiny_TINY_U_wcc_int64_forest_coo_p1",
+        "wide3_tiny_TINY_U_wcc_int64_forest_csr_p1",
+        "wide3_tiny_TINY_U_wcc_int64_label_coo_p1",
+        "wide3_tiny_TINY_D_wcc_auto_forest_coo_p2",
+        "wide3_tiny_TINY_D_wcc_auto_forest_csr_p2",
+        "wide3_tiny_TINY_D_wcc_auto_label_coo_p2",
+        "wide3_tiny_TINY_D_wcc_int64_forest_coo_p2",
+        "wide3_tiny_TINY_D_wcc_int64_forest_csr_p2",
+        "wide3_tiny_TINY_D_wcc_int64_label_coo_p2",
+        "wide3_tiny_TINY_U_wcc_auto_forest_coo_p2",
+        "wide3_tiny_TINY_U_wcc_auto_forest_csr_p2",
+        "wide3_tiny_TINY_U_wcc_auto_label_coo_p2",
+        "wide3_tiny_TINY_U_wcc_int64_forest_coo_p2",
+        "wide3_tiny_TINY_U_wcc_int64_forest_csr_p2",
+        "wide3_tiny_TINY_U_wcc_int64_label_coo_p2",
+        "wide3_tiny_TINY_D_wcc_auto_forest_coo_p4",
+        "wide3_tiny_TINY_D_wcc_auto_forest_csr_p4",
+        "wide3_tiny_TINY_D_wcc_auto_label_coo_p4",
+        "wide3_tiny_TINY_D_wcc_int64_forest_coo_p4",
+        "wide3_tiny_TINY_D_wcc_int64_forest_csr_p4",
+        "wide3_tiny_TINY_D_wcc_int64_label_coo_p4",
+        "wide3_tiny_TINY_U_wcc_auto_forest_coo_p4",
+        "wide3_tiny_TINY_U_wcc_auto_forest_csr_p4",
+        "wide3_tiny_TINY_U_wcc_auto_label_coo_p4",
+        "wide3_tiny_TINY_U_wcc_int64_forest_coo_p4",
+        "wide3_tiny_TINY_U_wcc_int64_forest_csr_p4",
+        "wide3_tiny_TINY_U_wcc_int64_label_coo_p4",
+        "wide3_tiny_TINY_D_wcc_auto_forest_coo_p8",
+        "wide3_tiny_TINY_D_wcc_auto_forest_csr_p8",
+        "wide3_tiny_TINY_D_wcc_auto_label_coo_p8",
+        "wide3_tiny_TINY_D_wcc_int64_forest_coo_p8",
+        "wide3_tiny_TINY_D_wcc_int64_forest_csr_p8",
+        "wide3_tiny_TINY_D_wcc_int64_label_coo_p8",
+        "wide3_tiny_TINY_U_wcc_auto_forest_coo_p8",
+        "wide3_tiny_TINY_U_wcc_auto_forest_csr_p8",
+        "wide3_tiny_TINY_U_wcc_auto_label_coo_p8",
+        "wide3_tiny_TINY_U_wcc_int64_forest_coo_p8",
+        "wide3_tiny_TINY_U_wcc_int64_forest_csr_p8",
+        "wide3_tiny_TINY_U_wcc_int64_label_coo_p8",
+        "wide3_public_regression_TINY_D_bfs_p1",
+        "wide3_public_regression_TINY_D_sssp_p1",
+        "wide3_public_regression_TINY_D_pr_p1",
+        "wide3_public_regression_TINY_U_bfs_p1",
+        "wide3_public_regression_TINY_U_sssp_p1",
+        "wide3_public_regression_TINY_U_pr_p1",
+        "wide3_public_regression_TINY_D_bfs_p2",
+        "wide3_public_regression_TINY_D_sssp_p2",
+        "wide3_public_regression_TINY_D_pr_p2",
+        "wide3_public_regression_TINY_U_bfs_p2",
+        "wide3_public_regression_TINY_U_sssp_p2",
+        "wide3_public_regression_TINY_U_pr_p2",
+        "wide3_public_regression_TINY_D_bfs_p4",
+        "wide3_public_regression_TINY_D_sssp_p4",
+        "wide3_public_regression_TINY_D_pr_p4",
+        "wide3_public_regression_TINY_U_bfs_p4",
+        "wide3_public_regression_TINY_U_sssp_p4",
+        "wide3_public_regression_TINY_U_pr_p4",
+        "wide3_public_regression_TINY_D_bfs_p8",
+        "wide3_public_regression_TINY_D_sssp_p8",
+        "wide3_public_regression_TINY_D_pr_p8",
+        "wide3_public_regression_TINY_U_bfs_p8",
+        "wide3_public_regression_TINY_U_sssp_p8",
+        "wide3_public_regression_TINY_U_pr_p8"
+      ],
+      "timeout": 18000,
+      "expected_statuses": [
+        "PASS_QUALIFICATION"
+      ],
+      "algorithm_flags": {
+        "--experiment": "E1-MG",
+        "--communication": "host_staging",
+        "--sssp-encoding": "u8_exact_u32_exact",
+        "--sssp-delta-rule": "certified_bound_plus_one",
+        "--native-profile": "static_full_profile_v1",
+        "--wcc-offset-mode": "auto",
+        "--wcc-qualification-variant": "forest_coo"
+      }
+    }
+  ],
+  "counts": {
+    "numeric": 4,
+    "wcc": 48,
+    "other_algorithms": 24,
+    "target": 4,
+    "total": 80
+  },
+  "gpu_executed": false
+}

@@ -77,8 +77,19 @@
   "progress_evidence_scope": "Progress checkpoint reported by the campaign controller owner; raw source-bound admission proofs remain in the private campaign and are not reusable public proofs.",
   "publication_kind": "DEVELOPMENT_CHECKPOINT",
   "e4s_formal_export": "RECOVERABLE_OUTPUT_TOOLING_INCLUDED; REQUIRES_ACTUAL_SUCCESSFUL_ARCHIVE_AND_MAINTENANCE_PROOFS",
-  "formal_campaign_status": "LAUNCHED_INCOMPLETE",
-  "progress_snapshot": {
+  "formal_campaign_status": "LAUNCHED_INCOMPLETE_NO_FINAL_CLAIMS",
+  "experimental_protocols": {
+    "state_protocol_completion_v1": "CPU_VALIDATED; NEW_PROTOCOL_GPU_QUALIFICATION_REQUIRED",
+    "e6_protocol_completion_v2": "CPU_VALIDATED; GPU_QUALIFICATION_SUBMITTED_INCOMPLETE",
+    "native_wcc_wide_v2": "SEPARATE_6CCE_OVERLAY; GPU_QUALIFICATION_SUBMITTED_INCOMPLETE; NOT_MAIN_SOURCE",
+    "formal_incremental_admission_v1": "CPU_VALIDATED_NOT_A_PORTABLE_GPU_PROOF",
+    "formal_incremental_e4s_v1": "CPU_VALIDATED_ARCHIVE_AND_MAINTENANCE_REQUIRED",
+    "state_completion_queue_guard_v1": "CPU_VALIDATED_QUALIFICATION_ENVELOPE",
+    "arena_diagnostic_v1": "DIAGNOSTIC_ONLY_NOT_FORMAL",
+    "paper_results_current": "STRICT_561_CELL_EXPORT_CPU_VALIDATED_NO_COMPLETE_FORMAL_FIGURES",
+    "native_wcc_wide_v3": "RUNNER_ONLY_CANDIDATE_NOT_MAIN"
+  },
+  "previous_progress_snapshot": {
     "observed_at": "2026-11-05T10:32:00Z",
     "observer": "campaign controller owner",
     "external_formal_passed": 2,
@@ -87,9 +98,12 @@
     "wcc_v2_qualification_submitted": 80,
     "scope": "Owner-reported progress only; original machine-bound receipts are not distributed as portable qualification proofs."
   },
-  "experimental_protocols": {
-    "state_protocol_completion_v1": "CPU_VALIDATED; NEW_PROTOCOL_GPU_QUALIFICATION_REQUIRED",
-    "e6_protocol_completion_v2": "CPU_VALIDATED; GPU_QUALIFICATION_SUBMITTED_INCOMPLETE",
-    "native_wcc_wide_v2": "SEPARATE_6CCE_OVERLAY; GPU_QUALIFICATION_SUBMITTED_INCOMPLETE; NOT_MAIN_SOURCE"
+  "progress_snapshot": {
+    "observed_at": "2026-11-05T11:32:46.280347+00:00",
+    "observer": "local controller snapshot; original machine receipts not distributed",
+    "formal_measurements": 15,
+    "formal_attempted": 15,
+    "complete_matrix": false,
+    "snapshot_sha256": "8c1f88cdb3c4e4059e5ab5803dd67a4740be95584a0f8db42366b7014e7ba434"
   }
 }

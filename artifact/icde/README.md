@@ -43,3 +43,5 @@ Native manifests retain a checked signed-32-bit local adjacency domain. A global
 E4-S recoverable-output tooling is included under `campaign/e4s_recoverable_outputs_v1`. Formal eligibility still requires the actual exact-output archive, successful original maintenance and complete source-bound qualification; a hash-only acknowledgement cannot authorize a formal figure.
 
 See [FOLLOWUP_CN.md](FOLLOWUP_CN.md) for the new experimental protocol commands, CPU validation scopes, portable reference prerequisites, separate WCC overlay and current queue observation. The earlier state/E6 commands above remain their named frozen protocols; they do not silently select the new protocol candidates.
+
+The latest local protocol update is documented in [PROTOCOLS_UPDATE_CN.md](PROTOCOLS_UPDATE_CN.md). Use `paper_results_current` for the new 561-cell protocol and `paper/README_CN.md` for current writing assets. The older `paper_results` directory remains a frozen historical exporter. No new complete formal figures are included.

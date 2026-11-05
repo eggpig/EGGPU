@@ -93,7 +93,7 @@ US、OR、IN、UK、TW，四算法，P=1/2/4/8；只有实际获授权且可用�
 
 ### E3：D-Maintain 的合法维护与代价
 
-冻结主协议为 US/IN/OR、FP64 权重、`ρ={0,10⁻⁶,10⁻⁴,10⁻²,0.1,1}`，均匀/行聚集与旧读者 none/per_update 分面；ρ=0/1 不重复等价的局部性输入。每条轨迹20次提交、80次 `[BFS,SSSP,WCC,WPR]` 查询，另有相同的四次初始查询。当前 `state_v4` 的 E3 主比较仅 **Reuse+Full（D0C1）与 D-Maintain（D1C1）**，C固定且不施加容量预算；相同执行器、布局、所有权保护和初始状态。P1覆盖三图，P8复核IN/OR。D0的 `persistent_full` 复用未变拓扑，对新的未命中权重身份执行全量上传；ρ=0仍可命中，不能称为每次无条件重建整图。原冻结要求的独立 Rebuild 第三臂正在单独候选中补齐：必须从相同规范输入实际重建所需图状态，且保护相同旧读者，不能把 D0 重命名为 Rebuild。最终主比较采用三臂；新候选完成相应资格和正式重复之前，当前图只显示已有两臂并标明第三臂待完成。
+冻结主协议为 US/IN/OR、FP64 权重、`ρ={0,10⁻⁶,10⁻⁴,10⁻²,0.1,1}`，均匀/行聚集与旧读者 none/per_update 分面；ρ=0/1 不重复等价的局部性输入。每条轨迹20次提交、80次 `[BFS,SSSP,WCC,WPR]` 查询，另有相同的四次初始查询。当前 `state_v4` 的 E3 主比较仅 **Reuse+Full（D0C1）与 D-Maintain（D1C1）**，C固定且不施加容量预算；相同执行器、布局、所有权保护和初始状态。P1覆盖三图，P8复核IN/OR。D0的 `persistent_full` 复用未变拓扑，对新的未命中权重身份执行全量上传；ρ=0仍可命中，不能称为每次无条件重建整图。原冻结要求的独立 Rebuild 第三臂已在 `state_protocol_completion_v1` 中实现并通过CPU合同检查，GPU资格与正式重复尚待验收：必须从相同规范输入实际重建所需图状态，且保护相同旧读者，不能把 D0 重命名为 Rebuild。最终主比较采用三臂；新候选完成相应资格和正式重复之前，当前图只显示已有两臂并标明第三臂待完成。
 
 两个主面板：横轴 `Updated edges (%)`（定义为变化存储位置占 A，且与无向配对规则一致），纵轴分别 `Workflow time (s)` 与 `Transferred data (GiB)`。ρ=0 是独立左端类别/小面板，不把0放进对数坐标；ρ>0使用明确对数刻度。最终每面板画 Rebuild、Reuse+Full、D-Maintain 三臂；只完成两臂时不画空想的第三条线。局部性和 lease 用分面，不用十几种颜色混在一张图。
 
@@ -101,11 +101,11 @@ US、OR、IN、UK、TW，四算法，P=1/2/4/8；只有实际获授权且可用�
 
 ### E4：C-Retain 的保留与状态复用
 
-主机制实验使用 US/OR/IN/UK 固定池、32次访问和128查询，比较同一请求多集合的 grouped/interleaved/permuted 三种顺序；不更新，D固定为D1。当前 `state_v4` 主比较仅 **closure-LRU（D1C0）与 C-Retain（D1C1）**，都按真实物理占用和相同lease约束作决策。预算取冻结 β=0/0.25/0.5/0.75/1；每个当前源码/图池/GPU配置先独立运行实际物理字节pilot，以逐卡 `floor(B_min+β(B_all−B_min))` 冻结字节预算，禁止按速度选预算。最终要求五臂：No-retention、view-LRU、closure-LRU、logical-size demand、C-Retain。其中 No-retention、view-LRU、logical-size demand 三个缺失替代正由独立候选补齐；所有臂仍遵守同一物理容量和持有者安全规则。view-LRU 按视图排序但只能通过合法撤销释放；logical-size demand 只改变价值排序，不能把名义大小当作已释放量。资格与正式重复未齐时，不伪造五臂结果。
+主机制实验使用 US/OR/IN/UK 固定池、32次访问和128查询，比较同一请求多集合的 grouped/interleaved/permuted 三种顺序；不更新，D固定为D1。当前 `state_v4` 主比较仅 **closure-LRU（D1C0）与 C-Retain（D1C1）**，都按真实物理占用和相同lease约束作决策。预算取冻结 β=0/0.25/0.5/0.75/1；每个当前源码/图池/GPU配置先独立运行实际物理字节pilot，以逐卡 `floor(B_min+β(B_all−B_min))` 冻结字节预算，禁止按速度选预算。最终要求五臂：No-retention、view-LRU、closure-LRU、logical-size demand、C-Retain。其中 No-retention、view-LRU、logical-size demand 三个替代已在 `state_protocol_completion_v1` 中实现并通过CPU合同检查；所有臂仍遵守同一物理容量和持有者安全规则。view-LRU 按视图排序但只能通过合法撤销释放；logical-size demand 只改变价值排序，不能把名义大小当作已释放量。资格与正式重复未齐时，不伪造五臂结果。
 
 主图横轴 `Memory budget (GiB)`；多卡不均匀预算时使用 `Budget fraction` 并在表注给 β 与逐卡字节向量的定义，不能用所有卡显存相加掩盖某张卡溢出。纵轴 `Workflow time (s)`；第二面板使用已实际记录的 `New shared arrays (GiB)` 与 `Freed memory (GiB)`。新共享数组字节属于分配证据，不等于所有重载/H2D；当前没有全拷贝计数时，不能标成 `Reloaded data`。β=1全驻留与β=0.25的once无回访控制都保留；once为4次访问、16查询，单独展示，不和128查询主项混合。另用一个真实日志片段连接“撤销视图—实际释放数组—下一次重载”，帮助读者理解命中率相近为何仍可能不同。
 
-**E4-S 共同状态复用副面板（本轮已纳入设计，待执行资格化）：** 在相同静态图上的不同源 SSSP 批任务，比较 EGGPU、KGraph、C²graph-PM，以及已接入的适用强静态系统。仍使用 US/OR/IN/UK，不增加新图；批长128为主点，32/512作敏感性，源点按冻结的拓扑散列规则扩展成不重复列表。所有请求都要返回全距离，不使用预存答案。允许作者已有 memoization，但其构建与有效性维护进入总时间；CPU 核数和主机内存上限一致，标明 CPU-only 与 CPU+GPU 的资源构成。横轴 `Queries`，纵轴 `Total time (s)`，准备与查询另作分解。该面板不计入 E1 单卡28格或90%目标的分母。
+**E4-S 共同状态复用副面板（资格与可恢复输出证据正在收集）：** 在相同静态图上的不同源 SSSP 批任务，比较 EGGPU、KGraph、C²graph-PM，以及已接入的适用强静态系统。仍使用 US/OR/IN/UK，不增加新图；批长128为主点，32/512作敏感性，源点按冻结的拓扑散列规则扩展成不重复列表。所有请求都要返回全距离，不使用预存答案。允许作者已有 memoization，但其构建与有效性维护进入总时间；CPU 核数和主机内存上限一致，标明 CPU-only 与 CPU+GPU 的资源构成。横轴 `Queries`，纵轴 `Total time (s)`，准备与查询另作分解。该面板不计入 E1 单卡28格或90%目标的分母。
 
 E4-S 是“已有状态复用系统如何完成共同任务”的比较，不是 C 的驱逐因果实验。KGraph 的主机结果缓存不能伪装成 GPU 闭包缓存；没有相同 GPU 驻留合同的系统不进入 β 曲线。若作者实现无法导出共同输出，应补正常输出接口并计时，不能直接将论文吞吐填入本机图。该副面板实际批长和运行状态以本轮 campaign 的正式记录为准，设计中未测的格子不得填历史数据。
 
@@ -121,9 +121,9 @@ IN/UK/OR 固定交错轨迹、96请求；主点ρ=10⁻⁴、β=0.25，ρ=0和β
 
 EP-U、LJ-U 主任务：**全图 Effective Size + Constraint → 排名取32候选 → 候选精确 WF Closeness → 选一个节点 → 该点 BFS + 全图 WCC → 输出**。OR 保留预注册压力面板。候选和 winner 必须在本次计时内由前序结果产生，所有变体返回相同候选、winner、距离和连通划分。
 
-最终主消融采用用户要求的扩展组 **2×2**：结构洞组 ES+Constraint 与 Closeness 各取 EGGPU/外部实现，尾部 BFS+WCC 固定 EGGPU；完整强外部组合另列。优先核验已有 GPU 外部函数组合，再单独保留 CPU 替代作为附加分析。现冻结 `e6_worker` 的 none、structural、closeness、bfs、wcc 五种单组配置没有“两扩展组同时外部”的臂，因此不能冒充完整2×2；`e6_protocol_completion_v1` 独立候选正在补齐两组同时外部及强 GPU 替代。原有资格/正式计划保持独立身份。外部只调用已存在的函数和正常图对象复用，真实交接/格式成本入账，不为替代臂额外设计加速内核。
+最终主消融采用用户要求的扩展组 **2×2**：结构洞组 ES+Constraint 与 Closeness 各取 EGGPU/外部实现，尾部 BFS+WCC 固定 EGGPU；完整强外部组合另列。优先核验已有 GPU 外部函数组合，再单独保留 CPU 替代作为附加分析。旧 `e6_memory_input_v1` 的五种单组配置不构成完整2×2；最新 `e6_protocol_completion_v2` 已实现CPU/GPU两套完整2×2、四个原生卡数、两个基础函数回退和三条完整外部路线，共15配置/图。59项CPU检查与部署预检通过，60项GPU资格已提交；450个正式槽位仍待准入。原有资格/正式计划保持独立身份。外部只调用已存在的函数和正常图对象复用，真实交接/格式成本入账，不为替代臂额外设计加速内核。
 
-主图横轴 `Configuration`，采用四个扩展组组合和少量合格完整外部路线；CPU/GPU 替代分面，基础函数单组回退放附加面板，避免十余柱混在一图。纵轴 `Application time (s)`；按 `Structural holes / Ranking / Closeness / BFS+WCC / Handoff` 堆叠。返回和初始准备如占比大，可明确增加段，不能藏到“其他”。首次完整应用为主；如另测已准备应用，必须单独冻结合同并分面，不能假定所有 E6 worker 已提供热调用计时。每次重算候选，短表列最终决策一致性及各阶段是否完成。新候选拟统一60min完整任务时限并保留现有更严格数值阈值；当前30min旧合同的结果继续明确标识，不直接合并。
+主图横轴 `Configuration`，采用四个扩展组组合和少量合格完整外部路线；CPU/GPU 替代分面，基础函数单组回退放附加面板，避免十余柱混在一图。纵轴 `Application time (s)`；按 `Structural holes / Ranking / Closeness / BFS+WCC / Handoff` 堆叠。返回和初始准备如占比大，可明确增加段，不能藏到“其他”。首次完整应用为主；如另测已准备应用，必须单独冻结合同并分面，不能假定所有 E6 worker 已提供热调用计时。每次重算候选，短表列最终决策一致性及各阶段是否完成。v2候选已统一60min完整任务时限并保留现有更严格数值阈值；旧30min合同保留原epoch，不能直接合并。
 
 多卡补图逐阶段注明结构洞为整图复制+ego分工、Closeness为整图复制+source分工、尾部既定GPU路线。它证明功能组合或并行工作分配的价值，不证明这些扩展函数都能用聚合显存容纳超单卡图。BC、LCC、K-core、SCC、MST 等未进入主任务的函数在能力矩阵保留，不借 E6 声称全部完成大图多卡验证。
 
@@ -245,3 +245,7 @@ E4 的 β 是 **managed retention budget** 的归一化预算，不是人为修�
 两类边界必须分开解释：**单个任务的工作集能否装入显存**，以及 **多图/多函数状态不能同时驻留时能否完成连续任务**。C-Retain 针对后者，不宣称能够处理任意单图的 out-of-core 情况；D-Maintain 维护版本所需的复制峰值也需要实际测量。E6 的多卡实现复制整图、分摊 ego/source 工作，不能用来证明分区系统的聚合显存容量。外部基线只纳入其实际支持的资源和任务边界，OOM 既不隐去，也不作为改变数据集或绕过正确性门禁的理由。
 
 建议容量图注： “Execution feasibility on the fixed graph suite, ordered by normalized stored arcs. OOM denotes an observed device-memory allocation failure in the source-bound execution; the failed stage is reported in the accompanying table. Qualification failures establish feasibility boundaries and are excluded from formal time averages. Sampled peaks are reported only when the complete sampling record is available.”
+
+## 当前图表导航补充（2026-11-05）
+
+唯一论文资产导航见 [paper/README_CN.md](../paper/README_CN.md)。Fig. 1 为明确构造的首页问题图，M1/M2 是外部机制/框架图占位；旧工具README中的Fig. 1/2编号不再作为排版权威。`paper_results_v1` 与早期 `presentation` 的旧协议说明不能证明新三臂/五臂/15配置已具备正式导出能力。最新协议导出器已在[paper_results_protocol_completion_v1](../paper_results_current/README_CN.md)独立实现：59项CPU测试通过，E3/E4/E3R完整480格合成渲染通过，E6每图15配置和双2×2得到覆盖。正式入口拒绝不完整网格、缺十次重复、混epoch及E4-S仅hash证明，要求实际解压完整输出和archive/maintenance双门。当前仅有明确标记的合成测试，尚无通过该入口的新完整正式图；CPU通过不能替代实测资格和正式重复。

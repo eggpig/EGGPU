@@ -51,7 +51,15 @@
     "state_protocol_completion_v1": "campaign/state_protocol_completion_v1",
     "e6_protocol_completion_v2": "campaign/e6_protocol_completion_v2",
     "e4s_recoverable_outputs_v1": "campaign/e4s_recoverable_outputs_v1",
-    "formal_admission_disposition_v1": "campaign/formal_admission_disposition_v1"
+    "formal_admission_disposition_v1": "campaign/formal_admission_disposition_v1",
+    "formal_incremental_admission_v1": "campaign/formal_incremental_admission_v1",
+    "formal_incremental_e4s_v1": "campaign/formal_incremental_e4s_v1",
+    "state_completion_queue_guard_v1": "campaign/state_completion_queue_guard_v1",
+    "arena_diagnostic_v1": "campaign/arena_diagnostic_v1"
   },
-  "experimental_wcc": "experimental/native_wcc_wide_v2"
+  "experimental_wcc": "experimental/native_wcc_wide_v2",
+  "current_paper_export": "paper_results_current",
+  "current_paper_navigation": "paper/README_CN.md",
+  "new_complete_formal_figures": [],
+  "experimental_wcc_runner": "experimental/native_wcc_wide_v3"
 }

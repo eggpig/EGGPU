@@ -37,7 +37,7 @@ White-Box 的作者、题名、ICDE 页码和 DOI 已由 Imperial 作者出版�
 ## 3. 图面与配色建议
 
 - 85 mm 单栏版优先纵向排列两个 panel；175 mm 版可横排。正文以单栏缩小后仍可读为验收条件，图内最终字号建议 8–9 pt，名称直接贴近对象。
-- 控制在三类语义色：共享拓扑用青绿 `#2A7F7F`；旧／新权重用同一暖橙的浅深变化 `#F3CFB4` / `#C97743`，并保留 $0/1$ 上标；独立图与文字辅助用灰 `#777777` / `#303030`。这些色号是本次建议值，不声称从参考图精确提取。
+- 控制在三类语义色：共享拓扑用青绿 `#2A7F7F`；旧／新权重用同一暖橙的浅深变化 `#F3CFB4` / `#C97743`，并保留 $0/1$ 上标；独立图与文字辅助用灰 `#777777` / `#303030`。这些色号是早期建议值，不声称从参考图精确提取；已生成版本的实际色号以 render_first_page.py 的 COLORS 为准，采用与实验章一致的浅蓝/浅绿/紫及深蓝释放量。
 - “逻辑大小”用浅灰或空心表示，“实际释放”用深色或数值强调。即使灰度打印，也应能通过填充／轮廓／标注分辨；不要只依赖红绿表示成功失败。
 - 数值只标存储单位与精确求和，不使用秒、MiB、加速比或实验系统名作横轴。容量条件用短标签“resident 16; budget 10; release needed 6”。
 - 参考 GUM 的编号可以只标两个观察：“unchanged topology is shared”与“one view removed, shared storage remains”。不要追加算法模块、控制器、成本模型、回收伪代码等方法框架。
@@ -70,9 +70,9 @@ P1 给请求序列；P2 定位执行、动态存储与计算结果复用；P3 �
 
 ## 已生成的第一页问题图
 
-推荐采用 [85 mm 单栏 PDF](first_page_problem_85mm.svg)；若第一页上方允许跨栏，可采用 [175 mm 双栏 PDF](first_page_problem_175mm.svg)。两版都提供同名 SVG 和 300 dpi PNG，数据来自 [明确构造的所有权模型](first_page_example.json)，由 [Python 脚本](render_first_page.py) 计算并绘制。[计算回执](example_calculation.json) 和 [文件来源记录](figure_provenance.json) 保存完整输入、代码与产物 SHA-256。图内所有数值是示例存储单位，不是实测显存。
+推荐采用 85 mm 单栏 PDF（内部来源未随本包分发：`first_page_problem_85mm.pdf`）；若第一页上方允许跨栏，可采用 175 mm 双栏 PDF（内部来源未随本包分发：`first_page_problem_175mm.pdf`）。两版都提供同名 SVG 和 300 dpi PNG，数据来自 [明确构造的所有权模型](first_page_example.json)，由 [Python 脚本](render_first_page.py) 计算并绘制。[计算回执](example_calculation.json) 和 [文件来源记录](figure_provenance.json) 保存完整输入、代码与产物 SHA-256。图内所有数值是示例存储单位，不是实测显存。
 
-**中文图注草稿。** 图 1：共享状态使逻辑撤销量与物理释放量分离。(a) 一次权重更新后的两个保留版本共享大小为 8 的拓扑，各自持有大小为 1 的权重，另一个图独占大小为 6 的状态。(b) 在随后允许回收的边界，要将物理占用从 16 降至 10，必须释放至少 6 个单位。仅撤销 G⁰ 虽移除 9 个单位的逻辑引用，却只释放 1；联合撤销 G⁰、G¹ 或撤销 H 才能满足此容量要求。构造例列出了全部持有者；此时没有活动读者、外部固定引用或额外工作区，所有视图均可合法撤销。图形面积不表示大小。两种可行撤销集合的后续恢复代价取决于请求需求，图中不宣称某一种总是最优。
+**中文图注草稿。** 图 1：共享状态使逻辑撤销量与物理释放量分离。(a) 一次权重更新后的两个保留版本共享大小为 8 的拓扑，各自持有大小为 1 的权重，另一个图独占大小为 6 的状态。(b) 在随后允许回收的边界，要将物理占用从 16 降至 10，必须释放至少 6 个单位。仅撤销 G⁰ 虽移除 9 个单位的逻辑引用，却只释放 1；图中另列的联合撤销 G⁰、G¹ 与撤销 H 两种候选均满足此容量要求；它们不是全部可行集合。构造例列出了全部持有者；此时没有活动读者、外部固定引用或额外工作区，所有视图均可合法撤销。图形面积不表示大小。两种可行撤销集合的后续恢复代价取决于请求需求，图中不宣称某一种总是最优。
 
 **English caption draft.** Shared state separates logical removal from physical reclamation. (a) Two retained versions share 8 units of topology and each owns 1 unit of weights; H owns 6 units. (b) Reducing physical occupancy from 16 to 10 requires reclaiming 6 units. Removing G⁰ drops 9 referenced units but frees only 1. Removing both versions or H meets the capacity requirement. This is a constructed example at a later reclamation boundary: all holders are shown and evictable, with no active readers, external pins, or additional workspaces. Box areas are not to scale. Feasibility alone does not determine the best choice for subsequent requests.
 

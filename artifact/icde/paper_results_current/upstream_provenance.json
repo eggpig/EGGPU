@@ -1,0 +1,217 @@
+{
+  "schema": "eggpu.paper.adapter.upstream.v1",
+  "files": {
+    "paper_results_v1/normalize.py": {
+      "bytes": 38623,
+      "sha256": "1baeb8ce38957ddd6fee9a6ef950760752583cbadb865bdfaae38d86dc574361"
+    },
+    "paper_results_v1/analysis.py": {
+      "bytes": 8788,
+      "sha256": "7ea9416e9f54638d8ea0be43adc0838ae1ec649f3c3f57529a6d087405ffd4a7"
+    },
+    "paper_results_v1/render.py": {
+      "bytes": 31992,
+      "sha256": "9a0c0660bb6f40f89df0981de6d0d8cbce8d9f8a647c5598d2ae3f34491ff64a"
+    },
+    "presentation/e1_summary.py": {
+      "bytes": 30844,
+      "sha256": "2dd454972294108615a0ef8968eb325f09b09ab18b57ac5d61f000698d9c1f48"
+    },
+    "state_protocol_completion_v1/state_plan.py": {
+      "bytes": 41884,
+      "sha256": "f70a81d12657ddba505c10db4ab34a08f204ed43beb271156c2490f2bd5cba75"
+    },
+    "state_protocol_completion_v1/state_protocol.py": {
+      "bytes": 5692,
+      "sha256": "98767a15e659dd96ee041bdb3e642861e701decb78b77b2052e5bf9cc938a21c"
+    },
+    "e6_protocol_completion_v2/e6_worker.py": {
+      "bytes": 41047,
+      "sha256": "44e165da21017e6bd20ebede60058702f68086514a08caf0812ba4e2fb07b0fb"
+    },
+    "e6_protocol_completion_v2/build_plans.py": {
+      "bytes": 16352,
+      "sha256": "568c23741b222f00186e2e1d33e054bc6ddd79b3de259afc7686aad4b5295d04"
+    },
+    "e4s_recoverable_outputs_v1/archive_outputs.py": {
+      "bytes": 12684,
+      "sha256": "52c61d293c49ccb7b562f9cd59e566a4f4a6747a416dedc697b4bf230760fd78"
+    },
+    "e4s_recoverable_outputs_v1/export_eligible.py": {
+      "bytes": 2459,
+      "sha256": "d329a4ed08561322a4ddba0ac9d57f56e7b05cd7c5a8bca050ea2681b55eb461"
+    },
+    "e4s_recoverable_outputs_v1/maintain_e4s_outputs.py": {
+      "bytes": 3717,
+      "sha256": "50b178ce93235ff0766cbff813d59a8e62c0e1450fb143284a229967ebb61293"
+    },
+    "state_protocol_completion_v1/state_worker.py": {
+      "bytes": 23636,
+      "sha256": "1e28df7ba3985a38ceccd065e3f3dea88b912d295eedc668c4d4f9f11b3a98dc"
+    },
+    "state_protocol_completion_v1/state_contract.py": {
+      "bytes": 14016,
+      "sha256": "ea0b3bb95bf037031f8bb8993f0990fca8f918951bcc406e48993cec92a41f8e"
+    },
+    "state_protocol_completion_v1/state_reference.py": {
+      "bytes": 8995,
+      "sha256": "59c16ece7d79498264566a25040e5808f039bd1b6ddee22c546aacbce26e6fc0"
+    },
+    "state_protocol_completion_v1/state_inputs.py": {
+      "bytes": 10881,
+      "sha256": "2c36cc9c2fc20d1d556467cd35077b889895daad4d395a213073478712f98e63"
+    },
+    "state_protocol_completion_v1/state_controls.py": {
+      "bytes": 6243,
+      "sha256": "9496c4e4e0234abec7d1df0f7db7f52784210246fd0991acb1fed5d8e12b0559"
+    },
+    "state_protocol_completion_v1/state_rebuild.py": {
+      "bytes": 7248,
+      "sha256": "5420982fc9f847bd4bee0ccdf89e049b6f348b3bc1c676aa69abc0afeed36975"
+    },
+    "state_protocol_completion_v1/cpu_ownership_oracle.py": {
+      "bytes": 10794,
+      "sha256": "124c237c92ab343b5b3d88a7ca9546295f40eb9ef077e946d46d8935afa56e1f"
+    },
+    "e6_protocol_completion_v2/e6_reused.py": {
+      "bytes": 14948,
+      "sha256": "44704d165a4b87de73152592c18efaebfa280286722b98bcd5d665487bee8af9"
+    },
+    "e6_protocol_completion_v2/sg_worker.py": {
+      "bytes": 41355,
+      "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+    },
+    "e6_protocol_completion_v2/cugraph_csr_adapter.py": {
+      "bytes": 6682,
+      "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+    },
+    "e6_protocol_completion_v2/legacy_cpu_reference.py": {
+      "bytes": 3116,
+      "sha256": "7ced877ef6ce588ac04bf7816b0bd67e252c7331f7f3ce8268940c3f698f3811"
+    },
+    "e6_protocol_completion_v2/e6_cpu_reference.py": {
+      "bytes": 3336,
+      "sha256": "cde01429b01c5c38fc1bed2c7e3468d334cf456d55f4330ebbcafbc1737afce3"
+    },
+    "state_protocol_completion_v1/baselines/hytgraph_qualify.py": {
+      "bytes": 10820,
+      "sha256": "6aa0832cd8c27eb91dde7e728dabdbf24d499f4a837c82053bbf8d4e8ab66da8"
+    },
+    "e6_protocol_completion_v2/e6_reuse_provenance.json": {
+      "bytes": 1480,
+      "sha256": "49bab07cfcfe263ed3b1e12b2316557640c99e8e032b3ec9e7b30d0199df42f6"
+    },
+    "e6_protocol_completion_v2/legacy_contract.json": {
+      "bytes": 1832,
+      "sha256": "47cb9d2a8f0b72ed6bb040dcc3af418c8b06c5738c772402b898b521c73399fa"
+    }
+  },
+  "original_files": {
+    "paper_results_v1/normalize.py": {
+      "bytes": 36850,
+      "sha256": "e68a4b6261bde1b22eeb79333a00f51d2ab6e046f99c4d8d1370ee9eab344013"
+    },
+    "paper_results_v1/analysis.py": {
+      "bytes": 8788,
+      "sha256": "7ea9416e9f54638d8ea0be43adc0838ae1ec649f3c3f57529a6d087405ffd4a7"
+    },
+    "paper_results_v1/render.py": {
+      "bytes": 30942,
+      "sha256": "ebcd7cd6fea27c3d6731f553567b15905d6d5d8af84a906c53498c5187fa03e0"
+    },
+    "presentation/e1_summary.py": {
+      "bytes": 30844,
+      "sha256": "2dd454972294108615a0ef8968eb325f09b09ab18b57ac5d61f000698d9c1f48"
+    },
+    "state_protocol_completion_v1/state_plan.py": {
+      "bytes": 41884,
+      "sha256": "f70a81d12657ddba505c10db4ab34a08f204ed43beb271156c2490f2bd5cba75"
+    },
+    "state_protocol_completion_v1/state_protocol.py": {
+      "bytes": 5692,
+      "sha256": "98767a15e659dd96ee041bdb3e642861e701decb78b77b2052e5bf9cc938a21c"
+    },
+    "e6_protocol_completion_v2/e6_worker.py": {
+      "bytes": 41047,
+      "sha256": "44e165da21017e6bd20ebede60058702f68086514a08caf0812ba4e2fb07b0fb"
+    },
+    "e6_protocol_completion_v2/build_plans.py": {
+      "bytes": 16352,
+      "sha256": "568c23741b222f00186e2e1d33e054bc6ddd79b3de259afc7686aad4b5295d04"
+    },
+    "e4s_recoverable_outputs_v1/archive_outputs.py": {
+      "bytes": 12684,
+      "sha256": "52c61d293c49ccb7b562f9cd59e566a4f4a6747a416dedc697b4bf230760fd78"
+    },
+    "e4s_recoverable_outputs_v1/export_eligible.py": {
+      "bytes": 2459,
+      "sha256": "d329a4ed08561322a4ddba0ac9d57f56e7b05cd7c5a8bca050ea2681b55eb461"
+    },
+    "e4s_recoverable_outputs_v1/maintain_e4s_outputs.py": {
+      "bytes": 3717,
+      "sha256": "50b178ce93235ff0766cbff813d59a8e62c0e1450fb143284a229967ebb61293"
+    },
+    "state_protocol_completion_v1/state_worker.py": {
+      "bytes": 23636,
+      "sha256": "1e28df7ba3985a38ceccd065e3f3dea88b912d295eedc668c4d4f9f11b3a98dc"
+    },
+    "state_protocol_completion_v1/state_contract.py": {
+      "bytes": 14016,
+      "sha256": "ea0b3bb95bf037031f8bb8993f0990fca8f918951bcc406e48993cec92a41f8e"
+    },
+    "state_protocol_completion_v1/state_reference.py": {
+      "bytes": 8995,
+      "sha256": "59c16ece7d79498264566a25040e5808f039bd1b6ddee22c546aacbce26e6fc0"
+    },
+    "state_protocol_completion_v1/state_inputs.py": {
+      "bytes": 10881,
+      "sha256": "2c36cc9c2fc20d1d556467cd35077b889895daad4d395a213073478712f98e63"
+    },
+    "state_protocol_completion_v1/state_controls.py": {
+      "bytes": 6243,
+      "sha256": "9496c4e4e0234abec7d1df0f7db7f52784210246fd0991acb1fed5d8e12b0559"
+    },
+    "state_protocol_completion_v1/state_rebuild.py": {
+      "bytes": 7248,
+      "sha256": "5420982fc9f847bd4bee0ccdf89e049b6f348b3bc1c676aa69abc0afeed36975"
+    },
+    "state_protocol_completion_v1/cpu_ownership_oracle.py": {
+      "bytes": 10794,
+      "sha256": "124c237c92ab343b5b3d88a7ca9546295f40eb9ef077e946d46d8935afa56e1f"
+    },
+    "e6_protocol_completion_v2/e6_reused.py": {
+      "bytes": 14948,
+      "sha256": "44704d165a4b87de73152592c18efaebfa280286722b98bcd5d665487bee8af9"
+    },
+    "e6_protocol_completion_v2/sg_worker.py": {
+      "bytes": 41355,
+      "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+    },
+    "e6_protocol_completion_v2/cugraph_csr_adapter.py": {
+      "bytes": 6682,
+      "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+    },
+    "e6_protocol_completion_v2/legacy_cpu_reference.py": {
+      "bytes": 3116,
+      "sha256": "7ced877ef6ce588ac04bf7816b0bd67e252c7331f7f3ce8268940c3f698f3811"
+    },
+    "e6_protocol_completion_v2/e6_cpu_reference.py": {
+      "bytes": 3336,
+      "sha256": "cde01429b01c5c38fc1bed2c7e3468d334cf456d55f4330ebbcafbc1737afce3"
+    },
+    "state_protocol_completion_v1/baselines/hytgraph_qualify.py": {
+      "bytes": 10820,
+      "sha256": "6aa0832cd8c27eb91dde7e728dabdbf24d499f4a837c82053bbf8d4e8ab66da8"
+    },
+    "e6_protocol_completion_v2/e6_reuse_provenance.json": {
+      "bytes": 1480,
+      "sha256": "49bab07cfcfe263ed3b1e12b2316557640c99e8e032b3ec9e7b30d0199df42f6"
+    },
+    "e6_protocol_completion_v2/legacy_contract.json": {
+      "bytes": 1832,
+      "sha256": "47cb9d2a8f0b72ed6bb040dcc3af418c8b06c5738c772402b898b521c73399fa"
+    }
+  },
+  "projection": "Published sibling layout and prior documented source projections; both original and published hashes retained",
+  "original_files_modified": false
+}

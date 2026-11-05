@@ -18,3 +18,5 @@ The fixed graphs are US, EP, LJ, OR, IN, UK and TW. Exact source variants and no
 See `artifact/icde/README.md` for current entry points, timing boundaries, baseline precision, reproduction checks and pending work. Mechanism and framework artwork remain reserved for the collaborator.
 
 The followup includes recoverable E4-S output archival, a read-only per-cell disposition inspector, watcher binding-schema fixes, the new E3/E4 and E6 protocol candidates, twenty primary Related Work sources, and the Chinese introduction with a reproducible first-page counterexample. The independent WCC int64-offset candidate is an overlay under `artifact/icde/experimental/native_wcc_wide_v2`; main `Easy-Graph/` remains d84. See `artifact/icde/FOLLOWUP_CN.md`.
+
+Latest protocol and paper update: strict 561-cell export, incremental admission gates, qualification capacity guards, a separate arena diagnostic and WCC runner v3. Main d84 source is unchanged. See [the current runbook](artifact/icde/PROTOCOLS_UPDATE_CN.md) and [paper navigation](artifact/icde/paper/README_CN.md). This checkpoint does not contain a complete formal result matrix.

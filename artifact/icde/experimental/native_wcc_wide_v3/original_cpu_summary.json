@@ -1,0 +1,21 @@
+{
+  "schema": "eggpu.public.original-cpu-summary/v1",
+  "original_freeze": {
+    "bytes": 198558,
+    "sha256": "e2724a20f72ba46bd18aa4aba9999967f588304b1d61b877f1b3c61cc707b871"
+  },
+  "original_cpu": {
+    "bytes": 3508,
+    "sha256": "50068e609c6fce7d1c11b8453a5f0102f80794cf6082287c056731d14a6d3884"
+  },
+  "source_tree_sha256": "6cce329e95f6fb10831d698845677579cfd05bfbf50c899132d03ed20cecab81",
+  "original_tests_passed": 50,
+  "gpu_executed": false,
+  "original_independent_review": {
+    "bytes": 1413,
+    "sha256": "5a00d851c00cfd497aa123eba186467ee7258d45bae0a454fa5e03b5451f345a"
+  },
+  "performance_evidence": false,
+  "source_overlay": "../native_wcc_wide_v2/source_overlay",
+  "promoted_to_main": false
+}

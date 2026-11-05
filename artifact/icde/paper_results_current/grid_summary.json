@@ -1,0 +1,13 @@
+{
+  "status": "PENDING_EXPLICIT_BINDINGS_NOT_RESULTS",
+  "counts": {
+    "E3": 300,
+    "E4": 160,
+    "E3R": 20,
+    "E4S": 36,
+    "E6": 45
+  },
+  "total": 561,
+  "command": "python3 -B prepare_selection.py --experiments E3 E4 E3R E4S E6 --output YOUR_NEW_TASK_DIR/pending_grid.json",
+  "performance_evidence": false
+}

@@ -12,6 +12,14 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[3]
 TARGETS = {
+    "test-protocols-cpu": "artifact/icde/tools/test_protocols_cpu.py",
+    "paper-current-grid": "artifact/icde/paper_results_current/prepare_selection.py",
+    "paper-current-render": "artifact/icde/paper_results_current/render.py",
+    "formal-incremental": "artifact/icde/campaign/formal_incremental_admission_v1/admit_incremental.py",
+    "e4s-incremental": "artifact/icde/campaign/formal_incremental_e4s_v1/admit_e4s_incremental.py",
+    "state-qualification-envelope": "artifact/icde/campaign/state_completion_queue_guard_v1/derive.py",
+    "arena-diagnostic-plan": "artifact/icde/campaign/arena_diagnostic_v1/prepare.py",
+    "wcc-v3-plan": "artifact/icde/experimental/native_wcc_wide_v3/prepare_qualification.py",
     "test-followup-cpu": "artifact/icde/tools/test_followup_cpu.py",
     "state-protocol-prepare": "artifact/icde/campaign/state_protocol_completion_v1/prepare.py",
     "state-protocol-test": "artifact/icde/campaign/state_protocol_completion_v1/run_cpu_tests.py",

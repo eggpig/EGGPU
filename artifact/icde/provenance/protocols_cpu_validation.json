@@ -1,0 +1,90 @@
+{
+  "schema": "eggpu.public.protocols-cpu-validation/v1",
+  "status": "PASS_PUBLIC_CPU_ONLY",
+  "passed": 190,
+  "skipped": 0,
+  "groups": [
+    {
+      "group": "incremental",
+      "returncode": 0,
+      "counts": {
+        "tests": 38,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "log_sha256": "827b330927a5d43490f088b9655df42af6e50c2c15aadc0d47608704d654a17c"
+    },
+    {
+      "group": "e4s_incremental",
+      "returncode": 0,
+      "counts": {
+        "tests": 24,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "log_sha256": "7d057d9f13b6c84e1f44dea73e53acb96efe26a65ccf135bc4fb0ed4a573e22c"
+    },
+    {
+      "group": "state_guard",
+      "returncode": 0,
+      "counts": {
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "log_sha256": "d1978c1eb0cd573d5cf5e8ee23d605b25cb10239a5f893264096c00592fc2bbf"
+    },
+    {
+      "group": "arena_diagnostic",
+      "returncode": 0,
+      "counts": {
+        "tests": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "log_sha256": "8ed60f24f8d313d813753acffd447aa3c95cd4cf1ad8a81c8de2fb04653a881f"
+    },
+    {
+      "group": "paper",
+      "returncode": 0,
+      "counts": {
+        "tests": 59,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "log_sha256": "67a7857068e19fa01da8212abdd76f4b62d32595da20e525cbead6c4f077e27c"
+    },
+    {
+      "group": "wcc_v3",
+      "returncode": 0,
+      "counts": {
+        "tests": 50,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "log_sha256": "3cd5fd52dfda9539e2bfddc90b5ae1a96ad9564ab8953cfbbc27a14cb2f907fe"
+    },
+    {
+      "group": "wcc_plan",
+      "returncode": 0,
+      "counts": {
+        "tests": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "log_sha256": "58745d8011883213acd6d3ad00c73a2860f68e432f60fc956b8cb2a8bb6d8181"
+    }
+  ],
+  "gpu_executed": false,
+  "performance_evidence": false,
+  "synthetic_figures_published": false,
+  "scope": "Separate processes in the actual published directory layout; WCC compiles unchanged production CPU validators; no DSO/GPU qualification is transferred.",
+  "prior_checkpoint_tests": "Prior 273 CPU checks remain historical, not re-counted as newly rerun tests."
+}

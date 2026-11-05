@@ -1,0 +1,60 @@
+{
+  "status": "PASS_WCC_RUNNER_CPU_ONLY",
+  "tests": {
+    "passed": 50,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "gpu_executed": false,
+  "source_tree_sha256": "6cce329e95f6fb10831d698845677579cfd05bfbf50c899132d03ed20cecab81",
+  "runner_files": {
+    "cugraph_csr_adapter.py": {
+      "bytes": 6682,
+      "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+    },
+    "historical_profile.json": {
+      "bytes": 92783,
+      "sha256": "067b50883e01426c808f1fa4a5613f22c9bc0050e54db9b8b37eecbc791afa93"
+    },
+    "native_input.py": {
+      "bytes": 14033,
+      "sha256": "8edeaa51ae5cd9460f6784afc3703a10128073f765ec30e9dbf6a780d1fd1e51"
+    },
+    "native_profile.py": {
+      "bytes": 7386,
+      "sha256": "230b76d86bf8c2af354c9a432239d348092e47531ae4dbde5c8e66f27681d392"
+    },
+    "native_worker.py": {
+      "bytes": 33816,
+      "sha256": "38ed33a0ffce3c1a66802a4c104aeb867ac2e0b6f344d98960cfe3e4f6fdba42"
+    },
+    "qualify_static_native_domains.py": {
+      "bytes": 5683,
+      "sha256": "27af686ede9a6441adc66e1565bba2220fdd92e64a12bee59e4c75702c9b4778"
+    },
+    "sg_worker.py": {
+      "bytes": 41355,
+      "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+    },
+    "test_metric_json_cpu.py": {
+      "bytes": 714,
+      "sha256": "ac350dc4e0bbf8bba7edd4e6089bc24d4381ddbe5c7f7f2a36478daefda0cf39"
+    },
+    "test_native_profile_cpu.py": {
+      "bytes": 3903,
+      "sha256": "e3a25b177239181c188d2cce67329d3e6ba154b385fa9d5c22a4cd91ee8b7649"
+    },
+    "test_static_runner_cpu.py": {
+      "bytes": 1916,
+      "sha256": "a413eaa3861e8651db6f6d4fddc16ea70db9baa23ab8e5f2293c13ac2e3ba824"
+    }
+  },
+  "public_recheck": {
+    "bytes": 2372,
+    "sha256": "68819ad54848717962201cad53e54b1aef9f1378991ba230bf722e4186da8882"
+  },
+  "performance_evidence": false,
+  "original_cpu_summary": "original_cpu_summary.json",
+  "rebuild_requires_fresh_gpu_qualification": true
+}

@@ -1,0 +1,32 @@
+{
+  "schema": "eggpu.public.original-cpu-summary/v1",
+  "original_files": {
+    "freeze.json": {
+      "bytes": 3878,
+      "sha256": "bcbeabd5d8152246238605bf021f87b12f91e4176f3db3d6db0565994e9c47e7"
+    },
+    "cpu_receipt.json": {
+      "bytes": 7214,
+      "sha256": "4bc116a28db2e1ab006d71d9e5bb5e3d84adaa178d4489cbe941ffb4c8619958"
+    },
+    "cpu_validation_v1/independent_review.json": {
+      "bytes": 1143,
+      "sha256": "c357ed928ebf811fb940d9f654c8deb1cffaeae4538b992a30c0af26b2bff7eb"
+    }
+  },
+  "original_reported_status": "PASS_CPU_ONLY_NO_ACTUAL_ADMISSION_OR_GPU",
+  "original_cpu_tests": {
+    "total": 38,
+    "passed": 38,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 20.499
+  },
+  "gpu_executed": false,
+  "performance_evidence": false,
+  "private_deployment_proofs_distributed": false,
+  "original_evidence_not_rewritten": true,
+  "public_relocation_requires_fresh_qualification": true,
+  "original_independent_review_status": "PASS_38_TESTS_SOURCE_UNCHANGED"
+}
