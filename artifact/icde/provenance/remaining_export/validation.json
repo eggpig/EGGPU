@@ -1,0 +1,27 @@
+{
+  "status": "PASS_CPU_REGRESSION",
+  "checks": [
+    "actual_source71_e4s_only_one_available_no_invented_E2_E6",
+    "all_160_unavailable_cells_have_null_times",
+    "all_20_p8_receipts_follow_explicit_continuation_mapping",
+    "last_E4S_full_output_mismatch_rejected",
+    "mixed_own_source_rejected",
+    "ambiguous_p8_mapping_rejected",
+    "E6_actual_devices_rejected_1",
+    "E6_actual_devices_rejected_2",
+    "E6_actual_devices_rejected_3",
+    "seven_actual_historical_tiny_schema_checks_not_admitted_as_target_results",
+    "actual_online_28_historical_reviews_removed_all_20_failures_preserved",
+    "cached_input_metadata_keeps_ready_exact_and_excludes_cold_first",
+    "cached_derivative_cannot_change_original_fields",
+    "two_declared_TW_WCC_CPU_limits_schema_accepted_without_timings",
+    "unexecuted_CPU_layout_cannot_close_deferred_cells"
+  ],
+  "check_count": 15,
+  "historical_tiny_schema_only": 7,
+  "metadata_fixture_timings_created": false,
+  "fixtures_not_published": true,
+  "gpu_executed": false,
+  "array_payloads_read": false,
+  "projection_scope": "Original exporter CPU validation; public path/affinity adaptations checked separately."
+}

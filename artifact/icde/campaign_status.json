@@ -1,10 +1,10 @@
 {
-  "schema": "eggpu.public_campaign_status/v4",
+  "schema": "eggpu.public_campaign_status/v5",
   "date": "2026-11-06",
   "source_candidate": "unified_release_20261106",
   "source_sha256": "71ea757d372f8c1b969ea074caaa27d3a77d4cea6d48cd9c6ae9c4b02936d7ce",
   "native_source_sha256": "959cb6bac81b36c9c56d7ec02427bf9c7c1dae6d6812e7fc381ae42be59b0d65",
-  "source_status": "FROZEN_BUILD_PASS_FOCUSED_GPU_PASS_STATIC_MATRIX_PENDING",
+  "source_status": "FROZEN_SOURCE_FOCUSED_TRACE_PASS_STATIC_MATRIX_INCOMPLETE",
   "datasets": [
     "US",
     "EP",
@@ -34,5 +34,12 @@
   },
   "publication_kind": "DEVELOPMENT_CHECKPOINT",
   "performance_claim": false,
-  "measurement_scope": "Two policy arms of one fixed continuous trace, n=1 per arm; zero static comparison cells on this source in this publication."
+  "measurement_scope": "Two policy arms of one fixed continuous trace, n=1 per arm; seven selected source-bound external n=1 observations in the paper crosscheck, five unresolved cells, and zero own-source static cells added by this publication.",
+  "additional_external_crosscheck": {
+    "available_n1": 7,
+    "unresolved": 5,
+    "table": "paper/references_20261105/paper_crosscheck_observed.csv",
+    "formal_statistics": false
+  },
+  "tooling_followup": "TOOLING_FOLLOWUP_CN.md"
 }

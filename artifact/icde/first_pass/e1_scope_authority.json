@@ -596,5 +596,6 @@
     "sha256": "9cd6d9e2fb310752ef65c2a01900e46cbf2fb729850182666deee06f92961d9c"
   },
   "first_pass_observations_per_configuration": 1,
-  "second_pass_after_first_pass": true
+  "second_pass_after_first_pass": true,
+  "eggpu_source_freeze": "candidates/unified_release_20261106/freeze.json"
 }

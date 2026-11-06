@@ -1,0 +1,26 @@
+{
+  "E6_PROTOCOL": "e6-weak-structural-dependent-complete-coverage2x2-3600-v2",
+  "E6_CONTRACT": {
+    "input": "same source-bound canonical host CSR; construct simple unweighted weak projection inside T_first; retain every canonical vertex including isolates",
+    "weights": "original w16-v1 files remain input-bound; all E6 operators are explicitly unweighted",
+    "selection": "all finite ES/Constraint rows; descending ES, ascending Constraint, canonical ID, after fixed round-to-even 1e-6 quantization; first min(32, finite vertices)",
+    "winner": "maximum exact Wasserman-Faust closeness among actual selected vertices; fixed 1e-6 rounding then minimum canonical ID",
+    "closeness": "32 exact sources, not a full all-vertex closeness ranking; r^2/((n-1)*sum_distance), zero for r=0",
+    "complete": "all ES and Constraint values, candidate IDs, every candidate closeness value, winner, full BFS distances and full canonical WCC partition on host",
+    "timing": "T_first starts with common host CSR ready and includes weak projection, imports, graph formats, uploads, all five calls, host materialization, both dependent selections; T_ready retains graph state after one full warmup; close recorded separately",
+    "ablation": "two extension groups structural=(ES,Constraint) and closeness independently native/external; both 2x2 panels share native P1 none control; external=igraph CPU or unchanged cuGraph/CuPy GPU composite; BFS/WCC stay EGGPU in all four 2x2 arms; legacy CPU bfs/wcc single-group fallbacks remain separate supplementary analyses; no precomputed outputs or omitted functions",
+    "mg": "whole graph replicated on each GPU; ego-vertex shards for structural metrics and selected-source shards for closeness; BFS/WCC on logical GPU0; not partitioned capacity scaling",
+    "quality": {
+      "rtol": 1e-08,
+      "atol": 1e-10,
+      "bfs_exact": true,
+      "wcc_partition_exact": true,
+      "nan_mask_exact": true,
+      "selection_exact": true,
+      "owning_immutable": true
+    },
+    "formal_repetitions": 10,
+    "timeout_seconds": 3600,
+    "task_origin": "controlled structural screening workflow, not an observed production trace"
+  }
+}

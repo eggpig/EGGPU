@@ -1,0 +1,16 @@
+{
+  "status": "PASS_READY_PRESENTATION_RECORDED_DATA",
+  "new_measurements": false,
+  "gpu_executed": false,
+  "worker_changes": false,
+  "source71_main_target_observations_added": 0,
+  "checks": [
+    "Actual E4S query batch is the main plotted value; cold-first retained separately",
+    "No E6 numerical row or figure created without actual PASS target",
+    "Actual data and n=1 counts unchanged by presentation metadata",
+    "All primary panels use ready_seconds, first_seconds is supplemental"
+  ],
+  "figure_records": 2,
+  "figure_data_sha256": "941412f2867639c05b56a31e9c3ef9544ee3300ccdfc0794d39a600a5ca114a0",
+  "visual_review": "PASS: one actual US/q32 point; pending OR/IN/UK panels remain blank; no errorbars, Time(s) axis, no invented E6 rows"
+}

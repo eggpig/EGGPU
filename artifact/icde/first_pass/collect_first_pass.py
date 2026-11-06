@@ -107,8 +107,18 @@ def collect(campaign,extra_queue_states=(),extra_plans=(),source_freeze='candida
  for graph in ('US','EP','LJ','OR','IN','UK','TW'):
   for name in ('receipt.json','canonical.json','sources.json'):read('inputs/canonical/'+graph+'/'+name)
  for rel in ('setup.json',source_freeze,'formal_admission_d84_v2/manifest.json'):read(rel)
- return {'schema':'eggpu.first-pass.receipts.v1','observed_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),
-  'campaign':str(root),'selected_source_freeze':source_freeze,'selected_native_protocol':native_protocol,'scope':'Explicit current plans plus their target proofs and completed queue receipts; JSON metadata plus failed-job log tails. No output vectors reread or measurements created.',
+ scheduler_deferrals={}
+ for kind,rel in [('event','first_pass_20261106/deferred_preparation_event.json'),('plan','first_pass_20261106/author_reservation_handoff/deferred_preparation.json')]:
+  item=read(rel)
+  if item is not None:
+   scheduler_deferrals[kind]={**objects[str(root/rel)]['binding'],'canonical_sha256':hashlib.sha256(json.dumps(item,sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest()}
+ author_text_input_plan=None
+ rel='first_pass_20261106/author_text_main/plan.json';item=read(rel)
+ if item is not None:
+  author_text_input_plan=objects[str(root/rel)]['binding'];refs(item.get('preparation'));refs(item.get('source_deferred'))
+  for job in item.get('jobs',[]):record(job.get('receipt'),rel,job)
+ return {'schema':'eggpu.first-pass.receipts.v1','observed_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'author_text_input_plan':author_text_input_plan,
+  'campaign':str(root),'selected_source_freeze':source_freeze,'selected_native_protocol':native_protocol,'scheduler_deferrals':scheduler_deferrals,'scope':'Explicit current plans plus their target proofs and completed queue receipts; JSON metadata plus failed-job log tails. No output vectors reread or measurements created.',
   'records':records,'plans':plans,'queues':queues,'objects':objects,'missing':missing,'failed_attempt_evidence':failed_attempt_evidence,'gpu_executed':False}
 
 if __name__=='__main__':

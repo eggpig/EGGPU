@@ -1,0 +1,12 @@
+{
+  "status": "PASS_INTEGRATED_EXPORT",
+  "generation_attempts": 4,
+  "successful_generations": 3,
+  "current_previous_retained": 2,
+  "failed_generation_kept_last_current": true,
+  "plot_status": "PASS",
+  "plots_only_actual_available_rows": true,
+  "gpu_executed": false,
+  "fixture": "Actual source71 JSON snapshot; E1 records omitted solely for generation/retention test; not a published report.",
+  "projection_scope": "Original exporter CPU validation; public path/affinity adaptations checked separately."
+}

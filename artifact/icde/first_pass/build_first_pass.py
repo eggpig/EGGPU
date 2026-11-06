@@ -75,7 +75,7 @@ def num(x):
 def observation(bundle,entry,freeze,domains):
  raw=bundle.get(entry['path']);dataset,algorithm,count,system,variant=key_of(raw)
  out=dict(dataset=dataset,algorithm=algorithm,gpu_count=count,system=system,variant=variant,
-  phase=raw.get('phase'),repeat=raw.get('repeat'),measurement_protocol=raw.get('protocol'),raw_status=raw.get('status'),raw_receipt=entry['path'],experiment=raw.get('experiment','E1'),implementation=raw.get('implementation'),
+  phase=raw.get('phase'),repeat=raw.get('repeat'),measurement_protocol=raw.get('measurement_protocol',raw.get('protocol')),raw_status=raw.get('status'),raw_receipt=entry['path'],experiment=raw.get('experiment','E1'),implementation=raw.get('implementation'),
   origin=entry['origin'],input_sha256=raw.get('input_sha256'),epoch_sha256=raw.get('epoch_sha256'),
   first_seconds=None,ready_seconds=None,job_wall_seconds=(entry.get('completed') or {}).get('seconds'),
   status='UNAVAILABLE',quality_pass=raw.get('quality_pass'),selection_order=0)
@@ -95,15 +95,20 @@ def observation(bundle,entry,freeze,domains):
  need(raw.get('input_sha256')==domain['sha256'] and raw.get('directed')==domain['directed'],'Different frozen graph/input identity')
  need(raw.get('quality_pass') is True,'Existing full job quality did not pass')
  epoch=bundle.get(raw['epoch']);need(digest(epoch)==raw['epoch_sha256'],'Recorded epoch identity differs')
+ cached=raw.get('measurement_protocol')=='author-ready-native-call2-cached-input-first-supplement-v1'
+ if cached:
+  need(raw.get('cached_input_first_supplement') is True and raw.get('ready_measurement_unchanged') is True and raw.get('canonical_csr_cold_first_comparable') is False,'Cached-input timing boundaries differ')
+  original=bundle.get(raw['original_author_result']);bundle.get(raw['text_cache_usage'])
+  need(all(raw.get(k)==v for k,v in original.items()),'Cached-input derivative altered the original author result')
  if system=='eggpu':
-  selected_protocol=bundle.data.get('selected_native_protocol')
-  if selected_protocol and (raw.get('implementation')=='forced_native' or raw.get('schema')=='eggpu.native.job.v1'):
-   need(raw.get('protocol')==selected_protocol,'Native measurement endpoint differs from selected protocol')
   observed=dict(epoch.get('release_sources',{}));observed.update(epoch.get('gpu_kernel_sources',{}));expected=freeze['source_files']
   required={name for name in expected if name.startswith(('easygraph/','cpp_easygraph/')) and Path(name).suffix in ('.py','.cpp','.cu','.h','.hpp','.c','.cuh')}
   need(required<=observed.keys(),'EGGPU measured runtime source coverage incomplete')
   for name,b in observed.items():
    need(name in expected and all(expected[name][k]==b[k] for k in ('bytes','sha256')),'EGGPU source differs from current frozen release: '+name)
+  selected_protocol=bundle.data.get('selected_native_protocol')
+  if selected_protocol and (raw.get('implementation')=='forced_native' or raw.get('schema')=='eggpu.native.job.v1'):
+   need(raw.get('protocol')==selected_protocol,'Native measurement endpoint differs from selected protocol')
  sources=raw.get('sources',[]);expected=domain['sources'] if algorithm in ('bfs','sssp') else [None]
  need(len(sources)==len(expected),'Incomplete fixed-source task')
  if len(expected)==3:need([x.get('source') for x in sources]==expected,'Fixed sources/order differ')
@@ -138,7 +143,69 @@ def observation(bundle,entry,freeze,domains):
   source_values=values,output_bindings=outputs,epoch=raw['epoch'],source_tree_sha256=freeze.get('source_tree_sha256') if system=='eggpu' else None,
   measurement_kind='existing_full_target_observation' if raw['phase']=='target' else 'existing_formal_r0_observation',
   qualification_promoted_to_formal=False,payload_revalidated_by_this_export=False)
+ out['canonical_csr_cold_first_comparable']=not cached
+ if cached:out.update(first_seconds=None,cached_input_first_seconds=first,original_author_result=raw['original_author_result'],text_cache_usage=raw['text_cache_usage'])
  return out
+
+
+def preparation_deferrals(bundle,domains):
+ """Read exact scheduler declarations; never infer deferral from an error string."""
+ links=bundle.data.get('scheduler_deferrals',{})
+ if 'event' not in links or 'plan' not in links:return []
+ def checked(kind):
+  link=links[kind];value=bundle.get(link)
+  need(digest(value)==link['canonical_sha256'],'Scheduler deferral JSON content changed')
+  return value
+ event=checked('event');plan=checked('plan')
+ need(event.get('status')=='DEFERRED_BEFORE_AUTHOR_BINARY','Unexpected scheduler event')
+ need(event.get('raw_partial_outputs_preserved') is True and event.get('supervised_cleanup_complete') is True,'Scheduler cleanup/raw preservation is not confirmed')
+ need(event.get('gpu_processes') in ('',[]),'Scheduler event reports GPU execution')
+ need(plan.get('status')=='DEFERRED_INPUT_SERIALIZATION_NOT_ALGORITHM_TIMEOUT','Unexpected deferred plan')
+ need(event.get('job_id') in {j.get('id') for j in plan.get('jobs',[])},'Deferred active job not in exact plan')
+ result=[]
+ for job in plan['jobs']:
+  command=job['command']
+  def arg(flag):
+   need(command.count(flag)==1,'Missing or ambiguous deferred argument: '+flag)
+   return command[command.index(flag)+1]
+  dataset,algorithm,system,variant=(arg(x) for x in ('--dataset','--algorithm','--system','--variant'))
+  need(dataset=='TW' and (system,variant) in {('grapin','grapin_author'),('hytgraph','hytgraph_author')} and algorithm in ALGORITHMS,'Scheduler declaration outside this frozen preparation deferral')
+  need(job.get('phase')=='target' and arg('--phase')=='target','Only the declared target preparation is deferred')
+  contract=job['target_contract'];domain=domains[dataset]
+  need(contract['dataset']==dataset and contract['input_sha256']==domain['sha256'] and contract['directed']==domain['directed'],'Deferred input contract changed')
+  if algorithm in ('bfs','sssp'):need(contract['sources']==domain['sources'],'Deferred fixed sources changed')
+  receipt_key=bundle.root+'/inputs/canonical/'+dataset+'/receipt.json';actual=bundle.objects[receipt_key]['binding']
+  bound=next((r for r in job['bindings'] if r['path']==receipt_key),None)
+  need(bound is not None and all(bound[k]==actual[k] for k in ('bytes','sha256')),'Deferred input receipt differs from captured canonical input')
+  worker=arg('--worker');worker_bound=next((r for r in job['bindings'] if r['path']==worker),None)
+  need(worker_bound is not None and worker_bound['sha256']==arg('--worker-sha256'),'Deferred worker source binding changed')
+  result.append(dict(dataset=dataset,algorithm=algorithm,gpu_count=1,system=system,variant=variant,job_id=job['id'],receipt=job['receipt'],status='DEFERRED_PREPARATION',reason=plan.get('reason'),active_attempt_cancelled_before_author_binary=job['id']==event['job_id'],scheduler_event=links['event'],deferred_plan=links['plan'],original_job_preserved=True,performance_outcome=False))
+ return result
+
+
+def input_layout_limits(bundle,domains,deferred):
+ link=bundle.data.get('author_text_input_plan')
+ if not link:return []
+ plan=bundle.get(link);need(plan.get('schema')=='eggpu.author.cached-input-first-pass.v1','Wrong cached author plan')
+ if not plan.get('unavailable'):return []
+ preparation=bundle.get(plan['preparation']);domain=domains['TW']
+ need(preparation.get('status')=='PASS_CPU_PREPARED_TEXT_INPUTS' and preparation.get('gpu_executed') is False,'CPU input preparation not completed')
+ need(preparation.get('input_sha256')==domain['sha256'],'Unsupported layout input identity differs')
+ original=bundle.get(plan['source_deferred']);need(digest(original)==bundle.data['scheduler_deferrals']['plan']['canonical_sha256'],'Cached plan differs from deferred source')
+ canonical=bundle.objects[bundle.root+'/inputs/canonical/TW/receipt.json']['binding']
+ need(all(preparation['canonical_receipt'][k]==canonical[k] for k in ('path','bytes','sha256')),'Unsupported layout canonical binding differs')
+ detail=preparation['layouts']['wcc']
+ need(detail.get('status')=='UNSUPPORTED_FROZEN_INT32_LAYOUT' and detail.get('original_graph_layout_executed') is True and detail.get('gpu_executed') is False and str(detail.get('error','')).startswith('INDEX_UNSUPPORTED:'),'No executed original CPU index-layout rejection')
+ result=[]
+ for item in plan['unavailable']:
+  match=next((d for d in deferred if d['job_id']==item['id']),None)
+  need(match is not None and item['dataset']=='TW' and item['algorithm']=='wcc' and item['system']==match['system'] and item['system'] in ('grapin','hytgraph'),'Unsupported declaration outside the exact two TW WCC cells')
+  job=next(j for j in original['jobs'] if j['id']==item['id']);command=job['command'];worker=preparation['original_worker']
+  need(worker['path']==command[command.index('--worker')+1] and worker['sha256']==command[command.index('--worker-sha256')+1] and any(all(b.get(k)==worker.get(k) for k in ('path','bytes','sha256') if k in b) for b in job['bindings']),'CPU graph layout worker differs from original frozen author')
+  need(item['status']=='INPUT_LAYOUT_UNSUPPORTED_CPU' and item.get('gpu_measurement') is False and item['original_attempt']==match['receipt'] and item['detail']==detail and bundle.get(item['evidence'])==preparation,'Unsupported declaration/evidence differs')
+  result.append({**match,'status':'INPUT_LAYOUT_UNSUPPORTED_CPU','preparation':plan['preparation'],'detail':detail,'gpu_measurement':False,'function_implemented_on_other_inputs':True})
+ need(len(result)==len({d['system'] for d in result})==2,'Expected two distinct declared TW WCC limits')
+ return result
 
 
 def label(row):
@@ -154,8 +221,8 @@ def fmt(x):
 
 
 def build(bundle_path,authority_path,output,supplement=None):
- b=Bundle(bundle_path,supplement);authority=json.loads(Path(authority_path).read_text());freeze_key=b.data.get('selected_source_freeze','candidates/native_memory_input_v1/freeze.json');freeze=b.get(freeze_key)
- domains={g:b.domain(g) for g in GRAPHS};attempts=[];excluded=[]
+ b=Bundle(bundle_path,supplement);authority=json.loads(Path(authority_path).read_text());freeze_path=b.data.get('selected_source_freeze',authority.get('eggpu_source_freeze','candidates/unified_release_20261106/freeze.json'));freeze=b.get(freeze_path)
+ domains={g:b.domain(g) for g in GRAPHS};attempts=[];excluded=[];deferred=preparation_deferrals(b,domains);layout_limits=input_layout_limits(b,domains,deferred)
  for i,entry in enumerate(b.data['records']):
   raw=b.get(entry['path']);key=key_of(raw)
   if key[0] not in GRAPHS or key[1] not in ALGORITHMS or raw.get('phase') not in ('target','formal'):continue
@@ -164,9 +231,14 @@ def build(bundle_path,authority_path,output,supplement=None):
    epoch=b.get(raw['epoch'])
    if epoch.get('precision',{}).get('compute')!='author float32':
     excluded.append(dict(raw_receipt=entry['path'],cell=list(key),reason='Historical GUM FP64 PR; current baseline requires original author FP32',classification='historical_variant',raw_status=raw.get('status'),phase=raw.get('phase')));continue
-  try:r=observation(b,entry,freeze,domains);r['selection_order']=i;attempts.append(r)
+  try:
+   r=observation(b,entry,freeze,domains);r['selection_order']=i
+   declaration=next((d for d in deferred if d['active_attempt_cancelled_before_author_binary'] and d['receipt']==entry['path'] and d['job_id']==entry.get('job_id') and (d['dataset'],d['algorithm'],d['gpu_count'],d['system'],d['variant'])==key),None)
+   if declaration and r['status']!='FIRST_OBSERVATION_AVAILABLE':
+    r.update(original_attempt_status=r['status'],original_error=r.get('error'),status='DEFERRED_PREPARATION_ATTEMPT',scheduler_deferral=declaration,performance_outcome=False)
+   attempts.append(r)
   except (KeyError,ValueError,TypeError) as e:
-   excluded.append(dict(raw_receipt=entry['path'],cell=list(key),reason=str(e),raw_status=raw.get('status'),phase=raw.get('phase')))
+   excluded.append(dict(raw_receipt=entry['path'],cell=list(key),reason=str(e),raw_status=raw.get('status'),phase=raw.get('phase'),classification='historical_variant' if 'EGGPU source differs from current frozen release:' in str(e) else 'unresolved_evidence'))
  cells=[]
  for original_spec in authority['rows']:
   spec=dict(original_spec)
@@ -184,7 +256,12 @@ def build(bundle_path,authority_path,output,supplement=None):
     status='AVAILABLE' if selected else ('FAILED' if any(r['status']=='FAILED_ATTEMPT' for r in rows) else 'PENDING'),first_seconds=selected['first_seconds'] if selected else None,
     ready_seconds=selected['ready_seconds'] if selected else None,measurement_kind=selected['measurement_kind'] if selected else None,
     measurement_protocol=selected.get('measurement_protocol') if selected else None,raw_receipt=selected['raw_receipt'] if selected else None,attempts=[r['raw_receipt'] for r in rows],
+    cached_input_first_seconds=selected.get('cached_input_first_seconds') if selected else None,canonical_csr_cold_first_comparable=selected.get('canonical_csr_cold_first_comparable',True) if selected else None,
     excluded_attempts=[r for r in excluded if tuple(r['cell'])==key])
+   cell['preparation_deferrals']=[d for d in deferred if (d['dataset'],d['algorithm'],d['gpu_count'],d['system'],d['variant'])==key]
+   if not selected and cell['status']=='PENDING' and cell['preparation_deferrals']:cell['status']='DEFERRED_PREPARATION'
+   limit=next((d for d in layout_limits if (d['dataset'],d['algorithm'],d['gpu_count'],d['system'],d['variant'])==key),None)
+   if limit and not selected and cell['status'] in ('PENDING','DEFERRED_PREPARATION'):cell.update(status='INPUT_LAYOUT_UNSUPPORTED_CPU',input_layout_evidence=limit)
    if selected:cell['observation']=selected
    failure_rows=[r for r in rows if r['status']=='FAILED_ATTEMPT']
    cell['failure_reasons']=[r.get('error') or r.get('raw_status') for r in failure_rows]
@@ -201,31 +278,35 @@ def build(bundle_path,authority_path,output,supplement=None):
     group=[r for r in cells if (r['gpu_count'],r['dataset'],r['algorithm'])==(count,graph,algorithm)]
     own=next(r for r in group if r['role']=='eggpu');external=[r for r in group if r['role']=='external'];available=[r for r in external if r['status']=='AVAILABLE']
     row=dict(dataset=graph,algorithm=algorithm,gpu_count=count,eggpu_first_seconds=own['first_seconds'],eggpu_ready_seconds=own['ready_seconds'],
-     available_baselines=len(available),required_baselines=len(external),matrix_resolved=all(r['status'] in ('AVAILABLE','FAILED') for r in group),all_systems_have_usable_times=all(r['status']=='AVAILABLE' for r in group),strongest_observed_baseline=None,baseline_ready_seconds=None,speedup_ready=None,strongest_observed_baseline_first=None,baseline_first_seconds=None,speedup_first=None)
+     available_baselines=len(available),required_baselines=len(external),deferred_baselines=sum(r['status']=='DEFERRED_PREPARATION' for r in external),sota_comparison_eligible=all(r['status']=='AVAILABLE' for r in group),unsupported_layout_baselines=sum(r['status']=='INPUT_LAYOUT_UNSUPPORTED_CPU' for r in external),matrix_resolved=all(r['status'] in ('AVAILABLE','FAILED','INPUT_LAYOUT_UNSUPPORTED_CPU') for r in group),all_systems_have_usable_times=all(r['status']=='AVAILABLE' for r in group),strongest_observed_baseline=None,baseline_ready_seconds=None,speedup_ready=None,strongest_observed_baseline_first=None,baseline_first_seconds=None,speedup_first=None)
     if available:
      fastest=min(available,key=lambda r:r['ready_seconds']);row.update(strongest_observed_baseline=fastest['label'],baseline_ready_seconds=fastest['ready_seconds'])
      if own['ready_seconds'] is not None:row['speedup_ready']=fastest['ready_seconds']/own['ready_seconds']
-     first_best=min(available,key=lambda r:r['first_seconds']);row.update(strongest_observed_baseline_first=first_best['label'],baseline_first_seconds=first_best['first_seconds'])
-     if own['first_seconds'] is not None:row['speedup_first']=first_best['first_seconds']/own['first_seconds']
+     cold=[r for r in available if r['first_seconds'] is not None and r.get('canonical_csr_cold_first_comparable') is True]
+     if cold:
+      first_best=min(cold,key=lambda r:r['first_seconds']);row.update(strongest_observed_baseline_first=first_best['label'],baseline_first_seconds=first_best['first_seconds'])
+      if own['first_seconds'] is not None:row['speedup_first']=first_best['first_seconds']/own['first_seconds']
+    row['cold_first_available_baselines']=sum(r['first_seconds'] is not None and r.get('canonical_csr_cold_first_comparable') is True for r in available)
+    row['cold_first_comparison_eligible']=all(r['status']=='AVAILABLE' and r['first_seconds'] is not None and r.get('canonical_csr_cold_first_comparable') is True for r in group)
     comparisons.append(row)
  out=Path(output);out.mkdir(parents=True,exist_ok=True)
  report=dict(schema='eggpu.first-pass.e1.presentation.v1',status='PARTIAL_FIRST_OBSERVATIONS_NOT_COMPLETE_EVALUATION',observed_utc=b.data['observed_utc'],
   source_bundle={'path':str(Path(bundle_path).resolve()),'sha256':hashlib.sha256(Path(bundle_path).read_bytes()).hexdigest()},
   metadata_supplement={'path':str(Path(supplement).resolve()),'sha256':hashlib.sha256(Path(supplement).read_bytes()).hexdigest()} if supplement else None,
-  selected_native_protocol=b.data.get('selected_native_protocol'),input_domains={k:v['sha256'] for k,v in domains.items()},source_freeze=b.objects[b.root+'/'+freeze_key]['binding'],
+  selected_native_protocol=b.data.get('selected_native_protocol'),input_domains={k:v['sha256'] for k,v in domains.items()},source_freeze=b.objects[b.root+'/'+freeze_path]['binding'],
   selection='Existing complete target first in original plan order, otherwise formal r0; never fastest replicate. Every failure and unavailable cell retained.',
   timings='Seconds per complete host-owned result; first includes preparation, ready retains prepared state. BFS/SSSP mean over fixed three sources is one observation; queue wall is excluded.',
   evidence='Recorded full-vector correctness and source/input JSON evidence reused. No new array reads or GPU execution; target receipts remain target, not formal.',
-  cells=cells,comparisons=comparisons,excluded=excluded,all_attempts=attempts,
-  counts={'required_cells':len(cells),'available_cells':sum(x['status']=='AVAILABLE' for x in cells),'pending_cells':sum(x['status']=='PENDING' for x in cells),'failed_cells':sum(x['status']=='FAILED' for x in cells),'review_cells':sum(x['status']=='REVIEW_NEEDED' for x in cells)})
+  cells=cells,comparisons=comparisons,excluded=excluded,all_attempts=attempts,scheduler_deferrals=deferred,input_layout_limits=layout_limits,
+  counts={'required_cells':len(cells),'available_cells':sum(x['status']=='AVAILABLE' for x in cells),'pending_cells':sum(x['status'] in ('PENDING','DEFERRED_PREPARATION') for x in cells),'deferred_preparation_cells':sum(x['status']=='DEFERRED_PREPARATION' for x in cells),'input_layout_unsupported_cells':sum(x['status']=='INPUT_LAYOUT_UNSUPPORTED_CPU' for x in cells),'failed_cells':sum(x['status']=='FAILED' for x in cells),'review_cells':sum(x['status']=='REVIEW_NEEDED' for x in cells)})
  if report['counts']['pending_cells']==0 and report['counts']['review_cells']==0:
-  report['status']='COMPLETE_FIRST_PASS_WITH_RECORDED_FAILURES' if report['counts']['failed_cells'] else 'COMPLETE_FIRST_PASS_ALL_CELLS_HAVE_USABLE_OBSERVATIONS'
+  report['status']='COMPLETE_FIRST_PASS_WITH_RECORDED_FAILURES_OR_INPUT_LIMITS' if report['counts']['failed_cells'] or report['counts']['input_layout_unsupported_cells'] else 'COMPLETE_FIRST_PASS_ALL_CELLS_HAVE_USABLE_OBSERVATIONS'
  report['complete_first_pass']=report['counts']['pending_cells']==0 and report['counts']['review_cells']==0
  report['all_cells_have_usable_times']=report['counts']['available_cells']==report['counts']['required_cells']
  (out/'first_pass.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
- missing=[{k:x[k] for k in ('gpu_count','dataset','algorithm','system','variant','label','status','failure_class','failure_reasons','attempts','excluded_attempts')} for x in cells if x['status']!='AVAILABLE']
+ missing=[{k:x[k] for k in ('gpu_count','dataset','algorithm','system','variant','label','status','failure_class','failure_reasons','attempts','excluded_attempts','preparation_deferrals')} for x in cells if x['status']!='AVAILABLE']
  (out/'missing_cells.json').write_text(json.dumps(missing,ensure_ascii=False,indent=2)+'\n')
- fields=['gpu_count','dataset','algorithm','label','status','first_seconds','ready_seconds','measurement_kind','measurement_protocol','raw_receipt','failure_class','failure_reasons']
+ fields=['gpu_count','dataset','algorithm','label','status','first_seconds','ready_seconds','cached_input_first_seconds','canonical_csr_cold_first_comparable','measurement_kind','measurement_protocol','raw_receipt','failure_class','failure_reasons']
  with (out/'all_systems.csv').open('w',newline='') as f:
   writer=csv.DictWriter(f,fieldnames=fields,extrasaction='ignore');writer.writeheader();writer.writerows(cells)
  with (out/'comparison.csv').open('w',newline='') as f:
@@ -238,8 +319,16 @@ def build(bundle_path,authority_path,output,supplement=None):
   for count in (1,8):
    markdown+=['## '+('单卡' if count==1 else '8 卡')+' · '+title,'','| 图 | 算法 | EGGPU (s) | 已测最快对手 | 对手 (s) | 相对速度 | 对手覆盖 |','|---|---|---:|---|---:|---:|---:|']
    for r in comparisons:
-    if r['gpu_count']==count:markdown.append('| '+ ' | '.join([r['dataset'],r['algorithm'].upper(),fmt(r['eggpu_'+metric+'_seconds']),r[name] or '—',fmt(r.get('baseline_'+metric+'_seconds')),fmt(r['speedup_'+metric])+'×' if r['speedup_'+metric] is not None else '—',f"{r['available_baselines']}/{r['required_baselines']}"])+' |')
+    if r['gpu_count']==count:markdown.append('| '+ ' | '.join([r['dataset'],r['algorithm'].upper(),fmt(r['eggpu_'+metric+'_seconds']),r[name] or '—',fmt(r.get('baseline_'+metric+'_seconds')),fmt(r['speedup_'+metric])+'×' if r['speedup_'+metric] is not None else '—',f"{r['cold_first_available_baselines'] if metric=='first' else r['available_baselines']}/{r['required_baselines']}"])+' |')
    markdown+=['','相对速度仅针对该计时边界下的已测对手；覆盖未齐时不代表完整对手集合上的领先。','']
+ markdown.extend(['## 缓存输入首耗时补充','', '缓存输入回执的 ready 保持原作者 native call2；首耗时只记入 cached_input_first_seconds，不进入共同 canonical CSR 起点的 cold-first 比较。原结果与缓存使用记录均保留绑定。',''])
+ for cell in cells:
+  if cell.get('cached_input_first_seconds') is not None:markdown.append(f"- {cell['dataset']} / {cell['algorithm'].upper()} / {cell['label']}：cached-input first {cell['cached_input_first_seconds']:.6g} s。")
+ markdown.extend(['## 调度延期（准备阶段，待完成）',''])
+ for cell in cells:
+  if cell['status']=='DEFERRED_PREPARATION':markdown.append(f"- {cell['dataset']} / {cell['algorithm'].upper()} / {cell['label']}：DEFERRED_PREPARATION；作者二进制执行前延后，保留原取消与准备记录，无算法时间，不计失败或胜负。")
+ for cell in cells:
+  if cell['status']=='INPUT_LAYOUT_UNSUPPORTED_CPU':markdown.append(f"- {cell['dataset']} / {cell['algorithm'].upper()} / {cell['label']}：INPUT_LAYOUT_UNSUPPORTED_CPU；原 CPU 图布局实际触发 int32 索引限制，已收束，无 GPU 时间、不计算法失败或胜负；该函数在其他图仍有实现。")
  markdown.extend(['## 实际失败分类','', '| 资源 | 图 | 算法 | 系统 | 原因 |','|---|---|---|---|---|'])
  for cell in cells:
   if cell['status']=='FAILED':markdown.append(f"| {cell['gpu_count']} GPU | {cell['dataset']} | {cell['algorithm'].upper()} | {cell['label']} | {cell['failure_class']} |")
@@ -260,13 +349,19 @@ def render_html(report,out):
      table.append('<tr><th>'+graph+'</th><th>'+alg.upper()+'</th>')
      for name in labels:
       r=next((x for x in rows if x['dataset']==graph and x['algorithm']==alg and x['label']==name),None)
-      text=fmt(r[metric]) if r and r['status']=='AVAILABLE' else {'FAILED':'FAIL','REVIEW_NEEDED':'CHECK','PENDING':'—'}.get(r['status'],'N/A') if r else 'N/A'
+      text=fmt(r[metric]) if r and r['status']=='AVAILABLE' else {'FAILED':'FAIL','REVIEW_NEEDED':'CHECK','PENDING':'—','DEFERRED_PREPARATION':'DEFER','INPUT_LAYOUT_UNSUPPORTED_CPU':'IDX-CPU'}.get(r['status'],'N/A') if r else 'N/A'
       if r and r['status']=='FAILED':text={'INDEX_LIMIT':'IDX','QUALITY_FAILED':'QF','PREPROCESSING_TIMEOUT':'TO-prep','TIMEOUT':'TO','PROCESS_FAILURE':'FAIL-proc'}.get(r.get('failure_class'),'FAIL')
       tooltip=html.escape((r.get('raw_receipt') or '; '.join(str(x) for x in [*r.get('failure_reasons',[]),*r.get('attempts',[])] if x) or r['status']) if r else 'Not applicable',quote=True)
       table.append('<td title="'+tooltip+'">'+text+'</td>')
      table.append('</tr>')
    table.append('</tbody></table>');sections.append(f'<h2>{count} GPU · {title}</h2>'+''.join(table))
- text='''<!doctype html><meta charset="utf-8"><title>EGGPU first-pass measurements</title><style>body{font:14px system-ui,sans-serif;color:#172033;margin:28px}h1{font-size:24px}h2{font-size:18px;margin-top:32px}p{max-width:1000px;line-height:1.7}table{border-collapse:collapse;font-variant-numeric:tabular-nums}th,td{padding:7px 10px;border-bottom:1px solid #e4e7eb;text-align:right}th{background:#f3f5f7}tr:nth-child(4n+1) td,tr:nth-child(4n+1) th{border-top:2px solid #b7bec9}td:hover{background:#e4eef7}</style><h1>首轮比较 · 每格一次完整观测</h1><p>固定七图与全部适用 baseline。已有完整 target 测量按原身份复用，不重标为 formal；数值使用原始 T_first/T_ready，不使用队列总耗时。— 待完成；IDX 索引限制；QF 输出质量未过；TO-prep 准备超时；FAIL-proc 进程失败；FAIL 其他失败；CHECK 来源或合同需核对；N/A 不适用。鼠标停留显示原始证据路径。</p>'''+''.join(sections)
+ text='''<!doctype html><meta charset="utf-8"><title>EGGPU first-pass measurements</title><style>body{font:14px system-ui,sans-serif;color:#172033;margin:28px}h1{font-size:24px}h2{font-size:18px;margin-top:32px}p{max-width:1000px;line-height:1.7}table{border-collapse:collapse;font-variant-numeric:tabular-nums}th,td{padding:7px 10px;border-bottom:1px solid #e4e7eb;text-align:right}th{background:#f3f5f7}tr:nth-child(4n+1) td,tr:nth-child(4n+1) th{border-top:2px solid #b7bec9}td:hover{background:#e4eef7}</style><h1>首轮比较 · 每格一次完整观测</h1><p>固定七图与全部适用 baseline。已有完整 target 测量按原身份复用，不重标为 formal；数值使用原始 T_first/T_ready，不使用队列总耗时。— 待完成；DEFER 准备调度延期（不计失败或胜负）；IDX 索引限制；QF 输出质量未过；TO-prep 准备超时；FAIL-proc 进程失败；FAIL 其他失败；CHECK 来源或合同需核对；N/A 不适用。鼠标停留显示原始证据路径。</p>'''+''.join(sections)
+ if report['counts'].get('input_layout_unsupported_cells'):text+='<p>IDX-CPU：原作者 CPU 图布局已实际触发 int32 索引限制，保留完整准备回执；该格已收束，无 GPU 算法时间，不表示该函数在其他图未实现，不进入胜负分母。</p>'
+ cached=[r for r in report['cells'] if r.get('cached_input_first_seconds') is not None]
+ if cached:
+  text+='<h2>Cached-input first · supplement</h2><p>以下首耗时使用已缓存的精确输入，只作补充，不进入 canonical-CSR cold-first 比较。主表 ready 保持作者原 native call2，原结果、缓存使用和输出校验绑定见 JSON/CSV。</p><table><tr><th>Graph</th><th>Algorithm</th><th>System</th><th>Time(s)</th></tr>'
+  for row in cached:text+='<tr><td>'+row['dataset']+'</td><td>'+row['algorithm'].upper()+'</td><td>'+html.escape(row['label'])+'</td><td>'+fmt(row['cached_input_first_seconds'])+'</td></tr>'
+  text+='</table>'
  (out/'first_pass.html').write_text(text)
 
 

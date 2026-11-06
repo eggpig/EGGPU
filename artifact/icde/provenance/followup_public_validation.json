@@ -1,0 +1,18 @@
+{
+  "schema": "eggpu.public-followup-validation.v1",
+  "status": "PASS_TARGETED_CPU_PUBLIC_PROJECTION",
+  "gpu_executed": false,
+  "source_implementation_changed": false,
+  "new_target_measurements": false,
+  "checks": [
+    "All changed Python sources compile without generating bytecode",
+    "Actual captured E1 metadata preserves 217 external observations and 20 failures, with old-source cells historical before protocol review",
+    "Actual captured E2/E4S/E6 metadata and exact twenty-P8 continuation mappings reproduce prior validated results",
+    "Collector explicit-source API and portable watcher CPU placement CLI remain available",
+    "Latest figure drawing functions are identical; public scalar input reproduces original measured primary and four-request clocks",
+    "Public scalar validator rejects mismatched primary interval"
+  ],
+  "cache_validation": "campaign/author_text_cache/public_cpu_validation.json",
+  "historical_runtime_logic_validation": "provenance/remaining_export/validation.json",
+  "private_metadata_replayed_but_not_distributed": true
+}

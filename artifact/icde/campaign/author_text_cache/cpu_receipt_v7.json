@@ -1,0 +1,103 @@
+{
+  "status": "PASS_CPU_EXACT_TEXT_CACHE",
+  "checks": [
+    "Compiled serializer byte-identical to original NumPy write_layout for both loaders",
+    "Fail-on-resource memory preflight exits after one check without a polling wait; disk shortage always fails directly",
+    "Empty graph, empty CSR rows, uint32 limits, 2^18 chunk boundary and >8 MiB buffered output checked",
+    "Fractional weights, invalid destination/offsets and overwrite rejected",
+    "Six BFS/SSSP/PR system/function consumers reuse one exact cache blob without conversion",
+    "Read-only hardlink cleanup retains cache; immutable producer metadata binding remains unchanged",
+    "Unprepared cache and writable cached payload rejected",
+    "Eight successor jobs preserve every original worker argument except new output path; unsupported weak layouts remain two explicit CPU-evidence cells",
+    "CPU-only wrapper fixture preserves raw receipt and every call value; derived receipt explicitly separates cached first and unchanged ready",
+    "Original worker, graph_layout, native invocations, algorithms and numerical checks not edited",
+    "Only CPU serializer and file lifecycle exercised; no GPU calls or author binary invocation"
+  ],
+  "source": {
+    "path": "workspace/experiments/campaign_20261104/first_pass_20261106/author_text_cache/csr_text.cpp",
+    "bytes": 3067,
+    "sha256": "3aaeee421fc90427b0b809e4fdba0f56a352a3fb0906812222cc2f9d0b5a07d1"
+  },
+  "original_worker": {
+    "path": "workspace/experiments/campaign_20261104/runner_candidates/sg_author_clock_v3/baselines/sg_author_worker.py",
+    "bytes": 24723,
+    "sha256": "6bf142f74d5e621b03ebe143914f197957f156c2887805e052573e626e26b137"
+  },
+  "fixtures": [
+    {
+      "fixture": 0,
+      "system": "grapin",
+      "n": 1,
+      "m": 0,
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixture": 0,
+      "system": "hytgraph",
+      "n": 1,
+      "m": 0,
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixture": 1,
+      "system": "grapin",
+      "n": 7,
+      "m": 8,
+      "bytes": 60,
+      "sha256": "e5551790c49f933bd7a4498016db1cb58cdbbbc7986beef70794c9c57d521699"
+    },
+    {
+      "fixture": 1,
+      "system": "hytgraph",
+      "n": 7,
+      "m": 8,
+      "bytes": 60,
+      "sha256": "e5551790c49f933bd7a4498016db1cb58cdbbbc7986beef70794c9c57d521699"
+    },
+    {
+      "fixture": 2,
+      "system": "grapin",
+      "n": 19,
+      "m": 262147,
+      "bytes": 2397374,
+      "sha256": "a934a1c2f5f576679d99386b13b934f56dee544c498666d28d1bbd223ad8dfd8"
+    },
+    {
+      "fixture": 2,
+      "system": "hytgraph",
+      "n": 19,
+      "m": 262147,
+      "bytes": 2397374,
+      "sha256": "a934a1c2f5f576679d99386b13b934f56dee544c498666d28d1bbd223ad8dfd8"
+    },
+    {
+      "fixture": 3,
+      "system": "grapin",
+      "n": 1024,
+      "m": 1000003,
+      "bytes": 12033039,
+      "sha256": "df317462f668ec43a9572bf1b8e5d1c62119b2601cd9db2182387dafb25f0d05"
+    },
+    {
+      "fixture": 3,
+      "system": "hytgraph",
+      "n": 1024,
+      "m": 1000003,
+      "bytes": 12033039,
+      "sha256": "df317462f668ec43a9572bf1b8e5d1c62119b2601cd9db2182387dafb25f0d05"
+    }
+  ],
+  "synthetic_fixture_timings_not_TW_ETA": true,
+  "gpu_executed": false,
+  "public_projection": {
+    "upstream": {
+      "bytes": 4704,
+      "sha256": "8e72cac3a3a7bd83539d6297d9cf93fe371ab08510ef884c4c231fb155bef03a"
+    },
+    "historical_original_receipt": true,
+    "private_paths_removed": true,
+    "does_not_validate_unexecuted_GPU_jobs": true
+  }
+}

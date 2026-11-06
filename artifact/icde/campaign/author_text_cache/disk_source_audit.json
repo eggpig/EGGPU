@@ -1,0 +1,620 @@
+{
+  "schema": "author.cached_text_incremental_disk_source_audit.v1",
+  "status": "PASS_READ_ONLY_SOURCE_AUDIT",
+  "gpu_executed": false,
+  "remote_writes": false,
+  "measured_binary_or_source_changed": false,
+  "scope": "Queued frozen Grapin/HyTGraph TW BFS/SSSP/PR only, selected by sg_clock_build_v4 receipts. WCC is separately unsupported by unchanged int32 input guard.",
+  "conclusion": "No persistent edge-sized graph cache is written by the frozen market_big load or invoked Grapin LoadCache route. Shared input text hardlinks consume no second payload. Remaining payload writes are three raw FP64 vectors, up to three NPY archives and one missing NPY reference per source.",
+  "selected_v4_build_receipts": [
+    {
+      "unit": "grapin_static",
+      "binding": {
+        "path": "campaign/baselines/sg_clock_build_v4/grapin_static/receipt.json",
+        "bytes": 4371,
+        "sha256": "5b435d277d5f4d3b8bb692e3accb6f63c365348e3b4c0e7f498265b987cc19d8"
+      },
+      "binaries": {
+        "bfs": {
+          "path": "campaign/baselines/sg_clock_build_v3/grapin_static/build/grapin_bfs",
+          "sha256": "66c570b48c661f6d07cf3e31f3e0f5e6d9c0db4859c14250a9ae87e0930eda85"
+        },
+        "pr": {
+          "path": "campaign/baselines/sg_clock_build_v3/grapin_static/build/grapin_pr",
+          "sha256": "a3af6d5cff05edb6465e3e559565540e0658b5228da63a8723cfa44f38676b18"
+        }
+      },
+      "source_build_steps": [
+        {
+          "argv": [
+            "runtime/envs/core/bin/cmake",
+            "-S",
+            "campaign/baselines/sg_clock_build_v3/grapin_static/source",
+            "-B",
+            "campaign/baselines/sg_clock_build_v3/grapin_static/build",
+            "-DCMAKE_BUILD_TYPE=Release",
+            "-DCMAKE_CUDA_RUNTIME_LIBRARY=Shared",
+            "-DCMAKE_CUDA_ARCHITECTURES=89",
+            "-DCMAKE_CXX_COMPILER=/usr/bin/g++",
+            "-DCMAKE_CUDA_HOST_COMPILER=/usr/bin/g++",
+            "-DCMAKE_CUDA_COMPILER=runtime/envs/cuda128/bin/nvcc",
+            "-DCUDAToolkit_ROOT=runtime/envs/cuda128/targets/x86_64-linux",
+            "-DCMAKE_POLICY_VERSION_MINIMUM=3.5",
+            "-DGRAPIN_NVTX_INCLUDE=/usr/local/cuda/include/nvtx3",
+            "-DTHRUST_INCLUDE_DIR=runtime/envs/cuda128/targets/x86_64-linux/include"
+          ],
+          "returncode": 0,
+          "seconds": 3.44857644662261
+        },
+        {
+          "argv": [
+            "runtime/envs/core/bin/cmake",
+            "--build",
+            "campaign/baselines/sg_clock_build_v3/grapin_static/build",
+            "--target",
+            "grapin_bfs",
+            "grapin_pr",
+            "-j",
+            "1"
+          ],
+          "returncode": 0,
+          "seconds": 52.43627390265465
+        }
+      ],
+      "source_lineage": "v4 receipt explicitly selects unchanged v3 binary and v3 source build path"
+    },
+    {
+      "unit": "grapin_sssp",
+      "binding": {
+        "path": "campaign/baselines/sg_clock_build_v4/grapin_sssp/receipt.json",
+        "bytes": 3451,
+        "sha256": "0f23cd4977cb2df4a19d196bb8be3fd56cf9756e3c18368b2a5cde947b8dbc3c"
+      },
+      "binaries": {
+        "sssp": {
+          "path": "campaign/baselines/sg_clock_build_v3/grapin_sssp/build/grapin_sssp",
+          "sha256": "1bc567b43c4146adced8dc0dca82e907453f61e695d5c25fda31f96c09aca631"
+        }
+      },
+      "source_build_steps": [
+        {
+          "argv": [
+            "runtime/envs/core/bin/cmake",
+            "-S",
+            "campaign/baselines/sg_clock_build_v3/grapin_sssp/source",
+            "-B",
+            "campaign/baselines/sg_clock_build_v3/grapin_sssp/build",
+            "-DCMAKE_BUILD_TYPE=Release",
+            "-DCMAKE_CUDA_RUNTIME_LIBRARY=Shared",
+            "-DCMAKE_CUDA_ARCHITECTURES=89",
+            "-DCMAKE_CXX_COMPILER=/usr/bin/g++",
+            "-DCMAKE_CUDA_HOST_COMPILER=/usr/bin/g++",
+            "-DCMAKE_CUDA_COMPILER=runtime/envs/cuda128/bin/nvcc",
+            "-DCUDAToolkit_ROOT=runtime/envs/cuda128/targets/x86_64-linux",
+            "-DCMAKE_POLICY_VERSION_MINIMUM=3.5",
+            "-DGRAPIN_NVTX_INCLUDE=/usr/local/cuda/include/nvtx3",
+            "-DTHRUST_INCLUDE_DIR=runtime/envs/cuda128/targets/x86_64-linux/include"
+          ],
+          "returncode": 0,
+          "seconds": 4.654130585491657
+        },
+        {
+          "argv": [
+            "runtime/envs/core/bin/cmake",
+            "--build",
+            "campaign/baselines/sg_clock_build_v3/grapin_sssp/build",
+            "--target",
+            "grapin_sssp",
+            "-j",
+            "1"
+          ],
+          "returncode": 0,
+          "seconds": 30.9921120069921
+        }
+      ],
+      "source_lineage": "v4 receipt explicitly selects unchanged v3 binary and v3 source build path"
+    },
+    {
+      "unit": "hytgraph",
+      "binding": {
+        "path": "campaign/baselines/sg_clock_build_v4/hytgraph/receipt.json",
+        "bytes": 5895,
+        "sha256": "09ae525ccd0f60b7d8be4a0e766299931b350fd16b30b2ab1d4fef78345d72c6"
+      },
+      "binaries": {
+        "bfs": {
+          "path": "campaign/baselines/sg_clock_build_v3/hytgraph/build/hytgraph_bfs",
+          "sha256": "7fd115a18904a766306a7e3ce8bc81eb6c390afbda781e6e063c7e467d44a4db"
+        },
+        "sssp": {
+          "path": "campaign/baselines/sg_clock_build_v3/hytgraph/build/hytgraph_sssp",
+          "sha256": "dc7551a736b43bb20f6a902e562ddf61f78ad97888b4a6d651d7bf2f0d149bee"
+        },
+        "cc": {
+          "path": "campaign/baselines/sg_clock_build_v3/hytgraph/build/hytgraph_cc",
+          "sha256": "1b49eb2bea68c5db3609aaced0bf6f0ca8919f925e1d553581796b0eb4366064"
+        },
+        "pr": {
+          "path": "campaign/baselines/sg_clock_build_v3/hytgraph/build/hytgraph_pr",
+          "sha256": "f1f058ed9387e2a1faf374e8bba2b49e9a12c2a3c5a3a977ce28185e469e24dd"
+        }
+      },
+      "source_build_steps": [
+        {
+          "argv": [
+            "runtime/envs/core/bin/cmake",
+            "-S",
+            "campaign/baselines/sg_clock_build_v3/hytgraph/source",
+            "-B",
+            "campaign/baselines/sg_clock_build_v3/hytgraph/build",
+            "-DCMAKE_BUILD_TYPE=Release",
+            "-DCMAKE_CUDA_COMPILER=runtime/envs/cuda128/bin/nvcc",
+            "-DCUDAToolkit_ROOT=runtime/envs/cuda128/targets/x86_64-linux",
+            "-DCMAKE_CUDA_RUNTIME_LIBRARY=Shared",
+            "-DCMAKE_POLICY_VERSION_MINIMUM=3.5",
+            "-DCMAKE_CUDA_ARCHITECTURES=89",
+            "-DCMAKE_CXX_COMPILER=/usr/bin/g++",
+            "-DCMAKE_CUDA_HOST_COMPILER=/usr/bin/g++",
+            "-DHYTGRAPH_NVTX_INCLUDE=/usr/local/cuda/include/nvtx3"
+          ],
+          "returncode": 0,
+          "seconds": 3.402720145881176
+        },
+        {
+          "argv": [
+            "runtime/envs/core/bin/cmake",
+            "--build",
+            "campaign/baselines/sg_clock_build_v3/hytgraph/build",
+            "-j",
+            "1"
+          ],
+          "returncode": 0,
+          "seconds": 68.94966310635209
+        }
+      ],
+      "source_lineage": "v4 receipt explicitly selects unchanged v3 binary and v3 source build path"
+    }
+  ],
+  "source_checks": [
+    {
+      "unit": "grapin_static",
+      "role": "Two input-only ifstream passes; no persistent graph cache writes; alternate gr/metis/market readers are empty stubs",
+      "lines": [
+        [
+          299,
+          410
+        ]
+      ],
+      "binding": {
+        "path": "campaign/baselines/sg_clock_build_v3/grapin_static/source/source/src/utils/parser.cpp",
+        "bytes": 9936,
+        "sha256": "b388aaf9367629d84cb48ec36eeffcd6e0b758892c491d8b10fc551c8fa3bcb4"
+      }
+    },
+    {
+      "unit": "grapin_static",
+      "role": "GetCachedGraph uses process-memory std::map<string,graph_t*> only",
+      "lines": [
+        [
+          41,
+          105
+        ]
+      ],
+      "binding": {
+        "path": "campaign/baselines/sg_clock_build_v3/grapin_static/source/source/src/utils/utils.cpp",
+        "bytes": 11637,
+        "sha256": "69a7ab5b35fab715c81f06ce09c770e54e8d0dd5705137e8ab33d9391ebd349a"
+      }
+    },
+    {
+      "unit": "grapin_static",
+      "role": "LoadCache/LoadGraph allocate host/device graph state; no disk serialization on the invoked route",
+      "lines": [
+        [
+          1938,
+          2084
+        ]
+      ],
+      "binding": {
+        "path": "campaign/baselines/sg_clock_build_v3/grapin_static/source/source/include/framework/framework.cuh",
+        "bytes": 234249,
+        "sha256": "dbb0338d17d92d897e3b72de7f954e1550d1ade2560574e7150ebf7ed99fd78d"
+      }
+    },
+    {
+      "unit": "grapin_static",
+      "role": "output and json flags default to empty; frozen invocation does not enable them",
+      "lines": [
+        [
+          54,
+          67
+        ]
+      ],
+      "binding": {
+        "path": "campaign/baselines/sg_clock_build_v3/grapin_static/source/source/include/utils/app_skeleton.h",
+        "bytes": 7089,
+        "sha256": "12cdfc428e9cffd95f6ea6ca457732f04cd995521acecd861324348d6b7ca4c2"
+      }
+    },
+    {
+      "unit": "grapin_static",
+      "algorithm": "bfs",
+      "role": "Archives exactly three complete owning float64 vectors after all measured calls; output.0.f64, output.1.f64, output.2.f64, each n*8 bytes",
+      "binding": {
+        "path": "campaign/baselines/sg_clock_build_v3/grapin_static/source/source/samples/hybrid_bfs/hybrid_bfs.cu",
+        "bytes": 9134,
+        "sha256": "052be93f448e5b25a730b9749f4355b545709e35a313250de81209376610dcf9"
+      }
+    },
+    {
+      "unit": "grapin_static",
+      "algorithm": "pr",
+      "role": "Archives exactly three complete owning float64 vectors after all measured calls; output.0.f64, output.1.f64, output.2.f64, each n*8 bytes",
+      "binding": {
+        "path": "campaign/baselines/sg_clock_build_v3/grapin_static/source/source/samples/hybrid_pr/hybrid_pr.cu",
+        "bytes": 8525,
+        "sha256": "e748618427a8836c8860f37385516a2635c9f32b415ebf871d2dc8886c157ab5"
+      }
+    },
+    {
+      "unit": "grapin_sssp",
+      "role": "Two input-only ifstream passes; no persistent graph cache writes; alternate gr/metis/market readers are empty stubs",
+      "lines": [
+        [
+          299,
+          410
+        ]
+      ],
+      "binding": {
+        "path": "campaign/baselines/sg_clock_build_v3/grapin_sssp/source/source/src/utils/parser.cpp",
+        "bytes": 9936,
+        "sha256": "b388aaf9367629d84cb48ec36eeffcd6e0b758892c491d8b10fc551c8fa3bcb4"
+      }
+    },
+    {
+      "unit": "grapin_sssp",
+      "role": "GetCachedGraph uses process-memory std::map<string,graph_t*> only",
+      "lines": [
+        [
+          41,
+          105
+        ]
+      ],
+      "binding": {
+        "path": "campaign/baselines/sg_clock_build_v3/grapin_sssp/source/source/src/utils/utils.cpp",
+        "bytes": 11637,
+        "sha256": "69a7ab5b35fab715c81f06ce09c770e54e8d0dd5705137e8ab33d9391ebd349a"
+      }
+    },
+    {
+      "unit": "grapin_sssp",
+      "role": "LoadCache/LoadGraph allocate host/device graph state; no disk serialization on the invoked route",
+      "lines": [
+        [
+          1938,
+          2084
+        ]
+      ],
+      "binding": {
+        "path": "campaign/baselines/sg_clock_build_v3/grapin_sssp/source/source/include/framework/framework.cuh",
+        "bytes": 234249,
+        "sha256": "dbb0338d17d92d897e3b72de7f954e1550d1ade2560574e7150ebf7ed99fd78d"
+      }
+    },
+    {
+      "unit": "grapin_sssp",
+      "role": "output and json flags default to empty; frozen invocation does not enable them",
+      "lines": [
+        [
+          54,
+          67
+        ]
+      ],
+      "binding": {
+        "path": "campaign/baselines/sg_clock_build_v3/grapin_sssp/source/source/include/utils/app_skeleton.h",
+        "bytes": 7089,
+        "sha256": "12cdfc428e9cffd95f6ea6ca457732f04cd995521acecd861324348d6b7ca4c2"
+      }
+    },
+    {
+      "unit": "grapin_sssp",
+      "algorithm": "sssp",
+      "role": "Archives exactly three complete owning float64 vectors after all measured calls; output.0.f64, output.1.f64, output.2.f64, each n*8 bytes",
+      "binding": {
+        "path": "campaign/baselines/sg_clock_build_v3/grapin_sssp/source/source/samples/hybrid_sssp/hybrid_sssp.cu",
+        "bytes": 14249,
+        "sha256": "8a52c031a2adfb90904f0c25c562016b9352de0febca72b37f6b355dee652784"
+      }
+    },
+    {
+      "unit": "hytgraph",
+      "role": "Two input-only ifstream passes; no persistent graph cache writes; alternate gr/metis/market readers are empty stubs",
+      "lines": [
+        [
+          301,
+          416
+        ]
+      ],
+      "binding": {
+        "path": "campaign/baselines/sg_clock_build_v3/hytgraph/source/src/utils/parser.cpp",
+        "bytes": 10038,
+        "sha256": "0071682a8f75e540710abb06ac10e557ae0fcf2a041b816ee4f06e0f78b9d397"
+      }
+    },
+    {
+      "unit": "hytgraph",
+      "role": "GetCachedGraph uses process-memory std::map<string,graph_t*> only",
+      "lines": [
+        [
+          41,
+          105
+        ]
+      ],
+      "binding": {
+        "path": "campaign/baselines/sg_clock_build_v3/hytgraph/source/src/utils/utils.cpp",
+        "bytes": 10326,
+        "sha256": "93a9191481ee2fa41603582bd77c34a711c6b69eb3dee34f6a351f6b798df144"
+      }
+    },
+    {
+      "unit": "hytgraph",
+      "role": "LoadCache/LoadGraph allocate host/device graph state; no disk serialization on the invoked route",
+      "lines": [
+        [
+          128,
+          213
+        ]
+      ],
+      "binding": {
+        "path": "campaign/baselines/sg_clock_build_v3/hytgraph/source/include/framework/framework.cuh",
+        "bytes": 54695,
+        "sha256": "6f58f8d7a0a9e2d37ab466d80b8ab35e957137a4e936c38177f84f4d42417d24"
+      }
+    },
+    {
+      "unit": "hytgraph",
+      "role": "output and json flags default to empty; frozen invocation does not enable them",
+      "lines": [
+        [
+          54,
+          67
+        ]
+      ],
+      "binding": {
+        "path": "campaign/baselines/sg_clock_build_v3/hytgraph/source/include/utils/app_skeleton.h",
+        "bytes": 6619,
+        "sha256": "5ca6fd77a2144b8c86875962a8d8c83ee556c43997f76bd055e9599e38912655"
+      }
+    },
+    {
+      "unit": "hytgraph",
+      "algorithm": "bfs",
+      "role": "Archives exactly three complete owning float64 vectors after all measured calls; output.0.f64, output.1.f64, output.2.f64, each n*8 bytes",
+      "binding": {
+        "path": "campaign/baselines/sg_clock_build_v3/hytgraph/source/samples/hybrid_bfs/hybrid_bfs.cu",
+        "bytes": 6729,
+        "sha256": "c4c0c6b15e651a5f0789edd68c84159d8b89528ae41efeda43e14c8a460d0b55"
+      }
+    },
+    {
+      "unit": "hytgraph",
+      "algorithm": "sssp",
+      "role": "Archives exactly three complete owning float64 vectors after all measured calls; output.0.f64, output.1.f64, output.2.f64, each n*8 bytes",
+      "binding": {
+        "path": "campaign/baselines/sg_clock_build_v3/hytgraph/source/samples/hybrid_sssp/hybrid_sssp.cu",
+        "bytes": 8253,
+        "sha256": "60cf7806bce0fd3e93e2ddcc56215eb80569a49baf5067c097623e5e0dbc8abf"
+      }
+    },
+    {
+      "unit": "hytgraph",
+      "algorithm": "pr",
+      "role": "Archives exactly three complete owning float64 vectors after all measured calls; output.0.f64, output.1.f64, output.2.f64, each n*8 bytes",
+      "binding": {
+        "path": "campaign/baselines/sg_clock_build_v3/hytgraph/source/samples/hybrid_pr/hybrid_pr.cu",
+        "bytes": 6677,
+        "sha256": "deb463b65750cfb074d05bc254c30be52593ab5c4bb511cb83e1616ee4e4f1e2"
+      }
+    }
+  ],
+  "v4_alias_sources": [
+    {
+      "unit": "grapin_static",
+      "path": "campaign/baselines/sg_clock_build_v4/grapin_static/source/source/src/utils/parser.cpp",
+      "bytes": 9936,
+      "sha256": "b388aaf9367629d84cb48ec36eeffcd6e0b758892c491d8b10fc551c8fa3bcb4"
+    },
+    {
+      "unit": "grapin_static",
+      "path": "campaign/baselines/sg_clock_build_v4/grapin_static/source/source/src/utils/utils.cpp",
+      "bytes": 11637,
+      "sha256": "69a7ab5b35fab715c81f06ce09c770e54e8d0dd5705137e8ab33d9391ebd349a"
+    },
+    {
+      "unit": "grapin_static",
+      "path": "campaign/baselines/sg_clock_build_v4/grapin_static/source/source/include/framework/framework.cuh",
+      "bytes": 234249,
+      "sha256": "dbb0338d17d92d897e3b72de7f954e1550d1ade2560574e7150ebf7ed99fd78d"
+    },
+    {
+      "unit": "grapin_static",
+      "path": "campaign/baselines/sg_clock_build_v4/grapin_static/source/source/include/utils/app_skeleton.h",
+      "bytes": 7089,
+      "sha256": "12cdfc428e9cffd95f6ea6ca457732f04cd995521acecd861324348d6b7ca4c2"
+    },
+    {
+      "unit": "grapin_static",
+      "path": "campaign/baselines/sg_clock_build_v4/grapin_static/source/source/samples/hybrid_bfs/hybrid_bfs.cu",
+      "bytes": 9134,
+      "sha256": "052be93f448e5b25a730b9749f4355b545709e35a313250de81209376610dcf9"
+    },
+    {
+      "unit": "grapin_static",
+      "path": "campaign/baselines/sg_clock_build_v4/grapin_static/source/source/samples/hybrid_sssp/hybrid_sssp.cu",
+      "bytes": 16865,
+      "sha256": "14a4db6f5fe02cddfc307469a55e7f2732ca8089803ad98c06f4587ea2a3c7ef"
+    },
+    {
+      "unit": "grapin_static",
+      "path": "campaign/baselines/sg_clock_build_v4/grapin_static/source/source/samples/hybrid_pr/hybrid_pr.cu",
+      "bytes": 8525,
+      "sha256": "e748618427a8836c8860f37385516a2635c9f32b415ebf871d2dc8886c157ab5"
+    },
+    {
+      "unit": "grapin_sssp",
+      "path": "campaign/baselines/sg_clock_build_v4/grapin_sssp/source/source/src/utils/parser.cpp",
+      "bytes": 9936,
+      "sha256": "b388aaf9367629d84cb48ec36eeffcd6e0b758892c491d8b10fc551c8fa3bcb4"
+    },
+    {
+      "unit": "grapin_sssp",
+      "path": "campaign/baselines/sg_clock_build_v4/grapin_sssp/source/source/src/utils/utils.cpp",
+      "bytes": 11637,
+      "sha256": "69a7ab5b35fab715c81f06ce09c770e54e8d0dd5705137e8ab33d9391ebd349a"
+    },
+    {
+      "unit": "grapin_sssp",
+      "path": "campaign/baselines/sg_clock_build_v4/grapin_sssp/source/source/include/framework/framework.cuh",
+      "bytes": 234249,
+      "sha256": "dbb0338d17d92d897e3b72de7f954e1550d1ade2560574e7150ebf7ed99fd78d"
+    },
+    {
+      "unit": "grapin_sssp",
+      "path": "campaign/baselines/sg_clock_build_v4/grapin_sssp/source/source/include/utils/app_skeleton.h",
+      "bytes": 7089,
+      "sha256": "12cdfc428e9cffd95f6ea6ca457732f04cd995521acecd861324348d6b7ca4c2"
+    },
+    {
+      "unit": "grapin_sssp",
+      "path": "campaign/baselines/sg_clock_build_v4/grapin_sssp/source/source/samples/hybrid_bfs/hybrid_bfs.cu",
+      "bytes": 8937,
+      "sha256": "e8bc8d372e50cb83e96d47cab63b14ccf344247082309f82085dcd3559320306"
+    },
+    {
+      "unit": "grapin_sssp",
+      "path": "campaign/baselines/sg_clock_build_v4/grapin_sssp/source/source/samples/hybrid_sssp/hybrid_sssp.cu",
+      "bytes": 14249,
+      "sha256": "8a52c031a2adfb90904f0c25c562016b9352de0febca72b37f6b355dee652784"
+    },
+    {
+      "unit": "grapin_sssp",
+      "path": "campaign/baselines/sg_clock_build_v4/grapin_sssp/source/source/samples/hybrid_pr/hybrid_pr.cu",
+      "bytes": 8328,
+      "sha256": "d02473899547031ace9f17d99d76f163d4ba0372ed76045089ba6287bbb6a471"
+    },
+    {
+      "unit": "hytgraph",
+      "path": "campaign/baselines/sg_clock_build_v4/hytgraph/source/src/utils/parser.cpp",
+      "bytes": 10038,
+      "sha256": "0071682a8f75e540710abb06ac10e557ae0fcf2a041b816ee4f06e0f78b9d397"
+    },
+    {
+      "unit": "hytgraph",
+      "path": "campaign/baselines/sg_clock_build_v4/hytgraph/source/src/utils/utils.cpp",
+      "bytes": 10326,
+      "sha256": "93a9191481ee2fa41603582bd77c34a711c6b69eb3dee34f6a351f6b798df144"
+    },
+    {
+      "unit": "hytgraph",
+      "path": "campaign/baselines/sg_clock_build_v4/hytgraph/source/include/framework/framework.cuh",
+      "bytes": 54695,
+      "sha256": "6f58f8d7a0a9e2d37ab466d80b8ab35e957137a4e936c38177f84f4d42417d24"
+    },
+    {
+      "unit": "hytgraph",
+      "path": "campaign/baselines/sg_clock_build_v4/hytgraph/source/include/utils/app_skeleton.h",
+      "bytes": 6619,
+      "sha256": "5ca6fd77a2144b8c86875962a8d8c83ee556c43997f76bd055e9599e38912655"
+    },
+    {
+      "unit": "hytgraph",
+      "path": "campaign/baselines/sg_clock_build_v4/hytgraph/source/samples/hybrid_bfs/hybrid_bfs.cu",
+      "bytes": 6729,
+      "sha256": "c4c0c6b15e651a5f0789edd68c84159d8b89528ae41efeda43e14c8a460d0b55"
+    },
+    {
+      "unit": "hytgraph",
+      "path": "campaign/baselines/sg_clock_build_v4/hytgraph/source/samples/hybrid_sssp/hybrid_sssp.cu",
+      "bytes": 8253,
+      "sha256": "60cf7806bce0fd3e93e2ddcc56215eb80569a49baf5067c097623e5e0dbc8abf"
+    },
+    {
+      "unit": "hytgraph",
+      "path": "campaign/baselines/sg_clock_build_v4/hytgraph/source/samples/hybrid_pr/hybrid_pr.cu",
+      "bytes": 6677,
+      "sha256": "deb463b65750cfb074d05bc254c30be52593ab5c4bb511cb83e1616ee4e4f1e2"
+    }
+  ],
+  "python_storage_checks": [
+    {
+      "binding": {
+        "path": "campaign/runner_candidates/sg_author_clock_v3/baselines/sg_author_worker.py",
+        "bytes": 24723,
+        "sha256": "6bf142f74d5e621b03ebe143914f197957f156c2887805e052573e626e26b137"
+      },
+      "lines": [
+        [
+          121,
+          132
+        ],
+        [
+          149,
+          184
+        ],
+        [
+          255,
+          288
+        ]
+      ],
+      "note": "Frozen argv selects market_big, no output/json flag; per source native raw arrays archived then unlinked, source stage removed"
+    },
+    {
+      "binding": {
+        "path": "campaign/runner_candidates/sg_author_clock_v3/sg_worker.py",
+        "bytes": 41355,
+        "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+      },
+      "lines": [
+        [
+          348,
+          372
+        ],
+        [
+          408,
+          419
+        ]
+      ],
+      "note": "At most one new FP64 reference NPY and three independent complete-output NPYs per source; file content dedup can reduce this but bound does not rely on it"
+    }
+  ],
+  "disk_model": {
+    "n": 41652230,
+    "bytes_per_value": 8,
+    "native_raw_vectors_per_source": 3,
+    "independent_npy_archives_per_source": 3,
+    "new_reference_vectors_per_source": 1,
+    "npy_header_allowance_each": 256,
+    "npy_count_per_source": 4,
+    "existing_headroom_bytes": 2147483648,
+    "formula": "source_count * (7*n*8 +4*256) +(2<<30)",
+    "bfs_sssp_source_count": 3,
+    "bfs_sssp_required_bytes": 9145061360,
+    "pr_source_count": 1,
+    "pr_required_bytes": 4480009552,
+    "dedup_or_unlink_savings_assumed": false,
+    "cache_text_creation_already_completed": true,
+    "edge_sized_incremental_cache_bytes": 0,
+    "headroom_scope": "Original 2 GiB reserve retained for ordinary logs/JSON/metadata and filesystem overhead; not a hard bound on arbitrary abnormal diagnostics or core dumps."
+  },
+  "future_binary_input": {
+    "current_usable_binary_csr_switch": false,
+    "evidence": "Both actual ReadGraphGR implementations only call CreateGraph and return without reading the file. ReadGraph and ReadGraphMarket are also stubs. GetCachedGraph is memory-only and does not survive fresh source processes. A binary CSR format requires a separately reviewed loader/protocol change; no frozen arguments changed."
+  },
+  "public_projection": {
+    "upstream": {
+      "bytes": 26758,
+      "sha256": "9a4800cf8e3ac90363a1017407f4b51308bb84eafba1ff198c6cf14288346fdf"
+    },
+    "path_policy": "Deployment paths replaced by relative provenance namespaces; no binary/source bytes changed."
+  }
+}

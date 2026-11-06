@@ -1,44 +1,34 @@
 {
-  "status": "PASS_DETERMINISTIC_COUNTEREXAMPLE_RENDER",
-  "performance_measurement": false,
-  "gpu_executed": false,
-  "claims": "Exact set-ownership arithmetic for the stated constructed model only; no empirical superiority claim.",
+  "schema": "eggpu.first-page.public-figure-provenance.v3",
+  "status": "PASS_MEASURED_FIRST_PAGE",
+  "performance_measurement": true,
+  "gpu_executed_by_renderer": false,
+  "source_sha256": "71ea757d372f8c1b969ea074caaa27d3a77d4cea6d48cd9c6ae9c4b02936d7ce",
   "input": {
-    "bytes": 975,
-    "sha256": "a348feb7f516f15c0a2e31c33067b60828530c4eae800ab945e554e459b26064"
+    "path": "first_page_measured_input.json",
+    "bytes": 5495,
+    "sha256": "77cc13bacf86f332adc85f0511810ca0c0d69844ea4d006f3b2eeaf03c72e4e0"
+  },
+  "original_receipt": {
+    "bytes": 5761438,
+    "sha256": "22cdc307021bc96150c69b7ac9e9ba7dc62c40691feadfc6e5feeab6c7648b5a"
   },
   "generator": {
-    "bytes": 7108,
-    "sha256": "6fd21f67b7476e9d783e7a861140011692877da78a04efa91c70702c87afe294"
+    "path": "render_first_page.py",
+    "bytes": 19617,
+    "sha256": "9ebe825a561b84094faef15102017aa7387a5130e8fb0b888d9306e8359aea83"
   },
-  "widths_mm": [
-    85,
-    175
-  ],
+  "drawing_functions_unchanged": true,
+  "new_measurements_created": false,
   "files": {
-    "first_page_problem_85mm.pdf": {
-      "bytes": 25925,
-      "sha256": "40719bc94a858878e73e032644640c8d5821c344e09afb987bc27b2ebac15a00"
-    },
     "first_page_problem_85mm.svg": {
-      "bytes": 26500,
-      "sha256": "007387ca712be874627897c12beb306fd583f6ca69968e93a230c1fd9bb3f601"
-    },
-    "first_page_problem_85mm.png": {
-      "bytes": 145071,
-      "sha256": "9fa61e0ea5e289aef47f54270d92520b1fd7f455599311d122c106017694e454"
-    },
-    "first_page_problem_175mm.pdf": {
-      "bytes": 25946,
-      "sha256": "2b0a87d80e1d4ecdc50cc2811b8f52d3d434c1a951e9cda119a0f0f64fa7759c"
+      "bytes": 169185,
+      "sha256": "ecdc93a290fa5e189ea0e9487bc35ea932104c08697332d55cdbabcb40c2523c"
     },
     "first_page_problem_175mm.svg": {
-      "bytes": 26527,
-      "sha256": "8052609ab99a843d33f7648673bc35bc650a77a4dc3e699a9b4ee69472db1ee0"
-    },
-    "first_page_problem_175mm.png": {
-      "bytes": 154121,
-      "sha256": "c2d582972cb1d9e0141280bc345b1eb4fa7cc13a596aedb588646e30fe5f6816"
+      "bytes": 169105,
+      "sha256": "dacf659288b0629f5e9f112f2b541aa78f1231f11125c9171e4db3a110adfa33"
     }
-  }
+  },
+  "historical_examples": "example_calculation.json and first_page_example.json remain preserved constructed examples; they are not the current figure input."
 }

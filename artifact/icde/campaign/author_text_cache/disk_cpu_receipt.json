@@ -1,0 +1,82 @@
+{
+  "status": "PASS_CPU_CACHED_STORAGE_ADMISSION",
+  "gpu_executed": false,
+  "simulated_filesystem_readings": true,
+  "original_worker": {
+    "path": "workspace/experiments/campaign_20261104/runner_candidates/sg_author_clock_v3/baselines/sg_author_worker.py",
+    "bytes": 24723,
+    "sha256": "6bf142f74d5e621b03ebe143914f197957f156c2887805e052573e626e26b137"
+  },
+  "helper": {
+    "path": "workspace/experiments/campaign_20261104/first_pass_20261106/author_text_cache/disk_admission.py",
+    "bytes": 5733,
+    "sha256": "a2b8bd4f6de694c6c496bf115b5dbe1ca6bf992dad061832d7cd1918040a09e7"
+  },
+  "bound_bfs_sssp": {
+    "n": 41652230,
+    "source_count": 3,
+    "native_raw_bytes": 2998960560,
+    "archived_output_bytes": 2998960560,
+    "reference_bytes": 999653520,
+    "npy_header_bytes": 3072,
+    "logs_metadata_reserve_bytes": 2147483648,
+    "cache_hardlink_incremental_payload_bytes": 0,
+    "min_free_bytes": 9145061360
+  },
+  "bound_pr": {
+    "n": 41652230,
+    "source_count": 1,
+    "native_raw_bytes": 999653520,
+    "archived_output_bytes": 999653520,
+    "reference_bytes": 333217840,
+    "npy_header_bytes": 1024,
+    "logs_metadata_reserve_bytes": 2147483648,
+    "cache_hardlink_incremental_payload_bytes": 0,
+    "min_free_bytes": 4480009552
+  },
+  "original_threshold_bytes": 75627958640,
+  "checks": [
+    {
+      "source_index": 0,
+      "path": "validation-scratch/author_text_cache/disk-admission-t3qzqelj",
+      "actual_free_bytes": 37300000000,
+      "actual_total_bytes": 100000000000,
+      "actual_used_bytes": 62700000000,
+      "original_threshold_bytes": 75627958640,
+      "incremental_threshold_bytes": 9145061360,
+      "cached_text_bytes": 30835662564,
+      "admitted": true,
+      "scope": "Before original layout and continuous first timer; full job output budget retained at every source"
+    },
+    {
+      "source_index": 1,
+      "path": "validation-scratch/author_text_cache/disk-admission-t3qzqelj",
+      "actual_free_bytes": 9145061359,
+      "actual_total_bytes": 100000000000,
+      "actual_used_bytes": 90854938641,
+      "original_threshold_bytes": 75627958640,
+      "incremental_threshold_bytes": 9145061360,
+      "cached_text_bytes": 30835662564,
+      "admitted": false,
+      "scope": "Before original layout and continuous first timer; full job output budget retained at every source"
+    }
+  ],
+  "patch": {
+    "original_function_ast_sha256": "9bd6cb5536d9828eef662f8edc3503453b0499b6188fbf1b3ace60209861b2db",
+    "guard_replacements": 1,
+    "all_other_function_ast_unchanged": true,
+    "physical_free_bytes_unmodified": true
+  },
+  "native_executed": false,
+  "numerical_guard_changes": false,
+  "host_gpu_guard_changes": false,
+  "public_projection": {
+    "upstream": {
+      "bytes": 2925,
+      "sha256": "eb04343258a756101228a4a7a1c20e17a64699cb8a593a7674fca8e7779064d2"
+    },
+    "historical_original_receipt": true,
+    "private_paths_removed": true,
+    "does_not_validate_unexecuted_GPU_jobs": true
+  }
+}

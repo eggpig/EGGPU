@@ -18,3 +18,5 @@
 `first_pass/README_CN.md` 说明只读采集、源码选择与导出。T_first、T_ready 与整作业 wall time 分开，所有失败、取消和缺项继续保留。完整 formal 图表仍须通过各自准入合同。
 
 静态 E1/E2 新增统一 native 测量适配器 `campaign/native_static_measurement/`，四函数与 P=1/2/4/8 统一选择 `Session.native_static`；runner 审核移至完整公共查询返回之后。协议终点变化明确记录，旧新计时不混合。runtime 源码 71ea 不变；CPU 通过不表示 GPU 正确性或加速已确认。
+
+后续文档与工具修订见 [TOOLING_FOLLOWUP_CN.md](TOOLING_FOLLOWUP_CN.md)。此处历史273/329仍保留原采集身份；不作为滚动当前结果。

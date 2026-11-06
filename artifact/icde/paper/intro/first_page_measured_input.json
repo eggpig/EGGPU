@@ -1,0 +1,134 @@
+{
+  "schema": "eggpu.first-page.public-figure-input.v1",
+  "source_sha256": "71ea757d372f8c1b969ea074caaa27d3a77d4cea6d48cd9c6ae9c4b02936d7ce",
+  "raw_receipt": {
+    "bytes": 5761438,
+    "sha256": "22cdc307021bc96150c69b7ac9e9ba7dc62c40691feadfc6e5feeab6c7648b5a"
+  },
+  "quality_pass": true,
+  "gpu_count": 8,
+  "gpu_executed": true,
+  "pressure_claim_supported": true,
+  "projection_verified_against_original_receipt": true,
+  "evidence": {
+    "status": "PASS_MEASURED_FIRST_PAGE",
+    "n": 1,
+    "arms": [
+      {
+        "label": "Full upload + LRU",
+        "route": "persistent_full",
+        "policy": "closure_lru",
+        "ready_session_seconds": 8.938643417,
+        "ready_session_interval_ns": [
+          29227818734203233,
+          29227827672846650
+        ],
+        "total_seconds": 21.794597326,
+        "phases": {
+          "setup_update_seconds": 14.828431542,
+          "query_excluding_retention_seconds": 6.842770865,
+          "retention_seconds": 0.123136262,
+          "bookkeeping_seconds": 0.00025865700000077263
+        },
+        "ready_session_breakdown": {
+          "host_preparation_seconds": 7.1404065910000005,
+          "device_execution_seconds": 1.472921808,
+          "other_seconds": 0.3253150179999993,
+          "host_preparation_fraction": 0.7988244141633377,
+          "definition": "Host preparation = measured public commit + later native host_plan phases. Device execution = later cooperative_gang wall phases, including upload, communication and results, not pure kernels. Other = continuous main window minus these disjoint wall intervals; nested CUDA/per-rank timings are not added.",
+          "native_phase_source": {
+            "path": "Easy-Graph/cpp_easygraph/runtime/egmgpu_partitioned_sssp.cpp",
+            "sha256": "24e9b8596ff87265d2aca66740c5c6e38b6913c99deb44a99f5f105ca910f76b",
+            "bytes": 137411
+          }
+        },
+        "commit_seconds": 3.772154957,
+        "requests": [
+          {
+            "stage": "G0",
+            "complete_query_seconds": 1.799542721,
+            "retention_seconds": 0.003389116,
+            "actual_released_bytes": 0
+          },
+          {
+            "stage": "G1",
+            "complete_query_seconds": 1.513837334,
+            "retention_seconds": 0.003673756,
+            "actual_released_bytes": 0
+          },
+          {
+            "stage": "H",
+            "complete_query_seconds": 2.993007885,
+            "retention_seconds": 0.063413399,
+            "actual_released_bytes": 2908667620
+          },
+          {
+            "stage": "G1 revisit",
+            "complete_query_seconds": 0.659519187,
+            "retention_seconds": 0.052659991,
+            "actual_released_bytes": 3758126700
+          }
+        ]
+      },
+      {
+        "label": "EGGPU",
+        "route": "lease_sparse",
+        "policy": "closure",
+        "ready_session_seconds": 7.899269512,
+        "ready_session_interval_ns": [
+          29227851207182092,
+          29227859106451604
+        ],
+        "total_seconds": 21.716015897,
+        "phases": {
+          "setup_update_seconds": 14.189284802,
+          "query_excluding_retention_seconds": 7.435884676000001,
+          "retention_seconds": 0.09035220399999999,
+          "bookkeeping_seconds": 0.0004942149999982437
+        },
+        "ready_session_breakdown": {
+          "host_preparation_seconds": 5.882518681,
+          "device_execution_seconds": 1.7485993340000001,
+          "other_seconds": 0.2681514970000003,
+          "host_preparation_fraction": 0.7446914771123712,
+          "definition": "Host preparation = measured public commit + later native host_plan phases. Device execution = later cooperative_gang wall phases, including upload, communication and results, not pure kernels. Other = continuous main window minus these disjoint wall intervals; nested CUDA/per-rank timings are not added.",
+          "native_phase_source": {
+            "path": "Easy-Graph/cpp_easygraph/runtime/egmgpu_partitioned_sssp.cpp",
+            "sha256": "24e9b8596ff87265d2aca66740c5c6e38b6913c99deb44a99f5f105ca910f76b",
+            "bytes": 137411
+          }
+        },
+        "commit_seconds": 3.028497473,
+        "requests": [
+          {
+            "stage": "G0",
+            "complete_query_seconds": 2.655525675,
+            "retention_seconds": 0.002515754,
+            "actual_released_bytes": 0
+          },
+          {
+            "stage": "G1",
+            "complete_query_seconds": 1.658387371,
+            "retention_seconds": 0.001685617,
+            "actual_released_bytes": 0
+          },
+          {
+            "stage": "H",
+            "complete_query_seconds": 2.81265719,
+            "retention_seconds": 0.069082361,
+            "actual_released_bytes": 5634327948
+          },
+          {
+            "stage": "G1 revisit",
+            "complete_query_seconds": 0.399666644,
+            "retention_seconds": 0.017068472,
+            "actual_released_bytes": 516654588
+          }
+        ]
+      }
+    ],
+    "main_timing_scope": "Continuous wall time from the weight-update commit start to the final query return, after the initial G0 request has completed. Includes maintenance, intervening bookkeeping, retention and complete owning results. Original four-request totals remain supplementary.",
+    "timing_choice": "Ready-session window fixed at the user's ready-input instruction before the second arm result returned; no timing-based selection.",
+    "formal_performance_claim": false
+  }
+}

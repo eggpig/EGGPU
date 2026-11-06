@@ -1,0 +1,413 @@
+{
+  "schema": "eggpu.public-followup-projection.v1",
+  "publication_parent": "62883ed29701e09d4e655c7a92575d5566613406",
+  "base_tree": "6d55ddad0e993f503bba6d5f85336801cd8dfbe5",
+  "source_sha256": "71ea757d372f8c1b969ea074caaa27d3a77d4cea6d48cd9c6ae9c4b02936d7ce",
+  "source_file_count": 1162,
+  "files": [
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/collect_first_pass.py",
+      "original": {
+        "bytes": 8202,
+        "sha256": "4efa2b6950d0af3cff32e763de201e8070484290a44c276d21af6d7302353dc8"
+      },
+      "public_path": "artifact/icde/first_pass/collect_first_pass.py",
+      "projected": {
+        "bytes": 8492,
+        "sha256": "3bc1213da01aba6ac25ff58ae8d0ca94193574c76e3d3c33c763e79d26d6e60c"
+      },
+      "adaptation": "Retain published explicit --plan/--queue-state/--source-freeze API; append current scheduler and cache evidence logic."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/build_first_pass.py",
+      "original": {
+        "bytes": 34556,
+        "sha256": "15eb8721fefca961f906466ada39defc77455a4ef8453dd4c78541f67eb8f56f"
+      },
+      "public_path": "artifact/icde/first_pass/build_first_pass.py",
+      "projected": {
+        "bytes": 34565,
+        "sha256": "f44a2da8002f95793786f554345f29bd71202a96d7bf39f1035a1103628178ac"
+      },
+      "adaptation": "Colocated scope authority and explicit captured source freeze. All source-order, deferral, cache and CPU layout checks preserved."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/remaining_protocol.json",
+      "original": {
+        "bytes": 2180,
+        "sha256": "e745503c059e8d59ca7ba20a1b7cef941d382a9d43f34bffb3472f57e12d0e04"
+      },
+      "public_path": "artifact/icde/first_pass/remaining_protocol.json",
+      "projected": {
+        "bytes": 2180,
+        "sha256": "e745503c059e8d59ca7ba20a1b7cef941d382a9d43f34bffb3472f57e12d0e04"
+      },
+      "adaptation": "Exact source bytes."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/export_on_progress.py",
+      "original": {
+        "bytes": 10863,
+        "sha256": "b9999731d3354f0df5d9bfd74b89a7af402a6b58523b2f61e5790af35aa7a039"
+      },
+      "public_path": "artifact/icde/first_pass/export_on_progress.py",
+      "projected": {
+        "bytes": 11140,
+        "sha256": "2317f0cd900390a2eedf785290672998a3d4dda70f0826b484e9d77e274f7ab7"
+      },
+      "adaptation": "Replace machine-specific exporter CPU mask with explicit --cpu-set or inherited affinity. Measured workers and times unchanged."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/timing/cache_worker.py",
+      "original": {
+        "bytes": 7418,
+        "sha256": "d248e6d13cf541b460acdff6bb7f2eb05155d6dbbb34d0cf4475f21432be7d2b"
+      },
+      "public_path": "artifact/icde/campaign/timing/cache_worker.py",
+      "projected": {
+        "bytes": 7418,
+        "sha256": "d248e6d13cf541b460acdff6bb7f2eb05155d6dbbb34d0cf4475f21432be7d2b"
+      },
+      "adaptation": "Exact source bytes."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/timing/placement_worker.py",
+      "original": {
+        "bytes": 11748,
+        "sha256": "2c224e86ecf4adca911d9487ca35268be68233928617ca778a4690c75f2ecb06"
+      },
+      "public_path": "artifact/icde/campaign/timing/placement_worker.py",
+      "projected": {
+        "bytes": 11748,
+        "sha256": "2c224e86ecf4adca911d9487ca35268be68233928617ca778a4690c75f2ecb06"
+      },
+      "adaptation": "Exact source bytes."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/author_text_cache/csr_text.cpp",
+      "original": {
+        "bytes": 3067,
+        "sha256": "3aaeee421fc90427b0b809e4fdba0f56a352a3fb0906812222cc2f9d0b5a07d1"
+      },
+      "public_path": "artifact/icde/campaign/author_text_cache/csr_text.cpp",
+      "projected": {
+        "bytes": 3067,
+        "sha256": "3aaeee421fc90427b0b809e4fdba0f56a352a3fb0906812222cc2f9d0b5a07d1"
+      },
+      "adaptation": "Exact source bytes."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/author_text_cache/build.py",
+      "original": {
+        "bytes": 1260,
+        "sha256": "029a48407aceb53ae6786293f170374b1717c214ca1ed486d806287a3a9f1e14"
+      },
+      "public_path": "artifact/icde/campaign/author_text_cache/build.py",
+      "projected": {
+        "bytes": 1260,
+        "sha256": "029a48407aceb53ae6786293f170374b1717c214ca1ed486d806287a3a9f1e14"
+      },
+      "adaptation": "Exact source bytes."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/author_text_cache/text_cache.py",
+      "original": {
+        "bytes": 10830,
+        "sha256": "c0fdb11ecdc12b7036c80ac40a77919640f799374e181fffd27337b5cf36ac26"
+      },
+      "public_path": "artifact/icde/campaign/author_text_cache/text_cache.py",
+      "projected": {
+        "bytes": 10830,
+        "sha256": "c0fdb11ecdc12b7036c80ac40a77919640f799374e181fffd27337b5cf36ac26"
+      },
+      "adaptation": "Exact source bytes."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/author_text_cache/prepare_plan.py",
+      "original": {
+        "bytes": 5716,
+        "sha256": "3e88cdd714aa0eecf0099b74172661949d815a548844527aa72ce895b1d646b5"
+      },
+      "public_path": "artifact/icde/campaign/author_text_cache/prepare_plan.py",
+      "projected": {
+        "bytes": 5716,
+        "sha256": "3e88cdd714aa0eecf0099b74172661949d815a548844527aa72ce895b1d646b5"
+      },
+      "adaptation": "Exact source bytes."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/author_text_cache/cached_worker.py",
+      "original": {
+        "bytes": 5776,
+        "sha256": "c569c03494956543643396d64b38e4bca26f2ba0023300c09234628485f8d886"
+      },
+      "public_path": "artifact/icde/campaign/author_text_cache/cached_worker.py",
+      "projected": {
+        "bytes": 5776,
+        "sha256": "c569c03494956543643396d64b38e4bca26f2ba0023300c09234628485f8d886"
+      },
+      "adaptation": "Exact source bytes."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/author_text_cache/disk_admission.py",
+      "original": {
+        "bytes": 5733,
+        "sha256": "a2b8bd4f6de694c6c496bf115b5dbe1ca6bf992dad061832d7cd1918040a09e7"
+      },
+      "public_path": "artifact/icde/campaign/author_text_cache/disk_admission.py",
+      "projected": {
+        "bytes": 5733,
+        "sha256": "a2b8bd4f6de694c6c496bf115b5dbe1ca6bf992dad061832d7cd1918040a09e7"
+      },
+      "adaptation": "Exact source bytes."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/author_text_cache/check_cpu.py",
+      "original": {
+        "bytes": 13277,
+        "sha256": "bfce1332a54df42ec22ae23b6e3d15ae4a93879348d6225bd46abb6caceff340"
+      },
+      "public_path": "artifact/icde/campaign/author_text_cache/check_cpu.py",
+      "projected": {
+        "bytes": 13180,
+        "sha256": "b514ea791f97f16d3ccdf17391a91d72a6dcb5fcb40899a965ab26d6bbea81a1"
+      },
+      "adaptation": "Resolve original author worker and binding/placement helpers through public campaign layout; CPU assertions unchanged."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/author_text_cache/check_disk_cpu.py",
+      "original": {
+        "bytes": 2697,
+        "sha256": "c95a9b95ff73c5bd39f5415a037f29cf2c4d788525d05abaa912dd4be43eb30d"
+      },
+      "public_path": "artifact/icde/campaign/author_text_cache/check_disk_cpu.py",
+      "projected": {
+        "bytes": 2660,
+        "sha256": "ee774f77bccfdb63da7aa07e3c977ff755d922e866630ac69b2c568b4c8c8a0b"
+      },
+      "adaptation": "Resolve original author worker and binding/placement helpers through public campaign layout; CPU assertions unchanged."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/author_text_cache/prepare_inputs.py",
+      "original": {
+        "bytes": 5218,
+        "sha256": "eca7e21136bc6b60278b1555b4d97cd1dd56c94507a26eb544253fb0de9425db"
+      },
+      "public_path": "artifact/icde/campaign/author_text_cache/prepare_inputs.py",
+      "projected": {
+        "bytes": 5394,
+        "sha256": "24f9eaf190ae23c8ec46d457fbdad12cb0242fa0316f6e568b5269f1b79832d2"
+      },
+      "adaptation": "Public worker/helper defaults and explicit CPU placement; unchanged CPU graph layout, numerical guards and input preparation."
+    },
+    {
+      "source": "paper/intro_20261105/current/INTRO_DRAFT_CN.md",
+      "original": {
+        "bytes": 10280,
+        "sha256": "ac06023ea3eb1743726e9195f1fe131858edcc0fde2bbfebee2a4ebb195e6258"
+      },
+      "public_path": "artifact/icde/paper/intro/INTRO_DRAFT_CN.md",
+      "projected": {
+        "bytes": 10213,
+        "sha256": "67b079b6cc9652d786ea8a92159c2a6e4ae3684f3d1a3d776f1b64f6ab55f994"
+      },
+      "adaptation": "Link already published scalar provenance instead of private raw receipt. Preserve validation_edges=0 versus remaining O(m) reconstruction/hash boundary."
+    },
+    {
+      "source": "docs/RELATED_WORK_NARRATIVE_20261104_CN.md",
+      "original": {
+        "bytes": 23743,
+        "sha256": "8f13a936e919c3217a905c4888d0395f97db0cae989a92535d4faf5a376c83f3"
+      },
+      "public_path": "artifact/icde/paper/RELATED_WORK_NARRATIVE_20261104_CN.md",
+      "projected": {
+        "bytes": 23743,
+        "sha256": "8f13a936e919c3217a905c4888d0395f97db0cae989a92535d4faf5a376c83f3"
+      },
+      "adaptation": "Exact source bytes."
+    },
+    {
+      "source": "paper/intro_20261105/current/render_first_page.py",
+      "original": {
+        "bytes": 17879,
+        "sha256": "7621b0b525475e7472802ae93b7fce889c5bfee0371ebb73e82c142bfca6b6d2"
+      },
+      "public_path": "artifact/icde/paper/intro/render_first_page.py",
+      "projected": {
+        "bytes": 19617,
+        "sha256": "9ebe825a561b84094faef15102017aa7387a5130e8fb0b888d9306e8359aea83"
+      },
+      "adaptation": "Add bound portable scalar-input branch; all drawing functions and original raw-input checks identical to latest author source, including final scene-label cleanup."
+    },
+    {
+      "source": "paper/intro_20261105/current/first_page_problem_85mm.svg",
+      "original": {
+        "bytes": 169185,
+        "sha256": "ecdc93a290fa5e189ea0e9487bc35ea932104c08697332d55cdbabcb40c2523c"
+      },
+      "public_path": "artifact/icde/paper/intro/first_page_problem_85mm.svg",
+      "projected": {
+        "bytes": 169185,
+        "sha256": "ecdc93a290fa5e189ea0e9487bc35ea932104c08697332d55cdbabcb40c2523c"
+      },
+      "adaptation": "Exact latest generated SVG from original recorded source71 evidence; no new measurements."
+    },
+    {
+      "source": "paper/intro_20261105/current/first_page_problem_175mm.svg",
+      "original": {
+        "bytes": 169105,
+        "sha256": "dacf659288b0629f5e9f112f2b541aa78f1231f11125c9171e4db3a110adfa33"
+      },
+      "public_path": "artifact/icde/paper/intro/first_page_problem_175mm.svg",
+      "projected": {
+        "bytes": 169105,
+        "sha256": "dacf659288b0629f5e9f112f2b541aa78f1231f11125c9171e4db3a110adfa33"
+      },
+      "adaptation": "Exact latest generated SVG from original recorded source71 evidence; no new measurements."
+    },
+    {
+      "source": "paper/README_CN.md",
+      "original": {
+        "bytes": 5133,
+        "sha256": "5b33fd2f33c193f592cd1d5342c1278771054f0edf88af8ab85db504a5dce396"
+      },
+      "public_path": "artifact/icde/paper/README_CN.md",
+      "projected": {
+        "bytes": 5584,
+        "sha256": "020b44529bb8edaa596d8a0e897c643cb066f45b28b7cb46fdf882d60f926dc7"
+      },
+      "adaptation": "Project corrected source71/n=1 navigation to public Intro/SVG/docs; explicitly mark internal rolling assets as not distributed."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/README_CN.md",
+      "original": {
+        "bytes": 3827,
+        "sha256": "d5aff9cb1aad4cf2632797572470a0cb52126892ec6c73e5a239fe3b6a26a38e"
+      },
+      "public_path": "artifact/icde/first_pass/README_CN.md",
+      "projected": {
+        "bytes": 6051,
+        "sha256": "daaa83a82b3368b69addff8ea0a802292cf406f14193473afabf010eb6e79eeb"
+      },
+      "adaptation": "Project latest source71 README and explicit scope authority to public commands; mark private rolling reports unshipped, replace campaign prefix and outputs, document current exporter/cache boundaries."
+    },
+    {
+      "source": "docs/references_20261105/paper_crosscheck.csv",
+      "original": {
+        "bytes": 5647,
+        "sha256": "e1c9bd56e1856cdbacc6d988cff5711b4e81c99ae636931f9eadaec40585319f"
+      },
+      "public_path": "artifact/icde/paper/references_20261105/paper_crosscheck.csv",
+      "projected": {
+        "bytes": 5647,
+        "sha256": "e1c9bd56e1856cdbacc6d988cff5711b4e81c99ae636931f9eadaec40585319f"
+      },
+      "adaptation": "Current external first-observation scalar crosscheck with explicit epoch/input hashes, n=1, unmatched scopes and no cross-machine ratios."
+    },
+    {
+      "source": "docs/references_20261105/paper_crosscheck_observed.csv",
+      "original": {
+        "bytes": 11593,
+        "sha256": "4ee01d7c7630cef306597d1eec404fab597edfe8215ebc6663a28d36defa0cab"
+      },
+      "public_path": "artifact/icde/paper/references_20261105/paper_crosscheck_observed.csv",
+      "projected": {
+        "bytes": 11580,
+        "sha256": "df350ad54dfcc717e1dca68ff56b1cae98ab01c8f98706deb718ed547d959c92"
+      },
+      "adaptation": "Current external first-observation scalar crosscheck with explicit epoch/input hashes, n=1, unmatched scopes and no cross-machine ratios."
+    },
+    {
+      "source": "docs/PAPER_EXPERIMENT_DESIGN_20261104_CN.md",
+      "original": {
+        "bytes": 48435,
+        "sha256": "282c055b255fd940e279865011bde5cc3549f8644964be283035ce93974903b3"
+      },
+      "public_path": "artifact/icde/paper/PAPER_EXPERIMENT_DESIGN_20261104_CN.md",
+      "projected": {
+        "bytes": 48635,
+        "sha256": "3798717449e1bea645620fd06fe6ada937d6071b0b63df773d03b5282f63f500"
+      },
+      "adaptation": "Include current n=1 paper crosscheck and corrected source71 first-page totals; internal operational links explicitly unshipped."
+    },
+    {
+      "source": "paper/intro_20261105/current/SOURCE_AND_FIGURE_NOTES_CN.md",
+      "original": {
+        "bytes": 14044,
+        "sha256": "f08e1dffd19edcada9b89165c2f92c57af13f08c245478a82cfc16a42dc253b4"
+      },
+      "public_path": "artifact/icde/paper/intro/SOURCE_AND_FIGURE_NOTES_CN.md",
+      "projected": {
+        "bytes": 13759,
+        "sha256": "65dd1e01828d0709db47a103519f5228ec44686ec2a98442c0ffc885087c2d61"
+      },
+      "adaptation": "Current timing/remaining O(m) correction; private source-cache path made relative, internal execution links explicitly unshipped."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/remaining_results.py",
+      "original": {
+        "bytes": 26192,
+        "sha256": "d3858f6d82f526dd852b3814ba6314c8b13f6b8ea75f108d69b1325d26585042"
+      },
+      "public_path": "artifact/icde/first_pass/remaining_results.py",
+      "projected": {
+        "bytes": 26192,
+        "sha256": "d3858f6d82f526dd852b3814ba6314c8b13f6b8ea75f108d69b1325d26585042"
+      },
+      "adaptation": "Exact tested source; E4S/E6 existing ready intervals now primary; first intervals supplementary; no producer or numerical changes."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/render_icde.py",
+      "original": {
+        "bytes": 12237,
+        "sha256": "661ec5a2c4ae1633e03acd08c1c4a340ee89b1d90defe29e4721b4171bd7d392"
+      },
+      "public_path": "artifact/icde/first_pass/render_icde.py",
+      "projected": {
+        "bytes": 12237,
+        "sha256": "661ec5a2c4ae1633e03acd08c1c4a340ee89b1d90defe29e4721b4171bd7d392"
+      },
+      "adaptation": "Exact tested source; E4S/E6 existing ready intervals now primary; first intervals supplementary; no producer or numerical changes."
+    },
+    {
+      "source": "paper/EXPERIMENT_DRAFT_CN.md",
+      "original": {
+        "bytes": 23348,
+        "sha256": "233fbf67dc82747de09e5518f7d970460b1b006906abcad4be4235066818afe1"
+      },
+      "public_path": "artifact/icde/paper/EXPERIMENT_DRAFT_CN.md",
+      "projected": {
+        "bytes": 23485,
+        "sha256": "ff2599e3e840bfe8a18c47ba586dde43d9bd1211844633a42042fb95abde43a9"
+      },
+      "adaptation": "Latest honest source71/historical scope and approved E4S/E6 ready-primary wording; local links projected, private rolling assets explicitly unshipped."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/remaining_export_patch/check_remaining.py",
+      "original": {
+        "bytes": 8178,
+        "sha256": "5826737f7ca04448f3380397b25a8653b480de0ee257573c2eb3bf07e93d5f48"
+      },
+      "public_path": "artifact/icde/first_pass/check_remaining.py",
+      "projected": {
+        "bytes": 8178,
+        "sha256": "5826737f7ca04448f3380397b25a8653b480de0ee257573c2eb3bf07e93d5f48"
+      },
+      "adaptation": "Exact previously executed metadata regression driver; private input snapshots not distributed."
+    }
+  ],
+  "gpu_executed_by_packaging": false,
+  "formal_results_added": false,
+  "raw_measurements_added": false,
+  "original_runtime_measurements_retained": true,
+  "additional_external_crosscheck": {
+    "rows": 12,
+    "available_n1": 7,
+    "unresolved": 5,
+    "own_source71_static_results_added": 0,
+    "formal_statistics": false,
+    "cross_machine_ratios": false
+  },
+  "measured_EGGPU_implementation_bytes_changed": false,
+  "measurement_and_reporting_adapters_changed": true
+}

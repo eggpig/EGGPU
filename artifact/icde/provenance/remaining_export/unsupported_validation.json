@@ -1,0 +1,17 @@
+{
+  "status": "PASS_UNSUPPORTED_LAYOUT_METADATA_FIXTURE",
+  "counts": {
+    "required_cells": 329,
+    "available_cells": 0,
+    "pending_cells": 327,
+    "deferred_preparation_cells": 6,
+    "input_layout_unsupported_cells": 2,
+    "failed_cells": 0,
+    "review_cells": 0
+  },
+  "all_times_null": true,
+  "gpu_executed": false,
+  "not_actual_preparation_receipt": true,
+  "not_published": true,
+  "projection_scope": "Original exporter CPU validation; public path/affinity adaptations checked separately."
+}

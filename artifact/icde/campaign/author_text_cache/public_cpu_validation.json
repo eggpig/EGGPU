@@ -1,0 +1,75 @@
+{
+  "schema": "eggpu.public-cache-cpu-validation.v1",
+  "status": "PASS_PUBLIC_CACHE_AND_STORAGE_ADAPTATIONS",
+  "gpu_executed": false,
+  "native_author_binary_executed": false,
+  "original_worker_unchanged": true,
+  "raw_receipt_sha256": {
+    "public_cache_cpu.json": "40683f430e8841a8208e49485b1a8fa777c68cf626a4d5b1805b87cf1776f26d",
+    "public_disk_cpu.json": "45c5452c3a2596bcec0a4f34ae1c486c6f4cd6d26966d8e24a2849109b674ed9"
+  },
+  "cache_checks": [
+    "Compiled serializer byte-identical to original NumPy write_layout for both loaders",
+    "Fail-on-resource memory preflight exits after one check without a polling wait; disk shortage always fails directly",
+    "Empty graph, empty CSR rows, uint32 limits, 2^18 chunk boundary and >8 MiB buffered output checked",
+    "Fractional weights, invalid destination/offsets and overwrite rejected",
+    "Six BFS/SSSP/PR system/function consumers reuse one exact cache blob without conversion",
+    "Read-only hardlink cleanup retains cache; immutable producer metadata binding remains unchanged",
+    "Unprepared cache and writable cached payload rejected",
+    "Eight successor jobs preserve every original worker argument except new output path; unsupported weak layouts remain two explicit CPU-evidence cells",
+    "CPU-only wrapper fixture preserves raw receipt and every call value; derived receipt explicitly separates cached first and unchanged ready",
+    "Original worker, graph_layout, native invocations, algorithms and numerical checks not edited",
+    "Only CPU serializer and file lifecycle exercised; no GPU calls or author binary invocation"
+  ],
+  "fixture_byte_equality_checks": 8,
+  "disk_patch": {
+    "original_function_ast_sha256": "9bd6cb5536d9828eef662f8edc3503453b0499b6188fbf1b3ace60209861b2db",
+    "guard_replacements": 1,
+    "all_other_function_ast_unchanged": true,
+    "physical_free_bytes_unmodified": true
+  },
+  "disk_simulated_filesystem_readings": true,
+  "disk_boundaries_tested": [
+    "37.3 GB free admits exact cached BFS/SSSP budget",
+    "budget minus one byte rejects"
+  ],
+  "validation_scope": "Actual CPU execution of public path adaptations against exact original worker; synthetic fixtures are correctness checks, not target GPU timing or throughput results.",
+  "files": {
+    "build.py": {
+      "bytes": 1260,
+      "sha256": "029a48407aceb53ae6786293f170374b1717c214ca1ed486d806287a3a9f1e14"
+    },
+    "cached_worker.py": {
+      "bytes": 5776,
+      "sha256": "c569c03494956543643396d64b38e4bca26f2ba0023300c09234628485f8d886"
+    },
+    "check_cpu.py": {
+      "bytes": 13180,
+      "sha256": "b514ea791f97f16d3ccdf17391a91d72a6dcb5fcb40899a965ab26d6bbea81a1"
+    },
+    "check_disk_cpu.py": {
+      "bytes": 2660,
+      "sha256": "ee774f77bccfdb63da7aa07e3c977ff755d922e866630ac69b2c568b4c8c8a0b"
+    },
+    "disk_admission.py": {
+      "bytes": 5733,
+      "sha256": "a2b8bd4f6de694c6c496bf115b5dbe1ca6bf992dad061832d7cd1918040a09e7"
+    },
+    "prepare_inputs.py": {
+      "bytes": 5394,
+      "sha256": "24f9eaf190ae23c8ec46d457fbdad12cb0242fa0316f6e568b5269f1b79832d2"
+    },
+    "prepare_plan.py": {
+      "bytes": 5716,
+      "sha256": "3e88cdd714aa0eecf0099b74172661949d815a548844527aa72ce895b1d646b5"
+    },
+    "text_cache.py": {
+      "bytes": 10830,
+      "sha256": "c0fdb11ecdc12b7036c80ac40a77919640f799374e181fffd27337b5cf36ac26"
+    }
+  },
+  "original_worker": {
+    "bytes": 24723,
+    "sha256": "6bf142f74d5e621b03ebe143914f197957f156c2887805e052573e626e26b137"
+  }
+}

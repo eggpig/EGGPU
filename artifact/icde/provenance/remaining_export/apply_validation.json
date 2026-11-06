@@ -1,0 +1,10 @@
+{
+  "status": "PASS_PATCH_APPLIER",
+  "exact_before_and_after_verified": true,
+  "originals_preserved": true,
+  "unrelated_edit_rejected": true,
+  "force_refresh_state_verified": true,
+  "idempotent": true,
+  "gpu_executed": false,
+  "projection_scope": "Original exporter CPU validation; public path/affinity adaptations checked separately."
+}

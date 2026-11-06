@@ -1,95 +1,124 @@
-# 引言主源与首页问题图核查
+# 引言与首页图：主源、设计和计时
 
-核查日期：2026-11-05。已实际打开以下四篇完整 PDF，阅读物理第 1–2 页的引言，并逐一查看第一页渲染图；另核对与本文定位相关的方法／实验段落。页码以下均为 PDF 物理页码。首页图建议是本次设计判断，不是引用论文的实验结论。
+修订：2026-11-06。当前方案固定为两个 panel：左侧四次 SSSP 请求，右侧为初始 G⁰ 已就绪后两臂的实际连续会话时间。主窗口依据用户 ready 后计时要求，在第二臂结果返回前固定，未按胜负选择。旧版共享分配构造例仅保留在 `../previous`；不再作为当前首页图。机制图与框架图仍留给协作者。
 
-## 1. 四个主源
+## 1. 本轮实际复核的原论文
 
-| 主源与准确书目信息 | 本次核查位置 | 引言／首页图观察与采用边界 |
+本轮重新读取两篇完整 PDF 的引言和实验定义，并查看第一页渲染，不以搜索摘要或旧笔记替代原文。
+
+| 原论文 | 实际阅读位置 | 借鉴与边界 |
 |---|---|---|
-| **GRACE: Alleviating Reconstruction Cost in Dynamic Graph Processing Systems**；Hongru Gao、Shuhao Zhang、Xiaofei Liao、Hai Jin；ICDE 2026。[作者 PDF](https://me.sage.org.ai/contents/research_papers/2026/2026_grace_icde_2026.pdf)；[作者单位录用记录](https://grid.hust.edu.cn/info/1053/2982.htm) | pp.1–2 §I、Fig.1；p.3 §II-B；方法 §III | p.1 右栏顶端用成本占比图指出重建开销，再拆分具体挑战。配色为深浅暖橙，重建部分另加斜线。它研究 PMA–CSR 存储更新，不是 GPU 跨调用保留。可借鉴“一个现象→明确困难”，不能借用它的开销比例作为本文动机数据。 |
-| **An Efficient Memoization Engine for Concurrent Graph Query Processing（KGraph）**；Sen Gao、Shengliang Lu、Shixuan Sun、Yuchen Li、Bingsheng He；ICDE 2025，pp.1015–1028；[DOI 10.1109/ICDE65448.2025.00081](https://doi.org/10.1109/ICDE65448.2025.00081)；[作者 PDF](https://gaosen.org/resources/papers/KGraph.pdf)；[合作者机构元数据](https://ink.library.smu.edu.sg/sis_research/10407/) | pp.1–2 §I、Fig.1–2；p.2 §II；p.9 §VI-A | p.1 右上以出租车请求的日内分布建立真实需求；不同日期用绿、黄、橙柱区分。随后讨论重复计算与 memoization 开销。其并发同函数查询及结果复用不等于本文多图、多函数和版本维护；其计时排除磁盘读取与分区。只借鉴具体任务开场，不把本文受控轨迹说成真实业务日志。 |
-| **White-Box Micro-Adaptive Query Processing**；Jack Pearce、Hubert Mohr-Daurat、Holger Pirk；ICDE 2025，pp.2880–2893；[DOI 10.1109/ICDE65448.2025.00216](https://doi.org/10.1109/ICDE65448.2025.00216)；[Imperial 作者稿 PDF](https://spiral.imperial.ac.uk/server/api/core/bitstreams/6d7e9f53-4ebc-49df-8996-eda224d2f2c7/content)；[作者机构出版记录](https://profiles.imperial.ac.uk/pirk/publications?id=950944&noscript=noscript&respub-action=citation.html) | pp.1–2 §I、Fig.1、§III；pp.8–9 §VII 和实验设置 | p.1 固定选择率，改变数据有序性，以黑色实线／虚线呈现实现选择的变化；无需彩色也清楚。引言由未被常见统计量捕捉的特征进入运行时决策。本文借鉴“固定表面条件、暴露隐藏状态”的问题呈现，不把其 CPU 硬件计数器方法或 TPC-H 数字写成本系统结果。 |
-| **Efficient Multi-GPU Graph Processing with Remote Work Stealing（GUM）**；Ke Meng、Liang Geng、Xue Li、Qian Tao、Wenyuan Yu、Jingren Zhou；ICDE 2023，pp.191–204；[DOI 10.1109/ICDE55515.2023.00022](https://doi.org/10.1109/ICDE55515.2023.00022)；[作者团队 PDF](https://graphscope.io/publication/gum.pdf) | pp.1–2 §I、Fig.1；§III–IV；§VI | p.1 右上以一次 SSSP 的八卡时间线呈现两种停顿，青绿为计算、浅色为停顿，两个编号直接对应后文困难。可借鉴“一张具体图支持两个相连问题”。其 FSteal／OSteal 针对执行中负载与长尾，不能推导本文的版本维护或回收收益；NVLink 机器结论也不能直接外推到当前硬件。 |
+| Meng et al., **Efficient Multi-GPU Graph Processing with Remote Work Stealing**, ICDE 2023, pp. 191–204；[作者 PDF](https://graphscope.io/publication/gum.pdf)，[DOI](https://doi.org/10.1109/ICDE55515.2023.00022) | §I、Fig. 1；§VI-A/B、Fig. 6 | 先交代并行执行进展，再用 Gunrock 在 webbase 上的一次 SSSP 八卡时间线，解释动态负载不均和长尾。其图并非宽泛框架图。本文借鉴“具体现象→两个挑战”的推进；不借用它的时间或加速比。 |
+| Gao et al., **GRACE: Alleviating Reconstruction Cost in Dynamic Graph Processing Systems**, ICDE 2026；[作者 PDF](https://me.sage.org.ai/contents/research_papers/2026/2026_grace_icde_2026.pdf)，[DOI](https://doi.org/10.1109/ICDE65706.2026.00075) | §I、Fig. 1；§V-A Evaluation Method | 先说明 PMA–CSR 兼顾更新与计算，再用实际更新时间分解暴露重建开销，最后拆分复制、遍历和重平衡挑战。本文保留其“已有进展→剩余代价”的结构，不挪用其占比或将 CPU 拓扑重建视为本文 GPU 权重维护的同一实验。 |
 
-White-Box 的作者、题名、ICDE 页码和 DOI 已由 Imperial 作者出版记录交叉核对；PDF 来自该校 Spiral 仓库，不是用搜索摘要代替原文。GRACE 本稿以用户指定作者 PDF 及作者单位记录为主源，不依赖第三方 DOI 搜索摘要。以上论文的性能数字均未挪入本文初稿。
+**原论文计时不能直接替换本文计时。** GUM §VI-A 明确排除 I/O；§VI-B 将执行分为 GPU kernel、设备间通信及等待、序列化和辅助开销。GRACE Fig. 1 的分母是整体图更新时间；§V-A 将随机打乱的静态图边按每批一千万条插入初始空图，另行评估图计算。两者均不等于下述四请求连续会话。本文必须自己测量；不能从 kernel time 推导总会话时间，也不能把 GUM 的通信桶或 GRACE 的重建桶直接套到本系统。
 
-补充定位主源：[Shared Arrangements: practical inter-query sharing for streaming dataflows](https://www.vldb.org/pvldb/vol13/p1793-mcsherry.pdf)，Frank McSherry、Andrea Lattuada、Malte Schwarzkopf、Timothy Roscoe，PVLDB 13(10):1793–1806，2020，DOI [10.14778/3401960.3401974](https://doi.org/10.14778/3401960.3401974)。本次打开原 PDF 并核对 §I–II：共享索引状态、多个查询／读者和跨查询状态维护已有明确先例。此处仅用于收紧新颖性陈述，不扩大首页图的表达任务。
+本轮读取的缓存位于：`validation-scratch/intro_20261105/primary_sources/`。下载 URL 与校验和已保存在该目录 `source_manifest.json`；`gum.pdf` SHA-256 为 `7a193326e961763fd2ed4e2d57afcac0af5f1f7974945d7530a1c7eef86b8976`，`grace.pdf` 为 `7bf694bad8b9147f04b46315d112523ba189af771e950f9d3c24a773afff15ce`。
 
-## 2. 对当前首页图方案的判断
+## 2. 首页实验：固定四次请求，不按结果选场景
 
-**建议保留“逻辑撤销量不等于真实物理释放量”这个单一焦点。** 这能让读者先看到一个错误容量判断，再理解为什么普通对象大小不足以指导保留。上方一次权重更新形成两个版本，可以自然连接 P3 的维护合法性；图面无需同时解释 D-Maintain 和 C-Retain 的内部步骤。这样与四篇参考的首页处理一致：先展示问题，方法结构放后文。
+执行入口为 first_page_trace.py（内部资产未随本增量分发：`../../../experiments/campaign_20261104/first_pass_20261106/timing/first_page_trace.py`）。只有主代理执行 GPU。本图使用冻结输入中的 IN（indochina-2004）与 UK（uk-2002）、八张已授权 GPU、同一源版本、同一数值合同；固定轨迹如下。
 
-推荐两个 panel，使用相同物理对象标识和颜色：
+| 顺序 | 请求 | 需要呈现的问题 |
+|---|---|---|
+| 1 | `IN@0 / SSSP`，记为 $G^0$ | 准备首个完整请求的输入状态 |
+| 2 | 按冻结 packet 提交固定拓扑权重更新；`IN@1 / SSSP`，记为 $G^1$ | 旧拓扑仍有效，新权重需要进入设备表示 |
+| 3 | `UK@0 / SSSP`，记为 $H$ | 不同图的保留状态竞争受管显存预算 |
+| 4 | `IN@1 / SSSP`，记为回访 $G^1$ | 前次保留与释放影响本次恢复 |
 
-- **(a) Shared physical state after a weight update.** 两个逻辑版本 $G^{0}$、$G^{1}$ 指向同一个拓扑分配 $T=8$，各有私有权重 $W^{0}=1$、$W^{1}=1$；独立图 $H=6$。只画一份物理 $T$，两个引用箭头，避免图形本身暗示复制。更新箭头仅说明权重版本变化，不表示持续时间，也不声称所有权重均需复制。
-- **(b) Logical size versus actual release.** 在随后可回收边界，列出同一组候选动作的两种计数，并检查是否足以填补 6 个单位的容量缺口。三个候选并列，不预选“最优”，不把可行等同于性能更优。
+每张图的源点固定为输入描述中的第 0 个源点；三次 IN 请求使用同一源点。两臂均返回完整距离向量，使用同一参考检查，并检查 Session 关闭后输出仍保持有效。先执行与计时分离的每图状态大小 pilot，以第 $d$ 张卡上单图 SSSP 视图的真实分配并集 $V_{G,d}$、$V_{H,d}$ 决定预算：
 
-| 候选撤销集合 | 被撤视图名义大小之和 | 实际释放 | 剩余物理占用 | 是否满足预算 10 |
-|---|---:|---:|---:|---|
-| $\{G^{0}\}$ | 9 | 1 | 15 | 否 |
-| $\{G^{0},G^{1}\}$ | 18 | 10 | 6 | 是 |
-| $\{H\}$ | 6 | 6 | 10 | 是 |
+$$B_d=\left\lfloor\max(V_{G,d},V_{H,d})+0.25\min(V_{G,d},V_{H,d})\right\rfloor.$$
 
-初始物理占用为 $8+1+1+6=16$；逐视图名义大小相加为 $9+9+6=24$。表内是集合和的精确算术，不是实验。第二候选中实际 10 也不能由两个单独撤销收益相加得到，因为共享 $T$ 只有在两侧均撤销后才真正释放。不能将上表再画成似乎来自实测的系统加速柱状图。
+预算公式不读取耗时；pilot 不是性能重复。`0.25` 是预先固定的预算参数，不是物理 GPU 容量比例。对两臂均检查 H 请求结束、回收前确有超预算设备，且回收确实释放字节；若没有观察到该现象，本图不得声称展示了预算压力。
 
-**必须写出的合法性条件：** 回收 panel 的全部持有者都已画出，候选 view 已允许撤销，没有活动读者、外部 pin 或未画出的 catalog holder。若 $G^{0}$ 仍被活动旧读者使用，撤销它不是合法候选。图 (a) 可以说明更新时保护旧版本；图 (b) 必须写明随后到达回收边界，不能把这两个时刻混为一谈。对于实际代码，catalog 也需要进入允许撤销的完整闭包后才可能释放共享分配。
+| 图中名称 | 实际实现 | 解释 |
+|---|---|---|
+| Full upload + LRU | `persistent_full + closure_lru` | 强对照：保留主机内存中的版本提交，对变化设备状态采用完整上传；LRU 仍按分配闭包计算真实释放量并执行合法回收。不是全量主机重建、不是逻辑大小错误记账、不是关闭全部优化。 |
+| EGGPU | `lease_sparse + closure` | 启用依赖维护路径与基于需求的闭包保留；与对照共用执行后端、请求、预算和完整输出要求。 |
 
-## 3. 图面与配色建议
+这是一组策略配对动机实验，不是 E1 的外部系统比较，也不是 D/C 四臂因果消融。若总时间没有改善，应保留原值；维护字节下降不能覆盖更慢的总时间。一次观测只记为 n=1；补第二次时保留原观测，不择优。
 
-- 85 mm 单栏版优先纵向排列两个 panel；175 mm 版可横排。正文以单栏缩小后仍可读为验收条件，图内最终字号建议 8–9 pt，名称直接贴近对象。
-- 控制在三类语义色：共享拓扑用青绿 `#2A7F7F`；旧／新权重用同一暖橙的浅深变化 `#F3CFB4` / `#C97743`，并保留 $0/1$ 上标；独立图与文字辅助用灰 `#777777` / `#303030`。这些色号是早期建议值，不声称从参考图精确提取；已生成版本的实际色号以 render_first_page.py 的 COLORS 为准，采用与实验章一致的浅蓝/浅绿/紫及深蓝释放量。
-- “逻辑大小”用浅灰或空心表示，“实际释放”用深色或数值强调。即使灰度打印，也应能通过填充／轮廓／标注分辨；不要只依赖红绿表示成功失败。
-- 数值只标存储单位与精确求和，不使用秒、MiB、加速比或实验系统名作横轴。容量条件用短标签“resident 16; budget 10; release needed 6”。
-- 参考 GUM 的编号可以只标两个观察：“unchanged topology is shared”与“one view removed, shared storage remains”。不要追加算法模块、控制器、成本模型、回收伪代码等方法框架。
-- 8+1+1+6 比 40/40/48 字节更便于首页阅读。后者若来自手工小图仍是构造例，不会自动变成性能证据；只有在需要解释 CSR 类型宽度时才值得换成精确字节图，而那更适合后文或补充材料。
+## 3. 实际计时边界与允许的分解
 
-建议英文图注：
+右侧主柱采用实际连续区间 `arms[*].commit.interval_ns[0]` → `arms[*].events[-1].complete_query_interval_ns[1]`，即初始 G⁰ 的首次完整请求已经结束，从权重更新开始，到 G¹ 回访的完整 query 返回。它包含权重提交、之后三次完整查询、延迟设备维护、查询结束后的保留决策和区间内记录开销。图中称 **Session time**，纵轴为 `Time (s)`。输入准备、初始 Session 创建、G⁰ 的首次查询、大小 pilot、参考校验、输出归档和关闭不在主窗口中。该窗口在第二臂结果返回前按用户 ready 后计时要求固定，直接用起止时间戳计算，不由 kernel time 推断，也不需要新一轮 GPU 执行。
 
-> **Fig. 1. Logical view removal does not determine physical memory release.** In this constructed example, two versions share topology storage and own separate weights. At a later reclamation boundary, all shown views are evictable and no unshown holder or active reader remains. Removing one version releases only its private weights; releasing the shared topology requires removing both holders. Values are illustrative storage units, not measured GPU memory or performance. Both sufficient reclamation choices are shown without assuming either is optimal for future requests.
+原始 `arms[*].total_seconds` 是从公开 Session 创建前至第四次 query 后记录完成的四请求总时间，包含初始输入装载与验证；它与以下全部原始阶段继续保存在原始回执和 first_page_measured_input.json，作为补充口径，不删除或覆盖。
 
-## 4. 文稿主线与评估边界
+**本次实际观测（n=1，统一源码 71ea）。** 两臂完整输出、关闭后的独立所有权和 H 阶段预算压力均通过。主窗口为 **8.938643417 s 对 7.899269512 s**，本次 EGGPU 少用时约 **11.6%**。四请求完整口径为 21.794597326 s 对 21.716015897 s，差异很小；不混淆这两个分母，也不据一次观测声称稳定收益。图 1 使用预先冻结的初始状态就绪后窗口。
 
-P1 给请求序列；P2 定位执行、动态存储与计算结果复用；P3 把小更新与旧引用合法性分开；P4 用精确反例解释共享回收；P5 将维护和保留连接到相同身份／持有关系；P6 交代如何用完整任务验证，并留下正式数据占位。不要将 P6 写成已经达成 90% 领先、所有函数多卡单调加速或 D/C 完整时间正交互。
+| 实际区间 | Full upload + LRU (s) | EGGPU (s) | 主窗口内 |
+|---|---:|---:|---|
+| Session 创建 | 11.056276585 | 11.160787329 | 否 |
+| 首次 G⁰ 完整查询 | 1.799542721 | 2.655525675 | 否 |
+| 权重提交 | 3.772154957 | 3.028497473 | 是 |
+| 更新后 G¹ 完整查询 | 1.513837334 | 1.658387371 | 是 |
+| H 完整查询 | 2.993007885 | 2.812657190 | 是 |
+| G¹ 回访完整查询 | 0.659519187 | 0.399666644 | 是 |
+| **主窗口连续时间** | 8.938643417 | 7.899269512 | **是** |
+| 四请求完整会话总时间（补充口径） | 21.794597326 | 21.716015897 | 包含初始准备 |
 
-当前实现边界以[实验范围核对](../EXPERIMENT_SCOPE_RECONCILIATION_20261105_CN.md)和[冻结协议](../DATASET_AND_EXPERIMENT_FREEZE_20261104_CN.md)为准：固定拓扑权重维护、FP64 COW／lease、紧凑静态路线、请求完成边界容量和实际计时需要分别表述。构造图证明的是物理共享的记账反例，不证明当前策略的平均性能，更不能代替 E3–E5 的实测因果证据。
+图 1(b) 堆叠的是以下三个互斥墙钟分类，而不是累加嵌套 CUDA event 或各卡时间。
 
-## 5. 本次核查留档
+| 主窗口内互斥分类 | Full upload + LRU (s) | EGGPU (s) |
+|---|---:|---:|
+| Host preparation：提交＋后续 host_plan | 7.140406591 | 5.882518681 |
+| Device execution：后续 cooperative_gang | 1.472921808 | 1.748599334 |
+| Other：剩余墙钟时间 | 0.325315018 | 0.268151497 |
+| **主机准备占比** | **79.9%** | **74.5%** |
 
-四篇原 PDF、前两页渲染和逐页文字保存在临时资料目录，不复制进论文源目录：
+`cooperative_gang` 包含上传、设备计算、通信和结果回传，不是纯 kernel time。三个后续请求均核对“所有 host phase 之和 = native_outer_seconds”，且不超出所属完整 query 扣除保留后的区间。Other 包含其余原生阶段、Python 层处理、保留和连续区间记录。完整阶段来源绑定在 first_page_measured_input.json。
 
-`INTERNAL_EVIDENCE_ROOT/intro_20261105/primary_sources/`
+实际改动已在两臂同样生效：G¹ 更新涉及 19,160 个位置，native_delta 保留确切父版本及修改包检查，省去对全部 191,606,827 个权重的再次合法性验证；完整权重重建及内容哈希仍需 O(m) 工作。不可变拓扑共享 920,469,020 字节，实测父拓扑复制量为 0。两臂使用相同实现改动，因此这些优化的前后收益不能直接解释为 D/C 策略差异。
 
-下载 URL、文件字节数、页数和 SHA-256 记录于该目录 `source_manifest.json`。四篇均为 14 页。网页获取 KGraph 时遇到文件大小限制，已直接从同一作者 URL 下载 13,058,976 字节 PDF，完成本地逐页读取和第一页视觉核查；没有以摘要替代全文。
+旧 b4 版本的主时间 **17.174507245 / 20.776297179 s** 及负结果继续保存在 `first_page_trace_receipt.json`，没有删除。它与当前统一源码不同，不能当作第二次重复平均，也不能把不同版本中较快的单项拼接。当前准备占比仍只能说明这一受控实例；普遍性与 D/C 各自效果由后续独立矩阵验证。
 
-| 文件 | SHA-256 |
-|---|---|
-| `grace.pdf` | `7bf694bad8b9147f04b46315d112523ba189af771e950f9d3c24a773afff15ce` |
-| `kgraph.pdf` | `c888d8663c2a3421d840a8a0ac99d9c16e3146b05b9e7b62aa4646f6c0f389f3` |
-| `white_box.pdf` | `29bf025d42aa1ff0d8741451c7373e3283c15da924805c607fd4eacb9fb04e4f` |
-| `gum.pdf` | `7a193326e961763fd2ed4e2d57afcac0af5f1f7974945d7530a1c7eef86b8976` |
+原始回执保留的阶段如下，名称必须保持边界含义：
 
-## 已生成的第一页问题图
+| 回执字段 | 对应实际区间 | 不能称为 |
+|---|---|---|
+| `setup_update_seconds` | 公开 Session 创建＋主机权重提交两个实测区间 | 所有 GPU 维护时间 |
+| `query_excluding_retention_seconds` | 每次 query 起止内，扣除实际观察到的 `finish_query` 区间；包含延迟设备维护、算法执行和完整独立结果 | 纯计算／纯 kernel time |
+| `retention_seconds` | 原始 `finish_query` 调用的实际墙钟区间 | 全部内存管理时间 |
+| `bookkeeping_seconds` | 连续会话时长减去以上不相交实测区间 | 未经测量的模拟开销 |
 
-推荐采用 85 mm 单栏 PDF（内部来源未随本包分发：`first_page_problem_85mm.pdf`）；若第一页上方允许跨栏，可采用 175 mm 双栏 PDF（内部来源未随本包分发：`first_page_problem_175mm.pdf`）。两版都提供同名 SVG 和 300 dpi PNG，数据来自 [明确构造的所有权模型](first_page_example.json)，由 [Python 脚本](render_first_page.py) 计算并绘制。[计算回执](example_calculation.json) 和 [文件来源记录](figure_provenance.json) 保存完整输入、代码与产物 SHA-256。图内所有数值是示例存储单位，不是实测显存。
+当前首页使用上表三个主窗口互斥阶段的堆叠柱。下表四请求原始阶段仅供补充，不能直接堆叠进较短主窗口；不在图中加入长段解释文字。不能把重建耗时或数据传输耗时从事件数量、字节数或外部论文比例中反推。
 
-**中文图注草稿。** 图 1：共享状态使逻辑撤销量与物理释放量分离。(a) 一次权重更新后的两个保留版本共享大小为 8 的拓扑，各自持有大小为 1 的权重，另一个图独占大小为 6 的状态。(b) 在随后允许回收的边界，要将物理占用从 16 降至 10，必须释放至少 6 个单位。仅撤销 G⁰ 虽移除 9 个单位的逻辑引用，却只释放 1；图中另列的联合撤销 G⁰、G¹ 与撤销 H 两种候选均满足此容量要求；它们不是全部可行集合。构造例列出了全部持有者；此时没有活动读者、外部固定引用或额外工作区，所有视图均可合法撤销。图形面积不表示大小。两种可行撤销集合的后续恢复代价取决于请求需求，图中不宣称某一种总是最优。
+## 4. 图面与数据准入
 
-**English caption draft.** Shared state separates logical removal from physical reclamation. (a) Two retained versions share 8 units of topology and each owns 1 unit of weights; H owns 6 units. (b) Reducing physical occupancy from 16 to 10 requires reclaiming 6 units. Removing G⁰ drops 9 referenced units but frees only 1. Removing both versions or H meets the capacity requirement. This is a constructed example at a later reclamation boundary: all holders are shown and evictable, with no active readers, external pins, or additional workspaces. Box areas are not to scale. Feasibility alone does not determine the best choice for subsequent requests.
+- **(a) Request sequence：** 四个 SSSP 请求按时间向下排列，箭头仅标 `Weight update`、`Switch graph`、`Revisit`。左侧计时括号从权重更新开始到最后一次返回；初始 G⁰ 不重复标注计时术语，边界在图注说明。底部只标 `G: IN; H: UK`。左图没有构造性能值。
+- **(b) Session time：** 两根柱，纵轴 `Time (s)`，横轴 `Full upload + LRU` 与 `EGGPU`。主机准备用蓝色、设备执行用金色及斜线，其余用浅灰及点纹；颜色编码阶段，系统名称由横轴区分。无真实回执时，只显示 `Measurement pending`，没有柱、数值或虚拟刻度。
+- 提供 85 mm 单栏与 175 mm 两栏矢量 PDF、SVG，以及 300 dpi PNG。175 mm 采用左右两个 panel；85 mm 采用上下两个 panel，保持字号可读。图中文字以短标签为主，方法流程与框架细节放后文。
 
-单栏 LaTeX 插入位置（需论文模板实际编译后微调浮动位置）：
+[render_first_page.py](render_first_page.py) 直接接受原始 `eggpu.first-page.four-request.v1` 回执。绘图前要求：状态 `PASS_FIRST_PAGE_TRACE`，`gpu_executed=true`，两个完整配对臂，八卡身份，两臂正确性通过，H 阶段压力与实际释放均已记录，同一预算和四请求顺序，有限正总时间、主窗口起止，以及阶段和、请求区间与连续区间的一致性。图旁来源 JSON 记录输入和生成器哈希、实际值与所有输出文件哈希。它不自行提交 GPU 作业，也不按时间挑选数据。
+
+当前图已直接绑定[真实回执](first_page_measured_input.json)，渲染来源见 [figure_provenance.json](figure_provenance.json)。first_page_trace_spec.json（内部资产未随本增量分发：`first_page_trace_spec.json`） 仅是保留的待测输入模板，不是当前图的数据源。若真实回执不完整，脚本报错，不自动降格为看似有效的时间柱。
+
+复现命令（需已有 matplotlib 环境）：
+
+```bash
+python3 -B render_first_page.py --input first_page_measured_input.json --output /your/output/first-page
+```
+
+## 5. 图注与正文接入
+
+**当前中文图注。** 图 1：连续图分析中的状态维护与回访。(a) IN（G）与 UK（H）上的四次 SSSP，包括权重更新和回访。(b) 初始 G⁰ 请求完成后，从权重更新到最后完整结果的实际连续时间；八卡、相同逐卡保留预算、一次配对观测。计时包含维护与完整输出；LRU 使用分配闭包感知回收。
+
+**当前英文图注。** Continuous graph analysis under a limited retention budget. (a) Four SSSP requests on IN ($G$) and UK ($H$), including a weight update and a revisit. (b) Measured time from the weight update through the final result, after the initial G⁰ request completes, on eight GPUs with equal per-device budgets (one paired observation). Timing includes maintenance and complete results; LRU uses allocation-aware reclamation.
+
+图注中的 one paired observation 只适用于 n=1，不使用误差条。正文可写该序列的实际秒数；不把这一个配对点写成所有图或所有算法的普遍规律。初始输入准备、首次 G⁰ 查询、参考校验和关闭阶段不在主时钟内，详细边界在实验设置明确。
 
 ```latex
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{figures/first_page_problem_85mm.pdf}
-  \caption{Shared state separates logical removal from physical reclamation.
-  Removing $G^0$ drops 9 referenced units but frees only 1, below the required 6.
-  This constructed example shows all holders at an idle reclamation boundary;
-  all views are evictable and box areas are not to scale.}
-  \label{fig:ownership-gap}
+  \caption{Continuous graph analysis under a limited retention budget.
+    (a) Four SSSP requests include a weight update and a revisit.
+    (b) Time from the weight update to the final result, after the initial $G^0$
+    request completes (eight GPUs; one paired observation). Timing includes
+    maintenance and complete results; LRU uses allocation-aware reclamation.}
+  \label{fig:continuous-session}
 \end{figure}
 ```
 
-复现命令：`python render_first_page.py --input first_page_example.json --output rendered`。依赖 Python 与 Matplotlib；不使用 GPU，不读取实验耗时，不生成模拟性能曲线。脚本检查全部视图子集的释放量，防止重复计算共享分配。生成后已查看两版 PNG，修正了初版双栏标题裁切及阈值文字重叠。
-
-方法框架图和 D/C 机制图继续保留外部绘制占位；这张图只承担首页问题说明。
+当前图由真实数据生成；本公开包分发 SVG、标量输入及绘图源码，PDF/PNG 可按下述命令生成。上一版正文和构造图仅保存在 `../previous`，其示例数值不进入当前实验输入。
