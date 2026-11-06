@@ -1,0 +1,21 @@
+{
+  "status": "PASS_CPU_SUITE",
+  "gpu_executed": false,
+  "compiled_subset": "PENDING_EXPLICIT_BUILD",
+  "excluded_compiled_tests": [
+    "test_pr_self_loop_and_explicit_native_options",
+    "test_upstream_cpu_dijkstra_precision_and_new_functions"
+  ],
+  "tests": {
+    "tests/gpu/test_capability_dispatch.py": "8199b63d055bda448267a214ceb98a6bbc8addc700a3df0587ec24086c40b5b5",
+    "tests/gpu/test_arena_numerical_contract.py": "7cbaf80b739628e172a05ee651406b53814f5abe5d59a0a96bd765db603dce7a",
+    "tests/gpu/test_public_csr_input.py": "e982d90e6dec75a70d0e1ead64bf08f0b6b14aadde00723466d6bb2124902cf6",
+    "tests/gpu/test_public_lazy_import.py": "f4bfc8f40af5507c01f9b0d5d43e382f506f317d533a1dae75bfb520527ccb73",
+    "tests/gpu/test_arena_cold_import.py": "d7fb49b85e8d5eb76f65ce411f202d385594741f347edf554161bec2aef578b0",
+    "tests/gpu/test_wcc_chunked_host.py": "a79440305c37bc467e78a53f1223c1c26f688f0b50215da7bdd633ce42308402",
+    "tests/gpu/test_arena_output_ownership.py": "594fcf1308645abb9004a6987ae1fa73876f562005499319cc50fd9d89eb0e6b",
+    "tests/gpu/test_unified_contract.py": "46686ab24959c37c863d76dbf932d43c99b9262664907e15512324b295b8e495",
+    "tests/gpu/test_static_native_encoding.py": "3dc8a51bb8c381cc8a2e3eb3652237f2631de38d3239adff9a4341e38b4a0acb"
+  },
+  "scope": "Normal public EasyGraph imports and actual host/dispatch code; no CUDA/DSO qualification."
+}

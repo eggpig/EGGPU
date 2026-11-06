@@ -1,37 +1,13 @@
 {
   "schema": "eggpu.source_delta/v2",
   "base_source_sha256": "aeeade2ea64edf46fc226c0e33f2ccf8e596f77b5ff1e8cc47489db3ff30ef80",
-  "current_source_sha256": "71ea757d372f8c1b969ea074caaa27d3a77d4cea6d48cd9c6ae9c4b02936d7ce",
+  "current_source_sha256": "5af9876b8596b3c8b769fe1865890eb3fe6afc91cd8bf60c9c9bf76dce9ffdeb",
   "files": [
-    {
-      "path": "cpp_easygraph/classes/__init__.h",
-      "change": "modified",
-      "base_sha256": "a1b0d7f7ac16a6b337e0a74135f05d06f0fee2dcbe3429ca208dc7d8c7b8dad7",
-      "current_sha256": "54bcebff51e30595455916101d5b48d05144c6ccb8bc2ae533f082bc90d2ed00"
-    },
-    {
-      "path": "cpp_easygraph/classes/graph_convert.cpp",
-      "change": "modified",
-      "base_sha256": "4fa8044cd8d9ab7397ebe9b83c7842227bed083c182f8478d9a29adc23955e5b",
-      "current_sha256": "51dad2f874485883af301d529082e78385a912f145d62c9b17dfd8c8b56f2f68"
-    },
     {
       "path": "cpp_easygraph/cpp_easygraph.cpp",
       "change": "modified",
       "base_sha256": "363af811b932046acbbf21115d2360b46bad0d30924d15eb83e06bc3c0a17fea",
       "current_sha256": "4c181328fb97e1d83c7a83ced50bf7e4806ffe779ca4e918fc0a206643efca09"
-    },
-    {
-      "path": "cpp_easygraph/runtime/egmgpu_partitioned_pagerank.cpp",
-      "change": "modified",
-      "base_sha256": "8d0b699780ba92ada27bff7fe7cd0b098bcf6be0ef8e6705af1fe507df5cfcf4",
-      "current_sha256": "bde5456e780353cca3031a54b83059917159fb203361a414baf90effaa36da9b"
-    },
-    {
-      "path": "cpp_easygraph/runtime/egmgpu_partitioned_sssp.cpp",
-      "change": "modified",
-      "base_sha256": "1465925a2dd5e15d3fa1f44afbf6fdc9d482ce6b0e13a9737c36a27ca2517825",
-      "current_sha256": "24e9b8596ff87265d2aca66740c5c6e38b6913c99deb44a99f5f105ca910f76b"
     },
     {
       "path": "easygraph/__init__.py",
@@ -46,6 +22,42 @@
       "current_sha256": "299110c70513803766241b868489941466f259e36446ad5fa4064ba28bfb970a"
     },
     {
+      "path": "cpp_easygraph/classes/__init__.h",
+      "change": "modified",
+      "base_sha256": "a1b0d7f7ac16a6b337e0a74135f05d06f0fee2dcbe3429ca208dc7d8c7b8dad7",
+      "current_sha256": "54bcebff51e30595455916101d5b48d05144c6ccb8bc2ae533f082bc90d2ed00"
+    },
+    {
+      "path": "cpp_easygraph/classes/graph_convert.cpp",
+      "change": "modified",
+      "base_sha256": "4fa8044cd8d9ab7397ebe9b83c7842227bed083c182f8478d9a29adc23955e5b",
+      "current_sha256": "51dad2f874485883af301d529082e78385a912f145d62c9b17dfd8c8b56f2f68"
+    },
+    {
+      "path": "cpp_easygraph/runtime/egmgpu_partitioned_pagerank.cpp",
+      "change": "modified",
+      "base_sha256": "8d0b699780ba92ada27bff7fe7cd0b098bcf6be0ef8e6705af1fe507df5cfcf4",
+      "current_sha256": "bde5456e780353cca3031a54b83059917159fb203361a414baf90effaa36da9b"
+    },
+    {
+      "path": "cpp_easygraph/runtime/egmgpu_partitioned_sssp.cpp",
+      "change": "modified",
+      "base_sha256": "1465925a2dd5e15d3fa1f44afbf6fdc9d482ce6b0e13a9737c36a27ca2517825",
+      "current_sha256": "24e9b8596ff87265d2aca66740c5c6e38b6913c99deb44a99f5f105ca910f76b"
+    },
+    {
+      "path": "cpp_easygraph/runtime/egmgpu_partitioned_wcc.cpp",
+      "change": "modified",
+      "base_sha256": "f5e17f1a0183cf37d948e4b865231c5fa2af00a6aed2fdee640a2406e29051e2",
+      "current_sha256": "55b0ae8f2f79de148a502e82c68f5f1ffad9866d7637232820764f7f2f5c493a"
+    },
+    {
+      "path": "cpp_easygraph/runtime/egmgpu_wcc_host_finalize.h",
+      "change": "modified",
+      "base_sha256": "99ea6890cc9fcf244262c1f4aefe470642d611c8f2c588c03d7f579aecf35526",
+      "current_sha256": "864ffd64f080a97301f52a34814b82786ed680a092ab40c3212c34ff5a3568b1"
+    },
+    {
       "path": "easygraph/egmgpu/__init__.py",
       "change": "modified",
       "base_sha256": "00a863c814513d789649a9daf23f0c2b5bf7dac05b5cf8c5352dfa047c802b6e",
@@ -58,34 +70,10 @@
       "current_sha256": "64a441a3162df1dd250770a6a7ef9367d13788c818c2dfc6e1ba6fbed25d31ec"
     },
     {
-      "path": "easygraph/gpu/_arena/connectivity.py",
-      "change": "modified",
-      "base_sha256": "0aefd9845a84cb822750ceb0bdffd5f0434301a920a91a18965973c1fe6fd759",
-      "current_sha256": "b340568135f7a1e9c4a01791ffefb5e8664194c66fe0ebfec2e9ad821c056aea"
-    },
-    {
-      "path": "easygraph/gpu/_arena/gpu_runtime.py",
-      "change": "modified",
-      "base_sha256": "f98c2d0a0361180fa1d543763a4b971f01299dd3edd753ae69fb929310cfe1a4",
-      "current_sha256": "5c9345eaa5655f011a71a07c4dd7ed0c674d81e4af9853aa04521cdd608dd7f0"
-    },
-    {
-      "path": "easygraph/gpu/_arena/public_session_final.py",
-      "change": "modified",
-      "base_sha256": "61b7aa3f3daf0d18ee02b7ac312af4faa832b103ed15393ed6e4f86a96997c26",
-      "current_sha256": "f87f0456eb869f947f9b63648341347ffe81dd894019e0dbcaff5c5214e4b84f"
-    },
-    {
-      "path": "easygraph/gpu/_arena/trace_backends.py",
-      "change": "modified",
-      "base_sha256": "47b839fc84c0c3c422c6d23f2834981744e8b1d5447f1c178b80a97dbc2f4427",
-      "current_sha256": "4bab35920788e5c97585db9ff6a965184f96c17427ceb4e9c54888efcbc7128d"
-    },
-    {
       "path": "easygraph/gpu/_arena_output.py",
       "change": "added",
       "base_sha256": null,
-      "current_sha256": "585df3ad15c26f791287bda918ea0b8a3de8a9948d0a4ee61e8e68b396ee5631"
+      "current_sha256": "66e8b8fba7fa20ec81bae62f76e6dd51383af17099c333610c5fc3933e125c1a"
     },
     {
       "path": "easygraph/gpu/_bridge.py",
@@ -103,7 +91,7 @@
       "path": "easygraph/gpu/_core.py",
       "change": "modified",
       "base_sha256": "df7b4a257812d1e45e70a85e1fdc5943153bff63a6ef72c720b52177c14ca9ef",
-      "current_sha256": "4f815c389ff2e639d7acf332d90d1cf5b01998f9302af06ed2e3af383c8e3a11"
+      "current_sha256": "6f1bee362fae527f4d0367c31e5a4358884fac6c5db4b0c12b64603c0362a231"
     },
     {
       "path": "easygraph/gpu/_csr_input.py",
@@ -115,7 +103,7 @@
       "path": "easygraph/gpu/_dispatch.py",
       "change": "added",
       "base_sha256": null,
-      "current_sha256": "1b0202556b183c75da5790a6c002b64108464502daabb927531c850852a8cfc1"
+      "current_sha256": "b993faa5736c17f7c7dfea722d9b4f7c6276f1a010f7ffb06105abdecde82679"
     },
     {
       "path": "easygraph/gpu/_dynamic.py",
@@ -152,6 +140,30 @@
       "change": "modified",
       "base_sha256": "4e441517622f125d7f9ba33cd81bfea2fad2e0ecfdc2302539b4ee756bfdf3e6",
       "current_sha256": "2f584cdafe5af7924418a7ee339d0322987e99aa1b721380091f65ab45dc5076"
+    },
+    {
+      "path": "easygraph/gpu/_arena/connectivity.py",
+      "change": "modified",
+      "base_sha256": "0aefd9845a84cb822750ceb0bdffd5f0434301a920a91a18965973c1fe6fd759",
+      "current_sha256": "234ba672ab8533726d911aad43a3c25aff39825658eea38e5b282d0e885466e9"
+    },
+    {
+      "path": "easygraph/gpu/_arena/gpu_runtime.py",
+      "change": "modified",
+      "base_sha256": "f98c2d0a0361180fa1d543763a4b971f01299dd3edd753ae69fb929310cfe1a4",
+      "current_sha256": "5c9345eaa5655f011a71a07c4dd7ed0c674d81e4af9853aa04521cdd608dd7f0"
+    },
+    {
+      "path": "easygraph/gpu/_arena/public_session_final.py",
+      "change": "modified",
+      "base_sha256": "61b7aa3f3daf0d18ee02b7ac312af4faa832b103ed15393ed6e4f86a96997c26",
+      "current_sha256": "f87f0456eb869f947f9b63648341347ffe81dd894019e0dbcaff5c5214e4b84f"
+    },
+    {
+      "path": "easygraph/gpu/_arena/trace_backends.py",
+      "change": "modified",
+      "base_sha256": "47b839fc84c0c3c422c6d23f2834981744e8b1d5447f1c178b80a97dbc2f4427",
+      "current_sha256": "4bab35920788e5c97585db9ff6a965184f96c17427ceb4e9c54888efcbc7128d"
     },
     {
       "path": "gpu_easygraph/common/csr_h2d_source.h",
@@ -235,7 +247,7 @@
       "path": "tests/gpu/test_arena_output_ownership.py",
       "change": "added",
       "base_sha256": null,
-      "current_sha256": "cbb532d6f2a547bc636123c697475b0b47f582a8df138749e8c0163b11780ecc"
+      "current_sha256": "594fcf1308645abb9004a6987ae1fa73876f562005499319cc50fd9d89eb0e6b"
     },
     {
       "path": "tests/gpu/test_capability_dispatch.py",
@@ -269,5 +281,5 @@
     }
   ],
   "cuda_cpp_changed": true,
-  "source_scope": "Resident owner retention, immutable SSSP host payload sharing, Arena WCC path halving, and registered owning host output."
+  "source_scope": "Version-aware maintenance, physical-allocation retention, complete owned outputs, and canonical WCC producer handoff."
 }

@@ -27,7 +27,7 @@ def _protocol():
         capability = object()
         state = dict(capability=capability, graph=graph_id, algorithm=algorithm,
                      thread=get_ident(), valid=True, registered=False,
-                     consumed=False, reference=None)
+                     consumed=False, reference=None, canonical_wcc=False)
         previous = active.set(state)
         try:
             yield capability
@@ -46,6 +46,26 @@ def _protocol():
             return
         state.update(registered=True, reference=weakref.ref(value))
 
+    def certify_wcc_producer(value):
+        # Called only by ConnectivityExecutor after its union and complete-root
+        # kernels, synchronization and fresh host download have all completed.
+        state = active.get()
+        if (state is None or not state['valid'] or state['consumed']
+                or state['thread'] != get_ident() or state['algorithm'] != 'wcc'):
+            return False
+        reference = state['reference']
+        if reference is None or reference() is not value or not eligible(value):
+            return False
+        state['canonical_wcc'] = True
+        return True
+
+    def consume_canonical_wcc(capability, graph_id, value):
+        state = active.get()
+        # An absent producer proof leaves the ordinary checked fallback usable.
+        if state is None or not state.get('canonical_wcc', False):
+            return False
+        return consume(capability, graph_id, 'wcc', value)
+
     def consume(capability, graph_id, algorithm, value):
         state = active.get()
         if (state is None or capability is not state['capability']
@@ -60,8 +80,9 @@ def _protocol():
         state['reference'] = None
         return reference is not None and reference() is value and eligible(value)
 
-    return request, register, consume
+    return request, register, consume, certify_wcc_producer, consume_canonical_wcc
 
 
-_download_request, _register_download, _consume_download = _protocol()
+(_download_request, _register_download, _consume_download,
+ _certify_wcc_producer, _consume_canonical_wcc_download) = _protocol()
 del _protocol

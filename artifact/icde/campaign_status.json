@@ -1,10 +1,8 @@
 {
-  "schema": "eggpu.public_campaign_status/v5",
-  "date": "2026-11-06",
-  "source_candidate": "unified_release_20261106",
-  "source_sha256": "71ea757d372f8c1b969ea074caaa27d3a77d4cea6d48cd9c6ae9c4b02936d7ce",
-  "native_source_sha256": "959cb6bac81b36c9c56d7ec02427bf9c7c1dae6d6812e7fc381ae42be59b0d65",
-  "source_status": "FROZEN_SOURCE_FOCUSED_TRACE_PASS_STATIC_MATRIX_INCOMPLETE",
+  "schema": "eggpu.public_campaign_status/v6",
+  "date": "2026-11-07",
+  "source_sha256": "5af9876b8596b3c8b769fe1865890eb3fe6afc91cd8bf60c9c9bf76dce9ffdeb",
+  "source_status": "CPU_PORTABILITY_REPAIRS_ON_MEASURED_RUNTIME",
   "datasets": [
     "US",
     "EP",
@@ -14,32 +12,15 @@
     "UK",
     "TW"
   ],
-  "current_source_measurements_in_this_publication": 2,
   "first_pass_observations_per_configuration": 1,
   "second_pass_after_first_pass": true,
-  "formal_results_in_this_publication": false,
-  "single_gpu_leading_target": 0.9,
-  "multi_gpu_leading_target": 0.85,
-  "target_status": "OPTIMIZATION_GOALS_NOT_MEASURED_OUTCOMES",
-  "gpu_qualification": {
-    "public_rebuild": "NOT_RUN",
-    "unified_source": "PASS_FOCUSED_FIRST_PAGE_TRACE_STATIC_MATRIX_PENDING"
-  },
-  "historical_status": "provenance/history/campaign_status_20261105.json",
+  "complete_performance_matrix": false,
   "runner_versions": "campaign/latest.json",
   "timing": {
-    "first": "Canonical host CSR ready to complete independently owning host result",
-    "ready": "Prepared-state complete execution with full host output",
-    "job_wall": "Recorded separately; never substituted for first or ready"
+    "first": "Canonical host CSR to complete independently owning host result",
+    "ready": "Prepared-state execution with complete host output",
+    "job_wall": "Separate orchestration metric"
   },
-  "publication_kind": "DEVELOPMENT_CHECKPOINT",
-  "performance_claim": false,
-  "measurement_scope": "Two policy arms of one fixed continuous trace, n=1 per arm; seven selected source-bound external n=1 observations in the paper crosscheck, five unresolved cells, and zero own-source static cells added by this publication.",
-  "additional_external_crosscheck": {
-    "available_n1": 7,
-    "unresolved": 5,
-    "table": "paper/references_20261105/paper_crosscheck_observed.csv",
-    "formal_statistics": false
-  },
-  "tooling_followup": "TOOLING_FOLLOWUP_CN.md"
+  "reproduction": "Build and run in a caller-selected Python/CUDA environment; record local hardware and input identities.",
+  "measurement_source_sha256": "308f80a5f866e1334a03501d84cfaafad8e01e2815da18b5bf455d753a88b2dd"
 }

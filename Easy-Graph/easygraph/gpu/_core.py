@@ -19,7 +19,8 @@ import numpy as np
 
 from ._bridge import (ManagedSession, NativePartitionSession, source_parameter,
                       _ARENA_WCC_OWNED_OUTPUT)
-from ._arena_output import _download_request, _consume_download
+from ._arena_output import (_download_request, _consume_download,
+                            _consume_canonical_wcc_download)
 from .contracts import QueryContract, query_contract
 
 POLICY_SOURCE = Path(__file__).resolve().parent.parent / 'egmgpu' / 'sssp_policy.py'
@@ -37,7 +38,7 @@ _WCC_CANONICAL_CERTIFICATE_AUDIT = {'calls': 0, 'off': 0, 'certified': 0, 'fallb
 _WCC_CANONICAL_CHUNK = 1 << 15
 
 
-def canonical_wcc(labels, count, *, certify_minimum=None, _arena_scope=None, _arena_graph=None):
+def canonical_wcc(labels, count, *, certify_minimum=None, _arena_scope=None, _arena_graph=None, _arena_cpu_certificate=False):
     """Return an owned float64 minimum dense index for every component.
 
     Validate every label even after a certificate fails. Only the final public
@@ -49,22 +50,46 @@ def canonical_wcc(labels, count, *, certify_minimum=None, _arena_scope=None, _ar
         raise ValueError('WCC requires one numeric dense-index component label per node')
     mode = (os.environ.get('EGGPU_WCC_CANONICAL_CERTIFICATE', '0')
             if certify_minimum is None else '1' if certify_minimum else '0')
+    if (mode == '1' and _arena_scope is not None
+            and _consume_canonical_wcc_download(_arena_scope, _arena_graph, array)):
+        # Only the completed internal monotone-union producer can mint this
+        # one-use capability. Generic arrays and native results keep the full
+        # domain/canonicalization checks and noncanonical-label fallback below.
+        _WCC_CANONICAL_CERTIFICATE_AUDIT['calls'] += 1
+        _WCC_CANONICAL_CERTIFICATE_AUDIT['certified'] += 1
+        return array
     certified = mode == '1'
     floating = array.dtype.kind == 'f'
-    for first in range(0, count, _WCC_CANONICAL_CHUNK):
-        last = min(count, first + _WCC_CANONICAL_CHUNK)
-        block = array[first:last]
-        # Integers are already finite and integral; floats require both checks.
-        if ((floating and not np.all(np.isfinite(block)))
-                or np.any(block < 0) or np.any(block >= count)
-                or (floating and np.any(block != np.floor(block)))):
-            raise ValueError('WCC component labels must be exact dense indices')
-        if certified:
-            indices = block.astype(np.intp, copy=False)
-            # The representative belongs to this same group and precedes every
-            # member. Together these prove that it is exactly the group's min.
-            certified = (np.all(array[indices] == block)
-                         and np.all(block <= np.arange(first, last, dtype=np.int64)))
+    cpu_certificate = None
+    if (_arena_cpu_certificate is True and _arena_scope is not None and mode == '1'
+            and array.dtype == np.dtype(np.float64) and array.flags.c_contiguous
+            and array.flags.aligned):
+        # A pure-Python installation or an older extension can use the same
+        # complete value checks below; neither can mint a producer capability.
+        try:
+            import cpp_easygraph
+        except ImportError:
+            pass
+        else:
+            cpu_certificate = getattr(cpp_easygraph, 'cpp_egmgpu_certify_wcc_float64', None)
+    if callable(cpu_certificate):
+        complete_certificate = cpu_certificate(array, count)
+        certified = certified and complete_certificate
+    else:
+        for first in range(0, count, _WCC_CANONICAL_CHUNK):
+            last = min(count, first + _WCC_CANONICAL_CHUNK)
+            block = array[first:last]
+            # Integers are already finite and integral; floats require both checks.
+            if ((floating and not np.all(np.isfinite(block)))
+                    or np.any(block < 0) or np.any(block >= count)
+                    or (floating and np.any(block != np.floor(block)))):
+                raise ValueError('WCC component labels must be exact dense indices')
+            if certified:
+                indices = block.astype(np.intp, copy=False)
+                # The representative belongs to this same group and precedes every
+                # member. Together these prove that it is exactly the group's min.
+                certified = (np.all(array[indices] == block)
+                             and np.all(block <= np.arange(first, last, dtype=np.int64)))
     if mode not in ('0', '1'):
         raise ValueError('EGGPU_WCC_CANONICAL_CERTIFICATE must be 0 or 1')
     _WCC_CANONICAL_CERTIFICATE_AUDIT['calls'] += 1
@@ -237,11 +262,12 @@ class CoreManagedSession(ManagedSession):
             downloaded = self.backend.query(graph_id,'wcc',{})
             canonical_begin = perf_counter()
             values = canonical_wcc(downloaded,len(self.nodes[graph_id]),certify_minimum=True,
-                                   _arena_scope=scope,_arena_graph=graph_id)
+                                   _arena_scope=scope,_arena_graph=graph_id,
+                                   _arena_cpu_certificate=True)
             canonical_seconds = perf_counter() - canonical_begin
             adopted = values is downloaded
             metrics = copy.deepcopy(self.backend.last)
-            metrics['wcc_public_output'] = dict(canonicalization='minimum_root_certificate_with_fallback',
+            metrics['wcc_public_output'] = dict(canonicalization='minimum_root_producer_or_cpu_certificate',
                 bridge_copy_bytes=0, bridge_copy_bytes_avoided=int(values.nbytes),
                 canonicalization_seconds=canonical_seconds,
                 canonical_output_write_bytes=0 if adopted else int(values.nbytes),

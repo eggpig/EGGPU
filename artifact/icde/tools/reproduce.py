@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
-"""Inspect reproduction status and forward explicit build/qualification commands.
-
-There is no `run-all`: inputs, baselines and separate qualification gates remain explicit.
-GPU qualification is a separate explicit command, never a consequence of status.
-"""
+"""Run the artifact tools for building, inputs, experiments, and result export."""
 import argparse
 import json
 from pathlib import Path

@@ -22,7 +22,6 @@ build/
 
 # Local research evidence and archived checkout history
 .maintenance/
-.codex-tmp/
 writing/
 baselines/
 EG_Evaluation/benchmarking/results/

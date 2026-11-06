@@ -1,3 +1,3 @@
-# Artifact entry
+# Artifact
 
-Use [the current ICDE guide](icde/README.md), [status](STATUS.md), and `python -B artifact/icde/tools/reproduce.py status`. Historical directories preserve original source and evidence, but are not the current experiment authority.
+Start with the [build and reproduction guide](icde/README.md). Machine-readable source and execution status are available through `python -B artifact/icde/tools/reproduce.py status`.

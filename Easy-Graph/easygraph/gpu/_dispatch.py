@@ -40,7 +40,7 @@ def plan_session(*, devices=(0,), state_model="static", algorithms=CORE_ALGORITH
     """
     normalized = []
     for device in devices:
-        if isinstance(device, bool) or type(device).__name__ == "bool_":
+        if isinstance(device, bool) or type(device).__name__ in ("bool", "bool_"):
             raise ValueError("Devices must be nonnegative integer logical IDs")
         try:
             value = operator.index(device)

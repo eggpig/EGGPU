@@ -2,8 +2,8 @@
   "schema": "eggpu.dataset_protocol_freeze.v1",
   "date": "2026-11-04",
   "timezone": "Asia/Shanghai",
-  "status": "dataset_selection_and_protocol_frozen_not_all_payloads_qualified",
-  "protocol_document": "DATASET_AND_EXPERIMENT_FREEZE_20261104_CN.md",
+  "status": "FIXED_SEVEN_GRAPH_SUITE",
+  "protocol_document": "README.md#inputs",
   "main_dataset_count": 7,
   "categories": {
     "RN": "道路网络",

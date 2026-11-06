@@ -2,6 +2,7 @@
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 #include <cstddef>
+#include <cmath>
 #include <cstdint>
 #include <stdexcept>
 
@@ -41,5 +42,34 @@ inline pybind11::dict finalize_wcc_uint64(const pybind11::array& labels,
     // A noncanonical candidate is never published by the Python integration.
     result["values"] = std::move(values);
     return result;
+}
+// One complete CPU pass over an existing FP64 vector. No output allocation,
+// graph algorithm, answer cache, label mutation or ownership transfer occurs.
+inline bool certify_wcc_float64(const pybind11::array& labels,
+                                pybind11::ssize_t count) {
+    namespace py = pybind11;
+    if (count < 0 || static_cast<std::uint64_t>(count) > (std::uint64_t(1) << 53)
+        || labels.ndim() != 1 || labels.shape(0) != count
+        || !labels.dtype().is(py::dtype::of<double>())
+        || !(labels.flags() & py::array::c_style)
+        || reinterpret_cast<std::uintptr_t>(labels.data()) % alignof(double))
+        throw std::invalid_argument("WCC certificate requires aligned contiguous native float64 labels");
+    const double* input = static_cast<const double*>(labels.data());
+    bool canonical = true;
+    {
+        py::gil_scoped_release release;
+        for (py::ssize_t i = 0; i < count; ++i) {
+            const double value = input[i];
+            // Validate before narrowing or using the value as an index. Always
+            // validate later elements even after canonical has become false.
+            if (!std::isfinite(value) || value < 0.0
+                || value >= static_cast<double>(count) || value != std::floor(value))
+                throw std::invalid_argument("WCC component labels must be exact dense indices");
+            const auto root = static_cast<py::ssize_t>(value);
+            if (value > static_cast<double>(i) || input[root] != value)
+                canonical = false;
+        }
+    }
+    return canonical;
 }
 }}  // namespace easygraph::egmgpu

@@ -21,10 +21,12 @@ from easygraph.gpu.contracts import GraphDescriptor, GraphVersion
 
 class Device:
     """CPU-only blocking device-copy double; no CuPy or CUDA initialization."""
-    def __init__(self, values): self.values = values
+    def __init__(self, values):
+        self.values = values
+        self.shape, self.dtype = values.shape, values.dtype
     def __getitem__(self, item): return Device(self.values[item])
     def set(self, values): self.values[...] = values
-    def get(self, out=None):
+    def get(self, out=None, blocking=True):
         if out is None: return self.values.copy()
         out[...] = self.values
         return out
@@ -37,7 +39,9 @@ def download(values, selected=None):
     tree = ast.parse(source.read_text())
     cls = next(n for n in tree.body if isinstance(n, ast.ClassDef) and n.name == 'Executor')
     method = next(n for n in cls.body if isinstance(n, ast.FunctionDef) and n.name == 'download')
-    namespace = {'np': np, 'time': time, 'cp': SimpleNamespace(cuda=SimpleNamespace(get_elapsed_time=lambda *a: 0.))}
+    namespace = {'np': np, 'time': time, 'cp': SimpleNamespace(cuda=SimpleNamespace(runtime=SimpleNamespace(), get_elapsed_time=lambda *a: 0.))}
+    helper = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == '_download_owned_host')
+    exec(compile(ast.Module(body=[helper], type_ignores=[]), str(source), 'exec'), namespace)
     exec(compile(ast.Module(body=[method], type_ignores=[]), str(source), 'exec'), namespace)
     event = SimpleNamespace(record=lambda: None)
     engine = SimpleNamespace(patch_capacity=2, patch_i=Device(np.empty(2, np.int32)),

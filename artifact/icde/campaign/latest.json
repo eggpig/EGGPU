@@ -1,6 +1,6 @@
 {
   "schema": "eggpu.runner.latest.v2",
-  "source_sha256": "71ea757d372f8c1b969ea074caaa27d3a77d4cea6d48cd9c6ae9c4b02936d7ce",
+  "source_sha256": "5af9876b8596b3c8b769fe1865890eb3fe6afc91cd8bf60c9c9bf76dce9ffdeb",
   "default_runners": {
     "native_load_p1": {
       "directory": "campaign/native_load_p1",
@@ -40,13 +40,13 @@
     }
   },
   "historical_top_level_entrypoints": "Unlisted old entrypoints are retained only as historical support; reproduce.py selects explicit current paths.",
-  "status": "UNIFIED_BUILD_AND_FOCUSED_TRACE_PASS_STATIC_MATRIX_PENDING",
+  "status": "SOURCE_FROZEN_GPU_PILOTS_PASS",
   "additional_entrypoints": {
     "continuous_and_e2_to_e6_figures": "artifact/icde/paper_results/render.py",
     "capacity": "artifact/icde/paper_results/capacity.py",
     "state_resource_template": "artifact/icde/tools/state_deployment_template.py"
   },
-  "formal_campaign_status": "CURRENT_UNIFIED_SOURCE_MEASUREMENTS_PENDING",
+  "formal_campaign_status": "FULL_SOURCE_BOUND_CAMPAIGN_RUNNING",
   "experimental_protocols": {
     "state_protocol_completion_v1": "campaign/state_protocol_completion_v1",
     "e6_protocol_completion_v2": "campaign/e6_protocol_completion_v2",
@@ -60,10 +60,10 @@
   },
   "experimental_wcc": "experimental/native_wcc_wide_v2",
   "current_paper_export": "paper_results_current",
-  "current_paper_navigation": "paper/README_CN.md",
-  "new_complete_formal_figures": [],
   "experimental_wcc_runner": "experimental/native_wcc_wide_v3",
   "first_pass": "first_pass/README_CN.md",
   "first_pass_source_policy": "Exact selected source only; do not combine historical EGGPU sources or promote target to formal",
-  "native_static_measurement_protocol": "native-host-csr-static-all4-public-return-v2"
+  "native_static_measurement_protocol": "native-host-csr-static-all4-public-return-v2",
+  "measurement_source_sha256": "308f80a5f866e1334a03501d84cfaafad8e01e2815da18b5bf455d753a88b2dd",
+  "source_status": "CPU_PORTABILITY_REPAIRS_ON_MEASURED_RUNTIME"
 }

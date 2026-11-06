@@ -1679,6 +1679,9 @@ py::dict run_serial_partitioned_wcc_core_output_guard(
 }  // namespace
 
 void bind_egmgpu_partitioned_wcc(py::module_& module) {
+    module.def("cpp_egmgpu_certify_wcc_float64", &easygraph::egmgpu::certify_wcc_float64,
+        py::arg("labels"), py::arg("count"),
+        "CPU-only full-domain/minimum-root certificate; never mutates or adopts input storage.");
     module.def("cpp_egmgpu_finalize_wcc_uint64", &easygraph::egmgpu::finalize_wcc_uint64,
         py::arg("labels"), py::arg("count"),
         "Certify a complete native uint64 WCC label vector and materialize fresh owning float64 values on CPU.");

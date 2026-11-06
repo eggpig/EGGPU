@@ -8,6 +8,7 @@ from time import perf_counter
 from contextlib import contextmanager
 import numpy as np
 import cupy as cp
+from easygraph.gpu._arena_output import _certify_wcc_producer
 
 SOURCE = r'''
 // Same monotone path halving used by native WCC local_root().
@@ -86,6 +87,13 @@ class ConnectivityExecutor:
             self.connectivity_kernels['emit_roots'](((n + 255)//256,), (256,), (np.int32(n), parent, output))
         end.record(); end.synchronize()
         value, metrics = self.base.download(output, kwargs.get('selected'))
+        # init_parents starts singleton sets; union_edges connects only graph
+        # edges and hooks each larger root to a smaller root. emit_roots resolves
+        # the complete chain after all unions finish, so the emitted FP64 value
+        # is each component's minimum dense index. The request-local capability
+        # binds this invariant to this exact fresh, synchronized host vector.
+        if kwargs.get('selected') is None and value.shape == (n,):
+            _certify_wcc_producer(value)
         return value, dict(iterations=1, device_loop_seconds=cp.cuda.get_elapsed_time(start, end)/1000,
                            d2h_bytes=value.nbytes, connectivity_module_load_seconds=load_seconds,
                            connectivity='minimum_root_atomic_union', retained_algorithm_answers=False,

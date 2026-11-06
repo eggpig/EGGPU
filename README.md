@@ -1,20 +1,32 @@
 # EGGPU
 
-EGGPU provides single-GPU and multi-GPU graph analysis with D-Maintain for version-aware maintenance and C-Retain for memory-budget-aware retention. The implementation is in `Easy-Graph/`.
+EGGPU runs graph analytics on one or multiple GPUs and manages graph state across successive requests. D-Maintain updates the representations required by a request. C-Retain manages retained state using shared physical allocations and observed reuse demand.
 
-This development checkpoint freezes exact source SHA-256 `71ea757d372f8c1b969ea074caaa27d3a77d4cea6d48cd9c6ae9c4b02936d7ce`. It integrates immutable SSSP host payload sharing, retained resident owners, Arena WCC path halving, and registered owning host output. The native build source is `959cb6bac81b36c9c56d7ec02427bf9c7c1dae6d6812e7fc381ae42be59b0d65`; the unified source differs from it only in two Python runtime files. Public builds must compile the complete source. No binaries or machine-specific qualification proofs are shipped.
+The implementation is in `Easy-Graph/`. The [artifact guide](artifact/icde/README.md) describes the fixed datasets, baseline adapters, six experiments, and measurement protocol.
 
-```sh
+## Build and run
+
+Use a Python environment with NumPy, SciPy, pybind11, and CMake, together with a compatible CUDA toolkit. The build uses the caller's environment and writes outside this checkout.
+
+```bash
 python -B artifact/icde/tools/verify.py
-python -B artifact/icde/tools/reproduce.py status
-python -B artifact/icde/tools/reproduce.py protocol-grid --kind state-configurations --output state-configurations.json
-python -B artifact/icde/tools/build.py --build-dir /outside/new-build --cuda-root /your/cuda --architecture 89 --jobs 2
+python -B artifact/icde/tools/build.py \
+  --build-dir /path/to/eggpu-build \
+  --cuda-root /path/to/cuda --architecture 89 --arena --execute
+python -B artifact/icde/tools/reproduce.py run-native-example --help
 ```
 
-The build command prints a plan unless `--execute` is supplied. Build artifacts, input payloads and results belong outside this checkout. Rebuilt binaries and relocated runners require a focused matching qualification; unchanged inputs and already complete current-source observations are reused explicitly.
+Architecture `89` targets the RTX 4090 D used in the main experiments; use `80` for A100. For NCCL support, supply both `--nccl-include` and `--nccl-library` to the build command. Record the locally selected communication backend with the experiment.
 
-The fixed graphs are US, EP, LJ, OR, IN, UK and TW. Exact source variants and normalization are documented in `artifact/icde/datasets.json` and `artifact/icde/paper/DATASET_AND_EXPERIMENT_FREEZE_20261104_CN.md`. The formal queues have started; results and qualification coverage remain incomplete. This checkpoint contains no completed formal result matrix or claim of a measured SOTA percentage.
+The [reproduction commands](artifact/icde/README.md#experiments) cover input preparation, single- and multi-GPU execution, maintenance and retention workloads, and the dependent application. All results are written to caller-selected directories.
 
-See `artifact/icde/README.md` for current entry points, timing boundaries, baseline precision, reproduction checks and pending work. Mechanism and framework artwork remain reserved for the collaborator.
+## Source and checks
 
-The current first-pass protocol presents one complete observation per configuration before a second repetition, retaining original target/formal labels, all missing cells and failures. First/ready query times and job wall time remain separate. No current-source result matrix or performance percentage is included. See [the current source and first-pass update](artifact/icde/FIRST_PASS_UPDATE_CN.md). Earlier protocol documents and qualification evidence remain explicitly historical.
+This release contains source `5af9876b8596b3c8b769fe1865890eb3fe6afc91cd8bf60c9c9bf76dce9ffdeb`, including immutable host-input sharing, retained device owners, canonical WCC output handoff, and independently owned host results. The source inventory and checksums are in `artifact/icde/provenance/`. Performance receipts bind revision `308f80a5f866`; this release adds NumPy boolean-input rejection, a checked fallback for older CPU extensions, and an updated CPU download fixture. CUDA/C++ sources are unchanged.
+
+```bash
+python -B artifact/icde/tools/test_cpu.py --work /path/to/new-cpu-check
+python -B artifact/icde/tools/reproduce.py status
+```
+
+See [LICENSE](LICENSE), [NOTICE](NOTICE), and [CITATION.cff](CITATION.cff) for licensing and attribution.

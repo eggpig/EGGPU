@@ -1,5 +1,3 @@
-# Artifact status
+# Release status
 
-Development checkpoint, 2026-11-06. The complete source is frozen as `71ea757d372f8c1b969ea074caaa27d3a77d4cea6d48cd9c6ae9c4b02936d7ce`. CPU component checks are recorded separately from GPU execution. The exact source-bound build and focused P8 SSSP first-page trace passed. The first-pass static comparison matrix remains pending; the trace is not an external superiority claim.
-
-The campaign prioritizes one complete observation per configuration before the second repetition. The 90% single-GPU and 85% multi-GPU targets remain optimization goals. Historical measurements retain their original source identity and are not pooled into the new source. See `artifact/icde/FIRST_PASS_UPDATE_CN.md`.
+The current source is `5af9876b8596b3c8b769fe1865890eb3fe6afc91cd8bf60c9c9bf76dce9ffdeb`. Source-bound WCC pilots and the EP application comparison have completed. The full seven-graph experiment matrix is running. Run `python -B artifact/icde/tools/reproduce.py status` for the packaged metadata.

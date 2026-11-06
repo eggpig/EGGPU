@@ -1,49 +1,80 @@
-# Current ICDE reproduction checkpoint
+# EGGPU artifact
 
-This development checkpoint contains 1162 implementation files matching unified source `71ea757d372f8c1b969ea074caaa27d3a77d4cea6d48cd9c6ae9c4b02936d7ce` byte for byte. It integrates the native 959 immutable-host change with two Python runtime overlays. The exact source-bound build and focused P8 SSSP first-page trace passed; static SG/MG matrix qualification and measurements remain pending. The included trace summary is n=1 per policy arm. [FIRST_PASS_UPDATE_CN.md](FIRST_PASS_UPDATE_CN.md) is the current execution and presentation policy; the frozen detailed protocols below remain available as explicitly named historical plans.
+This artifact contains the graph runtime, input tools, author-baseline adapters, experiment runners, and figure exporters. Its source inventory is verified by `tools/verify.py`.
 
-Current modules are selected explicitly by `tools/reproduce.py`: single-GPU `campaign/sg_current`, static native `campaign/native_load_p1`, E6 `campaign/e6_memory`, state `campaign/state_worker.py`, state planner `campaign/state_final_plan`, PR negative control `campaign/e3_unweighted_control`, and separate original-precision GUM candidate `campaign/gum_fp32_author`. `campaign/latest.json` is the selection authority. Unlisted older top-level runners are historical support files.
+## Build
 
-The source includes public graph functions, replicated extended functions and partitioned BFS/SSSP/WCC/PR. These execution scopes have different memory requirements; the full function list is not a claim of sixteen partitioned algorithms. Native D-Maintain's sparse weight/COW path is FP64-specific and does not maintain general topology changes or algorithm answers. C-Retain uses historical demand and releasable physical storage, not a learned recovery-time estimate.
+Use an existing Python environment with NumPy, SciPy, pybind11, networkx, and CMake. Tests also require pytest; figure export requires Matplotlib. Supply a compatible CUDA toolkit and select its compute architecture explicitly.
 
-## Local preparation and plans
+```bash
+python -B artifact/icde/tools/verify.py
+python -B artifact/icde/tools/build.py \
+  --build-dir /path/to/new-build --cuda-root /path/to/cuda \
+  --architecture 89 --arena --execute
+```
 
-Supply an existing compatible Python/CUDA environment and build outside the tree. `tools/build.py`, the original-format input tools, `tools/capture_setup.py` and the CPU tests remain available through `tools/reproduce.py`. GPU UUIDs, libraries, CPU placement and output roots are supplied locally; no private GPU identity or precompiled DSO is shipped.
+The build receipt records the source, command, and generated libraries. Build output belongs outside the checkout. `--arena` includes the libraries used by the single-GPU path. Add `--nccl-include /path/to/include --nccl-library /path/to/libnccl.so` when using NCCL.
 
-Static native uses the fixed per-function communication profile: PR uses NCCL, while the other functions use host staging. Its portable launcher defaults to this explicit profile. Set `EGGPU_BENCH_CPU_SET` to sixteen distinct available CPU IDs before launching on another CPU topology; the chosen CPU mapping becomes part of the new runner epoch. Source algorithms and function-specific policy are unchanged.
+After building, use the explicit extension and receipt paths:
 
-`protocol-grid` regenerates the 56 distinct state inputs, 288 main configurations or 32 hotspot configurations. `state-grid --help` exposes the shared-base preparation CLI; pass the packaged `state_grid_prepare_v2/prepare_state_grid.py` as the unchanged serializer controller and `state_grid_prepare_v3/positions.py` as the selector. Immutable graph bases are shared across density/ordering controls. `state-plan build --help` requires explicit rebuilt source/DSO, setup deployment, canonical registry and input receipts. Use `--scope available --enable-p8-targets`; `--grid-domain partition-hotspot` selects the separate K=1/2/4/8 intervention. The PR control uses the same new-source deployment and retains its original byte assertions.
+```bash
+python -B artifact/icde/tools/reproduce.py run-native-example \
+  --native-dso /path/to/build/cpp_easygraph.so \
+  --build-receipt /path/to/build/portable_build_receipt.json \
+  --manifest /path/to/graph-manifest.json \
+  --devices 0,1 --function sssp --source 0 \
+  --communication host_staging --output /path/to/new-result
+```
 
-The historical state plan has 288 main cells and 32 additional hotspot cells with ten-repeat templates. Current scheduling prioritizes one complete observation per configuration before the second repetition. The hotspot selector fixes rho=1e-4 and actual touched owner count, pairs undirected arcs and reports insufficient capacity as INFEASIBLE. It is a controlled intervention, not an asserted natural production trace. E6 covers a dependent structural-screening workflow with four coverage-ablation groups, retaining all intermediate and final outputs. Its weak projection and graph construction remain inside T_first even though redundant intermediate array files are eliminated.
+Use the exact extension filename produced by the build. Device IDs are logical IDs after `CUDA_VISIBLE_DEVICES` mapping. The example returns a complete host vector, retains its ownership through session close, and saves the timing and execution metrics.
 
-For E6, first run `e6-worker --prepare-reference` on each exact input using an independent CPU environment. Then `bind-e6-references --receipts ... --output ...` binds those newly produced full-vector oracle files. Supply this manifest to `run-e6 --reference-manifest ...`. An old manifest cannot simply be relocated and reused without fresh path/content validation. The original formula provenance is retained.
+## Inputs
 
-All campaign launchers default to plan-only or require explicit `--execute-gpu`. The v8 supervisor/controller preserves failures, process cleanup evidence, completed prefixes and source bindings. Its incremental maintenance runs outside measured intervals and reuses SHA only for unchanged read-only inode fingerprints. It does not remove raw observations. Source, inputs and resources remain explicit. Use one focused qualification for the new source, retain full-output checks, and reuse complete current-source target observations as n=1 without relabeling their phase.
+The seven fixed graphs are US (DIMACS10/road_usa), EP (SNAP soc-Epinions1), LJ (SNAP soc-LiveJournal1), OR (Network Repository soc-orkut), IN (LAW indochina-2004), UK (LAW uk-2002), and TW (LAW twitter-2010). [datasets.json](datasets.json) records exact source URLs, direction, normalization, weights, and fixed-source selection.
 
-## Timing and reporting
+Normalization preserves the vertex universe, removes self-loops and duplicate ordered arcs, sorts CSR rows, and stores both orientations for undirected graphs. SSSP uses deterministic integer weights in [1,16]. Keep the normalization receipt and identifier map with each prepared input.
 
-T_first begins with qualified canonical host CSR ready and ends with the complete independently owning host result. System-specific format construction, imports, initialization, uploads and query work are included. It is not disk-cold end-to-end latency. T_ready uses retained state after one complete warmup and includes fresh full host result materialization. Canonical payload checking and prefaulting occur before both systems' benchmark origin.
+```bash
+python -B artifact/icde/tools/reproduce.py build-input-tools --help
+python -B artifact/icde/tools/reproduce.py fetch-inputs --help
+python -B artifact/icde/tools/reproduce.py prepare-inputs --help
+python -B artifact/icde/tools/reproduce.py capture-local-setup --help
+```
 
-State workflow timing excludes inventory inspection, output SHA validation and Session.close. The existing `audit_and_close` field is a composite audit/cleanup measurement; it must not be relabeled as pure close time. Canonical loading, conversion and preparation are separately retained in receipts, including one-time versus reusable preparation.
+## Experiments
 
-GUM (standard) PR has a separately labeled FP64 compatibility variant. The new original FP32 candidate retains author rank/damping arithmetic and its eight-byte wire representation; conversion to an owning FP64 result is inside the query clock. Historical 64-iteration runs do not isolate a precision effect. RWS P8 platform peer-access failure is separate. C²graph TW reached a 1800-second CPU compression timeout before GPU execution; this is neither OOM nor a measured T_ready. See `provenance/baseline_precision_capacity.json`.
+| Experiment | Workload | Entry points |
+|---|---|---|
+| E1 | Seven graphs, BFS/SSSP/WCC/PageRank, one GPU | `run-sg`, `run-sg-authors`, `run-c2graph-p` |
+| E2 | Same-resource multi-GPU comparison and fixed-backend 1/2/4/8-GPU scaling | `run-native`, `run-gum`, `run-cugraph-mg` |
+| E3 | Weight updates, function dependencies, and old-version holders | `state-inputs`, `state-grid`, `state-plan`, `state-worker` |
+| E4 | Graph switching under a per-device memory budget; multi-source SSSP | `state-plan`, `state-worker`, `run-e4s` |
+| E5 | Matched D-Maintain/C-Retain four-arm intervention | `state-plan`, `state-worker` |
+| E6 | Structural-hole screening, Closeness ranking, BFS and WCC | `e6-protocol-plan`, `e6-protocol-worker` |
 
-`paper-results` accepts only explicit, source-bound complete formal selections. It refuses missing repetitions/proofs or qualification rows before creating paper outputs. The E1 renderer regenerates CSV, HTML and LaTeX from validated observations; no results are synthesized. E2–E6 normalization and vector renderers are integrated under `paper_results/`. Actual complete formal measurements remain pending; no measured success is claimed.
+Invoke an entry with `python -B artifact/icde/tools/reproduce.py ENTRY --help`. Dataset paths, built libraries, local environment, CPU affinity, GPU placement, and output paths are explicit runner arguments. [campaign/latest.json](campaign/latest.json) identifies the selected implementations. The [baseline guide](baselines/README_CN.md) records author revisions, supported algorithms, and compatibility changes.
 
-The unified-release CPU review, public projection tests, source/readback checks, continuous16 export, and E2–E6 vector renderers are integrated. This development checkpoint retains the following limits: a fresh portable clean build/GPU qualification and complete formal measurements remain outstanding, and the adapters must be checked against the first real formal receipts before producing paper results. No push is performed by stage preparation.
+Partitioned multi-GPU execution supports BFS, SSSP, WCC, and PageRank. Extended application functions use replicated graph state with ego-vertex or source work distributed across devices. D-Maintain's native sparse weight-update and copy-on-write path uses FP64 weights. C-Retain scores historical demand against actually releasable physical storage.
 
-Public CPU checks run with `python artifact/icde/tools/test_projection_cpu.py --work <absent-dir>`. They require NumPy, SciPy, networkx, Matplotlib and pytest. The source-only suite explicitly excludes two compiled-extension tests. After building, run `tools/test_cpu.py --work <absent-dir> --native-dso <built-extension>` and `tools/test_native_array_cpu.py --work <absent-dir> --native-dso <built-extension> --build-receipt <portable_build_receipt.json>`; the latter verifies source/build identity before its 32 file/array import cases. The separate E4-S CPU test executes actual KGraph author binaries: provide `E4S_CPU_AUTHOR_BUILD=<fresh-author-build-receipt>` and `E4S_CPU_REFERENCE=<repo>/artifact/icde/campaign/state_reference.py`, then select `--groups e4s`. No test silently treats absent author binaries as passing.
+For E3–E5, `state-deployment-template` creates the local resource template. `state-grid` builds shared immutable graph bases and predetermined updates. `state-plan` binds these inputs to the runtime, numerical checks, budgets, and policy settings. All policies in a matched experiment use the same source, input sequence, resource assignment, and clock.
 
-E2–E6 figures are generated with `python artifact/icde/tools/reproduce.py paper-e2-e6 --selection <formal-selection.json> --mode formal --output <paper-results-dir> --scratch <scratch-dir>`. The selected grid and all ten repetitions must pass exact source/input/output/proof checks before a publication directory can be produced. Incomplete input only yields a clearly labelled diagnostic outside paper/current/previous. Hotspot cells explicitly declare `grid_domain: partition-hotspot` and `hotspot_k: 1|2|4|8`; all 32 cells are required. `capacity-results` keeps OOM, CPU preprocessing timeout, and unavailable timings distinct. No sample figures are bundled as paper results.
+For E6, prepare the independent reference for each exact graph before timed runs. `e6-protocol-worker --help` exposes the reference and workflow modes. The workflow computes all structural scores, selects 32 candidates, computes exact Wasserman–Faust Closeness, selects the BFS source, and returns complete BFS/WCC results. CPU igraph and a cuGraph/CuPy composition provide full-workflow comparisons and operator replacements.
 
-For E3–E5, `state-deployment-template` builds the local P1/P8 resource template from explicit Python/DSO/tiny-input/environment/CPU/GPU paths. Then `state-plan build` takes that template, the public `campaign/freeze.json`, `provenance/runtime_source_freeze.json`, the seven-input registry, and exact prepared input receipts. Pass `--profile-environment campaign/state_profile_environment.json` to preserve the current four-function state profile; its legacy CPU lists are inactive under inherited placement. The generated plans require fresh source-bound pilots and tiny/target results before `state-plan admit-formal` will release ten-repeat formal jobs.
+## Measurement
 
-Native manifests retain a checked signed-32-bit local adjacency domain. A global weak WCC projection may be wider; every local partition must still satisfy its declared index type. An index-capacity rejection is distinct from GPU OOM.
+Execution time starts with prepared graph state and includes device synchronization and a complete, independently owned host result. First-task time additionally includes backend-specific preparation from the common host CSR. Continuous-workload timing includes the updates, queries, preparation, and state management inside the specified request sequence. Independent reference calculation and output archival are outside the measured interval. Job wall time is recorded separately.
 
-E4-S recoverable-output tooling is included under `campaign/e4s_recoverable_outputs_v1`. Formal eligibility still requires the actual exact-output archive, successful original maintenance and complete source-bound qualification; a hash-only acknowledgement cannot authorize a formal figure.
+BFS/SSSP compare complete distance vectors; WCC compares complete partitions. PageRank checks fixed-point residual, probability mass, and agreement with an independent reference. Static BFS/SSSP observations average three fixed sources. The first pass records one observation per configuration, followed by a second repetition. Preserve raw observations and failure states when exporting tables.
 
-See [FOLLOWUP_CN.md](FOLLOWUP_CN.md) for the new experimental protocol commands, CPU validation scopes, portable reference prerequisites, separate WCC overlay and current queue observation. The earlier state/E6 commands above remain their named frozen protocols; they do not silently select the new protocol candidates.
+Use `first-pass-collect`, `first-pass-build`, and `first-pass-render` for complete available observations. The `paper-current-*` and `paper-e2-e6` commands implement the explicitly selected repeated-result protocols; their input selection must match the requested repetition count. [first_pass/README_CN.md](first_pass/README_CN.md) describes the collector schema.
 
-The latest local protocol update is documented in [PROTOCOLS_UPDATE_CN.md](PROTOCOLS_UPDATE_CN.md). Use `paper_results_current` for the new 561-cell protocol and `paper/README_CN.md` for current writing assets. The older `paper_results` directory remains a frozen historical exporter. No new complete formal figures are included.
+## Checks
 
-The source-selected first-pass collector and exporter are under `first_pass/`. They do not execute GPUs, generate measurements, reinterpret queue wall time, or combine EGGPU source identities. A separate selected bundle is required for each frozen source.
+```bash
+python -B artifact/icde/tools/test_cpu.py --work /path/to/new-cpu-check
+python -B artifact/icde/tools/test_projection_cpu.py \
+  --groups native_load_p1,sg_current,state_worker \
+  --work /path/to/new-runner-check
+```
+
+After a local build, pass `--native-dso` to `test_cpu.py` to include the compiled CPU cases. `test-native-arrays-cpu` checks file and array imports against the local build receipt. Run the initial small GPU check once for each new source/build/resource configuration, then retain complete numerical output checks during measurements.
