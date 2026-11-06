@@ -1,0 +1,109 @@
+{
+  "schema": "eggpu.public_campaign_status/v3",
+  "date": "2026-11-05",
+  "source_candidate": "native_memory_input_v1",
+  "source_sha256": "d84ff388e1e40d1fd6ed83fcaceecd0491fc0451adffaff657a95940b1803f84",
+  "source_status": "DEVELOPMENT_CHECKPOINT_FORMAL_QUEUES_STARTED_RESULTS_INCOMPLETE",
+  "datasets": [
+    "US",
+    "EP",
+    "LJ",
+    "OR",
+    "TW",
+    "IN",
+    "UK"
+  ],
+  "canonical_inputs": {
+    "complete": [
+      "US",
+      "EP",
+      "LJ",
+      "OR",
+      "IN",
+      "UK",
+      "TW"
+    ],
+    "pending": [],
+    "portable_original_source_rebuild": "SIX_INDEPENDENT_FULL_HASH_MATCHES_AND_TW_ORIGINAL_FORMAT_PREPARATION_PASS",
+    "scope": "All seven original-format preparation paths executed; existing compressed sources verified, not all redownloaded on a new machine",
+    "completion_evidence": "inputs/completion.json"
+  },
+  "formal_repetitions": 10,
+  "formal_results_in_this_publication": false,
+  "single_gpu_leading_target": 0.9,
+  "target_status": "OPTIMIZATION_TARGET_NOT_ACHIEVED_OR_ESTABLISHED_BY_COMPLETE_FORMAL_MATRIX",
+  "experiments": {
+    "E1": {
+      "design": "FROZEN",
+      "current_source_formal_results": "PENDING"
+    },
+    "E2": {
+      "design": "FROZEN",
+      "current_source_formal_results": "PENDING"
+    },
+    "E3": {
+      "design": "FROZEN",
+      "current_source_formal_results": "PENDING"
+    },
+    "E4": {
+      "design": "FROZEN",
+      "current_source_formal_results": "PENDING"
+    },
+    "E5": {
+      "design": "FROZEN",
+      "current_source_formal_results": "PENDING"
+    },
+    "E6": {
+      "design": "FROZEN",
+      "current_source_formal_results": "PENDING"
+    }
+  },
+  "runner_versions": "campaign/latest.json",
+  "gpu_qualification": {
+    "public_relocation": "NOT_RUN",
+    "private_campaign_summary": "provenance/campaign_scope.json"
+  },
+  "not_provided": [
+    "Complete E1-E6 formal measurements and raw output vectors",
+    "Machine-specific binaries and private GPU identity",
+    "Previously computed oracle manifests as reusable public proof"
+  ],
+  "figure_slots": {
+    "mechanism": "RESERVED_FOR_COLLABORATOR",
+    "framework": "RESERVED_FOR_COLLABORATOR"
+  },
+  "presentation_tools": "presentation/README_CN.md and paper_results/README_CN.md: CPU-tested E1 tables, continuous16 and E2–E6 vector renderers; formal output requires exact complete evidence",
+  "current_private_campaign": "Formal queues launched; results incomplete and no final performance claims.",
+  "progress_evidence_scope": "Progress checkpoint reported by the campaign controller owner; raw source-bound admission proofs remain in the private campaign and are not reusable public proofs.",
+  "publication_kind": "DEVELOPMENT_CHECKPOINT",
+  "e4s_formal_export": "RECOVERABLE_OUTPUT_TOOLING_INCLUDED; REQUIRES_ACTUAL_SUCCESSFUL_ARCHIVE_AND_MAINTENANCE_PROOFS",
+  "formal_campaign_status": "LAUNCHED_INCOMPLETE_NO_FINAL_CLAIMS",
+  "experimental_protocols": {
+    "state_protocol_completion_v1": "CPU_VALIDATED; NEW_PROTOCOL_GPU_QUALIFICATION_REQUIRED",
+    "e6_protocol_completion_v2": "CPU_VALIDATED; GPU_QUALIFICATION_SUBMITTED_INCOMPLETE",
+    "native_wcc_wide_v2": "SEPARATE_6CCE_OVERLAY; GPU_QUALIFICATION_SUBMITTED_INCOMPLETE; NOT_MAIN_SOURCE",
+    "formal_incremental_admission_v1": "CPU_VALIDATED_NOT_A_PORTABLE_GPU_PROOF",
+    "formal_incremental_e4s_v1": "CPU_VALIDATED_ARCHIVE_AND_MAINTENANCE_REQUIRED",
+    "state_completion_queue_guard_v1": "CPU_VALIDATED_QUALIFICATION_ENVELOPE",
+    "arena_diagnostic_v1": "DIAGNOSTIC_ONLY_NOT_FORMAL",
+    "paper_results_current": "STRICT_561_CELL_EXPORT_CPU_VALIDATED_NO_COMPLETE_FORMAL_FIGURES",
+    "native_wcc_wide_v3": "RUNNER_ONLY_CANDIDATE_NOT_MAIN"
+  },
+  "previous_progress_snapshot": {
+    "observed_at": "2026-11-05T10:32:00Z",
+    "observer": "campaign controller owner",
+    "external_formal_passed": 2,
+    "external_formal_queue_jobs": 300,
+    "e6_v2_qualification_submitted": 60,
+    "wcc_v2_qualification_submitted": 80,
+    "scope": "Owner-reported progress only; original machine-bound receipts are not distributed as portable qualification proofs."
+  },
+  "progress_snapshot": {
+    "observed_at": "2026-11-05T11:32:46.280347+00:00",
+    "observer": "local controller snapshot; original machine receipts not distributed",
+    "formal_measurements": 15,
+    "formal_attempted": 15,
+    "complete_matrix": false,
+    "snapshot_sha256": "8c1f88cdb3c4e4059e5ab5803dd67a4740be95584a0f8db42366b7014e7ba434"
+  }
+}

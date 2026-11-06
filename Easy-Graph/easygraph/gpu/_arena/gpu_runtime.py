@@ -410,6 +410,67 @@ class HostGraph:
         return shortest_path(matrix,directed=True,indices=source,unweighted=function=='bfs',method='D')
 
 
+def _download_owned_host(device_array):
+    """Temporarily register a fresh NumPy owner for a blocking full download.
+
+    No pinned buffer or answer is retained. Only a successful registration is
+    released; unsupported/allocation/overlap errors use the original pageable
+    download. Copy and unregister errors propagate before result publication.
+    """
+    started=time.perf_counter()
+    output=np.empty(device_array.shape,dtype=device_array.dtype,order='C')
+    allocation=time.perf_counter()-started
+    registration=unregistration=copy_seconds=0.
+    fallback_status=None
+    runtime=cp.cuda.runtime
+    register=getattr(runtime,'hostRegister',None)
+    unregister=getattr(runtime,'hostUnregister',None)
+    if not output.nbytes:
+        route='empty_owned'
+    elif register is None or unregister is None:
+        route='pageable_registration_unavailable'
+        started=time.perf_counter();output=device_array.get()
+        copy_seconds=time.perf_counter()-started
+    else:
+        ptr=int(output.ctypes.data)
+        started=time.perf_counter()
+        try:
+            register(ptr,output.nbytes,0)  # cudaHostRegisterDefault
+        except runtime.CUDARuntimeError as error:
+            registration=time.perf_counter()-started
+            # CUDA driver_types.h: InvalidValue, MemoryAllocation,
+            # HostMemoryAlreadyRegistered, NotSupported. CuPy check_status
+            # resets CUDA's last-error state before raising this exception.
+            if error.status not in (1,2,712,801):
+                raise
+            fallback_status=int(error.status)
+            route='pageable_registration_fallback'
+            # Never borrow or unregister an overlapping external registration.
+            # The original .get() producer owns its ordinary pageable fallback.
+            started=time.perf_counter();output=device_array.get()
+            copy_seconds=time.perf_counter()-started
+        else:
+            registration=time.perf_counter()-started
+            route='registered_numpy_owner'
+            try:
+                started=time.perf_counter()
+                device_array.get(out=output,blocking=True)
+                copy_seconds=time.perf_counter()-started
+            finally:
+                # blocking=True finishes DMA on the current CuPy stream before
+                # the owner's memory can become pageable or be published.
+                started=time.perf_counter();unregister(ptr)
+                unregistration=time.perf_counter()-started
+    return output,dict(result_download_route=route,
+        result_host_allocation_seconds=allocation,
+        result_host_registration_seconds=registration,
+        result_host_unregister_seconds=unregistration,
+        result_copy_seconds=copy_seconds,
+        result_host_registration_fallback_status=fallback_status,
+        result_host_registered_bytes=output.nbytes if route=='registered_numpy_owner' else 0,
+        result_host_pinned_bytes_retained=0)
+
+
 class Executor:
     @staticmethod
     def workspace_layout(nmax,patch_capacity=8192):
@@ -458,9 +519,9 @@ class Executor:
 
     def download(self,device_array,selected=None):
         """Complete request-owned downloads using only reserved gather scratch."""
-        t=time.perf_counter();d2h=0.;launches=0;gather_device=0.
+        t=time.perf_counter();d2h=0.;launches=0;gather_device=0.;host_download={}
         if selected is None:
-            start=time.perf_counter();output=device_array.get();d2h=time.perf_counter()-start
+            start=time.perf_counter();output,host_download=_download_owned_host(device_array);d2h=time.perf_counter()-start
             index_bytes=0
         else:
             selected=np.ascontiguousarray(selected,dtype=np.int32)
@@ -476,15 +537,15 @@ class Executor:
                 start=time.perf_counter();self.patch_v[:count].get(out=output[lo:lo+count])
                 d2h+=time.perf_counter()-start;launches+=1
                 gather_device+=cp.cuda.get_elapsed_time(start_event,end_event)/1000
-        # Only these fresh .get()/np.empty allocations may enter the private
+        # Only these fresh owned host allocations may enter the private
         # request-scoped bridge transfer. No array is retained by the registry.
         from easygraph.gpu._arena_output import _register_download
         _register_download(output)
         return output,dict(download_seconds=time.perf_counter()-t,d2h_seconds=d2h,
                            result_d2h_bytes=output.nbytes,result_indices_h2d_bytes=index_bytes,
                            result_gather_launches=launches,result_gather_device_seconds=gather_device,
-                           d2h_timer_scope='host blocking get; selected mode also waits for preceding gather',
-                           output_host_bytes=output.nbytes)
+                           d2h_timer_scope='host allocation, registration, blocking get and unregister; selected mode also waits for preceding gather',
+                           output_host_bytes=output.nbytes,**host_download)
 
     def run(self, graph, arrays, function, attr=None, source=0, alpha=.85,tol=1e-8,max_iter=300,selected=None):
         n=graph.n

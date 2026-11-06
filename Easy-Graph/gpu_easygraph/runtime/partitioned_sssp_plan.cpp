@@ -122,7 +122,7 @@ PartitionedSsspPlan build_partitioned_sssp_plan(
         if (partition.owned_vertex_count == 0 &&
             (local_count != 0 || !partition.indices.empty() ||
              !partition.weights.empty() ||
-             partition.offsets != std::vector<int>(1U, 0))) {
+             partition.offsets.view() != std::vector<int>(1U, 0))) {
             throw std::invalid_argument(
                 "empty SSSP partition must contain only the zero CSR offset");
         }
@@ -230,10 +230,11 @@ PartitionedSsspPlan build_partitioned_sssp_plan(
     for (std::size_t rank = 0; rank < partitions.size(); ++rank) {
         plan.partitions[rank].weights_u8 = std::move(encoded[rank]);
     }
-    plan.owner_by_global = owner;
+    plan.owner_by_global = std::move(owner);
     plan.route_capacity = 0;
     const std::size_t count = partitions.size();
     plan.routes.resize(count * count);
+    std::vector<std::vector<int> > route_halos(count * count), route_owners(count * count);
     for (std::size_t source = 0; source < count; ++source) {
         for (std::size_t destination = 0; destination < count;
              ++destination) {
@@ -250,18 +251,20 @@ PartitionedSsspPlan build_partitioned_sssp_plan(
             const std::uint64_t global = partition.local_to_global[local];
             const std::size_t destination = static_cast<std::size_t>(
                 partition.owners[local]);
-            if (owner[static_cast<std::size_t>(global)] !=
+            if (plan.owner_by_global[static_cast<std::size_t>(global)] !=
                 static_cast<int>(destination)) {
                 throw std::invalid_argument(
                     "SSSP halo owner disagrees with global ownership");
             }
-            SsspOwnerRoute& route =
-                plan.routes[source * count + destination];
-            route.source_halo_local_ids.push_back(static_cast<int>(local));
-            route.destination_owner_local_ids.push_back(static_cast<int>(
+            route_halos[source * count + destination].push_back(static_cast<int>(local));
+            route_owners[source * count + destination].push_back(static_cast<int>(
                 find_owned_local(partitions[destination], global)));
             ++plan.route_capacity;
         }
+    }
+    for (std::size_t index = 0; index < plan.routes.size(); ++index) {
+        plan.routes[index].source_halo_local_ids = std::move(route_halos[index]);
+        plan.routes[index].destination_owner_local_ids = std::move(route_owners[index]);
     }
     return plan;
 }
@@ -384,9 +387,9 @@ static PartitionedSsspPlan rebuild_sssp_f64_from_parent_impl(
     plan.owner_by_global = parent.owner_by_global;
     plan.routes = parent.routes;
     plan.route_capacity = parent.route_capacity;
-    plan.parent_topology_copied_bytes = parent.owner_by_global.size() * sizeof(int);
+    plan.parent_topology_shared_bytes = parent.owner_by_global.size() * sizeof(int);
     for (const auto& route : parent.routes) {
-        plan.parent_topology_copied_bytes +=
+        plan.parent_topology_shared_bytes +=
             (route.source_halo_local_ids.size() + route.destination_owner_local_ids.size()) * sizeof(int);
     }
     bool all_integer_weights = true;
@@ -405,7 +408,7 @@ static PartitionedSsspPlan rebuild_sssp_f64_from_parent_impl(
         target.local_to_global = source.local_to_global;
         target.owners = source.owners;
         target.weights = std::move(current_weights[rank]);
-        plan.parent_topology_copied_bytes +=
+        plan.parent_topology_shared_bytes +=
             (source.offsets.size() + source.indices.size() + source.owners.size()) * sizeof(int) +
             source.local_to_global.size() * sizeof(std::uint64_t);
         if (delta_certified) continue;

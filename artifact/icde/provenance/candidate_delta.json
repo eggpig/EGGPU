@@ -1,7 +1,7 @@
 {
   "schema": "eggpu.source_delta/v2",
   "base_source_sha256": "aeeade2ea64edf46fc226c0e33f2ccf8e596f77b5ff1e8cc47489db3ff30ef80",
-  "current_source_sha256": "d84ff388e1e40d1fd6ed83fcaceecd0491fc0451adffaff657a95940b1803f84",
+  "current_source_sha256": "71ea757d372f8c1b969ea074caaa27d3a77d4cea6d48cd9c6ae9c4b02936d7ce",
   "files": [
     {
       "path": "cpp_easygraph/classes/__init__.h",
@@ -28,6 +28,12 @@
       "current_sha256": "bde5456e780353cca3031a54b83059917159fb203361a414baf90effaa36da9b"
     },
     {
+      "path": "cpp_easygraph/runtime/egmgpu_partitioned_sssp.cpp",
+      "change": "modified",
+      "base_sha256": "1465925a2dd5e15d3fa1f44afbf6fdc9d482ce6b0e13a9737c36a27ca2517825",
+      "current_sha256": "24e9b8596ff87265d2aca66740c5c6e38b6913c99deb44a99f5f105ca910f76b"
+    },
+    {
       "path": "easygraph/__init__.py",
       "change": "modified",
       "base_sha256": "bc4b1fbbf90d3fdb1283e0aeb6aa572b132205e5743186674014e5eeb73845a2",
@@ -52,10 +58,16 @@
       "current_sha256": "64a441a3162df1dd250770a6a7ef9367d13788c818c2dfc6e1ba6fbed25d31ec"
     },
     {
+      "path": "easygraph/gpu/_arena/connectivity.py",
+      "change": "modified",
+      "base_sha256": "0aefd9845a84cb822750ceb0bdffd5f0434301a920a91a18965973c1fe6fd759",
+      "current_sha256": "b340568135f7a1e9c4a01791ffefb5e8664194c66fe0ebfec2e9ad821c056aea"
+    },
+    {
       "path": "easygraph/gpu/_arena/gpu_runtime.py",
       "change": "modified",
       "base_sha256": "f98c2d0a0361180fa1d543763a4b971f01299dd3edd753ae69fb929310cfe1a4",
-      "current_sha256": "bc3269e2b1d0eae9cd0fe6ce84c15196a6ee6ab80f8dee97c20e3a63a022f351"
+      "current_sha256": "5c9345eaa5655f011a71a07c4dd7ed0c674d81e4af9853aa04521cdd608dd7f0"
     },
     {
       "path": "easygraph/gpu/_arena/public_session_final.py",
@@ -157,7 +169,7 @@
       "path": "gpu_easygraph/runtime/partitioned_device_state.cpp",
       "change": "modified",
       "base_sha256": "1317c308a4783a73633312f13a09a14531650b5d7a9aca3413dc0a90b6ec16aa",
-      "current_sha256": "9dfd7084b92d2fbf06882b9b806cf080f57f7d053f65aa37a86f06de1b46152a"
+      "current_sha256": "2266658a7b278515b077af28a201f25f882ec94204e15b3f6ea5d7c8aa322ad3"
     },
     {
       "path": "gpu_easygraph/runtime/partitioned_device_state.h",
@@ -166,16 +178,28 @@
       "current_sha256": "26cf3a110d51636d39dfedc4844a6840ac23678afa42aa04716b85231f0a64b2"
     },
     {
+      "path": "gpu_easygraph/runtime/partitioned_sssp_plan.cpp",
+      "change": "modified",
+      "base_sha256": "c81339ad282c1122f893a31b2d34733b7a698921b3ad8446728e3cb03a402087",
+      "current_sha256": "befd35f878a9dfe78a75454cf7ca8251d5eef2da260f128244a847af7172528a"
+    },
+    {
+      "path": "gpu_easygraph/runtime/partitioned_sssp_plan.h",
+      "change": "modified",
+      "base_sha256": "311eb8b23fd93f47e2dfc00a49b34cc0919c2637047d8615e57a622d67706058",
+      "current_sha256": "5b676cf7b3d9d4bf99fa83ebc58e374dbb2e21ec2136b135d77b099a4da48895"
+    },
+    {
       "path": "gpu_easygraph/runtime/partitioned_sssp_state.cpp",
       "change": "modified",
       "base_sha256": "e9c944a38893305e3f17f5c29e096df937bda8c25618a9cd8427b49c849b6a2f",
-      "current_sha256": "10a3b5bd5f66b76985bf0716f52271b1d3680c54006e40d1822ca5a28796bd2c"
+      "current_sha256": "56e5276d9a1626c6cccacdb4d7961b69f159d0491f76df963a530619a6044f23"
     },
     {
       "path": "gpu_easygraph/runtime/partitioned_sssp_state.h",
       "change": "modified",
       "base_sha256": "b810e049cd4c9384a4b02b16e76daa2efad41c2001fba263fb25840983c1e967",
-      "current_sha256": "b5fed993bc4b3d87e0bf487d3b4258f63604ebc887e22501f73290227bdaaf3b"
+      "current_sha256": "d57514415f3bf36b14f2a758cdbf9a477ecd5ef00bca4ad2a7837bdfda4b6a47"
     },
     {
       "path": "tests/gpu/qualify_arena_output_ownership.py",
@@ -245,5 +269,5 @@
     }
   ],
   "cuda_cpp_changed": true,
-  "source_scope": "Unified static profile, safe CSR host registration lifetime, strict native in-memory CSR entry, and fused weight admission."
+  "source_scope": "Resident owner retention, immutable SSSP host payload sharing, Arena WCC path halving, and registered owning host output."
 }

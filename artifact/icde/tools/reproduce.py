@@ -12,6 +12,9 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[3]
 TARGETS = {
+    "first-pass-collect": "artifact/icde/first_pass/collect_first_pass.py",
+    "first-pass-build": "artifact/icde/first_pass/build_first_pass.py",
+    "first-pass-render": "artifact/icde/first_pass/render_icde.py",
     "test-protocols-cpu": "artifact/icde/tools/test_protocols_cpu.py",
     "paper-current-grid": "artifact/icde/paper_results_current/prepare_selection.py",
     "paper-current-render": "artifact/icde/paper_results_current/render.py",

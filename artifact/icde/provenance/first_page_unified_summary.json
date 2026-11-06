@@ -1,0 +1,210 @@
+{
+  "schema": "eggpu.first-page.public-summary/v1",
+  "status": "PASS_FIRST_PAGE_TRACE",
+  "source_sha256": "71ea757d372f8c1b969ea074caaa27d3a77d4cea6d48cd9c6ae9c4b02936d7ce",
+  "native_source_sha256": "959cb6bac81b36c9c56d7ec02427bf9c7c1dae6d6812e7fc381ae42be59b0d65",
+  "native_dso_sha256": "e50bcad821a4972c6a8039edf58837229849c4f75e38aa56a051268afb5907ac",
+  "raw_receipt": {
+    "bytes": 5761438,
+    "sha256": "22cdc307021bc96150c69b7ac9e9ba7dc62c40691feadfc6e5feeab6c7648b5a"
+  },
+  "raw_receipt_relative": "first_pass_20261106/first_page_unified/trace/receipt.json",
+  "projection": "Selected original scalar timings, intervals and checks; private deployment paths, device UUIDs and allocation addresses omitted. Original raw receipt is preserved internally.",
+  "gpu_count": 8,
+  "gpu_executed": true,
+  "quality_pass": true,
+  "n_independent": 1,
+  "formal_performance_claim": false,
+  "scope": "One fixed IN/UK SSSP continuous four-request trace; not an external baseline comparison or static SG/MG matrix.",
+  "measurement_policy": {
+    "policy": "Initial G0 ready; update through revisit",
+    "user_instruction": "2026-11-06: main times after ready; explain concrete continuous-analysis state bottleneck",
+    "start": "arm.commit.interval_ns[0]",
+    "end": "arm.events[-1].complete_query_interval_ns[1]",
+    "included": [
+      "weight update",
+      "G1 complete query",
+      "H complete query and actual retention",
+      "G1 revisit complete query",
+      "continuous host control between those operations"
+    ],
+    "excluded_from_primary_only": [
+      "Session construction and original input manifest verification",
+      "first G0 query that establishes initial ready state",
+      "independent output audits after interval"
+    ],
+    "preserved_supplement": [
+      "original continuous four-request total",
+      "setup/update/query/retention/bookkeeping fields",
+      "all raw intervals",
+      "all output and pressure checks"
+    ],
+    "selection_uses_timing": false,
+    "noted_before": "EGGPU arm result inspected; control full-session total was observed but primary window follows latest user ready-time instruction",
+    "recorded_utc": "2026-11-05T17:51:58.994375+00:00"
+  },
+  "arms": [
+    {
+      "label": "Full upload + LRU",
+      "route": "persistent_full",
+      "policy": "closure_lru",
+      "n": 1,
+      "ready_update_through_revisit_seconds": 8.938643417,
+      "primary_interval_ns": [
+        29227818734203233,
+        29227827672846650
+      ],
+      "four_request_total_seconds": 21.794597326,
+      "setup_update_seconds": 14.828431542,
+      "query_excluding_retention_seconds": 6.842770865,
+      "retention_seconds": 0.123136262,
+      "bookkeeping_seconds": 0.00025865700000077263,
+      "quality_pass": true,
+      "pressure_observed": true,
+      "complete_outputs_survive_session_close": true,
+      "requests": [
+        {
+          "stage": "G0",
+          "dataset": "IN",
+          "version": 0,
+          "function": "sssp",
+          "source": 2461098,
+          "complete_query_interval_ns": [
+            29227816934603776,
+            29227818734146497
+          ],
+          "complete_query_seconds": 1.799542721,
+          "retention_seconds": 0.003389116,
+          "query_excluding_retention_seconds": 1.796153605,
+          "actual_released_bytes": 0
+        },
+        {
+          "stage": "G1",
+          "dataset": "IN",
+          "version": 1,
+          "function": "sssp",
+          "source": 2461098,
+          "complete_query_interval_ns": [
+            29227822506367594,
+            29227824020204928
+          ],
+          "complete_query_seconds": 1.513837334,
+          "retention_seconds": 0.003673756,
+          "query_excluding_retention_seconds": 1.510163578,
+          "actual_released_bytes": 0
+        },
+        {
+          "stage": "H",
+          "dataset": "UK",
+          "version": 0,
+          "function": "sssp",
+          "source": 5743327,
+          "complete_query_interval_ns": [
+            29227824020233887,
+            29227827013241772
+          ],
+          "complete_query_seconds": 2.993007885,
+          "retention_seconds": 0.063413399,
+          "query_excluding_retention_seconds": 2.929594486,
+          "actual_released_bytes": 2908667620
+        },
+        {
+          "stage": "G1 revisit",
+          "dataset": "IN",
+          "version": 1,
+          "function": "sssp",
+          "source": 2461098,
+          "complete_query_interval_ns": [
+            29227827013327463,
+            29227827672846650
+          ],
+          "complete_query_seconds": 0.659519187,
+          "retention_seconds": 0.052659991,
+          "query_excluding_retention_seconds": 0.606859196,
+          "actual_released_bytes": 3758126700
+        }
+      ]
+    },
+    {
+      "label": "EGGPU",
+      "route": "lease_sparse",
+      "policy": "closure",
+      "n": 1,
+      "ready_update_through_revisit_seconds": 7.899269512,
+      "primary_interval_ns": [
+        29227851207182092,
+        29227859106451604
+      ],
+      "four_request_total_seconds": 21.716015897,
+      "setup_update_seconds": 14.189284802,
+      "query_excluding_retention_seconds": 7.435884676000001,
+      "retention_seconds": 0.09035220399999999,
+      "bookkeeping_seconds": 0.0004942149999982437,
+      "quality_pass": true,
+      "pressure_observed": true,
+      "complete_outputs_survive_session_close": true,
+      "requests": [
+        {
+          "stage": "G0",
+          "dataset": "IN",
+          "version": 0,
+          "function": "sssp",
+          "source": 2461098,
+          "complete_query_interval_ns": [
+            29227848551613909,
+            29227851207139584
+          ],
+          "complete_query_seconds": 2.655525675,
+          "retention_seconds": 0.002515754,
+          "query_excluding_retention_seconds": 2.653009921,
+          "actual_released_bytes": 0
+        },
+        {
+          "stage": "G1",
+          "dataset": "IN",
+          "version": 1,
+          "function": "sssp",
+          "source": 2461098,
+          "complete_query_interval_ns": [
+            29227854235687345,
+            29227855894074716
+          ],
+          "complete_query_seconds": 1.658387371,
+          "retention_seconds": 0.001685617,
+          "query_excluding_retention_seconds": 1.656701754,
+          "actual_released_bytes": 0
+        },
+        {
+          "stage": "H",
+          "dataset": "UK",
+          "version": 0,
+          "function": "sssp",
+          "source": 5743327,
+          "complete_query_interval_ns": [
+            29227855894105780,
+            29227858706762970
+          ],
+          "complete_query_seconds": 2.81265719,
+          "retention_seconds": 0.069082361,
+          "query_excluding_retention_seconds": 2.743574829,
+          "actual_released_bytes": 5634327948
+        },
+        {
+          "stage": "G1 revisit",
+          "dataset": "IN",
+          "version": 1,
+          "function": "sssp",
+          "source": 2461098,
+          "complete_query_interval_ns": [
+            29227858706784960,
+            29227859106451604
+          ],
+          "complete_query_seconds": 0.399666644,
+          "retention_seconds": 0.017068472,
+          "query_excluding_retention_seconds": 0.382598172,
+          "actual_released_bytes": 516654588
+        }
+      ]
+    }
+  ]
+}

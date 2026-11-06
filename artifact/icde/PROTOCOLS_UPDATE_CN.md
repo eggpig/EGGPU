@@ -1,3 +1,5 @@
+> 历史协议更新：此文保留当时源码与验证状态。当前统一源码、构建及首轮状态以 [FIRST_PASS_UPDATE_CN.md](FIRST_PASS_UPDATE_CN.md) 为准。
+
 # 本轮协议与论文资产增量
 
 这是基于 `4cb83e75a98210e0106ee18cc581a714fc584a8a` 的开发检查点。`Easy-Graph/` 主源码仍逐字节保持 d84；6cce 仅作为独立实验 overlay。正式队列已启动，但完整矩阵与单卡 90% 领先目标尚未被完整正式证据确立。机器进度仅见 `campaign_status.json` 的带时间快照，不把 CPU 测试或资格结果当性能样本。

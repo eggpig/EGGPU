@@ -1,0 +1,31 @@
+{
+  "schema": "eggpu.public.unified.projection-check/v1",
+  "status": "PASS_PUBLIC_PROJECTION_CPU_ONLY",
+  "source_sha256": "71ea757d372f8c1b969ea074caaa27d3a77d4cea6d48cd9c6ae9c4b02936d7ce",
+  "source_byte_and_formal_gate_checks": 4,
+  "real_observation_export_pass": true,
+  "historical_counts": {
+    "required_cells": 329,
+    "available_cells": 209,
+    "pending_cells": 114,
+    "failed_cells": 6,
+    "review_cells": 0
+  },
+  "selected_unified_counts": {
+    "required_cells": 329,
+    "available_cells": 186,
+    "pending_cells": 114,
+    "failed_cells": 6,
+    "review_cells": 23
+  },
+  "old_source_eggpu_available_under_unified": 0,
+  "external_observations_preserved": true,
+  "public_python_syntax": "PASS",
+  "privacy_scan": "PASS_AFTER_RELATIVE_REFERENCE_PROJECTION",
+  "gpu_executed": false,
+  "formal_measurements_created": 0,
+  "native_protocol_rejection_pass": true,
+  "native_static_public_tests": 62,
+  "native_static_receipt": "campaign/native_static_measurement/public_cpu_receipt.json",
+  "native_protocol_test_scope": "Negative metadata fixture changes only schema/implementation/protocol of an already validated captured SG observation; mismatched native endpoint is rejected before measurement admission. This creates no measured result."
+}

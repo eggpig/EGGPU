@@ -3,6 +3,7 @@
 
 #include "partitioned_device_state.h"
 #include "partitioned_sssp_types.h"
+#include "../../cpp_easygraph/runtime/immutable_host_array.h"
 
 #include <cstddef>
 #include <cstdint>
@@ -16,6 +17,8 @@
 namespace gpu_easygraph {
 namespace runtime {
 
+using easygraph::egmgpu::ImmutableHostArray;
+
 struct SsspPartitionUpload {
     int partition_id;
     int device_id;
@@ -25,14 +28,14 @@ struct SsspPartitionUpload {
     std::vector<int> device_group;
     std::string view_signature;
     std::size_t owned_vertex_count;
-    std::vector<int> offsets;
-    std::vector<int> indices;
-    std::vector<double> weights;
-    std::vector<std::uint8_t> weights_u8;
+    ImmutableHostArray<int> offsets;
+    ImmutableHostArray<int> indices;
+    ImmutableHostArray<double> weights;
+    ImmutableHostArray<std::uint8_t> weights_u8;
     SsspWeightEncoding weight_encoding = SsspWeightEncoding::F64;
     SsspWireEncoding wire_encoding = SsspWireEncoding::F64;
     double wire_distance_bound = std::numeric_limits<double>::infinity();
-    std::vector<int> owners;
+    ImmutableHostArray<int> owners;
     std::string offsets_sha256;
     std::string indices_sha256;
     std::string weights_sha256;
@@ -42,9 +45,9 @@ struct SsspPartitionUpload {
     std::shared_ptr<const ExactWeightPatch> native_weight_patch;
     std::string ownership_compatibility;
     // local halo ID -> flat outgoing route slot; owned IDs use -1.
-    std::vector<int> halo_route_slots;
-    std::vector<int> route_destination_ranks;
-    std::vector<int> route_owner_local_ids;
+    ImmutableHostArray<int> halo_route_slots;
+    ImmutableHostArray<int> route_destination_ranks;
+    ImmutableHostArray<int> route_owner_local_ids;
     std::vector<std::size_t> outgoing_route_offsets;
     std::vector<std::size_t> incoming_route_offsets;
 

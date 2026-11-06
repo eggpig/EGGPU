@@ -1,0 +1,9 @@
+{
+  "status": "PASS_PUBLIC_CPU_ONLY",
+  "tests": 62,
+  "gpu_executed": false,
+  "log_sha256": "2d8c99d482ba8d3d8edf0bf769824246dc315468950bcd32bfec225b8538d8e7",
+  "source_sha256": "71ea757d372f8c1b969ea074caaa27d3a77d4cea6d48cd9c6ae9c4b02936d7ce",
+  "prior_attempt": "First invocation lacked EGGPU_TEST_SCRATCH and had a nonexistent basetemp; 56 passed, 5 failed, 1 setup error. No GPU was executed; corrected explicit scratch environment passes.",
+  "scope": "Projected runner boundary/profile/preparation tests only; no GPU correctness or performance claim."
+}

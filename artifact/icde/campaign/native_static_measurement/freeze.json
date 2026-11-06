@@ -1,0 +1,149 @@
+{
+  "schema": "eggpu.native.static.measurement.freeze.v1",
+  "status": "CPU_CHECKED_GPU_PENDING",
+  "protocol": "native-host-csr-static-all4-public-return-v2",
+  "gpu_executed": false,
+  "runtime_source_tree_sha256": "71ea757d372f8c1b969ea074caaa27d3a77d4cea6d48cd9c6ae9c4b02936d7ce",
+  "runtime_source_modified": false,
+  "external_baselines_modified": false,
+  "parent_runner": "campaign/native_load_p1",
+  "parent_files": {
+    "benchmark_preparation_cpu.py": {
+      "bytes": 4567,
+      "sha256": "ac93244a26985af0964c0ccddbba508b6c894d62d704b5ae3e72409ea0fa126b"
+    },
+    "cugraph_csr_adapter.py": {
+      "bytes": 6682,
+      "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+    },
+    "historical_profile.json": {
+      "bytes": 92783,
+      "sha256": "067b50883e01426c808f1fa4a5613f22c9bc0050e54db9b8b37eecbc791afa93"
+    },
+    "native_input.py": {
+      "bytes": 12636,
+      "sha256": "e2b5acf9c9dc264ac96a56df8bbf5b2de49558a9c56e06acc10d47ee350a251c"
+    },
+    "native_profile.py": {
+      "bytes": 7941,
+      "sha256": "2e5791b66c84293be05778b880f3f5ebc611612163a818e78a9f8d6bd2bd2cd4"
+    },
+    "native_worker.py": {
+      "bytes": 28106,
+      "sha256": "0e4bb3d393287f9e986934b4dcf53711003fa936b21515710b018185f5a31816"
+    },
+    "qualify_static_native_domains.py": {
+      "bytes": 5683,
+      "sha256": "27af686ede9a6441adc66e1565bba2220fdd92e64a12bee59e4c75702c9b4778"
+    },
+    "sg_worker.py": {
+      "bytes": 41355,
+      "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+    },
+    "test_load_preparation_cpu.py": {
+      "bytes": 6046,
+      "sha256": "53314b3b47250151d0418a859772d6f5e6a05e0a81cef6e2384739404d18a751"
+    },
+    "test_metric_json_cpu.py": {
+      "bytes": 714,
+      "sha256": "ac350dc4e0bbf8bba7edd4e6089bc24d4381ddbe5c7f7f2a36478daefda0cf39"
+    },
+    "test_native_profile_cpu.py": {
+      "bytes": 3903,
+      "sha256": "e3a25b177239181c188d2cce67329d3e6ba154b385fa9d5c22a4cd91ee8b7649"
+    },
+    "test_static_runner_cpu.py": {
+      "bytes": 1916,
+      "sha256": "a413eaa3861e8651db6f6d4fddc16ea70db9baa23ab8e5f2293c13ac2e3ba824"
+    }
+  },
+  "files": {
+    "cpu_receipt.json": {
+      "bytes": 527,
+      "sha256": "a182766129249878b4933a474ed2af7277e86e992317feed62e235fe5bdd9b97"
+    },
+    "prepare_plan.py": {
+      "bytes": 3418,
+      "sha256": "834abccf2a9d11a9536bdb3296a1f74842063c7d2aae505f02c063ff1aa8f69e"
+    },
+    "protocol_amendment.json": {
+      "bytes": 2576,
+      "sha256": "5589e853094f3d461b8bdfeff180d24d8505060ae4c8f1557b41dd7080f4e0c6"
+    },
+    "runner/benchmark_preparation_cpu.py": {
+      "bytes": 4553,
+      "sha256": "335bf18e0b71e77e4980c441220596c052f13604f6d85a2b0696abf291ea66d1"
+    },
+    "runner/cugraph_csr_adapter.py": {
+      "bytes": 6682,
+      "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+    },
+    "runner/historical_profile.json": {
+      "bytes": 97695,
+      "sha256": "adcc594646dfe71c2dbd3bf2f0547bfb218ffecd03296152af9fa2691cefdc4b"
+    },
+    "runner/native_input.py": {
+      "bytes": 12636,
+      "sha256": "e2b5acf9c9dc264ac96a56df8bbf5b2de49558a9c56e06acc10d47ee350a251c"
+    },
+    "runner/native_profile.py": {
+      "bytes": 7941,
+      "sha256": "2e5791b66c84293be05778b880f3f5ebc611612163a818e78a9f8d6bd2bd2cd4"
+    },
+    "runner/native_worker.py": {
+      "bytes": 28480,
+      "sha256": "98c91f301a80af1f2542d154aee252d6bc75aa94c183998583d8a8720a590074"
+    },
+    "runner/qualify_static_native_domains.py": {
+      "bytes": 5683,
+      "sha256": "27af686ede9a6441adc66e1565bba2220fdd92e64a12bee59e4c75702c9b4778"
+    },
+    "runner/sg_worker.py": {
+      "bytes": 41355,
+      "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+    },
+    "runner/test_load_preparation_cpu.py": {
+      "bytes": 6046,
+      "sha256": "e5f3048e300278f692e3e639859b875b0fce24faeeaa022400a4fc5379cd8f75"
+    },
+    "runner/test_metric_json_cpu.py": {
+      "bytes": 714,
+      "sha256": "ac350dc4e0bbf8bba7edd4e6089bc24d4381ddbe5c7f7f2a36478daefda0cf39"
+    },
+    "runner/test_native_profile_cpu.py": {
+      "bytes": 3903,
+      "sha256": "e3a25b177239181c188d2cce67329d3e6ba154b385fa9d5c22a4cd91ee8b7649"
+    },
+    "runner/test_static_measurement_cpu.py": {
+      "bytes": 2986,
+      "sha256": "85bd3b91a17b5b25927550f13a71cfa3f9ac8aed7bcbecbd603d34b35535fdd0"
+    },
+    "runner/test_static_runner_cpu.py": {
+      "bytes": 1921,
+      "sha256": "8d6f91353a495b5b1b2ec9fb4c193f0b1100fe1059cca3f592a1c80787e979d1"
+    },
+    "runner.patch": {
+      "bytes": 5761,
+      "sha256": "7135e3811655f5a6e2172beb122a4b69543954c28b21df4e7c15f6c8b3a11783"
+    }
+  },
+  "runtime_files": [
+    "runner/native_worker.py",
+    "runner/native_input.py",
+    "runner/native_profile.py",
+    "runner/historical_profile.json",
+    "runner/sg_worker.py",
+    "runner/cugraph_csr_adapter.py",
+    "runner/qualify_static_native_domains.py"
+  ],
+  "helper_parity": {
+    "native_input.py": true,
+    "native_profile.py": true,
+    "historical_profile.json": false,
+    "sg_worker.py": true,
+    "cugraph_csr_adapter.py": true,
+    "qualify_static_native_domains.py": true
+  },
+  "public_projection": "projection.json",
+  "historical_profile_parity_scope": "Environment and observed profile fields unchanged; original evidence origin references are retained as relative paths in this projection."
+}

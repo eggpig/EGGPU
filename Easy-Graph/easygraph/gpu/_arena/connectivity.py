@@ -10,9 +10,17 @@ import numpy as np
 import cupy as cp
 
 SOURCE = r'''
+// Same monotone path halving used by native WCC local_root().
+// Ordinary observed loads avoid atomic read-modify-write traffic at hot roots.
 __device__ __forceinline__ int root(int *p, int x) {
-    int y = atomicAdd(p + x, 0);
-    while (y != x) { x = y; y = atomicAdd(p + x, 0); }
+    volatile int *observed = p;
+    int parent = observed[x];
+    while (parent != x) {
+        int grandparent = observed[parent];
+        if (grandparent != parent) atomicMin(p + x, grandparent);
+        x = parent;
+        parent = grandparent;
+    }
     return x;
 }
 extern "C" __global__ void init_parents(int n, int *p) {
@@ -29,7 +37,7 @@ extern "C" __global__ void union_edges(int n, const int *row,
         while (a != b) {
             int hi = max(a, b), lo = min(a, b);
             int prior = atomicCAS(p + hi, hi, lo);
-            if (prior == hi) break;
+            if (prior == hi || prior == lo) break;
             a = root(p, lo); b = root(p, prior);
         }
     }

@@ -548,7 +548,10 @@ std::size_t ResidentPartitionView::shared_array_count() const {
     return shared_array_count_;
 }
 bool ResidentPartitionView::cacheable() const {
-    return shared_array_stats_.all_retained;
+    // The complete view owns every array, including catalog-bypass arrays.
+    // Catalog admission governs cross-view sharing, not this view's lifetime.
+    // Retention/release remains governed by registry LRU and the byte controller.
+    return true;
 }
 
 PartitionWorkspace::PartitionWorkspace(int device_id)

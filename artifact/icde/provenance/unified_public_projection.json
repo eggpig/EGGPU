@@ -1,0 +1,73 @@
+{
+  "schema": "eggpu.public_projection/v4",
+  "status": "STAGED_FOR_ROOT_REVIEW",
+  "source_sha256": "71ea757d372f8c1b969ea074caaa27d3a77d4cea6d48cd9c6ae9c4b02936d7ce",
+  "publication_parent": "c2588294822af8a5d8e64ac5776e2f7dcb54f9b0",
+  "base_tree": "0b25a689b2ad8813d698e5c42c91dbe8a9b03f38",
+  "files": [
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/collect_first_pass.py",
+      "original": {
+        "bytes": 7095,
+        "sha256": "300fc1251c2903fa605fe8dbd95700a30f6cf6aece4e3906c6bb8be298d8b4e4"
+      },
+      "public_path": "artifact/icde/first_pass/collect_first_pass.py",
+      "projected": {
+        "bytes": 7667,
+        "sha256": "7be8ac81717de7d349c2b3e53125dacace41543a02bd1232e80474a55e9701de"
+      },
+      "adaptation": "Accept explicit extra plan/queue paths and selected source freeze; original receipt capture and timing remain unchanged. Select and enforce the explicit native measurement protocol to prevent mixing different timing endpoints."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/build_first_pass.py",
+      "original": {
+        "bytes": 22708,
+        "sha256": "7585090bb2a3b4c05757b8179cb462660c31fce45d471e09469aa0bcc0e845fe"
+      },
+      "public_path": "artifact/icde/first_pass/build_first_pass.py",
+      "projected": {
+        "bytes": 23201,
+        "sha256": "d84395f5c233846401e3c2285e8f6a01b11cd88d1180c3d50d50cc582db91b39"
+      },
+      "adaptation": "Use the explicitly selected captured source freeze and colocated public scope authority; metric selection and complete-output admission unchanged. Select and enforce the explicit native measurement protocol to prevent mixing different timing endpoints."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/render_icde.py",
+      "original": {
+        "bytes": 4208,
+        "sha256": "dccda7540cb00db8b5f75ff94c97008cfc473e0b0e0fcfbf284b2c93084d00d4"
+      },
+      "public_path": "artifact/icde/first_pass/render_icde.py",
+      "projected": {
+        "bytes": 4208,
+        "sha256": "dccda7540cb00db8b5f75ff94c97008cfc473e0b0e0fcfbf284b2c93084d00d4"
+      },
+      "adaptation": "Unchanged source bytes."
+    }
+  ],
+  "implementation_files_changed_from_d84": [
+    "cpp_easygraph/runtime/egmgpu_partitioned_sssp.cpp",
+    "easygraph/gpu/_arena/connectivity.py",
+    "easygraph/gpu/_arena/gpu_runtime.py",
+    "gpu_easygraph/runtime/partitioned_device_state.cpp",
+    "gpu_easygraph/runtime/partitioned_sssp_plan.cpp",
+    "gpu_easygraph/runtime/partitioned_sssp_plan.h",
+    "gpu_easygraph/runtime/partitioned_sssp_state.cpp",
+    "gpu_easygraph/runtime/partitioned_sssp_state.h"
+  ],
+  "implementation_bytes_changed_by_packaging": false,
+  "gpu_executed": false,
+  "source_component_cpu_checks": {
+    "host_payload": "Five geometry/lifetime cases and eight C++ translation units; no GPU",
+    "registered_output": "13 CPU/mock-CUDA checks; no GPU"
+  },
+  "new_gpu_measurements_included": true,
+  "gpu_measurements_scope": "Source-bound scalar summary of one root-executed trace, two policy arms, n=1.",
+  "gpu_executed_by_packaging": false,
+  "scope_authority_projection": {
+    "public_path": "artifact/icde/first_pass/e1_scope_authority.json",
+    "original_sha256": "187f82b02b1248b9653aebf77334852dc2b63ee545f68f08c85710632b9d5510",
+    "projected_sha256": "1e1fbb11985bf2d0e9943bb2bf30a653f0edd10a6f02feb5636dc7e3891f4465",
+    "adaptation": "Replace private absolute campaign prefix with relative evidence paths; fixed row scope unchanged."
+  }
+}

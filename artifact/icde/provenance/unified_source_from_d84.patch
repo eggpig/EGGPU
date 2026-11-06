@@ -1,0 +1,595 @@
+--- a/Easy-Graph/cpp_easygraph/runtime/egmgpu_partitioned_sssp.cpp
++++ b/Easy-Graph/cpp_easygraph/runtime/egmgpu_partitioned_sssp.cpp
+@@ -417,15 +417,14 @@
+         target.device_id = source.device_id;
+         target.owned_vertex_count = static_cast<std::size_t>(
+             source.owned_vertex_count);
+-        target.offsets.assign(source.offsets.begin(), source.offsets.end());
+-        target.indices.assign(source.indices.begin(), source.indices.end());
+-        target.local_to_global.assign(
+-            source.local_to_global.begin(), source.local_to_global.end());
+-        target.owners.assign(source.owners.begin(), source.owners.end());
++        target.offsets = source.offsets;
++        target.indices = source.indices;
++        target.local_to_global = source.local_to_global;
++        target.owners = source.owners;
+         if (source.weight_type == easygraph::egmgpu::PartitionWeightType::kFloat64) {
+             target.weights = source.weights_float64;
+         } else {
+-            target.weights.assign(
++            target.weights = std::vector<double>(
+                 source.weights_float32.begin(), source.weights_float32.end());
+         }
+     }
+@@ -438,7 +437,8 @@
+     const std::vector<int>& devices,
+     std::size_t rank,
+     const std::string& weight_identity,
+-    SsspUploadBuildStats* stats) {
++    SsspUploadBuildStats* stats,
++    const SsspPartitionUpload* parent_upload = nullptr) {
+     const auto descriptor_begin = SteadyClock::now();
+     const SsspHostPartition& partition = plan.partitions[rank];
+     const std::size_t rank_count = plan.partitions.size();
+@@ -481,7 +481,7 @@
+     }
+     upload.offsets_sha256 = manifest_partition.offsets_sha256;
+     upload.indices_sha256 = manifest_partition.indices_sha256;
+-    // F64 weights are copied unchanged from the immutable loader-owned
++    // F64 weights are shared unchanged from the immutable validated host
+     // array. Reuse its byte identity under the same loader policy as offsets
+     // and indices. Float32 normalization changes bytes and requires a new F64
+     // digest. Weight type, not vector emptiness, also covers empty F64 owners.
+@@ -501,7 +501,7 @@
+         stats->weight_manifest_bytes += weight_bytes;
+         ++stats->weight_manifest_descriptors;
+     } else {
+-        upload.weights_sha256 = easygraph::egmgpu::sha256_vector(upload.weights);
++        upload.weights_sha256 = easygraph::egmgpu::sha256_vector(upload.weights.view());
+         stats->weight_hash_bytes += weight_bytes;
+         ++stats->weight_hash_descriptors;
+         if (manifest_partition.weight_type == easygraph::egmgpu::PartitionWeightType::kFloat32)
+@@ -519,35 +519,49 @@
+         easygraph::egmgpu::partition_ownership_compatibility(
+             graph, partition.partition_id, devices);
+     const auto routes_begin = SteadyClock::now();
+-    upload.halo_route_slots.assign(partition.local_to_global.size(), -1);
+-    upload.outgoing_route_offsets.push_back(0U);
+-    for (std::size_t destination = 0; destination < rank_count;
+-         ++destination) {
+-        const SsspOwnerRoute& route = plan.route(rank, destination);
+-        for (std::size_t index = 0; index < route.capacity(); ++index) {
+-            const int halo_local = route.source_halo_local_ids[index];
+-            if (halo_local < 0 ||
+-                static_cast<std::size_t>(halo_local) >=
+-                    upload.halo_route_slots.size() ||
+-                upload.halo_route_slots[static_cast<std::size_t>(halo_local)] !=
+-                    -1) {
+-                throw std::logic_error("invalid SSSP halo route");
++    if (parent_upload) {
++        // Exact direct-parent eligibility has already checked topology and
++        // placement. Keep only owning array handles, never the parent plan.
++        upload.halo_route_slots = parent_upload->halo_route_slots;
++        upload.route_destination_ranks = parent_upload->route_destination_ranks;
++        upload.route_owner_local_ids = parent_upload->route_owner_local_ids;
++        upload.outgoing_route_offsets = parent_upload->outgoing_route_offsets;
++        upload.incoming_route_offsets = parent_upload->incoming_route_offsets;
++    } else {
++        std::vector<int> halo_route_slots, route_destination_ranks, route_owner_local_ids;
++        halo_route_slots.assign(partition.local_to_global.size(), -1);
++        upload.outgoing_route_offsets.push_back(0U);
++        for (std::size_t destination = 0; destination < rank_count;
++             ++destination) {
++            const SsspOwnerRoute& route = plan.route(rank, destination);
++            for (std::size_t index = 0; index < route.capacity(); ++index) {
++                const int halo_local = route.source_halo_local_ids[index];
++                if (halo_local < 0 ||
++                    static_cast<std::size_t>(halo_local) >=
++                        halo_route_slots.size() ||
++                    halo_route_slots[static_cast<std::size_t>(halo_local)] !=
++                        -1) {
++                    throw std::logic_error("invalid SSSP halo route");
++                }
++                halo_route_slots[static_cast<std::size_t>(halo_local)] =
++                    static_cast<int>(route_owner_local_ids.size());
++                route_destination_ranks.push_back(
++                    static_cast<int>(destination));
++                route_owner_local_ids.push_back(
++                    route.destination_owner_local_ids[index]);
+             }
+-            upload.halo_route_slots[static_cast<std::size_t>(halo_local)] =
+-                static_cast<int>(upload.route_owner_local_ids.size());
+-            upload.route_destination_ranks.push_back(
+-                static_cast<int>(destination));
+-            upload.route_owner_local_ids.push_back(
+-                route.destination_owner_local_ids[index]);
++            upload.outgoing_route_offsets.push_back(
++                route_owner_local_ids.size());
+         }
+-        upload.outgoing_route_offsets.push_back(
+-            upload.route_owner_local_ids.size());
+-    }
+-    upload.incoming_route_offsets.push_back(0U);
+-    for (std::size_t source = 0; source < rank_count; ++source) {
+-        upload.incoming_route_offsets.push_back(
+-            upload.incoming_route_offsets.back() +
+-            plan.route(source, rank).capacity());
++        upload.incoming_route_offsets.push_back(0U);
++        for (std::size_t source = 0; source < rank_count; ++source) {
++            upload.incoming_route_offsets.push_back(
++                upload.incoming_route_offsets.back() +
++                plan.route(source, rank).capacity());
++        }
++        upload.halo_route_slots = std::move(halo_route_slots);
++        upload.route_destination_ranks = std::move(route_destination_ranks);
++        upload.route_owner_local_ids = std::move(route_owner_local_ids);
+     }
+     const auto descriptor_end = SteadyClock::now();
+     const double routes_seconds = elapsed_seconds(routes_begin, descriptor_end);
+@@ -556,13 +570,17 @@
+     stats->routes_seconds += routes_seconds;
+     stats->other_seconds += elapsed_seconds(descriptor_begin, descriptor_end) -
+         copy_seconds - digest_seconds - routes_seconds;
++    stats->shared_payload_bytes += upload.offsets.payload_bytes() + upload.indices.payload_bytes() +
++        upload.owners.payload_bytes() + upload.weights.payload_bytes() + upload.weights_u8.payload_bytes();
++    if (parent_upload) stats->shared_payload_bytes += upload.halo_route_slots.payload_bytes() +
++        upload.route_destination_ranks.payload_bytes() + upload.route_owner_local_ids.payload_bytes();
+     ++stats->descriptors;
+     return upload;
+ }
+ 
+-template <typename T>
+-std::size_t array_capacity_bytes(const std::vector<T>& values) {
+-    return values.capacity() * sizeof(T);
++template <typename Array>
++std::size_t array_capacity_bytes(const Array& values) {
++    return values.capacity() * sizeof(typename Array::value_type);
+ }
+ 
+ std::size_t upload_array_capacity_bytes(const SsspPartitionUpload& upload) {
+@@ -598,6 +616,7 @@
+ 
+ py::dict descriptor_stats(const SsspUploadBuildStats& stats) {
+     py::dict out;
++    out["shared_payload_bytes"] = stats.shared_payload_bytes;
+     out["copy_seconds"] = stats.copy_seconds;
+     out["weight_digest_seconds"] = stats.weight_digest_seconds;
+     out["routes_seconds"] = stats.routes_seconds;
+@@ -1441,7 +1460,8 @@
+                         prepared->prepared_uploads.reserve(prepared->partitions.size());
+                         for (std::size_t rank = 0; rank < prepared->partitions.size(); ++rank) {
+                             SsspPartitionUpload upload = make_upload(*graph, *prepared,
+-                                devices, rank, weight_identity, &descriptor_this_call);
++                                devices, rank, weight_identity, &descriptor_this_call,
++                                parent_plan ? parent_plan->prepared_uploads.at(rank).get() : nullptr);
+                             if (serial_partitions) {
+                                 upload.device_id = devices.front();
+                                 upload.view_signature += ":same-device-serial-v2";
+@@ -1456,7 +1476,8 @@
+                     return std::shared_ptr<const PartitionedSsspPlan>(prepared);
+                 });
+         // End the temporary parent lease before any GPU task is constructed.
+-        // The new plan owns its arrays and no descriptor/packet from the parent.
++        // The new plan/descriptors own immutable payload handles independently;
++        // no ancestor plan, descriptor or old weight packet is retained.
+         parent_plan.reset();
+     }
+     const std::shared_ptr<const PartitionedSsspPlan> plan =
+@@ -2215,6 +2236,8 @@
+     out["parent_topology_lookup_attempted"] = parent_topology_lookup_attempted;
+     out["parent_topology_lookup_seconds"] = parent_topology_lookup_seconds;
+     out["parent_topology_reused_first_prepare"] = plan->parent_topology_reused;
++    out["parent_topology_shared_bytes_first_prepare"] = plan->parent_topology_shared_bytes;
++    out["parent_topology_shared_bytes_this_call"] = plan_acquisition.builder ? plan->parent_topology_shared_bytes : 0;
+     out["parent_topology_reused_this_call"] = plan_acquisition.builder && plan->parent_topology_reused;
+     out["parent_topology_copied_bytes_this_call"] = plan_acquisition.builder ? plan->parent_topology_copied_bytes : 0;
+     out["weight_validation_edges_this_call"] = plan_acquisition.builder ? plan->weight_validation_edges : 0;
+@@ -2270,6 +2293,7 @@
+         : "nested in per-query upload_descriptor; owned descriptors copied into tasks";
+     out["host_plan_array_capacity_bytes"] = plan->host_plan_array_capacity_bytes;
+     out["prepared_upload_array_capacity_bytes"] = plan->prepared_upload_array_capacity_bytes;
++    out["host_plan_array_capacity_scope"] = "logical reachable capacity; shared payloads may occur in multiple plans/descriptors; not unique allocation bytes";
+     out["host_plan_retained_array_capacity_bytes"] = plan->host_plan_array_capacity_bytes +
+         plan->prepared_upload_array_capacity_bytes;
+     out["host_retained_bytes_scope"] =
+--- a/Easy-Graph/easygraph/gpu/_arena/connectivity.py
++++ b/Easy-Graph/easygraph/gpu/_arena/connectivity.py
+@@ -10,9 +10,17 @@
+ import cupy as cp
+ 
+ SOURCE = r'''
++// Same monotone path halving used by native WCC local_root().
++// Ordinary observed loads avoid atomic read-modify-write traffic at hot roots.
+ __device__ __forceinline__ int root(int *p, int x) {
+-    int y = atomicAdd(p + x, 0);
+-    while (y != x) { x = y; y = atomicAdd(p + x, 0); }
++    volatile int *observed = p;
++    int parent = observed[x];
++    while (parent != x) {
++        int grandparent = observed[parent];
++        if (grandparent != parent) atomicMin(p + x, grandparent);
++        x = parent;
++        parent = grandparent;
++    }
+     return x;
+ }
+ extern "C" __global__ void init_parents(int n, int *p) {
+@@ -29,7 +37,7 @@
+         while (a != b) {
+             int hi = max(a, b), lo = min(a, b);
+             int prior = atomicCAS(p + hi, hi, lo);
+-            if (prior == hi) break;
++            if (prior == hi || prior == lo) break;
+             a = root(p, lo); b = root(p, prior);
+         }
+     }
+--- a/Easy-Graph/easygraph/gpu/_arena/gpu_runtime.py
++++ b/Easy-Graph/easygraph/gpu/_arena/gpu_runtime.py
+@@ -410,6 +410,67 @@
+         return shortest_path(matrix,directed=True,indices=source,unweighted=function=='bfs',method='D')
+ 
+ 
++def _download_owned_host(device_array):
++    """Temporarily register a fresh NumPy owner for a blocking full download.
++
++    No pinned buffer or answer is retained. Only a successful registration is
++    released; unsupported/allocation/overlap errors use the original pageable
++    download. Copy and unregister errors propagate before result publication.
++    """
++    started=time.perf_counter()
++    output=np.empty(device_array.shape,dtype=device_array.dtype,order='C')
++    allocation=time.perf_counter()-started
++    registration=unregistration=copy_seconds=0.
++    fallback_status=None
++    runtime=cp.cuda.runtime
++    register=getattr(runtime,'hostRegister',None)
++    unregister=getattr(runtime,'hostUnregister',None)
++    if not output.nbytes:
++        route='empty_owned'
++    elif register is None or unregister is None:
++        route='pageable_registration_unavailable'
++        started=time.perf_counter();output=device_array.get()
++        copy_seconds=time.perf_counter()-started
++    else:
++        ptr=int(output.ctypes.data)
++        started=time.perf_counter()
++        try:
++            register(ptr,output.nbytes,0)  # cudaHostRegisterDefault
++        except runtime.CUDARuntimeError as error:
++            registration=time.perf_counter()-started
++            # CUDA driver_types.h: InvalidValue, MemoryAllocation,
++            # HostMemoryAlreadyRegistered, NotSupported. CuPy check_status
++            # resets CUDA's last-error state before raising this exception.
++            if error.status not in (1,2,712,801):
++                raise
++            fallback_status=int(error.status)
++            route='pageable_registration_fallback'
++            # Never borrow or unregister an overlapping external registration.
++            # The original .get() producer owns its ordinary pageable fallback.
++            started=time.perf_counter();output=device_array.get()
++            copy_seconds=time.perf_counter()-started
++        else:
++            registration=time.perf_counter()-started
++            route='registered_numpy_owner'
++            try:
++                started=time.perf_counter()
++                device_array.get(out=output,blocking=True)
++                copy_seconds=time.perf_counter()-started
++            finally:
++                # blocking=True finishes DMA on the current CuPy stream before
++                # the owner's memory can become pageable or be published.
++                started=time.perf_counter();unregister(ptr)
++                unregistration=time.perf_counter()-started
++    return output,dict(result_download_route=route,
++        result_host_allocation_seconds=allocation,
++        result_host_registration_seconds=registration,
++        result_host_unregister_seconds=unregistration,
++        result_copy_seconds=copy_seconds,
++        result_host_registration_fallback_status=fallback_status,
++        result_host_registered_bytes=output.nbytes if route=='registered_numpy_owner' else 0,
++        result_host_pinned_bytes_retained=0)
++
++
+ class Executor:
+     @staticmethod
+     def workspace_layout(nmax,patch_capacity=8192):
+@@ -458,9 +519,9 @@
+ 
+     def download(self,device_array,selected=None):
+         """Complete request-owned downloads using only reserved gather scratch."""
+-        t=time.perf_counter();d2h=0.;launches=0;gather_device=0.
++        t=time.perf_counter();d2h=0.;launches=0;gather_device=0.;host_download={}
+         if selected is None:
+-            start=time.perf_counter();output=device_array.get();d2h=time.perf_counter()-start
++            start=time.perf_counter();output,host_download=_download_owned_host(device_array);d2h=time.perf_counter()-start
+             index_bytes=0
+         else:
+             selected=np.ascontiguousarray(selected,dtype=np.int32)
+@@ -476,15 +537,15 @@
+                 start=time.perf_counter();self.patch_v[:count].get(out=output[lo:lo+count])
+                 d2h+=time.perf_counter()-start;launches+=1
+                 gather_device+=cp.cuda.get_elapsed_time(start_event,end_event)/1000
+-        # Only these fresh .get()/np.empty allocations may enter the private
++        # Only these fresh owned host allocations may enter the private
+         # request-scoped bridge transfer. No array is retained by the registry.
+         from easygraph.gpu._arena_output import _register_download
+         _register_download(output)
+         return output,dict(download_seconds=time.perf_counter()-t,d2h_seconds=d2h,
+                            result_d2h_bytes=output.nbytes,result_indices_h2d_bytes=index_bytes,
+                            result_gather_launches=launches,result_gather_device_seconds=gather_device,
+-                           d2h_timer_scope='host blocking get; selected mode also waits for preceding gather',
+-                           output_host_bytes=output.nbytes)
++                           d2h_timer_scope='host allocation, registration, blocking get and unregister; selected mode also waits for preceding gather',
++                           output_host_bytes=output.nbytes,**host_download)
+ 
+     def run(self, graph, arrays, function, attr=None, source=0, alpha=.85,tol=1e-8,max_iter=300,selected=None):
+         n=graph.n
+--- a/Easy-Graph/gpu_easygraph/runtime/partitioned_device_state.cpp
++++ b/Easy-Graph/gpu_easygraph/runtime/partitioned_device_state.cpp
+@@ -548,7 +548,10 @@
+     return shared_array_count_;
+ }
+ bool ResidentPartitionView::cacheable() const {
+-    return shared_array_stats_.all_retained;
++    // The complete view owns every array, including catalog-bypass arrays.
++    // Catalog admission governs cross-view sharing, not this view's lifetime.
++    // Retention/release remains governed by registry LRU and the byte controller.
++    return true;
+ }
+ 
+ PartitionWorkspace::PartitionWorkspace(int device_id)
+--- a/Easy-Graph/gpu_easygraph/runtime/partitioned_sssp_plan.cpp
++++ b/Easy-Graph/gpu_easygraph/runtime/partitioned_sssp_plan.cpp
+@@ -122,7 +122,7 @@
+         if (partition.owned_vertex_count == 0 &&
+             (local_count != 0 || !partition.indices.empty() ||
+              !partition.weights.empty() ||
+-             partition.offsets != std::vector<int>(1U, 0))) {
++             partition.offsets.view() != std::vector<int>(1U, 0))) {
+             throw std::invalid_argument(
+                 "empty SSSP partition must contain only the zero CSR offset");
+         }
+@@ -230,10 +230,11 @@
+     for (std::size_t rank = 0; rank < partitions.size(); ++rank) {
+         plan.partitions[rank].weights_u8 = std::move(encoded[rank]);
+     }
+-    plan.owner_by_global = owner;
++    plan.owner_by_global = std::move(owner);
+     plan.route_capacity = 0;
+     const std::size_t count = partitions.size();
+     plan.routes.resize(count * count);
++    std::vector<std::vector<int> > route_halos(count * count), route_owners(count * count);
+     for (std::size_t source = 0; source < count; ++source) {
+         for (std::size_t destination = 0; destination < count;
+              ++destination) {
+@@ -250,18 +251,20 @@
+             const std::uint64_t global = partition.local_to_global[local];
+             const std::size_t destination = static_cast<std::size_t>(
+                 partition.owners[local]);
+-            if (owner[static_cast<std::size_t>(global)] !=
++            if (plan.owner_by_global[static_cast<std::size_t>(global)] !=
+                 static_cast<int>(destination)) {
+                 throw std::invalid_argument(
+                     "SSSP halo owner disagrees with global ownership");
+             }
+-            SsspOwnerRoute& route =
+-                plan.routes[source * count + destination];
+-            route.source_halo_local_ids.push_back(static_cast<int>(local));
+-            route.destination_owner_local_ids.push_back(static_cast<int>(
++            route_halos[source * count + destination].push_back(static_cast<int>(local));
++            route_owners[source * count + destination].push_back(static_cast<int>(
+                 find_owned_local(partitions[destination], global)));
+             ++plan.route_capacity;
+         }
++    }
++    for (std::size_t index = 0; index < plan.routes.size(); ++index) {
++        plan.routes[index].source_halo_local_ids = std::move(route_halos[index]);
++        plan.routes[index].destination_owner_local_ids = std::move(route_owners[index]);
+     }
+     return plan;
+ }
+@@ -384,9 +387,9 @@
+     plan.owner_by_global = parent.owner_by_global;
+     plan.routes = parent.routes;
+     plan.route_capacity = parent.route_capacity;
+-    plan.parent_topology_copied_bytes = parent.owner_by_global.size() * sizeof(int);
++    plan.parent_topology_shared_bytes = parent.owner_by_global.size() * sizeof(int);
+     for (const auto& route : parent.routes) {
+-        plan.parent_topology_copied_bytes +=
++        plan.parent_topology_shared_bytes +=
+             (route.source_halo_local_ids.size() + route.destination_owner_local_ids.size()) * sizeof(int);
+     }
+     bool all_integer_weights = true;
+@@ -405,7 +408,7 @@
+         target.local_to_global = source.local_to_global;
+         target.owners = source.owners;
+         target.weights = std::move(current_weights[rank]);
+-        plan.parent_topology_copied_bytes +=
++        plan.parent_topology_shared_bytes +=
+             (source.offsets.size() + source.indices.size() + source.owners.size()) * sizeof(int) +
+             source.local_to_global.size() * sizeof(std::uint64_t);
+         if (delta_certified) continue;
+--- a/Easy-Graph/gpu_easygraph/runtime/partitioned_sssp_plan.h
++++ b/Easy-Graph/gpu_easygraph/runtime/partitioned_sssp_plan.h
+@@ -1,6 +1,7 @@
+ #pragma once
+ 
+ #include "partitioned_sssp_types.h"
++#include "../../cpp_easygraph/runtime/immutable_host_array.h"
+ #include "partitioned_host_plan_cache.h"
+ 
+ #include <cstddef>
+@@ -12,18 +13,20 @@
+ namespace gpu_easygraph {
+ namespace runtime {
+ 
++using easygraph::egmgpu::ImmutableHostArray;
++
+ struct SsspHostPartition {
+     int partition_id;
+     int device_id;
+     std::size_t owned_vertex_count;
+-    std::vector<int> offsets;
+-    std::vector<int> indices;
+-    std::vector<double> weights;
++    ImmutableHostArray<int> offsets;
++    ImmutableHostArray<int> indices;
++    ImmutableHostArray<double> weights;
+     // Original FP64 values remain available to the host reference. Only this
+     // certified exact view is uploaded when U8Exact was explicitly requested.
+-    std::vector<std::uint8_t> weights_u8;
+-    std::vector<std::uint64_t> local_to_global;
+-    std::vector<int> owners;
++    ImmutableHostArray<std::uint8_t> weights_u8;
++    ImmutableHostArray<std::uint64_t> local_to_global;
++    ImmutableHostArray<int> owners;
+ };
+ 
+ // One source partition has one slot per distinct remote halo.  A relaxation
+@@ -31,8 +34,8 @@
+ struct SsspOwnerRoute {
+     int source_rank;
+     int destination_rank;
+-    std::vector<int> source_halo_local_ids;
+-    std::vector<int> destination_owner_local_ids;
++    ImmutableHostArray<int> source_halo_local_ids;
++    ImmutableHostArray<int> destination_owner_local_ids;
+ 
+     std::size_t capacity() const;
+ };
+@@ -45,6 +48,7 @@
+     double routes_seconds = 0.0;
+     double other_seconds = 0.0;
+     std::size_t descriptors = 0;
++    std::size_t shared_payload_bytes = 0;
+     std::size_t weight_hash_bytes = 0;
+     std::size_t weight_hash_descriptors = 0;
+     std::size_t weight_manifest_bytes = 0;
+@@ -86,7 +90,7 @@
+     std::vector<SsspHostPartition> partitions;
+     // Row-major [source_rank * partition_count + destination_rank].
+     std::vector<SsspOwnerRoute> routes;
+-    std::vector<int> owner_by_global;
++    ImmutableHostArray<int> owner_by_global;
+     std::uint64_t route_capacity;
+     // Immutable descriptor lifetime follows this plan, including in-flight tasks.
+     std::vector<std::shared_ptr<const SsspPartitionUpload> > prepared_uploads;
+@@ -94,7 +98,8 @@
+     // Numeric vector allocated capacity, excluding metadata/allocator overhead.
+     std::size_t host_plan_array_capacity_bytes = 0;
+     std::size_t prepared_upload_array_capacity_bytes = 0;
+-    // Preparation provenance only. No parent plan or shared topology is held.
++    // Arrays own shared immutable payloads independently of ancestor plans.
++    // Releasing an ancestor cannot invalidate this plan or its descriptors.
+     std::string weight_certification_selected_route = "full";
+     std::string weight_certification_selection_reason = "initial_full_builder";
+     std::uint64_t weight_certification_candidate_positions = 0;
+@@ -107,6 +112,7 @@
+     bool weight_delta_rescan_required = false;
+     bool parent_topology_reused = false;
+     std::size_t parent_topology_copied_bytes = 0;
++    std::size_t parent_topology_shared_bytes = 0;
+ 
+     const SsspOwnerRoute& route(
+         std::size_t source_rank, std::size_t destination_rank) const;
+@@ -133,7 +139,7 @@
+     const std::vector<std::pair<int, int> >& target_partition_devices);
+ 
+ // The caller must hold the completed plan selected by the exact-parent check.
+-// Copy only validated topology/owner/routes; move current weights into a fresh
++// Share validated immutable topology/owner/routes; move current weights into a fresh
+ // plan; a complete native delta permits exact incremental certification,
+ // otherwise every weight is checked. No old descriptor/packet is copied.
+ PartitionedSsspPlan rebuild_sssp_f64_from_parent(
+--- a/Easy-Graph/gpu_easygraph/runtime/partitioned_sssp_state.cpp
++++ b/Easy-Graph/gpu_easygraph/runtime/partitioned_sssp_state.cpp
+@@ -158,7 +158,7 @@
+     if (upload.owned_vertex_count == 0 &&
+         (local_count != 0 || !upload.indices.empty() ||
+          weight_count != 0 || route_total != 0 ||
+-         upload.offsets != std::vector<int>(1U, 0))) {
++         upload.offsets.view() != std::vector<int>(1U, 0))) {
+         throw std::invalid_argument("invalid empty SSSP partition upload");
+     }
+     validate_offsets(
+@@ -240,13 +240,13 @@
+         ++shared_array_count_;
+     }
+     halo_route_slots_ = upload_array(
+-        upload.device_id, upload.halo_route_slots,
++        upload.device_id, upload.halo_route_slots.view(),
+         "upload SSSP halo route slots");
+     route_destination_ranks_ = upload_array(
+-        upload.device_id, upload.route_destination_ranks,
++        upload.device_id, upload.route_destination_ranks.view(),
+         "upload SSSP route destination ranks");
+     route_owner_local_ids_ = upload_array(
+-        upload.device_id, upload.route_owner_local_ids,
++        upload.device_id, upload.route_owner_local_ids.view(),
+         "upload SSSP owner local IDs");
+ 
+     view_.partition_id = upload.partition_id;
+@@ -302,7 +302,10 @@
+     return shared_array_count_;
+ }
+ bool ResidentSsspPartitionView::cacheable() const {
+-    return shared_array_stats_.all_retained;
++    // The complete view owns every array, including catalog-bypass arrays.
++    // Catalog admission governs cross-view sharing, not this view's lifetime.
++    // Retention/release remains governed by registry LRU and the byte controller.
++    return true;
+ }
+ 
+ SsspPartitionWorkspace::SsspPartitionWorkspace(int device_id)
+--- a/Easy-Graph/gpu_easygraph/runtime/partitioned_sssp_state.h
++++ b/Easy-Graph/gpu_easygraph/runtime/partitioned_sssp_state.h
+@@ -3,6 +3,7 @@
+ 
+ #include "partitioned_device_state.h"
+ #include "partitioned_sssp_types.h"
++#include "../../cpp_easygraph/runtime/immutable_host_array.h"
+ 
+ #include <cstddef>
+ #include <cstdint>
+@@ -15,6 +16,8 @@
+ 
+ namespace gpu_easygraph {
+ namespace runtime {
++
++using easygraph::egmgpu::ImmutableHostArray;
+ 
+ struct SsspPartitionUpload {
+     int partition_id;
+@@ -25,14 +28,14 @@
+     std::vector<int> device_group;
+     std::string view_signature;
+     std::size_t owned_vertex_count;
+-    std::vector<int> offsets;
+-    std::vector<int> indices;
+-    std::vector<double> weights;
+-    std::vector<std::uint8_t> weights_u8;
++    ImmutableHostArray<int> offsets;
++    ImmutableHostArray<int> indices;
++    ImmutableHostArray<double> weights;
++    ImmutableHostArray<std::uint8_t> weights_u8;
+     SsspWeightEncoding weight_encoding = SsspWeightEncoding::F64;
+     SsspWireEncoding wire_encoding = SsspWireEncoding::F64;
+     double wire_distance_bound = std::numeric_limits<double>::infinity();
+-    std::vector<int> owners;
++    ImmutableHostArray<int> owners;
+     std::string offsets_sha256;
+     std::string indices_sha256;
+     std::string weights_sha256;
+@@ -42,9 +45,9 @@
+     std::shared_ptr<const ExactWeightPatch> native_weight_patch;
+     std::string ownership_compatibility;
+     // local halo ID -> flat outgoing route slot; owned IDs use -1.
+-    std::vector<int> halo_route_slots;
+-    std::vector<int> route_destination_ranks;
+-    std::vector<int> route_owner_local_ids;
++    ImmutableHostArray<int> halo_route_slots;
++    ImmutableHostArray<int> route_destination_ranks;
++    ImmutableHostArray<int> route_owner_local_ids;
+     std::vector<std::size_t> outgoing_route_offsets;
+     std::vector<std::size_t> incoming_route_offsets;
+ 

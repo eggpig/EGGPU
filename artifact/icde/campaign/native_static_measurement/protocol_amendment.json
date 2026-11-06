@@ -1,0 +1,31 @@
+{
+  "schema": "eggpu.measurement.amendment.v2",
+  "protocol": "native-host-csr-static-all4-public-return-v2",
+  "status": "CPU_CHECKED_GPU_PENDING",
+  "gpu_executed": false,
+  "runtime_source_tree_sha256": "71ea757d372f8c1b969ea074caaa27d3a77d4cea6d48cd9c6ae9c4b02936d7ce",
+  "runtime_source_modified": false,
+  "scope": "Immutable E1/E2 native execution only; uniform Session.native_static for BFS/SSSP/WCC/PR and P=1/2/4/8. No dynamic E3/E4/application routing change.",
+  "endpoint_changed": true,
+  "old_protocol": "native-host-csr-complete-static-full-profile-v1",
+  "old_endpoint": "NativeBackend.query includes native_profile.observe, JSON metric conversion and runner guards after public Session.query returns.",
+  "new_endpoint": "Stop timer after complete Session.query result.values return; then run unchanged profile/device/encoding/PR guards and JSON conversion.",
+  "timed_work_preserved": [
+    "first: imports, weak projection, partition construction, manifest validation, runtime startup, native query, public result construction",
+    "ready: entire public Session.query including its native budget/resource completion and ownership checks",
+    "complete independent readonly FP64 host output; public Session API is not shortened"
+  ],
+  "outside_timer_preserved": [
+    "runner profile/device/encoding/PR contract validation",
+    "metric JSON sentinel conversion",
+    "full reference comparison, no cross-call output alias, survives session close, persistence, partition roundtrip"
+  ],
+  "semantics_preserved": [
+    "SSSP original FP64 weights fully certified; explicit u8_exact/u32_exact B+1 same policy across P",
+    "PR damping .85, max_iter 1000, L1 tolerance 1e-9 and original reference/error checks",
+    "BFS/WCC owning FP64 dense output and weak-projection semantics",
+    "source selection, reference cache, all full-vector numerical checks, external baselines and GPU resource controls"
+  ],
+  "change_reason": "The static immutable wrapper reaches the same UnifiedNativeSession native dispatch and output finalizers; dynamic snapshot bookkeeping is unnecessary for immutable E1/E2. Runner audit/serialization is measured separately from public API return.",
+  "historical_policy": "Retain all old receipts/measurements under original protocol. Do not pool old/new timings or claim unchanged measurement endpoint. New native timings require source-bound GPU qualification and complete-output checks; no speedup is measured by this CPU package. Unchanged external baseline receipts retain their original identities and timing definitions."
+}

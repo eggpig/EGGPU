@@ -1,0 +1,243 @@
+{
+  "schema": "eggpu.native.static.public-projection/v1",
+  "runtime_source_sha256": "71ea757d372f8c1b969ea074caaa27d3a77d4cea6d48cd9c6ae9c4b02936d7ce",
+  "runtime_source_modified": false,
+  "upstream_freeze": {
+    "bytes": 5193,
+    "sha256": "abdd4aaedb4fd99b28e8b9ee1e0a6414210cc4af6be1df9860da0ca5bed7825d"
+  },
+  "files": [
+    {
+      "path": "cpu_receipt.json",
+      "original": {
+        "bytes": 527,
+        "sha256": "a182766129249878b4933a474ed2af7277e86e992317feed62e235fe5bdd9b97"
+      },
+      "projected": {
+        "bytes": 527,
+        "sha256": "a182766129249878b4933a474ed2af7277e86e992317feed62e235fe5bdd9b97"
+      },
+      "adaptations": []
+    },
+    {
+      "path": "freeze.json",
+      "original": {
+        "bytes": 5193,
+        "sha256": "abdd4aaedb4fd99b28e8b9ee1e0a6414210cc4af6be1df9860da0ca5bed7825d"
+      },
+      "projected": {
+        "bytes": 5402,
+        "sha256": "b2c4e3f5b79a26f9fb5436e038b0c334e67ef7599dea2c4e0e4c6c0fda547f31"
+      },
+      "adaptations": [
+        "Recompute frozen file identities and bind portable published parent workers; original freeze preserved in upstream_freeze.json."
+      ]
+    },
+    {
+      "path": "prepare_plan.py",
+      "original": {
+        "bytes": 3418,
+        "sha256": "834abccf2a9d11a9536bdb3296a1f74842063c7d2aae505f02c063ff1aa8f69e"
+      },
+      "projected": {
+        "bytes": 3418,
+        "sha256": "834abccf2a9d11a9536bdb3296a1f74842063c7d2aae505f02c063ff1aa8f69e"
+      },
+      "adaptations": []
+    },
+    {
+      "path": "protocol_amendment.json",
+      "original": {
+        "bytes": 2576,
+        "sha256": "5589e853094f3d461b8bdfeff180d24d8505060ae4c8f1557b41dd7080f4e0c6"
+      },
+      "projected": {
+        "bytes": 2576,
+        "sha256": "5589e853094f3d461b8bdfeff180d24d8505060ae4c8f1557b41dd7080f4e0c6"
+      },
+      "adaptations": []
+    },
+    {
+      "path": "runner/benchmark_preparation_cpu.py",
+      "original": {
+        "bytes": 4567,
+        "sha256": "ac93244a26985af0964c0ccddbba508b6c894d62d704b5ae3e72409ea0fa126b"
+      },
+      "projected": {
+        "bytes": 4553,
+        "sha256": "335bf18e0b71e77e4980c441220596c052f13604f6d85a2b0696abf291ea66d1"
+      },
+      "adaptations": [
+        "Resolve diagnostic preparation helpers and implementation from portable checkout; canonical inputs still supplied by --campaign."
+      ]
+    },
+    {
+      "path": "runner/cugraph_csr_adapter.py",
+      "original": {
+        "bytes": 6682,
+        "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+      },
+      "projected": {
+        "bytes": 6682,
+        "sha256": "7f3f334f0f1e6013373fa373716bc7cc36152fd11e82f4a584044e2efd168db7"
+      },
+      "adaptations": []
+    },
+    {
+      "path": "runner/historical_profile.json",
+      "original": {
+        "bytes": 98671,
+        "sha256": "693d58bcffdcef34ba2c2bebdd0ddf19f648c73a8239b03e0565661d43f49d4f"
+      },
+      "projected": {
+        "bytes": 97695,
+        "sha256": "adcc594646dfe71c2dbd3bf2f0547bfb218ffecd03296152af9fa2691cefdc4b"
+      },
+      "adaptations": [
+        "Private workspace prefix removed from historical evidence references; profile values unchanged."
+      ]
+    },
+    {
+      "path": "runner/native_input.py",
+      "original": {
+        "bytes": 12636,
+        "sha256": "e2b5acf9c9dc264ac96a56df8bbf5b2de49558a9c56e06acc10d47ee350a251c"
+      },
+      "projected": {
+        "bytes": 12636,
+        "sha256": "e2b5acf9c9dc264ac96a56df8bbf5b2de49558a9c56e06acc10d47ee350a251c"
+      },
+      "adaptations": []
+    },
+    {
+      "path": "runner/native_profile.py",
+      "original": {
+        "bytes": 7386,
+        "sha256": "230b76d86bf8c2af354c9a432239d348092e47531ae4dbde5c8e66f27681d392"
+      },
+      "projected": {
+        "bytes": 7941,
+        "sha256": "2e5791b66c84293be05778b880f3f5ebc611612163a818e78a9f8d6bd2bd2cd4"
+      },
+      "adaptations": [
+        "Reuse the already published explicit EGGPU_BENCH_CPU_SET mapping adaptation; function policy unchanged."
+      ]
+    },
+    {
+      "path": "runner/native_worker.py",
+      "original": {
+        "bytes": 28480,
+        "sha256": "98c91f301a80af1f2542d154aee252d6bc75aa94c183998583d8a8720a590074"
+      },
+      "projected": {
+        "bytes": 28480,
+        "sha256": "98c91f301a80af1f2542d154aee252d6bc75aa94c183998583d8a8720a590074"
+      },
+      "adaptations": []
+    },
+    {
+      "path": "runner/qualify_static_native_domains.py",
+      "original": {
+        "bytes": 5683,
+        "sha256": "27af686ede9a6441adc66e1565bba2220fdd92e64a12bee59e4c75702c9b4778"
+      },
+      "projected": {
+        "bytes": 5683,
+        "sha256": "27af686ede9a6441adc66e1565bba2220fdd92e64a12bee59e4c75702c9b4778"
+      },
+      "adaptations": []
+    },
+    {
+      "path": "runner/sg_worker.py",
+      "original": {
+        "bytes": 41355,
+        "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+      },
+      "projected": {
+        "bytes": 41355,
+        "sha256": "26b504265600ef0bdf15cd987ed34e225778ada08c46177769f7cb6cbce8bdaf"
+      },
+      "adaptations": []
+    },
+    {
+      "path": "runner/test_load_preparation_cpu.py",
+      "original": {
+        "bytes": 6118,
+        "sha256": "60fe1334f131452915938ff4885edfe6aa565e1877d46808cbcdaa8cadba79da"
+      },
+      "projected": {
+        "bytes": 6046,
+        "sha256": "e5f3048e300278f692e3e639859b875b0fce24faeeaa022400a4fc5379cd8f75"
+      },
+      "adaptations": [
+        "Resolve preparation parent and frozen implementation from portable checkout layout."
+      ]
+    },
+    {
+      "path": "runner/test_metric_json_cpu.py",
+      "original": {
+        "bytes": 714,
+        "sha256": "ac350dc4e0bbf8bba7edd4e6089bc24d4381ddbe5c7f7f2a36478daefda0cf39"
+      },
+      "projected": {
+        "bytes": 714,
+        "sha256": "ac350dc4e0bbf8bba7edd4e6089bc24d4381ddbe5c7f7f2a36478daefda0cf39"
+      },
+      "adaptations": []
+    },
+    {
+      "path": "runner/test_native_profile_cpu.py",
+      "original": {
+        "bytes": 3903,
+        "sha256": "e3a25b177239181c188d2cce67329d3e6ba154b385fa9d5c22a4cd91ee8b7649"
+      },
+      "projected": {
+        "bytes": 3903,
+        "sha256": "e3a25b177239181c188d2cce67329d3e6ba154b385fa9d5c22a4cd91ee8b7649"
+      },
+      "adaptations": []
+    },
+    {
+      "path": "runner/test_static_measurement_cpu.py",
+      "original": {
+        "bytes": 2986,
+        "sha256": "85bd3b91a17b5b25927550f13a71cfa3f9ac8aed7bcbecbd603d34b35535fdd0"
+      },
+      "projected": {
+        "bytes": 2986,
+        "sha256": "85bd3b91a17b5b25927550f13a71cfa3f9ac8aed7bcbecbd603d34b35535fdd0"
+      },
+      "adaptations": []
+    },
+    {
+      "path": "runner/test_static_runner_cpu.py",
+      "original": {
+        "bytes": 1921,
+        "sha256": "8d6f91353a495b5b1b2ec9fb4c193f0b1100fe1059cca3f592a1c80787e979d1"
+      },
+      "projected": {
+        "bytes": 1921,
+        "sha256": "8d6f91353a495b5b1b2ec9fb4c193f0b1100fe1059cca3f592a1c80787e979d1"
+      },
+      "adaptations": []
+    },
+    {
+      "path": "runner.patch",
+      "original": {
+        "bytes": 5761,
+        "sha256": "7135e3811655f5a6e2172beb122a4b69543954c28b21df4e7c15f6c8b3a11783"
+      },
+      "projected": {
+        "bytes": 5761,
+        "sha256": "7135e3811655f5a6e2172beb122a4b69543954c28b21df4e7c15f6c8b3a11783"
+      },
+      "adaptations": []
+    }
+  ],
+  "parent_binding_policy": "Rebind parent worker identities to already published portable native_load_p1 files. Native measurement behavior and prepare_plan.py remain unchanged.",
+  "projected_freeze": {
+    "bytes": 5402,
+    "sha256": "b2c4e3f5b79a26f9fb5436e038b0c334e67ef7599dea2c4e0e4c6c0fda547f31"
+  },
+  "gpu_executed": false
+}

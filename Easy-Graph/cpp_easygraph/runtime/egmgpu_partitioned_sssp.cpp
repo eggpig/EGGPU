@@ -417,15 +417,14 @@ std::vector<SsspHostPartition> host_partitions(
         target.device_id = source.device_id;
         target.owned_vertex_count = static_cast<std::size_t>(
             source.owned_vertex_count);
-        target.offsets.assign(source.offsets.begin(), source.offsets.end());
-        target.indices.assign(source.indices.begin(), source.indices.end());
-        target.local_to_global.assign(
-            source.local_to_global.begin(), source.local_to_global.end());
-        target.owners.assign(source.owners.begin(), source.owners.end());
+        target.offsets = source.offsets;
+        target.indices = source.indices;
+        target.local_to_global = source.local_to_global;
+        target.owners = source.owners;
         if (source.weight_type == easygraph::egmgpu::PartitionWeightType::kFloat64) {
             target.weights = source.weights_float64;
         } else {
-            target.weights.assign(
+            target.weights = std::vector<double>(
                 source.weights_float32.begin(), source.weights_float32.end());
         }
     }
@@ -438,7 +437,8 @@ SsspPartitionUpload make_upload(
     const std::vector<int>& devices,
     std::size_t rank,
     const std::string& weight_identity,
-    SsspUploadBuildStats* stats) {
+    SsspUploadBuildStats* stats,
+    const SsspPartitionUpload* parent_upload = nullptr) {
     const auto descriptor_begin = SteadyClock::now();
     const SsspHostPartition& partition = plan.partitions[rank];
     const std::size_t rank_count = plan.partitions.size();
@@ -481,7 +481,7 @@ SsspPartitionUpload make_upload(
     }
     upload.offsets_sha256 = manifest_partition.offsets_sha256;
     upload.indices_sha256 = manifest_partition.indices_sha256;
-    // F64 weights are copied unchanged from the immutable loader-owned
+    // F64 weights are shared unchanged from the immutable validated host
     // array. Reuse its byte identity under the same loader policy as offsets
     // and indices. Float32 normalization changes bytes and requires a new F64
     // digest. Weight type, not vector emptiness, also covers empty F64 owners.
@@ -501,7 +501,7 @@ SsspPartitionUpload make_upload(
         stats->weight_manifest_bytes += weight_bytes;
         ++stats->weight_manifest_descriptors;
     } else {
-        upload.weights_sha256 = easygraph::egmgpu::sha256_vector(upload.weights);
+        upload.weights_sha256 = easygraph::egmgpu::sha256_vector(upload.weights.view());
         stats->weight_hash_bytes += weight_bytes;
         ++stats->weight_hash_descriptors;
         if (manifest_partition.weight_type == easygraph::egmgpu::PartitionWeightType::kFloat32)
@@ -519,35 +519,49 @@ SsspPartitionUpload make_upload(
         easygraph::egmgpu::partition_ownership_compatibility(
             graph, partition.partition_id, devices);
     const auto routes_begin = SteadyClock::now();
-    upload.halo_route_slots.assign(partition.local_to_global.size(), -1);
-    upload.outgoing_route_offsets.push_back(0U);
-    for (std::size_t destination = 0; destination < rank_count;
-         ++destination) {
-        const SsspOwnerRoute& route = plan.route(rank, destination);
-        for (std::size_t index = 0; index < route.capacity(); ++index) {
-            const int halo_local = route.source_halo_local_ids[index];
-            if (halo_local < 0 ||
-                static_cast<std::size_t>(halo_local) >=
-                    upload.halo_route_slots.size() ||
-                upload.halo_route_slots[static_cast<std::size_t>(halo_local)] !=
-                    -1) {
-                throw std::logic_error("invalid SSSP halo route");
+    if (parent_upload) {
+        // Exact direct-parent eligibility has already checked topology and
+        // placement. Keep only owning array handles, never the parent plan.
+        upload.halo_route_slots = parent_upload->halo_route_slots;
+        upload.route_destination_ranks = parent_upload->route_destination_ranks;
+        upload.route_owner_local_ids = parent_upload->route_owner_local_ids;
+        upload.outgoing_route_offsets = parent_upload->outgoing_route_offsets;
+        upload.incoming_route_offsets = parent_upload->incoming_route_offsets;
+    } else {
+        std::vector<int> halo_route_slots, route_destination_ranks, route_owner_local_ids;
+        halo_route_slots.assign(partition.local_to_global.size(), -1);
+        upload.outgoing_route_offsets.push_back(0U);
+        for (std::size_t destination = 0; destination < rank_count;
+             ++destination) {
+            const SsspOwnerRoute& route = plan.route(rank, destination);
+            for (std::size_t index = 0; index < route.capacity(); ++index) {
+                const int halo_local = route.source_halo_local_ids[index];
+                if (halo_local < 0 ||
+                    static_cast<std::size_t>(halo_local) >=
+                        halo_route_slots.size() ||
+                    halo_route_slots[static_cast<std::size_t>(halo_local)] !=
+                        -1) {
+                    throw std::logic_error("invalid SSSP halo route");
+                }
+                halo_route_slots[static_cast<std::size_t>(halo_local)] =
+                    static_cast<int>(route_owner_local_ids.size());
+                route_destination_ranks.push_back(
+                    static_cast<int>(destination));
+                route_owner_local_ids.push_back(
+                    route.destination_owner_local_ids[index]);
             }
-            upload.halo_route_slots[static_cast<std::size_t>(halo_local)] =
-                static_cast<int>(upload.route_owner_local_ids.size());
-            upload.route_destination_ranks.push_back(
-                static_cast<int>(destination));
-            upload.route_owner_local_ids.push_back(
-                route.destination_owner_local_ids[index]);
+            upload.outgoing_route_offsets.push_back(
+                route_owner_local_ids.size());
         }
-        upload.outgoing_route_offsets.push_back(
-            upload.route_owner_local_ids.size());
-    }
-    upload.incoming_route_offsets.push_back(0U);
-    for (std::size_t source = 0; source < rank_count; ++source) {
-        upload.incoming_route_offsets.push_back(
-            upload.incoming_route_offsets.back() +
-            plan.route(source, rank).capacity());
+        upload.incoming_route_offsets.push_back(0U);
+        for (std::size_t source = 0; source < rank_count; ++source) {
+            upload.incoming_route_offsets.push_back(
+                upload.incoming_route_offsets.back() +
+                plan.route(source, rank).capacity());
+        }
+        upload.halo_route_slots = std::move(halo_route_slots);
+        upload.route_destination_ranks = std::move(route_destination_ranks);
+        upload.route_owner_local_ids = std::move(route_owner_local_ids);
     }
     const auto descriptor_end = SteadyClock::now();
     const double routes_seconds = elapsed_seconds(routes_begin, descriptor_end);
@@ -556,13 +570,17 @@ SsspPartitionUpload make_upload(
     stats->routes_seconds += routes_seconds;
     stats->other_seconds += elapsed_seconds(descriptor_begin, descriptor_end) -
         copy_seconds - digest_seconds - routes_seconds;
+    stats->shared_payload_bytes += upload.offsets.payload_bytes() + upload.indices.payload_bytes() +
+        upload.owners.payload_bytes() + upload.weights.payload_bytes() + upload.weights_u8.payload_bytes();
+    if (parent_upload) stats->shared_payload_bytes += upload.halo_route_slots.payload_bytes() +
+        upload.route_destination_ranks.payload_bytes() + upload.route_owner_local_ids.payload_bytes();
     ++stats->descriptors;
     return upload;
 }
 
-template <typename T>
-std::size_t array_capacity_bytes(const std::vector<T>& values) {
-    return values.capacity() * sizeof(T);
+template <typename Array>
+std::size_t array_capacity_bytes(const Array& values) {
+    return values.capacity() * sizeof(typename Array::value_type);
 }
 
 std::size_t upload_array_capacity_bytes(const SsspPartitionUpload& upload) {
@@ -598,6 +616,7 @@ struct SsspUploadHolder {
 
 py::dict descriptor_stats(const SsspUploadBuildStats& stats) {
     py::dict out;
+    out["shared_payload_bytes"] = stats.shared_payload_bytes;
     out["copy_seconds"] = stats.copy_seconds;
     out["weight_digest_seconds"] = stats.weight_digest_seconds;
     out["routes_seconds"] = stats.routes_seconds;
@@ -1441,7 +1460,8 @@ py::dict run_partitioned_sssp_impl(
                         prepared->prepared_uploads.reserve(prepared->partitions.size());
                         for (std::size_t rank = 0; rank < prepared->partitions.size(); ++rank) {
                             SsspPartitionUpload upload = make_upload(*graph, *prepared,
-                                devices, rank, weight_identity, &descriptor_this_call);
+                                devices, rank, weight_identity, &descriptor_this_call,
+                                parent_plan ? parent_plan->prepared_uploads.at(rank).get() : nullptr);
                             if (serial_partitions) {
                                 upload.device_id = devices.front();
                                 upload.view_signature += ":same-device-serial-v2";
@@ -1456,7 +1476,8 @@ py::dict run_partitioned_sssp_impl(
                     return std::shared_ptr<const PartitionedSsspPlan>(prepared);
                 });
         // End the temporary parent lease before any GPU task is constructed.
-        // The new plan owns its arrays and no descriptor/packet from the parent.
+        // The new plan/descriptors own immutable payload handles independently;
+        // no ancestor plan, descriptor or old weight packet is retained.
         parent_plan.reset();
     }
     const std::shared_ptr<const PartitionedSsspPlan> plan =
@@ -2215,6 +2236,8 @@ py::dict run_partitioned_sssp_impl(
     out["parent_topology_lookup_attempted"] = parent_topology_lookup_attempted;
     out["parent_topology_lookup_seconds"] = parent_topology_lookup_seconds;
     out["parent_topology_reused_first_prepare"] = plan->parent_topology_reused;
+    out["parent_topology_shared_bytes_first_prepare"] = plan->parent_topology_shared_bytes;
+    out["parent_topology_shared_bytes_this_call"] = plan_acquisition.builder ? plan->parent_topology_shared_bytes : 0;
     out["parent_topology_reused_this_call"] = plan_acquisition.builder && plan->parent_topology_reused;
     out["parent_topology_copied_bytes_this_call"] = plan_acquisition.builder ? plan->parent_topology_copied_bytes : 0;
     out["weight_validation_edges_this_call"] = plan_acquisition.builder ? plan->weight_validation_edges : 0;
@@ -2270,6 +2293,7 @@ py::dict run_partitioned_sssp_impl(
         : "nested in per-query upload_descriptor; owned descriptors copied into tasks";
     out["host_plan_array_capacity_bytes"] = plan->host_plan_array_capacity_bytes;
     out["prepared_upload_array_capacity_bytes"] = plan->prepared_upload_array_capacity_bytes;
+    out["host_plan_array_capacity_scope"] = "logical reachable capacity; shared payloads may occur in multiple plans/descriptors; not unique allocation bytes";
     out["host_plan_retained_array_capacity_bytes"] = plan->host_plan_array_capacity_bytes +
         plan->prepared_upload_array_capacity_bytes;
     out["host_retained_bytes_scope"] =

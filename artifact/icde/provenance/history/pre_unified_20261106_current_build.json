@@ -1,0 +1,8 @@
+{
+  "status": "PUBLIC_CLEAN_BUILD_PENDING",
+  "source_sha256": "d84ff388e1e40d1fd6ed83fcaceecd0491fc0451adffaff657a95940b1803f84",
+  "build_tool": "artifact/icde/tools/build.py",
+  "gpu_qualified": false,
+  "private_build_dso_sha256": "6dfc1c03f249900afc216163d7b59d40da3dce19efdacc6eb60d198724801bac",
+  "scope": "A matching private build supports CPU checks only; the public clean build remains independent."
+}

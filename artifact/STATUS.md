@@ -1,5 +1,5 @@
 # Artifact status
 
-Development checkpoint, 2026-11-05. Main Easy-Graph remains d84 byte for byte. Formal queues launched; complete results and the 90% single-GPU target are not established. `campaign_status.json` contains a timestamped observation, never a permanent counter.
+Development checkpoint, 2026-11-06. The complete source is frozen as `71ea757d372f8c1b969ea074caaa27d3a77d4cea6d48cd9c6ae9c4b02936d7ce`. CPU component checks are recorded separately from GPU execution. The exact source-bound build and focused P8 SSSP first-page trace passed. The first-pass static comparison matrix remains pending; the trace is not an external superiority claim.
 
-The new public layout passed 190 CPU-only tests with zero skips. Synthetic figures are not published; CPU evidence does not transfer GPU correctness or performance. WCC 6cce remains an experimental overlay, now with a separately tested v3 runner. Unfrozen E5/E6 admission work is excluded. See `artifact/icde/PROTOCOLS_UPDATE_CN.md`.
+The campaign prioritizes one complete observation per configuration before the second repetition. The 90% single-GPU and 85% multi-GPU targets remain optimization goals. Historical measurements retain their original source identity and are not pooled into the new source. See `artifact/icde/FIRST_PASS_UPDATE_CN.md`.

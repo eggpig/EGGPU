@@ -1,0 +1,44 @@
+{
+  "schema": "eggpu.unified_release.integration.v1",
+  "source_tree_sha256": "71ea757d372f8c1b969ea074caaa27d3a77d4cea6d48cd9c6ae9c4b02936d7ce",
+  "native_source_sha256": "959cb6bac81b36c9c56d7ec02427bf9c7c1dae6d6812e7fc381ae42be59b0d65",
+  "native_dso": {
+    "status": "PASS",
+    "build_receipt": "candidates/unified_release_20261106/build_receipt.json",
+    "sha256": "e50bcad821a4972c6a8039edf58837229849c4f75e38aa56a051268afb5907ac",
+    "bytes": 8551264,
+    "native_source_sha256": "959cb6bac81b36c9c56d7ec02427bf9c7c1dae6d6812e7fc381ae42be59b0d65",
+    "rebuild_required": false
+  },
+  "components": [
+    {
+      "component": "immutable_host_payload",
+      "source_sha256": "959cb6bac81b36c9c56d7ec02427bf9c7c1dae6d6812e7fc381ae42be59b0d65"
+    },
+    {
+      "component": "arena_wcc_halving",
+      "source_sha256": "b96ee55a2cae3a3daddc225f71fb1c57390e40744e6635b096551fc29c67ff8e",
+      "relative_path": "easygraph/gpu/_arena/connectivity.py",
+      "bytes": 5971,
+      "sha256": "b340568135f7a1e9c4a01791ffefb5e8664194c66fe0ebfec2e9ad821c056aea"
+    },
+    {
+      "component": "arena_registered_output",
+      "relative_path": "easygraph/gpu/_arena/gpu_runtime.py",
+      "bytes": 28860,
+      "sha256": "5c9345eaa5655f011a71a07c4dd7ed0c674d81e4af9853aa04521cdd608dd7f0"
+    }
+  ],
+  "source_file_count": 1162,
+  "changed_from_native_build": [
+    "easygraph/gpu/_arena/connectivity.py",
+    "easygraph/gpu/_arena/gpu_runtime.py"
+  ],
+  "baseline_originals_modified": false,
+  "gpu_executed": true,
+  "unified_gpu_qualification": "PASS_FOCUSED_FIRST_PAGE_TRACE_STATIC_MATRIX_PENDING",
+  "unified_formal_measurements": 0,
+  "native_abi_proof": "Every source file outside the two named Python runtime files is byte-identical to the 959cb6b native build source map.",
+  "performance_claim": false,
+  "first_page_summary": "provenance/first_page_unified_summary.json"
+}

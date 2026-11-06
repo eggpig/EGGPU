@@ -1,0 +1,249 @@
+{
+  "schema": "eggpu.source_delta/v2",
+  "base_source_sha256": "aeeade2ea64edf46fc226c0e33f2ccf8e596f77b5ff1e8cc47489db3ff30ef80",
+  "current_source_sha256": "d84ff388e1e40d1fd6ed83fcaceecd0491fc0451adffaff657a95940b1803f84",
+  "files": [
+    {
+      "path": "cpp_easygraph/classes/__init__.h",
+      "change": "modified",
+      "base_sha256": "a1b0d7f7ac16a6b337e0a74135f05d06f0fee2dcbe3429ca208dc7d8c7b8dad7",
+      "current_sha256": "54bcebff51e30595455916101d5b48d05144c6ccb8bc2ae533f082bc90d2ed00"
+    },
+    {
+      "path": "cpp_easygraph/classes/graph_convert.cpp",
+      "change": "modified",
+      "base_sha256": "4fa8044cd8d9ab7397ebe9b83c7842227bed083c182f8478d9a29adc23955e5b",
+      "current_sha256": "51dad2f874485883af301d529082e78385a912f145d62c9b17dfd8c8b56f2f68"
+    },
+    {
+      "path": "cpp_easygraph/cpp_easygraph.cpp",
+      "change": "modified",
+      "base_sha256": "363af811b932046acbbf21115d2360b46bad0d30924d15eb83e06bc3c0a17fea",
+      "current_sha256": "4c181328fb97e1d83c7a83ced50bf7e4806ffe779ca4e918fc0a206643efca09"
+    },
+    {
+      "path": "cpp_easygraph/runtime/egmgpu_partitioned_pagerank.cpp",
+      "change": "modified",
+      "base_sha256": "8d0b699780ba92ada27bff7fe7cd0b098bcf6be0ef8e6705af1fe507df5cfcf4",
+      "current_sha256": "bde5456e780353cca3031a54b83059917159fb203361a414baf90effaa36da9b"
+    },
+    {
+      "path": "easygraph/__init__.py",
+      "change": "modified",
+      "base_sha256": "bc4b1fbbf90d3fdb1283e0aeb6aa572b132205e5743186674014e5eeb73845a2",
+      "current_sha256": "4f7455c08ebb18bae1084ae43e18919b3e56afb334e4e5a2d4df72e2742ede62"
+    },
+    {
+      "path": "easygraph/_legacy_exports.py",
+      "change": "added",
+      "base_sha256": null,
+      "current_sha256": "299110c70513803766241b868489941466f259e36446ad5fa4064ba28bfb970a"
+    },
+    {
+      "path": "easygraph/egmgpu/__init__.py",
+      "change": "modified",
+      "base_sha256": "00a863c814513d789649a9daf23f0c2b5bf7dac05b5cf8c5352dfa047c802b6e",
+      "current_sha256": "3a001c14f05db5d1572158ddd4a8b314d04589f10c18b21b0229580a85341a4a"
+    },
+    {
+      "path": "easygraph/gpu/__init__.py",
+      "change": "modified",
+      "base_sha256": "19a6c04e9be1fd05cd78ca568129320e659fc99f66357b4ef94d106fe354e01b",
+      "current_sha256": "64a441a3162df1dd250770a6a7ef9367d13788c818c2dfc6e1ba6fbed25d31ec"
+    },
+    {
+      "path": "easygraph/gpu/_arena/gpu_runtime.py",
+      "change": "modified",
+      "base_sha256": "f98c2d0a0361180fa1d543763a4b971f01299dd3edd753ae69fb929310cfe1a4",
+      "current_sha256": "bc3269e2b1d0eae9cd0fe6ce84c15196a6ee6ab80f8dee97c20e3a63a022f351"
+    },
+    {
+      "path": "easygraph/gpu/_arena/public_session_final.py",
+      "change": "modified",
+      "base_sha256": "61b7aa3f3daf0d18ee02b7ac312af4faa832b103ed15393ed6e4f86a96997c26",
+      "current_sha256": "f87f0456eb869f947f9b63648341347ffe81dd894019e0dbcaff5c5214e4b84f"
+    },
+    {
+      "path": "easygraph/gpu/_arena/trace_backends.py",
+      "change": "modified",
+      "base_sha256": "47b839fc84c0c3c422c6d23f2834981744e8b1d5447f1c178b80a97dbc2f4427",
+      "current_sha256": "4bab35920788e5c97585db9ff6a965184f96c17427ceb4e9c54888efcbc7128d"
+    },
+    {
+      "path": "easygraph/gpu/_arena_output.py",
+      "change": "added",
+      "base_sha256": null,
+      "current_sha256": "585df3ad15c26f791287bda918ea0b8a3de8a9948d0a4ee61e8e68b396ee5631"
+    },
+    {
+      "path": "easygraph/gpu/_bridge.py",
+      "change": "modified",
+      "base_sha256": "bfb1d17c98aaad1e00d9492e532d57da3c3eb96a175f7bb038f5722eb4652eb3",
+      "current_sha256": "13c1c337e5d1f4dd100fd886c26d6802fbbfb74f958e56e2990d3a708e70e8a6"
+    },
+    {
+      "path": "easygraph/gpu/_controller.py",
+      "change": "modified",
+      "base_sha256": "d8f1f1920937d7791d2c7553b6720d9bdd946dfcbdc91a090f873f1c686cd782",
+      "current_sha256": "7da317b45fc2fea858f50eae1cc1afa38bbe7c2e1c56105601304f2927870fd4"
+    },
+    {
+      "path": "easygraph/gpu/_core.py",
+      "change": "modified",
+      "base_sha256": "df7b4a257812d1e45e70a85e1fdc5943153bff63a6ef72c720b52177c14ca9ef",
+      "current_sha256": "4f815c389ff2e639d7acf332d90d1cf5b01998f9302af06ed2e3af383c8e3a11"
+    },
+    {
+      "path": "easygraph/gpu/_csr_input.py",
+      "change": "added",
+      "base_sha256": null,
+      "current_sha256": "456d075379274dd95b63111a900a2dcfc81e4d45bdbebbbc41a9cadfb70db8bd"
+    },
+    {
+      "path": "easygraph/gpu/_dispatch.py",
+      "change": "added",
+      "base_sha256": null,
+      "current_sha256": "1b0202556b183c75da5790a6c002b64108464502daabb927531c850852a8cfc1"
+    },
+    {
+      "path": "easygraph/gpu/_dynamic.py",
+      "change": "modified",
+      "base_sha256": "69d12ea05bce00ef1161796e3f36d75c4870a6181925708b5b76d11726de6c9b",
+      "current_sha256": "3f5dfe7b9fbc0cbb030565274497c687d926a4f5e24fed6d4feca5429c38aa87"
+    },
+    {
+      "path": "easygraph/gpu/_native.py",
+      "change": "modified",
+      "base_sha256": "83a8478aef86a621b736f0e85fb88f1b6bc1b5ba78ed97ae2c78ffa6fd662054",
+      "current_sha256": "59740b0d24743843a9b8e4d91b9fd067185619628c5a0056d7d4e600386d9979"
+    },
+    {
+      "path": "easygraph/gpu/_snapshot_lease.py",
+      "change": "added",
+      "base_sha256": null,
+      "current_sha256": "6c1d6dc8a18fad51c773de8b1066afbe11f0c2419e0d514e0986c1d7bdf70305"
+    },
+    {
+      "path": "easygraph/gpu/_static_native.py",
+      "change": "added",
+      "base_sha256": null,
+      "current_sha256": "de61b0341a8a7004a4b29884a66925c45056b982c63267470b75e42598ca3ef1"
+    },
+    {
+      "path": "easygraph/gpu/_weight_admission.py",
+      "change": "added",
+      "base_sha256": null,
+      "current_sha256": "b09874a4f870415303fe90bf8e97670d5a09362fb7e357ca6cb0df9772dcf3b3"
+    },
+    {
+      "path": "easygraph/gpu/session.py",
+      "change": "modified",
+      "base_sha256": "4e441517622f125d7f9ba33cd81bfea2fad2e0ecfdc2302539b4ee756bfdf3e6",
+      "current_sha256": "2f584cdafe5af7924418a7ee339d0322987e99aa1b721380091f65ab45dc5076"
+    },
+    {
+      "path": "gpu_easygraph/common/csr_h2d_source.h",
+      "change": "added",
+      "base_sha256": null,
+      "current_sha256": "36e9053430afcbc98730d13a568d45496c3cede57b4053439103dac7268986e4"
+    },
+    {
+      "path": "gpu_easygraph/common/device_graph_cache.cu",
+      "change": "modified",
+      "base_sha256": "a43a48b8420837d9ff5207d5b3c6aacd634f9e8446ac7075da20efa57eec7699",
+      "current_sha256": "4bf89f9296934f248678eadb9cadebb35a42f78a6c18890ced45cd0b56423179"
+    },
+    {
+      "path": "gpu_easygraph/runtime/partitioned_device_state.cpp",
+      "change": "modified",
+      "base_sha256": "1317c308a4783a73633312f13a09a14531650b5d7a9aca3413dc0a90b6ec16aa",
+      "current_sha256": "9dfd7084b92d2fbf06882b9b806cf080f57f7d053f65aa37a86f06de1b46152a"
+    },
+    {
+      "path": "gpu_easygraph/runtime/partitioned_device_state.h",
+      "change": "modified",
+      "base_sha256": "8bc08bbbff63482d70fb034b64f32845fc8d928fc560ab01c31af4c914b27649",
+      "current_sha256": "26cf3a110d51636d39dfedc4844a6840ac23678afa42aa04716b85231f0a64b2"
+    },
+    {
+      "path": "gpu_easygraph/runtime/partitioned_sssp_state.cpp",
+      "change": "modified",
+      "base_sha256": "e9c944a38893305e3f17f5c29e096df937bda8c25618a9cd8427b49c849b6a2f",
+      "current_sha256": "10a3b5bd5f66b76985bf0716f52271b1d3680c54006e40d1822ca5a28796bd2c"
+    },
+    {
+      "path": "gpu_easygraph/runtime/partitioned_sssp_state.h",
+      "change": "modified",
+      "base_sha256": "b810e049cd4c9384a4b02b16e76daa2efad41c2001fba263fb25840983c1e967",
+      "current_sha256": "b5fed993bc4b3d87e0bf487d3b4258f63604ebc887e22501f73290227bdaaf3b"
+    },
+    {
+      "path": "tests/gpu/qualify_arena_output_ownership.py",
+      "change": "added",
+      "base_sha256": null,
+      "current_sha256": "d0b80b879b2b72a37c2e8ebb5a3c1b2d008bf59f969f81e8d26c1d4d59382996"
+    },
+    {
+      "path": "tests/gpu/qualify_capability_route.py",
+      "change": "added",
+      "base_sha256": null,
+      "current_sha256": "b9049bb0de083060b2318df244d321fa179ca1f2a505271e5ed235208d08501f"
+    },
+    {
+      "path": "tests/gpu/qualify_public_csr.py",
+      "change": "added",
+      "base_sha256": null,
+      "current_sha256": "0bcef88759e3341e00e826ecb3af7c03d72f5c1a63f6a40b33588aff5391475b"
+    },
+    {
+      "path": "tests/gpu/test_arena_cold_import.py",
+      "change": "added",
+      "base_sha256": null,
+      "current_sha256": "d7fb49b85e8d5eb76f65ce411f202d385594741f347edf554161bec2aef578b0"
+    },
+    {
+      "path": "tests/gpu/test_arena_numerical_contract.py",
+      "change": "modified",
+      "base_sha256": "b28809f719ff05f6464a0b7e6050755f5c182dc02bd61ce6d86a6f326a133b9a",
+      "current_sha256": "7cbaf80b739628e172a05ee651406b53814f5abe5d59a0a96bd765db603dce7a"
+    },
+    {
+      "path": "tests/gpu/test_arena_output_ownership.py",
+      "change": "added",
+      "base_sha256": null,
+      "current_sha256": "cbb532d6f2a547bc636123c697475b0b47f582a8df138749e8c0163b11780ecc"
+    },
+    {
+      "path": "tests/gpu/test_capability_dispatch.py",
+      "change": "added",
+      "base_sha256": null,
+      "current_sha256": "8199b63d055bda448267a214ceb98a6bbc8addc700a3df0587ec24086c40b5b5"
+    },
+    {
+      "path": "tests/gpu/test_public_csr_input.py",
+      "change": "added",
+      "base_sha256": null,
+      "current_sha256": "e982d90e6dec75a70d0e1ead64bf08f0b6b14aadde00723466d6bb2124902cf6"
+    },
+    {
+      "path": "tests/gpu/test_public_lazy_import.py",
+      "change": "added",
+      "base_sha256": null,
+      "current_sha256": "f4bfc8f40af5507c01f9b0d5d43e382f506f317d533a1dae75bfb520527ccb73"
+    },
+    {
+      "path": "tests/gpu/test_static_native_encoding.py",
+      "change": "added",
+      "base_sha256": null,
+      "current_sha256": "3dc8a51bb8c381cc8a2e3eb3652237f2631de38d3239adff9a4341e38b4a0acb"
+    },
+    {
+      "path": "tests/gpu/test_wcc_chunked_host.py",
+      "change": "added",
+      "base_sha256": null,
+      "current_sha256": "a79440305c37bc467e78a53f1223c1c26f688f0b50215da7bdd633ce42308402"
+    }
+  ],
+  "cuda_cpp_changed": true,
+  "source_scope": "Unified static profile, safe CSR host registration lifetime, strict native in-memory CSR entry, and fused weight admission."
+}

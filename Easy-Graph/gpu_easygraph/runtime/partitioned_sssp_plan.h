@@ -1,6 +1,7 @@
 #pragma once
 
 #include "partitioned_sssp_types.h"
+#include "../../cpp_easygraph/runtime/immutable_host_array.h"
 #include "partitioned_host_plan_cache.h"
 
 #include <cstddef>
@@ -12,18 +13,20 @@
 namespace gpu_easygraph {
 namespace runtime {
 
+using easygraph::egmgpu::ImmutableHostArray;
+
 struct SsspHostPartition {
     int partition_id;
     int device_id;
     std::size_t owned_vertex_count;
-    std::vector<int> offsets;
-    std::vector<int> indices;
-    std::vector<double> weights;
+    ImmutableHostArray<int> offsets;
+    ImmutableHostArray<int> indices;
+    ImmutableHostArray<double> weights;
     // Original FP64 values remain available to the host reference. Only this
     // certified exact view is uploaded when U8Exact was explicitly requested.
-    std::vector<std::uint8_t> weights_u8;
-    std::vector<std::uint64_t> local_to_global;
-    std::vector<int> owners;
+    ImmutableHostArray<std::uint8_t> weights_u8;
+    ImmutableHostArray<std::uint64_t> local_to_global;
+    ImmutableHostArray<int> owners;
 };
 
 // One source partition has one slot per distinct remote halo.  A relaxation
@@ -31,8 +34,8 @@ struct SsspHostPartition {
 struct SsspOwnerRoute {
     int source_rank;
     int destination_rank;
-    std::vector<int> source_halo_local_ids;
-    std::vector<int> destination_owner_local_ids;
+    ImmutableHostArray<int> source_halo_local_ids;
+    ImmutableHostArray<int> destination_owner_local_ids;
 
     std::size_t capacity() const;
 };
@@ -45,6 +48,7 @@ struct SsspUploadBuildStats {
     double routes_seconds = 0.0;
     double other_seconds = 0.0;
     std::size_t descriptors = 0;
+    std::size_t shared_payload_bytes = 0;
     std::size_t weight_hash_bytes = 0;
     std::size_t weight_hash_descriptors = 0;
     std::size_t weight_manifest_bytes = 0;
@@ -86,7 +90,7 @@ struct PartitionedSsspPlan {
     std::vector<SsspHostPartition> partitions;
     // Row-major [source_rank * partition_count + destination_rank].
     std::vector<SsspOwnerRoute> routes;
-    std::vector<int> owner_by_global;
+    ImmutableHostArray<int> owner_by_global;
     std::uint64_t route_capacity;
     // Immutable descriptor lifetime follows this plan, including in-flight tasks.
     std::vector<std::shared_ptr<const SsspPartitionUpload> > prepared_uploads;
@@ -94,7 +98,8 @@ struct PartitionedSsspPlan {
     // Numeric vector allocated capacity, excluding metadata/allocator overhead.
     std::size_t host_plan_array_capacity_bytes = 0;
     std::size_t prepared_upload_array_capacity_bytes = 0;
-    // Preparation provenance only. No parent plan or shared topology is held.
+    // Arrays own shared immutable payloads independently of ancestor plans.
+    // Releasing an ancestor cannot invalidate this plan or its descriptors.
     std::string weight_certification_selected_route = "full";
     std::string weight_certification_selection_reason = "initial_full_builder";
     std::uint64_t weight_certification_candidate_positions = 0;
@@ -107,6 +112,7 @@ struct PartitionedSsspPlan {
     bool weight_delta_rescan_required = false;
     bool parent_topology_reused = false;
     std::size_t parent_topology_copied_bytes = 0;
+    std::size_t parent_topology_shared_bytes = 0;
 
     const SsspOwnerRoute& route(
         std::size_t source_rank, std::size_t destination_rank) const;
@@ -133,7 +139,7 @@ bool matches_sssp_direct_parent(
     const std::vector<std::pair<int, int> >& target_partition_devices);
 
 // The caller must hold the completed plan selected by the exact-parent check.
-// Copy only validated topology/owner/routes; move current weights into a fresh
+// Share validated immutable topology/owner/routes; move current weights into a fresh
 // plan; a complete native delta permits exact incremental certification,
 // otherwise every weight is checked. No old descriptor/packet is copied.
 PartitionedSsspPlan rebuild_sssp_f64_from_parent(

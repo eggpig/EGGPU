@@ -1,8 +1,8 @@
 {
-  "status": "ROOT_CPU_REVIEW_INTEGRATED_PUBLIC_DEPLOYMENT_REBIND_REQUIRED",
-  "source_sha256": "d84ff388e1e40d1fd6ed83fcaceecd0491fc0451adffaff657a95940b1803f84",
-  "gpu_executed": false,
+  "status": "STATIC_FIRST_PASS_AND_PUBLIC_REBUILD_PENDING",
+  "source_sha256": "71ea757d372f8c1b969ea074caaa27d3a77d4cea6d48cd9c6ae9c4b02936d7ce",
+  "source_bound_build": "PASS",
+  "focused_trace": "PASS_N1",
   "formal_results": 0,
-  "cpu_receipt": "artifact/icde/provenance/unified_release_cpu.json",
-  "reason": "Private deployment plans are byte-bound to original setup and proofs. Public launchers regenerate new plans with explicit local parameters and cannot inherit those proofs."
+  "portable_deployment": "Regenerate plans and proofs against explicit local source, input, DSO and placement identities."
 }

@@ -158,7 +158,7 @@ void ResidentSsspPartitionView::initialize(
     if (upload.owned_vertex_count == 0 &&
         (local_count != 0 || !upload.indices.empty() ||
          weight_count != 0 || route_total != 0 ||
-         upload.offsets != std::vector<int>(1U, 0))) {
+         upload.offsets.view() != std::vector<int>(1U, 0))) {
         throw std::invalid_argument("invalid empty SSSP partition upload");
     }
     validate_offsets(
@@ -240,13 +240,13 @@ void ResidentSsspPartitionView::initialize(
         ++shared_array_count_;
     }
     halo_route_slots_ = upload_array(
-        upload.device_id, upload.halo_route_slots,
+        upload.device_id, upload.halo_route_slots.view(),
         "upload SSSP halo route slots");
     route_destination_ranks_ = upload_array(
-        upload.device_id, upload.route_destination_ranks,
+        upload.device_id, upload.route_destination_ranks.view(),
         "upload SSSP route destination ranks");
     route_owner_local_ids_ = upload_array(
-        upload.device_id, upload.route_owner_local_ids,
+        upload.device_id, upload.route_owner_local_ids.view(),
         "upload SSSP owner local IDs");
 
     view_.partition_id = upload.partition_id;
@@ -302,7 +302,10 @@ std::size_t ResidentSsspPartitionView::shared_array_count() const {
     return shared_array_count_;
 }
 bool ResidentSsspPartitionView::cacheable() const {
-    return shared_array_stats_.all_retained;
+    // The complete view owns every array, including catalog-bypass arrays.
+    // Catalog admission governs cross-view sharing, not this view's lifetime.
+    // Retention/release remains governed by registry LRU and the byte controller.
+    return true;
 }
 
 SsspPartitionWorkspace::SsspPartitionWorkspace(int device_id)

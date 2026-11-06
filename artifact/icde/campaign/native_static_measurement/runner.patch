@@ -1,0 +1,94 @@
+--- native_load_p1_v1/native_worker.py
++++ native_static_measurement/runner/native_worker.py
+@@ -22,7 +22,8 @@
+ import native_profile
+ 
+ E2_DATASETS = ('US', 'OR', 'IN', 'UK', 'TW')
+-PROTOCOL = 'native-host-csr-complete-static-full-profile-v1'
++PROTOCOL = 'native-host-csr-static-all4-public-return-v2'
++TIMING_ENDPOINT = 'Session.query returns complete independent readonly FP64 host values; runner audit follows timer'
+ NATIVE_PR_MAX_ITER = 1000  # Actual _native.py API, not the campaign's allowed upper cap.
+ 
+ 
+@@ -97,9 +98,10 @@
+     data, _ = shared.source_epoch(proxy)
+     data.update(protocol=PROTOCOL, system='eggpu', implementation='forced_native',
+                 gpu_count=args.count, gpu_uuids=args.uuids,
+-                native_route='static_immutable' if args.algorithm=='sssp' else 'persistent_full',
++                native_route='static_immutable_all4',
+                 communication=args.communication,
+                 sssp_encoding=args.sssp_encoding, sssp_session='Session.native_static',
++                native_session='Session.native_static', timing_endpoint=TIMING_ENDPOINT,
+                 sssp_delta_rule=args.sssp_delta_rule, native_profile=native_profile.identity(args),
+                 sssp_single_owner_execution='off',
+                 inventory_mode='recheck', retained_budget_mib=args.retained_budget_mib,
+@@ -209,20 +211,23 @@
+         self.audit_graph = prepared
+         budgets = None if args.retained_budget_mib == 0 else {
+             device: args.retained_budget_mib << 20 for device in range(args.count)}
+-        if args.algorithm == 'sssp':
+-            self.session = Session.native_static({'g': manifest['path']}, devices=tuple(range(args.count)), cpp=cpp,
+-                sssp_encoding=args.sssp_encoding, sssp_delta_rule=args.sssp_delta_rule,
+-                inventory_mode='recheck', budgets=budgets)
+-        else:
+-            self.session = Session.native({'g': manifest['path']}, devices=tuple(range(args.count)), cpp=cpp,
+-                                          route='persistent_full', inventory_mode='recheck', budgets=budgets)
++        # E1/E2 use immutable canonical inputs for every function and GPU count.
++        # No commit, retention, lease or snapshot capability is needed here.
++        self.session = Session.native_static({'g': manifest['path']}, devices=tuple(range(args.count)), cpp=cpp,
++            sssp_encoding=args.sssp_encoding, sssp_delta_rule=args.sssp_delta_rule,
++            inventory_mode='recheck', budgets=budgets)
+         self.sssp_encoding = args.sssp_encoding
+         self.algorithm, self.source, self.count = args.algorithm, source, args.count
+         self.last_metrics = {}
+ 
+     def query(self):
+         parameters = {'source': self.source} if self.algorithm in ('bfs', 'sssp') else {}
+-        result = self.session.query('g', self.algorithm, parameters)
++        self.last_result = self.session.query('g', self.algorithm, parameters)
++        return self.last_result.values
++
++    def audit_last_query(self):
++        """Runner-only guards and serialization; called after the query timer."""
++        result = self.last_result
+         if result.backend_metrics.get('devices_used') != list(range(self.count)):
+             raise ValueError('Actual native devices_used differs from requested P')
+         observed = native_profile.observe(result.backend_metrics, self.algorithm, self.count,
+@@ -239,7 +244,7 @@
+                     or result.contract.damping != shared.PR_ALPHA
+                     or result.contract.tolerance_per_vertex != shared.PR_TOLERANCE / len(result.values)):
+                 raise ValueError('Native PR contract changed; explicitly rebind and qualify the new API')
+-        return result.values
++        return self.last_metrics
+ 
+     def close(self):
+         self.session.close()
+@@ -264,7 +269,8 @@
+     out = args.output; out.mkdir(parents=True, exist_ok=False)
+     record = dict(status='RUNNING', source=source, source_index=args.source_index, gpu_count=args.count,
+                   implementation='forced_native', input_sha256=graph['input_sha256'], calls={},
+-                  timing_start='common immutable host CSR ready; fresh Python process for every source')
++                  timing_start='common immutable host CSR ready; fresh Python process for every source',
++                  protocol=PROTOCOL, timing_endpoint=TIMING_ENDPOINT)
+     shared.save(out / 'result.json', record)
+     backend = None
+     try:
+@@ -279,6 +285,7 @@
+                     backend = NativeBackend(args, graph, source)
+                 outputs[label] = backend.query()
+                 seconds = time.perf_counter() - started
++            backend.audit_last_query()
+             shared.save(out / 'stage.json', {'active': False, 'label': label})
+             record['calls'][label] = ({'seconds': seconds} if label != 'warmup' else {'timed': False, 'count': 1})
+             record['calls'][label]['native_metrics'] = backend.last_metrics
+@@ -339,8 +346,8 @@
+         algorithm=args.algorithm, repeat=args.repeat, gpu_count=args.count, status='RUNNING',
+         quality_pass=False, performance_eligible=False, sources=[], started_unix=time.time(),
+         complete_task_timeout_seconds=1800,
+-        native_route='static_immutable' if args.algorithm=='sssp' else 'persistent_full',
+-        communication=args.communication,
++        native_route='static_immutable_all4',
++        communication=args.communication, native_session='Session.native_static', timing_endpoint=TIMING_ENDPOINT,
+         sssp_encoding=args.sssp_encoding,
+         sssp_delta_rule=args.sssp_delta_rule, native_profile=native_profile.identity(args),
+         pr_max_iter_actual=NATIVE_PR_MAX_ITER, pr_max_iter_campaign_upper_bound=shared.PR_MAX_ITER,
