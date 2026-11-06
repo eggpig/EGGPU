@@ -1,0 +1,78 @@
+{
+  "status": "ROOT_WIRING_CONFIRMED_TARGETS_PENDING",
+  "bindings": [
+    {
+      "relative_path": "state_main_pr_v1/plan.json",
+      "bytes": 904819,
+      "sha256": "bfdf40c34a54992144905bfa0357d681f29e54e2ca5a46e46ace2b0a67e370c9",
+      "status": null,
+      "returncode": null
+    },
+    {
+      "relative_path": "state_main_pr_v1/measurement_policy.json",
+      "bytes": 1946,
+      "sha256": "0916ee5a8b6948fbc48d33b57325a4ee51bd20268865ea4050e3cde93277a9ef",
+      "status": null,
+      "returncode": null
+    },
+    {
+      "relative_path": "after_main_pr_v1/config.json",
+      "bytes": 3140,
+      "sha256": "49eff3816af0019cc36b2ac9f4fc6560440c39148522876634cc1331b80dcca4",
+      "status": null,
+      "returncode": null
+    },
+    {
+      "relative_path": "after_main_pr_v1/runtime/state.json",
+      "bytes": 8471,
+      "sha256": "55f7e5f127ddcb4ab3dc2ceb238f6e3529174e4f7ba07f0855672dee035f53a9",
+      "status": "WAITING_MAIN_AND_MISSING",
+      "returncode": null
+    },
+    {
+      "relative_path": "state_tail_pr_v1/state.json",
+      "bytes": 11092,
+      "sha256": "cdb0b29d1e31adeb42e1d06e3596cc0c8576a86b69882b4931320e66cf2258d8",
+      "status": "WAITING_MAJOR_FIRST_PASS_STAGES",
+      "returncode": null
+    },
+    {
+      "relative_path": "state_scope_additions_pr_v1/watcher_state.json",
+      "bytes": 115,
+      "sha256": "433159e588d731638239078fdeed42c9841b982857bce670ee2665d43b7683e6",
+      "status": "WAIT_FOCUSED",
+      "returncode": null
+    },
+    {
+      "relative_path": "sssp_subset_plan/successor_state.json",
+      "bytes": 506,
+      "sha256": "f747d6d90b25bd3a0aa85d7b99da855d88c2eb3011569eec864123f22cd1a370",
+      "status": "WAITING_MAIN_AND_MISSING",
+      "returncode": null
+    },
+    {
+      "relative_path": "state_ready_progress/state.json",
+      "bytes": 121,
+      "sha256": "a7afdc51fed833675f7e999001984a89d69422ce0cc902a787680706b6653630",
+      "status": "WATCHING",
+      "returncode": 0
+    }
+  ],
+  "root_confirmed_sssp_exporter_running": true,
+  "root_confirmed_author_priority": "WAITING_COMPLETE_JOB_BOUNDARY",
+  "gpu_performance_targets_achieved": false,
+  "public_scope": "Scalar scheduling status and provenance; private runtime identifiers omitted. No target measurement added.",
+  "SG_MG_performance_targets_achieved": false,
+  "cpu_build_and_plan_preparation": "PASS",
+  "new_main_complete_n1": 0,
+  "new_main_denominator": 504,
+  "new_gpu_qualification": "PENDING_ACTUAL_RECEIPTS",
+  "new_target_measurements": "PENDING_ACTUAL_RECEIPTS",
+  "packaging_gpu_executed": false,
+  "export_trigger_deployment": {
+    "status": "TARGET_EVENT_EXPORT_REFRESHED",
+    "plot_status": "PASS",
+    "source_sha256": "cf2803ec3a746ca5457effa92189ff290dc9e0c0137ec1bf1239a79e3c83fab9",
+    "gpu_workers_changed": false
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "schema": "state.pr-certificate.cpu-tests.v1",
+  "status": "PASS",
+  "tests": 7,
+  "errors": 0,
+  "failures": 0,
+  "seconds": 0.07136069983243942,
+  "random_graph_cases": 32,
+  "exact_rational_cases": 5,
+  "gpu_executed": false,
+  "remote_changes": false,
+  "numpy": "2.2.6",
+  "public_projection": {
+    "original_receipt": {
+      "bytes": 281,
+      "sha256": "bd10506b78c1e7e2348569ca3a3452dd5cfdcfbbc0fdec0a1440c01205bb5026"
+    },
+    "historical_original_receipt": true,
+    "paths": "Provenance namespaces only, not an executable deployment binding.",
+    "private_runtime_identifiers_removed": true,
+    "public_layout_reexecution_claimed": false
+  }
+}

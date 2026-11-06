@@ -1,0 +1,29 @@
+{
+  "status": "PASS_CPU_FRESH_STATE_POLICY_PREPARATION",
+  "source": {
+    "path": "workspace/experiments/campaign_20261104/first_pass_20261106/state_pr_policy_v1/prepare_fresh_policy.py",
+    "bytes": 9195,
+    "sha256": "006c69fd265eb40c37a034c07bd77d65f58afc8062e0036ea278e7da6eebcc57"
+  },
+  "jobs": 511,
+  "targets": 504,
+  "core_jobs": 82,
+  "tail_jobs": 429,
+  "checked_job_bindings": true,
+  "original_bundle_unchanged": true,
+  "new_focused": 1,
+  "new_physical_pilots": 6,
+  "actual_route_negative_checks": true,
+  "gpu_executed": false,
+  "seconds": 6.3464184664189816,
+  "public_projection": {
+    "original_receipt": {
+      "bytes": 633,
+      "sha256": "cd2bfd7b41386c3ecc1e3507c164a21605b6df1d9377676cf24f3c7d5afd123a"
+    },
+    "historical_original_receipt": true,
+    "paths": "Provenance namespaces only, not an executable deployment binding.",
+    "private_runtime_identifiers_removed": true,
+    "public_layout_reexecution_claimed": false
+  }
+}

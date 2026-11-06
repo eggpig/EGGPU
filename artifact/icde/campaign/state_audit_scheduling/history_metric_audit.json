@@ -1,0 +1,271 @@
+{
+  "schema": "history.sg-winrate.scope-audit.v1",
+  "status": "BOUNDED_DOCUMENT_AUDIT_COMPLETE",
+  "scope": "Paper/docs and already-derived reports only; no raw session histories, secrets, fresh GPU measurements or revalidation of historical raw runs.",
+  "sources": {
+    "aug02_evaluation": {
+      "path": "workspace-sources/EGGPU/writing/EGGPU_VLDB_20260802_ZIP10_SERVICE_SEMANTICS_REVISION/4Evaluation.tex",
+      "bytes": 15478,
+      "sha256": "0e8c12ee8646830797a7ede2b3930a7733ead0aba72fe0f5c205852bb2a07ec2"
+    },
+    "aug02_datasets": {
+      "path": "workspace-sources/EGGPU/writing/EGGPU_VLDB_20260802_ZIP10_SERVICE_SEMANTICS_REVISION/paper_table_datasets.tex",
+      "bytes": 1854,
+      "sha256": "161388109ebd081492b0c6332b96a5dc23fb3092568300b1d8bd490e9a7f48ac"
+    },
+    "july30_evaluation": {
+      "path": "workspace-sources/EGGPU/writing/EGGPU_VLDB_20260730_FINAL_LOCAL_SYNC_V15/4Evaluation.tex",
+      "bytes": 19301,
+      "sha256": "bed8a49b5fe3ae749859822eb897dacd4dc87976c86e0632f9783fc9009b1009"
+    },
+    "july30_archived_table": {
+      "path": "workspace-sources/EGGPU/writing/EGGPU_VLDB_20260730_FINAL_LOCAL_SYNC_V15/paper_table_rtx3080ti_results.tex",
+      "bytes": 2128,
+      "sha256": "4134f5be0afdf6e434f0d3c6b5202c4d4839a32e6d2884b16c8275d8683e3da9"
+    },
+    "oct_v5_evaluation": {
+      "path": "workspace-sources/EGGPU_revise/research/sigmod_20261007_r11/paper/revision_review_v5/evaluation.tex",
+      "bytes": 17814,
+      "sha256": "17a808f5d8dc9614571e8e7d0a05a2e75a9f3ebc25a97634e7d1e66dbf350c02"
+    },
+    "oct_sg_audit": {
+      "path": "workspace/docs/SINGLE_GPU_AUDIT_CN.md",
+      "bytes": 20652,
+      "sha256": "36b0ff6f33202652bb13c25f59466e9c639154af590537add3bb8f208db082de"
+    },
+    "current_protocol": {
+      "path": "workspace/docs/PAPER_EXPERIMENT_DESIGN_20261104_CN.md",
+      "bytes": 48435,
+      "sha256": "282c055b255fd940e279865011bde5cc3549f8644964be283035ce93974903b3"
+    },
+    "historical_d84_comparison": {
+      "path": "workspace/experiments/campaign_20261104/first_pass_20261106/previous/comparison.csv",
+      "bytes": 8644,
+      "sha256": "92643ddca65a6425464d3524c17fbe3536d1d2866b6b486479f5b50f70e69d70"
+    },
+    "historical_d84_report": {
+      "path": "workspace/experiments/campaign_20261104/first_pass_20261106/previous/FIRST_PASS_CN.md",
+      "bytes": 9127,
+      "sha256": "a6bf5f72aca017175e7fc0401946f5d70a746547fa2b5d4fd3f07f00f9b432d0"
+    },
+    "current71_report": {
+      "path": "workspace/experiments/campaign_20261104/first_pass_20261106/current/FIRST_PASS_CN.md",
+      "bytes": 10001,
+      "sha256": "4c1884c6e84e3a8cfc42f34458e71299d64bfd397b40e01ab016e133c10215e7"
+    },
+    "v15_final_13_pairwise_sota_details.csv": {
+      "path": "workspace-sources/EGGPU/writing/EGGPU_FINAL_EXPERIMENT_ASSETS_15_CURRENT_RUNTIME_MIXED_ESTIMATOR_20260730/final_13_pairwise_sota_details.csv",
+      "bytes": 62093,
+      "sha256": "32c4a855802821f4e5d78abe830d835b3db8beccd4ea5e6888f4987538c4039f"
+    },
+    "v15_final_13_cell_outcome_ledger.csv": {
+      "path": "workspace-sources/EGGPU/writing/EGGPU_FINAL_EXPERIMENT_ASSETS_15_CURRENT_RUNTIME_MIXED_ESTIMATOR_20260730/final_13_cell_outcome_ledger.csv",
+      "bytes": 1467569,
+      "sha256": "e2775b794a2c6762e2bdb8242d779ff4944dba2e6ed43fa63a153e6affabe02c"
+    },
+    "v15_MIXED_ESTIMATOR_FIVE_RUN_MANIFEST.json": {
+      "path": "workspace-sources/EGGPU/writing/EGGPU_FINAL_EXPERIMENT_ASSETS_15_CURRENT_RUNTIME_MIXED_ESTIMATOR_20260730/MIXED_ESTIMATOR_FIVE_RUN_MANIFEST.json",
+      "bytes": 2062,
+      "sha256": "2370cb4f0a71474910f72ecc19fc4456d8d397da0aa8063dd1bb946ba453e139"
+    },
+    "v15_paper_table_headline_results_README.md": {
+      "path": "workspace-sources/EGGPU/writing/EGGPU_FINAL_EXPERIMENT_ASSETS_15_CURRENT_RUNTIME_MIXED_ESTIMATOR_20260730/paper_table_headline_results_README.md",
+      "bytes": 3093,
+      "sha256": "0f99280b287b3dfe7642b538b5dded1aa07faf44d725e0d57aaf712ec2c2e2b8"
+    }
+  },
+  "historical_claims": [
+    {
+      "source": "aug02_evaluation",
+      "lines": [
+        19,
+        20,
+        28,
+        33,
+        35,
+        39,
+        58,
+        64
+      ],
+      "e2e": {
+        "wins": 164,
+        "paired": 167,
+        "percent": 98.20359281437126
+      },
+      "native_processing": {
+        "wins": 100,
+        "paired": 105,
+        "percent": 95.23809523809524
+      },
+      "grid": "13 datasets x16 functions=208; successful shared subsets167 and105",
+      "endpoint": "Warm public-call E2E after2 warmups and separately reported graph preparation; native processing excludes result transfer/host return",
+      "baselines": [
+        "EGGPU-2024",
+        "NetworkX",
+        "EasyGraph",
+        "EasyGraph C++",
+        "igraph",
+        "GraphScope",
+        "nx-cugraph",
+        "Gunrock"
+      ],
+      "functions": "Includes16 contracts and four structural-hole functions; not only BFS/SSSP/WCC/PR",
+      "parameters": "PRalpha.75/cap200; BFS8 sources, SSSP8 sources; large validation guard uses predetermined vertices",
+      "estimator": "Document states5 fresh processes and arithmetic means"
+    },
+    {
+      "source": "july30_evaluation",
+      "lines": [
+        72,
+        89,
+        310,
+        326
+      ],
+      "grid": "17 datasets x16 labels,272 planned minus6 guardedCloseness=266",
+      "best_device": {
+        "wins_or_ties": 263,
+        "paired": 266,
+        "percent": 98.87218045112782
+      },
+      "best_e2e": {
+        "wins_or_ties": 231,
+        "paired": 266,
+        "percent": 86.84210526315789
+      },
+      "endpoint": "Archived RTX3080Ti earlier revision; one observation; EGGPU2 warmups and peersnone; historicalcounts include ties. Separate from A100 main5process results.",
+      "estimator_note": "SameJuly30 document separately states A100 EGGPU minimum-of5 vs external arithmeticmean; August02 revision instead states uniform2warmups/allmeans. Do not conflate revisions."
+    },
+    {
+      "source": "oct_v5_evaluation",
+      "lines": [
+        36,
+        47,
+        70,
+        115,
+        140,
+        188,
+        224
+      ],
+      "wins": "11/11 complete sessions against5 full-portfolio peers,55 comparisons",
+      "grid": "8 primarily small graphs, mixed BFS/SSSP/uniformPR/weightedPR; NOT static WCC mainmatrix",
+      "endpoint": "Common hostCOO through fullhostoutputs for an entire request session, setup/update costs included",
+      "qualification": "Full-vector; PRresidual<=2e-6/referenceL1<=2e-5",
+      "baselines": "Fivefullportfolio peers pooledcuGraph,poolednx-cugraph,retainedGunrock,igraph,NetworkX; SYgraph/CGgraph/C2 additional selectedfunction projections separately"
+    }
+  ],
+  "current_contract": {
+    "source": "current_protocol",
+    "lines": [
+      79,
+      81,
+      88
+    ],
+    "grid": "US EP LJ OR IN UK TW xBFS SSSP WCC PR=28 perGPUcount/perendpoint",
+    "counting": "BFS/SSSP3sources equal-weight mean count asone observation; first andready separately; no qualifiedbaseline cannot countaswin",
+    "ninety_percent": "26/28 wins required to exceed90%;85% P8 target requires24/28",
+    "source71_snapshot": "09:05:58snapshot has0 own source71 static targets; no current source71 winrate yet"
+  },
+  "historical_d84": {
+    "snapshot": "2026-11-06 05:39:07 CST",
+    "ready_wins": 11,
+    "ready_paired": 27,
+    "ready_planned": 28,
+    "by_function": {
+      "bfs": {
+        "wins": 4,
+        "paired": 7
+      },
+      "sssp": {
+        "wins": 4,
+        "paired": 7
+      },
+      "wcc": {
+        "wins": 0,
+        "paired": 6
+      },
+      "pr": {
+        "wins": 3,
+        "paired": 7
+      }
+    },
+    "missing_pair": "TW WCC noavailableexternalbaseline",
+    "losing_fastest_baselines": {
+      "Gunrock": 4,
+      "GUM": 2,
+      "C²graph-P": 1,
+      "SYgraph": 5,
+      "Grapin": 2,
+      "CGgraph v1.5": 2
+    },
+    "coverage_incomplete": true,
+    "observations": 1
+  },
+  "conclusion": "Earlier >90% statements are attached to different grids, endpoints, baseline rosters, numerical contracts and/or repeated-run estimators. August02 includes a real E2E claim; it is inaccurate to dismiss every old90% claim as kernel-only. Currentd84 ready11/27 is an n1 incomplete-coverage observation. Documentation explains why the percentages are not directly comparable, not how much of a same-contract regression any factor caused. Newsource71 target measurements are still needed. V15 four-function subset remains50/50 E2E and48/50 device; report this rather than attributing all historical advantage to extra functions. The exact V15 estimator manifest conflicts with later Aug02 prose and must be labelled unresolved without matching raw provenance.",
+  "gpu_executed": false,
+  "v15_four_function_supplement": {
+    "source": "final_13_pairwise_sota_details.csv",
+    "filters": "function in BFS,SSSP,WCC,PageRank; metric e2e/kernel",
+    "summary": {
+      "e2e": {
+        "cells": 52,
+        "outcomes": {
+          "strict_win": 50,
+          "sole_validated": 2
+        },
+        "fastest_competitors": {
+          "nx-cugraph": 8,
+          "igraph": 27,
+          "easygraph-cpp": 14,
+          "GraphScope": 1,
+          "": 2
+        }
+      },
+      "kernel": {
+        "cells": 52,
+        "outcomes": {
+          "strict_win": 48,
+          "loss": 2,
+          "sole_validated": 2
+        },
+        "fastest_competitors": {
+          "nx-cugraph": 24,
+          "Gunrock": 26,
+          "": 2
+        }
+      }
+    },
+    "losses": [
+      {
+        "dataset": "com-youtube",
+        "function": "SSSP",
+        "metric": "kernel",
+        "best_competitor": "Gunrock",
+        "eggpu_seconds": "0.165959167",
+        "best_competitor_seconds": "0.1624859176",
+        "speedup": "0.9790716628506578"
+      },
+      {
+        "dataset": "com-Orkut",
+        "function": "SSSP",
+        "metric": "kernel",
+        "best_competitor": "Gunrock",
+        "eggpu_seconds": "5.38922607421875",
+        "best_competitor_seconds": "1.255033423",
+        "speedup": "0.23287822884326412"
+      }
+    ],
+    "estimator_provenance": "V15 authoritative README/manifest: EGGPU minimum_of_five, external arithmetic_mean_of_five; sampleSD of allfive. Aug02paperline33 says arithmeticmeans and uniformtwo warmups. These documents disagree; this bounded read does not establish a new matching rerun behind the changed prose.",
+    "comparator_scope": "V15 E2E fastest library pool is NetworkX,EasyGraphCPU,EasyGraphC++,igraph,GraphScope,strictnx-cugraph; Gunrock excluded from this E2E pool. Nativeprocessing pool is strictnx-cugraph orGunrock.",
+    "inference_limit": "The old advantage is not explained solely by adding12otherfunctions: the four-function subset itself is50/50 E2E or48/50 device on13differentdatasets under its documented estimator/pools. It still does not supply current7graph28cell ready results against the expanded authorsystem roster."
+  },
+  "public_projection": {
+    "original_receipt": {
+      "bytes": 11448,
+      "sha256": "4409d88a7bf146ad26162d931ec8988752273ce3a7b6f01afd67281a29a895be"
+    },
+    "historical_original_receipt": true,
+    "paths": "Provenance namespaces only, not an executable deployment binding.",
+    "private_runtime_identifiers_removed": true,
+    "public_layout_reexecution_claimed": false
+  }
+}

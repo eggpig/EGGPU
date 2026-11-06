@@ -1,0 +1,26 @@
+--- frozen/hybrid_sssp.cu
++++ isolated_observed/hybrid_sssp.cu
+@@ -283,6 +283,7 @@
+  const size_t batches=engine.UpdateBatchCount();
+  results.reserve(batches+1);completed_with_parent.reserve(batches+1);
+  double calls=0;
++ EggpuClock::time_point eggpu_base_complete;
+  for(size_t snapshot=0;snapshot<=batches;++snapshot){
+   GROUTE_CUDA_CHECK(cudaDeviceSynchronize());
+   const auto a=EggpuClock::now();bool empty=false;
+@@ -311,6 +312,7 @@
+   engine.EggpuParentCheckpointV6(snapshot,source,parent_repair,qualification);
+   completed_with_parent.push_back(eggpu_seconds(a,EggpuClock::now()));
+   if(qualification)engine.EggpuCheckPartialCacheV2(snapshot);
++  if(snapshot==0)eggpu_base_complete=EggpuClock::now();
+   if(policy!="keep" && snapshot<batches){
+    const auto cursor=begin;
+    engine.EggpuTransferV11(snapshot,policy,B_n,H_n,qualification);
+@@ -348,6 +350,7 @@
+   <<",\"A_complete_calls_seconds\":"<<calls<<",\"hook_seconds\":"<<hooks
+   <<",\"complete_service_wall_seconds\":"<<eggpu_seconds(service_begin,service_end)
+   <<",\"active_workflow_wall_seconds\":"<<eggpu_seconds(prepared,service_end)
++   <<",\"post_base_update_workflow_seconds\":"<<eggpu_seconds(eggpu_base_complete,service_end)
+   <<",\"archive_after_service_interval\":true,\"B_distance_D2H_inside_interval\":true"
+   <<",\"H_distance_D2H_inside_interval\":true,\"controlled_H_arrival_after_B_compute\":true"
+   <<",\"extra_validation_inside_interval\":"<<(qualification?"true":"false")<<"}"<<std::endl;

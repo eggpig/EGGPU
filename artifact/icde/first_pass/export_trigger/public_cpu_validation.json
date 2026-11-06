@@ -1,0 +1,12 @@
+{
+  "schema": "eggpu.public-export-trigger.cpu-validation.v1",
+  "status": "PASS_PUBLIC_METADATA_TARGET_EXPORT_TRIGGER",
+  "tests": 5,
+  "actual_public_source_sha256": "4470073366a932d426f0ab61b093dbdf8e4813eaa7bc6503c3536f2946e37e57",
+  "original895_sha256": "2317f0cd900390a2eedf785290672998a3d4dda70f0826b484e9d77e274f7ab7",
+  "cpu_set_cli_preserved": true,
+  "private_inputs_read": false,
+  "gpu_executed": false,
+  "raw_cpu_receipt_sha256": "8f418f5f0c0bfa06451c8ecca85b1e2b00faf2f975a4d535043c199e5d1165f0",
+  "scope": "Actual5CPU fixtures run against merged public source: every target outcome, tiny/pilot exclusion, inherited-prefix deduplication, restart persistence, exact current/previous rotation; collector/build/renderer function AST unchanged."
+}

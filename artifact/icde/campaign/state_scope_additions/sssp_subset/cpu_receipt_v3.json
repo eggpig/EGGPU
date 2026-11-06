@@ -1,0 +1,79 @@
+{
+  "status": "PASS_CPU_SSSP_COMMON_UPDATE_ADAPTER",
+  "gpu_executed": false,
+  "native_algorithm_executed": false,
+  "original_author": {
+    "path": "workspace/experiments/campaign_20261104/first_pass_20261106/state_scope_additions/sssp_subset/grapin_update_sssp.cu",
+    "bytes": 17276,
+    "sha256": "ede123860f5090090c89292fac1d3b0d957234c5c488f655e9507ebf775c3856"
+  },
+  "observer": {
+    "path": "workspace/experiments/campaign_20261104/first_pass_20261106/state_scope_additions/sssp_subset/observe_build.py",
+    "bytes": 4695,
+    "sha256": "e5abf7a53e9dc06bdd2db398e1eb3bdc6a246d3bf0332ec642c24fca1c166871"
+  },
+  "formatter": {
+    "path": "workspace/experiments/campaign_20261104/first_pass_20261106/state_scope_additions/sssp_subset/update_text.cpp",
+    "bytes": 3051,
+    "sha256": "fe5b3ba6f9c113d1892118ac587c3255f80ebfa8f66e915adec40cebde93e9b0"
+  },
+  "frozen_packet_source": {
+    "path": "workspace/experiments/campaign_20261104/first_pass_20261106/state_main_first_pass/runner/state_worker.py",
+    "bytes": 24524,
+    "sha256": "9142bf5c5aaea36fbeff4ec0e817c541d12ee2a4a4fd999b08ebf0e085bccb6b"
+  },
+  "fixtures": [
+    {
+      "positions": 0,
+      "commits": 20,
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "positions": 2,
+      "commits": 20,
+      "bytes": 669,
+      "sha256": "6be49a18352f71cb4e45c661a8159e0a57a0ec491b219d69c2397eb3709e4eab"
+    },
+    {
+      "positions": 6,
+      "commits": 20,
+      "bytes": 2023,
+      "sha256": "d7cd8de1ba38c2c007af3291b89c0a79c812ddd20f0c16782dd1874df2e826eb"
+    }
+  ],
+  "checks": [
+    "Exact d/a bytes agree with frozen packet_for for all 20 cyclic versions, including zero updates, sparse/full density and 16-to-1 wrap",
+    "Count-only formatter matches actual output bytes",
+    "Malformed positions rejected",
+    "Grapin App/kernel prefix unchanged; observer adds only one completed-base timestamp and one elapsed output field",
+    "Actual original receipt build-command schema rebases to isolated source/build directories",
+    "CPU fake Session executes 20 exact commits and 21 fixed-source full queries, closes, rejects aliased or teardown-mutated outputs",
+    "CPU plan fixtures using bound actual IN/OR max counts preserve36 executable targets plus3 tiny checks; synthetic uint32 over-count explicitly unavailable; all targets depend on one initial same-system check"
+  ],
+  "worker": {
+    "path": "workspace/experiments/campaign_20261104/first_pass_20261106/state_scope_additions/sssp_subset/worker.py",
+    "bytes": 16980,
+    "sha256": "6e4c9fb396e94f11e37f78da9064e34ca0b986da814217957a497bd8b8a8c369"
+  },
+  "planner": {
+    "path": "workspace/experiments/campaign_20261104/first_pass_20261106/state_scope_additions/sssp_subset/prepare_plan.py",
+    "bytes": 7521,
+    "sha256": "d01a71084b3ee51845e2ef66df28298f8eb635c26596ff80463a44fd969a9e72"
+  },
+  "test": {
+    "path": "workspace/experiments/campaign_20261104/first_pass_20261106/state_scope_additions/sssp_subset/check_cpu.py",
+    "bytes": 9217,
+    "sha256": "9e9d46e491ae1237acaacf5adbdc69374198bc450f04124aa7bff20a54da8c2e"
+  },
+  "public_projection": {
+    "original_receipt": {
+      "bytes": 3519,
+      "sha256": "bcf8d365887f8a9c6b42dd5f96e1f06b4a6abde7dfeef83d0c2a9d209963ba4a"
+    },
+    "historical_original_receipt": true,
+    "paths": "Provenance namespaces only, not an executable deployment binding.",
+    "private_runtime_identifiers_removed": true,
+    "public_layout_reexecution_claimed": false
+  }
+}

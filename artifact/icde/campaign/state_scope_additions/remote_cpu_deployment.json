@@ -1,0 +1,209 @@
+{
+  "status": "PASS_REMOTE_CPU_DEPLOYMENT",
+  "gpu_executed": false,
+  "watcher_started": false,
+  "sssp": {
+    "plan": {
+      "path": "campaign/first_pass_20261106/sssp_subset_plan/plan.json",
+      "bytes": 273011,
+      "sha256": "753b9e3e7bdeab764afa1a480af2374b1329e45caff881d3051b3826d1006722"
+    },
+    "jobs": 39,
+    "targets": 36,
+    "tiny": 3,
+    "unavailable": [],
+    "stage_manifest": {
+      "path": "campaign/first_pass_20261106/sssp_subset_plan/stage_manifest.json",
+      "bytes": 322,
+      "sha256": "f04c99b083b3ac3746467ada792e8c2440f605b6e32454b295f9ffef1b381d71"
+    },
+    "original_state_bundle": "state_main",
+    "fresh_PR_focused_required": false,
+    "build": {
+      "status": "PASS_OBSERVATION_ONLY_CPU_BUILD",
+      "original_build": {
+        "path": "runtime/build/grapin_pma_boundary_v1/update/receipt.json",
+        "bytes": 373088,
+        "sha256": "464351dd82172302e4497343e5697ac167ab2ebd567a4c22ba7c11914452f3d2"
+      },
+      "original_binary": {
+        "path": "runtime/build/grapin_pma_boundary_v1/update/build/grapin_sssp",
+        "sha256": "90eefc3fea3d2437b5643c392e3b62ee89a765d08cf3dd7e94cc0bf305588bde"
+      },
+      "original_source": {
+        "path": "runtime/build/grapin_pma_boundary_v1/update/source/source/samples/hybrid_sssp/hybrid_sssp.cu",
+        "bytes": 17276,
+        "sha256": "ede123860f5090090c89292fac1d3b0d957234c5c488f655e9507ebf775c3856"
+      },
+      "observed_source": {
+        "path": "campaign/first_pass_20261106/sssp_subset_grapin_observation_build/source/source/samples/hybrid_sssp/hybrid_sssp.cu",
+        "bytes": 17472,
+        "sha256": "642658ff80050313e14430126b17e493df3eeeda5ef22ae25abe7c258cda1ab9"
+      },
+      "builder": {
+        "path": "campaign/first_pass_20261106/state_scope_additions/sssp_subset/observe_build.py",
+        "bytes": 4695,
+        "sha256": "e5abf7a53e9dc06bdd2db398e1eb3bdc6a246d3bf0332ec642c24fca1c166871"
+      },
+      "source_only_additions": "One host time_point, one timestamp after completed base request, one JSON elapsed field; native kernels, input parsing, update API, output ownership and required parent repair unchanged.",
+      "algorithms_changed": false,
+      "numerical_types_changed": false,
+      "gpu_executed": false,
+      "steps": [
+        {
+          "argv": [
+            "runtime/envs/core/bin/cmake",
+            "-S",
+            "campaign/first_pass_20261106/sssp_subset_grapin_observation_build/source",
+            "-B",
+            "campaign/first_pass_20261106/sssp_subset_grapin_observation_build/build",
+            "-DCMAKE_BUILD_TYPE=Release",
+            "-DCMAKE_CUDA_RUNTIME_LIBRARY=Shared",
+            "-DCMAKE_CUDA_ARCHITECTURES=89",
+            "-DCMAKE_CXX_COMPILER=/usr/bin/g++",
+            "-DCMAKE_CUDA_HOST_COMPILER=/usr/bin/g++",
+            "-DCMAKE_CUDA_COMPILER=runtime/envs/cuda128/bin/nvcc",
+            "-DCUDAToolkit_ROOT=runtime/envs/cuda128/targets/x86_64-linux",
+            "-DCMAKE_POLICY_VERSION_MINIMUM=3.5",
+            "-DGRAPIN_NVTX_INCLUDE=/usr/local/cuda/include/nvtx3",
+            "-DTHRUST_INCLUDE_DIR=runtime/envs/cuda128/targets/x86_64-linux/include"
+          ],
+          "returncode": 0
+        },
+        {
+          "argv": [
+            "runtime/envs/core/bin/cmake",
+            "--build",
+            "campaign/first_pass_20261106/sssp_subset_grapin_observation_build/build",
+            "--target",
+            "grapin_sssp",
+            "-j",
+            "1"
+          ],
+          "returncode": 0
+        }
+      ],
+      "binary": {
+        "path": "campaign/first_pass_20261106/sssp_subset_grapin_observation_build/build/grapin_sssp",
+        "bytes": 2078992,
+        "sha256": "93050ec6341795d6ca8b987a966d3ffe564e6ec27cc50ca89d26c05925ee0906"
+      }
+    },
+    "formatter": {
+      "status": "PASS_CPU_FORMATTER_BUILD",
+      "source": {
+        "path": "campaign/first_pass_20261106/state_scope_additions/sssp_subset/update_text.cpp",
+        "bytes": 3051,
+        "sha256": "fe5b3ba6f9c113d1892118ac587c3255f80ebfa8f66e915adec40cebde93e9b0"
+      },
+      "library": {
+        "path": "campaign/first_pass_20261106/sssp_subset_formatter_build/libupdate_text.so",
+        "bytes": 21384,
+        "sha256": "315bbf5915522c7bc6f837a952cea4e71f14f50becee6bef4ade9c6cc747e1ff"
+      },
+      "command": [
+        "/usr/bin/g++",
+        "-O3",
+        "-std=c++17",
+        "-shared",
+        "-fPIC",
+        "-fno-gnu-unique",
+        "campaign/first_pass_20261106/state_scope_additions/sssp_subset/update_text.cpp",
+        "-o",
+        "campaign/first_pass_20261106/sssp_subset_formatter_build/libupdate_text.so"
+      ],
+      "gpu_executed": false
+    },
+    "deployment": {
+      "status": "PASS_CPU_BUILD_AND_PLAN",
+      "gpu_executed": false,
+      "commands": [
+        [
+          "runtime/envs/core/bin/python",
+          "-B",
+          "campaign/first_pass_20261106/state_scope_additions/sssp_subset/observe_build.py",
+          "--original-receipt",
+          "runtime/build/grapin_pma_boundary_v1/update/receipt.json",
+          "--output",
+          "campaign/first_pass_20261106/sssp_subset_grapin_observation_build"
+        ],
+        [
+          "runtime/envs/core/bin/python",
+          "-B",
+          "campaign/first_pass_20261106/state_scope_additions/sssp_subset/prepare_inputs.py",
+          "build",
+          "--output",
+          "campaign/first_pass_20261106/sssp_subset_formatter_build"
+        ],
+        [
+          "runtime/envs/core/bin/python",
+          "-B",
+          "campaign/first_pass_20261106/state_scope_additions/sssp_subset/prepare_plan.py",
+          "--campaign",
+          "campaign",
+          "--state-main",
+          "campaign/first_pass_20261106/state_main",
+          "--grapin-build",
+          "campaign/first_pass_20261106/sssp_subset_grapin_observation_build/receipt.json",
+          "--formatter-build",
+          "campaign/first_pass_20261106/sssp_subset_formatter_build/receipt.json",
+          "--output",
+          "campaign/first_pass_20261106/sssp_subset_plan"
+        ]
+      ],
+      "started_unix": 1793931299.9326084,
+      "steps": [
+        {
+          "index": 0,
+          "returncode": 0
+        },
+        {
+          "index": 1,
+          "returncode": 0
+        },
+        {
+          "index": 2,
+          "returncode": 0
+        }
+      ],
+      "finished_unix": 1793931345.3748744
+    }
+  },
+  "additions": {
+    "bootstrap": {
+      "path": "campaign/first_pass_20261106/state_scope_additions_pr_v1/bootstrap.json",
+      "bytes": 3242,
+      "sha256": "5faca486a93d64ee39508ac51ae2b2ddb8f57bf2f55f8b5652985f1ba67fe48a"
+    },
+    "stage_manifest": {
+      "path": "campaign/first_pass_20261106/state_scope_additions_pr_v1/stage_manifest.json",
+      "bytes": 947,
+      "sha256": "7a44459bf9336f90e2b947eb8ff652254aec5e7d9202b2247e68b83a9b2706c7"
+    },
+    "state": {
+      "status": "WAIT_FOCUSED",
+      "queue": "campaign/first_pass_20261106/state_scope_additions_pr_v1/queue",
+      "plan": "campaign/first_pass_20261106/state_scope_additions_pr_v1/plan.json",
+      "target_cells": 38,
+      "initial_checks": 2,
+      "prerequisite_focused": "campaign/first_pass_20261106/state_main_pr_v1/results/focused_source_p8/receipt.json",
+      "prerequisite_core_queue": "campaign/first_pass_20261106/state_main_pr_v1/queue/state.json",
+      "bootstrap": {
+        "path": "campaign/first_pass_20261106/state_scope_additions_pr_v1/bootstrap.json",
+        "bytes": 3242,
+        "sha256": "5faca486a93d64ee39508ac51ae2b2ddb8f57bf2f55f8b5652985f1ba67fe48a"
+      },
+      "gpu_submitted": false
+    }
+  },
+  "public_projection": {
+    "original_receipt": {
+      "bytes": 9465,
+      "sha256": "d6881e70e14c72ca1f93d441f7dcfc89c02868b93fe4828bad4c1db79d1a3ad4"
+    },
+    "historical_original_receipt": true,
+    "paths": "Provenance namespaces only, not an executable deployment binding.",
+    "private_runtime_identifiers_removed": true,
+    "public_layout_reexecution_claimed": false
+  }
+}

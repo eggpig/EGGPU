@@ -1,0 +1,934 @@
+{
+  "schema": "eggpu.state.supplement.projection.v1",
+  "expected_parent_sha": "8953673f212eeaa7c7bd5bc4775b00dd1af9b45d",
+  "base_tree_sha": "b9978688eacdc88e5229f5367abd03de2792146f",
+  "source_sha256": "71ea757d372f8c1b969ea074caaa27d3a77d4cea6d48cd9c6ae9c4b02936d7ce",
+  "runtime_implementation_changed": false,
+  "files": [
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/pr_residual_certificate/DEPLOYMENT.txt",
+      "original": {
+        "bytes": 5240,
+        "sha256": "e09092c9bf2aaa9c2272a750c784eafd258b0cc86a46ce46503fdb3721fbeaf4"
+      },
+      "public_path": "artifact/icde/campaign/pr_residual_certificate/DEPLOYMENT.txt",
+      "projected": {
+        "bytes": 5240,
+        "sha256": "e09092c9bf2aaa9c2272a750c784eafd258b0cc86a46ce46503fdb3721fbeaf4"
+      },
+      "adaptation": "Documentation/provenance path namespaces normalized; no numerical values or claims added."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/pr_residual_certificate/PROOF.txt",
+      "original": {
+        "bytes": 4191,
+        "sha256": "7ea4c4438e4e12fa986f83fdea3a9e9f42dfff079c0a787d6b3fdf7b6ab0ec3c"
+      },
+      "public_path": "artifact/icde/campaign/pr_residual_certificate/PROOF.txt",
+      "projected": {
+        "bytes": 4191,
+        "sha256": "7ea4c4438e4e12fa986f83fdea3a9e9f42dfff079c0a787d6b3fdf7b6ab0ec3c"
+      },
+      "adaptation": "Documentation/provenance path namespaces normalized; no numerical values or claims added."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/pr_residual_certificate/check_cpu.py",
+      "original": {
+        "bytes": 5854,
+        "sha256": "ca1aa0020deffda6efbb4cc0c15ecc5efecb52f56d5f3696b0044eb5b2495e17"
+      },
+      "public_path": "artifact/icde/campaign/pr_residual_certificate/check_cpu.py",
+      "projected": {
+        "bytes": 5854,
+        "sha256": "ca1aa0020deffda6efbb4cc0c15ecc5efecb52f56d5f3696b0044eb5b2495e17"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/pr_residual_certificate/cpu_receipt.json",
+      "original": {
+        "bytes": 281,
+        "sha256": "bd10506b78c1e7e2348569ca3a3452dd5cfdcfbbc0fdec0a1440c01205bb5026"
+      },
+      "public_path": "artifact/icde/campaign/pr_residual_certificate/cpu_receipt.json",
+      "projected": {
+        "bytes": 666,
+        "sha256": "dfca9e092881c3dd0cd50513371ef9d9625e40fea85e9c4fcae8282df25a611c"
+      },
+      "adaptation": "JSON provenance projection; original content SHA retained, private paths/identifiers removed. Original nested hashes remain historical identities."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/pr_residual_certificate/launch_certificate.py",
+      "original": {
+        "bytes": 5691,
+        "sha256": "34f1c0af674893cc553d08fb303226f4d73cfd503b204544d8db386670b8ae11"
+      },
+      "public_path": "artifact/icde/campaign/pr_residual_certificate/launch_certificate.py",
+      "projected": {
+        "bytes": 5691,
+        "sha256": "34f1c0af674893cc553d08fb303226f4d73cfd503b204544d8db386670b8ae11"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/pr_residual_certificate/pr_certificate.py",
+      "original": {
+        "bytes": 7195,
+        "sha256": "4115688f9787d22b59f83cbe1c2fa3219ed4ba69762c0c96c07abe5423efba72"
+      },
+      "public_path": "artifact/icde/campaign/pr_residual_certificate/pr_certificate.py",
+      "projected": {
+        "bytes": 7195,
+        "sha256": "4115688f9787d22b59f83cbe1c2fa3219ed4ba69762c0c96c07abe5423efba72"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/pr_residual_certificate/source_contract.json",
+      "original": {
+        "bytes": 404,
+        "sha256": "13c64142cb0dd04e9dae330cbb99d15e817a3dd28ca4c33e3768d072dbf9ed13"
+      },
+      "public_path": "artifact/icde/campaign/pr_residual_certificate/source_contract.json",
+      "projected": {
+        "bytes": 789,
+        "sha256": "ea8eb43e0d9e652b83e577c19071d8ac155bdacd9c62039d6b9210b95695142e"
+      },
+      "adaptation": "JSON provenance projection; original content SHA retained, private paths/identifiers removed. Original nested hashes remain historical identities."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_pr_policy_v1/DEPLOYMENT.txt",
+      "original": {
+        "bytes": 4878,
+        "sha256": "9f45acd7660d496887be50f4d94ce92522b5e37b2a3e4a13a4a13cb92abfc276"
+      },
+      "public_path": "artifact/icde/campaign/state_pr_policy_v1/DEPLOYMENT.txt",
+      "projected": {
+        "bytes": 4878,
+        "sha256": "9f45acd7660d496887be50f4d94ce92522b5e37b2a3e4a13a4a13cb92abfc276"
+      },
+      "adaptation": "Documentation/provenance path namespaces normalized; no numerical values or claims added."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_pr_policy_v1/after_main_supervise_v4.py",
+      "original": {
+        "bytes": 12072,
+        "sha256": "0dc7c21c593cf57c425d5ca9ee5a6bb85c911d853b85bc185e9021ce42dc9398"
+      },
+      "public_path": "artifact/icde/campaign/state_pr_policy_v1/after_main_supervise_v4.py",
+      "projected": {
+        "bytes": 12072,
+        "sha256": "0dc7c21c593cf57c425d5ca9ee5a6bb85c911d853b85bc185e9021ce42dc9398"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_pr_policy_v1/check_cpu.py",
+      "original": {
+        "bytes": 7842,
+        "sha256": "f125082baa60599aadb2851c35e808c2f9a7652109d102908ac4cd5ebde3caa1"
+      },
+      "public_path": "artifact/icde/campaign/state_pr_policy_v1/check_cpu.py",
+      "projected": {
+        "bytes": 7842,
+        "sha256": "f125082baa60599aadb2851c35e808c2f9a7652109d102908ac4cd5ebde3caa1"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_pr_policy_v1/cpu_receipt.json",
+      "original": {
+        "bytes": 633,
+        "sha256": "cd2bfd7b41386c3ecc1e3507c164a21605b6df1d9377676cf24f3c7d5afd123a"
+      },
+      "public_path": "artifact/icde/campaign/state_pr_policy_v1/cpu_receipt.json",
+      "projected": {
+        "bytes": 967,
+        "sha256": "9d4d03f17797e757573084d8418091078935763c69bebb0367b62301d47c490c"
+      },
+      "adaptation": "JSON provenance projection; original content SHA retained, private paths/identifiers removed. Original nested hashes remain historical identities."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_pr_policy_v1/launch_state_policy.py",
+      "original": {
+        "bytes": 6919,
+        "sha256": "009a9a855ca67300e57c026bf414452dbad5b2bf89f98e6f88d8a162e5edc3b7"
+      },
+      "public_path": "artifact/icde/campaign/state_pr_policy_v1/launch_state_policy.py",
+      "projected": {
+        "bytes": 6919,
+        "sha256": "009a9a855ca67300e57c026bf414452dbad5b2bf89f98e6f88d8a162e5edc3b7"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_pr_policy_v1/policy_guard.py",
+      "original": {
+        "bytes": 1895,
+        "sha256": "73815d4a5f8fafcc057145169935b3f1790ce2d67043395ca327715d9304dd24"
+      },
+      "public_path": "artifact/icde/campaign/state_pr_policy_v1/policy_guard.py",
+      "projected": {
+        "bytes": 1895,
+        "sha256": "73815d4a5f8fafcc057145169935b3f1790ce2d67043395ca327715d9304dd24"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_pr_policy_v1/prepare_fresh_policy.py",
+      "original": {
+        "bytes": 9195,
+        "sha256": "006c69fd265eb40c37a034c07bd77d65f58afc8062e0036ea278e7da6eebcc57"
+      },
+      "public_path": "artifact/icde/campaign/state_pr_policy_v1/prepare_fresh_policy.py",
+      "projected": {
+        "bytes": 9195,
+        "sha256": "006c69fd265eb40c37a034c07bd77d65f58afc8062e0036ea278e7da6eebcc57"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_pr_policy_v1/weighted_policy_cpu_receipt.json",
+      "original": {
+        "bytes": 3033,
+        "sha256": "9072f39573b9346332b5cb4832f38171287d25a05cf22eea354514625d75df8e"
+      },
+      "public_path": "artifact/icde/campaign/state_pr_policy_v1/weighted_policy_cpu_receipt.json",
+      "projected": {
+        "bytes": 3419,
+        "sha256": "1cec2567f09be8ab19d6734a12198741fcbb420d4680022ae773375ee85a3723"
+      },
+      "adaptation": "JSON provenance projection; original content SHA retained, private paths/identifiers removed. Original nested hashes remain historical identities."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_ready_presentation/check_cpu.py",
+      "original": {
+        "bytes": 4420,
+        "sha256": "914fbc7fb63ad1ca8ba0703c90f5c1ca05a893938d07cbbb13ebe6b38dcb9aaf"
+      },
+      "public_path": "artifact/icde/campaign/state_ready_presentation/check_cpu.py",
+      "projected": {
+        "bytes": 4420,
+        "sha256": "914fbc7fb63ad1ca8ba0703c90f5c1ca05a893938d07cbbb13ebe6b38dcb9aaf"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_ready_presentation/cpu_receipt.json",
+      "original": {
+        "bytes": 731,
+        "sha256": "8411decb21e45f46841b3c38d15aeae79eb80390757d2cbc17bb9601aa57a049"
+      },
+      "public_path": "artifact/icde/campaign/state_ready_presentation/cpu_receipt.json",
+      "projected": {
+        "bytes": 1126,
+        "sha256": "73a8e0e7492d3dc7825fb0398b2b9abccc705193f9d17eb7875299d31c4725e2"
+      },
+      "adaptation": "JSON provenance projection; original content SHA retained, private paths/identifiers removed. Original nested hashes remain historical identities."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_ready_presentation/summarize_state_ready.py",
+      "original": {
+        "bytes": 16651,
+        "sha256": "528673fdd59cf614f1a0e80abc7009be558f60a2a20ece9e22e92fefab019a90"
+      },
+      "public_path": "artifact/icde/campaign/state_ready_presentation/summarize_state_ready.py",
+      "projected": {
+        "bytes": 16651,
+        "sha256": "528673fdd59cf614f1a0e80abc7009be558f60a2a20ece9e22e92fefab019a90"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_audit_scheduling/run_campaign_queue_v9.py",
+      "original": {
+        "bytes": 29206,
+        "sha256": "e3de4288a5a1397e797efb945e526058bfbc45b4439e37d7e37a3131cc2b7b08"
+      },
+      "public_path": "artifact/icde/campaign/state_audit_scheduling/run_campaign_queue_v9.py",
+      "projected": {
+        "bytes": 29206,
+        "sha256": "e3de4288a5a1397e797efb945e526058bfbc45b4439e37d7e37a3131cc2b7b08"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_audit_scheduling/state_tail_successor_v2.py",
+      "original": {
+        "bytes": 19134,
+        "sha256": "417615c3aeec0adbb29ef85ee5cdbabd0f5d33703e259e41a6c9ea3f91f63af3"
+      },
+      "public_path": "artifact/icde/campaign/state_audit_scheduling/state_tail_successor_v2.py",
+      "projected": {
+        "bytes": 19134,
+        "sha256": "417615c3aeec0adbb29ef85ee5cdbabd0f5d33703e259e41a6c9ea3f91f63af3"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_audit_scheduling/after_main_supervise_v2.py",
+      "original": {
+        "bytes": 10816,
+        "sha256": "8d1e25e8659432ff9acd42117a3aa8ca2e9da4b4e1b0e298953eab954f6bb104"
+      },
+      "public_path": "artifact/icde/campaign/state_audit_scheduling/after_main_supervise_v2.py",
+      "projected": {
+        "bytes": 10816,
+        "sha256": "8d1e25e8659432ff9acd42117a3aa8ca2e9da4b4e1b0e298953eab954f6bb104"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_audit_scheduling/check_timeout_floor_cpu.py",
+      "original": {
+        "bytes": 6583,
+        "sha256": "6680299760c666e9b5a49fa4a052f82778848ecc76fb511550f6dc17617af107"
+      },
+      "public_path": "artifact/icde/campaign/state_audit_scheduling/check_timeout_floor_cpu.py",
+      "projected": {
+        "bytes": 6583,
+        "sha256": "6680299760c666e9b5a49fa4a052f82778848ecc76fb511550f6dc17617af107"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_audit_scheduling/timeout_floor_cpu_receipt.json",
+      "original": {
+        "bytes": 214,
+        "sha256": "ecd8ffdb439cbfbad26ed8ac4c620c509da00d4b83b2419e55da7dd070a166f5"
+      },
+      "public_path": "artifact/icde/campaign/state_audit_scheduling/timeout_floor_cpu_receipt.json",
+      "projected": {
+        "bytes": 599,
+        "sha256": "df363c6d05280238ae773bcfa208212d9550db3ffc3c0ab5332151efa40c4656"
+      },
+      "adaptation": "JSON provenance projection; original content SHA retained, private paths/identifiers removed. Original nested hashes remain historical identities."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_audit_scheduling/history_metric_audit.json",
+      "original": {
+        "bytes": 11448,
+        "sha256": "4409d88a7bf146ad26162d931ec8988752273ce3a7b6f01afd67281a29a895be"
+      },
+      "public_path": "artifact/icde/campaign/state_audit_scheduling/history_metric_audit.json",
+      "projected": {
+        "bytes": 11292,
+        "sha256": "4f2d5bf9a562f25a24a044fd574cdf7ce50ba7437c2728d350609f94059b8ddb"
+      },
+      "adaptation": "JSON provenance projection; original content SHA retained, private paths/identifiers removed. Original nested hashes remain historical identities."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_audit_scheduling/historical_v15_four_function_subset.csv",
+      "original": {
+        "bytes": 16907,
+        "sha256": "b85325c8bd20e1814b584b22fe9365a3118a10f8f6fa408cc7db9c323ea6a31d"
+      },
+      "public_path": "artifact/icde/campaign/state_audit_scheduling/historical_v15_four_function_subset.csv",
+      "projected": {
+        "bytes": 16802,
+        "sha256": "8fc81fb712d8dbc2c597470ce22e75a1d9d8643a575f0c81cf91ff5d761fd827"
+      },
+      "adaptation": "Documentation/provenance path namespaces normalized; no numerical values or claims added."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_audit_scheduling/run_campaign_queue_v9.py",
+      "original": {
+        "bytes": 29206,
+        "sha256": "e3de4288a5a1397e797efb945e526058bfbc45b4439e37d7e37a3131cc2b7b08"
+      },
+      "public_path": "artifact/icde/campaign/run_campaign_queue_v9.py",
+      "projected": {
+        "bytes": 29206,
+        "sha256": "e3de4288a5a1397e797efb945e526058bfbc45b4439e37d7e37a3131cc2b7b08"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/pr_runtime_policy_audit/weighted_packed_cpu.cpp",
+      "original": {
+        "bytes": 5410,
+        "sha256": "b7b00efe190c543e6fad410fc9048b4125c856ef34b6cf969e3a6568baba8d8d"
+      },
+      "public_path": "artifact/icde/campaign/pr_runtime_policy_audit/weighted_packed_cpu.cpp",
+      "projected": {
+        "bytes": 5410,
+        "sha256": "b7b00efe190c543e6fad410fc9048b4125c856ef34b6cf969e3a6568baba8d8d"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/pr_runtime_policy_audit/cpu_receipt.json",
+      "original": {
+        "bytes": 3033,
+        "sha256": "9072f39573b9346332b5cb4832f38171287d25a05cf22eea354514625d75df8e"
+      },
+      "public_path": "artifact/icde/campaign/pr_runtime_policy_audit/cpu_receipt.json",
+      "projected": {
+        "bytes": 3419,
+        "sha256": "1cec2567f09be8ab19d6734a12198741fcbb420d4680022ae773375ee85a3723"
+      },
+      "adaptation": "JSON provenance projection; original content SHA retained, private paths/identifiers removed. Original nested hashes remain historical identities."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/pr_residual_certificate/state_audit_migration_v1.py",
+      "original": {
+        "bytes": 3021,
+        "sha256": "d6152263e2fe442d4a7a7893c073ffdc4ec8d2aa12842e4dfcc644a51b754ee8"
+      },
+      "public_path": "artifact/icde/campaign/pr_residual_certificate/state_audit_migration_v1.py",
+      "projected": {
+        "bytes": 3021,
+        "sha256": "d6152263e2fe442d4a7a7893c073ffdc4ec8d2aa12842e4dfcc644a51b754ee8"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_scope_additions/prepare.py",
+      "original": {
+        "bytes": 10017,
+        "sha256": "75b104a056d0b38c2df959d3093e29c2582b1066d8a25a2c9c2a64b6c5a36201"
+      },
+      "public_path": "artifact/icde/campaign/state_scope_additions/prepare.py",
+      "projected": {
+        "bytes": 10017,
+        "sha256": "75b104a056d0b38c2df959d3093e29c2582b1066d8a25a2c9c2a64b6c5a36201"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_scope_additions/prepare_fresh_policy.py",
+      "original": {
+        "bytes": 11247,
+        "sha256": "c65bc8ed81cc33d9a694dc065fb8ae1799fade0884308817d43684666afb2a01"
+      },
+      "public_path": "artifact/icde/campaign/state_scope_additions/prepare_fresh_policy.py",
+      "projected": {
+        "bytes": 11247,
+        "sha256": "c65bc8ed81cc33d9a694dc065fb8ae1799fade0884308817d43684666afb2a01"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_scope_additions/fresh_policy_support.py",
+      "original": {
+        "bytes": 1495,
+        "sha256": "e83cc5bdf0cbb505d160bb79be6c8c31938d9a4ece33a99b0bea143202f912fe"
+      },
+      "public_path": "artifact/icde/campaign/state_scope_additions/fresh_policy_support.py",
+      "projected": {
+        "bytes": 1495,
+        "sha256": "e83cc5bdf0cbb505d160bb79be6c8c31938d9a4ece33a99b0bea143202f912fe"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_scope_additions/watch_fresh_additions.py",
+      "original": {
+        "bytes": 7815,
+        "sha256": "e4b192c60d7c6718ce6447858613f89812233ee90bea9ec5de9868c2a969f439"
+      },
+      "public_path": "artifact/icde/campaign/state_scope_additions/watch_fresh_additions.py",
+      "projected": {
+        "bytes": 7815,
+        "sha256": "e4b192c60d7c6718ce6447858613f89812233ee90bea9ec5de9868c2a969f439"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_scope_additions/export_progress.py",
+      "original": {
+        "bytes": 11808,
+        "sha256": "809466235472e18dc61e67726bd309acbfa74e8e76496a3789adda525e74ac0a"
+      },
+      "public_path": "artifact/icde/campaign/state_scope_additions/export_progress.py",
+      "projected": {
+        "bytes": 11808,
+        "sha256": "809466235472e18dc61e67726bd309acbfa74e8e76496a3789adda525e74ac0a"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_scope_additions/export_fresh_progress.py",
+      "original": {
+        "bytes": 2055,
+        "sha256": "9610e9d2bcd5dbdb8ec6f96daf40dce640a8f167fac789cb0ca25722d89a5260"
+      },
+      "public_path": "artifact/icde/campaign/state_scope_additions/export_fresh_progress.py",
+      "projected": {
+        "bytes": 2055,
+        "sha256": "9610e9d2bcd5dbdb8ec6f96daf40dce640a8f167fac789cb0ca25722d89a5260"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_scope_additions/check_cpu.py",
+      "original": {
+        "bytes": 3210,
+        "sha256": "5150482c1116de814875bce9148fd8eef0ff8001c568986c1719f3cbdbdb50a7"
+      },
+      "public_path": "artifact/icde/campaign/state_scope_additions/check_cpu.py",
+      "projected": {
+        "bytes": 3321,
+        "sha256": "11a0aa8eb199badfc573a904ccf51f37688331719812915f73a67dbf91b7c69a"
+      },
+      "adaptation": "Public CLI/path adaptation only; original and projected identities are separately recorded. No algorithm, numerical threshold or timer edit."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_scope_additions/cpu_receipt.json",
+      "original": {
+        "bytes": 3759,
+        "sha256": "eb2c5e7fb4dcbf648a1db81215d9c98c33afeeff01f5490eedd5f96aff91b812"
+      },
+      "public_path": "artifact/icde/campaign/state_scope_additions/cpu_receipt.json",
+      "projected": {
+        "bytes": 3560,
+        "sha256": "7c8f9a7084b751c279e1d50330e5f99923c4a0e0c99fe42903f2da37c53b4dc2"
+      },
+      "adaptation": "JSON provenance projection; original content SHA retained, private paths/identifiers removed. Original nested hashes remain historical identities."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_scope_additions/check_export_cpu.py",
+      "original": {
+        "bytes": 7165,
+        "sha256": "bc5a45f7e3bc3a799af0654ece9990e8efa6bbfa4f769ee2d1bdf4b3053235d1"
+      },
+      "public_path": "artifact/icde/campaign/state_scope_additions/check_export_cpu.py",
+      "projected": {
+        "bytes": 7165,
+        "sha256": "bc5a45f7e3bc3a799af0654ece9990e8efa6bbfa4f769ee2d1bdf4b3053235d1"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_scope_additions/export_ready_cpu_receipt.json",
+      "original": {
+        "bytes": 1208,
+        "sha256": "a126d0bd763a5d1904d35a23dd4bd8c095b6120965cd37f5ce6e7a6d59842489"
+      },
+      "public_path": "artifact/icde/campaign/state_scope_additions/export_ready_cpu_receipt.json",
+      "projected": {
+        "bytes": 1492,
+        "sha256": "91b02f8b53b89c8253dd4a51a358c96fcf16622df401c5492f403dffb46317e9"
+      },
+      "adaptation": "JSON provenance projection; original content SHA retained, private paths/identifiers removed. Original nested hashes remain historical identities."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_scope_additions/check_fresh_policy_cpu.py",
+      "original": {
+        "bytes": 3413,
+        "sha256": "6b46dab9b3bda90c5c0320681096d4e4758a8dfaa0552f747ba547751c2bdc2f"
+      },
+      "public_path": "artifact/icde/campaign/state_scope_additions/check_fresh_policy_cpu.py",
+      "projected": {
+        "bytes": 3413,
+        "sha256": "6b46dab9b3bda90c5c0320681096d4e4758a8dfaa0552f747ba547751c2bdc2f"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_scope_additions/fresh_watcher_policy_cpu_receipt.json",
+      "original": {
+        "bytes": 1836,
+        "sha256": "a2af708167d95a50df8059b90be8d1cc6334db6d2ffebb01ce264fe13f546309"
+      },
+      "public_path": "artifact/icde/campaign/state_scope_additions/fresh_watcher_policy_cpu_receipt.json",
+      "projected": {
+        "bytes": 2018,
+        "sha256": "a40d9e62765bcce75214591153f632b94e94e67df6f50e698883287078ebff7c"
+      },
+      "adaptation": "JSON provenance projection; original content SHA retained, private paths/identifiers removed. Original nested hashes remain historical identities."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_scope_additions/check_watcher_cpu.py",
+      "original": {
+        "bytes": 3776,
+        "sha256": "b169275510294331b93310adfbbe400fea40df30ddbb4fc0b37b54f748cfe28d"
+      },
+      "public_path": "artifact/icde/campaign/state_scope_additions/check_watcher_cpu.py",
+      "projected": {
+        "bytes": 3776,
+        "sha256": "b169275510294331b93310adfbbe400fea40df30ddbb4fc0b37b54f748cfe28d"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_scope_additions/watcher_cpu_receipt.json",
+      "original": {
+        "bytes": 1077,
+        "sha256": "fc10d804adb9885a7f4ad4e0b4c3c2b7c6080f6fdfa273c67b838d28bec2fccd"
+      },
+      "public_path": "artifact/icde/campaign/state_scope_additions/watcher_cpu_receipt.json",
+      "projected": {
+        "bytes": 1361,
+        "sha256": "3625d9836671f49336e463655929d83e0c1544527bf949428fb557903814e0d4"
+      },
+      "adaptation": "JSON provenance projection; original content SHA retained, private paths/identifiers removed. Original nested hashes remain historical identities."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_scope_additions/scope_decision.json",
+      "original": {
+        "bytes": 3073,
+        "sha256": "738b63537462014f40c1e380cd309191cac70b7cce695beffec9aa1ecebfa320"
+      },
+      "public_path": "artifact/icde/campaign/state_scope_additions/scope_decision.json",
+      "projected": {
+        "bytes": 3303,
+        "sha256": "8121efe894f735e129a88ba63198b682a62e04342b45494f2399b16d9404eda1"
+      },
+      "adaptation": "JSON provenance projection; original content SHA retained, private paths/identifiers removed. Original nested hashes remain historical identities."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_scope_additions/remote_cpu_deployment.json",
+      "original": {
+        "bytes": 9465,
+        "sha256": "d6881e70e14c72ca1f93d441f7dcfc89c02868b93fe4828bad4c1db79d1a3ad4"
+      },
+      "public_path": "artifact/icde/campaign/state_scope_additions/remote_cpu_deployment.json",
+      "projected": {
+        "bytes": 7997,
+        "sha256": "c60662ce76fa99b50c63dd2b3e6b32262ec4d5dc0d4d1b48b5e0bdce92b8695d"
+      },
+      "adaptation": "JSON provenance projection; original content SHA retained, private paths/identifiers removed. Original nested hashes remain historical identities."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_scope_additions/sssp_subset/observe_build.py",
+      "original": {
+        "bytes": 4695,
+        "sha256": "e5abf7a53e9dc06bdd2db398e1eb3bdc6a246d3bf0332ec642c24fca1c166871"
+      },
+      "public_path": "artifact/icde/campaign/state_scope_additions/sssp_subset/observe_build.py",
+      "projected": {
+        "bytes": 4695,
+        "sha256": "e5abf7a53e9dc06bdd2db398e1eb3bdc6a246d3bf0332ec642c24fca1c166871"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_scope_additions/sssp_subset/prepare_inputs.py",
+      "original": {
+        "bytes": 6723,
+        "sha256": "8b660555dd94cbbb72ce429dd6099a5f8c8ddfcf83bfe2be3ee858d9c061abbe"
+      },
+      "public_path": "artifact/icde/campaign/state_scope_additions/sssp_subset/prepare_inputs.py",
+      "projected": {
+        "bytes": 6723,
+        "sha256": "8b660555dd94cbbb72ce429dd6099a5f8c8ddfcf83bfe2be3ee858d9c061abbe"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_scope_additions/sssp_subset/prepare_plan.py",
+      "original": {
+        "bytes": 7521,
+        "sha256": "d01a71084b3ee51845e2ef66df28298f8eb635c26596ff80463a44fd969a9e72"
+      },
+      "public_path": "artifact/icde/campaign/state_scope_additions/sssp_subset/prepare_plan.py",
+      "projected": {
+        "bytes": 7521,
+        "sha256": "d01a71084b3ee51845e2ef66df28298f8eb635c26596ff80463a44fd969a9e72"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_scope_additions/sssp_subset/worker.py",
+      "original": {
+        "bytes": 16980,
+        "sha256": "6e4c9fb396e94f11e37f78da9064e34ca0b986da814217957a497bd8b8a8c369"
+      },
+      "public_path": "artifact/icde/campaign/state_scope_additions/sssp_subset/worker.py",
+      "projected": {
+        "bytes": 16980,
+        "sha256": "6e4c9fb396e94f11e37f78da9064e34ca0b986da814217957a497bd8b8a8c369"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_scope_additions/sssp_subset/update_text.cpp",
+      "original": {
+        "bytes": 3051,
+        "sha256": "fe5b3ba6f9c113d1892118ac587c3255f80ebfa8f66e915adec40cebde93e9b0"
+      },
+      "public_path": "artifact/icde/campaign/state_scope_additions/sssp_subset/update_text.cpp",
+      "projected": {
+        "bytes": 3051,
+        "sha256": "fe5b3ba6f9c113d1892118ac587c3255f80ebfa8f66e915adec40cebde93e9b0"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_scope_additions/sssp_subset/check_cpu.py",
+      "original": {
+        "bytes": 9217,
+        "sha256": "9e9d46e491ae1237acaacf5adbdc69374198bc450f04124aa7bff20a54da8c2e"
+      },
+      "public_path": "artifact/icde/campaign/state_scope_additions/sssp_subset/check_cpu.py",
+      "projected": {
+        "bytes": 9217,
+        "sha256": "9e9d46e491ae1237acaacf5adbdc69374198bc450f04124aa7bff20a54da8c2e"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_scope_additions/sssp_subset/cpu_receipt_v3.json",
+      "original": {
+        "bytes": 3519,
+        "sha256": "bcf8d365887f8a9c6b42dd5f96e1f06b4a6abde7dfeef83d0c2a9d209963ba4a"
+      },
+      "public_path": "artifact/icde/campaign/state_scope_additions/sssp_subset/cpu_receipt_v3.json",
+      "projected": {
+        "bytes": 3548,
+        "sha256": "1febac99853bedbb86f528b78ded79f08e0a1bdf3be377df758a7e0b4a30bcf9"
+      },
+      "adaptation": "JSON provenance projection; original content SHA retained, private paths/identifiers removed. Original nested hashes remain historical identities."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_scope_additions/sssp_subset/export_progress.py",
+      "original": {
+        "bytes": 12914,
+        "sha256": "e902e4525ecdb8c887761757268f4813dc6eb23ab7f038790336606f702a560f"
+      },
+      "public_path": "artifact/icde/campaign/state_scope_additions/sssp_subset/export_progress.py",
+      "projected": {
+        "bytes": 12914,
+        "sha256": "e902e4525ecdb8c887761757268f4813dc6eb23ab7f038790336606f702a560f"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_scope_additions/sssp_subset/check_export_cpu.py",
+      "original": {
+        "bytes": 3087,
+        "sha256": "a32d669d3d4879824a8ded03a6dc4b60dbd41cd85f804ddb155ab07f14a5cfdd"
+      },
+      "public_path": "artifact/icde/campaign/state_scope_additions/sssp_subset/check_export_cpu.py",
+      "projected": {
+        "bytes": 3087,
+        "sha256": "a32d669d3d4879824a8ded03a6dc4b60dbd41cd85f804ddb155ab07f14a5cfdd"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_scope_additions/sssp_subset/export_cpu_receipt.json",
+      "original": {
+        "bytes": 694,
+        "sha256": "9449cbc6f612133bc6db34181871882ef5a7183d21eca3cce264c9ca920fb402"
+      },
+      "public_path": "artifact/icde/campaign/state_scope_additions/sssp_subset/export_cpu_receipt.json",
+      "projected": {
+        "bytes": 1028,
+        "sha256": "8e69c2bb170aca30ae16f22f2d987e4ae0cfdf54013bd49fb791ad42394906f1"
+      },
+      "adaptation": "JSON provenance projection; original content SHA retained, private paths/identifiers removed. Original nested hashes remain historical identities."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_scope_additions/sssp_subset/author_source_bindings.json",
+      "original": {
+        "bytes": 1266,
+        "sha256": "2777a4645bf18ee415adb94536c33140f85f21c6726d45ed103027152938ed38"
+      },
+      "public_path": "artifact/icde/campaign/state_scope_additions/sssp_subset/author_source_bindings.json",
+      "projected": {
+        "bytes": 1556,
+        "sha256": "70eb3802d04845442b480776e9d14846334ae7b25984b7b915cedef4281e2b6d"
+      },
+      "adaptation": "JSON provenance projection; original content SHA retained, private paths/identifiers removed. Original nested hashes remain historical identities."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_scope_additions/sssp_subset/actual_density_metadata.json",
+      "original": {
+        "bytes": 1299,
+        "sha256": "4f5cdc5f159f1cc0136709988920a8467acbff30db7ca1be83253d4f283d6f0b"
+      },
+      "public_path": "artifact/icde/campaign/state_scope_additions/sssp_subset/actual_density_metadata.json",
+      "projected": {
+        "bytes": 1577,
+        "sha256": "8257f579972f7ab5aae2ab9e1429fafdc188326f8b536d05dd98318ef571c004"
+      },
+      "adaptation": "JSON provenance projection; original content SHA retained, private paths/identifiers removed. Original nested hashes remain historical identities."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_scope_additions/sssp_subset/observation_only.diff",
+      "original": {
+        "bytes": 1485,
+        "sha256": "0f9577b5bf66815b38c819215789e0d5e06afbf7d3c3436cef7287986f07e0b7"
+      },
+      "public_path": "artifact/icde/campaign/state_scope_additions/sssp_subset/observation_only.diff",
+      "projected": {
+        "bytes": 1485,
+        "sha256": "0f9577b5bf66815b38c819215789e0d5e06afbf7d3c3436cef7287986f07e0b7"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_scope_additions/sssp_subset/grapin_update_sssp.cu",
+      "original": {
+        "bytes": 17276,
+        "sha256": "ede123860f5090090c89292fac1d3b0d957234c5c488f655e9507ebf775c3856"
+      },
+      "public_path": "artifact/icde/campaign/state_scope_additions/sssp_subset/grapin_update_sssp.cu",
+      "projected": {
+        "bytes": 17276,
+        "sha256": "ede123860f5090090c89292fac1d3b0d957234c5c488f655e9507ebf775c3856"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_scope_additions/sssp_subset/grapin_update_Loader.h",
+      "original": {
+        "bytes": 4517,
+        "sha256": "b676ada66aa9f0ebdc3d983a2e114b653ae4b59460275adef5883c26c805ee43"
+      },
+      "public_path": "artifact/icde/campaign/state_scope_additions/sssp_subset/grapin_update_Loader.h",
+      "projected": {
+        "bytes": 4517,
+        "sha256": "b676ada66aa9f0ebdc3d983a2e114b653ae4b59460275adef5883c26c805ee43"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/activate_fresh_state_schedule.py",
+      "original": {
+        "bytes": 4237,
+        "sha256": "6b542e1d4f376367ae74dc0c74e8d0954c8c94ec3b12d11b2b02b859d553f241"
+      },
+      "public_path": "artifact/icde/campaign/state_activation/activate_fresh_state_schedule.py",
+      "projected": {
+        "bytes": 4578,
+        "sha256": "26cd32bbe1cbdfa7279e8520acc81f458611c35855ef14e9417b083e98b0d2a2"
+      },
+      "adaptation": "Public CLI/path adaptation only; original and projected identities are separately recorded. No algorithm, numerical threshold or timer edit."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/activate_fresh_state_tail.py",
+      "original": {
+        "bytes": 1498,
+        "sha256": "16286b1da543751731fb7ac8fbee16289bfbb6e9d66c5363ada8a82ad2012ed3"
+      },
+      "public_path": "artifact/icde/campaign/state_activation/activate_fresh_state_tail.py",
+      "projected": {
+        "bytes": 1600,
+        "sha256": "f077e9f32f898b298f585ce1a6a4611eb62bef6ee57db12cb439e6ddf1608e81"
+      },
+      "adaptation": "Public CLI/path adaptation only; original and projected identities are separately recorded. No algorithm, numerical threshold or timer edit."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/schedule_sssp_subset.py",
+      "original": {
+        "bytes": 2303,
+        "sha256": "1b6ad2a4b00575e61f8a5bc26c9e67dae88d4d4170472fe702c7b928bec00c38"
+      },
+      "public_path": "artifact/icde/campaign/state_activation/schedule_sssp_subset.py",
+      "projected": {
+        "bytes": 2424,
+        "sha256": "1fb118cbf37a2ec4151f7ba2cc2c73d1a48c103a85b9e76f193b484fbce3e802"
+      },
+      "adaptation": "Public CLI/path adaptation only; original and projected identities are separately recorded. No algorithm, numerical threshold or timer edit."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/state_ready_presentation/watch_progress.py",
+      "original": {
+        "bytes": 1243,
+        "sha256": "515bb366747684ef252a185cc6e7af7811a9d66b5057aa278e9f60ad7b4f24d8"
+      },
+      "public_path": "artifact/icde/campaign/state_ready_presentation/watch_progress.py",
+      "projected": {
+        "bytes": 1295,
+        "sha256": "dec19d8bbc8a797dbf39b480bc905bf77b486af89981d70f1cdcc6e5c0e50d71"
+      },
+      "adaptation": "Public CLI/path adaptation only; original and projected identities are separately recorded. No algorithm, numerical threshold or timer edit."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/author_priority/pause_then_resume_author.py",
+      "original": {
+        "bytes": 10511,
+        "sha256": "7b06104289757ce70a7e03927348e7d804f926bf4ac74aad14260cf634c0689d"
+      },
+      "public_path": "artifact/icde/campaign/author_priority/pause_then_resume_author.py",
+      "projected": {
+        "bytes": 10446,
+        "sha256": "baf9e7b8df93bd9c831524d12d99178ec215bcc9d52e3612de6615484ef62f60"
+      },
+      "adaptation": "Public CLI/path adaptation only; original and projected identities are separately recorded. No algorithm, numerical threshold or timer edit."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/author_priority/check_cpu.py",
+      "original": {
+        "bytes": 4856,
+        "sha256": "c40232500eb0676904edd2554eb9561e4baa0f32ec88bc5b242131fea0ba88e8"
+      },
+      "public_path": "artifact/icde/campaign/author_priority/check_cpu.py",
+      "projected": {
+        "bytes": 4856,
+        "sha256": "c40232500eb0676904edd2554eb9561e4baa0f32ec88bc5b242131fea0ba88e8"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/author_priority/cpu_receipt.json",
+      "original": {
+        "bytes": 666,
+        "sha256": "516fbc24c3d304837d414dbeb6790f50efb2230f3579410bef31575a89656d60"
+      },
+      "public_path": "artifact/icde/campaign/author_priority/cpu_receipt.json",
+      "projected": {
+        "bytes": 1000,
+        "sha256": "a09c1891fc3c9ce3338e1be10339e8b93df5b37f7022b9adad97c5501f7ebd7c"
+      },
+      "adaptation": "JSON provenance projection; original content SHA retained, private paths/identifiers removed. Original nested hashes remain historical identities."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/export_on_progress.py",
+      "original": {
+        "bytes": 13711,
+        "sha256": "cf2803ec3a746ca5457effa92189ff290dc9e0c0137ec1bf1239a79e3c83fab9"
+      },
+      "public_path": "artifact/icde/first_pass/export_on_progress.py",
+      "projected": {
+        "bytes": 13988,
+        "sha256": "4470073366a932d426f0ab61b093dbdf8e4813eaa7bc6503c3536f2946e37e57"
+      },
+      "adaptation": "Public CLI/path adaptation only; original and projected identities are separately recorded. No algorithm, numerical threshold or timer edit."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/followup_artifact_62883ed/stage/artifact/icde/first_pass/export_on_progress.py",
+      "original": {
+        "bytes": 11140,
+        "sha256": "2317f0cd900390a2eedf785290672998a3d4dda70f0826b484e9d77e274f7ab7"
+      },
+      "public_path": "artifact/icde/first_pass/export_trigger/before.py",
+      "projected": {
+        "bytes": 11140,
+        "sha256": "2317f0cd900390a2eedf785290672998a3d4dda70f0826b484e9d77e274f7ab7"
+      },
+      "adaptation": "Exact source bytes; requires the externally retained frozen campaign inputs and build/runtime bindings."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/export_progress_patch/check_cpu.py",
+      "original": {
+        "bytes": 6959,
+        "sha256": "a62b58611bbdcb04b45a73f0c4e12ec4a7daf0b8913eba0a412ea81711ce3089"
+      },
+      "public_path": "artifact/icde/first_pass/export_trigger/check_cpu.py",
+      "projected": {
+        "bytes": 6972,
+        "sha256": "b62e80b6e82c3b4345fd36747530e69fc366fac81c8ef9eca666137349cdff77"
+      },
+      "adaptation": "Public CLI/path adaptation only; original and projected identities are separately recorded. No algorithm, numerical threshold or timer edit."
+    },
+    {
+      "source": "experiments/campaign_20261104/first_pass_20261106/export_progress_patch/cpu_receipt.json",
+      "original": {
+        "bytes": 828,
+        "sha256": "16995d7bcdaec81991fb8c9e3144eac48a1ab45ad52a0c99382a769bf2b26c4b"
+      },
+      "public_path": "artifact/icde/first_pass/export_trigger/original_cpu_receipt.json",
+      "projected": {
+        "bytes": 1162,
+        "sha256": "6729349f50067990427c73a864a9ce032ea818b8d1034cef0b924a5b70b408f4"
+      },
+      "adaptation": "JSON provenance projection; original content SHA retained, private paths/identifiers removed. Original nested hashes remain historical identities."
+    }
+  ],
+  "raw_results_distributed": false,
+  "gpu_executed": false
+}

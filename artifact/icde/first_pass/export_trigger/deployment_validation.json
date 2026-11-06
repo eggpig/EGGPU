@@ -1,0 +1,34 @@
+{
+  "status": "TARGET_EVENT_EXPORT_REFRESHED",
+  "counts": {
+    "required_cells": 329,
+    "available_cells": 218,
+    "pending_cells": 89,
+    "deferred_preparation_cells": 5,
+    "input_layout_unsupported_cells": 2,
+    "failed_cells": 20,
+    "review_cells": 0
+  },
+  "remaining_counts": {
+    "E2": {
+      "PENDING": 80
+    },
+    "E4S": {
+      "AVAILABLE": 2,
+      "PENDING": 34
+    },
+    "E6": {
+      "PENDING": 45
+    }
+  },
+  "plot_status": "PASS",
+  "source_sha256": "cf2803ec3a746ca5457effa92189ff290dc9e0c0137ec1bf1239a79e3c83fab9",
+  "gpu_workers_changed": false,
+  "original_receipt": {
+    "bytes": 1096,
+    "sha256": "54fa1c555a9c7360732c635867c046f1c77d3b5e3b6a61b5af5bfabb5b3b3735"
+  },
+  "public_source_sha256": "4470073366a932d426f0ab61b093dbdf8e4813eaa7bc6503c3536f2946e37e57",
+  "private_runtime_identifiers_removed": true,
+  "new_GPU_measurements_created": false
+}

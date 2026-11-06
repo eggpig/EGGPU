@@ -1,0 +1,33 @@
+{
+  "status": "PASS_CPU_WATCHER_TRANSITIONS",
+  "fixture_only": true,
+  "subprocesses_mocked": true,
+  "gpu_executed": false,
+  "checks": [
+    "Missing/RUNNING focused does not admit CPU preparation",
+    "Bootstrap publishes exact future queue before preparation",
+    "Without root flag terminal core produces launch request only",
+    "Root-flag mocked submission occurs only after terminal core",
+    "Terminal final export executes; durable launch intent prevents restart resubmission"
+  ],
+  "watcher": {
+    "path": "workspace/experiments/campaign_20261104/first_pass_20261106/state_scope_additions/watch_fresh_additions.py",
+    "bytes": 7815,
+    "sha256": "e4b192c60d7c6718ce6447858613f89812233ee90bea9ec5de9868c2a969f439"
+  },
+  "test": {
+    "path": "workspace/experiments/campaign_20261104/first_pass_20261106/state_scope_additions/check_watcher_cpu.py",
+    "bytes": 3776,
+    "sha256": "b169275510294331b93310adfbbe400fea40df30ddbb4fc0b37b54f748cfe28d"
+  },
+  "public_projection": {
+    "original_receipt": {
+      "bytes": 1077,
+      "sha256": "fc10d804adb9885a7f4ad4e0b4c3c2b7c6080f6fdfa273c67b838d28bec2fccd"
+    },
+    "historical_original_receipt": true,
+    "paths": "Provenance namespaces only, not an executable deployment binding.",
+    "private_runtime_identifiers_removed": true,
+    "public_layout_reexecution_claimed": false
+  }
+}

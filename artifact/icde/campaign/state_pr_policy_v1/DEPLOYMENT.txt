@@ -1,0 +1,27 @@
+Fresh source71 state policy epoch: CPU prepared, not GPU qualified or launched.
+
+The package changes only five explicit PR preparation/storage settings:
+EGMGPU_PAGERANK_HOST_TRANSPOSE=auto
+EGMGPU_PAGERANK_HOST_WEIGHT_STORAGE=implicit
+EGMGPU_PAGERANK_DEVICE_METADATA=pull_only
+EGMGPU_PAGERANK_TRANSPOSE_ENGINE=cpu
+EGMGPU_PAGERANK_VIEW=transpose
+All original state transport, FP64 numerical modes, SSSP maintenance interventions, arm/beta grids, traces and output contracts remain. Source71 and native DSO bytes are unchanged. CPU evidence verifies weighted host builders only; GPU dynamic/lease/COW/retention qualification remains required.
+
+Prepare, without launching:
+  <core-python> -B <package>/prepare_fresh_policy.py --original-bundle <H/state_main> --output <NEW fresh bundle directory> --certificate <H/pr_residual_certificate> --policy-cpu-proof <package>/weighted_policy_cpu_receipt.json
+
+The original bundle is read-only. New bundle retains 504 target configuration IDs, core82 jobs and tail429 jobs. IDs identify the same planned cells; the new bundle/spec/receipt paths and measurement_policy SHA identify the new observation epoch. No oldgeneral D0/bytepilot/focused observation is reused. Actual selected-plan per-job maintenance/resource additions are preserved over the older all-plan template. It retains the original one focused tiny and six physical-byte pilots and recomputes all beta budgets from their fresh results. Complete paired blocks all receive the same five settings.
+
+The launcher retains all original source/DSO/runner checks and worker bytes. It runs original independent full-reference checks for tiny; target/formal outputs use the separately declared full residual certificate or original-reference fallback. It checks actual PR metrics after the timed workflow: host_transpose=auto, preparation_method=transpose, implicit weights, pull_only metadata and whole_contiguous(P1)/packed_destination_owned(P>1). A successful receipt on the old general route becomes FAIL_STATE_POLICY. Pilots record policy-bound new physical bytes, not a fabricated query-route observation. No new numeric imports are performed before the original worker entry.
+
+Scheduling integration (root owns process control):
+- Old state controller is already paused. Preserve its completed D0 raw observation separately from its TIMED_OUT queue item; no relabel/reuse in new epoch.
+- Original prepared after_main runtime remains historical; root stopped its exact idle owner100700. Old tail watcher100703 and additive watcher99799 must be replaced only while idle, before binding the fresh paths. Do not change a prepared config behind a live watcher.
+- after_main_supervise_v4.py supports schema eggpu.after-main.resume.config.v2: exactly state_main=start, unified_mechanism_application=resume, scaling=start. Include config.fresh_state_policy=<binding of fresh measurement_policy.json>. State plan is fresh/plan.json with v9 floor10800 and a new queue; mechanism uses its exact stopped checkpoint/SHA and unchanged plan; scaling retains its unstarted repaired plan.
+- Prerequisites MUST be actual repaired main state and H/missing_external_continuation/queue/state.json, not the historical missing_external queue. Root supplies all exact paths/SHAs. v4 archives old stage pointers and updates authoritative state plan/policy pointers.
+- Fresh tail_pending already contains policy+certificate commands. Use existing original admit_tail.py and state_audit_scheduling/state_tail_successor_v2.py with --bundle <fresh>, --core-plan <fresh/plan.json>, --core-queue <fresh/queue>, --controller campaign/run_campaign_queue_v9.py --wall-timeout-floor18000. Retain all six original major-stage waits PLUS the fresh scope-additions stage wait. No v10 migration or forged aggregate queue is needed for this fresh epoch.
+- Fresh38 additions use the peer's isolated state_scope_additions/prepare_fresh_policy.py after the fresh focused receipt is available. Hotspot32 inherit fresh templates/launcher; PR6 use the same five settings and their original two exact-arm tiny checks. Do not submit old-general additions.
+- summarize_state_policy.py uses the fresh bundle and a new report/cache directory, admits only matching measurement_policy and explicit actual-route PASS, and labels certified reference bounds separately. Existing old-general reports remain historical.
+
+Validation: CPU planner fixture generates/checks all511 jobs, every rebound file, all504 cells/core82/tail429, original files unchanged, selected-plan additions retained, no output/GPU execution; actual oldgeneral route rejection; fresh two-start/one-resume supervisor preparation. Certificate numerical/lifecycle evidence is in the separate certificate package. weighted_policy_cpu_receipt.json binds actual source71 C++ host builders (12 cases,40 array comparisons,6 changed-weight cases), not GPU qualification.

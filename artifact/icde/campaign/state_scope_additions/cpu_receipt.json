@@ -1,0 +1,84 @@
+{
+  "status": "PASS_CPU_ADDITIVE_SCOPE_AND_RETAINED_HOTSPOT_INPUTS",
+  "gpu_executed": false,
+  "hotspot_cells": 32,
+  "distinct_retained_hotspot_inputs": 8,
+  "unweighted_pr_target_cells": 6,
+  "initial_exact_arm_pr_tiny_checks": 2,
+  "source_tree_required": "71ea757d372f8c1b969ea074caaa27d3a77d4cea6d48cd9c6ae9c4b02936d7ce",
+  "hotspot_input_proofs": [
+    {
+      "path": "campaign/state_unified_full_v1/hotspot_inputs/IN_k1/inputs.json",
+      "bytes": 43012,
+      "sha256": "6b32ea704cc7430277a419f951159daa5e58bbb8a1609b6975fb746110dd4ab4"
+    },
+    {
+      "path": "campaign/state_unified_full_v1/hotspot_inputs/IN_k2/inputs.json",
+      "bytes": 43012,
+      "sha256": "ee20d2b97cbbf36624fd53b5710dbfafb5864f3ffe3b14bcce8ebda2d5a0b4bf"
+    },
+    {
+      "path": "campaign/state_unified_full_v1/hotspot_inputs/IN_k4/inputs.json",
+      "bytes": 43012,
+      "sha256": "3e26bdd4324f351a0b1d3098d9848ccf5fd4dc4d058ac2db9b891393d9e93503"
+    },
+    {
+      "path": "campaign/state_unified_full_v1/hotspot_inputs/IN_k8/inputs.json",
+      "bytes": 43012,
+      "sha256": "11e8ef788f6cd2daa2eb19e4fdb17b8b3f13fb672b2930dda4b89eef2c966721"
+    },
+    {
+      "path": "campaign/state_unified_full_v1/hotspot_inputs/OR_k1/inputs.json",
+      "bytes": 42893,
+      "sha256": "7555dd748880768ba5d6a682eb769753af250f7c8d72c34d1998439afc7cac45"
+    },
+    {
+      "path": "campaign/state_unified_full_v1/hotspot_inputs/OR_k2/inputs.json",
+      "bytes": 42893,
+      "sha256": "a3ede026736d888adae6b08b83343801eb5aeeb610ba538bd4f304da1ee9f1f5"
+    },
+    {
+      "path": "campaign/state_unified_full_v1/hotspot_inputs/OR_k4/inputs.json",
+      "bytes": 42893,
+      "sha256": "335b66e96d9f1da1a11780569069eb013b9f272a9c381070c4781690adcb169e"
+    },
+    {
+      "path": "campaign/state_unified_full_v1/hotspot_inputs/OR_k8/inputs.json",
+      "bytes": 42893,
+      "sha256": "6b61bd47332f9f9333c835998f11d7609ef496e8a2ee956eecad1f37d19748d6"
+    }
+  ],
+  "original_pr_worker": {
+    "path": "workspace/experiments/campaign_20261104/e3_unweighted_control_v4/pr_control.py",
+    "bytes": 22799,
+    "sha256": "8726ecfee943fd8a8ba3e92d3deb324daf77acea6e74872bb4627219b2deb1be"
+  },
+  "original_state_runner": {
+    "path": "workspace/experiments/campaign_20261104/first_pass_20261106/state_main_first_pass/runner/state_worker.py",
+    "bytes": 24524,
+    "sha256": "9142bf5c5aaea36fbeff4ec0e817c541d12ee2a4a4fd999b08ebf0e085bccb6b"
+  },
+  "planner": {
+    "path": "workspace/experiments/campaign_20261104/first_pass_20261106/state_scope_additions/prepare.py",
+    "bytes": 10017,
+    "sha256": "75b104a056d0b38c2df959d3093e29c2582b1066d8a25a2c9c2a64b6c5a36201"
+  },
+  "actual_gpu_plan_preparation_requires_remote_bound_source_and_core_focused_PASS": true,
+  "checks": [
+    "All eight retained hotspot position arrays pass original source-bound count/order/owner validation",
+    "Invalid hotspot owner-domain rejected",
+    "32 hotspot cells and six distinct PR target cells match frozen design",
+    "Every original PR command parses; all 21 queries and 20 real weight commits are retained",
+    "No numerical or current-runner code edited; no GPU imports or execution"
+  ],
+  "public_projection": {
+    "original_receipt": {
+      "bytes": 3759,
+      "sha256": "eb2c5e7fb4dcbf648a1db81215d9c98c33afeeff01f5490eedd5f96aff91b812"
+    },
+    "historical_original_receipt": true,
+    "paths": "Provenance namespaces only, not an executable deployment binding.",
+    "private_runtime_identifiers_removed": true,
+    "public_layout_reexecution_claimed": false
+  }
+}

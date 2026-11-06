@@ -1,0 +1,41 @@
+{
+  "status": "READ_ONLY_SOURCE_SNAPSHOT",
+  "files": [
+    {
+      "local_file": "grapin_update_receipt.json",
+      "path": "runtime/build/grapin_pma_boundary_v1/update/receipt.json",
+      "bytes": 373088,
+      "sha256": "464351dd82172302e4497343e5697ac167ab2ebd567a4c22ba7c11914452f3d2"
+    },
+    {
+      "local_file": "grapin_update_sssp.cu",
+      "path": "runtime/build/grapin_pma_boundary_v1/update/source/source/samples/hybrid_sssp/hybrid_sssp.cu",
+      "bytes": 17276,
+      "sha256": "ede123860f5090090c89292fac1d3b0d957234c5c488f655e9507ebf775c3856"
+    },
+    {
+      "local_file": "grapin_update_framework.cuh",
+      "path": "runtime/build/grapin_pma_boundary_v1/update/source/source/include/framework/framework.cuh",
+      "bytes": 234234,
+      "sha256": "1016cc328e4ecb014f9d02ee0ab8ef231133fc9143ca30260e7657c396be063b"
+    },
+    {
+      "local_file": "grapin_update_Loader.h",
+      "path": "runtime/build/grapin_pma_boundary_v1/update/source/source/include/framework/Loader.h",
+      "bytes": 4517,
+      "sha256": "b676ada66aa9f0ebdc3d983a2e114b653ae4b59460275adef5883c26c805ee43"
+    }
+  ],
+  "remote_writes": false,
+  "gpu_executed": false,
+  "public_projection": {
+    "original_receipt": {
+      "bytes": 1266,
+      "sha256": "2777a4645bf18ee415adb94536c33140f85f21c6726d45ed103027152938ed38"
+    },
+    "historical_original_receipt": true,
+    "paths": "Provenance namespaces only, not an executable deployment binding.",
+    "private_runtime_identifiers_removed": true,
+    "public_layout_reexecution_claimed": false
+  }
+}

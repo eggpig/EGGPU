@@ -1,0 +1,25 @@
+{
+  "original_reference": {
+    "bytes": 8995,
+    "sha256": "59c16ece7d79498264566a25040e5808f039bd1b6ddee22c546aacbce26e6fc0"
+  },
+  "original_pr_step": "return .15/n+.85*(transpose@(values*inv)+values[dangling].sum()/n)",
+  "quality": {
+    "pr_alpha": 0.85,
+    "reference_stop_l1": 1e-12,
+    "reference_cap": 2000,
+    "residual_l1": 1e-06,
+    "mass_error": 1e-06,
+    "reference_l1": 1e-05
+  },
+  "public_projection": {
+    "original_receipt": {
+      "bytes": 404,
+      "sha256": "13c64142cb0dd04e9dae330cbb99d15e817a3dd28ca4c33e3768d072dbf9ed13"
+    },
+    "historical_original_receipt": true,
+    "paths": "Provenance namespaces only, not an executable deployment binding.",
+    "private_runtime_identifiers_removed": true,
+    "public_layout_reexecution_claimed": false
+  }
+}

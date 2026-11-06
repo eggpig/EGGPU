@@ -1,0 +1,30 @@
+{
+  "status": "PASS_CPU_READY_PRESENTATION",
+  "source": {
+    "path": "workspace/experiments/campaign_20261104/first_pass_20261106/state_ready_presentation/summarize_state_ready.py",
+    "bytes": 16651,
+    "sha256": "528673fdd59cf614f1a0e80abc7009be558f60a2a20ece9e22e92fefab019a90"
+  },
+  "primary": "workflow_complete_host_seconds",
+  "supplement": "first_complete_workflow_seconds",
+  "checked": [
+    "direct actual1251.345/1284.461 field mapping",
+    "all4 E5arms",
+    "CSV bothfields",
+    "ready interaction5 vsfirst0",
+    "ready figurecaption",
+    "oldfirst cache not reused"
+  ],
+  "plot_series": "All existing E3/E4/E5 draw paths read the checked primary time_seconds; no measurement code changes",
+  "gpu_executed": false,
+  "public_projection": {
+    "original_receipt": {
+      "bytes": 731,
+      "sha256": "8411decb21e45f46841b3c38d15aeae79eb80390757d2cbc17bb9601aa57a049"
+    },
+    "historical_original_receipt": true,
+    "paths": "Provenance namespaces only, not an executable deployment binding.",
+    "private_runtime_identifiers_removed": true,
+    "public_layout_reexecution_claimed": false
+  }
+}

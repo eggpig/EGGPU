@@ -1,0 +1,26 @@
+{
+  "status": "PASS_CPU_EXACT_AUTHOR_PAUSE_RESUME",
+  "helper": {
+    "path": "workspace/experiments/campaign_20261104/first_pass_20261106/author_priority/pause_then_resume_author.py",
+    "sha256": "7b06104289757ce70a7e03927348e7d804f926bf4ac74aad14260cf634c0689d",
+    "bytes": 10511
+  },
+  "real_frozen_v8_and_supervisor": true,
+  "maintenance_evidence_parent_preserved": true,
+  "queue_list_and_stage_pointers_updated": true,
+  "completed_prefix_preserved": true,
+  "no_completed_job_rerun": true,
+  "original_plan_bytes_unchanged": true,
+  "main_and_missing_terminal_required": true,
+  "gpu_executed": false,
+  "public_projection": {
+    "original_receipt": {
+      "bytes": 666,
+      "sha256": "516fbc24c3d304837d414dbeb6790f50efb2230f3579410bef31575a89656d60"
+    },
+    "historical_original_receipt": true,
+    "paths": "Provenance namespaces only, not an executable deployment binding.",
+    "private_runtime_identifiers_removed": true,
+    "public_layout_reexecution_claimed": false
+  }
+}

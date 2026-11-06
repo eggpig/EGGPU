@@ -59,13 +59,44 @@ def discover(campaign):
  return sorted(queues),driver
 
 
+def completed_targets(item):
+ # Use only queue metadata. Resumed queues can repeat an inherited completed
+ # prefix, so the signature below omits the queue path and deduplicates rows.
+ jobs={job.get('id'):job for job in item.get('jobs',[])};result=[]
+ for row in item.get('completed',[]):
+  job=jobs.get(row.get('id'),{});phase=row.get('phase')
+  if phase in (None,'unspecified'):phase=item.get('job_phases',{}).get(row.get('id'),job.get('phase'))
+  if phase is None:
+   command=job.get('command',[])
+   for index,arg in enumerate(command):
+    if arg=='--phase' and index+1<len(command):phase=command[index+1];break
+    if arg.startswith('--phase='):phase=arg.split('=',1)[1];break
+  if phase not in ('target','formal'):continue
+  receipt=row.get('receipt');receipt=receipt if isinstance(receipt,dict) else {}
+  result.append(dict(id=row.get('id'),phase=phase,outcome=row.get('outcome'),status=row.get('status'),
+   receipt={key:receipt[key] for key in ('path','sha256','bytes') if key in receipt},
+   expected_receipt=job.get('receipt')))
+ return result
+
+
+def needs_export(progress,previous):
+ return (previous.get('last_export_completed',-1)<0
+  or progress['target_completed_signature']!=previous.get('last_export_target_completed_signature')
+  or progress['remaining_completed']!=previous.get('last_export_remaining_completed',{})
+  or progress['stage']!=previous.get('last_export_stage')
+  or progress['terminal_queues']!=previous.get('last_export_terminal_queues',[])
+  or (progress['finished'] and not previous.get('last_export_finished',False))
+  or (progress['stopped'] and not previous.get('last_export_stopped',False)))
+
+
 def snapshot(campaign,prior_stage):
- paths,driver=discover(campaign);rows=[]
+ paths,driver=discover(campaign);rows=[];targets=set()
  for path in paths:
   item=read(path)
-  if item is None:rows.append(dict(path=str(path),status='NOT_STARTED',completed=0,passed=0,failed=0));continue
-  completed=item.get('completed',[])
-  rows.append(dict(path=str(path),status=item.get('status','UNKNOWN'),completed=len(completed),
+  if item is None:rows.append(dict(path=str(path),status='NOT_STARTED',completed=0,target_completed=0,passed=0,failed=0));continue
+  completed=item.get('completed',[]);target_rows=completed_targets(item)
+  targets.update(json.dumps(row,sort_keys=True,separators=(',',':'),ensure_ascii=False) for row in target_rows)
+  rows.append(dict(path=str(path),status=item.get('status','UNKNOWN'),completed=len(completed),target_completed=len(target_rows),
    passed=sum(x.get('outcome')=='PASS' for x in completed),failed=sum(x.get('outcome')=='FAIL' for x in completed),active_job=item.get('active_job')))
  status=driver.get('status','WAITING_CORE_FIRST_PASS')
  # Ignore per-job RUNNING/WAITING and temporary archive/memory waits.
@@ -73,7 +104,8 @@ def snapshot(campaign,prior_stage):
  terminal_queues=sorted(x['path']+':'+x['status'] for x in rows if terminal(x['status']))
  all_ended=bool(rows) and all(terminal(x['status']) for x in rows)
  return dict(observed_unix=time.time(),queues=rows,completed=sum(x['completed'] for x in rows),
-  remaining_completed={x['path']:x['completed'] for x in rows if any(name in x['path'] for name in ('unified_main_continuation/','unified_scaling_continuation/','unified_mechanism_application/'))},
+  target_completed=len(targets),target_completed_signature=hashlib.sha256(json.dumps(sorted(targets),ensure_ascii=False,separators=(',',':')).encode()).hexdigest(),
+  remaining_completed={x['path']:x['target_completed'] for x in rows if any(name in x['path'] for name in ('unified_main_continuation/','unified_scaling_continuation/','unified_mechanism_application/'))},
   stage=stage,driver_status=status,terminal_queues=terminal_queues,
   finished=status=='FIRST_PASS_SCHEDULED_STAGES_FINISHED' and all_ended,
   stopped=status=='STOPPED_REQUIRES_INSPECTION' and all(x['status']=='NOT_STARTED' or terminal(x['status']) for x in rows))
@@ -158,17 +190,24 @@ def run(args):
  previous=read(output/'state.json') or {};last_count=previous.get('last_export_completed',-1)
  last_stage=previous.get('last_export_stage');last_terminal=previous.get('last_export_terminal_queues',[])
  last_remaining=previous.get('last_export_remaining_completed',{})
+ last_targets=previous.get('last_export_target_completed_signature')
+ last_finished=previous.get('last_export_finished',False);last_stopped=previous.get('last_export_stopped',False)
  stage=previous.get('stage');failures=0
  while True:
   try:
    progress=snapshot(campaign,stage);stage=progress['stage']
-   due=last_count<0 or progress['completed']-last_count>=10 or progress['remaining_completed']!=last_remaining or stage!=last_stage or progress['terminal_queues']!=last_terminal or progress['finished'] or progress['stopped']
+   due=needs_export(progress,dict(last_export_completed=last_count,last_export_stage=last_stage,
+    last_export_terminal_queues=last_terminal,last_export_remaining_completed=last_remaining,
+    last_export_target_completed_signature=last_targets,last_export_finished=last_finished,last_export_stopped=last_stopped))
    state={**progress,'status':'WATCHING','pid':os.getpid(),'last_export_completed':last_count,
-    'last_export_stage':last_stage,'last_export_terminal_queues':last_terminal,'last_export_remaining_completed':last_remaining,'plot_available':plot_enabled}
+    'last_export_stage':last_stage,'last_export_terminal_queues':last_terminal,'last_export_remaining_completed':last_remaining,
+    'last_export_target_completed_signature':last_targets,'last_export_finished':last_finished,'last_export_stopped':last_stopped,'plot_available':plot_enabled}
    if due:
     receipt=export(campaign,output,progress,authority,plot_python,plot_enabled)
     last_count=progress['completed'];last_stage=stage;last_terminal=progress['terminal_queues'];last_remaining=progress['remaining_completed'];failures=0
-    state.update(last_export_completed=last_count,last_export_stage=last_stage,last_export_terminal_queues=last_terminal,last_export_remaining_completed=last_remaining,last_export=receipt)
+    last_targets=progress['target_completed_signature'];last_finished=progress['finished'];last_stopped=progress['stopped']
+    state.update(last_export_completed=last_count,last_export_stage=last_stage,last_export_terminal_queues=last_terminal,last_export_remaining_completed=last_remaining,last_export_target_completed_signature=last_targets,
+     last_export_finished=last_finished,last_export_stopped=last_stopped,last_export=receipt)
    if progress['finished']:state['status']='FINISHED_FINAL_EXPORT'
    elif progress['stopped']:state['status']='STOPPED_WITH_INCOMPLETE_STAGES_FINAL_EXPORT'
    save(output/'state.json',state);clean_unpublished(output)
@@ -176,7 +215,8 @@ def run(args):
   except Exception as exc:
    clean_unpublished(output)
    failures+=1;save(output/'state.json',dict(status='EXPORT_ERROR_RETRYING',error=repr(exc),traceback=traceback.format_exc(),pid=os.getpid(),observed_unix=time.time(),
-    last_export_completed=last_count,last_export_stage=last_stage,last_export_terminal_queues=last_terminal,stage=stage,consecutive_errors=failures))
+    last_export_completed=last_count,last_export_stage=last_stage,last_export_terminal_queues=last_terminal,last_export_remaining_completed=last_remaining,
+    last_export_target_completed_signature=last_targets,last_export_finished=last_finished,last_export_stopped=last_stopped,stage=stage,consecutive_errors=failures))
    if args.once:raise
   time.sleep(60)
 

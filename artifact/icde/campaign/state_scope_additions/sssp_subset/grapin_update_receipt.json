@@ -1,0 +1,61 @@
+{
+  "status": "PASS_BUILD_ONLY",
+  "unit": "update",
+  "source": "runtime/build/grapin_pma_boundary_v1/update/source",
+  "steps": [
+    {
+      "command": [
+        "runtime/envs/core/bin/cmake",
+        "-S",
+        "runtime/build/grapin_pma_boundary_v1/update/source",
+        "-B",
+        "runtime/build/grapin_pma_boundary_v1/update/build",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_CUDA_RUNTIME_LIBRARY=Shared",
+        "-DCMAKE_CUDA_ARCHITECTURES=89",
+        "-DCMAKE_CXX_COMPILER=/usr/bin/g++",
+        "-DCMAKE_CUDA_HOST_COMPILER=/usr/bin/g++",
+        "-DCMAKE_CUDA_COMPILER=runtime/envs/cuda128/bin/nvcc",
+        "-DCUDAToolkit_ROOT=runtime/envs/cuda128/targets/x86_64-linux",
+        "-DCMAKE_POLICY_VERSION_MINIMUM=3.5",
+        "-DGRAPIN_NVTX_INCLUDE=/usr/local/cuda/include/nvtx3",
+        "-DTHRUST_INCLUDE_DIR=runtime/envs/cuda128/targets/x86_64-linux/include"
+      ],
+      "returncode": 0,
+      "seconds": 5.108164291828871,
+      "log": {
+        "path": "runtime/build/grapin_pma_boundary_v1/update/build_0.log",
+        "sha256": "4259e86f3168489e674bebb29daf329ac24167aa96cd382791ba5d02b6a6c315"
+      }
+    },
+    {
+      "command": [
+        "runtime/envs/core/bin/cmake",
+        "--build",
+        "runtime/build/grapin_pma_boundary_v1/update/build",
+        "--target",
+        "grapin_sssp",
+        "-j",
+        "1"
+      ],
+      "returncode": 0,
+      "seconds": 38.23871764540672,
+      "log": {
+        "path": "runtime/build/grapin_pma_boundary_v1/update/build_1.log",
+        "sha256": "ebcc88420009279237d5f19a26fe210e02323f9539e716402d10520519fe00bb"
+      }
+    }
+  ],
+  "binary": {
+    "path": "runtime/build/grapin_pma_boundary_v1/update/build/grapin_sssp",
+    "sha256": "90eefc3fea3d2437b5643c392e3b62ee89a765d08cf3dd7e94cc0bf305588bde"
+  },
+  "public_projection": {
+    "original_receipt": {
+      "bytes": 373088,
+      "sha256": "464351dd82172302e4497343e5697ac167ab2ebd567a4c22ba7c11914452f3d2"
+    },
+    "review_only": true,
+    "not_a_full_runtime_build_receipt": true
+  }
+}

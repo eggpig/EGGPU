@@ -1,0 +1,103 @@
+{
+  "status": "SCOPE_FROZEN_ADDITIVE_CPU_PLAN_READY_GPU_UNEXECUTED",
+  "source_tree_sha256": "71ea757d372f8c1b969ea074caaa27d3a77d4cea6d48cd9c6ae9c4b02936d7ce",
+  "authority": {
+    "path": "workspace/docs/DATASET_AND_EXPERIMENT_FREEZE_20261104_CN.md",
+    "bytes": 49380,
+    "sha256": "1915e40ce30d558d1ed59cdac7abd692eed5cdee4b033499e881bc4baee10f06"
+  },
+  "authority_sections": [
+    "8.2: unweighted PR negative control",
+    "8.2: P8 one versus multiple owner partitions"
+  ],
+  "existing_state_denominator": 504,
+  "additive_target_cells": 38,
+  "combined_state_denominator": 542,
+  "hotspot": {
+    "cells": 32,
+    "datasets": [
+      "IN",
+      "OR"
+    ],
+    "partitions": 8,
+    "rho": 0.0001,
+    "owner_counts": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "arms": [
+      "D0C1",
+      "D1C1"
+    ],
+    "old_readers": [
+      "none",
+      "per_update"
+    ],
+    "source_inputs_retained": true
+  },
+  "unweighted_pr": {
+    "cells": 6,
+    "datasets": [
+      "US",
+      "IN",
+      "OR"
+    ],
+    "partitions": 1,
+    "rho": 0.0001,
+    "locality": "uniform",
+    "arms": [
+      "D0C1",
+      "D1C1"
+    ],
+    "commits": 20,
+    "queries": 21,
+    "initial_exact_arm_tiny_checks": 2,
+    "old_readers": "none; weighted-view leases are inapplicable to this topology-only PR control",
+    "original_worker": {
+      "path": "workspace/experiments/campaign_20261104/e3_unweighted_control_v4/pr_control.py",
+      "bytes": 22799,
+      "sha256": "8726ecfee943fd8a8ba3e92d3deb324daf77acea6e74872bb4627219b2deb1be"
+    }
+  },
+  "grapin_whole_E3": {
+    "status": "INAPPLICABLE_WEIGHTED_PR_CONTRACT",
+    "full_contract": [
+      "bfs",
+      "sssp",
+      "wcc",
+      "weighted_pr"
+    ],
+    "reason": "Frozen Grapin PageRank divides by unweighted out-degree and ignores the weight argument; a fixed-topology weight-only commit therefore cannot implement the WPR requests of the full four-function E3 trajectory.",
+    "source": {
+      "path": "campaign/baselines/sg_clock_build_v3/grapin_static/source/source/samples/hybrid_pr/hybrid_pr.cu",
+      "bytes": 8525,
+      "sha256": "e748618427a8836c8860f37385516a2635c9f32b415ebf871d2dc8886c157ab5"
+    },
+    "source_lines": {
+      "out_degree_normalization": [
+        88,
+        90
+      ],
+      "weight_parameter_ignored": [
+        118,
+        130
+      ]
+    },
+    "supported_subset": "Fixed-topology explicit-weight SSSP update path exists, including delete old edge, apply replacement weight, insert edge, and required parent repair.",
+    "subset_status": "Required separate matched SSSP-only EGGPU D0/D1 versus Grapin panel is being prepared; not silently dropped and not counted as a full four-function E3 result"
+  },
+  "raw_phase_policy": "Original target repeat zero remains target; complete numerical PASS can be published as first observation n=1. No formal relabeling or duplicate full target.",
+  "gpu_executed": false,
+  "public_projection": {
+    "original_receipt": {
+      "bytes": 3073,
+      "sha256": "738b63537462014f40c1e380cd309191cac70b7cce695beffec9aa1ecebfa320"
+    },
+    "historical_original_receipt": true,
+    "paths": "Provenance namespaces only, not an executable deployment binding.",
+    "private_runtime_identifiers_removed": true,
+    "public_layout_reexecution_claimed": false
+  }
+}

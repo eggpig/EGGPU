@@ -1,0 +1,48 @@
+{
+  "status": "PASS_CPU_FRESH_ADDITIVE_POLICY_ADMISSION",
+  "gpu_executed": false,
+  "fixture_only": true,
+  "checks": [
+    "Fresh source71 policy and actual P8 focused route admitted",
+    "All21 P1 control query policy metrics admitted",
+    "device_metadata_policy mismatch rejected",
+    "host_transpose_method mismatch rejected",
+    "Old measurement reuse rejected"
+  ],
+  "files": {
+    "prepare_fresh_policy.py": {
+      "path": "workspace/experiments/campaign_20261104/first_pass_20261106/state_scope_additions/prepare_fresh_policy.py",
+      "bytes": 11247,
+      "sha256": "c65bc8ed81cc33d9a694dc065fb8ae1799fade0884308817d43684666afb2a01"
+    },
+    "fresh_policy_support.py": {
+      "path": "workspace/experiments/campaign_20261104/first_pass_20261106/state_scope_additions/fresh_policy_support.py",
+      "bytes": 1495,
+      "sha256": "e83cc5bdf0cbb505d160bb79be6c8c31938d9a4ece33a99b0bea143202f912fe"
+    },
+    "export_fresh_progress.py": {
+      "path": "workspace/experiments/campaign_20261104/first_pass_20261106/state_scope_additions/export_fresh_progress.py",
+      "bytes": 2055,
+      "sha256": "9610e9d2bcd5dbdb8ec6f96daf40dce640a8f167fac789cb0ca25722d89a5260"
+    },
+    "fresh_planner.diff": {
+      "path": "workspace/experiments/campaign_20261104/first_pass_20261106/state_scope_additions/fresh_planner.diff",
+      "bytes": 5499,
+      "sha256": "78914493efbb451db405ad456c98b4e5995daffc374ce55f484ab600685c6243"
+    }
+  },
+  "source71": "71ea757d372f8c1b969ea074caaa27d3a77d4cea6d48cd9c6ae9c4b02936d7ce",
+  "target_cells": 38,
+  "initial_PR_checks": 2,
+  "hotspot_requires_new_focused_PASS": true,
+  "public_projection": {
+    "original_receipt": {
+      "bytes": 1836,
+      "sha256": "a2af708167d95a50df8059b90be8d1cc6334db6d2ffebb01ce264fe13f546309"
+    },
+    "historical_original_receipt": true,
+    "paths": "Provenance namespaces only, not an executable deployment binding.",
+    "private_runtime_identifiers_removed": true,
+    "public_layout_reexecution_claimed": false
+  }
+}

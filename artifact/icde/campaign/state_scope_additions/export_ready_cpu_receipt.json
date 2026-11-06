@@ -1,0 +1,38 @@
+{
+  "status": "PASS_CPU_EXPORT_ADMISSION",
+  "fixture_only": true,
+  "gpu_executed": false,
+  "measurements_created": false,
+  "checks": [
+    "PR real producer trace and schema accepted",
+    "source mismatch rejected",
+    "nonzero byte counter rejected",
+    "invariance failure rejected",
+    "output-event swap rejected",
+    "Hotspot real producer trace and schema accepted",
+    "Hotspot output-event mismatch rejected",
+    "Unchanged receipt/source evidence reused without reparsing; current and previous retained",
+    "Cached result withdrawn after retained output disappears",
+    "Missing retained output rejected"
+  ],
+  "exporter": {
+    "path": "workspace/experiments/campaign_20261104/first_pass_20261106/state_scope_additions/export_progress.py",
+    "bytes": 11808,
+    "sha256": "809466235472e18dc61e67726bd309acbfa74e8e76496a3789adda525e74ac0a"
+  },
+  "test": {
+    "path": "workspace/experiments/campaign_20261104/first_pass_20261106/state_scope_additions/check_export_cpu.py",
+    "bytes": 7165,
+    "sha256": "bc5a45f7e3bc3a799af0654ece9990e8efa6bbfa4f769ee2d1bdf4b3053235d1"
+  },
+  "public_projection": {
+    "original_receipt": {
+      "bytes": 1208,
+      "sha256": "a126d0bd763a5d1904d35a23dd4bd8c095b6120965cd37f5ce6e7a6d59842489"
+    },
+    "historical_original_receipt": true,
+    "paths": "Provenance namespaces only, not an executable deployment binding.",
+    "private_runtime_identifiers_removed": true,
+    "public_layout_reexecution_claimed": false
+  }
+}

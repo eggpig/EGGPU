@@ -1,0 +1,28 @@
+{
+  "status": "PASS_CPU_SSSP_EXPORT_ADMISSION",
+  "fixture_only": true,
+  "gpu_executed": false,
+  "checks": [
+    "Primary copies direct post-base interval; prepared service and job wall remain distinct",
+    "missing numerical check rejected",
+    "wrong source rejected",
+    "missing commit rejected",
+    "invalid interval rejected",
+    "Missing retained complete vector rejected"
+  ],
+  "exporter": {
+    "path": "workspace/experiments/campaign_20261104/first_pass_20261106/state_scope_additions/sssp_subset/export_progress.py",
+    "bytes": 12914,
+    "sha256": "e902e4525ecdb8c887761757268f4813dc6eb23ab7f038790336606f702a560f"
+  },
+  "public_projection": {
+    "original_receipt": {
+      "bytes": 694,
+      "sha256": "9449cbc6f612133bc6db34181871882ef5a7183d21eca3cce264c9ca920fb402"
+    },
+    "historical_original_receipt": true,
+    "paths": "Provenance namespaces only, not an executable deployment binding.",
+    "private_runtime_identifiers_removed": true,
+    "public_layout_reexecution_claimed": false
+  }
+}

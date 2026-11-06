@@ -1,0 +1,61 @@
+{
+  "status": "PASS_WEIGHTED_PACKED_CPU_EQUIVALENCE",
+  "cases": 12,
+  "exact_partition_array_comparisons": 40,
+  "weight_changed_topology_fixed_cases": 6,
+  "independent_dense_max_abs_error": 1.24581e-13,
+  "negative_weight_rejected": true,
+  "gpu_executed": false,
+  "native_dynamic_patch_executed": false,
+  "device_pull_only_validated_by_this_test": false,
+  "schema": "eggpu.source71.weighted-pr-packed-host-cpu.v1",
+  "source_tree_sha256": "71ea757d372f8c1b969ea074caaa27d3a77d4cea6d48cd9c6ae9c4b02936d7ce",
+  "source_files": {
+    "gpu_easygraph/runtime/partitioned_pagerank_reference.cpp": {
+      "path": "experiments/campaign_20261104/first_pass_20261106/unified_release_20261106/Easy-Graph/gpu_easygraph/runtime/partitioned_pagerank_reference.cpp",
+      "bytes": 52722,
+      "sha256": "c1b89627ed0ece81795cf52af8f6748b1fa8395db700c73caec780434075076f"
+    },
+    "gpu_easygraph/runtime/partitioned_pagerank_reference.h": {
+      "path": "experiments/campaign_20261104/first_pass_20261106/unified_release_20261106/Easy-Graph/gpu_easygraph/runtime/partitioned_pagerank_reference.h",
+      "bytes": 4351,
+      "sha256": "093e29073fd55363389fa738dca57da93d66ef76ee4cd5fc23e7afd18d187737"
+    }
+  },
+  "test": {
+    "path": "experiments/campaign_20261104/first_pass_20261106/pr_runtime_policy_audit/weighted_packed_cpu.cpp",
+    "bytes": 5410,
+    "sha256": "b7b00efe190c543e6fad410fc9048b4125c856ef34b6cf969e3a6568baba8d8d"
+  },
+  "tested_cpu_binary": {
+    "path": "weighted_packed_cpu",
+    "bytes": 78888,
+    "sha256": "63a2533f04638940d877c77a0c979170b81956fb6819b8216dec24ab39d9d801"
+  },
+  "actual_scope": "Weighted host outgoing-to-incoming builders only; actual frozen source71 C++ linked directly, no CUDA. General/packed materialized/implicit and P1 whole-contiguous arrays are exact; immutable input copies retained across changed weights.",
+  "fixture_revision": "An initial assertion incorrectly assumed an arbitrary whole-row rescaling changes PageRank. Revised fixture changes exactly one positive edge weight; original comparison arrays already agreed. Final test verifies rank changes and independent dense reference.",
+  "recommended_policy_candidate": {
+    "EGMGPU_PAGERANK_HOST_TRANSPOSE": "auto",
+    "EGMGPU_PAGERANK_HOST_WEIGHT_STORAGE": "implicit",
+    "EGMGPU_PAGERANK_DEVICE_METADATA": "pull_only",
+    "EGMGPU_PAGERANK_TRANSPOSE_ENGINE": "cpu",
+    "EGMGPU_PAGERANK_VIEW": "transpose"
+  },
+  "gpu_qualification_status": "REQUIRED_NOT_RUN_FOR_NEW_STATE_POLICY",
+  "pull_only_scope": "Source inspection only: incoming FP64 weights preserved, local-to-global/owners omitted only on device, separate view signature; kernel interfaces do not consume omitted device arrays.",
+  "required_followup": [
+    "Fresh weighted dynamic tiny proof across intervention arms and old-reader/COW paths",
+    "Fresh physical-byte pilots bound to new environment for all six pool/GPU-count configurations",
+    "New epoch and outputs for complete paired blocks; no mixing old-policy D0 with new-policy arms"
+  ],
+  "public_projection": {
+    "original_receipt": {
+      "bytes": 3033,
+      "sha256": "9072f39573b9346332b5cb4832f38171287d25a05cf22eea354514625d75df8e"
+    },
+    "historical_original_receipt": true,
+    "paths": "Provenance namespaces only, not an executable deployment binding.",
+    "private_runtime_identifiers_removed": true,
+    "public_layout_reexecution_claimed": false
+  }
+}

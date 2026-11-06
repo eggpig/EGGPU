@@ -1,0 +1,105 @@
+dataset,function,category,metric,eggpu_status,eggpu_seconds,eggpu_std_seconds,competitors,best_competitor,best_competitor_seconds,fastest_tied_or_only,only_validated,common_strict_win,common_tie,common_loss,pair_outcome,speedup
+ca-HepTh,PageRank,Centrality,e2e,ok,0.000874381512,8.895622527929983e-05,6,nx-cugraph,0.003754805028,True,False,True,False,False,strict_win,4.294241102389639
+ca-HepTh,WCC,Connectivity,e2e,ok,0.00136748329,0.0002325500468779,6,igraph,0.002166650488,True,False,True,False,False,strict_win,1.5844072858835443
+ca-HepTh,BFS,Paths & Spanning Trees,e2e,ok,0.00276396796,0.0002631254801034,6,igraph,0.00457436922,True,False,True,False,False,strict_win,1.655000812672228
+ca-HepTh,SSSP,Paths & Spanning Trees,e2e,ok,0.00551149249,0.0003541722320012,6,igraph,0.01684783744,True,False,True,False,False,strict_win,3.0568557374556087
+LastFM,PageRank,Centrality,e2e,ok,0.00100206211,0.0001334199161784,6,nx-cugraph,0.00398650244,True,False,True,False,False,strict_win,3.9782987503638876
+LastFM,WCC,Connectivity,e2e,ok,0.00111363456,0.0002230906474421,6,igraph,0.001410593606,True,False,True,False,False,strict_win,1.2666575344069784
+LastFM,BFS,Paths & Spanning Trees,e2e,ok,0.00258522108,0.0002387462512702,6,igraph,0.003946864744,True,False,True,False,False,strict_win,1.526702986655207
+LastFM,SSSP,Paths & Spanning Trees,e2e,ok,0.00419194624,0.0002950935250198,6,easygraph-cpp,0.01888660748,True,False,True,False,False,strict_win,4.50545078555206
+p2p-Gnutella04,PageRank,Centrality,e2e,ok,0.000861164182,0.0002771033605556,6,nx-cugraph,0.002995541692,True,False,True,False,False,strict_win,3.4784791966649626
+p2p-Gnutella04,WCC,Connectivity,e2e,ok,0.00104822963,0.0011099710850412,6,igraph,0.001833224388,True,False,True,False,False,strict_win,1.7488767112984585
+p2p-Gnutella04,BFS,Paths & Spanning Trees,e2e,ok,0.00272922963,0.0006674305151358,6,igraph,0.003069306442,True,False,True,False,False,strict_win,1.12460542281303
+p2p-Gnutella04,SSSP,Paths & Spanning Trees,e2e,ok,0.00580131635,0.0009312891064299,6,easygraph-cpp,0.0090747108699999,True,False,True,False,False,strict_win,1.5642503050191185
+ca-HepPh,PageRank,Centrality,e2e,ok,0.000898830593,0.0001814329177144,6,easygraph-cpp,0.09485736536,True,False,True,False,False,strict_win,105.5341975437189
+ca-HepPh,WCC,Connectivity,e2e,ok,0.00129030645,0.0002524756889933,6,igraph,0.002936852072,True,False,True,False,False,strict_win,2.276088809755233
+ca-HepPh,BFS,Paths & Spanning Trees,e2e,ok,0.00474995747,0.0014619877355646,6,igraph,0.007508203574,True,False,True,False,False,strict_win,1.5806885896180456
+ca-HepPh,SSSP,Paths & Spanning Trees,e2e,ok,0.00815485045,0.0004695205185638,6,igraph,0.0393041028,True,False,True,False,False,strict_win,4.8197208570514
+email-Enron,PageRank,Centrality,e2e,ok,0.00125291571,0.0001573018398562,6,easygraph-cpp,0.03617950132,True,False,True,False,False,strict_win,28.87624525036884
+email-Enron,WCC,Connectivity,e2e,ok,0.00370699167,0.0005269494607669,6,igraph,0.0075799143819999,True,False,True,False,False,strict_win,2.044761644150093
+email-Enron,BFS,Paths & Spanning Trees,e2e,ok,0.00651839375,0.0011970305739333,6,igraph,0.01540828054,True,False,True,False,False,strict_win,2.363815555020744
+email-Enron,SSSP,Paths & Spanning Trees,e2e,ok,0.0213966221,0.0010654749363676,6,igraph,0.0898395936399999,True,False,True,False,False,strict_win,4.198774611250432
+ca-CondMat,PageRank,Centrality,e2e,ok,0.000912211835,0.0002714228246945,6,easygraph-cpp,0.03336284114,True,False,True,False,False,strict_win,36.573567520092524
+ca-CondMat,WCC,Connectivity,e2e,ok,0.00231064111,0.0007931896584005,6,igraph,0.004508111998,True,False,True,False,False,strict_win,1.9510221550589482
+ca-CondMat,BFS,Paths & Spanning Trees,e2e,ok,0.0048786588,0.0022352705744093,6,igraph,0.02198828624,True,False,True,False,False,strict_win,4.507035056438052
+ca-CondMat,SSSP,Paths & Spanning Trees,e2e,ok,0.0165704638,0.0001418984226141,6,igraph,0.06239894242,True,False,True,False,False,strict_win,3.765672655463029
+soc-Epinions1,PageRank,Centrality,e2e,ok,0.00143981725,0.0004896683689177,6,easygraph-cpp,0.01511365178,True,False,True,False,False,strict_win,10.496923675556742
+soc-Epinions1,WCC,Connectivity,e2e,ok,0.00405136868,0.0017192800401228,6,igraph,0.009991494148,True,False,True,False,False,strict_win,2.46620214973869
+soc-Epinions1,BFS,Paths & Spanning Trees,e2e,ok,0.0105230473,0.0010466360615125,6,igraph,0.02382381698,True,False,True,False,False,strict_win,2.2639655891312014
+soc-Epinions1,SSSP,Paths & Spanning Trees,e2e,ok,0.0265368335,0.0016222569128924,6,easygraph-cpp,0.08660105006,True,False,True,False,False,strict_win,3.2634281727697467
+soc-Slashdot0811,PageRank,Centrality,e2e,ok,0.0017767027,0.0001192826261589,6,easygraph-cpp,0.014991200672,True,False,True,False,False,strict_win,8.437652890379466
+soc-Slashdot0811,WCC,Connectivity,e2e,ok,0.00409260392,0.0020869612450606,6,igraph,0.01081091676,True,False,True,False,False,strict_win,2.641574159465693
+soc-Slashdot0811,BFS,Paths & Spanning Trees,e2e,ok,0.0095037818,0.000904522992538,6,igraph,0.0256908756199999,True,False,True,False,False,strict_win,2.703226585021123
+soc-Slashdot0811,SSSP,Paths & Spanning Trees,e2e,ok,0.0197141953,0.001392259454037,6,easygraph-cpp,0.1273316094,True,False,True,False,False,strict_win,6.458879374092433
+ER-100k,PageRank,Centrality,e2e,ok,0.00164510682,0.000223583718884,6,easygraph-cpp,0.0431669114,True,False,True,False,False,strict_win,26.239579628026828
+ER-100k,WCC,Connectivity,e2e,ok,0.00592428446,0.0022964178923706,6,igraph,0.02830453782,True,False,True,False,False,strict_win,4.777714171408981
+ER-100k,BFS,Paths & Spanning Trees,e2e,ok,0.011951685,0.0018602304477196,6,igraph,0.05708705658,True,False,True,False,False,strict_win,4.776486041926305
+ER-100k,SSSP,Paths & Spanning Trees,e2e,ok,0.023125302,0.0009439403681254,6,easygraph-cpp,0.3386099964,True,False,True,False,False,strict_win,14.642403217047717
+web-NotreDame,PageRank,Centrality,e2e,ok,0.00250771269,0.0014487150815633,6,easygraph-cpp,0.02271527244,True,False,True,False,False,strict_win,9.058163852095833
+web-NotreDame,WCC,Connectivity,e2e,ok,0.0178116411,0.0044668382339928,6,igraph,0.02734665898,True,False,True,False,False,strict_win,1.5353250622145087
+web-NotreDame,BFS,Paths & Spanning Trees,e2e,ok,0.033636719,0.0192271618290957,6,igraph,0.06263819048,True,False,True,False,False,strict_win,1.862196799872187
+web-NotreDame,SSSP,Paths & Spanning Trees,e2e,ok,0.0429644622,0.0015621873326623,6,easygraph-cpp,0.09637048262,True,False,True,False,False,strict_win,2.2430277882077156
+com-youtube,PageRank,Centrality,e2e,ok,0.00791887939,0.0020494482067521,6,easygraph-cpp,0.106362541,True,False,True,False,False,strict_win,13.431514203173135
+com-youtube,WCC,Connectivity,e2e,ok,0.0566837601,0.0132790284994188,6,igraph,0.1724138708,True,False,True,False,False,strict_win,3.0416802007458923
+com-youtube,BFS,Paths & Spanning Trees,e2e,ok,0.143499665,0.0079289559005202,6,igraph,0.85269375,True,False,True,False,False,strict_win,5.942130596611498
+com-youtube,SSSP,Paths & Spanning Trees,e2e,ok,0.30933084,0.00682485511786,4,igraph,5.4778336240000005,True,False,True,False,False,strict_win,17.708656608568354
+com-Orkut,PageRank,Centrality,e2e,ok,0.0144584067165851,0.0021179696739014,2,GraphScope,0.8843325123192,True,False,True,False,False,strict_win,61.16389790756063
+com-Orkut,WCC,Connectivity,e2e,ok,0.0093761272728443,0.0003183603017579,3,nx-cugraph,0.735819547623396,True,False,True,False,False,strict_win,78.47798202937373
+com-Orkut,BFS,Paths & Spanning Trees,e2e,ok,0.1934938356280326,0.0029333204046824,2,nx-cugraph,8.62778594121337,True,False,True,False,False,strict_win,44.589461536124574
+com-Orkut,SSSP,Paths & Spanning Trees,e2e,ok,5.54503757879138,0.0502045021355891,2,nx-cugraph,22.57542079091072,True,False,True,False,False,strict_win,4.071283642379093
+GAP-twitter,PageRank,Centrality,e2e,ok,0.2646347992122173,0.2145312882729708,2,nx-cugraph,8.61658209040761,True,False,True,False,False,strict_win,32.56027595787868
+GAP-twitter,WCC,Connectivity,e2e,ok,0.5472487211227417,0.3808508711127167,0,,,True,True,False,False,False,sole_validated,
+GAP-twitter,BFS,Paths & Spanning Trees,e2e,ok,7.191580288112164,2.425924147814361,1,nx-cugraph,60.63958412110806,True,False,True,False,False,strict_win,8.432024908537361
+GAP-twitter,SSSP,Paths & Spanning Trees,e2e,ok,26.66604834794998,0.770850514136526,0,,,True,True,False,False,False,sole_validated,
+ca-HepTh,PageRank,Centrality,kernel,ok,0.00048694399,3.1320496238219175e-05,2,nx-cugraph,0.0007408320068,True,False,True,False,False,strict_win,1.5213905952510063
+ca-HepTh,WCC,Connectivity,kernel,ok,0.000227359995,9.953540187791716e-05,1,nx-cugraph,0.02675249292,True,False,True,False,False,strict_win,117.66578777414205
+ca-HepTh,BFS,Paths & Spanning Trees,kernel,ok,0.000939552009,4.139101350375422e-05,2,Gunrock,0.006088192,True,False,True,False,False,strict_win,6.479888225112613
+ca-HepTh,SSSP,Paths & Spanning Trees,kernel,ok,0.00349827194,0.0001636338319874,2,Gunrock,0.0119623104,True,False,True,False,False,strict_win,3.4194912817440946
+LastFM,PageRank,Centrality,kernel,ok,0.000571680009,5.510500251794354e-05,2,nx-cugraph,0.0008859456064,True,False,True,False,False,strict_win,1.5497229087120308
+LastFM,WCC,Connectivity,kernel,ok,0.000238976002,1.1846121152852771e-05,1,nx-cugraph,0.01702798062,True,False,True,False,False,strict_win,71.2539354474597
+LastFM,BFS,Paths & Spanning Trees,kernel,ok,0.000903104007,5.236745859672656e-05,2,Gunrock,0.0069998656,True,False,True,False,False,strict_win,7.750896403674134
+LastFM,SSSP,Paths & Spanning Trees,kernel,ok,0.0026880641,0.0001499865519331,2,Gunrock,0.0171935364,True,False,True,False,False,strict_win,6.396252381035111
+p2p-Gnutella04,PageRank,Centrality,kernel,ok,0.000365824014,4.964425536207041e-05,2,nx-cugraph,0.0005861823916,True,False,True,False,False,strict_win,1.6023617071786873
+p2p-Gnutella04,WCC,Connectivity,kernel,ok,0.000184735999,4.2534699702826505e-05,1,nx-cugraph,0.0491318332799999,True,False,True,False,False,strict_win,265.9570064630441
+p2p-Gnutella04,BFS,Paths & Spanning Trees,kernel,ok,0.000904031992,5.181228563235315e-05,2,Gunrock,0.0056204996,True,False,True,False,False,strict_win,6.217146793185612
+p2p-Gnutella04,SSSP,Paths & Spanning Trees,kernel,ok,0.00371382403,0.0001941882027869,2,Gunrock,0.0092192126,True,False,True,False,False,strict_win,2.482404261894983
+ca-HepPh,PageRank,Centrality,kernel,ok,0.000488959998,7.678805290927215e-05,2,nx-cugraph,0.0008923263908,True,False,True,False,False,strict_win,1.8249476326282217
+ca-HepPh,WCC,Connectivity,kernel,ok,0.000249408007,3.967516838326015e-05,1,nx-cugraph,0.04734927442,True,False,True,False,False,strict_win,189.84664922966968
+ca-HepPh,BFS,Paths & Spanning Trees,kernel,ok,0.00230377603,0.0001317537031657,2,Gunrock,0.0096319104,True,False,True,False,False,strict_win,4.180923090861398
+ca-HepPh,SSSP,Paths & Spanning Trees,kernel,ok,0.00593804789,0.0002985523027535,2,Gunrock,0.1495118982,True,False,True,False,False,strict_win,25.17862788742177
+email-Enron,PageRank,Centrality,kernel,ok,0.00051631999,5.519298335717812e-05,2,nx-cugraph,0.001183916808,True,False,True,False,False,strict_win,2.2929904534589105
+email-Enron,WCC,Connectivity,kernel,ok,0.000329376012,4.891671977522716e-05,1,nx-cugraph,0.09730951042,True,False,True,False,False,strict_win,295.4359360571771
+email-Enron,BFS,Paths & Spanning Trees,kernel,ok,0.00255811191,0.0001825789510127,2,Gunrock,0.0077256772,True,False,True,False,False,strict_win,3.02007006409661
+email-Enron,SSSP,Paths & Spanning Trees,kernel,ok,0.0168080006,0.0004339587674482,2,Gunrock,0.1145484902,True,False,True,False,False,strict_win,6.815116974710246
+ca-CondMat,PageRank,Centrality,kernel,ok,0.000328352004,9.109324959903472e-05,2,nx-cugraph,0.0006290560008,True,False,True,False,False,strict_win,1.9157976596360287
+ca-CondMat,WCC,Connectivity,kernel,ok,0.000269439995,3.618517340754953e-05,1,nx-cugraph,0.0267366783,True,False,True,False,False,strict_win,99.23054778857163
+ca-CondMat,BFS,Paths & Spanning Trees,kernel,ok,0.00234703994,0.000147330417942,2,Gunrock,0.0067515518,True,False,True,False,False,strict_win,2.876624161751589
+ca-CondMat,SSSP,Paths & Spanning Trees,kernel,ok,0.0128483839,0.0003416981931004,2,Gunrock,0.0639522614,True,False,True,False,False,strict_win,4.977455678297408
+soc-Epinions1,PageRank,Centrality,kernel,ok,0.000351808012,6.94693679456732e-05,2,Gunrock,0.0027231488,True,False,True,False,False,strict_win,7.740439976108333
+soc-Epinions1,WCC,Connectivity,kernel,ok,0.000359104007,5.59538527727004e-05,1,nx-cugraph,0.30471633446,True,False,True,False,False,strict_win,848.5461830560972
+soc-Epinions1,BFS,Paths & Spanning Trees,kernel,ok,0.00216560006,0.0001495212665269,2,Gunrock,0.0061068546,True,False,True,False,False,strict_win,2.819936475251114
+soc-Epinions1,SSSP,Paths & Spanning Trees,kernel,ok,0.0178152008,0.0011329802319969,2,Gunrock,0.0951445202,True,False,True,False,False,strict_win,5.340636980078271
+soc-Slashdot0811,PageRank,Centrality,kernel,ok,0.000400224,2.396555737426569e-05,2,Gunrock,0.0028274816,True,False,True,False,False,strict_win,7.064747741264891
+soc-Slashdot0811,WCC,Connectivity,kernel,ok,0.000347328007,3.79558636842332e-05,1,nx-cugraph,0.054352166,True,False,True,False,False,strict_win,156.4865628587216
+soc-Slashdot0811,BFS,Paths & Spanning Trees,kernel,ok,0.00193782401,2.9659418033957936e-05,2,Gunrock,0.004975936,True,False,True,False,False,strict_win,2.5677956173120178
+soc-Slashdot0811,SSSP,Paths & Spanning Trees,kernel,ok,0.0121157122,0.0002017130088863,2,Gunrock,0.051593619,True,False,True,False,False,strict_win,4.258405791448232
+ER-100k,PageRank,Centrality,kernel,ok,0.000221824005,3.328588373229803e-05,2,nx-cugraph,0.0004624256014,True,False,True,False,False,strict_win,2.0846508537252313
+ER-100k,WCC,Connectivity,kernel,ok,0.000668160021,8.642537724173725e-06,1,nx-cugraph,0.0278909313,True,False,True,False,False,strict_win,41.74289155800898
+ER-100k,BFS,Paths & Spanning Trees,kernel,ok,0.00206732798,5.922548186369852e-05,2,Gunrock,0.0051493312,True,False,True,False,False,strict_win,2.4908148343254175
+ER-100k,SSSP,Paths & Spanning Trees,kernel,ok,0.0113469124,0.0004093799649277,2,Gunrock,0.0894188328,True,False,True,False,False,strict_win,7.8804550214030025
+web-NotreDame,PageRank,Centrality,kernel,ok,0.000244639993,3.2800395670736515e-05,2,Gunrock,0.0034261056,True,False,True,False,False,strict_win,14.004683199937796
+web-NotreDame,WCC,Connectivity,kernel,ok,0.000594528019,3.432223250436146e-05,1,nx-cugraph,0.09901780158,True,False,True,False,False,strict_win,166.54858714068445
+web-NotreDame,BFS,Paths & Spanning Trees,kernel,ok,0.00243212795,6.785241309790754e-05,2,Gunrock,0.0052366272,True,False,True,False,False,strict_win,2.153105143995405
+web-NotreDame,SSSP,Paths & Spanning Trees,kernel,ok,0.00908435154,0.0004920648516539,2,Gunrock,0.009188806,True,False,True,False,False,strict_win,1.0114982846645761
+com-youtube,PageRank,Centrality,kernel,ok,0.000172767997,4.181965531461985e-05,2,nx-cugraph,0.016843058962,True,False,True,False,False,strict_win,97.48946132656734
+com-youtube,WCC,Connectivity,kernel,ok,0.00271632004,0.0011223715899171,1,nx-cugraph,0.4129093048,True,False,True,False,False,strict_win,152.0105505682607
+com-youtube,BFS,Paths & Spanning Trees,kernel,ok,0.0183322563,0.000944564905729,2,Gunrock,0.8481208194,True,False,True,False,False,strict_win,46.2638534788541
+com-youtube,SSSP,Paths & Spanning Trees,kernel,ok,0.165959167,0.0083690857763407,2,Gunrock,0.1624859176,False,False,False,False,True,loss,0.9790716628506578
+com-Orkut,PageRank,Centrality,kernel,ok,0.0027562239170074,6.822210502208517e-05,2,nx-cugraph,0.0920995140075683,True,False,True,False,False,strict_win,33.41510587701682
+com-Orkut,WCC,Connectivity,kernel,ok,0.0072553920745849,0.0003156274981373,1,nx-cugraph,0.2195585250854491,True,False,True,False,False,strict_win,30.26142802875482
+com-Orkut,BFS,Paths & Spanning Trees,kernel,ok,0.0633782730102539,0.0035361401733906,2,nx-cugraph,1.1321321807861329,True,False,True,False,False,strict_win,17.86309608977459
+com-Orkut,SSSP,Paths & Spanning Trees,kernel,ok,5.38922607421875,0.0513650826555671,2,Gunrock,1.255033423,False,False,False,False,True,loss,0.23287822884326412
+GAP-twitter,PageRank,Centrality,kernel,ok,0.0450693778991699,0.0001342112551306,1,nx-cugraph,0.5882981140136719,True,False,True,False,False,strict_win,13.053166949182748
+GAP-twitter,WCC,Connectivity,kernel,ok,0.4703110961914062,0.0024647264187608,0,,,True,True,False,False,False,sole_validated,
+GAP-twitter,BFS,Paths & Spanning Trees,kernel,ok,3.71276708984375,0.0223609404412429,1,nx-cugraph,10.622765856933594,True,False,True,False,False,strict_win,2.8611452320809727
+GAP-twitter,SSSP,Paths & Spanning Trees,kernel,ok,23.1505078125,0.6961409999119053,0,,,True,True,False,False,False,sole_validated,

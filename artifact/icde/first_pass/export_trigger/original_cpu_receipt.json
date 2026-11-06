@@ -1,0 +1,35 @@
+{
+  "status": "PASS_METADATA_TARGET_EXPORT_TRIGGER_CPU",
+  "tests": 5,
+  "source": {
+    "path": "workspace/experiments/campaign_20261104/first_pass_20261106/export_on_progress.py",
+    "bytes": 13711,
+    "sha256": "cf2803ec3a746ca5457effa92189ff290dc9e0c0137ec1bf1239a79e3c83fab9"
+  },
+  "target_outcomes": [
+    "PASS",
+    "FAIL",
+    "SKIPPED_DEPENDENCY",
+    "BLOCKED",
+    "TIMED_OUT"
+  ],
+  "tiny_and_pilot_do_not_trigger": true,
+  "remaining_target_progress_preserved": true,
+  "stage_terminal_final_stop_preserved": true,
+  "unchanged_restart_does_not_export": true,
+  "inherited_prefix_deduplicated": true,
+  "actual_current_previous_retention_checked": true,
+  "collector_builder_plotter_unmodified": true,
+  "array_payloads_read": false,
+  "gpu_executed": false,
+  "public_projection": {
+    "original_receipt": {
+      "bytes": 828,
+      "sha256": "16995d7bcdaec81991fb8c9e3144eac48a1ab45ad52a0c99382a769bf2b26c4b"
+    },
+    "historical_original_receipt": true,
+    "paths": "Provenance namespaces only, not an executable deployment binding.",
+    "private_runtime_identifiers_removed": true,
+    "public_layout_reexecution_claimed": false
+  }
+}

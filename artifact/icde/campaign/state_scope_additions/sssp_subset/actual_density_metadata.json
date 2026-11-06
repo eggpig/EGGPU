@@ -1,0 +1,56 @@
+{
+  "status": "READ_ONLY_BOUND_INPUT_METADATA",
+  "gpu_executed": false,
+  "rows": [
+    {
+      "dataset": "IN",
+      "inputs": {
+        "path": "campaign/state_grid_v1/cells/E3_IN_p1_rho1_uniform_typed_v3/inputs.json",
+        "bytes": 10926,
+        "sha256": "0e77da5f91d94c9b201f3753abeb99c586cd38d9f51d9fc0027d8a0e6cd45dd7"
+      },
+      "metadata": {
+        "n": 7414866,
+        "m": 191606827,
+        "changed_positions": 191606827,
+        "sources": [
+          2461098,
+          3902774,
+          7014783
+        ]
+      },
+      "per_kind_update_records": 3832136540,
+      "fits_original_uint32_total": true
+    },
+    {
+      "dataset": "OR",
+      "inputs": {
+        "path": "campaign/state_grid_v1/cells/E3_OR_p1_rho1_uniform_typed_v3/inputs.json",
+        "bytes": 10904,
+        "sha256": "50eba9a146a14e977159378ecdcd20c2a0e7e54ed4ec98b41f38ff4bc3c512c1"
+      },
+      "metadata": {
+        "n": 2997166,
+        "m": 212698418,
+        "changed_positions": 212698418,
+        "sources": [
+          1072806,
+          838716,
+          1505232
+        ]
+      },
+      "per_kind_update_records": 4253968360,
+      "fits_original_uint32_total": true
+    }
+  ],
+  "public_projection": {
+    "original_receipt": {
+      "bytes": 1299,
+      "sha256": "4f5cdc5f159f1cc0136709988920a8467acbff30db7ca1be83253d4f283d6f0b"
+    },
+    "historical_original_receipt": true,
+    "paths": "Provenance namespaces only, not an executable deployment binding.",
+    "private_runtime_identifiers_removed": true,
+    "public_layout_reexecution_claimed": false
+  }
+}
