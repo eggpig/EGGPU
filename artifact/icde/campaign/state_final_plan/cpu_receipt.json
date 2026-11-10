@@ -1,8 +1,0 @@
-{
-  "status": "PASS_PUBLIC_CPU_PLANNER",
-  "tests": 30,
-  "gpu_executed": false,
-  "formal_measurements": 0,
-  "evidence": "../../provenance/current_cpu_validation.json",
-  "scope": "Public projected CPU parser/planning/evidence-guard checks; fresh GPU and formal admission remain separate."
-}

@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68", "wheel", "cmake>=3.23"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "eggpu"
+version = "0.2.0"
+description = "GPU graph analytics with reusable graph state"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {file = "LICENSE"}
+authors = [{name = "EGGPU contributors"}]
+dependencies = ["numpy>=1.24", "scipy>=1.10", "requests>=2.28"]
+
+[project.optional-dependencies]
+test = ["pytest>=7", "networkx>=3"]
+arena = ["numba>=0.60"]
+
+[project.urls]
+Repository = "https://github.com/eggpig/EGGPU"
+
+[tool.setuptools.packages.find]
+include = ["easygraph*"]
+
+[tool.setuptools.package-data]
+"easygraph.gpu._arena" = ["native/*.cu", "native/*.h", "native/common/*.h"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["gpu: requires an explicitly selected CUDA device"]

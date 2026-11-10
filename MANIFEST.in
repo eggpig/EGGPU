@@ -1,0 +1,7 @@
+include CMakeLists.txt LICENSE NOTICE
+recursive-include cpp_easygraph *.h *.hpp *.cpp *.in *.cmake CMakeLists.txt LICENSE
+recursive-include gpu_easygraph *.h *.cuh *.c *.cpp *.cu CMakeLists.txt
+recursive-include easygraph *.py *.cu *.h *.cuh
+recursive-include examples *.py
+recursive-include tests *.py
+global-exclude __pycache__ *.py[cod] *.so

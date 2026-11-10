@@ -1,40 +1,13 @@
-# Native and Python build products
-Easy-Graph/build/
-Easy-Graph/.eggs/
-Easy-Graph/*.egg-info/
-*.so
-
-# Python/editor caches
 __pycache__/
-**/__pycache__/
 *.py[cod]
-.pytest_cache/
-.mypy_cache/
-.vscode/
-.idea/
-.DS_Store
-
-# Local outputs and downloaded data
-*.log
-artifact/datasets/files/
-dist/
+*.so
+*.o
+*.a
+*.egg-info/
 build/
-
-# Local research evidence and archived checkout history
-.maintenance/
-writing/
-baselines/
-EG_Evaluation/benchmarking/results/
-EG_Evaluation/benchmarking/build/
-EG_Evaluation/benchmarking/diagnostics/
-EG_Evaluation/build_artifacts/
-EG_Evaluation/third_party/
-EG_Evaluation/torchinductor_batchcom/
-EG_Evaluation/dataset_package/
-EG_Evaluation/datasets/*
-!EG_Evaluation/datasets/DATASETS.md
-!EG_Evaluation/datasets/MANIFEST_*.tsv
-!EG_Evaluation/datasets/DATASET_PROVENANCE_*.csv
-EG_Evaluation/benchmarking/tools/csr_to_matrix_market
-EG_Evaluation/benchmarking/tools/generate_rmat_csr
-EG_Evaluation/benchmarking/tools/prepare_graphscope_dataset
+dist/
+.venv/
+.pytest_cache/
+.env
+.env.*
+example-data/

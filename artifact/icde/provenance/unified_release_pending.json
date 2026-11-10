@@ -1,8 +1,0 @@
-{
-  "status": "STATIC_FIRST_PASS_AND_PUBLIC_REBUILD_PENDING",
-  "source_sha256": "71ea757d372f8c1b969ea074caaa27d3a77d4cea6d48cd9c6ae9c4b02936d7ce",
-  "source_bound_build": "PASS",
-  "focused_trace": "PASS_N1",
-  "formal_results": 0,
-  "portable_deployment": "Regenerate plans and proofs against explicit local source, input, DSO and placement identities."
-}

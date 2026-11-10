@@ -1,32 +1,122 @@
 # EGGPU
 
-EGGPU runs graph analytics on one or multiple GPUs and manages graph state across successive requests. D-Maintain updates the representations required by a request. C-Retain manages retained state using shared physical allocations and observed reuse demand.
+EGGPU is a GPU graph-analysis system built on EasyGraph. It provides Python
+graph functions and persistent sessions for analysis across functions, graph
+versions, and graph instances, with single- and multi-GPU execution.
 
-The implementation is in `Easy-Graph/`. The [artifact guide](artifact/icde/README.md) describes the fixed datasets, baseline adapters, six experiments, and measurement protocol.
+- **D-Maintain** reuses compatible graph components and updates affected
+  weights through in-place maintenance or copy-on-write.
+- **A-Retain** tracks shared physical allocations and selects removable view
+  sets under per-GPU memory budgets.
+- Owning host results remain valid after subsequent requests and session closure.
 
-## Build and run
+## Functions
 
-Use a Python environment with NumPy, SciPy, pybind11, and CMake, together with a compatible CUDA toolkit. The build uses the caller's environment and writes outside this checkout.
+| Family | Functions |
+| --- | --- |
+| Centrality | PageRank, betweenness, closeness |
+| Connectivity | Local clustering coefficient, weakly connected components, strongly connected components, K-Core |
+| Paths and spanning trees | BFS, Dijkstra, Bellman–Ford, SSSP, MST |
+| Structural holes | Effective size, efficiency, constraint, hierarchy |
+
+The EasyGraph interface exposes all 16 functions. Partitioned native sessions
+provide BFS, SSSP, WCC, PageRank, and weighted PageRank over one or more GPUs.
+
+## Build
+
+Requirements: Linux, Python 3.10 or newer, a C++ compiler supported by your
+CUDA Toolkit, CMake 3.23 or newer, and the full CUDA Toolkit including cuBLAS
+and cuSPARSE. The NVIDIA driver must support the selected Toolkit.
 
 ```bash
-python -B artifact/icde/tools/verify.py
-python -B artifact/icde/tools/build.py \
-  --build-dir /path/to/eggpu-build \
-  --cuda-root /path/to/cuda --architecture 89 --arena --execute
-python -B artifact/icde/tools/reproduce.py run-native-example --help
+git clone https://github.com/eggpig/EGGPU.git
+cd EGGPU
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+CMAKE_BUILD_PARALLEL_LEVEL=2 \
+  CMAKE_ARGS="-DCMAKE_CUDA_ARCHITECTURES=80" \
+  python -m pip install '.[test]'
 ```
 
-Architecture `89` targets the RTX 4090 D used in the main experiments; use `80` for A100. For NCCL support, supply both `--nccl-include` and `--nccl-library` to the build command. Record the locally selected communication backend with the experiment.
+Set `CMAKE_CUDA_ARCHITECTURES` to the target GPU architecture: `80` for A100,
+`89` for RTX 4090/4090 D, or a semicolon-separated list for multiple targets.
+Set `CUDACXX` to `nvcc` when selecting a non-default Toolkit. For a CPU-only
+build, set `EASYGRAPH_ENABLE_GPU=OFF` during installation.
 
-The [reproduction commands](artifact/icde/README.md#experiments) cover input preparation, single- and multi-GPU execution, maintenance and retention workloads, and the dependent application. All results are written to caller-selected directories.
+## Usage
 
-## Source and checks
-
-This release contains source `5af9876b8596b3c8b769fe1865890eb3fe6afc91cd8bf60c9c9bf76dce9ffdeb`, including immutable host-input sharing, retained device owners, canonical WCC output handoff, and independently owned host results. The source inventory and checksums are in `artifact/icde/provenance/`. Performance receipts bind revision `308f80a5f866`; this release adds NumPy boolean-input rejection, a checked fallback for older CPU extensions, and an updated CPU download fixture. CUDA/C++ sources are unchanged.
+Select host-staged communication for PCIe systems without GPU peer access:
 
 ```bash
-python -B artifact/icde/tools/test_cpu.py --work /path/to/new-cpu-check
-python -B artifact/icde/tools/reproduce.py status
+export EGGPU_COMM_BACKEND=host_staging
 ```
 
-See [LICENSE](LICENSE), [NOTICE](NOTICE), and [CITATION.cff](CITATION.cff) for licensing and attribution.
+Use `peer_to_peer` when all selected GPU pairs support peer access.
+
+Run the function examples on a visible GPU:
+
+```bash
+CUDA_VISIBLE_DEVICES=0 EASYGRAPH_ENABLE_GPU=TRUE \
+  EASYGRAPH_GPU_STRICT_ERRORS=TRUE python examples/functions.py
+```
+
+Run a sequence that updates edge weights, queries the new version, and revisits
+the original graph on two GPUs:
+
+```bash
+CUDA_VISIBLE_DEVICES=0,1 python examples/continuous.py --devices 0,1
+```
+
+The example constructs its own small graph under `example-data/` and checks the
+returned distances. Add `--budget-mib 256` to enable A-Retain with a 256 MiB
+retained-state budget per GPU. Select a fresh directory with `--directory` for
+another run. Device IDs are relative to `CUDA_VISIBLE_DEVICES`.
+
+For application inputs, `easygraph.gpu.io.write_partitioned_graph` writes
+partitioned CSR from directed arcs and optional nonnegative weights. Vertices
+are numbered from zero. For WCC, use `directed=False` and supply both arc
+directions to construct the undirected projection.
+
+```python
+from easygraph.gpu import Session
+from easygraph.gpu.io import write_partitioned_graph
+
+manifest = write_partitioned_graph(
+    4, [(0, 1), (1, 2), (2, 3)], "example-data/input",
+    weights=[1.0, 2.0, 1.0], devices=(0, 1),
+)
+with Session.native({"G": manifest}, devices=(0, 1), route="lease_sparse",
+                    budgets={0: 256 << 20, 1: 256 << 20}, policy="closure") as session:
+    distances = session.query("G", "sssp", {"source": 0}).values
+    print(distances)
+```
+
+In unbudgeted sessions, `retain_snapshot` preserves an older version's prepared
+views during weight maintenance; `release_snapshot` removes that retention
+request. Budgeted sessions use the selected retention policy. `inventory()` reports the
+managed views, allocations, and workspace state. Topology changes enter a
+session as a new manifest through `register_snapshot`.
+
+## Tests
+
+```bash
+CUDA_VISIBLE_DEVICES='' python -m pytest -q
+```
+
+The tests cover graph-state invalidation, shared allocation accounting, result
+ownership, version updates, and numerical input contracts. The continuous
+example additionally checks native GPU execution.
+
+## Source layout
+
+- `easygraph/`: Python API, graph state, and execution policies.
+- `cpp_easygraph/`: native graph objects, Python bindings, and runtime.
+- `gpu_easygraph/`: CUDA operators and device state management.
+- `examples/`, `tests/`: usage and correctness checks.
+
+## License
+
+BSD 3-Clause. See [LICENSE](LICENSE) and [NOTICE](NOTICE) for component licenses
+and algorithm attributions. The GPU MST implementation adapts
+[ECL-MST](https://github.com/burtscher/ECL-MST).
