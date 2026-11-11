@@ -22,6 +22,12 @@ versions, and graph instances, with single- and multi-GPU execution.
 The EasyGraph interface exposes all 16 functions. Partitioned native sessions
 provide BFS, SSSP, WCC, PageRank, and weighted PageRank over one or more GPUs.
 
+## Datasets
+
+The seven graph datasets (EP, LJ, OR, IN, UK, TW, and US) are available on
+[Zenodo](https://zenodo.org/records/24134345), with CSR data packages, dataset
+descriptions, and checksums.
+
 ## Build
 
 Requirements: Linux, Python 3.10 or newer, a C++ compiler supported by your
